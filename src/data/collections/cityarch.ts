@@ -62,8 +62,14 @@ const cityarchData = {
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l4-10h10l4 10H3z"/><line x1="12" y1="7" x2="12" y2="2"/></svg>',
     },
     {
-      name: 'Traffic Control Lamp',
-      slug: 'traffic-control-lamp',
+      name: 'Street Sign',
+      slug: 'street-sign',
+      skuCount: 5,
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="8" rx="1"/><line x1="12" y1="2" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="22"/></svg>',
+    },
+    {
+      name: 'Traffic Control Lamps',
+      slug: 'traffic-control-lamps',
       skuCount: 3,
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><circle cx="12" cy="7" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="17" r="2"/></svg>',
     },

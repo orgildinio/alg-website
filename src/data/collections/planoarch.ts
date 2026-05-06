@@ -76,6 +76,18 @@ const planoarchData = {
       skuCount: 17,
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z"/><path d="M4 6c0-1.1.9-2 2-2h12a2 2 0 012 2"/></svg>',
     },
+    {
+      name: 'Stairwell & Passageway',
+      slug: 'stairwell-passageway',
+      skuCount: 8,
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h4v-4h4v-4h4v-4h4V3"/><path d="M3 21V3"/></svg>',
+    },
+    {
+      name: 'General Purpose Strips',
+      slug: 'general-purpose-strips',
+      skuCount: 12,
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="10" width="20" height="4" rx="1"/><line x1="6" y1="10" x2="6" y2="14"/><line x1="10" y1="10" x2="10" y2="14"/><line x1="14" y1="10" x2="14" y2="14"/><line x1="18" y1="10" x2="18" y2="14"/></svg>',
+    },
   ],
   featured: [
     {
