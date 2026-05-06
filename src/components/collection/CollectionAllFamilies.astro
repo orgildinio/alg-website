@@ -468,7 +468,7 @@ const skusJson = JSON.stringify(skus);
       if (!appParam) { render(); return; }
       // Find the matching sub_category (slug match: lowercase, spaces/& → hyphen)
       const matchSub = families.find(f =>
-        f.sub_category.toLowerCase().replace(/[\s&]+/g, '-') === appParam.toLowerCase()
+        f.sub_category.toLowerCase().replace(/\s*\|\s*/g, '-').replace(/[\s&]+/g, '-') === appParam.toLowerCase()
       )?.sub_category;
       if (!matchSub) { render(); return; }
       // Apply the filter
