@@ -471,7 +471,7 @@ const skusJson = JSON.stringify(skus);
       // Apply the filter
       active.application.add(matchSub);
       const cb = document.querySelector(`[data-facet="application"][value="${matchSub}"]`);
-      if (cb) (cb as HTMLInputElement).checked = true;
+      if (cb) /** @type {HTMLInputElement} */(cb).checked = true;
       render();
       // Scroll to All Families section after layout settles
       requestAnimationFrame(() => {
