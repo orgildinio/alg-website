@@ -2906,7 +2906,8 @@
             "Universal"
           ],
           "taa": false,
-          "pdpUrl": "/products/heritage/"
+          "pdpUrl": "/products/heritage/",
+          "card_image": "/images/family-cards/luxoarch/heritage.png"
         },
         {
           "family": "Liberty",
@@ -2931,7 +2932,8 @@
             "Universal"
           ],
           "taa": true,
-          "pdpUrl": "/products/liberty/"
+          "pdpUrl": "/products/liberty/",
+          "card_image": "/images/family-cards/luxoarch/liberty.png"
         },
         {
           "family": "Navigator",
@@ -2950,7 +2952,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/navigator/"
+          "pdpUrl": "/products/navigator/",
+          "card_image": "/images/family-cards/luxoarch/navigator.png"
         },
         {
           "family": "Pathfinder",
@@ -2969,7 +2972,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/pathfinder/"
+          "pdpUrl": "/products/pathfinder/",
+          "card_image": "/images/family-cards/luxoarch/pathfinder.png"
         },
         {
           "family": "Aura",
@@ -2988,7 +2992,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/aura/"
+          "pdpUrl": "/products/aura/",
+          "card_image": null
         },
         {
           "family": "Canadarm",
@@ -3004,7 +3009,8 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "card_image": null
         },
         {
           "family": "Everest",
@@ -3028,7 +3034,8 @@
             "Yoke"
           ],
           "taa": false,
-          "pdpUrl": "/products/everest/"
+          "pdpUrl": "/products/everest/",
+          "card_image": "/images/family-cards/luxoarch/everest.png"
         },
         {
           "family": "Illuminator",
@@ -3049,7 +3056,8 @@
             "Trunnion"
           ],
           "taa": true,
-          "pdpUrl": "/products/illuminator/"
+          "pdpUrl": "/products/illuminator/",
+          "card_image": "/images/family-cards/luxoarch/illuminator.png"
         },
         {
           "family": "Radiator-I",
@@ -3067,7 +3075,8 @@
           "mount_types": [
             "Trunnion"
           ],
-          "taa": false
+          "taa": false,
+          "card_image": "/images/family-cards/luxoarch/radiator-i.png"
         },
         {
           "family": "Radiator-II",
@@ -3087,7 +3096,8 @@
           "mount_types": [
             "Trunnion"
           ],
-          "taa": true
+          "taa": true,
+          "card_image": "/images/family-cards/luxoarch/radiator-ii.png"
         },
         {
           "family": "Radiator-III",
@@ -3105,7 +3115,8 @@
           "mount_types": [
             "Trunnion"
           ],
-          "taa": false
+          "taa": false,
+          "card_image": "/images/family-cards/luxoarch/radiator-iii.png"
         },
         {
           "family": "Beacon-I",
@@ -3123,7 +3134,8 @@
           "mount_types": [
             "Trunnion"
           ],
-          "taa": false
+          "taa": false,
+          "card_image": null
         },
         {
           "family": "LSL Series",
@@ -3141,7 +3153,8 @@
             "120V ONLY"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "card_image": null
         },
         {
           "family": "Anaheim",
@@ -3160,7 +3173,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/anaheim/"
+          "pdpUrl": "/products/anaheim/",
+          "card_image": "/images/family-cards/luxoarch/anaheim.png"
         },
         {
           "family": "Guardian",
@@ -3179,7 +3193,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/guardian/"
+          "pdpUrl": "/products/guardian/",
+          "card_image": "/images/family-cards/luxoarch/guardian.png"
         },
         {
           "family": "Ramparts",
@@ -3198,7 +3213,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/ramparts/"
+          "pdpUrl": "/products/ramparts/",
+          "card_image": "/images/family-cards/luxoarch/ramparts.png"
         },
         {
           "family": "Shield",
@@ -3216,7 +3232,8 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "card_image": null
         },
         {
           "family": "Watchtower",
@@ -3235,7 +3252,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/watchtower/"
+          "pdpUrl": "/products/watchtower/",
+          "card_image": "/images/family-cards/luxoarch/watchtower.png"
         },
         {
           "family": "Wedge-I",
@@ -3253,7 +3271,8 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "card_image": "/images/family-cards/luxoarch/wedge-i.png"
         },
         {
           "family": "Atlanta",
@@ -3272,7 +3291,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/atlanta/"
+          "pdpUrl": "/products/atlanta/",
+          "card_image": "/images/family-cards/luxoarch/atlanta.png"
         },
         {
           "family": "Nightwatch",
@@ -3291,7 +3311,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/nightwatch/"
+          "pdpUrl": "/products/nightwatch/",
+          "card_image": "/images/family-cards/luxoarch/nightwatch.png"
         },
         {
           "family": "Sentinel",
@@ -3310,7 +3331,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/sentinel/"
+          "pdpUrl": "/products/sentinel/",
+          "card_image": "/images/family-cards/luxoarch/sentinel.png"
         }
       ]
     },

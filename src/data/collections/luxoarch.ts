@@ -91,7 +91,7 @@ const luxoarchData = {
       maxWattage: 45,
       skuCount: 4,
       dlc: true,
-      lineDrawing: null,
+      lineDrawing: null, // no hero image available yet
     },
     {
       family: 'Illuminator',
@@ -100,7 +100,7 @@ const luxoarchData = {
       maxWattage: 800,
       skuCount: 11,
       dlc: true,
-      lineDrawing: null,
+      lineDrawing: '/images/family-cards/luxoarch/illuminator.png',
       pdpUrl: '/products/illuminator/',
     },
     {
@@ -110,7 +110,7 @@ const luxoarchData = {
       maxWattage: 450,
       skuCount: 25,
       dlc: true,
-      lineDrawing: null,
+      lineDrawing: '/images/family-cards/luxoarch/liberty.png',
     },
     {
       family: 'Nightwatch',
@@ -119,7 +119,7 @@ const luxoarchData = {
       maxWattage: null,
       skuCount: 4,
       dlc: true,
-      lineDrawing: null,
+      lineDrawing: '/images/family-cards/luxoarch/nightwatch.png',
     },
     {
       family: 'Sentinel',
@@ -128,7 +128,7 @@ const luxoarchData = {
       maxWattage: null,
       skuCount: 4,
       dlc: true,
-      lineDrawing: null,
+      lineDrawing: '/images/family-cards/luxoarch/sentinel.png',
     },
   ],
   familiesHeadline: '22 families. One outdoor portfolio.',
