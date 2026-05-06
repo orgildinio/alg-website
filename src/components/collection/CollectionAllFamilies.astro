@@ -441,7 +441,7 @@ const skusJson = JSON.stringify(skus);
       tile.addEventListener('click', () => {
         const app = tile.dataset.app;
         // Find matching sub_category from families
-        const matchSub = families.find(f => f.sub_category.toLowerCase().replace(/\s+/g,'-') === app)?.sub_category;
+        const matchSub = families.find(f => f.sub_category.toLowerCase().replace(/\s*\|\s*/g,'-').replace(/[\s&]+/g,'-') === app)?.sub_category;
         if (!matchSub) return;
         // Toggle
         if (active.application.has(matchSub)) {
