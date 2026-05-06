@@ -458,7 +458,29 @@ const skusJson = JSON.stringify(skus);
       });
     });
 
-    render();
+    // §URL-PARAM-INIT — apply ?application= filter + scroll on page load (canonical rule v2.7.30)
+    (function initFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const appParam = params.get('application');
+      if (!appParam) { render(); return; }
+      // Find the matching sub_category (slug match: lowercase, spaces/& → hyphen)
+      const matchSub = families.find(f =>
+        f.sub_category.toLowerCase().replace(/[\s&]+/g, '-') === appParam.toLowerCase()
+      )?.sub_category;
+      if (!matchSub) { render(); return; }
+      // Apply the filter
+      active.application.add(matchSub);
+      const cb = document.querySelector(`[data-facet="application"][value="${matchSub}"]`);
+      if (cb) (cb as HTMLInputElement).checked = true;
+      render();
+      // Scroll to All Families section after layout settles
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const target = document.getElementById('families');
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+      });
+    })();
   })();
 </script>
 
