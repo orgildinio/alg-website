@@ -25,7 +25,7 @@ const { collectionName, collectionSlug, featured } = Astro.props;
   <div class="collection-content">
     <div class="feat-eyebrow">Featured Families</div>
     <div class="feat-header">
-      <h2 class="feat-headline">Five flagship families from the {collectionName.replace(/Ⓐ/g, '')} collection.</h2>
+      <h2 class="feat-headline">Five flagship families from the {collectionName} collection.</h2>
     </div>
     <div class="feat-grid">
       {featured.map(f => (
