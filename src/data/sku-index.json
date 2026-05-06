@@ -956,38 +956,6 @@
           "taa": false
         },
         {
-          "sku": "LDKT30",
-          "family": "Canadarm",
-          "sub_category": "Dock Light",
-          "display_echelon": "PRO",
-          "wattages": [
-            30
-          ],
-          "ccts": [
-            "5000K"
-          ],
-          "voltage": "120 - 277V",
-          "mount_types": [],
-          "dlc": "Premium",
-          "taa": false
-        },
-        {
-          "sku": "LDKT60",
-          "family": "Canadarm",
-          "sub_category": "Dock Light",
-          "display_echelon": "PRO",
-          "wattages": [
-            60
-          ],
-          "ccts": [
-            "5000K"
-          ],
-          "voltage": "120 - 277V",
-          "mount_types": [],
-          "dlc": "Premium",
-          "taa": false
-        },
-        {
           "sku": "LFLD3W150-3E1-UD/PS/SP",
           "family": "Everest",
           "sub_category": "Flood Light",
@@ -2994,23 +2962,6 @@
           "taa": false,
           "pdpUrl": "/products/aura/",
           "card_image": null
-        },
-        {
-          "family": "Canadarm",
-          "sub_category": "Dock Light",
-          "display_echelon": "PRO",
-          "max_wattage": 60,
-          "sku_count": 2,
-          "dlc": true,
-          "ccts": [
-            "5000K"
-          ],
-          "voltages": [
-            "120 - 277V"
-          ],
-          "mount_types": [],
-          "taa": false,
-          "card_image": "/images/family-cards/luxoarch/canadarm.png"
         },
         {
           "family": "Everest",
@@ -10005,6 +9956,38 @@
           ],
           "dlc": null,
           "taa": false
+        },
+        {
+          "sku": "LDKT30",
+          "family": "Canadarm",
+          "sub_category": "Dock Light",
+          "display_echelon": "PRO",
+          "wattages": [
+            30
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LDKT60",
+          "family": "Canadarm",
+          "sub_category": "Dock Light",
+          "display_echelon": "PRO",
+          "wattages": [
+            60
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
         }
       ],
       "families": [
@@ -10179,6 +10162,23 @@
             "Surface Mount"
           ],
           "taa": false
+        },
+        {
+          "family": "Canadarm",
+          "sub_category": "Dock Light",
+          "display_echelon": "PRO",
+          "max_wattage": 60,
+          "sku_count": 2,
+          "dlc": true,
+          "ccts": [
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V"
+          ],
+          "mount_types": [],
+          "taa": false,
+          "card_image": "/images/family-cards/lampararch/canadarm.png"
         }
       ]
     },

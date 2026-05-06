@@ -19,9 +19,9 @@ const lampararchData = {
     { value: '48-hr',label: 'Layouts' },
   ],
   redBanner: [
-    { value: '9',   label: 'Families'     },
-    { value: '102', label: 'Active SKUs'  },
-    { value: '5',   label: 'Applications' },
+    { value: '10',  label: 'Families'     },
+    { value: '104', label: 'Active SKUs'  },
+    { value: '6',   label: 'Applications' },
     { value: 'DLC', label: 'Premium'      },
     { value: 'TAA', label: 'Available'    },
     { value: '5 US',label: 'Warehouses'   },
@@ -56,6 +56,12 @@ const lampararchData = {
       slug: 'vapor-tight',
       skuCount: 12,
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="8" rx="3"/><line x1="6" y1="8" x2="6" y2="16"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="18" y1="8" x2="18" y2="16"/></svg>',
+    },
+    {
+      name: 'Dock Light',
+      slug: 'dock-light',
+      skuCount: 2,
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M2 12h4M18 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>',
     },
   ],
   featured: [
