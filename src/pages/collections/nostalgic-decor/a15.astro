@@ -207,7 +207,18 @@ const dimmers = [
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="a19-eyebrow a19-eyebrow-rule a19-amber-text" style="margin-bottom:1.5rem;">FULL SPECIFICATIONS</p>
     <h2 id="a15-specs-h2" class="a19-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:3rem;">Spec sheet for the lamp · designer-grade detail.</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;" class="a15-spec-grid">
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:3rem;align-items:start;" class="a15-spec-grid">
+      <aside aria-label="Spec sections" style="position:sticky;top:1.5rem;">
+        <p style="font-family:var(--ns-mono);font-size:0.65rem;letter-spacing:0.18em;opacity:0.55;margin-bottom:0.75rem;padding:0 0.75rem;">SPEC SECTIONS</p>
+        <nav style="display:flex;flex-direction:column;gap:0.25rem;">
+          <a href="#spec-color" class="toc-link active"><span style="font-family:var(--ns-mono);font-size:0.65rem;opacity:0.55;">01</span> Color &amp; Optical</a>
+          <a href="#spec-electrical" class="toc-link"><span style="font-family:var(--ns-mono);font-size:0.65rem;opacity:0.55;">02</span> Electrical</a>
+          <a href="#spec-dimming" class="toc-link"><span style="font-family:var(--ns-mono);font-size:0.65rem;opacity:0.55;">03</span> Dimming &amp; Controls</a>
+          <a href="#spec-materials" class="toc-link"><span style="font-family:var(--ns-mono);font-size:0.65rem;opacity:0.55;">04</span> Materials &amp; Finish</a>
+          <a href="#spec-compliance" class="toc-link"><span style="font-family:var(--ns-mono);font-size:0.65rem;opacity:0.55;">05</span> Compliance &amp; Warranty</a>
+        </nav>
+      </aside>
+      <div style="display:flex;flex-direction:column;gap:3rem;">
       <article id="spec-color">
         <p class="a19-spec-block-num" style="margin-bottom:0.5rem;">01</p>
         <h3 class="a19-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Color &amp; Optical</h3>
@@ -251,20 +262,20 @@ const dimmers = [
           <div class="a19-spec-row"><dt>MOL</dt><dd>3.8" (97mm)</dd></div>
         </dl>
       </article>
-      <article id="spec-compliance" style="grid-column:1/-1;">
+      <article id="spec-compliance">
         <p class="a19-spec-block-num" style="margin-bottom:0.5rem;">05</p>
         <h3 class="a19-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Compliance &amp; Warranty</h3>
-        <dl style="display:grid;grid-template-columns:1fr 1fr;gap:0 2rem;">
+        <dl>
           <div class="a19-spec-row"><dt>Safety</dt><dd>UL Listed</dd></div>
           <div class="a19-spec-row"><dt>Energy code</dt><dd>CEC Title 24 JA8-2022-E · T20 (on JA8 variants)</dd></div>
           <div class="a19-spec-row"><dt>Warranty</dt><dd>3 years / 25,000 hours</dd></div>
           <div class="a19-spec-row"><dt>RoHS</dt><dd>Compliant</dd></div>
         </dl>
       </article>
+      </div>
     </div>
     <style>
       @media (max-width: 900px) { .a15-spec-grid { grid-template-columns: 1fr !important; } }
-      @media (max-width: 900px) { .a15-spec-grid article[style*="grid-column"] { grid-column: 1 !important; } }
     </style>
   </div>
 </section>
