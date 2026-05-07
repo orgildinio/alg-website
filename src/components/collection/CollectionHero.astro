@@ -20,15 +20,19 @@ const { slug, parentVertical, parentSubVertical, headlineLine, description, pill
 const verticalUpper = parentVertical.toUpperCase();
 const verticalSlug  = parentVertical.toLowerCase();
 ---
-<!-- §1 BREADCRUMB — B2 canonical: HOME › PRODUCTS › {VERTICAL} › COMMERCIAL › {NAME} -->
+<!-- §1 BREADCRUMB — B2 canonical: HOME › PRODUCTS › {VERTICAL} [› {SUBVERTICAL}] › {NAME} -->
 <div class="breadcrumb-band">
   <a href="/">HOME</a>
   <span class="bc-sep">›</span>
   <a href="/collections">PRODUCTS</a>
   <span class="bc-sep">›</span>
   <a href={`/collections/${verticalSlug}`}>{verticalUpper}</a>
-  <span class="bc-sep">›</span>
-  <span class="bc-plain">{parentSubVertical.toUpperCase()}</span>
+  {parentSubVertical && (
+    <>
+      <span class="bc-sep">›</span>
+      <span class="bc-plain">{parentSubVertical.toUpperCase()}</span>
+    </>
+  )}
   <span class="bc-sep">›</span>
   <span class="bc-current" set:html={headlineLine}></span>
 </div>
