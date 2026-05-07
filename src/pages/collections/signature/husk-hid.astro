@@ -242,10 +242,21 @@ const skus = [
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="husk-eyebrow husk-eyebrow-rule husk-accent-text" style="margin-bottom:1.5rem;">FULL SPECIFICATION</p>
     <h2 id="husk-spec-h2" class="husk-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:3rem;">Five spec blocks. Anchored, exportable, signed.</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;" class="husk-spec-grid">
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:3rem;align-items:start;" class="husk-spec-grid">
+      <aside aria-label="Spec sections" style="position:sticky;top:1.5rem;">
+        <p style="font-family:var(--husk-mono);font-size:0.65rem;letter-spacing:0.18em;opacity:0.55;margin-bottom:0.75rem;padding:0 0.75rem;">SPEC SECTIONS</p>
+        <nav style="display:flex;flex-direction:column;gap:0.25rem;">
+          <a href="#spec-electrical" class="toc-link active"><span style="font-family:var(--husk-mono);font-size:0.65rem;opacity:0.55;">01</span> Electrical &amp; Driver</a>
+          <a href="#spec-photometric" class="toc-link"><span style="font-family:var(--husk-mono);font-size:0.65rem;opacity:0.55;">02</span> Photometric</a>
+          <a href="#spec-materials" class="toc-link"><span style="font-family:var(--husk-mono);font-size:0.65rem;opacity:0.55;">03</span> Materials &amp; Build</a>
+          <a href="#spec-environmental" class="toc-link"><span style="font-family:var(--husk-mono);font-size:0.65rem;opacity:0.55;">04</span> Environmental</a>
+          <a href="#spec-compliance" class="toc-link"><span style="font-family:var(--husk-mono);font-size:0.65rem;opacity:0.55;">05</span> Compliance &amp; Listings</a>
+        </nav>
+      </aside>
+      <div style="display:flex;flex-direction:column;gap:3rem;">
       <article id="spec-electrical">
         <p class="husk-spec-block-num" style="margin-bottom:0.5rem;">01</p>
-        <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:1rem;">Electrical &amp; Driver</h3>
+        <h3 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem;">Electrical &amp; Driver</h3>
         <dl>
           <div class="husk-spec-row"><dt>Input voltage</dt><dd>120–277V AC (-CSMG) · 277–480V AC (-CSHG)</dd></div>
           <div class="husk-spec-row"><dt>Wattage (WATTselect)</dt><dd>3-position dip-switch · per-SKU range (see SKU table)</dd></div>
@@ -257,7 +268,7 @@ const skus = [
       </article>
       <article id="spec-photometric">
         <p class="husk-spec-block-num" style="margin-bottom:0.5rem;">02</p>
-        <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:1rem;">Photometric</h3>
+        <h3 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem;">Photometric</h3>
         <dl>
           <div class="husk-spec-row"><dt>Efficacy</dt><dd>Up to 150 lm/W (typ. at 5000K)</dd></div>
           <div class="husk-spec-row"><dt>CCT options (CCTselect)</dt><dd>3000K · 4000K · 5000K</dd></div>
@@ -268,7 +279,7 @@ const skus = [
       </article>
       <article id="spec-materials">
         <p class="husk-spec-block-num" style="margin-bottom:0.5rem;">03</p>
-        <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:1rem;">Materials &amp; Build</h3>
+        <h3 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem;">Materials &amp; Build</h3>
         <dl>
           <div class="husk-spec-row"><dt>Base</dt><dd>E39 mogul screw base</dd></div>
           <div class="husk-spec-row"><dt>Housing</dt><dd>Die-cast aluminum · passive thermal management</dd></div>
@@ -279,7 +290,7 @@ const skus = [
       </article>
       <article id="spec-environmental">
         <p class="husk-spec-block-num" style="margin-bottom:0.5rem;">04</p>
-        <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:1rem;">Environmental</h3>
+        <h3 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem;">Environmental</h3>
         <dl>
           <div class="husk-spec-row"><dt>Operating temperature</dt><dd>-40°F to 122°F (-40°C to 50°C)</dd></div>
           <div class="husk-spec-row"><dt>Storage temperature</dt><dd>-40°F to 185°F (-40°C to 85°C)</dd></div>
@@ -287,22 +298,22 @@ const skus = [
           <div class="husk-spec-row"><dt>Location rating</dt><dd>Wet location listed (with compatible fixture)</dd></div>
         </dl>
       </article>
-      <article id="spec-compliance" style="grid-column:1/-1;">
+      <article id="spec-compliance">
         <p class="husk-spec-block-num" style="margin-bottom:0.5rem;">05</p>
-        <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:1rem;">Compliance &amp; Listings</h3>
-        <dl style="display:grid;grid-template-columns:1fr 1fr;gap:0 2rem;">
+        <h3 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem;">Compliance &amp; Listings</h3>
+        <dl>
           <div class="husk-spec-row"><dt>Safety</dt><dd>cULus Listed per datasheet</dd></div>
           <div class="husk-spec-row"><dt>DLC</dt><dd>DLC Listed · QPL # to confirm on submittal</dd></div>
           <div class="husk-spec-row"><dt>EMC</dt><dd>FCC Part 15 · ICES-003</dd></div>
           <div class="husk-spec-row"><dt>Warranty</dt><dd>5 years / 50,000 hours (standard per datasheet)</dd></div>
         </dl>
       </article>
+      </div>
     </div>
   </div>
 </section>
 <style>
   @media (max-width: 900px) { .husk-spec-grid { grid-template-columns: 1fr !important; } }
-  @media (max-width: 900px) { .husk-spec-grid article[style*="grid-column"] { grid-column: 1 !important; } }
 </style>
 
 <!-- SENSOR RECEPTACLE -->
