@@ -1374,12 +1374,12 @@
         const ecoCard  = document.getElementById('tierSkuEco').closest('.tier-card');
         const proCard  = document.getElementById('tierSkuPro').closest('.tier-card');
         const plusCard = document.getElementById('tierSkuProplus').closest('.tier-card');
-        if (eco)  { ecoCard.classList.remove('slot-empty');  document.getElementById('tierSkuEco').innerHTML     = renderAa(eco);  }
-        else      { ecoCard.classList.add('slot-empty'); }
-        if (pro)  { proCard.classList.remove('slot-empty');  document.getElementById('tierSkuPro').innerHTML     = renderAa(pro);  }
-        else      { proCard.classList.add('slot-empty'); }
-        if (plus) { plusCard.classList.remove('slot-empty'); document.getElementById('tierSkuProplus').innerHTML = renderAa(plus); }
-        else      { plusCard.classList.add('slot-empty'); }
+        if (eco)  { ecoCard.classList.remove('slot-empty');  document.getElementById('tierSkuEco').innerHTML     = renderAa(eco);  ecoCard.dataset.tierKey  = eco;  }
+        else      { ecoCard.classList.add('slot-empty');  ecoCard.dataset.tierKey  = ''; }
+        if (pro)  { proCard.classList.remove('slot-empty');  document.getElementById('tierSkuPro').innerHTML     = renderAa(pro);  proCard.dataset.tierKey  = pro;  }
+        else      { proCard.classList.add('slot-empty');  proCard.dataset.tierKey  = ''; }
+        if (plus) { plusCard.classList.remove('slot-empty'); document.getElementById('tierSkuProplus').innerHTML = renderAa(plus); plusCard.dataset.tierKey = plus; }
+        else      { plusCard.classList.add('slot-empty'); plusCard.dataset.tierKey = ''; }
       } else {
         tierStrip.classList.add('hidden');
       }
@@ -1409,13 +1409,13 @@
       el.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
     });
     /* Tier card clicks — navigate to product page if one exists */
-    [['tierImgEco','tierSkuEco','t-eco'],['tierImgPro','tierSkuPro','t-pro'],['tierImgProplus','tierSkuProplus','t-proplus']].forEach(([imgId, skuId, cls]) => {
+    ['t-eco','t-pro','t-proplus'].forEach(cls => {
       const card = document.querySelector('.tier-card.' + cls);
       if (!card) return;
       card.style.cursor = 'pointer';
       card.addEventListener('click', () => {
-        const sku = document.getElementById(skuId)?.textContent?.trim();
-        if (sku && TIER_URLS[sku]) window.location.href = TIER_URLS[sku];
+        const key = card.dataset.tierKey || '';
+        if (key && TIER_URLS[key]) window.location.href = TIER_URLS[key];
       });
     });
     productsLi.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
