@@ -1314,6 +1314,26 @@
       'outdoor-city':   '/mm-previews/tier-hero-city.png',
       'lamps-tubul':    '/mm-previews/tier-hero-tubul.png',
     };
+    /* Per-product images for tier cards — keyed by data-tier-* value */
+    const TIER_IMGS = {
+      'Heritage-I':    '/images/family-cards/luxoarch/heritage.png',
+      'Liberty-I':     '/images/family-cards/luxoarch/liberty.png',
+      'Rosetta-III':   '/mm-previews/tier-hero-luxo.png',
+      'Pathfinder-I':  '/images/family-cards/luxoarch/pathfinder.png',
+      'Navigator-I':   '/images/family-cards/luxoarch/navigator.png',
+      'Everest-I':     '/images/family-cards/luxoarch/everest.png',
+      'Zion-II':       '/mm-previews/tier-hero-luxo.png',
+      'Anaheim-I':     '/images/family-cards/luxoarch/anaheim.png',
+      'Atlanta-I':     '/images/family-cards/luxoarch/atlanta.png',
+      'Guardian-I':    '/images/family-cards/luxoarch/guardian.png',
+      'Sentinel-I':    '/images/family-cards/luxoarch/sentinel.png',
+      'Ramparts-I':    '/images/family-cards/luxoarch/ramparts.png',
+      'Wedge-I':       '/images/family-cards/luxoarch/wedge-i.png',
+      'Watchtower-I':  '/images/family-cards/luxoarch/watchtower.png',
+      'Nightwatch-I':  '/images/family-cards/luxoarch/nightwatch.png',
+      'Illuminator-I': '/images/family-cards/luxoarch/illuminator.png',
+      'Canadarm':      '/images/family-cards/luxoarch/canadarm.png',
+    };
 
     window._algSwapApp = function(appEl){ swapAppPreview(appEl); };
     function swapAppPreview(appEl){
@@ -1326,14 +1346,13 @@
         const activeCat = menu.querySelector('.mm-cat-item.active');
         const catKey    = activeCat ? activeCat.dataset.cat : null;
         const heroSrc   = catKey && FAMILY_HERO[catKey] ? FAMILY_HERO[catKey] : null;
-        if (heroSrc) {
-          document.getElementById('tierImgEco').src     = heroSrc;
-          document.getElementById('tierImgPro').src     = heroSrc;
-          document.getElementById('tierImgProplus').src = heroSrc;
-        }
         const eco  = appEl.dataset.tierEco     || '';
         const pro  = appEl.dataset.tierPro     || '';
         const plus = appEl.dataset.tierProplus || '';
+        const fallback = heroSrc || '/mm-previews/tier-hero-luxo.png';
+        document.getElementById('tierImgEco').src     = (eco  && TIER_IMGS[eco])  ? TIER_IMGS[eco]  : fallback;
+        document.getElementById('tierImgPro').src     = (pro  && TIER_IMGS[pro])  ? TIER_IMGS[pro]  : fallback;
+        document.getElementById('tierImgProplus').src = (plus && TIER_IMGS[plus]) ? TIER_IMGS[plus] : fallback;
         const ecoCard  = document.getElementById('tierSkuEco').closest('.tier-card');
         const proCard  = document.getElementById('tierSkuPro').closest('.tier-card');
         const plusCard = document.getElementById('tierSkuProplus').closest('.tier-card');
