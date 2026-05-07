@@ -362,7 +362,7 @@ const verticals = [
             <h3>Utility &amp; Décor Lamps</h3>
             <p>T8 linear, vintage filament, and decorative lamps. Retrofit-ready for every socket.</p>
             <div class="wm-meta">
-              <span class="wm-sub-brands">Nostalgic · Vintage · <BrandMark prefix="tubul" suffix="RCH" /></span>
+              <span class="wm-sub-brands">Décor · Linear · Utility</span>
               <span class="wm-arrow">Browse →</span>
             </div>
           </div>
@@ -1171,7 +1171,7 @@ const verticals = [
   .wm-card.controls .wm-img { background: url('/images/wwm/wwm-safety.jpg') center/cover no-repeat; }
   .wm-card.lamps .wm-img { background: url('/images/wwm/wwm-utility.jpg') center/cover no-repeat; }
 
-  .wm-body { padding: 28px 28px 32px; }
+  .wm-body { padding: 28px 28px 32px; display: flex; flex-direction: column; }
   .wm-body h3 {
     font-family: 'Lato', system-ui, sans-serif;
     font-size: 24px;
@@ -1180,13 +1180,16 @@ const verticals = [
     letter-spacing: -0.01em;
     color: var(--ink);
   }
-  .wm-body p { font-size: 15px; line-height: 1.55; color: var(--ink2); margin-bottom: 22px; }
+  .wm-body p { font-size: 15px; line-height: 1.55; color: var(--ink2); margin-bottom: 22px; flex: 1; }
   .wm-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-top: 18px;
     border-top: 1px solid rgba(17,20,24,0.08);
+    gap: 8px;
+    flex-wrap: nowrap;
+    margin-top: auto;
   }
   .wm-sub-brands {
     font-family: 'JetBrains Mono', monospace;
@@ -1194,8 +1197,11 @@ const verticals = [
     letter-spacing: 0.05em;
     color: var(--ink2);
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .wm-arrow { font-size: 13px; color: var(--brand); font-weight: 700; }
+  .wm-arrow { font-size: 13px; color: var(--brand); font-weight: 700; white-space: nowrap; flex-shrink: 0; }
 
   /* ============================================================
      LOCATOR MAP
