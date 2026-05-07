@@ -28,16 +28,16 @@ const lampararchData = {
   ],
   applications: [
     {
+      name: 'Dock Light',
+      slug: 'dock-light',
+      skuCount: 2,
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M2 12h4M18 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>',
+    },
+    {
       name: 'Linear High Bay',
       slug: 'linear-high-bay',
       skuCount: 20,
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="9" width="20" height="6" rx="1"/><line x1="12" y1="2" x2="12" y2="9"/><line x1="8" y1="4" x2="8" y2="9"/><line x1="16" y1="4" x2="16" y2="9"/></svg>',
-    },
-    {
-      name: 'Round High Bay',
-      slug: 'round-high-bay',
-      skuCount: 24,
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="6"/><line x1="12" y1="16" x2="12" y2="22"/><line x1="8" y1="19" x2="16" y2="19"/></svg>',
     },
     {
       name: 'Linear Strip',
@@ -52,16 +52,16 @@ const lampararchData = {
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="10" width="20" height="4" rx="1"/><path d="M9 10l-2-4M15 10l2-4"/><path d="M7 14l-2 4M17 14l2 4"/></svg>',
     },
     {
+      name: 'Round High Bay',
+      slug: 'round-high-bay',
+      skuCount: 24,
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="6"/><line x1="12" y1="16" x2="12" y2="22"/><line x1="8" y1="19" x2="16" y2="19"/></svg>',
+    },
+    {
       name: 'Vapor-Tight',
       slug: 'vapor-tight',
       skuCount: 12,
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="8" rx="3"/><line x1="6" y1="8" x2="6" y2="16"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="18" y1="8" x2="18" y2="16"/></svg>',
-    },
-    {
-      name: 'Dock Light',
-      slug: 'dock-light',
-      skuCount: 2,
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M2 12h4M18 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>',
     },
   ],
   featured: [
