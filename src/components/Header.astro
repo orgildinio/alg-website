@@ -134,11 +134,11 @@
         <div class="mm-col mm-col-preview">
           <div class="mm-preview">
             <div class="preview-img-wrap">
-              <img src="/images/verticals/vertical-warehouse.jpg" alt="Solutions preview" id="solPreviewImg">
+              <img src="/images/verticals/vertical-coldstorage.jpg" alt="Solutions preview" id="solPreviewImg">
             </div>
-            <div class="preview-label" id="solPreviewLabel">Vertical · Warehouse</div>
-            <div class="preview-name" id="solPreviewName">Warehouse &amp; Logistics</div>
-            <div class="preview-desc" id="solPreviewDesc">High-bay and low-bay systems engineered for distribution centers and 3PL facilities. DLC Premium listed with integrated sensors and emergency egress.</div>
+            <div class="preview-label" id="solPreviewLabel">Vertical · Cold Chain</div>
+            <div class="preview-name" id="solPreviewName">Cold Storage &amp; Grocery</div>
+            <div class="preview-desc" id="solPreviewDesc">Freezer, cooler, and grocery cold-chain fixtures rated for low-temperature starts down to -40°F. IP-rated with moisture-resistant gaskets.</div>
             <a href="/solutions" class="preview-cta">View solutions →</a>
           </div>
         </div>
@@ -1433,6 +1433,20 @@
     const solPrevNm  = solMenu.querySelector('#solPreviewName');
     const solPrevDsc = solMenu.querySelector('#solPreviewDesc');
     let solTimer = null;
+    // Init: seed preview from the first (active) item so HTML default always stays in sync
+    function solInitPreview() {
+      const first = vertItems[0];
+      if (!first) return;
+      vertItems.forEach(v => v.classList.remove('active'));
+      first.classList.add('active');
+      solPrevImg.src = first.dataset.preview || solPrevImg.src;
+      if (first.dataset.previewLabel) solPrevLbl.textContent = first.dataset.previewLabel;
+      if (first.dataset.previewName)  solPrevNm.innerHTML    = renderAa(first.dataset.previewName);
+      if (first.dataset.previewDesc)  solPrevDsc.textContent = first.dataset.previewDesc;
+    }
+    solLi.addEventListener('mouseenter', solInitPreview, { once: false });
+    // Also run once at load so the static HTML is never stale
+    solInitPreview();
     vertItems.forEach(el => {
       el.addEventListener('mouseenter', () => {
         clearTimeout(solTimer);
@@ -1447,7 +1461,7 @@
       });
       el.addEventListener('mouseleave', () => clearTimeout(solTimer));
     });
-    solLi.addEventListener('mouseleave', () => clearTimeout(solTimer));
+    solLi.addEventListener('mouseleave', () => { clearTimeout(solTimer); solInitPreview(); });
   }
 
   /* =============================================================
