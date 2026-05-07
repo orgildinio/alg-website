@@ -1151,6 +1151,8 @@ const verticals = [
     text-decoration: none;
     color: inherit;
     transition: transform var(--transition), box-shadow var(--transition);
+    display: flex;
+    flex-direction: column;
   }
   .wm-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
   .wm-img {
@@ -1171,7 +1173,7 @@ const verticals = [
   .wm-card.controls .wm-img { background: url('/images/wwm/wwm-safety.jpg') center/cover no-repeat; }
   .wm-card.lamps .wm-img { background: url('/images/wwm/wwm-utility.jpg') center/cover no-repeat; }
 
-  .wm-body { padding: 28px 28px 32px; display: flex; flex-direction: column; }
+  .wm-body { padding: 28px 28px 32px; display: flex; flex-direction: column; flex: 1; }
   .wm-body h3 {
     font-family: 'Lato', system-ui, sans-serif;
     font-size: 24px;
