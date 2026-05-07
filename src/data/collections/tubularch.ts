@@ -37,7 +37,8 @@ const tubularchData = {
     {
       name: 'T5',
       slug: 't5',
-      skuCount: 4,
+      skuCount: 33,
+      appMulti: 'T5HE,T5HO',
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="10" width="20" height="4" rx="1"/><line x1="5" y1="12" x2="19" y2="12"/></svg>',
     },
     {

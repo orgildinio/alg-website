@@ -13251,501 +13251,6 @@
           "comingSoon": false
         },
         {
-          "sku": "T5HO | 4FT | Type-A | 24W/4100K | K Series",
-          "family": "t5",
-          "sub_category": "T5HO",
-          "display_echelon": "UL-A",
-          "wattages": [
-            24
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HO | 4FT | Type-A | 24W/3500K | K Series",
-          "family": "t5",
-          "sub_category": "T5HO",
-          "display_echelon": "UL-A",
-          "wattages": [
-            24
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HO | 4FT | Type-B | 25W/3000K | BP Series",
-          "family": "t5",
-          "sub_category": "T5HO",
-          "display_echelon": "UL-B",
-          "wattages": [
-            25
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 4FT | Type-A | 13W/3500K | K Series",
-          "family": "t5",
-          "sub_category": "T5HE",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            13
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 4FT | Type-B | 13W/4100K | BP Series",
-          "family": "t5",
-          "sub_category": "T5HE",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            13
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 4FT | Type-B | 13W/3000K | BP Series",
-          "family": "t5",
-          "sub_category": "T5HE",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            13
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HO | 4FT | Type A+B | 24W/3500K | U5 Series",
-          "family": "t5",
-          "sub_category": "T5HO",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            24
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HO | 4FT | Type A+B | 24W/4100K | U5 Series",
-          "family": "t5",
-          "sub_category": "T5HO",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            24
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HO | 4FT | Type A+B | 24W/5000K | U5 Series",
-          "family": "t5",
-          "sub_category": "T5HO",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            24
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 4FT | Type A+B | 15W/4100K | U5 Series",
-          "family": "t5",
-          "sub_category": "T5HE",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            24
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 2FT | Type A+B | 12W/4100K | U5 Series",
-          "family": "t5",
-          "sub_category": "T5HE",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            12
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 3FT | Type A+B | 18W/4100K | U5 Series",
-          "family": "t5",
-          "sub_category": "T5HE",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            18
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 4FT | Type A+B | 15W/3000K | U5 Series",
-          "family": "t5",
-          "sub_category": "T5HE",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            15
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HO | 4FT | Type-B | 24W | 4-CCTselect | DE5 Series",
-          "family": "t5",
-          "sub_category": "T5",
-          "display_echelon": "UL-B",
-          "wattages": [
-            24
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 2FT | Type-B | 7W | 4-CCTselect | DE5 Series",
-          "family": "t5",
-          "sub_category": "T5",
-          "display_echelon": "UL-B",
-          "wattages": [
-            7
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HO | 2FT | Type-B | 12W | 4-CCTselect | DE5 Series",
-          "family": "t5",
-          "sub_category": "T5",
-          "display_echelon": "UL-B",
-          "wattages": [
-            12
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 3FT | Type-B | 12W | 4-CCTselect | DE5 Series",
-          "family": "t5",
-          "sub_category": "T5",
-          "display_echelon": "UL-B",
-          "wattages": [
-            12
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HO | 3FT | Type-B | 18W | 4-CCTselect | DE5 Series",
-          "family": "t5",
-          "sub_category": "T5",
-          "display_echelon": "UL-B",
-          "wattages": [
-            18
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 4FT | Type-B | 15W | 4-CCTselect | DE5 Series",
-          "family": "t5",
-          "sub_category": "T5",
-          "display_echelon": "UL-B",
-          "wattages": [
-            15
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 2FT | Type A-B | 7W | 4-CCTselect | U5 Series",
-          "family": "t5",
-          "sub_category": "T5",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            7
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HO | 2FT | Type A-B | 11W | 4-CCTselect | U5 Series",
-          "family": "t5",
-          "sub_category": "T5",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            11
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 3FT | Type A-B | 10W | 4-CCTselect | U5 Series",
-          "family": "t5",
-          "sub_category": "T5",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            10
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HO | 3FT | Type A-B | 17W | 4-CCTselect | U5 Series",
-          "family": "t5",
-          "sub_category": "T5",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            17
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 4FT | Type A-B | 13W | 4-CCTselect | U5 Series",
-          "family": "t5",
-          "sub_category": "T5",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            13
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HO | 4FT | Type A-B | 24W | 4-CCTselect | U5 Series",
-          "family": "t5",
-          "sub_category": "T5",
-          "display_echelon": "UL-A+B",
-          "wattages": [
-            24
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 48in | Type-A | 24W/3500K | K5 Series",
-          "family": "t5",
-          "sub_category": "T5HE",
-          "display_echelon": "UL-A",
-          "wattages": [
-            24
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 60in | Type-A | 24W/3500K | K5 Series",
-          "family": "t5",
-          "sub_category": "T5HE",
-          "display_echelon": "UL-A",
-          "wattages": [
-            24
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 12in | Type-A | 4W/3500K | K5 Series",
-          "family": "t5",
-          "sub_category": "T5HE",
-          "display_echelon": "UL-A",
-          "wattages": [
-            4
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 21in | Type-A | 12W/3500K | K5 Series",
-          "family": "t5",
-          "sub_category": "T5HE",
-          "display_echelon": "UL-A",
-          "wattages": [
-            12
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 24in | Type-A | 12W/3500K | K5 Series",
-          "family": "t5",
-          "sub_category": "T5HE",
-          "display_echelon": "UL-A",
-          "wattages": [
-            12
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 34in | Type-A | 18W/3500K | K5 Series",
-          "family": "t5",
-          "sub_category": "T5HE",
-          "display_echelon": "UL-A",
-          "wattages": [
-            18
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 36in | Type-A | 18W/3500K | K5 Series",
-          "family": "t5",
-          "sub_category": "T5HE",
-          "display_echelon": "UL-A",
-          "wattages": [
-            18
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "T5HE | 9in | Type-A | 4W/3500K | K5 Series",
-          "family": "t5",
-          "sub_category": "T5HE",
-          "display_echelon": "UL-A",
-          "wattages": [
-            4
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
           "sku": "U6 | Type A+B | 13W/5000K",
           "family": "u6",
           "sub_category": "U6",
@@ -13819,6 +13324,435 @@
           "dlc": null,
           "taa": false,
           "comingSoon": false
+        },
+        {
+          "sku": "T5HE | 2FT | Type A-B | 7W | 4-CCTselect | U5 Series",
+          "sku_number": "LT5F2CS4/HE/U5",
+          "family": "t5-cs-u5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HO | 2FT | Type A-B | 11W | 4-CCTselect | U5 Series",
+          "sku_number": "LT5F2CS4/HO/U5",
+          "family": "t5-cs-u5",
+          "sub_category": "T5HO",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 3FT | Type A-B | 10W | 4-CCTselect | U5 Series",
+          "sku_number": "LT5F3CS4/HE/U5",
+          "family": "t5-cs-u5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HO | 3FT | Type A-B | 17W | 4-CCTselect | U5 Series",
+          "sku_number": "LT5F3CS4/HO/U5",
+          "family": "t5-cs-u5",
+          "sub_category": "T5HO",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 4FT | Type A-B | 13W | 4-CCTselect | U5 Series",
+          "sku_number": "LT5F4CS4/HE/U5",
+          "family": "t5-cs-u5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HO | 4FT | Type A-B | 24W | 4-CCTselect | U5 Series",
+          "sku_number": "LT5F4CS4/HO/U5",
+          "family": "t5-cs-u5",
+          "sub_category": "T5HO",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 2FT | Type-B | 7W | 4-CCTselect | DE5 Series",
+          "sku_number": "LT5F2CS4/HE/DE5",
+          "family": "t5-cs-de5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HO | 2FT | Type-B | 12W | 4-CCTselect | DE5 Series",
+          "sku_number": "LT5F2CS4/HO/DE5",
+          "family": "t5-cs-de5",
+          "sub_category": "T5HO",
+          "display_echelon": "UL-B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 3FT | Type-B | 12W | 4-CCTselect | DE5 Series",
+          "sku_number": "LT5F3CS4/HE/DE5",
+          "family": "t5-cs-de5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HO | 3FT | Type-B | 18W | 4-CCTselect | DE5 Series",
+          "sku_number": "LT5F3CS4/HO/DE5",
+          "family": "t5-cs-de5",
+          "sub_category": "T5HO",
+          "display_echelon": "UL-B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 4FT | Type-B | 15W | 4-CCTselect | DE5 Series",
+          "sku_number": "LT5F4CS4/HE/DE5",
+          "family": "t5-cs-de5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HO | 4FT | Type-B | 24W | 4-CCTselect | DE5 Series",
+          "sku_number": "LT5F4CS4/HO/DE5",
+          "family": "t5-cs-de5",
+          "sub_category": "T5HO",
+          "display_echelon": "UL-B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 4FT | Type-A | 13W/3500K | K Series",
+          "sku_number": "LT5F160035K1",
+          "family": "t5-he-u5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 2FT | Type A+B | 12W/4100K | U5 Series",
+          "sku_number": "LT5F21241U5",
+          "family": "t5-he-u5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 3FT | Type A+B | 18W/4100K | U5 Series",
+          "sku_number": "LT5F31841U5",
+          "family": "t5-he-u5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 4FT | Type-B | 13W/3000K | BP Series",
+          "sku_number": "LT5F41330BP1",
+          "family": "t5-he-u5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 4FT | Type-B | 13W/4100K | BP Series",
+          "sku_number": "LT5F41341BP1",
+          "family": "t5-he-u5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 4FT | Type A+B | 15W/3000K | U5 Series",
+          "sku_number": "LT5F41530U5",
+          "family": "t5-he-u5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 4FT | Type A+B | 15W/4100K | U5 Series",
+          "sku_number": "LT5F41541U5",
+          "family": "t5-he-u5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 9in | Type-A | 4W/3500K | K5 Series",
+          "sku_number": "LT5F090435K5",
+          "family": "t5-he-k5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 12in | Type-A | 4W/3500K | K5 Series",
+          "sku_number": "LT5F120435K5",
+          "family": "t5-he-k5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 21in | Type-A | 12W/3500K | K5 Series",
+          "sku_number": "LT5F211235K5",
+          "family": "t5-he-k5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 24in | Type-A | 12W/3500K | K5 Series",
+          "sku_number": "LT5F241235K5",
+          "family": "t5-he-k5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 34in | Type-A | 18W/3500K | K5 Series",
+          "sku_number": "LT5F341835K5",
+          "family": "t5-he-k5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 36in | Type-A | 18W/3500K | K5 Series",
+          "sku_number": "LT5F361835K5",
+          "family": "t5-he-k5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 48in | Type-A | 24W/3500K | K5 Series",
+          "sku_number": "LT5F482435K5",
+          "family": "t5-he-k5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HE | 60in | Type-A | 24W/3500K | K5 Series",
+          "sku_number": "LT5F602435K5",
+          "family": "t5-he-k5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HO | 4FT | Type A+B | 24W/3500K | U5 Series",
+          "sku_number": "LT5F42435U5",
+          "family": "t5-ho-u5",
+          "sub_category": "T5HO",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HO | 4FT | Type A+B | 24W/4100K | U5 Series",
+          "sku_number": "LT5F42441U5",
+          "family": "t5-ho-u5",
+          "sub_category": "T5HO",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HO | 4FT | Type A+B | 24W/5000K | U5 Series",
+          "sku_number": "LT5F42450U5",
+          "family": "t5-ho-u5",
+          "sub_category": "T5HO",
+          "display_echelon": "UL-A+B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HO | 4FT | Type-A | 24W/3500K | K Series",
+          "sku_number": "LT5F330035K2",
+          "family": "t5-ho-k5",
+          "sub_category": "T5HO",
+          "display_echelon": "UL-A",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HO | 4FT | Type-A | 24W/4100K | K Series",
+          "sku_number": "LT5F330041K2",
+          "family": "t5-ho-k5",
+          "sub_category": "T5HO",
+          "display_echelon": "UL-A",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "sku": "T5HO | 4FT | Type-B | 25W/3000K | BP Series",
+          "sku_number": "LT5F42530BP1",
+          "family": "t5-ho-de5",
+          "sub_category": "T5HO",
+          "display_echelon": "UL-B",
+          "max_wattage": null,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
         }
       ],
       "families": [
@@ -13862,11 +13796,11 @@
           "comingSoon": false
         },
         {
-          "family": "t5",
-          "sub_category": "T5HO",
-          "display_echelon": "UL-A",
-          "max_wattage": 25,
-          "sku_count": 33,
+          "family": "u6",
+          "sub_category": "U6",
+          "display_echelon": "UL-A+B",
+          "max_wattage": 15,
+          "sku_count": 5,
           "dlc": false,
           "ccts": [],
           "voltages": [],
@@ -13875,11 +13809,89 @@
           "comingSoon": false
         },
         {
-          "family": "u6",
-          "sub_category": "U6",
+          "family": "t5-cs-u5",
+          "sub_category": "T5HE \u00b7 T5HO",
+          "display_echelon": "UL-A+B",
+          "max_wattage": 24,
+          "sku_count": 6,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false,
+          "comingSoon": false
+        },
+        {
+          "family": "t5-cs-de5",
+          "sub_category": "T5HE \u00b7 T5HO",
+          "display_echelon": "UL-B",
+          "max_wattage": 24,
+          "sku_count": 6,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false,
+          "comingSoon": false
+        },
+        {
+          "family": "t5-he-u5",
+          "sub_category": "T5HE",
           "display_echelon": "UL-A+B",
           "max_wattage": 15,
-          "sku_count": 5,
+          "sku_count": 7,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false,
+          "comingSoon": false
+        },
+        {
+          "family": "t5-he-k5",
+          "sub_category": "T5HE",
+          "display_echelon": "UL-A",
+          "max_wattage": 24,
+          "sku_count": 8,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false,
+          "comingSoon": false
+        },
+        {
+          "family": "t5-ho-u5",
+          "sub_category": "T5HO",
+          "display_echelon": "UL-A+B",
+          "max_wattage": 24,
+          "sku_count": 3,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false,
+          "comingSoon": false
+        },
+        {
+          "family": "t5-ho-k5",
+          "sub_category": "T5HO",
+          "display_echelon": "UL-A",
+          "max_wattage": 24,
+          "sku_count": 2,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false,
+          "comingSoon": false
+        },
+        {
+          "family": "t5-ho-de5",
+          "sub_category": "T5HO",
+          "display_echelon": "UL-B",
+          "max_wattage": 25,
+          "sku_count": 1,
           "dlc": false,
           "ccts": [],
           "voltages": [],

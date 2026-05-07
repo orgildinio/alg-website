@@ -6,7 +6,7 @@
  * Tiles are light-bg (luxo canonical).
  */
 export interface Props {
-  applications: { name: string; slug: string; skuCount: number; icon: string }[];
+  applications: { name: string; slug: string; skuCount: number; icon: string; appMulti?: string }[];
 }
 const { applications } = Astro.props;
 ---
@@ -16,7 +16,7 @@ const { applications } = Astro.props;
     <div class="sec-eyebrow">Browse by application</div>
     <div class="app-grid">
       {applications.map(app => (
-        <button class="app-tile" data-app={app.slug} aria-pressed="false">
+        <button class="app-tile" data-app={app.slug} data-app-multi={app.appMulti || ''} aria-pressed="false">
           <span class="app-icon" set:html={app.icon}></span>
           <span class="app-label">{app.name}</span>
           <span class="app-count">{app.skuCount} SKUs</span>

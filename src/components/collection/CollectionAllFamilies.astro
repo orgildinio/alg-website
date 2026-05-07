@@ -440,20 +440,28 @@ const skusJson = JSON.stringify(skus);
     document.querySelectorAll('[data-app]').forEach(tile => {
       tile.addEventListener('click', () => {
         const app = tile.dataset.app;
-        // Find matching sub_category from families
-        const matchSub = families.find(f => f.sub_category.toLowerCase().replace(/\s*\|\s*/g,'-').replace(/[\s&]+/g,'-') === app)?.sub_category;
-        if (!matchSub) return;
-        // Toggle
-        if (active.application.has(matchSub)) {
-          active.application.delete(matchSub);
+        // Support multi-sub_category tiles via data-app-multi (comma-separated sub_categories)
+        const multiRaw = tile.dataset.appMulti;
+        const matchSubs = multiRaw
+          ? multiRaw.split(',').map(s => s.trim()).filter(Boolean)
+          : [families.find(f => f.sub_category.toLowerCase().replace(/\s*\|\s*/g,'-').replace(/[\s&]+/g,'-') === app)?.sub_category].filter(Boolean);
+        if (!matchSubs.length) return;
+        // Toggle: if ALL are active → deactivate all; otherwise activate all
+        const allActive = matchSubs.every(s => active.application.has(s));
+        if (allActive) {
+          matchSubs.forEach(s => {
+            active.application.delete(s);
+            const cb = document.querySelector(`[data-facet="application"][value="${s}"]`);
+            if (cb) cb.checked = false;
+          });
           tile.setAttribute('aria-pressed','false');
-          const cb = document.querySelector(`[data-facet="application"][value="${matchSub}"]`);
-          if (cb) cb.checked = false;
         } else {
-          active.application.add(matchSub);
+          matchSubs.forEach(s => {
+            active.application.add(s);
+            const cb = document.querySelector(`[data-facet="application"][value="${s}"]`);
+            if (cb) cb.checked = true;
+          });
           tile.setAttribute('aria-pressed','true');
-          const cb = document.querySelector(`[data-facet="application"][value="${matchSub}"]`);
-          if (cb) cb.checked = true;
         }
         // Scroll to families section
         document.getElementById('families')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
