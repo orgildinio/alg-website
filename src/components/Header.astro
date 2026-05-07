@@ -1314,6 +1314,24 @@
       'outdoor-city':   '/mm-previews/tier-hero-city.png',
       'lamps-tubul':    '/mm-previews/tier-hero-tubul.png',
     };
+    /* Per-product page URLs — keyed by data-tier-* value (only products with pages) */
+    const TIER_URLS = {
+      'Heritage-I':    '/products/heritage/',
+      'Liberty-I':     '/products/liberty/',
+      'Pathfinder-I':  '/products/pathfinder/',
+      'Navigator-I':   '/products/navigator/',
+      'Everest-I':     '/products/everest/',
+      'Anaheim-I':     '/products/anaheim/',
+      'Atlanta-I':     '/products/atlanta/',
+      'Guardian-I':    '/products/guardian/',
+      'Sentinel-I':    '/products/sentinel/',
+      'Ramparts-I':    '/products/ramparts/',
+      'Wedge-I':       '/products/wedge/',
+      'Watchtower-I':  '/products/watchtower/',
+      'Nightwatch-I':  '/products/nightwatch/',
+      'Illuminator-I': '/products/illuminator/',
+      'Aura-I':        '/products/aura/',
+    };
     /* Per-product images for tier cards — keyed by data-tier-* value */
     const TIER_IMGS = {
       'Heritage-I':    '/images/family-cards/luxoarch/heritage.png',
@@ -1389,6 +1407,16 @@
         hoverTimer = setTimeout(() => swapAppPreview(el), HOVER_DELAY_MS);
       });
       el.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
+    });
+    /* Tier card clicks — navigate to product page if one exists */
+    [['tierImgEco','tierSkuEco','t-eco'],['tierImgPro','tierSkuPro','t-pro'],['tierImgProplus','tierSkuProplus','t-proplus']].forEach(([imgId, skuId, cls]) => {
+      const card = document.querySelector('.tier-card.' + cls);
+      if (!card) return;
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        const sku = document.getElementById(skuId)?.textContent?.trim();
+        if (sku && TIER_URLS[sku]) window.location.href = TIER_URLS[sku];
+      });
     });
     productsLi.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
   }
