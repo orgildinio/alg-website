@@ -3321,28 +3321,40 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
                alpha-cutout; the build script (process_carousel.py) just crops
                to content + resizes + transcodes to WebP for web delivery. -->
           <div class="carousel-slide">
-            <img class="slide-img"
-                 src="/products/illuminator/assets/hero/illuminator-hero-1.webp"
-                 alt="Illuminator — 3/4 angle hero, LED face illuminated, orange pivot pin visible"
-                 loading="eager" />
+            <picture>
+              <source type="image/webp" srcset="/products/illuminator/assets/hero/illuminator-hero-1.webp">
+              <img class="slide-img"
+                   src="/products/illuminator/assets/hero/illuminator-hero-1.webp"
+                   alt="Illuminator — 3/4 angle hero, LED face illuminated, orange pivot pin visible"
+                   loading="eager" />
+            </picture>
           </div>
           <div class="carousel-slide">
-            <img class="slide-img"
-                 src="/products/illuminator/assets/hero/illuminator-hero-2.webp"
-                 alt="Illuminator — side profile detail showing trunnion yoke and pivot pin assembly"
-                 loading="lazy" />
+            <picture>
+              <source type="image/webp" srcset="/products/illuminator/assets/hero/illuminator-hero-2.webp">
+              <img class="slide-img"
+                   src="/products/illuminator/assets/hero/illuminator-hero-2.webp"
+                   alt="Illuminator — side profile detail showing trunnion yoke and pivot pin assembly"
+                   loading="lazy" />
+            </picture>
           </div>
           <div class="carousel-slide">
-            <img class="slide-img"
-                 src="/products/illuminator/assets/hero/illuminator-hero-3.webp"
-                 alt="Illuminator — back-quarter view showing heat-sink fin geometry and rear housing"
-                 loading="lazy" />
+            <picture>
+              <source type="image/webp" srcset="/products/illuminator/assets/hero/illuminator-hero-3.webp">
+              <img class="slide-img"
+                   src="/products/illuminator/assets/hero/illuminator-hero-3.webp"
+                   alt="Illuminator — back-quarter view showing heat-sink fin geometry and rear housing"
+                   loading="lazy" />
+            </picture>
           </div>
           <div class="carousel-slide">
-            <img class="slide-img"
-                 src="/products/illuminator/assets/hero/illuminator-hero-4.webp"
-                 alt="Illuminator — three-luminaire array on a stadium pole crossarm"
-                 loading="lazy" />
+            <picture>
+              <source type="image/webp" srcset="/products/illuminator/assets/hero/illuminator-hero-4.webp">
+              <img class="slide-img"
+                   src="/products/illuminator/assets/hero/illuminator-hero-4.webp"
+                   alt="Illuminator — three-luminaire array on a stadium pole crossarm"
+                   loading="lazy" />
+            </picture>
           </div>
         </div>
         <div class="carousel-dots" id="carouselDots">
