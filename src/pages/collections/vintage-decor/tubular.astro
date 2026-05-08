@@ -75,6 +75,7 @@ const dimmers = [
   { model: 'FLRLV603P', brand: 'Forbes & Lomax', type: 'ELV', series: 'Designer rotary ELV' },
   { model: 'DAL06P', brand: 'Cooper', type: 'CL', series: 'Aspire' },
 ];
+import CollectionStickyNav from '../../../components/CollectionStickyNav.astro';
 ---
 <BaseLayout
   title="The Brighton Tubular — Vintage Décor | Archipelago Lighting Group"
@@ -174,12 +175,14 @@ const dimmers = [
     </div>
   </div>
 </section>
+<CollectionStickyNav collection="vintage" hasTechnology={false} />
+
 <style>
   @media (max-width: 768px) { .tubular-hero-grid { grid-template-columns: 1fr !important; } }
 </style>
 
 <!-- WHERE IT BELONGS -->
-<section class="ed-cream2" aria-labelledby="tubular-belongs-h2">
+<section id="applications" class="ed-cream2" aria-labelledby="tubular-belongs-h2">
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="ed-eyebrow ed-eyebrow-rule ed-brick-text" style="margin-bottom:1.5rem;">WHERE THE THE BRIGHTON TUBULAR BELONGS</p>
     <h2 id="tubular-belongs-h2" class="ed-h2" style="font-size:clamp(1.75rem,3.5vw,3rem);margin-bottom:3rem;">Three install registers. One lamp.</h2>
@@ -209,7 +212,7 @@ const dimmers = [
 
 
 <!-- STRUCTURED SPECS -->
-<section class="ed-cream" aria-labelledby="tubular-specs-h2">
+<section id="specifications" class="ed-cream" aria-labelledby="tubular-specs-h2">
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="ed-eyebrow ed-eyebrow-rule ed-brick-text" style="margin-bottom:1.5rem;">FULL SPECIFICATIONS</p>
     <h2 id="tubular-specs-h2" class="ed-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:3rem;">Spec sheet for the lamp · restoration-grade detail.</h2>
@@ -290,7 +293,7 @@ const dimmers = [
 </section>
 
 <!-- DIMMER COMPATIBILITY TABLE -->
-<section class="ed-cream2" aria-labelledby="tubular-dim-h2">
+<section id="dimmers" class="ed-cream2" aria-labelledby="tubular-dim-h2">
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="ed-eyebrow ed-eyebrow-rule ed-brick-text" style="margin-bottom:1.5rem;">DIMMER COMPATIBILITY</p>
     <h2 id="tubular-dim-h2" class="ed-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:1rem;">The Nostalgic &amp; Vintage GEN-2 dimmer list.</h2>
@@ -331,7 +334,7 @@ const dimmers = [
 </section>
 
 <!-- SKU TABLE -->
-<section class="ed-cream2" aria-labelledby="tubular-sku-h2">
+<section id="variants" class="ed-cream2" aria-labelledby="tubular-sku-h2">
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="ed-eyebrow ed-eyebrow-rule ed-brick-text" style="margin-bottom:1.5rem;">ORDERABLE VARIANTS</p>
     <h2 id="tubular-sku-h2" class="ed-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:0.75rem;">Active T9 tubular variants. Clear and Amber glass.</h2>
@@ -380,7 +383,7 @@ const dimmers = [
 </section>
 
 <!-- SISTER LAMPS -->
-<section class="ed-cream2" aria-labelledby="tubular-sister-h2">
+<section id="family" class="ed-cream2" aria-labelledby="tubular-sister-h2">
   <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;">
     <p class="ed-eyebrow ed-eyebrow-rule ed-brick-text" style="margin-bottom:1.5rem;">SISTER LAMPS IN VINTAGE DÉCOR</p>
     <h2 id="tubular-sister-h2" class="ed-h2" style="font-size:clamp(1.25rem,2.5vw,2rem);margin-bottom:2rem;">Five more named lamps. Same series register.</h2>

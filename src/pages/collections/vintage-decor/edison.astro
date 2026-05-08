@@ -78,6 +78,7 @@ const dimmers = [
   { model: 'FLRLV603P', brand: 'Forbes & Lomax', type: 'ELV', series: 'Designer rotary ELV' },
   { model: 'DAL06P', brand: 'Cooper', type: 'CL', series: 'Aspire' },
 ];
+import CollectionStickyNav from '../../../components/CollectionStickyNav.astro';
 ---
 <BaseLayout
   title="The Foundry Edison — Vintage Décor | Archipelago Lighting Group"
@@ -177,12 +178,14 @@ const dimmers = [
     </div>
   </div>
 </section>
+<CollectionStickyNav collection="vintage" hasTechnology={true} />
+
 <style>
   @media (max-width: 768px) { .ed-hero-grid { grid-template-columns: 1fr !important; } }
 </style>
 
 <!-- WHERE IT BELONGS -->
-<section class="ed-cream2" aria-labelledby="ed-belongs-h2">
+<section id="applications" class="ed-cream2" aria-labelledby="ed-belongs-h2">
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="ed-eyebrow ed-eyebrow-rule ed-brick-text" style="margin-bottom:1.5rem;">WHERE THE FOUNDRY BELONGS</p>
     <h2 id="ed-belongs-h2" class="ed-h2" style="font-size:clamp(1.75rem,3.5vw,3rem);margin-bottom:3rem;">Three install registers. One lamp.</h2>
@@ -210,7 +213,7 @@ const dimmers = [
 </section>
 
 <!-- FILAMENT TECHNOLOGY SPOTLIGHT -->
-<section class="ed-umber" aria-labelledby="ed-filament-h2">
+<section id="technology" class="ed-umber" aria-labelledby="ed-filament-h2">
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="ed-eyebrow ed-eyebrow-rule ed-eyebrow-rule-light" style="color:rgba(245,194,74,0.85);margin-bottom:1.5rem;">FILAMENT TECHNOLOGY · SQUIRREL-CAGE GEOMETRY</p>
     <h2 id="ed-filament-h2" class="ed-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:1.5rem;max-width:48rem;">A filament drawn to look like 1908. Behavior tuned to 2026.</h2>
@@ -236,7 +239,7 @@ const dimmers = [
 </section>
 
 <!-- STRUCTURED SPECS -->
-<section class="ed-cream" aria-labelledby="ed-specs-h2">
+<section id="specifications" class="ed-cream" aria-labelledby="ed-specs-h2">
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="ed-eyebrow ed-eyebrow-rule ed-brick-text" style="margin-bottom:1.5rem;">FULL SPECIFICATIONS</p>
     <h2 id="ed-specs-h2" class="ed-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:3rem;">Spec sheet for the lamp · restoration-grade detail.</h2>
@@ -318,7 +321,7 @@ const dimmers = [
 </section>
 
 <!-- DIMMER COMPATIBILITY TABLE -->
-<section class="ed-cream2" aria-labelledby="ed-dim-h2">
+<section id="dimmers" class="ed-cream2" aria-labelledby="ed-dim-h2">
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="ed-eyebrow ed-eyebrow-rule ed-brick-text" style="margin-bottom:1.5rem;">DIMMER COMPATIBILITY</p>
     <h2 id="ed-dim-h2" class="ed-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:1rem;">The Nostalgic &amp; Vintage GEN-2 dimmer list.</h2>
@@ -359,7 +362,7 @@ const dimmers = [
 </section>
 
 <!-- SKU TABLE -->
-<section class="ed-cream2" aria-labelledby="ed-sku-h2">
+<section id="variants" class="ed-cream2" aria-labelledby="ed-sku-h2">
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="ed-eyebrow ed-eyebrow-rule ed-brick-text" style="margin-bottom:1.5rem;">ORDERABLE VARIANTS</p>
     <h2 id="ed-sku-h2" class="ed-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:0.75rem;">Ten datasheet variants. Two envelopes (ST19 · ST21). Five filament suffixes.</h2>
@@ -408,7 +411,7 @@ const dimmers = [
 </section>
 
 <!-- SISTER LAMPS -->
-<section class="ed-cream2" aria-labelledby="ed-sister-h2">
+<section id="family" class="ed-cream2" aria-labelledby="ed-sister-h2">
   <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;">
     <p class="ed-eyebrow ed-eyebrow-rule ed-brick-text" style="margin-bottom:1.5rem;">SISTER LAMPS IN VINTAGE DÉCOR</p>
     <h2 id="ed-sister-h2" class="ed-h2" style="font-size:clamp(1.25rem,2.5vw,2rem);margin-bottom:2rem;">Five more named lamps. Same series register.</h2>

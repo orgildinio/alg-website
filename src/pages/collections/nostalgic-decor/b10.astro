@@ -75,6 +75,7 @@ const dimmers = [
   { model: 'FLRLV603P', brand: 'Forbes & Lomax', type: 'ELV', series: 'Designer rotary ELV' },
   { model: 'DAL06P', brand: 'Cooper', type: 'CL', series: 'Aspire' },
 ];
+import CollectionStickyNav from '../../../components/CollectionStickyNav.astro';
 ---
 <BaseLayout
   title="The Knoll B10 — Nostalgic Décor | Archipelago Lighting Group"
@@ -177,12 +178,14 @@ const dimmers = [
     </div>
   </div>
 </section>
+<CollectionStickyNav collection="nostalgic" hasTechnology={false} />
+
 <style>
   @media (max-width: 768px) { .b10-hero-grid { grid-template-columns: 1fr !important; } }
 </style>
 
 <!-- WHERE IT BELONGS -->
-<section class="a19-warm2" aria-labelledby="b10-belongs-h2">
+<section id="applications" class="a19-warm2" aria-labelledby="b10-belongs-h2">
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="a19-eyebrow a19-eyebrow-rule a19-amber-text" style="margin-bottom:1.5rem;">WHERE THE KNOLL BELONGS</p>
     <h2 id="b10-belongs-h2" class="a19-h2" style="font-size:clamp(1.75rem,3.5vw,3rem);margin-bottom:3rem;">Three install registers. One lamp.</h2>
@@ -210,7 +213,7 @@ const dimmers = [
 </section>
 
 <!-- STRUCTURED SPECS -->
-<section class="a19-warm" aria-labelledby="b10-specs-h2">
+<section id="specifications" class="a19-warm" aria-labelledby="b10-specs-h2">
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="a19-eyebrow a19-eyebrow-rule a19-amber-text" style="margin-bottom:1.5rem;">FULL SPECIFICATIONS</p>
     <h2 id="b10-specs-h2" class="a19-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:3rem;">Spec sheet for the lamp · designer-grade detail.</h2>
@@ -290,7 +293,7 @@ const dimmers = [
 </section>
 
 <!-- DIMMER COMPATIBILITY TABLE -->
-<section class="a19-warm2" aria-labelledby="b10-dim-h2">
+<section id="dimmers" class="a19-warm2" aria-labelledby="b10-dim-h2">
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="a19-eyebrow a19-eyebrow-rule a19-amber-text" style="margin-bottom:1.5rem;">DIMMER COMPATIBILITY</p>
     <h2 id="b10-dim-h2" class="a19-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:1rem;">The Nostalgic &amp; Vintage GEN-2 dimmer list.</h2>
@@ -320,7 +323,7 @@ const dimmers = [
 </section>
 
 <!-- SKU TABLE -->
-<section class="a19-warm" aria-labelledby="b10-sku-h2">
+<section id="variants" class="a19-warm" aria-labelledby="b10-sku-h2">
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="a19-eyebrow a19-eyebrow-rule a19-amber-text" style="margin-bottom:1.5rem;">ORDERABLE VARIANTS</p>
     <h2 id="b10-sku-h2" class="a19-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:0.75rem;">Active LTB10 variants.</h2>
@@ -369,7 +372,7 @@ const dimmers = [
 </section>
 
 <!-- SISTER LAMPS -->
-<section class="a19-warm" aria-labelledby="b10-sister-h2">
+<section id="family" class="a19-warm" aria-labelledby="b10-sister-h2">
   <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;">
     <p class="a19-eyebrow a19-eyebrow-rule a19-amber-text" style="margin-bottom:1.5rem;">SISTER LAMPS IN NOSTALGIC DÉCOR</p>
     <h2 id="b10-sister-h2" class="a19-h2" style="font-size:clamp(1.25rem,2.5vw,2rem);margin-bottom:2rem;">More named lamps. Same series register.</h2>
