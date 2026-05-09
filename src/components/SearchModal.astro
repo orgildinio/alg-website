@@ -337,14 +337,17 @@ function classify(url) {
   return 'other';
 }
 
-/* ── Breadcrumb from URL ── */
-function breadcrumb(url) {
+/* ── Breadcrumb from URL (fallback) ── */
+function breadcrumbFromUrl(url) {
   try {
     return new URL(url, location.href).pathname
       .split('/').filter(Boolean)
       .map(function(s){ return s.replace(/-/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();}); })
       .join(' \u203a ');
   } catch(e) { return url; }
+}
+function breadcrumb(item) {
+  return (item.meta && item.meta.breadcrumb) ? item.meta.breadcrumb : breadcrumbFromUrl(item.url);
 }
 
 function esc(s) {
@@ -393,7 +396,7 @@ function render(grouped, query) {
     items.forEach(function(item) {
       var rawTitle = (item.meta && item.meta.title) ? item.meta.title : 'Untitled';
       var parsed   = parseTitle(rawTitle);
-      var bc       = breadcrumb(item.url);
+      var bc       = breadcrumb(item);
 
       /* tier badge HTML — only for products */
       var tierHTML = '';
@@ -458,6 +461,9 @@ async function doSearch(query) {
     if (!grouped[g]) grouped[g] = [];
     grouped[g].push(item);
   });
+  /* Option A: suppress 'other' if any primary group has results */
+  var hasPrimary = grouped.products || grouped.collections || grouped.verticals || grouped.tools || grouped.docs;
+  if (hasPrimary) delete grouped.other;
   render(grouped, query);
 }
 
