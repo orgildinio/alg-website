@@ -50,12 +50,12 @@ const {
     <slot name="head" />
   </head>
   <body class={bodyClass}>
-    <header id="site-header">
+    <header id="site-header" data-pagefind-ignore>
       <Header />
     </header>
     <main id="main" data-pagefind-body>
       <slot />
     </main>
-    <Footer />
+    <Footer data-pagefind-ignore />
   </body>
 </html>

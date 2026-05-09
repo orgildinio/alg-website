@@ -278,7 +278,7 @@
   async function loadPagefind() {
     if (pagefind) return pagefind;
     try {
-      pagefind = await import('/pagefind/pagefind.js');
+      pagefind = await import('/_pagefind/pagefind.js');
       await pagefind.options({ excerptLength: 30 });
     } catch (e) {
       console.warn('[search] Pagefind not available (run a build first):', e);

@@ -39,7 +39,7 @@ function pagefindIntegration() {
         const { execSync: exec } = await import('node:child_process');
         const sitePath = dir.pathname.replace(/\/$/, '');
         console.log('[pagefind] Indexing', sitePath);
-        exec(`node_modules/.bin/pagefind --site "${sitePath}"`, {
+        exec(`node_modules/.bin/pagefind --site "${sitePath}" --output-path "${sitePath}/_pagefind"`, {
           stdio: 'inherit',
           cwd: process.cwd()
         });
@@ -65,7 +65,7 @@ export default defineConfig({
       rollupOptions: {
         // Pagefind is generated post-build and served as a static asset.
         // Externalizing prevents Vite from trying to resolve it at build time.
-        external: ['/pagefind/pagefind.js'],
+        external: ['/_pagefind/pagefind.js'],
       },
     },
     define: {

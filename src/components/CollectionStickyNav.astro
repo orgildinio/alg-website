@@ -25,7 +25,7 @@ interface Props {
 const { collection, hasTechnology = false } = Astro.props;
 ---
 
-<nav class="coll-sticky-nav" data-collection={collection} aria-label="Page sections">
+<nav class="coll-sticky-nav" data-collection={collection} aria-label="Page sections" data-pagefind-ignore>
   <!-- "Specify This Lamp" pill — scrolls to #variants -->
   <a href="#variants" class="coll-nav-pill">Specify This Lamp</a>
 
