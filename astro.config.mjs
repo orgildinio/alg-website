@@ -28,6 +28,26 @@ function resolveBuildTime() {
 const BUILD_HASH = resolveBuildHash();
 const BUILD_TIME = resolveBuildTime();
 
+// Pagefind integration: runs pagefind CLI after every static build.
+// The index lands in dist/_pagefind/ and is served as part of the static site.
+// Zero manual configuration — every new HTML file is indexed automatically.
+function pagefindIntegration() {
+  return {
+    name: 'pagefind',
+    hooks: {
+      'astro:build:done': async ({ dir }) => {
+        const { execSync: exec } = await import('node:child_process');
+        const sitePath = dir.pathname.replace(/\/$/, '');
+        console.log('[pagefind] Indexing', sitePath);
+        exec(`node_modules/.bin/pagefind --site "${sitePath}"`, {
+          stdio: 'inherit',
+          cwd: process.cwd()
+        });
+      }
+    }
+  };
+}
+
 export default defineConfig({
   site: 'https://archipelagolighting.com',
   output: 'static',
@@ -35,10 +55,18 @@ export default defineConfig({
     format: 'directory'
   },
   trailingSlash: 'never',
+  integrations: [pagefindIntegration()],
   // Compression handled by Cloudflare CDN — no in-build minification quirks
   vite: {
     preview: {
       allowedHosts: true,
+    },
+    build: {
+      rollupOptions: {
+        // Pagefind is generated post-build and served as a static asset.
+        // Externalizing prevents Vite from trying to resolve it at build time.
+        external: ['/pagefind/pagefind.js'],
+      },
     },
     define: {
       // Bake the real SHA into static HTML at build time.

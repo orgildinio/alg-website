@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "jsdom": "^29.0.2",
+    "pagefind": "^1.5.2",
     "xlsx": "^0.18.5"
   }
 }

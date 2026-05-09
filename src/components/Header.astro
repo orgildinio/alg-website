@@ -20,11 +20,24 @@
  *           JS IIFE handles 3-tier cascade for Products and Solutions preview swap.
  *           Mobile: hamburger toggles .mobile-drawer.open, accordion via data-expand.
  */
+import SearchModal from './SearchModal.astro';
 ---
 <!-- UTILITY BAR -->
 <div class="utility-bar">
   <p class="site-tagline">Lighting | Reinvented, since 1997.</p>
   <div class="utility-bar-right">
+    <!-- Search icon — opens global site search modal (Cmd+K) -->
+    <button
+      class="utility-search-btn"
+      id="utilitySearchBtn"
+      type="button"
+      aria-label="Search the site (⌘K)"
+      title="Search the site (⌘K)"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </button>
     <a href="/find-a-distributor">Find a Distributor</a>
     <a href="/find-a-rep">Find a Rep</a>
     <a href="/support/sample-request">Sample Request</a>
@@ -643,6 +656,21 @@ data-preview="/mm-previews/warehouse-deals.webp"
   }
   .utility-bar-right a{color:#fff;text-decoration:none;opacity:0.8;transition:opacity 0.15s;}
   .utility-bar-right a:hover{opacity:1;}
+  /* Search icon button in utility bar */
+  .utility-search-btn{
+    width:32px;height:32px;
+    display:inline-flex;align-items:center;justify-content:center;
+    background:transparent;border:0;
+    color:rgba(255,255,255,0.65);
+    cursor:pointer;border-radius:4px;
+    transition:color .12s ease,background .12s ease;
+    flex-shrink:0;
+  }
+  .utility-search-btn:hover{
+    color:#fff;
+    background:rgba(255,255,255,0.06);
+  }
+  .utility-search-btn svg{width:16px;height:16px;}
   .utility-bar .signin{
     position:relative;
     background:var(--brand);padding:5px 14px;border-radius:3px;
@@ -1635,4 +1663,19 @@ data-preview="/mm-previews/warehouse-deals.webp"
 
   window.addEventListener('scroll', onScroll, { passive: true });
 })();
+
+// Wire utility bar search button → global search modal
+(function(){
+  var btn = document.getElementById('utilitySearchBtn');
+  if (btn) {
+    btn.addEventListener('click', function(){
+      if (typeof window.__algSearchOpen === 'function') {
+        window.__algSearchOpen();
+      }
+    });
+  }
+})();
 </script>
+
+<!-- Global site search modal (Pagefind) -->
+<SearchModal />
