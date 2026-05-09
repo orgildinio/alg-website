@@ -1,484 +1,357 @@
 ---
 /**
- * SearchModal.astro
- *
- * Global site search powered by Pagefind.
- * - Option B: full-screen modal overlay (anchored ~30% from top)
- * - Cmd+K / Ctrl+K opens from anywhere on the site
- * - Esc closes; backdrop click closes
- * - Results grouped by content type (Products, Collections, Industry Verticals,
- *   Tools, Documentation, Blog, Other)
- * - Dark-theme styling matching ALG design tokens
- * - Mobile: full-viewport overlay (no modal chrome)
- * - Focus trap while modal is open
- * - Pagefind JS loaded lazily on first open
+ * SearchModal.astro — Global site search (Pagefind-powered)
+ * Redesign v2: card-per-result, group headers, brand-red UX
  */
 ---
-
 <!-- SEARCH MODAL OVERLAY -->
 <div id="search-overlay" role="dialog" aria-modal="true" aria-label="Site search" hidden>
   <div id="search-backdrop"></div>
   <div id="search-modal">
-    <!-- Input row -->
     <div id="search-input-row">
       <svg id="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
       </svg>
-      <input
-        id="search-input"
-        type="search"
-        placeholder="Search products, specs, SKUs, docs…"
-        autocomplete="off"
-        autocorrect="off"
-        spellcheck="false"
-        aria-label="Search"
-        aria-autocomplete="list"
-        aria-controls="search-results"
-      />
+      <input id="search-input" type="search" placeholder="Search products, specs, SKUs, docs…"
+        autocomplete="off" autocorrect="off" spellcheck="false"
+        aria-label="Search" aria-autocomplete="list" aria-controls="search-results"/>
       <button id="search-close-btn" type="button" aria-label="Close search (Esc)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
           <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
         </svg>
       </button>
     </div>
-
-    <!-- Results area -->
-    <div id="search-results" role="listbox" aria-label="Search results"></div>
-
-    <!-- Footer hint -->
+    <div id="search-results" role="listbox" aria-label="Search results" aria-live="polite"></div>
     <div id="search-footer">
-      <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
-      <span><kbd>↵</kbd> open</span>
-      <span><kbd>Esc</kbd> close</span>
+      <span><kbd class="search-kbd">↑↓</kbd> navigate</span>
+      <span><kbd class="search-kbd">↵</kbd> open</span>
+      <span><kbd class="search-kbd">Esc</kbd> close</span>
     </div>
   </div>
 </div>
 
 <style>
-  /* ── Overlay ── */
   #search-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 14vh;
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: flex-start; justify-content: center; padding-top: 14vh;
   }
   #search-overlay[hidden] { display: none !important; }
-
-  #search-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.72);
-    backdrop-filter: blur(2px);
-  }
-
-  /* ── Modal card ── */
+  #search-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.72); backdrop-filter: blur(2px); }
   #search-modal {
-    position: relative;
-    z-index: 1;
-    width: min(640px, calc(100vw - 32px));
-    background: #2a2e34;
-    border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 6px;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    max-height: 72vh;
+    position: relative; z-index: 1; width: min(640px, calc(100vw - 32px));
+    background: #2a2e34; border: 1px solid rgba(255,255,255,.14); border-radius: 8px;
+    box-shadow: 0 24px 60px rgba(0,0,0,.55); overflow: hidden;
+    display: flex; flex-direction: column; max-height: 70vh;
   }
-
-  /* ── Input row ── */
   #search-input-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    flex-shrink: 0;
+    display: flex; align-items: center; gap: 10px; padding: 0 16px;
+    border-bottom: 1px solid rgba(255,255,255,.08); flex-shrink: 0;
   }
-
-  #search-input-icon {
-    width: 18px;
-    height: 18px;
-    color: rgba(236,237,239,0.45);
-    flex-shrink: 0;
-  }
-
+  #search-input-icon { width: 18px; height: 18px; color: rgba(236,237,239,.4); flex-shrink: 0; }
   #search-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #ECEDEF;
-    font-family: var(--font-body, 'Lato', sans-serif);
-    font-size: 16px;
-    padding: 16px 0;
-    line-height: 1.4;
+    flex: 1; background: transparent; border: none; outline: none;
+    color: #ECEDEF; font-family: var(--font-body,'Lato',sans-serif);
+    font-size: 16px; padding: 16px 0; line-height: 1.4;
   }
-  #search-input::placeholder { color: rgba(236,237,239,0.35); }
-  /* Remove native clear button */
+  #search-input::placeholder { color: rgba(236,237,239,.32); }
   #search-input::-webkit-search-cancel-button { display: none; }
-
   #search-close-btn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: rgba(236,237,239,0.45);
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    flex-shrink: 0;
-    transition: color .12s, background .12s;
+    background: transparent; border: none; cursor: pointer;
+    color: rgba(236,237,239,.4); width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 4px; flex-shrink: 0; transition: color .12s, background .12s;
   }
-  #search-close-btn:hover { color: #ECEDEF; background: rgba(255,255,255,0.06); }
+  #search-close-btn:hover { color: #ECEDEF; background: rgba(255,255,255,.06); }
   #search-close-btn svg { width: 16px; height: 16px; }
-
-  /* ── Results ── */
   #search-results {
-    overflow-y: auto;
-    flex: 1;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255,255,255,0.15) transparent;
+    overflow-y: auto; flex: 1; padding: 4px 0;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.12) transparent;
   }
   #search-results:empty { display: none; }
-
-  .search-group-label {
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #F32740;
-    padding: 10px 16px 6px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    position: sticky;
-    top: 0;
-    background: #2a2e34;
-    z-index: 1;
+  .search-group-header {
+    display: flex; align-items: center; justify-content: space-between; padding: 16px 16px 6px;
   }
-
+  .search-group-header:first-child { padding-top: 10px; }
+  .search-group-name {
+    font-family: var(--font-mono,'JetBrains Mono',monospace);
+    font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #F32740;
+  }
+  .search-group-count {
+    font-family: var(--font-mono,'JetBrains Mono',monospace);
+    font-size: 11px; color: rgba(236,237,239,.38);
+  }
+  .search-group-divider { height: 1px; background: rgba(255,255,255,.08); margin: 0 16px 4px; }
   .search-result-row {
-    display: block;
-    padding: 11px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    cursor: pointer;
-    text-decoration: none;
-    transition: background .1s;
-    outline: none;
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 16px; border-radius: 6px; margin: 0 6px;
+    cursor: pointer; text-decoration: none; transition: background .12s; outline: none;
   }
   .search-result-row:hover,
-  .search-result-row.is-selected {
-    background: #22262b;
-  }
-  .search-result-row:last-child { border-bottom: none; }
-
-  .result-title {
-    color: #ECEDEF;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 1.35;
-    margin-bottom: 2px;
-    transition: color .1s;
-  }
-  .search-result-row:hover .result-title,
+  .search-result-row.is-selected { background: rgba(243,39,64,.08); }
   .search-result-row.is-selected .result-title { color: #F32740; }
-
-  .result-breadcrumb {
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    color: rgba(236,237,239,0.45);
-    margin-bottom: 4px;
+  .result-icon {
+    flex-shrink: 0; width: 36px; height: 36px; border-radius: 6px;
+    background: rgba(243,39,64,.1); display: flex; align-items: center; justify-content: center; margin-top: 1px;
   }
-
+  .result-icon svg {
+    width: 16px; height: 16px; color: rgba(243,39,64,.65);
+    stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .result-content { flex: 1; min-width: 0; }
+  .result-title-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+  .result-title {
+    color: #ECEDEF; font-family: var(--font-body,'Lato',sans-serif);
+    font-weight: 700; font-size: 15px; line-height: 1.3;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .12s;
+  }
+  .result-tier-badge {
+    flex-shrink: 0; font-family: var(--font-body,'Lato',sans-serif);
+    font-size: 9.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    padding: 2px 6px; border-radius: 3px; line-height: 1;
+  }
+  .result-tier-badge.tier-pro     { background: #F32740; color: #fff; }
+  .result-tier-badge.tier-proplus { background: #c81835; color: #fff; }
+  .result-tier-badge.tier-eco     { background: rgba(255,255,255,.12); color: rgba(236,237,239,.75); }
+  .result-breadcrumb {
+    font-family: var(--font-mono,'JetBrains Mono',monospace);
+    font-size: 11px; letter-spacing: .03em; color: rgba(236,237,239,.42); margin-bottom: 4px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
   .result-excerpt {
-    color: rgba(236,237,239,0.65);
-    font-size: 12px;
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    color: rgba(236,237,239,.6); font-family: var(--font-body,'Lato',sans-serif);
+    font-size: 13px; line-height: 1.45; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .result-excerpt mark {
-    background: rgba(243,39,64,0.18);
-    color: #F32740;
-    padding: 1px 2px;
-    border-radius: 2px;
-    font-style: normal;
+    background: rgba(243,39,64,.14); color: #ECEDEF; border-radius: 2px; padding: 0 2px; font-weight: 600;
   }
-
-  /* Empty / loading states */
-  #search-empty {
-    padding: 32px 16px;
-    text-align: center;
-    color: rgba(236,237,239,0.4);
-    font-size: 14px;
+  .result-enter-hint {
+    flex-shrink: 0; font-size: 16px; color: rgba(236,237,239,.3);
+    align-self: center; opacity: 0; transition: opacity .12s; line-height: 1;
   }
-
-  /* ── Footer ── */
+  .search-result-row.is-selected .result-enter-hint { opacity: 1; }
+  #search-empty { padding: 48px 24px; text-align: center; }
+  .search-empty-headline {
+    color: rgba(236,237,239,.75); font-family: var(--font-body,'Lato',sans-serif);
+    font-size: 15px; font-weight: 600; margin-bottom: 10px;
+  }
+  .search-empty-hint {
+    color: rgba(236,237,239,.38); font-family: var(--font-body,'Lato',sans-serif);
+    font-size: 13px; line-height: 1.6;
+  }
+  #search-loading {
+    display: flex; align-items: center; gap: 10px; padding: 16px 22px;
+    color: rgba(236,237,239,.5); font-family: var(--font-body,'Lato',sans-serif); font-size: 14px;
+  }
+  .search-spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(243,39,64,.25); border-top-color: #F32740;
+    border-radius: 50%; animation: srch-spin .7s linear infinite; flex-shrink: 0;
+  }
+  @keyframes srch-spin { to { transform: rotate(360deg); } }
   #search-footer {
-    display: flex;
-    gap: 16px;
-    padding: 8px 16px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    flex-shrink: 0;
+    display: flex; align-items: center; gap: 16px; padding: 8px 16px;
+    background: #22262b; border-top: 1px solid rgba(255,255,255,.08); flex-shrink: 0;
   }
   #search-footer span {
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 10px;
-    color: rgba(236,237,239,0.35);
-    display: flex;
-    align-items: center;
-    gap: 4px;
+    display: flex; align-items: center; gap: 5px;
+    font-family: var(--font-mono,'JetBrains Mono',monospace);
+    font-size: 11px; color: rgba(236,237,239,.38);
   }
-  kbd {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 3px;
-    padding: 1px 5px;
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 10px;
-    color: rgba(236,237,239,0.55);
+  .search-kbd {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14);
+    border-radius: 3px; padding: 1px 5px;
+    font-family: var(--font-mono,'JetBrains Mono',monospace);
+    font-size: 10px; color: rgba(236,237,239,.55); line-height: 1.6;
   }
-
-  /* ── Mobile: full-screen overlay ── */
-  @media (max-width: 640px) {
-    #search-overlay {
-      padding-top: 0;
-      align-items: stretch;
-    }
-    #search-modal {
-      width: 100%;
-      max-height: 100dvh;
-      border-radius: 0;
-      border: none;
-    }
+  @media (max-width: 600px) {
+    #search-overlay { padding-top: 0; align-items: stretch; }
+    #search-modal { width: 100%; max-height: 100dvh; border-radius: 0; border: none; }
+    .search-result-row { padding: 14px 16px; min-height: 44px; }
+    #search-footer { gap: 12px; }
   }
 </style>
 
 <script>
-(function () {
-  const overlay  = document.getElementById('search-overlay');
-  const input    = document.getElementById('search-input');
-  const results  = document.getElementById('search-results');
-  const closeBtn = document.getElementById('search-close-btn');
-  const backdrop = document.getElementById('search-backdrop');
+(function(){
+'use strict';
+var overlay=document.getElementById('search-overlay');
+var input=document.getElementById('search-input');
+var results=document.getElementById('search-results');
+var closeBtn=document.getElementById('search-close-btn');
+var backdrop=document.getElementById('search-backdrop');
+var pfInstance=null,debounceTimer=null,resultLinks=[],selectedIndex=-1;
 
-  let pagefind = null;
-  let debounceTimer = null;
-  let selectedIndex = -1;
-  let resultLinks = [];
+var ICONS={
+  lightbulb:'<line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>',
+  layers:'<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',
+  building2:'<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v8h4"/><path d="M18 9h2a2 2 0 0 1 2 2v11h-4"/>',
+  wrench:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+  filetext:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+  circledot:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="1"/>',
+};
+var GROUP_ICON_MAP={products:'lightbulb',collections:'layers',verticals:'building2',tools:'wrench',docs:'filetext',other:'circledot'};
+function iconSvg(t){return'<svg viewBox="0 0 24 24" aria-hidden="true">'+(ICONS[t]||ICONS.circledot)+'</svg>';}
 
-  // ── Pagefind loader ──────────────────────────────────────────────────────
-  async function loadPagefind() {
-    if (pagefind) return pagefind;
-    try {
-      pagefind = await import('/_pagefind/pagefind.js');
-      await pagefind.options({ excerptLength: 30 });
-    } catch (e) {
-      console.warn('[search] Pagefind not available (run a build first):', e);
-      pagefind = null;
-    }
-    return pagefind;
+async function loadPagefind(){
+  if(pfInstance)return pfInstance;
+  try{pfInstance=await import('/_pagefind/pagefind.js');await pfInstance.init();}
+  catch(e){console.warn('[ALG Search]',e);pfInstance=null;}
+  return pfInstance;
+}
+
+function classifyUrl(url){
+  var p=url.replace(/^https?:\/\/[^/]+/,'');
+  if(/^\/products\//.test(p))return'products';
+  if(/^\/collections\//.test(p))return'collections';
+  if(/^\/solutions\//.test(p))return'verticals';
+  if(/\/(rebate|configurator|find-a-distributor|tools|calculator)/.test(p))return'tools';
+  if(/\/(datasheets?|ies|lm79|lm80|spec-sheet|pdf)/.test(p))return'docs';
+  return'other';
+}
+
+var GROUP_ORDER=['products','collections','verticals','tools','docs','other'];
+var GROUP_LABELS={products:'Products',collections:'Collections',verticals:'Industry Verticals',tools:'Tools',docs:'Documentation',other:'Other'};
+
+function getTierBadge(item){
+  var tier=(item.meta||{}).tier||'';if(!tier)return'';
+  var cls=tier.toLowerCase().replace(/\+/g,'plus').replace(/\s/g,'');
+  return'<span class="result-tier-badge tier-'+cls+'">'+tier+'</span>';
+}
+
+function makeBreadcrumb(url){
+  try{
+    return new URL(url,location.href).pathname.split('/').filter(Boolean)
+      .map(function(s){return s.replace(/-/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});})
+      .join(' \u203a ');
+  }catch(e){return url;}
+}
+
+function escHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function truncateExcerpt(html,max){
+  max=max||120;
+  var plain=html.replace(/<[^>]+>/g,'');
+  if(plain.length<=max)return html;
+  var count=0,out='',inTag=false;
+  for(var i=0;i<html.length;i++){
+    if(html[i]==='<')inTag=true;
+    if(!inTag)count++;
+    out+=html[i];
+    if(html[i]==='>') inTag=false;
+    if(count>=max){out+='\u2026';break;}
   }
+  if(out.includes('<mark>')&&!out.includes('</mark>'))out+='</mark>';
+  return out;
+}
 
-  // ── URL → content group ──────────────────────────────────────────────────
-  function classifyUrl(url) {
-    if (/\/products\//.test(url))                          return 'Products';
-    if (/\/collections\//.test(url))                       return 'Collections';
-    if (/\/solutions\//.test(url))                         return 'Industry Verticals';
-    if (/\/(tools|rebate|configurator|ies-files)/.test(url)) return 'Tools';
-    if (/\/(blog|news|articles)/.test(url))                return 'Blog / News';
-    return 'Other';
+function renderResults(grouped,query){
+  results.innerHTML='';resultLinks=[];selectedIndex=-1;
+  var groups=GROUP_ORDER.filter(function(g){return grouped[g]&&grouped[g].length>0;});
+  if(groups.length===0){
+    results.innerHTML='<div id="search-empty">'+
+      '<div class="search-empty-headline">No results for \u201c'+escHtml(query)+'\u201d</div>'+
+      '<div class="search-empty-hint">Try: SKU prefix (LRHB, LSNT, LSAL, LILL), product family name,<br>or \u201crebate\u201d, \u201cdatasheet\u201d, \u201cies\u201d, \u201cnavigator\u201d</div>'+
+      '</div>';
+    return;
   }
-
-  function groupLabel(group) {
-    const icons = {
-      'Products': '⬡',
-      'Collections': '◈',
-      'Industry Verticals': '◉',
-      'Tools': '⚙',
-      'Documentation': '⬜',
-      'Blog / News': '✦',
-      'Other': '◦',
-    };
-    return (icons[group] || '◦') + '  ' + group;
-  }
-
-  // ── Breadcrumb from URL ──────────────────────────────────────────────────
-  function makeBreadcrumb(url) {
-    try {
-      const parts = new URL(url, location.origin).pathname
-        .replace(/^\/|\/$/g, '')
-        .split('/')
-        .map(s => s.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()));
-      return parts.join(' › ');
-    } catch { return url; }
-  }
-
-  // ── Render results ───────────────────────────────────────────────────────
-  function renderResults(grouped) {
-    results.innerHTML = '';
-    resultLinks = [];
-    selectedIndex = -1;
-
-    const groups = Object.keys(grouped);
-    if (groups.length === 0) {
-      results.innerHTML = '<div id="search-empty">No results found.</div>';
-      return;
-    }
-
-    groups.forEach(group => {
-      const labelEl = document.createElement('div');
-      labelEl.className = 'search-group-label';
-      labelEl.textContent = groupLabel(group);
-      labelEl.setAttribute('aria-hidden', 'true');
-      results.appendChild(labelEl);
-
-      grouped[group].forEach(item => {
-        const a = document.createElement('a');
-        a.className = 'search-result-row';
-        a.href = item.url;
-        a.setAttribute('role', 'option');
-        a.setAttribute('tabindex', '-1');
-
-        const title = document.createElement('div');
-        title.className = 'result-title';
-        title.textContent = item.meta?.title || 'Untitled';
-
-        const breadcrumb = document.createElement('div');
-        breadcrumb.className = 'result-breadcrumb';
-        breadcrumb.textContent = makeBreadcrumb(item.url);
-
-        const excerpt = document.createElement('div');
-        excerpt.className = 'result-excerpt';
-        excerpt.innerHTML = item.excerpt || '';
-
-        a.appendChild(title);
-        a.appendChild(breadcrumb);
-        a.appendChild(excerpt);
-        results.appendChild(a);
-        resultLinks.push(a);
-      });
+  groups.forEach(function(group){
+    var items=grouped[group];
+    var hdr=document.createElement('div');
+    hdr.className='search-group-header';hdr.setAttribute('aria-hidden','true');
+    hdr.innerHTML='<span class="search-group-name">'+GROUP_LABELS[group]+'</span>'+
+      '<span class="search-group-count">'+items.length+' result'+(items.length!==1?'s':'')+'</span>';
+    results.appendChild(hdr);
+    var div=document.createElement('div');div.className='search-group-divider';results.appendChild(div);
+    items.forEach(function(item){
+      var a=document.createElement('a');
+      a.className='search-result-row';a.href=item.url;
+      a.setAttribute('role','option');a.setAttribute('tabindex','-1');
+      var title=item.meta&&item.meta.title?item.meta.title:'Untitled';
+      var badge=group==='products'?getTierBadge(item):'';
+      a.innerHTML=
+        '<div class="result-icon">'+iconSvg(GROUP_ICON_MAP[group])+'</div>'+
+        '<div class="result-content">'+
+          '<div class="result-title-row"><span class="result-title">'+escHtml(title)+'</span>'+badge+'</div>'+
+          '<div class="result-breadcrumb">'+escHtml(makeBreadcrumb(item.url))+'</div>'+
+          '<div class="result-excerpt">'+truncateExcerpt(item.excerpt||'',120)+'</div>'+
+        '</div>'+
+        '<span class="result-enter-hint" aria-hidden="true">\u21a9</span>';
+      results.appendChild(a);resultLinks.push(a);
     });
+  });
+}
+
+function showLoading(q){
+  results.innerHTML='<div id="search-loading"><div class="search-spinner"></div>'+
+    '<span>Searching for \u201c'+escHtml(q)+'\u201d\u2026</span></div>';
+}
+
+async function doSearch(query){
+  var pf=await loadPagefind();
+  if(!pf){
+    results.innerHTML='<div id="search-empty"><div class="search-empty-headline">Search index not available.</div>'+
+      '<div class="search-empty-hint">Run a production build to generate the index.</div></div>';
+    return;
   }
+  if(!query||query.trim().length<2){results.innerHTML='';return;}
+  showLoading(query);
+  var raw=await pf.search(query);
+  var items=await Promise.all(raw.results.slice(0,24).map(function(r){return r.data();}));
+  var grouped={};
+  items.forEach(function(item){var g=classifyUrl(item.url);if(!grouped[g])grouped[g]=[];grouped[g].push(item);});
+  renderResults(grouped,query);
+}
 
-  // ── Search ───────────────────────────────────────────────────────────────
-  async function doSearch(query) {
-    const pf = await loadPagefind();
-    if (!pf) {
-      results.innerHTML = '<div id="search-empty">Search index not available. Please run a build.</div>';
-      return;
-    }
-    if (!query || query.trim().length < 2) {
-      results.innerHTML = '';
-      return;
-    }
+function setSelected(idx){
+  resultLinks.forEach(function(el,i){
+    el.classList.toggle('is-selected',i===idx);
+    if(i===idx)el.scrollIntoView({block:'nearest'});
+  });
+  selectedIndex=idx;
+}
 
-    const raw = await pf.search(query);
-    const MAX = 24;
-    const items = await Promise.all(raw.results.slice(0, MAX).map(r => r.data()));
+function openModal(){
+  overlay.hidden=false;document.body.style.overflow='hidden';
+  setTimeout(function(){input.focus();},30);loadPagefind();
+}
+function closeModal(){
+  overlay.hidden=true;document.body.style.overflow='';
+  results.innerHTML='';input.value='';selectedIndex=-1;resultLinks=[];
+}
 
-    // Group by content type
-    const grouped = {};
-    items.forEach(item => {
-      const group = classifyUrl(item.url);
-      if (!grouped[group]) grouped[group] = [];
-      grouped[group].push(item);
-    });
-
-    renderResults(grouped);
+function trapFocus(e){
+  if(overlay.hidden)return;
+  var f=overlay.querySelectorAll('input,button,a[href],[tabindex]:not([tabindex="-1"])');
+  var first=f[0],last=f[f.length-1];
+  if(e.key==='Tab'){
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
   }
+}
 
-  // ── Keyboard navigation ──────────────────────────────────────────────────
-  function setSelected(idx) {
-    resultLinks.forEach((el, i) => {
-      el.classList.toggle('is-selected', i === idx);
-      if (i === idx) el.scrollIntoView({ block: 'nearest' });
-    });
-    selectedIndex = idx;
-  }
-
-  function handleKeydown(e) {
-    if (!overlay || overlay.hidden) return;
-
-    if (e.key === 'Escape') { closeModal(); return; }
-
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      const next = Math.min(selectedIndex + 1, resultLinks.length - 1);
-      setSelected(next);
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      const prev = Math.max(selectedIndex - 1, 0);
-      setSelected(prev);
-    } else if (e.key === 'Enter' && selectedIndex >= 0) {
-      e.preventDefault();
-      resultLinks[selectedIndex].click();
-    }
-  }
-
-  // ── Open / close ─────────────────────────────────────────────────────────
-  function openModal() {
-    overlay.hidden = false;
-    document.body.style.overflow = 'hidden';
-    setTimeout(() => input.focus(), 30);
-    loadPagefind(); // pre-warm
-  }
-
-  function closeModal() {
-    overlay.hidden = true;
-    document.body.style.overflow = '';
-    results.innerHTML = '';
-    input.value = '';
-    selectedIndex = -1;
-    resultLinks = [];
-  }
-
-  // ── Focus trap ───────────────────────────────────────────────────────────
-  function trapFocus(e) {
-    if (overlay.hidden) return;
-    const focusable = overlay.querySelectorAll(
-      'input, button, a[href], [tabindex]:not([tabindex="-1"])'
-    );
-    const first = focusable[0];
-    const last  = focusable[focusable.length - 1];
-    if (e.key === 'Tab') {
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault(); last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault(); first.focus();
-      }
-    }
-  }
-
-  // ── Event wiring ─────────────────────────────────────────────────────────
-  // Cmd+K / Ctrl+K global shortcut
-  document.addEventListener('keydown', e => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-      e.preventDefault();
-      overlay.hidden ? openModal() : closeModal();
-    }
-    handleKeydown(e);
+document.addEventListener('keydown',function(e){
+  if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();overlay.hidden?openModal():closeModal();}
+  if(!overlay.hidden){
+    if(e.key==='Escape'){closeModal();return;}
+    if(e.key==='ArrowDown'){e.preventDefault();setSelected(Math.min(selectedIndex+1,resultLinks.length-1));}
+    else if(e.key==='ArrowUp'){e.preventDefault();setSelected(Math.max(selectedIndex-1,0));}
+    else if(e.key==='Enter'&&selectedIndex>=0){e.preventDefault();resultLinks[selectedIndex].click();}
     trapFocus(e);
-  });
+  }
+});
 
-  // Input → debounced search
-  input.addEventListener('input', () => {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => doSearch(input.value), 200);
-  });
+input.addEventListener('input',function(){
+  clearTimeout(debounceTimer);
+  var q=input.value;
+  if(q.trim().length>=2){debounceTimer=setTimeout(function(){doSearch(q);},200);}
+  else{results.innerHTML='';}
+});
 
-  // Close triggers
-  closeBtn.addEventListener('click', closeModal);
-  backdrop.addEventListener('click', closeModal);
-
-  // Expose openModal for the utility bar button
-  window.__algSearchOpen = openModal;
+closeBtn.addEventListener('click',closeModal);
+backdrop.addEventListener('click',closeModal);
+window.__algSearchOpen=openModal;
 })();
 </script>
