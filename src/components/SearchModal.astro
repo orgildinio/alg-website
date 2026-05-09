@@ -1,48 +1,55 @@
 ---
 /**
  * SearchModal.astro — Global site search (Pagefind-powered)
- * Variant A · Tight List (Linear / Raycast / Spotlight pattern)
+ * Variant A · Tight List
+ *
+ * IMPORTANT: <style is:global> is intentional.
+ * All result rows (.search-row, .row-icon, .row-title, etc.) are injected
+ * dynamically by the search JS, so Astro's scoped CSS would never match them.
+ * Using is:global ensures the styles apply to dynamically-rendered children.
  */
 ---
 <div id="search-backdrop" hidden></div>
 <div id="search-modal" role="dialog" aria-modal="true" aria-label="Site search" hidden>
-  <div class="search-bar">
-    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <div class="alg-search-bar">
+    <svg class="alg-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
     </svg>
-    <input id="search-input" class="search-input" type="search"
+    <input id="search-input" class="alg-search-input" type="search"
       placeholder="Search the site…"
       autocomplete="off" autocorrect="off" spellcheck="false"
       aria-label="Search" aria-autocomplete="list" aria-controls="search-results"/>
-    <button id="search-clear" class="search-clear" type="button" aria-label="Clear search">
+    <button id="search-clear" class="alg-search-clear" type="button" aria-label="Clear search">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
         <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
       </svg>
     </button>
   </div>
-  <div id="search-results" class="search-results" role="listbox" aria-label="Search results" aria-live="polite"></div>
-  <div class="search-footer">
-    <span><kbd class="kbd">↑↓</kbd> navigate</span>
-    <span><kbd class="kbd">↩</kbd> open</span>
-    <span><kbd class="kbd">Esc</kbd> close</span>
+  <div id="search-results" class="alg-search-results" role="listbox" aria-label="Search results" aria-live="polite"></div>
+  <div class="alg-search-footer">
+    <span><kbd class="alg-kbd">↑↓</kbd> navigate</span>
+    <span><kbd class="alg-kbd">↩</kbd> open</span>
+    <span><kbd class="alg-kbd">Esc</kbd> close</span>
   </div>
 </div>
 
-<style>
-  /* ── CSS tokens (scoped to search) ── */
-  #search-modal, #search-backdrop {
-    --brand-red: #F32740;
-    --brand-red-soft: rgba(243,39,64,0.08);
-    --bg-card: #2a2e34;
-    --bg-spec: #22262b;
-    --bg-deepest: #15181c;
-    --text-primary: #ECEDEF;
-    --text-secondary: #A8AEB7;
-    --text-muted: #6E7682;
-    --line: rgba(255,255,255,0.08);
-    --line-medium: rgba(255,255,255,0.14);
-    --font-body: 'Lato', system-ui, sans-serif;
-    --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+<!-- is:global is REQUIRED — dynamically-injected children won't carry Astro's scope attribute -->
+<style is:global>
+  /* ── CSS tokens ── */
+  #search-modal,
+  #search-backdrop {
+    --alg-brand-red:       #F32740;
+    --alg-brand-red-soft:  rgba(243,39,64,0.08);
+    --alg-bg-card:         #2a2e34;
+    --alg-bg-spec:         #22262b;
+    --alg-bg-deepest:      #15181c;
+    --alg-text-primary:    #ECEDEF;
+    --alg-text-secondary:  #A8AEB7;
+    --alg-text-muted:      #6E7682;
+    --alg-line:            rgba(255,255,255,0.08);
+    --alg-line-medium:     rgba(255,255,255,0.14);
+    --alg-font-body:       'Lato', system-ui, sans-serif;
+    --alg-font-mono:       'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
   }
 
   /* ── Backdrop ── */
@@ -54,12 +61,12 @@
   }
   #search-backdrop[hidden] { display: none !important; }
 
-  /* ── Modal frame (Variant A) ── */
+  /* ── Modal frame ── */
   #search-modal {
     width: 640px;
     max-width: calc(100vw - 32px);
-    background: var(--bg-card);
-    border: 1px solid var(--line-medium);
+    background: var(--alg-bg-card);
+    border: 1px solid var(--alg-line-medium);
     border-radius: 6px;
     box-shadow: 0 24px 80px rgba(0,0,0,0.6);
     overflow: hidden;
@@ -68,105 +75,123 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-    font-family: var(--font-body);
+    font-family: var(--alg-font-body);
   }
   #search-modal[hidden] { display: none !important; }
 
   /* ── Search bar ── */
-  .search-bar {
+  .alg-search-bar {
     display: flex; align-items: center; gap: 12px;
     padding: 14px 16px;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid var(--alg-line);
   }
-  .search-icon { color: var(--text-muted); flex-shrink: 0; }
-  .search-input {
+  .alg-search-icon { color: var(--alg-text-muted); flex-shrink: 0; }
+  .alg-search-input {
     flex: 1; background: transparent; border: 0; outline: 0;
-    color: var(--text-primary);
-    font-family: var(--font-body);
+    color: var(--alg-text-primary);
+    font-family: var(--alg-font-body);
     font-size: 15px;
     padding: 0;
   }
-  .search-input::placeholder { color: var(--text-muted); }
-  .search-input::-webkit-search-cancel-button { display: none; }
-  .search-clear {
+  .alg-search-input::placeholder { color: var(--alg-text-muted); }
+  .alg-search-input::-webkit-search-cancel-button { display: none; }
+  .alg-search-clear {
     background: transparent; border: none; cursor: pointer;
-    color: var(--text-muted);
+    color: var(--alg-text-muted);
     width: 18px; height: 18px;
     display: inline-flex; align-items: center; justify-content: center;
     padding: 0; flex-shrink: 0;
     transition: color .12s;
   }
-  .search-clear:hover { color: var(--text-primary); }
+  .alg-search-clear:hover { color: var(--alg-text-primary); }
 
   /* ── Results pane ── */
-  .search-results {
+  .alg-search-results {
     max-height: 480px;
     overflow-y: auto;
     padding: 4px 0;
     scrollbar-width: thin;
     scrollbar-color: rgba(255,255,255,.1) transparent;
   }
-  .search-results:empty { display: none; }
+  .alg-search-results:empty { display: none; }
 
   /* ── Group header ── */
-  .group-h {
-    font-family: var(--font-mono);
+  .alg-group-h {
+    font-family: var(--alg-font-mono);
     font-size: 10px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--brand-red);
+    color: var(--alg-brand-red);
     font-weight: 700;
     padding: 12px 16px 6px;
     display: flex; justify-content: space-between; align-items: center;
   }
-  .group-h-count { color: var(--text-muted); font-weight: 500; }
+  .alg-group-h-count { color: var(--alg-text-muted); font-weight: 500; }
 
   /* ── Result row ── */
-  .search-row {
+  .alg-search-row {
     display: flex; align-items: center; gap: 12px;
     padding: 8px 16px;
     cursor: pointer;
     position: relative;
     text-decoration: none;
+    min-height: 36px;
   }
-  .search-row:hover,
-  .search-row.is-selected { background: var(--brand-red-soft); }
-  .search-row.is-selected::before {
+  .alg-search-row:hover,
+  .alg-search-row.is-selected { background: var(--alg-brand-red-soft); }
+  .alg-search-row.is-selected::before {
     content: ""; position: absolute; left: 0; top: 4px; bottom: 4px; width: 2px;
-    background: var(--brand-red); border-radius: 0 1px 1px 0;
+    background: var(--alg-brand-red); border-radius: 0 1px 1px 0;
   }
 
-  /* ── Row icon ── */
-  .row-icon {
-    width: 20px; height: 20px;
-    color: var(--text-muted);
+  /* ── Row icon — THREE layers of enforcement ── */
+  .alg-row-icon {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    max-width: 20px;
+    max-height: 20px;
+    color: var(--alg-text-muted);
     flex-shrink: 0;
     display: inline-flex; align-items: center; justify-content: center;
+    overflow: hidden;
   }
-  .row-icon svg {
-    width: 16px; height: 16px;
-    stroke: currentColor; fill: none;
-    stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+  /* SVG inside icon — explicit size, block display, no auto-expansion */
+  .alg-row-icon svg {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px;
+    min-height: 16px;
+    max-width: 16px;
+    max-height: 16px;
+    display: block;
+    flex-shrink: 0;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   /* ── Row text block ── */
-  .row-text {
+  .alg-row-text {
     flex: 1; min-width: 0;
     display: flex; align-items: baseline; gap: 8px;
     font-size: 14px;
     overflow: hidden;
   }
-  .row-title {
-    color: var(--text-primary);
+  .alg-row-title {
+    color: var(--alg-text-primary);
     font-weight: 600;
     white-space: nowrap;
     flex-shrink: 0;
   }
-  .search-row.is-selected .row-title { color: var(--brand-red); }
+  .alg-search-row.is-selected .alg-row-title { color: var(--alg-brand-red); }
 
   /* ── Tier badge ── */
-  .row-tier {
-    font-family: var(--font-mono);
+  .alg-row-tier {
+    font-family: var(--alg-font-mono);
     font-size: 9px;
     font-weight: 700;
     letter-spacing: 0.06em;
@@ -174,100 +199,99 @@
     border-radius: 2px;
     text-transform: uppercase;
     flex-shrink: 0;
+    white-space: nowrap;
   }
-  .tier-eco     { background: rgba(15,174,124,0.16); color: #38C796; }
-  .tier-pro     { background: rgba(112,162,232,0.16); color: #7FB3FF; }
-  .tier-proplus { background: rgba(243,39,64,0.16);   color: #FF6478; }
+  .alg-tier-eco     { background: rgba(15,174,124,0.16); color: #38C796; }
+  .alg-tier-pro     { background: rgba(112,162,232,0.16); color: #7FB3FF; }
+  .alg-tier-proplus { background: rgba(243,39,64,0.16);   color: #FF6478; }
 
-  /* ── Breadcrumb (right-aligned, truncates) ── */
-  .row-breadcrumb {
-    font-family: var(--font-mono);
+  /* ── Breadcrumb ── */
+  .alg-row-breadcrumb {
+    font-family: var(--alg-font-mono);
     font-size: 10.5px;
-    color: var(--text-muted);
+    color: var(--alg-text-muted);
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     flex: 1; text-align: right;
     letter-spacing: 0.04em;
   }
 
   /* ── Enter hint ── */
-  .row-enter {
-    color: var(--text-muted);
+  .alg-row-enter {
+    color: var(--alg-text-muted);
     font-size: 11px;
     opacity: 0;
     flex-shrink: 0;
     transition: opacity .12s;
   }
-  .search-row.is-selected .row-enter { opacity: 1; color: var(--brand-red); }
+  .alg-search-row.is-selected .alg-row-enter { opacity: 1; color: var(--alg-brand-red); }
 
   /* ── Loading state ── */
-  .search-loading {
+  .alg-search-loading {
     padding: 16px; display: flex; align-items: center; gap: 10px;
-    font-size: 13px; color: var(--text-secondary);
+    font-size: 13px; color: var(--alg-text-secondary);
   }
-  .search-spinner {
+  .alg-search-spinner {
     width: 14px; height: 14px;
     border: 2px solid rgba(243,39,64,0.2);
-    border-top-color: var(--brand-red);
+    border-top-color: var(--alg-brand-red);
     border-radius: 50%;
-    animation: search-spin 0.8s linear infinite;
+    animation: alg-spin 0.8s linear infinite;
     flex-shrink: 0;
   }
-  @keyframes search-spin { to { transform: rotate(360deg); } }
+  @keyframes alg-spin { to { transform: rotate(360deg); } }
 
   /* ── Empty state ── */
-  .search-empty {
+  .alg-search-empty {
     padding: 48px 24px;
     text-align: center;
   }
-  .search-empty-headline {
-    color: var(--text-primary);
+  .alg-search-empty-headline {
+    color: var(--alg-text-primary);
     font-size: 14px;
     margin-bottom: 8px;
   }
-  .search-empty-q { color: var(--brand-red); font-weight: 700; }
-  .search-empty-hint {
-    color: var(--text-muted);
+  .alg-search-empty-q { color: var(--alg-brand-red); font-weight: 700; }
+  .alg-search-empty-hint {
+    color: var(--alg-text-muted);
     font-size: 12.5px;
-    font-family: var(--font-mono);
+    font-family: var(--alg-font-mono);
     letter-spacing: 0.04em;
   }
 
   /* ── Footer ── */
-  .search-footer {
-    border-top: 1px solid var(--line);
-    background: var(--bg-spec);
+  .alg-search-footer {
+    border-top: 1px solid var(--alg-line);
+    background: var(--alg-bg-spec);
     padding: 8px 16px;
     display: flex; gap: 16px;
-    font-family: var(--font-mono);
+    font-family: var(--alg-font-mono);
     font-size: 10.5px;
-    color: var(--text-muted);
+    color: var(--alg-text-muted);
     letter-spacing: 0.04em;
   }
-  .kbd {
+  .alg-kbd {
     display: inline-block;
     padding: 1px 5px;
-    background: var(--bg-deepest);
-    border: 1px solid var(--line);
+    background: var(--alg-bg-deepest);
+    border: 1px solid var(--alg-line);
     border-radius: 3px;
     font-size: 10px;
-    color: var(--text-secondary);
+    color: var(--alg-text-secondary);
     margin-right: 4px;
-    font-family: var(--font-mono);
+    font-family: var(--alg-font-mono);
   }
 
   /* ── Mobile ── */
   @media (max-width: 600px) {
     #search-modal {
-      width: 100vw;
-      height: 100vh;
+      width: 100vw; height: 100vh;
       max-width: none;
       top: 0; left: 0;
       transform: none;
-      border-radius: 0;
-      border: 0;
+      border-radius: 0; border: 0;
     }
-    .search-results { max-height: calc(100vh - 56px - 36px); }
-    .search-row { padding: 12px 16px; min-height: 44px; }
+    .alg-search-results { max-height: calc(100vh - 56px - 36px); }
+    .alg-search-row { padding: 12px 16px; min-height: 44px; }
   }
 </style>
 
@@ -284,27 +308,28 @@ var results  = document.getElementById('search-results');
 var pfInstance = null, debounceTimer = null;
 var resultRows = [], selectedIndex = -1;
 
-/* ── Lucide icon paths ── */
-var ICONS = {
-  lightbulb: '<line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>',
-  layers:    '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',
-  building2: '<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v8h4"/><path d="M18 9h2a2 2 0 0 1 2 2v11h-4"/>',
-  wrench:    '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
-  filetext:  '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
-  circledot: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="1"/>',
+/* ── Lucide icon paths (inline SVG strings with explicit 16x16 attrs) ── */
+function makeIcon(paths) {
+  return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:16px;height:16px;display:block;flex-shrink:0">' + paths + '</svg>';
+}
+
+var ICON_SVG = {
+  lightbulb: makeIcon('<line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>'),
+  layers:    makeIcon('<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>'),
+  building2: makeIcon('<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v8h4"/><path d="M18 9h2a2 2 0 0 1 2 2v11h-4"/>'),
+  wrench:    makeIcon('<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>'),
+  filetext:  makeIcon('<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>'),
+  circledot: makeIcon('<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="1"/>'),
 };
-var GROUP_ICON = { products:'lightbulb', collections:'layers', verticals:'building2', tools:'wrench', docs:'filetext', other:'circledot' };
+
+var GROUP_ICON   = { products:'lightbulb', collections:'layers', verticals:'building2', tools:'wrench', docs:'filetext', other:'circledot' };
 var GROUP_ORDER  = ['products','collections','verticals','tools','docs','other'];
 var GROUP_LABELS = { products:'Products', collections:'Collections', verticals:'Industry Verticals', tools:'Tools', docs:'Documentation', other:'Other' };
-
-function icon(type) {
-  return '<svg viewBox="0 0 24 24" aria-hidden="true">' + (ICONS[type] || ICONS.circledot) + '</svg>';
-}
 
 /* ── URL classifier ── */
 function classify(url) {
   var p = url.replace(/^https?:\/\/[^/]+/, '');
-  if (/^\/products\//.test(p))   return 'products';
+  if (/^\/products\//.test(p))    return 'products';
   if (/^\/collections\//.test(p)) return 'collections';
   if (/^\/solutions\//.test(p))   return 'verticals';
   if (/\/(rebate|configurator|find-a-distributor|tools|calculator)/.test(p)) return 'tools';
@@ -326,11 +351,16 @@ function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-function tierBadge(item) {
-  var tier = (item.meta || {}).tier || '';
-  if (!tier) return '';
-  var cls = tier.toLowerCase().replace(/\+/g,'plus').replace(/\s/g,'');
-  return '<span class="row-tier tier-' + cls + '">' + esc(tier) + '</span>';
+/* ── Parse tier suffix out of page title ── */
+function parseTitle(rawTitle) {
+  var match = rawTitle.match(/^(.+?)\s+(ECO|PRO\+|PRO)$/i);
+  if (match) {
+    var title   = match[1].trim();
+    var tierRaw = match[2].toUpperCase();
+    var tierCls = tierRaw.toLowerCase().replace('+', 'plus'); /* pro+ → proplus */
+    return { title: title, tier: tierRaw, tierCls: tierCls };
+  }
+  return { title: rawTitle, tier: null, tierCls: null };
 }
 
 /* ── Render ── */
@@ -343,40 +373,47 @@ function render(grouped, query) {
 
   if (groups.length === 0) {
     results.innerHTML =
-      '<div class="search-empty">' +
-        '<div class="search-empty-headline">No results for "<span class="search-empty-q">' + esc(query) + '</span>"</div>' +
-        '<div class="search-empty-hint">Try: SKU pattern (LRHB, LSBX, LSPL), product family, or "rebate", "datasheet", "ies"</div>' +
+      '<div class="alg-search-empty">' +
+        '<div class="alg-search-empty-headline">No results for "<span class="alg-search-empty-q">' + esc(query) + '</span>"</div>' +
+        '<div class="alg-search-empty-hint">Try: SKU prefix (LRHB, LSBX, LSPL), product family, or "rebate", "datasheet", "ies"</div>' +
       '</div>';
     return;
   }
 
   groups.forEach(function(group) {
     var items = grouped[group];
+
     /* group header */
     var hdr = document.createElement('div');
-    hdr.className = 'group-h';
+    hdr.className = 'alg-group-h';
     hdr.setAttribute('aria-hidden', 'true');
-    hdr.innerHTML = '<span>' + GROUP_LABELS[group] + '</span><span class="group-h-count">' + items.length + '</span>';
+    hdr.innerHTML = '<span>' + GROUP_LABELS[group] + '</span><span class="alg-group-h-count">' + items.length + '</span>';
     results.appendChild(hdr);
 
     items.forEach(function(item) {
-      var title = (item.meta && item.meta.title) ? item.meta.title : 'Untitled';
-      var badge = group === 'products' ? tierBadge(item) : '';
-      var bc    = breadcrumb(item.url);
+      var rawTitle = (item.meta && item.meta.title) ? item.meta.title : 'Untitled';
+      var parsed   = parseTitle(rawTitle);
+      var bc       = breadcrumb(item.url);
+
+      /* tier badge HTML — only for products */
+      var tierHTML = '';
+      if (group === 'products' && parsed.tier) {
+        tierHTML = '<span class="alg-row-tier alg-tier-' + parsed.tierCls + '">' + esc(parsed.tier) + '</span>';
+      }
 
       var row = document.createElement('a');
-      row.className = 'search-row';
+      row.className = 'alg-search-row';
       row.href = item.url;
       row.setAttribute('role', 'option');
       row.setAttribute('tabindex', '-1');
       row.innerHTML =
-        '<span class="row-icon">' + icon(GROUP_ICON[group]) + '</span>' +
-        '<span class="row-text">' +
-          '<span class="row-title">' + esc(title) + '</span>' +
-          badge +
-          '<span class="row-breadcrumb">' + esc(bc) + '</span>' +
+        '<span class="alg-row-icon">' + ICON_SVG[GROUP_ICON[group]] + '</span>' +
+        '<span class="alg-row-text">' +
+          '<span class="alg-row-title">' + esc(parsed.title) + '</span>' +
+          tierHTML +
+          '<span class="alg-row-breadcrumb">' + esc(bc) + '</span>' +
         '</span>' +
-        '<span class="row-enter" aria-hidden="true">\u21a9</span>';
+        '<span class="alg-row-enter" aria-hidden="true">\u21a9</span>';
 
       results.appendChild(row);
       resultRows.push(row);
@@ -386,8 +423,8 @@ function render(grouped, query) {
 
 function showLoading(q) {
   results.innerHTML =
-    '<div class="search-loading">' +
-      '<span class="search-spinner"></span>' +
+    '<div class="alg-search-loading">' +
+      '<span class="alg-search-spinner"></span>' +
       '<span>Searching for \u201c' + esc(q) + '\u201d\u2026</span>' +
     '</div>';
 }
@@ -408,7 +445,7 @@ async function loadPagefind() {
 async function doSearch(query) {
   var pf = await loadPagefind();
   if (!pf) {
-    results.innerHTML = '<div class="search-empty"><div class="search-empty-headline">Search index not available.</div><div class="search-empty-hint">Run a production build to generate the index.</div></div>';
+    results.innerHTML = '<div class="alg-search-empty"><div class="alg-search-empty-headline">Search index not available.</div><div class="alg-search-empty-hint">Run a production build to generate the index.</div></div>';
     return;
   }
   if (!query || query.trim().length < 2) { results.innerHTML = ''; return; }
