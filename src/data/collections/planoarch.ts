@@ -6,6 +6,7 @@
 
 const planoarchData = {
   slug: 'planoarch',
+  searchKeywords: 'commercial indoor,architectural linear,downlight,panel,troffer,recessed,2x2,2x4,1x4,2x2 panel,2x4 troffer,suspended linear,recessed downlight',
   parentVertical: 'Indoor',
   parentSubVertical: 'Commercial',
   name: 'planoⒶRCH',

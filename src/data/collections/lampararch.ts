@@ -5,6 +5,7 @@
  */
 const lampararchData = {
   slug: 'lampararch',
+  searchKeywords: 'industrial lighting,high-bay,linear strip,vapor tight,washdown,LED retrofit,8-foot strip,4-foot strip,industrial high-bay,warehouse lighting,manufacturing lighting,distribution center',
   parentVertical: 'Indoor',
   parentSubVertical: 'Industrial',
   name: 'lamparⒶRCH',

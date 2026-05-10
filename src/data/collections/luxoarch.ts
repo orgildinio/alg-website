@@ -6,6 +6,7 @@
 
 const luxoarchData = {
   slug: 'luxoarch',
+  searchKeywords: 'outdoor commercial,parking lot,facade,sports lighting,wall pack,canopy,bollard,roadway,shoebox,flood light,DLC premium,TAA compliant,5 US warehouses,3-day delivery',
   parentVertical: 'Outdoor',
   parentSubVertical: 'Commercial',
   name: 'luxoⒶRCH',

@@ -7,6 +7,7 @@
  */
 const multifamilyData = {
   slug: 'multifamily',
+  searchKeywords: 'multi-family,apartment,condo,property management,low-glare,downlight,puck light,recess can,wall sconce,balcony lighting,corridor lighting,stairwell lighting,fixture-only,wireless control',
   parentVertical: 'Residential',
   parentSubVertical: 'Multi-Family',
   name: 'multi-fⒶMILY',

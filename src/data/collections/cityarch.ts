@@ -9,6 +9,7 @@
  */
 const cityarchData = {
   slug: 'cityarch',
+  searchKeywords: 'municipal,roadway,post top,bollard,high mast,traffic lamp,street sign,DOT,municipal lighting,roadway luminaire,decorative post top,Type III roadway,Type V roadway',
   parentVertical: 'Outdoor',
   parentSubVertical: 'Municipal',
   name: 'cityⒶRCH',
