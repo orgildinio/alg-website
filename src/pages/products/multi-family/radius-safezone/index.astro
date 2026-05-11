@@ -1,0 +1,339 @@
+---
+/**
+ * LDRS-SZ Radius SafeZone Series PDP — Stub (Phase B)
+ * Route: /products/multi-family/radius-safezone/
+ *
+ * Full PDP mockup pending from PM. This stub:
+ *   - Routes correctly (200 OK)
+ *   - Correct H1: "Radius SafeZone Series"
+ *   - Correct breadcrumb: HOME › INDOOR › RESIDENTIAL · MULTI-FAMILY › MULTI-FAMILY › RADIUS SAFEZONE
+ *   - Correct JSON-LD Product schema
+ *   - PRO+ tier badge
+ *   - Links back to /collections/multi-family/
+ *   - "Full PDP coming soon" notice
+ */
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Radius SafeZone Series — LDRS-SZ Emergency Egress Downlight | Archipelago Lighting"
+  description="LDRS-SZ Radius SafeZone: UL 924 emergency-rated downlight for egress paths and life-safety zones in multi-family corridors. PRO+ tier, 15W max, 8 active SKUs."
+  bodyClass="page-radius-safezone-pdp"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json">{JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "LDRS-SZ Radius SafeZone Series",
+      "description": "UL 924 emergency-rated downlight for egress paths and life-safety zones in multi-family corridors. PRO+ tier, 15W max, 8 active SKUs.",
+      "brand": { "@type": "Brand", "name": "Archipelago Lighting Group" },
+      "sku": "LDRS-SZ",
+      "offers": { "@type": "Offer", "availability": "https://schema.org/InStock", "priceCurrency": "USD" }
+    })}</script>
+  </Fragment>
+<style is:global>
+  :root {
+    --brand-red: #F32740;
+    --tier-proplus-bg: #2a1f10;
+    --tier-proplus-border: rgba(255,196,87,0.45);
+    --tier-proplus-color: #ffc457;
+  }
+  .rsz-page {
+    font-family: 'Lato', system-ui, sans-serif;
+    background: #f8f8f8;
+    min-height: 60vh;
+  }
+  .rsz-breadcrumb {
+    background: #fff;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 0.6rem 2rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888;
+  }
+  .rsz-breadcrumb a { color: #888; text-decoration: none; }
+  .rsz-breadcrumb a:hover { color: #F32740; }
+  .rsz-breadcrumb .bc-sep { margin: 0 6px; }
+  .rsz-breadcrumb .bc-current { color: #111; }
+  .rsz-hero {
+    background: #0a0e1a;
+    color: #fff;
+    padding: 4rem 2rem 5rem;
+    text-align: center;
+  }
+  .rsz-hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #F32740;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  .rsz-hero-eyebrow::before,
+  .rsz-hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 2px;
+    background: #F32740;
+  }
+  .rsz-tier-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    background: var(--tier-proplus-bg);
+    color: var(--tier-proplus-color);
+    border: 1px solid var(--tier-proplus-border);
+    margin-bottom: 1.25rem;
+  }
+  .rsz-hero h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5rem;
+    line-height: 1.05;
+  }
+  .rsz-hero-sku {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    margin-bottom: 1.5rem;
+  }
+  .rsz-hero-desc {
+    max-width: 560px;
+    margin: 0 auto 2rem;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.7);
+  }
+  .rsz-spec-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+  }
+  .rsz-chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.75);
+  }
+  .rsz-cta-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .rsz-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    background: #F32740;
+    color: #fff;
+    font-family: 'Lato', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background 0.2s;
+  }
+  .rsz-btn-primary:hover { background: #c81835; }
+  .rsz-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    background: transparent;
+    color: rgba(255,255,255,0.75);
+    font-family: 'Lato', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 3px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .rsz-btn-secondary:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+  .rsz-coming-soon {
+    max-width: 680px;
+    margin: 3rem auto;
+    padding: 2.5rem 2rem;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.08);
+    text-align: center;
+  }
+  .rsz-coming-soon h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: #111;
+  }
+  .rsz-coming-soon p {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+  .rsz-spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    text-align: left;
+    margin-top: 1.5rem;
+  }
+  .rsz-spec-table th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888;
+    padding: 6px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+  .rsz-spec-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    color: #333;
+  }
+  .rsz-spec-table tr:last-child td { border-bottom: none; }
+  .rsz-spec-table td:first-child { color: #888; font-size: 0.8rem; }
+  .rsz-body { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+</style>
+
+<div class="rsz-page">
+  <!-- Breadcrumb -->
+  <nav class="rsz-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">HOME</a>
+    <span class="bc-sep">›</span>
+    <a href="/collections/indoor/">INDOOR</a>
+    <span class="bc-sep">›</span>
+    <a href="/collections/residential/">RESIDENTIAL · MULTI-FAMILY</a>
+    <span class="bc-sep">›</span>
+    <a href="/collections/multi-family/">MULTI-FAMILY</a>
+    <span class="bc-sep">›</span>
+    <span class="bc-current">RADIUS SAFEZONE</span>
+  </nav>
+
+  <!-- Hero -->
+  <section class="rsz-hero" aria-label="Product hero">
+    <div class="rsz-hero-eyebrow">MULTI-FAMILY · SAFEZONE / EGRESS</div>
+    <div class="rsz-tier-badge">PRO+</div>
+    <h1>Radius SafeZone Series</h1>
+    <p class="rsz-hero-sku">LDRS-SZ · 8 ACTIVE SKUs · UP TO 15W</p>
+    <p class="rsz-hero-desc">
+      UL 924 emergency-rated downlights for egress paths and life-safety zones in multi-family corridors.
+      Integrated battery backup, 90-minute emergency runtime, and standard-trim aesthetics — so the fixture
+      looks the same whether it's in normal or emergency mode.
+    </p>
+    <div class="rsz-spec-chips">
+      <span class="rsz-chip">UL 924 Listed</span>
+      <span class="rsz-chip">90-Min Emergency</span>
+      <span class="rsz-chip">4″ / 6″ Apertures</span>
+      <span class="rsz-chip">2700K – 4000K</span>
+      <span class="rsz-chip">CRI ≥90</span>
+      <span class="rsz-chip">Up to 15W</span>
+      <span class="rsz-chip">Damp Location</span>
+      <span class="rsz-chip">PRO+ 7-yr Warranty</span>
+    </div>
+    <div class="rsz-cta-row">
+      <a href="/collections/multi-family/" class="rsz-btn-secondary">← BACK TO MULTI-FAMILY</a>
+      <a href="/contact/" class="rsz-btn-primary">REQUEST SPEC SHEET →</a>
+    </div>
+  </section>
+
+  <!-- Body -->
+  <div class="rsz-body">
+    <!-- Coming-soon notice + known specs -->
+    <div class="rsz-coming-soon">
+      <h2>Full product detail page coming soon.</h2>
+      <p>
+        The Radius SafeZone full PDP — including photometrics, configurator, submittal generator, and
+        downloadable IES files — is being prepared and will be published in the next release cycle.
+        In the meantime, contact your ALG rep or distributor for spec sheets and project pricing.
+      </p>
+      <p>
+        Known specification data is shown below. All values are preliminary and subject to final
+        engineering sign-off.
+      </p>
+
+      <table class="rsz-spec-table">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Series</td><td>Radius SafeZone (LDRS-SZ)</td></tr>
+          <tr><td>Tier</td><td>PRO+</td></tr>
+          <tr><td>Application</td><td>SafeZone / Egress · Hallway / Common Area · Code &amp; Inspection</td></tr>
+          <tr><td>Active SKUs</td><td>8</td></tr>
+          <tr><td>Max Wattage</td><td>15W</td></tr>
+          <tr><td>Apertures</td><td>4″, 6″</td></tr>
+          <tr><td>CCT Options</td><td>2700K, 3000K, 3500K, 4000K</td></tr>
+          <tr><td>CRI</td><td>≥90</td></tr>
+          <tr><td>Emergency Rating</td><td>UL 924 · 90-minute runtime</td></tr>
+          <tr><td>Location Rating</td><td>Damp</td></tr>
+          <tr><td>Warranty</td><td>7 years (PRO+)</td></tr>
+          <tr><td>Compliance</td><td>JA8 · Title 24 · ENERGY STAR (TBC)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Family band — same 8 families as other multi-family PDPs -->
+    <section aria-label="Other multi-fAMILY families" style="margin-top:3rem;padding-bottom:3rem;">
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:#F32740;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;">
+        <span style="display:block;width:2rem;height:2px;background:#F32740;"></span>
+        OTHER FAMILIES IN MULTI-F<span style="font-family:inherit;">Ⓐ</span>MILY
+      </p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;">
+        {[
+          { name: 'Eclipse-II',    slug: 'eclipse-ii',    tier: 'PRO',  sub: 'Inside the Unit' },
+          { name: 'Radius-II',     slug: 'radius-ii',     tier: 'PRO',  sub: 'Inside the Unit' },
+          { name: 'Nebula-II',     slug: 'nebula-ii',     tier: 'ECO',  sub: 'Inside the Unit' },
+          { name: 'Crescent',      slug: 'crescent',      tier: 'ECO',  sub: 'Inside the Unit' },
+          { name: 'eCrescent',     slug: 'ecrescent',     tier: 'ECO',  sub: 'Inside the Unit' },
+          { name: 'Orbit-I',       slug: 'orbit-i',       tier: 'PRO',  sub: 'Inside the Unit' },
+          { name: 'Lunar Eclipse', slug: 'lunar-eclipse', tier: 'PRO',  sub: 'Inside the Unit' },
+          { name: 'Gehry',         slug: 'gehry',         tier: 'ECO',  sub: 'Housing Cans'    },
+        ].map(f => (
+          <a href={`/products/multi-family/${f.slug}/`}
+             style="display:flex;flex-direction:column;gap:4px;padding:12px;background:#0a0e1a;border:1px solid rgba(255,255,255,0.07);border-radius:6px;text-decoration:none;transition:border-color 0.2s;"
+             onmouseover="this.style.borderColor='rgba(255,255,255,0.2)'"
+             onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);">{f.sub}</span>
+            <span style="font-family:'Lato',system-ui,sans-serif;font-size:0.85rem;font-weight:700;color:#fff;">{f.name}</span>
+            <span style={`font-family:'JetBrains Mono',monospace;font-size:0.6rem;font-weight:700;letter-spacing:0.06em;padding:2px 6px;border-radius:3px;width:fit-content;${
+              f.tier === 'ECO'    ? 'background:#1a2a1a;color:#4caf50;border:1px solid rgba(76,175,80,0.4);' :
+              f.tier === 'PRO'    ? 'background:#1a1a2a;color:#7c9fff;border:1px solid rgba(124,159,255,0.4);' :
+                                    'background:#2a1f10;color:#ffc457;border:1px solid rgba(255,196,87,0.45);'
+            }`}>{f.tier}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</div>
+</BaseLayout>

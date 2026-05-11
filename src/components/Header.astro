@@ -233,8 +233,8 @@ data-preview="/mm-previews/consumer.webp"
 data-preview="/mm-previews/multi-family.webp"
                 data-preview-name="multi-fⒶMILY"
                data-preview-label="Residential · multi-family"
-               data-preview-desc="Apartment-grade downlights and ceiling-mount lighting for multi-family residential developments. Downlight · Housing Cans · Surface Mounts.">
-               multi-f<span class="aa">Ⓐ</span>MILY<span class="mm-cat-sub">Downlight · Housing Cans · Surface Mounts</span>
+               data-preview-desc="Apartment-grade downlights and ceiling-mount lighting for multi-family residential developments. Housing Cans · Recessed Downlights · SafeZone Downlights · Surface Mount.">
+               multi-f<span class="aa">Ⓐ</span>MILY<span class="mm-cat-sub">Housing Cans · Recessed · SafeZone · Surface Mount</span>
             </a>
           </div>
           <!-- LAMPS · 4 categories (B1, v2.5.6) -->
@@ -353,14 +353,12 @@ data-preview="/mm-previews/warehouse-deals.webp"
             <a href="/collections/consumer#camping" class="mm-app-item" data-preview-name="Consumer · Camping" data-preview-label="Consumer · Aisle 05" data-preview-desc="USB-solar charged. Real output. Real runtime. Compact form factors."><span class="mm-aisle-num">05</span> Camping</a>
             <a href="/collections/consumer#party" class="mm-app-item" data-preview-name="Consumer · Party" data-preview-label="Consumer · Aisle 06" data-preview-desc="LED festoon. Bistro string lights. Café-style decorative that survives more than one season."><span class="mm-aisle-num">06</span> Party</a>
           </div>
-          <!-- multi-fⒶMILY applications -->
+          <!-- multi-fⒶMILY applications — §B1: 4 applications, hover-driven tier cards -->
           <div class="mm-app-group" data-app-group="res-multi">
-            <a href="#" class="mm-app-item" data-preview-name="multi-fⒶMILY · Housing Cans" data-preview-label="multi-family · Housing Cans" data-preview-desc="Recessed downlight housings (Gehry series) for multi-family new construction.">Housing Cans</a>
-            <a href="#" class="mm-app-item" data-preview-name="multi-fⒶMILY · Landscape" data-preview-label="multi-family · Landscape" data-preview-desc="Landscape and pathway lighting for multi-family property common areas.">Landscape</a>
-            <a href="#" class="mm-app-item" data-preview-name="multi-fⒶMILY · Recessed Downlights" data-preview-label="multi-family · Recessed" data-preview-desc="Recessed downlights for multi-family construction.">Recessed Downlights</a>
-            <a href="#" class="mm-app-item" data-preview-name="multi-fⒶMILY · SafeZone Downlight" data-preview-label="multi-family · SafeZone" data-preview-desc="SafeZone emergency-ready downlights for multi-family path-of-egress compliance.">SafeZone Downlight</a>
-            <a href="#" class="mm-app-item" data-preview-name="multi-fⒶMILY · Surface Mount Downlights" data-preview-label="multi-family · Surface" data-preview-desc="Surface-mount downlights for multi-family construction — ideal for retrofit.">Surface Mount</a>
-            <a href="#" class="mm-app-item" data-preview-name="multi-fⒶMILY · Vanity Lights" data-preview-label="multi-family · Vanity" data-preview-desc="Bathroom vanity lights for apartments, condos, and MDU properties.">Vanity Lights</a>
+            <a href="/collections/multi-family/?application=housing-cans" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Gehry" data-tier-proplus="" data-preview-name="multi-fⒶMILY · Housing Cans" data-preview-label="RESIDENTIAL · HOUSING CANS" data-preview-desc="Insulation-contact rated commercial recess cans for ground-up multi-family builds. Code-compliant, inspector-ready.">Housing Cans</a>
+            <a href="/collections/multi-family/?application=recessed-downlights" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Nebula-II" data-tier-pro="Radius-II" data-tier-proplus="" data-preview-name="multi-fⒶMILY · Recessed Downlights" data-preview-label="RESIDENTIAL · RECESSED DOWNLIGHTS" data-preview-desc="Apartment-grade recessed downlights for in-unit hallways, kitchens, and common areas. Value-engineered to a per-door budget.">Recessed Downlights</a>
+            <a href="/collections/multi-family/?application=safezone-downlights" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="" data-tier-proplus="Radius SafeZone" data-preview-name="multi-fⒶMILY · SafeZone Downlights" data-preview-label="RESIDENTIAL · SAFEZONE DOWNLIGHTS" data-preview-desc="UL 924 emergency-rated downlights for egress paths and life-safety zones in multi-family corridors.">SafeZone Downlights</a>
+            <a href="/collections/multi-family/?application=surface-mount" class="mm-app-item" data-preview-tiers="1" data-tier-eco="eCrescent" data-tier-pro="Eclipse-II" data-tier-proplus="" data-preview-name="multi-fⒶMILY · Surface Mount" data-preview-label="RESIDENTIAL · SURFACE MOUNT" data-preview-desc="Ceiling-mount fixtures for shallow plenums, retrofits, and exterior walkways. Edge-lit profile with built-in PIR options.">Surface Mount</a>
           </div>
           <!-- constⒶNT applications -->
           <div class="mm-app-group" data-app-group="ctrl-constant">
@@ -1359,6 +1357,15 @@ data-preview="/mm-previews/warehouse-deals.webp"
       'Nightwatch-I':  '/products/nightwatch/',
       'Illuminator-I': '/products/illuminator/',
       'Aura-I':        '/products/aura/',
+      /* multi-fⒶMILY families */
+      'Gehry':           '/products/multi-family/gehry/',
+      'Nebula-II':       '/products/multi-family/nebula-ii/',
+      'Orbit-I':         '/products/multi-family/orbit-i/',
+      'Radius-II':       '/products/multi-family/radius-ii/',
+      'Radius SafeZone': '/products/multi-family/radius-safezone/',
+      'eCrescent':       '/products/multi-family/ecrescent/',
+      'Eclipse-II':      '/products/multi-family/eclipse-ii/',
+      'Lunar Eclipse':   '/products/multi-family/lunar-eclipse/',
     };
     /* Per-product images for tier cards — keyed by data-tier-* value */
     const TIER_IMGS = {
@@ -1379,6 +1386,15 @@ data-preview="/mm-previews/warehouse-deals.webp"
       'Nightwatch-I':  '/images/family-cards/luxoarch/nightwatch.png',
       'Illuminator-I': '/images/family-cards/luxoarch/illuminator.png',
       'Canadarm':      '/images/family-cards/luxoarch/canadarm.png',
+      /* multi-fⒶMILY families — placeholder until product photos are supplied */
+      'Gehry':           '/mm-previews/multi-family.webp',
+      'Nebula-II':       '/mm-previews/multi-family.webp',
+      'Orbit-I':         '/mm-previews/multi-family.webp',
+      'Radius-II':       '/mm-previews/multi-family.webp',
+      'Radius SafeZone': '/mm-previews/multi-family.webp',
+      'eCrescent':       '/mm-previews/multi-family.webp',
+      'Eclipse-II':      '/mm-previews/multi-family.webp',
+      'Lunar Eclipse':   '/mm-previews/multi-family.webp',
     };
 
     window._algSwapApp = function(appEl){ swapAppPreview(appEl); };

@@ -10187,8 +10187,8 @@
         {
           "sku": "CRC4-SB/E26",
           "family": "Gehry",
-          "sub_category": "Commercial Recess Can",
-          "display_echelon": "",
+          "sub_category": "Housing Cans",
+          "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -10199,8 +10199,8 @@
         {
           "sku": "CRC4-SB/T24",
           "family": "Gehry",
-          "sub_category": "Commercial Recess Can",
-          "display_echelon": "",
+          "sub_category": "Housing Cans",
+          "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -10211,8 +10211,8 @@
         {
           "sku": "CRC6-SB/E26",
           "family": "Gehry",
-          "sub_category": "Commercial Recess Can",
-          "display_echelon": "",
+          "sub_category": "Housing Cans",
+          "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -10223,8 +10223,8 @@
         {
           "sku": "CRC6-SB/E26/A19",
           "family": "Gehry",
-          "sub_category": "Commercial Recess Can",
-          "display_echelon": "",
+          "sub_category": "Housing Cans",
+          "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -10235,8 +10235,8 @@
         {
           "sku": "CRC6-SB/E26/BR30",
           "family": "Gehry",
-          "sub_category": "Commercial Recess Can",
-          "display_echelon": "",
+          "sub_category": "Housing Cans",
+          "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -10247,8 +10247,8 @@
         {
           "sku": "CRC6-SB/T24",
           "family": "Gehry",
-          "sub_category": "Commercial Recess Can",
-          "display_echelon": "",
+          "sub_category": "Housing Cans",
+          "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -10259,8 +10259,8 @@
         {
           "sku": "CRC6-SB/T24/LDRR612",
           "family": "Gehry",
-          "sub_category": "Commercial Recess Can",
-          "display_echelon": "",
+          "sub_category": "Housing Cans",
+          "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -10271,8 +10271,8 @@
         {
           "sku": "CRC6-SB/T24/LSMT615",
           "family": "Gehry",
-          "sub_category": "Commercial Recess Can",
-          "display_echelon": "",
+          "sub_category": "Housing Cans",
+          "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -10283,7 +10283,7 @@
         {
           "sku": "LDLL0510-E2S5/B",
           "family": "Eclipse-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             10
@@ -10305,7 +10305,7 @@
         {
           "sku": "LDLL0510-E2S5/W",
           "family": "Eclipse-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             10
@@ -10327,7 +10327,7 @@
         {
           "sku": "LDLL0712-E2S5/W/S",
           "family": "Eclipse-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             12
@@ -10349,7 +10349,7 @@
         {
           "sku": "LDLL0715-E2S5/B",
           "family": "Eclipse-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             15
@@ -10371,7 +10371,7 @@
         {
           "sku": "LDLL0715-E2S5/W",
           "family": "Eclipse-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             15
@@ -10393,7 +10393,7 @@
         {
           "sku": "LDLL0918-E2S5/B",
           "family": "Eclipse-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             18
@@ -10415,7 +10415,7 @@
         {
           "sku": "LDLL0918-E2S5/W",
           "family": "Eclipse-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             18
@@ -10437,7 +10437,7 @@
         {
           "sku": "LDLL0918-E2S5/W/S",
           "family": "Eclipse-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             18
@@ -10459,7 +10459,7 @@
         {
           "sku": "LDLL1121-E2S5/B",
           "family": "Eclipse-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             21
@@ -10481,7 +10481,7 @@
         {
           "sku": "LDLL1121-E2S5/W",
           "family": "Eclipse-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             21
@@ -10503,7 +10503,7 @@
         {
           "sku": "LDLL1122-E2S5/W/S",
           "family": "Eclipse-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             22
@@ -10525,7 +10525,7 @@
         {
           "sku": "LDLL1324-E2S5/B",
           "family": "Eclipse-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             24
@@ -10547,7 +10547,7 @@
         {
           "sku": "LDLL1324-E2S5/W",
           "family": "Eclipse-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             24
@@ -10569,7 +10569,7 @@
         {
           "sku": "LDLL0510-LE1S5/B",
           "family": "Lunar Eclipse",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             10
@@ -10591,7 +10591,7 @@
         {
           "sku": "LDLL0715-LE1S5/B",
           "family": "Lunar Eclipse",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             15
@@ -10613,7 +10613,7 @@
         {
           "sku": "LDLL0918-LE1S5/B",
           "family": "Lunar Eclipse",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             18
@@ -10635,7 +10635,7 @@
         {
           "sku": "LDRR410-S5-N2/B/BK",
           "family": "Nebula-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -10657,7 +10657,7 @@
         {
           "sku": "LDRR410-S5-N2/B/BK/12PK",
           "family": "Nebula-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -10679,7 +10679,7 @@
         {
           "sku": "LDRR410-S5-N2/B/BZ",
           "family": "Nebula-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -10701,7 +10701,7 @@
         {
           "sku": "LDRR410-S5-N2/B/BZ/12PK",
           "family": "Nebula-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -10723,7 +10723,7 @@
         {
           "sku": "LDRR410-S5-N2/B/W",
           "family": "Nebula-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -10745,7 +10745,7 @@
         {
           "sku": "LDRR410-S5-N2/B/W/12PK",
           "family": "Nebula-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -10767,7 +10767,7 @@
         {
           "sku": "LDRR615-S5-N2/B/BK",
           "family": "Nebula-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -10789,7 +10789,7 @@
         {
           "sku": "LDRR615-S5-N2/B/BK/12PK",
           "family": "Nebula-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -10811,7 +10811,7 @@
         {
           "sku": "LDRR615-S5-N2/B/BZ",
           "family": "Nebula-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -10833,7 +10833,7 @@
         {
           "sku": "LDRR615-S5-N2/B/BZ/12PK",
           "family": "Nebula-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -10855,7 +10855,7 @@
         {
           "sku": "LDRR615-S5-N2/B/W",
           "family": "Nebula-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -10877,7 +10877,7 @@
         {
           "sku": "LDRR615-S5-N2/B/W/12PK",
           "family": "Nebula-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -10898,7 +10898,7 @@
         },
         {
           "sku": "LDGR410-S5/O1/B",
-          "family": "Orbit",
+          "family": "Orbit-I",
           "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
@@ -10920,7 +10920,7 @@
         },
         {
           "sku": "LDGR410-S5/O1/W",
-          "family": "Orbit",
+          "family": "Orbit-I",
           "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
@@ -10942,7 +10942,7 @@
         },
         {
           "sku": "LDGR615-S5/O1/B",
-          "family": "Orbit",
+          "family": "Orbit-I",
           "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
@@ -10964,7 +10964,7 @@
         },
         {
           "sku": "LDGR615-S5/O1/W",
-          "family": "Orbit",
+          "family": "Orbit-I",
           "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
@@ -10987,8 +10987,8 @@
         {
           "sku": "LDRS306-RSZ5/B",
           "family": "Radius SafeZone",
-          "sub_category": "Downlight",
-          "display_echelon": "PRO+",
+          "sub_category": "SafeZone / Egress",
+          "display_echelon": "PRO",
           "wattages": [
             6
           ],
@@ -11009,8 +11009,8 @@
         {
           "sku": "LDRS306-RSZ5/F",
           "family": "Radius SafeZone",
-          "sub_category": "Downlight",
-          "display_echelon": "PRO+",
+          "sub_category": "SafeZone / Egress",
+          "display_echelon": "PRO",
           "wattages": [
             6
           ],
@@ -11031,8 +11031,8 @@
         {
           "sku": "LDRS411-RSZ5/B",
           "family": "Radius SafeZone",
-          "sub_category": "Downlight",
-          "display_echelon": "PRO+",
+          "sub_category": "SafeZone / Egress",
+          "display_echelon": "PRO",
           "wattages": [
             11
           ],
@@ -11053,8 +11053,8 @@
         {
           "sku": "LDRS411-RSZ5/F",
           "family": "Radius SafeZone",
-          "sub_category": "Downlight",
-          "display_echelon": "PRO+",
+          "sub_category": "SafeZone / Egress",
+          "display_echelon": "PRO",
           "wattages": [
             11
           ],
@@ -11075,8 +11075,8 @@
         {
           "sku": "LDRS615-RSZ5/B",
           "family": "Radius SafeZone",
-          "sub_category": "Downlight",
-          "display_echelon": "PRO+",
+          "sub_category": "SafeZone / Egress",
+          "display_echelon": "PRO",
           "wattages": [
             15
           ],
@@ -11097,8 +11097,8 @@
         {
           "sku": "LDRS615-RSZ5/F",
           "family": "Radius SafeZone",
-          "sub_category": "Downlight",
-          "display_echelon": "PRO+",
+          "sub_category": "SafeZone / Egress",
+          "display_echelon": "PRO",
           "wattages": [
             15
           ],
@@ -11119,8 +11119,8 @@
         {
           "sku": "LDRS819-RSZ5/B",
           "family": "Radius SafeZone",
-          "sub_category": "Downlight",
-          "display_echelon": "PRO+",
+          "sub_category": "SafeZone / Egress",
+          "display_echelon": "PRO",
           "wattages": [
             19
           ],
@@ -11141,8 +11141,8 @@
         {
           "sku": "LDRS819-RSZ5/F",
           "family": "Radius SafeZone",
-          "sub_category": "Downlight",
-          "display_echelon": "PRO+",
+          "sub_category": "SafeZone / Egress",
+          "display_echelon": "PRO",
           "wattages": [
             19
           ],
@@ -11163,7 +11163,7 @@
         {
           "sku": "LDRS409-R2S5/F",
           "family": "Radius-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             9
@@ -11185,7 +11185,7 @@
         {
           "sku": "LDRS409-R2S5/F/12PK",
           "family": "Radius-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             9
@@ -11207,7 +11207,7 @@
         {
           "sku": "LDRS612-R2S5/F",
           "family": "Radius-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             12
@@ -11229,7 +11229,7 @@
         {
           "sku": "LDRS612-R2S5/F/12PK",
           "family": "Radius-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             12
@@ -11251,7 +11251,7 @@
         {
           "sku": "LDRS818-R2S5/F",
           "family": "Radius-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             18
@@ -11273,7 +11273,7 @@
         {
           "sku": "LDRS818-R2S5/F/12PK",
           "family": "Radius-II",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "PRO",
           "wattages": [
             18
@@ -11295,7 +11295,7 @@
         {
           "sku": "LSMT410-S5E",
           "family": "eCrescent",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -11317,7 +11317,7 @@
         {
           "sku": "LSMT410-S5E/24PK",
           "family": "eCrescent",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -11339,7 +11339,7 @@
         {
           "sku": "LSMT615-S5E",
           "family": "eCrescent",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -11361,7 +11361,7 @@
         {
           "sku": "LSMT615-S5E/24PK",
           "family": "eCrescent",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -11383,33 +11383,10 @@
         {
           "sku": "LSMT615-S5E/P",
           "family": "eCrescent",
-          "sub_category": "Downlight",
+          "sub_category": "Inside the Unit",
           "display_echelon": "ECO",
           "wattages": [
             15
-          ],
-          "ccts": [
-            "2700K",
-            "3000K",
-            "3500K",
-            "4000K",
-            "5000K"
-          ],
-          "voltage": "120V ONLY",
-          "mount_types": [
-            "Surface Mount"
-          ],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "LSFL25-5CS/B/W1",
-          "family": "Wally",
-          "sub_category": "Security Flood",
-          "display_echelon": "ECO",
-          "wattages": [
-            16,
-            25
           ],
           "ccts": [
             "2700K",
@@ -11429,8 +11406,8 @@
       "families": [
         {
           "family": "Gehry",
-          "sub_category": "Commercial Recess Can",
-          "display_echelon": "",
+          "sub_category": "Housing Cans",
+          "display_echelon": "PRO",
           "max_wattage": 0,
           "sku_count": 8,
           "dlc": false,
@@ -11442,7 +11419,7 @@
         },
         {
           "family": "eCrescent",
-          "sub_category": "Downlight",
+          "sub_category": "Surface Mount",
           "display_echelon": "ECO",
           "max_wattage": 15,
           "sku_count": 5,
@@ -11465,7 +11442,7 @@
         },
         {
           "family": "Nebula-II",
-          "sub_category": "Downlight",
+          "sub_category": "Recessed Downlights",
           "display_echelon": "ECO",
           "max_wattage": 15,
           "sku_count": 12,
@@ -11487,8 +11464,8 @@
           "pdpUrl": "/products/multi-family/nebula-ii/"
         },
         {
-          "family": "Orbit",
-          "sub_category": "Downlight",
+          "family": "Orbit-I",
+          "sub_category": "Recessed Downlights",
           "display_echelon": "ECO",
           "max_wattage": 15,
           "sku_count": 4,
@@ -11511,7 +11488,7 @@
         },
         {
           "family": "Eclipse-II",
-          "sub_category": "Downlight",
+          "sub_category": "Surface Mount",
           "display_echelon": "PRO",
           "max_wattage": 24,
           "sku_count": 13,
@@ -11534,7 +11511,7 @@
         },
         {
           "family": "Lunar Eclipse",
-          "sub_category": "Downlight",
+          "sub_category": "Surface Mount",
           "display_echelon": "PRO",
           "max_wattage": 18,
           "sku_count": 3,
@@ -11557,7 +11534,7 @@
         },
         {
           "family": "Radius-II",
-          "sub_category": "Downlight",
+          "sub_category": "Recessed Downlights",
           "display_echelon": "PRO",
           "max_wattage": 18,
           "sku_count": 6,
@@ -11580,7 +11557,7 @@
         },
         {
           "family": "Radius SafeZone",
-          "sub_category": "Downlight",
+          "sub_category": "SafeZone Downlights",
           "display_echelon": "PRO+",
           "max_wattage": 19,
           "sku_count": 8,
@@ -11598,29 +11575,8 @@
           "mount_types": [
             "Recessed Mount"
           ],
-          "taa": false
-        },
-        {
-          "family": "Wally",
-          "sub_category": "Security Flood",
-          "display_echelon": "ECO",
-          "max_wattage": 25,
-          "sku_count": 1,
-          "dlc": false,
-          "ccts": [
-            "2700K",
-            "3000K",
-            "3500K",
-            "4000K",
-            "5000K"
-          ],
-          "voltages": [
-            "120V ONLY"
-          ],
-          "mount_types": [
-            "Surface Mount"
-          ],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/multi-family/radius-safezone/"
         }
       ]
     },
