@@ -1,0 +1,1330 @@
+---
+/**
+ * TP24 Gehry J-Box — Submittal Sheet — Submittal Generator
+ * Route: /products/multi-family/gehry/submittal/
+ * 
+ * Standalone print-optimized page. No site header/footer.
+ * URL params auto-populate the submittal fields.
+ * Fires window.print() 600ms after load (suppress with ?autoprint=0).
+ * 
+ * Source: submittal_gehry.html
+ */
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CRC Gehry — Submittal Sheet</title>
+
+<!--
+  ALG GEHRY (CRC) SUBMITTAL TEMPLATE v1
+  =====================================
+  Reads URL query params from the §8 configurator and auto-fills:
+    - Catalog number (4 page headers + project info form)
+    - Quick spec grid (Can Aperture / Bracket Footprint / Base Type / etc.)
+    - Ordering code visual breakdown (CRC · &#123;N&#125; · -SB · /&#123;E26|T24&#125; · [/WH])
+    - Companion BOM list (LED retrofit module + lamp + dimmer)
+    - 75W PAR30 photometric reference baseline (housing has no native IES)
+
+  Param schema (matches buildSubmittalUrl() in mockup_gehry_pdp_v1.html):
+    ?sku=CRC6-SB-E26
+    &size=4|6
+    &base=E26|T24
+    [&module=NEBULA-II|ECRESCENT|RADIUS-II|ECLIPSE-II|LUNAR-ECLIPSE|ORBIT-I]
+    [&module_sku=LDRR410|LDRR615|LSMT410|LSMT615|LDRS4|LDRS6|LDLL0510|LDLL0715|LDGR410|LDGR615]
+    [&module_name=<descriptor>]   (size-matched human-readable line)
+    [&lamp=A19-27|A19-30|A19-35|A19-40|A19-50]
+    [&lamp_sku=LTA19F800&#123;27|30|35|40|50&#125;MB]
+    [&autoprint=1]     ← auto-trigger window.print() on load (default behavior)
+
+  Companion size-match rules (CFG-COMPANION-SIZE-MATCH):
+    CRC4 housing → 4″ module SKU (LDRR410 / LSMT410 / LDRS4 / LDGR410)
+                or  closest fit (LDLL0510 5″ for Eclipse-II + Lunar Eclipse)
+    CRC6 housing → 6″ module SKU (LDRR615 / LSMT615 / LDRS6 / LDGR615)
+                or  closest fit (LDLL0715 7″ for Eclipse-II + Lunar Eclipse)
+    A19 lamp     → size-agnostic (medium-base E26 fits both housing sizes).
+  Nebula-II (LDRR) is the canonical / hero pair — designed alongside Gehry.
+
+  Print: page auto-fires window.print() 600 ms after load. The user gets the
+  browser's Save-as-PDF dialog without an extra click. To suppress, append
+  &autoprint=0 to the URL.
+
+  NOTE: All 4 pages are now Gehry-native (v1 completion sweep 2026-05-08). The
+  Page 2 spec table is rebuilt around the housing-only spec set (no LED engine,
+  no driver, no built-in light source). Page 3 dimensions are rebuilt around
+  the CRC4 / CRC6 can + bracket footprint with a redrawn Top + Side SVG showing
+  the joist + can + TP24 + remote J-Box. Sibling-context references to
+  Radius-II / eCrescent / Eclipse-II / Lunar Eclipse / Orbit-I LED retrofit
+  modules are preserved (these are the multi-fⒶMILY light sources that drop
+  INTO the Gehry housing via the TP24 J-Box).
+-->
+
+<style>
+  /* ============= PRINT-OPTIMIZED CSS ============= */
+  @page {
+    size: letter portrait;
+    margin: 0.5in 0.6in;
+  }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+    .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+    .page:last-of-type { page-break-after: auto; }
+  }
+
+  /* ============= TYPE + COLOR TOKENS — match Gehry PDP palette ============= */
+  :root {
+    --brand-red: #E3353C;
+    --ink: #0E0E10;
+    --ink-2: #2A2A2D;
+    --muted: #6B6B70;
+    --rule: #DCDEE2;
+    --rule-strong: #A6A4A0;
+    --tint: #F1ECE3;        /* warm-paper background — matches PDP --bg-darker */
+    --hi: #FFF6E5;
+    --grn: #0FAE7C;
+    --yel: #FDD85E;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Sora', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.5pt;
+    line-height: 1.4;
+    background: #E8E6E2;
+  }
+  body { padding: 24px 12px; }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 24px;
+    padding: 0.55in 0.65in;
+    background: white;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  h1, h2, h3, h4 { font-family: 'Sora', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+  .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+  .aa { font-family: 'Sora', sans-serif; }   /* Ⓐ glyph wrapper — same font as body, no special handling */
+
+  /* ============= PAGE HEADER (every page) ============= */
+  .submittal-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+  .submittal-head .brand-mark {
+    width: 28px; height: 28px; background: var(--brand-red);
+    display: inline-block;
+  }
+  .submittal-head .brand-name {
+    font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1;
+  }
+  .submittal-head .brand-sub {
+    font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .submittal-head .catalog-block { text-align: right; }
+  .submittal-head .catalog-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .submittal-head .catalog-number {
+    font-size: 12pt; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+    border: 1.5px solid var(--ink);
+    padding: 4px 10px; display: inline-block;
+    letter-spacing: 0.5pt;
+  }
+
+  /* ============= PROJECT INFO FORM ============= */
+  .project-info {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    border: 1px solid var(--rule-strong); margin-bottom: 14px;
+  }
+  .pi-cell {
+    padding: 6px 9px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    min-height: 38px;
+  }
+  .pi-cell:nth-child(3n) { border-right: none; }
+  .pi-cell:nth-child(n+4) { border-bottom: none; }
+  .pi-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .pi-value {
+    border-bottom: 1px dotted var(--rule-strong); min-height: 14px; padding-top: 2px;
+  }
+
+  /* ============= PRODUCT TITLE BAND ============= */
+  .product-title { margin: 14px 0 14px; }
+  .product-title h1 { font-size: 22pt; line-height: 1; margin: 0; }
+  .product-title .tagline {
+    font-size: 10pt; color: var(--ink-2); margin-top: 4px; line-height: 1.3;
+  }
+
+  /* ============= HERO + QUICK SPECS GRID ============= */
+  .at-a-glance {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; margin-bottom: 12px;
+  }
+  .hero-img {
+    background: var(--tint); border: 1px solid var(--rule);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-img img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+  .qs-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  }
+  .qs-cell {
+    border: 1px solid var(--rule-strong); padding: 8px 10px; min-height: 56px;
+  }
+  .qs-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 3px;
+  }
+  .qs-value { font-size: 14pt; font-weight: 700; line-height: 1.05; }
+  .qs-unit { font-size: 8pt; font-weight: 400; color: var(--muted); margin-left: 2px; }
+
+  /* ============= FEATURE BAND ============= */
+  .feature-band {
+    background: var(--ink); color: white;
+    padding: 8px 14px;
+    display: flex; gap: 18px; align-items: center;
+    margin-bottom: 12px;
+  }
+  .feature-band .fb-pill {
+    background: var(--brand-red); color: white;
+    font-size: 7pt; font-weight: 700; letter-spacing: 1.2pt;
+    padding: 3px 7px; text-transform: uppercase;
+  }
+  .feature-band .fb-features { font-size: 9pt; line-height: 1.3; }
+  .feature-band .fb-features strong { font-weight: 700; }
+
+  /* ============= COMPANION BOM PANEL (page 1) ============= */
+  .bom-panel {
+    border: 1px dashed var(--brand-red);
+    background: rgba(227, 53, 60, 0.04);
+    padding: 10px 14px; margin: 10px 0 12px;
+  }
+  .bom-eyebrow {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .bom-list {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4px 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 9pt;
+  }
+  .bom-list li { display: flex; gap: 6px; }
+  .bom-list li .plus { color: var(--brand-red); font-weight: 700; }
+  .bom-list li .pair-name {
+    font-family: 'Sora', sans-serif; font-size: 8pt; color: var(--muted); display: block;
+  }
+
+  /* ============= SELECTED COMPANION DETAIL CARD (page 1) =============
+     Shows when state.module is set — renders the size-matched, real-numbers
+     spec card (W / lm / lpw / CCT / DLC / warranty + pair rationale). */
+  .companion-detail {
+    border: 1.5px solid var(--brand-red);
+    background: rgba(227, 53, 60, 0.04);
+    padding: 10px 14px;
+    margin: 8px 0 12px;
+    display: none;
+  }
+  .companion-detail.show { display: block; }
+  .companion-detail-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 10px;
+    border-bottom: 1px solid var(--rule-strong);
+    padding-bottom: 6px; margin-bottom: 8px;
+  }
+  .companion-detail-eyebrow {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--brand-red);
+    text-transform: uppercase; font-weight: 700;
+  }
+  .companion-detail-sku {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11pt; font-weight: 700; color: var(--ink);
+    letter-spacing: 0.4pt;
+  }
+  .companion-detail-title {
+    font-size: 9.5pt; font-weight: 700; color: var(--ink); margin-bottom: 4px;
+  }
+  .companion-detail-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 6px 12px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 6px 0; margin-bottom: 6px;
+  }
+  .companion-spec-cell { display: flex; flex-direction: column; gap: 2px; }
+  .companion-spec-key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6.5pt; letter-spacing: 1pt;
+    color: var(--muted); text-transform: uppercase; font-weight: 700;
+  }
+  .companion-spec-val {
+    font-size: 9pt; font-weight: 700; color: var(--ink); line-height: 1.2;
+  }
+  .companion-detail-rationale {
+    font-size: 8pt; color: var(--ink-2); line-height: 1.4;
+  }
+  .companion-detail-rationale strong { color: var(--ink); }
+
+  /* Page 2 Companion table — flag the selected row with a left-border + tint */
+  .spec-table tr.is-selected td {
+    background: rgba(227, 53, 60, 0.06);
+    border-left: 3px solid var(--brand-red);
+  }
+  .spec-table tr.is-selected .spec-attr::before {
+    content: '★ SELECTED · ';
+    color: var(--brand-red); font-weight: 700;
+    font-size: 7pt; letter-spacing: 0.6pt;
+  }
+
+  /* ============= APPROVAL SIGNATURE BLOCK ============= */
+  .approval-block {
+    display: grid; grid-template-columns: 2fr 1fr; gap: 18px;
+    margin-top: 14px; padding-top: 8px;
+    border-top: 1px dashed var(--rule-strong);
+  }
+  .approval-cell {
+    display: grid; grid-template-columns: max-content 1fr;
+    gap: 8px; align-items: end; font-size: 8pt;
+  }
+  .approval-line { border-bottom: 1px solid var(--ink); height: 16px; }
+
+  /* ============= SECTION HEAD (page 2+) ============= */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 4px; margin-bottom: 10px; margin-top: 4px;
+  }
+  .section-head h2 { font-size: 14pt; line-height: 1; }
+  .section-head .section-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= SPEC TABLE ============= */
+  .spec-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  .spec-table th, .spec-table td {
+    text-align: left; padding: 5px 8px;
+    border-bottom: 1px solid var(--rule); vertical-align: top;
+  }
+  .spec-table .spec-section-head td {
+    background: var(--tint);
+    font-weight: 700; font-size: 9pt; letter-spacing: 0.3pt;
+    border-bottom: 1px solid var(--rule-strong);
+    padding: 6px 8px;
+  }
+  .spec-table .spec-attr { width: 30%; font-weight: 600; color: var(--ink-2); }
+  .spec-table .spec-val  { width: 70%; }
+
+  /* ============= ORDERING CODE MATRIX ============= */
+  .order-code {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px;
+    margin-bottom: 10px;
+  }
+  .order-segment {
+    background: var(--tint); border: 1px solid var(--rule-strong);
+    padding: 8px 6px; text-align: center;
+  }
+  .order-segment.active {
+    background: var(--brand-red); color: white; border-color: var(--brand-red);
+  }
+  .order-segment.fixed {
+    background: var(--ink); color: white; border-color: var(--ink);
+  }
+  .order-seg-label {
+    font-size: 7pt; letter-spacing: 1pt; text-transform: uppercase;
+    margin-bottom: 4px; opacity: 0.85;
+  }
+  .order-seg-value {
+    font-family: 'JetBrains Mono', monospace; font-size: 11pt; font-weight: 700;
+  }
+  .order-matrix { width: 100%; border-collapse: collapse; font-size: 7.5pt; }
+  .order-matrix th, .order-matrix td {
+    border: 1px solid var(--rule); padding: 4px 6px; text-align: left;
+    vertical-align: top;
+  }
+  .order-matrix th {
+    background: var(--ink); color: white;
+    font-size: 7pt; letter-spacing: 1pt; text-transform: uppercase;
+  }
+  .order-matrix .code {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; width: 80px;
+  }
+
+  /* ============= DIMENSIONS LAYOUT ============= */
+  .dim-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 14px; }
+  .dim-view {
+    border: 1px solid var(--rule-strong);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    background: white; position: relative; overflow: hidden;
+  }
+  .dim-view img, .dim-view svg { width: 100%; height: 100%; object-fit: contain; }
+  .dim-view-label {
+    position: absolute; top: 4px; left: 6px;
+    font-size: 7pt; letter-spacing: 1pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= PHOTOMETRIC DATA ============= */
+  .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .photo-polar {
+    border: 1px solid var(--rule-strong); padding: 10px;
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    background: white; overflow: hidden;
+  }
+  .photo-polar svg { width: 100%; height: 100%; }
+  .photo-summary { border: 1px solid var(--rule); }
+  .photo-summary table { width: 100%; border-collapse: collapse; font-size: 8pt; }
+  .photo-summary table td {
+    padding: 4px 8px; border-bottom: 1px solid var(--rule);
+  }
+  .photo-summary table tr:last-child td { border-bottom: none; }
+  .photo-summary td:first-child { color: var(--muted); }
+  .photo-summary td:last-child {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; text-align: right;
+  }
+
+  /* ============= CERTIFICATIONS ============= */
+  .certs {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 8px 10px; border: 1px solid var(--rule); margin-top: 10px;
+  }
+  .cert-badge {
+    font-size: 7.5pt; font-weight: 700;
+    border: 1.5px solid var(--ink); padding: 3px 8px;
+    letter-spacing: 0.6pt; text-transform: uppercase;
+  }
+  .cert-badge.brand { border-color: var(--brand-red); color: var(--brand-red); }
+
+  /* ============= PAGE FOOTER ============= */
+  .page-foot {
+    position: absolute;
+    bottom: 0.4in; left: 0.65in; right: 0.65in;
+    display: flex; justify-content: space-between;
+    font-size: 7pt; color: var(--muted);
+    padding-top: 6px; border-top: 1px solid var(--rule);
+  }
+
+  /* ============= NO-PRINT CONTROLS BAR ============= */
+  .controls {
+    max-width: 8.5in; margin: 0 auto 18px;
+    background: white; padding: 14px 18px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  }
+  .controls .ctrl-label {
+    font-size: 9pt; font-weight: 600; color: var(--muted);
+    letter-spacing: 0.5pt; text-transform: uppercase;
+  }
+  .controls .ctrl-value {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11pt;
+  }
+  .controls button {
+    background: var(--brand-red); color: white;
+    border: none; padding: 8px 16px;
+    font-family: inherit; font-weight: 700; font-size: 9pt;
+    letter-spacing: 0.5pt; text-transform: uppercase;
+    cursor: pointer; margin-left: auto;
+  }
+  .controls button:hover { background: #B0252B; }
+  .controls .ctrl-back {
+    background: transparent; color: var(--ink); border: 1px solid var(--ink);
+    margin-left: 8px;
+  }
+  .controls .ctrl-back:hover { background: var(--ink); color: white; }
+</style>
+</head>
+<body>
+
+<!-- ============= NO-PRINT CONTROLS BAR =============
+     The Save-as-PDF button stays accessible after the auto-print fires —
+     in case the user dismissed the print dialog and wants a second shot.
+     The Back-to-Configurator link rewinds to the PDP using document.referrer. -->
+<div class="controls no-print">
+  <div>
+    <div class="ctrl-label">Configured SKU</div>
+    <div class="ctrl-value" id="liveSku">CRC6-SB-E26</div>
+  </div>
+  <div>
+    <div class="ctrl-label">Generated</div>
+    <div class="ctrl-value" id="liveDate" style="font-size:9pt; font-weight:400;">—</div>
+  </div>
+  <button onclick="window.print()">Save as PDF →</button>
+  <button class="ctrl-back" onclick="history.length > 1 ? history.back() : window.close()">← Back to Configurator</button>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — AT A GLANCE                                          -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum">CRC6-SB-E26</div>
+    </div>
+  </div>
+
+  <div class="project-info">
+    <div class="pi-cell"><div class="pi-label">Project</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Type</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Catalog #</div><div class="pi-value" id="piCatNum"></div></div>
+    <div class="pi-cell"><div class="pi-label">Prepared By</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Notes</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Date</div><div class="pi-value"></div></div>
+  </div>
+
+  <div class="product-title">
+    <h1 id="productTitle">CRC Gehry Series · 6″ Universal Recessed Housing (E26 Legacy Lamp Socket)</h1>
+    <div class="tagline" id="productTagline">
+      Multi-fⒶMILY PRO-tier universal recessed housing &middot; 2 sizes (CRC4 / CRC6) &middot; 2 base types (E26 legacy lamp socket / T24 California Title 24 JA8-2022-E LED-only) &middot; TP24 Quick Connect coupler in the J-Box &middot; AIR-TIGHT &middot; AIR-SHUT &middot; IC Rated &middot; Die-formed aluminum can with pre-installed swivel bracket and adjustable bar hangers (24&Prime; OC default · field-shortenable to 12&Prime; OC) &middot; 90&deg; pivoting bracket plate &middot; UL / cULus / ETL / Title 20 + Title 24/JA8 (T24 SKU) &middot; Universal lamp envelope: PAR30 / PAR38 / R30 / BR30 / BR40 / A19 (incandescent / halogen / LED) plus the multi-f<span class="aa">Ⓐ</span>MILY RL Series LED Retrofit Modules (eCrescent / Radius-II / Eclipse-II / Lunar Eclipse / Orbit-I)
+    </div>
+  </div>
+
+  <div class="at-a-glance">
+    <div class="hero-img">
+      <!-- Real Gehry hero image. JS swaps based on the size param (both sizes
+           share gehry-hero-1.png — only 1 main hero photo per size on disk;
+           flagged Phase 2.99 carry-forward for differentiation). -->
+      <img id="heroImg" src="/products/multi-family/gehry/assets/gehry/gehry-hero-1.png"
+           alt="CRC Gehry — universal recessed housing, die-formed aluminum can with pre-installed swivel bracket + adjustable bar hangers + remote J-Box with TP24 Quick Connect, front 3/4 angle" />
+    </div>
+    <div class="qs-grid">
+      <div class="qs-cell">
+        <div class="qs-label">Can Aperture</div>
+        <div class="qs-value" id="qsLumens">6 1/2&Prime; W &times; 7 3/8&Prime; H</div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Bracket Footprint</div>
+        <div class="qs-value" id="qsWatts">11 7/8&Prime; W &times; 14 7/8&Prime; L</div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Base Type</div>
+        <div class="qs-value" id="qsLpw">E26 (legacy / universal)</div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Ceiling Thickness</div>
+        <div class="qs-value">1/2&Prime; – 1-3/8&Prime; <span class="qs-unit">adj</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Joist Span</div>
+        <div class="qs-value">24&Prime; OC <span class="qs-unit">(12&Prime; field-shortenable)</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Voltage · Material</div>
+        <div class="qs-value">120Vac · Die-formed Al</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feature-band">
+    <div class="fb-pill">7-AMPLIFIER STACK</div>
+    <div class="fb-features">
+      <strong>One housing, two install paths</strong> (E26 legacy + T24 JA8 LED-only) &middot;
+      <strong>TP24 Quick Connect</strong> coupler included in the J-Box &middot;
+      <strong>AIR-TIGHT &middot; AIR-SHUT &middot; IC Rated</strong> (ASTM E283 &lt; 2.0 CFM @ 75 Pa) &middot;
+      <strong>Title 20 + Title 24 / JA8-2022-E</strong> on the T24 SKU (CA-spec) &middot;
+      <strong>Universal lamp compatibility</strong> (PAR30 / PAR38 / R30 / BR30 / BR40 / A19) &middot;
+      <strong>Pre-installed bar hangers + 90&deg; pivoting plate</strong> &middot;
+      <strong>multi-f<span class="aa">Ⓐ</span>MILY designer-name family</strong> &middot;
+      Die-formed aluminum can &middot;
+      Pairs natively with <strong>Nebula-II ★ (recommended)</strong> / eCrescent / Radius-II / Eclipse-II / Lunar Eclipse / Orbit-I LED modules via the TP24 J-Box
+    </div>
+  </div>
+
+  <!-- Companion BOM — only shows when at least one companion is selected.
+       Populated by JS from the URL params (module + module_sku + module_name · lamp + lamp_sku). -->
+  <div class="bom-panel" id="bomPanel" style="display:none;">
+    <div class="bom-eyebrow">Pair-With · Separate Line Items</div>
+    <ul class="bom-list" id="bomList"></ul>
+  </div>
+
+  <!-- Selected Companion · Module Detail — rich spec card that prints the
+       size-matched, real-numbers spec block when a module is picked.
+       Populated by renderCompanionDetail() in the JS pipeline. -->
+  <div class="companion-detail" id="modDetail">
+    <div class="companion-detail-head">
+      <div>
+        <div class="companion-detail-eyebrow" id="modDetailEyebrow">Selected Companion · LED Retrofit Module</div>
+        <div class="companion-detail-title" id="modDetailTitle">—</div>
+      </div>
+      <div class="companion-detail-sku" id="modDetailSku">—</div>
+    </div>
+    <div class="companion-detail-grid" id="modDetailGrid">
+      <!-- 8 spec cells injected by JS: Size · Wattage · Lumens · lm/W · CCT · CRI · DLC Tier · Warranty -->
+    </div>
+    <div class="companion-detail-rationale" id="modDetailRationale">—</div>
+  </div>
+
+  <!-- Selected Companion · A19 Lamp Detail — rendered when a lamp is picked. -->
+  <div class="companion-detail" id="lampDetail">
+    <div class="companion-detail-head">
+      <div>
+        <div class="companion-detail-eyebrow">Selected Companion · A19 Lamp</div>
+        <div class="companion-detail-title" id="lampDetailTitle">—</div>
+      </div>
+      <div class="companion-detail-sku" id="lampDetailSku">—</div>
+    </div>
+    <div class="companion-detail-grid" id="lampDetailGrid">
+      <!-- spec cells injected by JS: Wattage · Lumens · lm/W · CCT · Base · Application -->
+    </div>
+    <div class="companion-detail-rationale" id="lampDetailRationale">—</div>
+  </div>
+
+  <div class="approval-block">
+    <div class="approval-cell">
+      <span><strong>Approved by</strong></span>
+      <div class="approval-line"></div>
+    </div>
+    <div class="approval-cell">
+      <span><strong>Date</strong></span>
+      <div class="approval-line"></div>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · CRC Gehry submittal · UL + cULus + ETL + IC + Air-Tight + Title 20/24 (T24 SKU) · Specifications subject to change</div>
+    <div>Rev. <span id="revDate">2026-05</span> · Page 1 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — SPECIFICATIONS                                       -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum2">CRC6-SB-E26</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Specifications</h2>
+    <div class="section-eyebrow" id="specEyebrow">CRC Gehry · 4&Prime; + 6&Prime; Universal Recessed Housing · E26 Legacy or T24 / JA8 LED-Only · die-formed aluminum can · TP24 Quick Connect J-Box · IC + AIR-TIGHT</div>
+  </div>
+
+  <table class="spec-table">
+    <tbody>
+      <tr class="spec-section-head"><td colspan="2">Construction</td></tr>
+      <tr><td class="spec-attr">Can Body</td><td class="spec-val">Die-formed all-aluminum can (per CRC6-Gehry-Datasheet.pdf page 1) &middot; cylindrical above-ceiling profile &middot; radiates passively into the joist cavity. <em>Honesty marker: older 2023 QuickSheet says &ldquo;steel construction&rdquo; &mdash; flagged for engineering reconciliation.</em></td></tr>
+      <tr><td class="spec-attr">Bracket</td><td class="spec-val">Pre-installed Swivel Bracket (-SB suffix · only bracket type currently shipping · future-proofed for additional bracket designs) &middot; <strong>90&deg; pivoting plate</strong> lets the can rotate flush against either joist for skinny-cavity installs &middot; bracket footprint scales with can size: 8 1/8&Prime; W &times; 11 7/8&Prime; L (CRC4) or 11 7/8&Prime; W &times; 14 7/8&Prime; L (CRC6)</td></tr>
+      <tr><td class="spec-attr">Bar Hangers</td><td class="spec-val">Pre-installed adjustable bar hangers &middot; 24&Prime; on-center joist span default &middot; <strong>field-shortenable to 12&Prime; OC</strong> for legacy framing or remodel cavities &middot; 4&times; double-headed nail holes through bracket plate for joist-crown attachment</td></tr>
+      <tr><td class="spec-attr">Finish</td><td class="spec-val">Default: unbadged die-formed aluminum &middot; Optional: <code>/WH</code> white-painted accessory variant (display-only suffix · appended to SKU as <code>/WH</code> · not part of housing&rsquo;s required spec)</td></tr>
+      <tr><td class="spec-attr">J-Box</td><td class="spec-val">Remote Plug-n-Play J-Box ships with the housing &middot; <strong>TP24 Quick Connect coupler pre-installed</strong> in the J-Box (4-conductor industry-standard fast-disconnect for tool-free service swaps) &middot; 4&times; Romex knockouts for branch-circuit termination &middot; mounts above the ceiling on a joist or T-grid drop</td></tr>
+      <tr><td class="spec-attr">Ingress / Location</td><td class="spec-val">Indoor recessed ceiling install &middot; Damp Location listed &middot; <strong>AIR-TIGHT &middot; AIR-SHUT</strong> certified per ASTM E283 (&lt; 2.0 CFM at 75 Pa) &middot; satisfies IECC &sect;&nbsp;R402.4.5 envelope-leakage limit for recessed lighting in the building thermal envelope</td></tr>
+      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">&minus;22&deg;F to +105&deg;F (&minus;30&deg;C to +41&deg;C) ambient &middot; standard recessed-can range</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Light Source · See Companion Module / Lamp</td></tr>
+      <tr><td class="spec-attr">Built-In Light Source</td><td class="spec-val"><strong>None</strong> &mdash; the Gehry housing is infrastructure. The photometric output is determined by the lamp or LED retrofit module the installer drops into the socket. Wattage, lumens, lm/W, CCT, CRI, and beam distribution all flow from the chosen lamp/module &mdash; not the housing itself.</td></tr>
+      <tr><td class="spec-attr">Photometric Reference Baseline</td><td class="spec-val">Datasheet ships a <strong>75W PAR30 incandescent</strong> reference: 3 ft throw = 222 fc / 26 ft beam spread &middot; 6 ft throw = 56 fc / 52 ft beam spread &middot; 9 ft throw = 25 fc / 79 ft beam spread (60&deg; PAR30 reference beam). <em>Honesty marker: the 75W PAR30 incandescent baseline is a 30+ year-old reference lamp. A modern 12W LED PAR30 retrofit delivers approximately 16% of these footcandles on a wattage-matched basis &mdash; but with ~6&times; the lumens-per-watt efficacy.</em></td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Base Type</td></tr>
+      <tr><td class="spec-attr">/E26 Legacy Lamp Socket</td><td class="spec-val">E26 medium-base universal lamp socket &middot; accepts every standard medium-base lamp shape: <strong>PAR30 (up to 75W incandescent / halogen / 12W LED), PAR38 (CRC6 only · up to 75W), R30 (75W), BR30 (65W), BR40 (CRC6 only), A19 (60W)</strong>, plus the multi-f<span class="aa">Ⓐ</span>MILY RL Series LED Retrofit Module family. Universal install path everywhere outside California.</td></tr>
+      <tr><td class="spec-attr">/T24 JA8 LED-Only</td><td class="spec-val">California Title 20 + Title 24 / JA8-2022-E compliant socket &middot; <strong>locks out incandescent and unqualified CFL replacement lamps</strong> &middot; satisfies the high-efficacy luminaire (HEL) requirement for new-construction recessed cans in CA residential and small-commercial spaces &middot; accepts JA8-qualified LED PAR30 / PAR38 lamps and the multi-f<span class="aa">Ⓐ</span>MILY RL Series LED Retrofit Module</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Companion · multi-fⒶMILY LED Retrofit Module (separate SKU)</td></tr>
+      <tr data-mod-row="NEBULA-II"><td class="spec-attr">Nebula-II (LDRR) ★ <strong style="color:var(--brand-red); font-size: 7.5pt; letter-spacing: 0.6pt;">RECOMMENDED PAIR</strong></td><td class="spec-val">ECO recessed retrofit module &middot; <strong>2 sizes (LDRR410 4&Prime; / LDRR615 6&Prime;)</strong> &middot; 10W / 15W &middot; 880 / 1,320 lm &middot; 88 lm/W &middot; 5-CCTselect (27/30/35/40/50K) &middot; CRI 90+ &middot; 100&deg; flood &middot; DLC Premium &middot; the canonical multi-f<span class="aa">Ⓐ</span>MILY companion designed alongside Gehry &mdash; LDRR410 drops into CRC4, LDRR615 drops into CRC6, both via the TP24 J-Box for tool-free service swaps &middot; 5-yr ECO warranty</td></tr>
+      <tr data-mod-row="ECRESCENT"><td class="spec-attr">eCrescent (LSMT)</td><td class="spec-val">ECO edge-lit LED retrofit module &middot; 2 sizes (LSMT410 4&Prime; / LSMT615 6&Prime;) &middot; 10W / 15W &middot; 750 / 1,100 lm &middot; <strong>built-in PIR sensor with 3-position dip switch</strong> &middot; 5-CCTselect &middot; drops into TP24-equipped Gehry J-Box &middot; 5-yr ECO warranty</td></tr>
+      <tr data-mod-row="RADIUS-II"><td class="spec-attr">Radius-II (LDRS)</td><td class="spec-val">PRO slim wafer LED retrofit &middot; 3 sizes (LDRS4 4&Prime; / LDRS6 6&Prime; / LDRS8 8&Prime;) &middot; 9W / 12W / 18W &middot; 644 / 1,041 / 1,504 lm &middot; 5-CCTselect dip switch on the J-Box &middot; CRI 90+ &middot; PRO 7-yr warranty &middot; Wet Location · ETL-listed &middot; DLC Premium</td></tr>
+      <tr data-mod-row="ECLIPSE-II"><td class="spec-attr">Eclipse-II (LDLL)</td><td class="spec-val">PRO surface puck &middot; 5 sizes (LDLL0510 / 0715 / 0918 / 1121 / 1324 &middot; 5/7/9/11/13&Prime;) &middot; driverless edge-lit PMMA &middot; 103 lm/W peak &middot; 5-CCTselect &middot; sensor-ready (1-Pin Plug-n-Play Bi-Level port) &middot; DLC Premium &middot; <em>4&Prime; size N/A &mdash; CRC4 snaps to LDLL0510 (5&Prime; closest fit), CRC6 snaps to LDLL0715 (7&Prime; closest fit)</em></td></tr>
+      <tr data-mod-row="LUNAR-ECLIPSE"><td class="spec-attr">Lunar Eclipse (LDLL)</td><td class="spec-val">PRO trimless surface puck &middot; black-only sister to Eclipse-II &middot; 3 sizes (LDLL0510 / 0715 / 0918 · 5/7/9&Prime;) &middot; <strong>IP65 wet-rated</strong> upgrade over Eclipse-II IP44 &middot; 5-CCTselect &middot; sensor-ready &middot; <em>same closest-fit mapping: CRC4 → LDLL0510, CRC6 → LDLL0715</em></td></tr>
+      <tr data-mod-row="ORBIT-I"><td class="spec-attr">Orbit-I (LDGR)</td><td class="spec-val">PRO retrofit gimbal trim &middot; 2 sizes (LDGR410 4&Prime; / LDGR615 6&Prime;) &middot; 10W / 15W &middot; <strong>60&deg; tilt + 360&deg; rotation</strong> &middot; for accent / wall-wash / directional aiming &middot; PRO 7-yr warranty</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Compatible Lamp · A19 (separate SKU · for E26 socket path)</td></tr>
+      <tr data-lamp-row="A19"><td class="spec-attr">A19 LED · LTA19F800xxMB</td><td class="spec-val">multi-f<span class="aa">Ⓐ</span>MILY A19 LED lamp &middot; <strong>800 lm &middot; 8.5W &middot; 94 lm/W</strong> &middot; medium-base E26 omnidirectional &middot; <strong>5 active SKUs</strong>: LTA19F80027MB · LTA19F80030MB · LTA19F80035MB · LTA19F80040MB · LTA19F80050MB (xx = first 2 chars of CCT &middot; 2700/3000/3500/4000/5000K) &middot; CRC4 + CRC6 &middot; <strong>E26 base only</strong> (not JA8-qualified for T24 install path) &middot; for closet / pantry / service-room / corridor ambient applications</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Mounting</td></tr>
+      <tr><td class="spec-attr">Standard Install</td><td class="spec-val">Joist-mounted swivel bracket &middot; pre-installed adjustable bar hangers (24&Prime; OC default) &middot; field-shortenable to 12&Prime; OC for legacy framing &middot; 4&times; double-headed nails into joist crown &middot; TP24 Quick Connect cable from can to remote J-Box &middot; J-Box mounts above ceiling on adjacent joist</td></tr>
+      <tr><td class="spec-attr">Ceiling Thickness Adjustment</td><td class="spec-val">1/2&Prime; &ndash; 1-3/8&Prime; (adjustable) &middot; identical across both sizes &middot; accommodates standard 1/2&Prime; drywall up to 1-3/8&Prime; double-layer fire-rated assemblies</td></tr>
+      <tr><td class="spec-attr">IC Rating</td><td class="spec-val">IC (Insulation Contact) rated &middot; the housing can be buried directly in attic blown-in or batt insulation with no clearance keep-out &middot; no re-blowing the insulation around a fire-rated can</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
+      <tr><td class="spec-attr">Standards (Both SKUs)</td><td class="spec-val">UL listed (US) &middot; cULus (US + Canada) &middot; ETL listed &middot; IC Rated &middot; AIR-TIGHT &middot; AIR-SHUT (ASTM E283 &lt; 2.0 CFM @ 75 Pa) &middot; Damp Location</td></tr>
+      <tr><td class="spec-attr">T24 SKU Adds</td><td class="spec-val">CA Title 20 + Title 24 Part 6 (compliant for new-construction CA residential + small-commercial recessed cans) &middot; JA8-2022-E qualified socket (locks out incandescent + non-JA8 CFL replacement lamps)</td></tr>
+      <tr><td class="spec-attr">Rebate-Ready (via Module)</td><td class="spec-val"><strong>Honesty marker:</strong> the Gehry housing itself is infrastructure &mdash; rebates flow through the LED retrofit module that drops INTO the housing. Spec the housing with a <code>/T24</code> base + a JA8-qualified module from the multi-f<span class="aa">Ⓐ</span>MILY family (eCrescent ECO · Radius-II PRO · Eclipse-II PRO/DLC · Lunar Eclipse PRO) and the project unlocks <strong>CalEnergyWise, PG&amp;E / SCE / SDG&amp;E utility rebates, HUD multi-family programs</strong>, and (for DLC-listed pairings) <strong>commercial rebate ladders</strong>. Search "LSMT / LDRS" at archipelagolighting.com/pages/rebate-center.</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val">5-year limited housing warranty (can &middot; bracket &middot; bar hangers &middot; J-Box &middot; TP24 coupler) &middot; LED retrofit module warranty is separate (per-module &mdash; eCrescent 5-yr ECO &middot; Radius-II 7-yr PRO &middot; Eclipse-II / Lunar Eclipse 5-yr PRO) &middot; all 4 base SKUs + 4 finish-variant SKUs ship QuickShip</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · CRC Gehry submittal · UL + cULus + ETL + IC + Air-Tight + Title 20/24 (T24 SKU) · Specifications subject to change</div>
+    <div>Rev. <span class="rev-date">2026-05</span> · Page 2 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 3 — DIMENSIONS & MOUNTING                                -->
+<!-- ============================================================ -->
+<div class="page" id="page-3">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum3">CRC6-SB-E26</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Dimensions &amp; Mounting</h2>
+    <div class="section-eyebrow">Top + Side views &middot; die-formed aluminum can &middot; pre-installed swivel bracket + adjustable bar hangers (24&Prime; OC &middot; field-shortenable to 12&Prime; OC) &middot; remote J-Box with TP24 Quick Connect coupler</div>
+  </div>
+
+  <div class="dim-grid">
+    <div class="dim-view" id="dimView">
+      <div class="dim-view-label">Top + Side views (in)</div>
+      <!-- Inline SVG dimension diagram — Gehry housing top (can+bracket) + side
+           (joist+can+J-Box+TP24) view; JS swaps the labels (can W, bracket W×L,
+           can H) based on the size param. -->
+      <svg id="dimSvg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Top view — bracket footprint with can aperture in center -->
+        <g transform="translate(40, 50)">
+          <text x="0" y="-8" font-family="JetBrains Mono, monospace" font-size="9" fill="#6B6B70" letter-spacing="1">TOP &middot; BRACKET FOOTPRINT</text>
+          <!-- Bracket plate (large rectangle) -->
+          <rect x="0" y="0" width="160" height="100" fill="rgba(227, 53, 60, 0.04)" stroke="#0E0E10" stroke-width="1.4"/>
+          <!-- Can aperture (centered circle within bracket) -->
+          <circle cx="80" cy="50" r="32" fill="rgba(227, 53, 60, 0.10)" stroke="#E3353C" stroke-width="1.4"/>
+          <!-- Center socket marker -->
+          <circle cx="80" cy="50" r="3" fill="#E3353C"/>
+          <!-- Adjustable bar hangers (lateral lines extending from bracket) -->
+          <line x1="-10" y1="22" x2="170" y2="22" stroke="#A6A4A0" stroke-width="0.8" stroke-dasharray="2,2"/>
+          <line x1="-10" y1="78" x2="170" y2="78" stroke="#A6A4A0" stroke-width="0.8" stroke-dasharray="2,2"/>
+          <text x="-12" y="22" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="6" fill="#A6A4A0">JOIST</text>
+          <text x="-12" y="78" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="6" fill="#A6A4A0">JOIST</text>
+          <!-- Double-headed nail markers (4×) at bracket corners -->
+          <circle cx="12" cy="12" r="2" fill="#E3353C"/>
+          <circle cx="148" cy="12" r="2" fill="#E3353C"/>
+          <circle cx="12" cy="88" r="2" fill="#E3353C"/>
+          <circle cx="148" cy="88" r="2" fill="#E3353C"/>
+          <!-- Can aperture diameter label -->
+          <text id="dimTopWidth" x="80" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#E3353C" font-weight="700" dy="-4">Can Ø 6 1/2&Prime;</text>
+          <!-- Bracket footprint label -->
+          <text id="dimAperture" x="80" y="120" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#0E0E10" font-weight="700">Bracket 11 7/8&Prime; W &times; 14 7/8&Prime; L</text>
+          <text x="80" y="134" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#6B6B70">24&Prime; OC joist span (12&Prime; field-shortenable)</text>
+        </g>
+        <!-- Side view — joist + can + J-Box + TP24 cable -->
+        <g transform="translate(230, 50)">
+          <text x="0" y="-8" font-family="JetBrains Mono, monospace" font-size="9" fill="#6B6B70" letter-spacing="1">SIDE &middot; JOIST CAVITY</text>
+          <!-- Joist (top) -->
+          <rect x="0" y="0" width="150" height="22" fill="none" stroke="#A6A4A0" stroke-width="0.8"/>
+          <text x="75" y="14" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#A6A4A0">2&times;6 JOIST</text>
+          <!-- Bracket plate at top of can -->
+          <line x1="-4" y1="22" x2="84" y2="22" stroke="#E3353C" stroke-width="1.4"/>
+          <text x="-6" y="20" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="5" fill="#E3353C" font-weight="700">SB</text>
+          <!-- Can body (cylindrical above-ceiling) -->
+          <rect x="20" y="22" width="50" height="58" rx="2" fill="rgba(227, 53, 60, 0.06)" stroke="#0E0E10" stroke-width="1.2"/>
+          <!-- E26 socket inside can -->
+          <rect x="38" y="48" width="14" height="10" fill="#E3353C" opacity="0.85"/>
+          <text x="45" y="56" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="4" fill="#fff" font-weight="700">E26</text>
+          <!-- Ceiling line (drywall, dashed) -->
+          <line x1="-4" y1="80" x2="160" y2="80" stroke="#0E0E10" stroke-width="1.2"/>
+          <line x1="-4" y1="84" x2="160" y2="84" stroke="#A6A4A0" stroke-width="0.4" stroke-dasharray="1,1"/>
+          <text x="160" y="92" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="5" fill="#A6A4A0">DRYWALL</text>
+          <!-- TP24 cable from can to remote J-Box -->
+          <path d="M70 50 Q90 50 105 65 Q115 75 120 88" fill="none" stroke="#E3353C" stroke-width="1.2"/>
+          <text x="100" y="60" font-family="JetBrains Mono, monospace" font-size="5" fill="#E3353C" font-weight="700">TP24</text>
+          <!-- Remote J-Box -->
+          <rect x="110" y="88" width="35" height="22" rx="1" fill="rgba(227, 53, 60, 0.08)" stroke="#E3353C" stroke-width="1.2"/>
+          <text x="127" y="100" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5" fill="#E3353C" font-weight="700">J-BOX</text>
+          <!-- Can height label -->
+          <text id="dimDepth" x="45" y="98" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#0E0E10" font-weight="700">Can H 7 3/8&Prime;</text>
+          <text id="dimRecess" x="75" y="118" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#6B6B70">recessed housing &middot; 0&Prime; projection &middot; 1/2&Prime;-1-3/8&Prime; ceiling thickness</text>
+        </g>
+      </svg>
+    </div>
+
+    <div>
+      <table class="spec-table">
+        <tbody>
+          <tr class="spec-section-head"><td colspan="2">Dimensions (in)</td></tr>
+          <tr><td class="spec-attr">Can W &times; H</td><td class="spec-val" id="specOd">6 1/2&Prime; W &times; 7 3/8&Prime; H (CRC6) &middot; 4 1/4&Prime; W &times; 5 5/8&Prime; H (CRC4)</td></tr>
+          <tr><td class="spec-attr">Bracket W &times; L</td><td class="spec-val" id="specAp">11 7/8&Prime; W &times; 14 7/8&Prime; L (CRC6) &middot; 8 1/8&Prime; W &times; 11 7/8&Prime; L (CRC4)</td></tr>
+          <tr><td class="spec-attr">Ceiling Thickness</td><td class="spec-val" id="specDepth">1/2&Prime; &ndash; 1-3/8&Prime; (adjustable per ceiling drywall thickness · identical across both sizes)</td></tr>
+          <tr><td class="spec-attr">Joist Span</td><td class="spec-val" id="specRecess">24&Prime; OC default (pre-installed adjustable bar hangers) &middot; <strong>field-shortenable to 12&Prime; OC</strong> for legacy framing or remodel cavities</td></tr>
+          <tr><td class="spec-attr">Recess</td><td class="spec-val" id="specCutout">Recessed housing &middot; 0&Prime; projection below ceiling line &middot; ceiling cutout matched to can aperture (CRC4 = ~4 1/4&Prime; / CRC6 = ~6 1/2&Prime;)</td></tr>
+          <tr class="spec-section-head"><td colspan="2">In-the-Box Components</td></tr>
+          <tr><td class="spec-attr">Housing Assembly</td><td class="spec-val">Die-formed aluminum can &middot; pre-installed Swivel Bracket &middot; pre-installed adjustable bar hangers &middot; 4&times; double-headed nails &middot; remote Plug-n-Play J-Box with TP24 Quick Connect coupler &middot; plenum-rated 4-conductor cable from can to J-Box (factory-installed)</td></tr>
+          <tr><td class="spec-attr">Light Source</td><td class="spec-val"><strong>Not included</strong> &middot; the housing accepts the lamp or LED retrofit module the installer specifies (see Page 2 § Compatible Lamps + multi-f<span class="aa">Ⓐ</span>MILY LED Retrofit Module)</td></tr>
+          <tr><td class="spec-attr">Single Unit Pkg</td><td class="spec-val">Single-housing retail box</td></tr>
+          <tr><td class="spec-attr">Master Carton</td><td class="spec-val" id="specWeight">Master carton artwork pending production (per disk: CRC6-SB-E26 24-pack contractor carton standard)</td></tr>
+          <tr class="spec-section-head"><td colspan="2">Install Path</td></tr>
+          <tr><td class="spec-attr">E26 Standard Install</td><td class="spec-val" id="mountStd">Joist-mounted swivel bracket &middot; pre-installed bar hangers (24&Prime; OC) &middot; field-shortenable to 12&Prime; OC &middot; 4&times; double-headed nails into joist crown &middot; TP24 Quick Connect cable to remote J-Box &middot; J-Box mounts on adjacent joist above ceiling</td></tr>
+          <tr><td class="spec-attr">T24 / JA8 Install</td><td class="spec-val" id="mountT24">Same physical install procedure as E26 (joist + bracket + bar hangers + TP24 + J-Box) &middot; difference is at the lamp socket: T24 socket locks out incandescent + non-JA8 CFL replacement lamps per CA Title 20 + Title 24 / JA8-2022-E &middot; documentation pack-in includes JA8-qualified lamp QR code reference</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · CRC Gehry submittal · UL + cULus + ETL + IC + Air-Tight + Title 20/24 (T24 SKU) · Specifications subject to change</div>
+    <div>Rev. <span class="rev-date">2026-05</span> · Page 3 of 4</div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 4 — ORDERING CODE & PHOTOMETRICS                         -->
+<!-- ============================================================ -->
+<div class="page" id="page-4">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum4">CRC6-SB-E26</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Ordering Information</h2>
+    <div class="section-eyebrow">Configure your catalog number</div>
+  </div>
+
+  <!-- ORDERING CODE VISUAL BREAKDOWN — 4 segments matching the Gehry SKU pattern:
+         CRC&#123;N&#125;-SB-&#123;E26|T24&#125;[/WH]
+       The -SB segment is the fixed bracket designator (Swivel Bracket — only
+       bracket type currently shipping; future-proofed for additional designs).
+       The base type appends with slash separator. /WH is a display-only suffix. -->
+  <div class="order-code" style="grid-template-columns: repeat(4, 1fr);">
+    <div class="order-segment active"><div class="order-seg-label">Family</div><div class="order-seg-value">CRC</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Size</div><div class="order-seg-value" id="ocHousing">6</div></div>
+    <div class="order-segment fixed"><div class="order-seg-label">Bracket</div><div class="order-seg-value">-SB</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Base · [/WH]</div><div class="order-seg-value" id="ocSensor">/E26</div></div>
+  </div>
+
+  <table class="order-matrix">
+    <thead>
+      <tr>
+        <th style="width:14%">Segment</th>
+        <th>Available Codes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="code">CRC</td><td>multi-fⒶMILY Commercial Recessed Can family prefix</td></tr>
+      <tr><td class="code">4 / 6</td><td>Size — CRC4 (4&Prime; aperture · 4 1/4&Prime; W &times; 5 5/8&Prime; H can / 8 1/8&Prime; W &times; 11 7/8&Prime; L bracket) · CRC6 (6&Prime; aperture · 6 1/2&Prime; W &times; 7 3/8&Prime; H can / 11 7/8&Prime; W &times; 14 7/8&Prime; L bracket · default star)</td></tr>
+      <tr><td class="code">-SB</td><td>Bracket designator — Swivel Bracket · pre-installed adjustable bar hangers (24&Prime; OC default · field-shortenable to 12&Prime; OC) · 90&deg; pivoting plate · only bracket type currently shipping (future-proofed for additional bracket designs)</td></tr>
+      <tr><td class="code">/E26 · /T24</td><td>Base type — E26 medium-base universal lamp socket (legacy + LED retrofit · accepts PAR30 / PAR38 [CRC6 only] / R30 / BR30 / BR40 [CRC6 only] / A19 incandescent / halogen / LED) OR T24 / JA8-2022-E LED-only socket (California Title 24 high-efficacy luminaire · locks out incandescent + non-JA8 CFL replacement lamps)</td></tr>
+      <tr><td class="code">[/WH]</td><td>Display-only finish suffix — appends <code>/WH</code> for the white-painted accessory variant. Default finish is unbadged die-formed aluminum. Not a required field.</td></tr>
+      <tr><td class="code">+ Companions</td><td>multi-fⒶMILY LED Retrofit Module — <strong>Nebula-II ★ (LDRR410 / LDRR615 · recommended pair · matches CRC4/CRC6 1:1)</strong> · eCrescent (LSMT) · Radius-II (LDRS) · Eclipse-II (LDLL) · Lunar Eclipse (LDLL) · Orbit-I (LDGR) — all drop INTO the housing via the TP24-equipped J-Box for tool-free service swaps · Compatible Lamp: A19 LED <code>LTA19F800xxMB</code> (5 CCT variants · E26 path only) · all separate-line companion SKUs (see Page 1 Pair-With panel + Selected Companion detail card)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ACTIVE SKU TABLE — 4 base + 4 finish-variant = 8 valid combinations -->
+  <table class="order-matrix" style="margin-top: 10px;">
+    <thead>
+      <tr>
+        <th style="width:30%">Active SKU</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="code">CRC4-SB-E26</td><td>4&Prime; · Swivel Bracket · E26 legacy lamp socket · default aluminum finish</td></tr>
+      <tr><td class="code">CRC4-SB-E26/WH</td><td>4&Prime; · Swivel Bracket · E26 legacy lamp socket · /WH white accessory variant</td></tr>
+      <tr><td class="code">CRC4-SB-T24</td><td>4&Prime; · Swivel Bracket · T24 / JA8 LED-only · CA Title 24 spec · default aluminum</td></tr>
+      <tr><td class="code">CRC4-SB-T24/WH</td><td>4&Prime; · Swivel Bracket · T24 / JA8 LED-only · /WH white accessory variant</td></tr>
+      <tr><td class="code">CRC6-SB-E26</td><td>6&Prime; · Swivel Bracket · E26 legacy lamp socket · default aluminum · <strong>high-volume multifamily SKU</strong> ★</td></tr>
+      <tr><td class="code">CRC6-SB-E26/WH</td><td>6&Prime; · Swivel Bracket · E26 legacy lamp socket · /WH white accessory variant</td></tr>
+      <tr><td class="code">CRC6-SB-T24</td><td>6&Prime; · Swivel Bracket · T24 / JA8 LED-only · CA Title 24 spec · default aluminum</td></tr>
+      <tr><td class="code">CRC6-SB-T24/WH</td><td>6&Prime; · Swivel Bracket · T24 / JA8 LED-only · /WH white accessory variant</td></tr>
+    </tbody>
+  </table>
+
+  <!-- PHOTOMETRIC DATA — Gehry is a HOUSING (no built-in light source).
+       Datasheet ships a 75W PAR30 incandescent reference baseline at
+       3 / 6 / 9 ft throw. The polar plot below is the 60° PAR30 reference
+       beam — actual photometric output depends on the lamp/module installed. -->
+  <div class="section-head" style="margin-top: 16px;">
+    <h2>Photometric Reference Baseline</h2>
+    <div class="section-eyebrow" id="photoEyebrow">75W PAR30 incandescent reference · CRC6-SB-E26 · die-formed aluminum housing · IC + Air-Tight</div>
+  </div>
+
+  <div class="photo-grid">
+    <div class="photo-polar">
+      <!-- Inline polar plot — 60° PAR30 reference beam (the Datasheet baseline lamp). -->
+      <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#A6A4A0" stroke-width="0.4">
+          <path d="M 40 140 A 80 80 0 0 1 200 140"/>
+          <path d="M 60 140 A 60 60 0 0 1 180 140"/>
+          <path d="M 80 140 A 40 40 0 0 1 160 140"/>
+          <path d="M 100 140 A 20 20 0 0 1 140 140"/>
+        </g>
+        <g stroke="#A6A4A0" stroke-width="0.4">
+          <line x1="120" y1="140" x2="40" y2="140"/>
+          <line x1="120" y1="140" x2="200" y2="140"/>
+          <line x1="120" y1="140" x2="120" y2="60"/>
+          <line x1="120" y1="140" x2="60" y2="80"/>
+          <line x1="120" y1="140" x2="180" y2="80"/>
+        </g>
+        <!-- 60° PAR30 reference beam curve — narrow PAR30 incandescent baseline -->
+        <path d="M 120 140 L 80 70 Q 120 50 160 70 Z" fill="rgba(227,53,60,0.28)" stroke="#E3353C" stroke-width="1.4"/>
+        <text x="120" y="56" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70">0°</text>
+        <text x="48" y="76" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70">90°</text>
+        <text x="192" y="76" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70">90°</text>
+        <text x="120" y="160" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#0E0E10" font-weight="700">60° BEAM · 75W PAR30 REFERENCE</text>
+      </svg>
+    </div>
+
+    <div class="photo-summary">
+      <table>
+        <tbody>
+          <tr><td>Reference Lamp</td><td id="photoPeak">75W PAR30 (Datasheet baseline)</td></tr>
+          <tr><td>3 ft Throw</td><td id="photoLumens">222 fc · 26 ft beam spread</td></tr>
+          <tr><td>6 ft Throw</td><td>56 fc · 52 ft beam spread (typical)</td></tr>
+          <tr><td>9 ft Throw</td><td>25 fc · 79 ft beam spread</td></tr>
+          <tr><td>Beam Angle</td><td>60° (PAR30 reference)</td></tr>
+          <tr><td>Modern LED Equivalent</td><td>~16% of these fc on 12W LED PAR30</td></tr>
+          <tr><td>Housing IES File</td><td id="photoIesFile">N/A — housing has no built-in light source</td></tr>
+          <tr><td>For Real IES Data</td><td>See <a href="#" style="color:var(--brand-red);">multi-f<span class="aa">Ⓐ</span>MILY LED retrofit module Datasheets</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CERTIFICATIONS — Gehry housing 6-cert stack per Datasheet page 1:
+       UL · cULus · ETL · Title 24/JA8 (T24 SKU) · IC · Damp · Air-Tight.
+       Brand red highlights the multifamily-permit-critical ones. -->
+  <div class="certs">
+    <span class="cert-badge brand">UL · cULus · ETL</span>
+    <span class="cert-badge brand">Title 20 + Title 24 / JA8 (T24 SKU)</span>
+    <span class="cert-badge brand">AIR-TIGHT &middot; AIR-SHUT</span>
+    <span class="cert-badge brand">IC Rated</span>
+    <span class="cert-badge">Damp Location</span>
+    <span class="cert-badge">ASTM E283 &lt; 2.0 CFM @ 75 Pa</span>
+    <span class="cert-badge">5-Yr Housing Warranty</span>
+    <span class="cert-badge">CA Title-24 Part 6 (T24)</span>
+    <span class="cert-badge">JA8-2022-E (T24)</span>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · CRC Gehry submittal · UL + cULus + ETL + IC + Air-Tight + Title 20/24 (T24 SKU) · Specifications subject to change</div>
+    <div>Rev. <span class="rev-date">2026-05</span> · Page 4 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============= URL PARAM POPULATION + AUTO-PRINT ============= -->
+<script>
+(function() {
+  // --- PARSE URL PARAMS · Gehry configurator → submittal pipeline ---
+  // Canonical params: sku · size · base
+  //                 + companions: module + module_sku + module_name · lamp + lamp_sku
+  // Finish (/WH) field was retired 2026-05-09 — Gehry ships factory-default aluminum.
+  // CFG-COMPANION-SIZE-MATCH: companion module SKU is pre-resolved upstream in
+  // the configurator (CRC4 → 4″ module SKU; CRC6 → 6″) so the BOM ships a real,
+  // orderable line item rather than a family placeholder.
+  var params = new URLSearchParams(window.location.search);
+  var sku        = params.get('sku')        || 'CRC6-SB-E26';
+  var size       = params.get('size')       || '6';      // 4 | 6
+  var base       = params.get('base')       || 'E26';    // E26 | T24
+  var module     = params.get('module')     || '';       // family chip val (e.g. NEBULA-II)
+  var moduleSku  = params.get('module_sku') || '';       // resolved size-matched SKU
+  var moduleName = params.get('module_name')|| '';       // resolved descriptor (incl. size note)
+  var lamp       = params.get('lamp')       || '';       // chip val (e.g. A19-30)
+  var lampSku    = params.get('lamp_sku')   || '';       // resolved (LTA19F800xxMB)
+  var dimmer     = params.get('dimmer')     || '';       // legacy (no longer emitted)
+  var autoprint  = params.get('autoprint')  !== '0';     // default ON
+
+  // --- 2-SIZE LOOKUP TABLE (CRC6-Gehry-Datasheet.pdf § Sizing & Measurements) ---
+  // Both sizes share the same lamp envelope baseline; CRC6 adds PAR38 + BR40 (the
+  // two large-aperture floods). Both sizes share gehry-hero-1.png (only 1 main
+  // hero photo per size on disk — flagged Phase 2.99 carry-forward).
+  // Photometric reference baseline is the 75W PAR30 incandescent lamp per Datasheet
+  // page 2 (3 ft = 222 fc · 6 ft = 56 fc · 9 ft = 25 fc).
+  var sizeData = {
+    '4': { in: 4, canW: '4 1/4″',  canH: '5 5/8″',  bracketW: '8 1/8″',  bracketL: '11 7/8″', heroImg: 'assets/gehry/gehry-hero-1.png' },
+    '6': { in: 6, canW: '6 1/2″',  canH: '7 3/8″',  bracketW: '11 7/8″', bracketL: '14 7/8″', heroImg: 'assets/gehry/gehry-hero-1.png' }
+  };
+  var sd = sizeData[size] || sizeData['6'];
+
+  // --- BASE TYPE LOOKUP ---
+  var baseLabel = { 'E26': 'E26 Legacy Lamp Socket', 'T24': 'T24 / JA8 LED-Only (CA)' }[base] || 'E26 Legacy Lamp Socket';
+  var baseDesc  = { 'E26': 'universal medium-base socket · accepts incandescent / halogen / LED PAR/R/BR/A19 lamps + the multi-fⒶMILY RL Series LED Retrofit Module',
+                    'T24': 'California Title 24 / JA8-2022-E LED-only socket · locks out incandescent + non-JA8 CFL replacement lamps · for new-construction CA installs' }[base] || '';
+
+  // --- AUTOFILL CATALOG NUMBER (4 page headers + project info form + control bar) ---
+  document.querySelectorAll('#catNum, #catNum2, #catNum3, #catNum4, #liveSku').forEach(function(el) {
+    el.textContent = sku;
+  });
+  var pi = document.getElementById('piCatNum');
+  if (pi) pi.textContent = sku;
+
+  // --- AUTOFILL PRODUCT TITLE ---
+  document.getElementById('productTitle').textContent =
+    'CRC Gehry Series · ' + sd.in + '″ Universal Recessed Housing (' + baseLabel + ')';
+
+  // --- AUTOFILL QUICK SPECS (housing dimensions instead of lumens/wattage) ---
+  // Slot mapping: qsLumens → Can Aperture, qsWatts → Bracket Footprint, qsLpw → Base Type
+  var qsL = document.getElementById('qsLumens'); if (qsL) qsL.innerHTML = sd.canW + ' W &times; ' + sd.canH + ' H';
+  var qsW = document.getElementById('qsWatts');  if (qsW) qsW.innerHTML = sd.bracketW + ' W &times; ' + sd.bracketL + ' L';
+  var qsP = document.getElementById('qsLpw');    if (qsP) qsP.innerHTML = baseLabel;
+
+  // --- AUTOFILL HERO IMAGE — Gehry housing ---
+  var heroImg = document.getElementById('heroImg');
+  if (heroImg) {
+    heroImg.src = sd.heroImg;
+    heroImg.alt = 'CRC' + sd.in + '-SB-' + base + ' Gehry — ' + sd.in + '″ universal recessed housing, die-formed aluminum can with pre-installed swivel bracket and adjustable bar hangers, remote J-Box with TP24 Quick Connect, ' + baseLabel + (finish === 'WH' ? '' : '');
+  }
+
+  // --- AUTOFILL ORDERING CODE BREAKDOWN (Page 4) ---
+  // Gehry SKU pattern: CRC{N}-SB-{E26|T24}[/WH]
+  //   ocHousing = 1-digit size (4 or 6)
+  //   ocSensor  = base type segment (/E26 or /T24 · re-using the ID for parity)
+  document.getElementById('ocHousing').textContent = size;
+  var ocSensor = document.getElementById('ocSensor');
+  if (ocSensor) ocSensor.textContent = '/' + base;
+
+  // --- AUTOFILL DIMENSIONS (Page 3) per size ---
+  // Page 3 surfaces the Gehry can + bracket dimensions through the existing
+  // DOM IDs (specOd → Can W × H, specAp → Bracket W × L, specDepth → Ceiling
+  // Thickness, specRecess → Joist Span, specCutout → Recess, specWeight →
+  // Master Carton, mountStd → E26 Standard Install, mountT24 → T24 / JA8
+  // Install). All IDs are present and Gehry-native after the v1 completion
+  // sweep 2026-05-08.
+  var specOd     = document.getElementById('specOd');     if (specOd)     specOd.textContent     = 'Can Ø ' + sd.canW + ' (CRC' + sd.in + ')';
+  var specAp     = document.getElementById('specAp');     if (specAp)     specAp.textContent     = 'Bracket: ' + sd.bracketW + ' W × ' + sd.bracketL + ' L';
+  var specCutout = document.getElementById('specCutout'); if (specCutout) specCutout.textContent = 'Recessed can install · joist-mounted swivel bracket with pre-installed adjustable bar hangers (24″ OC · field-shortenable to 12″ OC) · 90° pivoting plate for skinny-cavity installs · TP24 Quick Connect to remote J-Box';
+  var specRecess = document.getElementById('specRecess'); if (specRecess) specRecess.textContent = 'Can Ø ' + sd.canW + ' · ceiling cutout matched to can aperture · 0″ projection below ceiling line';
+  var specDepth  = document.getElementById('specDepth');  if (specDepth)  specDepth.textContent  = 'Ceiling thickness adjustment: 1/2″ – 1-3/8″ · adjustable per ceiling drywall thickness';
+  var specWeight = document.getElementById('specWeight'); if (specWeight) specWeight.textContent = 'Master carton artwork pending production (per disk: CRC' + sd.in + '-SB-' + base + ')';
+  var mountStd   = document.getElementById('mountStd');   if (mountStd)   mountStd.textContent   = 'Joist-mounted swivel bracket · pre-installed bar hangers (24″ OC) · field-shortenable to 12″ OC · 4× double-headed nails · TP24 Quick Connect cable to remote J-Box';
+  var mountT24   = document.getElementById('mountT24');   if (mountT24)   mountT24.textContent   = (base === 'T24')
+    ? 'Title 24 / JA8-2022-E LED-only base socket — locks out incandescent and unqualified CFL replacement lamps. Use for California new-construction recessed-can installs.'
+    : 'E26 medium-base universal lamp socket — accepts every standard medium-base lamp (incandescent, halogen, LED) + the multi-fⒶMILY RL Series LED Retrofit Module via TP24 J-Box.';
+  var dimTopW    = document.getElementById('dimTopWidth');if (dimTopW)    dimTopW.textContent    = 'Can Ø ' + sd.canW;
+  var dimAp      = document.getElementById('dimAperture');if (dimAp)      dimAp.textContent      = 'Bracket ' + sd.bracketW + ' W × ' + sd.bracketL + ' L';
+  var dimDp      = document.getElementById('dimDepth');   if (dimDp)      dimDp.textContent      = 'depth ' + sd.canH + ' (above-ceiling can height)';
+  var dimRc      = document.getElementById('dimRecess');  if (dimRc)      dimRc.textContent      = 'recessed housing · 0″ projection · 1/2″–1-3/8″ ceiling thickness';
+
+  // --- AUTOFILL PHOTOMETRIC PAGE 4 ---
+  // Gehry is a HOUSING; no native IES file. The photometric reference baseline is
+  // the 75W PAR30 incandescent lamp per Datasheet page 2.
+  var photoEyebrow = document.getElementById('photoEyebrow');
+  if (photoEyebrow) photoEyebrow.textContent =
+    '75W PAR30 incandescent reference · CRC' + sd.in + '-SB-' + base + ' · die-formed aluminum housing · IC + Air-Tight' +
+    (base === 'T24' ? ' · Title 24/JA8-2022-E' : '');
+  // Peak / Lumens slots repurposed: peak → reference lamp, lumens → 3 ft throw
+  var photoPeak = document.getElementById('photoPeak');
+  if (photoPeak) photoPeak.textContent = '75W PAR30 (Datasheet baseline)';
+  var photoLumens = document.getElementById('photoLumens');
+  if (photoLumens) photoLumens.textContent = '222 fc · 26 ft beam spread';
+  var photoIesFile = document.getElementById('photoIesFile');
+  if (photoIesFile) photoIesFile.textContent = 'N/A — housing has no built-in light source';
+
+  // ============================================================================
+  // CFG-COMPANION-SIZE-MATCH — Submittal Companion Pipeline
+  // ============================================================================
+  // When the user picks a Companion Module, the housing size (CRC4 or CRC6)
+  // dictates which size-matched module SKU ships in the BOM. NEBULA-II ★ is
+  // the canonical companion designed alongside Gehry — LDRR410 for CRC4,
+  // LDRR615 for CRC6, both via the TP24 J-Box. Other module families snap to
+  // the nearest size where a 4″ / 6″ split isn't available (Eclipse-II + Lunar
+  // Eclipse → 5″/7″ closest fit). Lamps stay versatile — A19 fits any E26.
+  //
+  // The pipeline:
+  //   1. Read state (module + module_sku + module_name · lamp + lamp_sku) from URL
+  //   2. Resolve real per-size specs from MODULE_SPEC_TABLE
+  //   3. Render the Pair-With BOM panel (1 line per companion)
+  //   4. Render the rich Selected-Companion detail card (size-matched specs)
+  //   5. Flag the picked row in the Page 2 Companion table with ★ SELECTED
+  // ============================================================================
+
+  // MODULE_SPEC_TABLE — full per-size specs for each multi-fⒶMILY LED module.
+  // Numbers verified against each module's PDP / Datasheet 2026-05-09.
+  // Keyed: [moduleVal][housingSize] → resolved companion record.
+  // For modules with no native 4″ option (Eclipse-II 5/7/9/11/13″, Lunar 5/7/9″)
+  // we snap to the closest fit and tag it in the spec card.
+  var MODULE_SPEC_TABLE = {
+    'NEBULA-II': {
+      family: 'Nebula-II',
+      familyCode: 'LDRR',
+      tier: 'ECO',
+      hero: true,             // ★ recommended pair for Gehry — built alongside the housing
+      cctOptions: '2700 / 3000 / 3500 / 4000 / 5000K',
+      cri: '90+',
+      dlc: 'DLC Premium',
+      warranty: '5-yr ECO',
+      datasheet: 'https://workdrive.archipelagolighting.com/external/f85531794c0da1dc848e3037781aa1c19322c21c93a074d4d85c74792b5f83ba',
+      rationale: 'Nebula-II is the <strong>canonical multi-fⒶMILY companion designed alongside Gehry</strong> — the recessed retrofit pair specified to drop directly into the TP24-equipped J-Box for tool-free service swaps. 100° flood pattern matches the standard CRC throw geometry. Recommended over Orbit-I when the application is general ambient (vs directional accent).',
+      sizes: {
+        '4': { sku: 'LDRR410',  size: '4″',  matches: 'CRC4', wattage: '10W',  lumens: '880 lm',   lpw: '88 lm/W',  closestFit: false },
+        '6': { sku: 'LDRR615',  size: '6″',  matches: 'CRC6', wattage: '15W',  lumens: '1,320 lm', lpw: '88 lm/W',  closestFit: false }
+      }
+    },
+    'ECRESCENT': {
+      family: 'eCrescent',
+      familyCode: 'LSMT',
+      tier: 'ECO',
+      cctOptions: '2700 / 3000 / 3500 / 4000 / 5000K',
+      cri: '80+',
+      dlc: 'DLC Premium',
+      warranty: '5-yr ECO',
+      datasheet: '',
+      rationale: '<strong>Edge-lit LED retrofit with built-in PIR sensor</strong> + 3-position dip switch (motion / vacancy / on-demand). Use when the spec calls for occupancy sensing without a separate sensor SKU.',
+      sizes: {
+        '4': { sku: 'LSMT410',  size: '4″',  matches: 'CRC4', wattage: '10W',  lumens: '750 lm',   lpw: '75 lm/W',  closestFit: false },
+        '6': { sku: 'LSMT615',  size: '6″',  matches: 'CRC6', wattage: '15W',  lumens: '1,100 lm', lpw: '73 lm/W',  closestFit: false }
+      }
+    },
+    'RADIUS-II': {
+      family: 'Radius-II',
+      familyCode: 'LDRS',
+      tier: 'PRO',
+      cctOptions: '2700 / 3000 / 3500 / 4000 / 5000K',
+      cri: '90+',
+      dlc: 'DLC Premium',
+      warranty: '7-yr PRO',
+      datasheet: 'https://workdrive.archipelagolighting.com/external/a9989323c34a1c55b7de7873571feafb3794a38a881af67b98c367dde0631a3b',
+      rationale: '<strong>Slim wafer retrofit · PRO tier · 7-yr warranty</strong>. Use when the spec calls for a thinner above-ceiling profile or longer warranty than the ECO Nebula-II ladder. Wet Location · ETL listed.',
+      sizes: {
+        '4': { sku: 'LDRS4',    size: '4″',  matches: 'CRC4', wattage: '9W',   lumens: '644 lm',   lpw: '72 lm/W',  closestFit: false },
+        '6': { sku: 'LDRS6',    size: '6″',  matches: 'CRC6', wattage: '12W',  lumens: '1,041 lm', lpw: '87 lm/W',  closestFit: false }
+      }
+    },
+    'ECLIPSE-II': {
+      family: 'Eclipse-II',
+      familyCode: 'LDLL',
+      tier: 'PRO',
+      cctOptions: '2700 / 3000 / 3500 / 4000 / 5000K',
+      cri: '90+',
+      dlc: 'DLC Premium',
+      warranty: '5-yr PRO',
+      datasheet: 'https://workdrive.archipelagolighting.com/external/bb82fac38ac148a688c82ebe8de1ffd7627bca8cbd0e577eb3d2403070be0d65',
+      rationale: '<strong>Surface puck — driverless 103 lm/W peak · sensor-ready</strong> (1-Pin Plug-n-Play Bi-Level port). Use when the spec calls for a surface-mounted alternative to the recessed Nebula-II / Radius-II path. <em>Note: Eclipse-II ships in 5/7/9/11/13″ — there is no 4″ or 6″ option, so CRC4 snaps to LDLL0510 (5″) and CRC6 snaps to LDLL0715 (7″).</em>',
+      sizes: {
+        '4': { sku: 'LDLL0510', size: '5″',  matches: 'CRC4 (closest fit · 4″ N/A)', wattage: '10W', lumens: '790 lm',   lpw: '79 lm/W', closestFit: true },
+        '6': { sku: 'LDLL0715', size: '7″',  matches: 'CRC6 (closest fit · 6″ N/A)', wattage: '15W', lumens: '1,185 lm', lpw: '79 lm/W', closestFit: true }
+      }
+    },
+    'LUNAR-ECLIPSE': {
+      family: 'Lunar Eclipse',
+      familyCode: 'LDLL',
+      tier: 'PRO',
+      cctOptions: '2700 / 3000 / 3500 / 4000 / 5000K',
+      cri: '90+',
+      dlc: 'DLC Premium',
+      warranty: '5-yr PRO',
+      datasheet: 'https://workdrive.archipelagolighting.com/external/bb82fac38ac148a688c82ebe8de1ffd7627bca8cbd0e577eb3d2403070be0d65',
+      rationale: '<strong>Black-only trimless surface puck · IP65 wet-rated</strong> upgrade over Eclipse-II IP44. Use when the spec calls for an exterior-grade or wash-down location. <em>Same closest-fit mapping: CRC4 → LDLL0510 (5″), CRC6 → LDLL0715 (7″).</em>',
+      sizes: {
+        '4': { sku: 'LDLL0510', size: '5″',  matches: 'CRC4 (closest fit · 4″ N/A)', wattage: '10W', lumens: '790 lm',   lpw: '79 lm/W', closestFit: true },
+        '6': { sku: 'LDLL0715', size: '7″',  matches: 'CRC6 (closest fit · 6″ N/A)', wattage: '15W', lumens: '1,185 lm', lpw: '79 lm/W', closestFit: true }
+      }
+    },
+    'ORBIT-I': {
+      family: 'Orbit-I',
+      familyCode: 'LDGR',
+      tier: 'PRO',
+      cctOptions: '2700 / 3000 / 3500 / 4000 / 5000K',
+      cri: '90+',
+      dlc: 'DLC Premium',
+      warranty: '7-yr PRO',
+      datasheet: 'https://workdrive.archipelagolighting.com/external/668f4316a802c0182814c58dbef7f987ba01d2d73117eaba0fa8dda5a0b90d1f',
+      rationale: '<strong>Retrofit gimbal trim · 60° tilt + 360° rotation</strong>. Use when the spec calls for accent / wall-wash / directional aiming applications (vs the general ambient throw of Nebula-II).',
+      sizes: {
+        '4': { sku: 'LDGR410',  size: '4″',  matches: 'CRC4', wattage: '10W',  lumens: '800 lm',   lpw: '80 lm/W',  closestFit: false },
+        '6': { sku: 'LDGR615',  size: '6″',  matches: 'CRC6', wattage: '15W',  lumens: '1,200 lm', lpw: '80 lm/W',  closestFit: false }
+      }
+    }
+  };
+
+  // LAMP_SPEC_TABLE — A19 ladder. Lamp specs are size-agnostic (medium-base
+  // E26 fits CRC4 + CRC6) but CCT-specific. Each chip val maps to the real SKU.
+  var LAMP_SPEC_TABLE = {
+    'A19-27': { sku: 'LTA19F80027MB', cct: '2700K', wattage: '8.5W', lumens: '800 lm', lpw: '94 lm/W', label: 'Warm white · 2700K' },
+    'A19-30': { sku: 'LTA19F80030MB', cct: '3000K', wattage: '8.5W', lumens: '800 lm', lpw: '94 lm/W', label: 'Warm white · 3000K' },
+    'A19-35': { sku: 'LTA19F80035MB', cct: '3500K', wattage: '8.5W', lumens: '800 lm', lpw: '94 lm/W', label: 'Neutral · 3500K' },
+    'A19-40': { sku: 'LTA19F80040MB', cct: '4000K', wattage: '8.5W', lumens: '800 lm', lpw: '94 lm/W', label: 'Cool white · 4000K ★' },
+    'A19-50': { sku: 'LTA19F80050MB', cct: '5000K', wattage: '8.5W', lumens: '800 lm', lpw: '94 lm/W', label: 'Daylight · 5000K' }
+  };
+
+  // --- Resolve the picked module against the housing size ----------------------
+  function resolveModule(moduleVal, housingSize) {
+    var fam = MODULE_SPEC_TABLE[moduleVal];
+    if (!fam) return null;
+    var s = fam.sizes[housingSize] || fam.sizes['6'];
+    return {
+      family: fam.family,
+      familyCode: fam.familyCode,
+      tier: fam.tier,
+      hero: !!fam.hero,
+      sku: s.sku,
+      size: s.size,
+      matches: s.matches,
+      wattage: s.wattage,
+      lumens: s.lumens,
+      lpw: s.lpw,
+      closestFit: s.closestFit,
+      cctOptions: fam.cctOptions,
+      cri: fam.cri,
+      dlc: fam.dlc,
+      warranty: fam.warranty,
+      datasheet: fam.datasheet,
+      rationale: fam.rationale
+    };
+  }
+
+  // --- Build the BOM list (Page 1, top of card) -------------------------------
+  // Always 1 line per picked companion. Uses the resolved (size-matched) SKU.
+  var bomEntries = [];
+  var resolvedMod = null;
+  var resolvedLamp = null;
+
+  if (module) {
+    resolvedMod = resolveModule(module, size);
+    if (resolvedMod) {
+      bomEntries.push({
+        sku: resolvedMod.sku,
+        name: resolvedMod.family + ' — ' + resolvedMod.size + ' module · ' +
+              resolvedMod.tier + ' tier · matches ' + resolvedMod.matches +
+              (resolvedMod.hero ? ' · ★ recommended pair' : '')
+      });
+    } else if (moduleSku || moduleName) {
+      bomEntries.push({ sku: moduleSku || module, name: moduleName || module });
+    }
+  }
+
+  if (lamp) {
+    resolvedLamp = LAMP_SPEC_TABLE[lamp];
+    if (resolvedLamp) {
+      bomEntries.push({
+        sku: resolvedLamp.sku,
+        name: 'A19 LED · ' + resolvedLamp.lumens + ' · ' + resolvedLamp.label + ' · medium-base (E26 socket path)'
+      });
+    } else if (lampSku) {
+      bomEntries.push({ sku: lampSku, name: 'A19 LED lamp (' + lamp + ')' });
+    }
+  }
+
+  // Legacy dimmer field (no longer emitted by configurator)
+  if (dimmer) {
+    bomEntries.push({ sku: dimmer, name: 'Approved dimmer (legacy companion)' });
+  }
+
+  if (bomEntries.length) {
+    var bomList = document.getElementById('bomList');
+    if (bomList) {
+      bomList.innerHTML = bomEntries.map(function(e) {
+        return '<li><span class="plus">+</span><span><strong>' + e.sku + '</strong>' +
+               '<span class="pair-name">' + e.name + '</span></span></li>';
+      }).join('');
+      var bomPanel = document.getElementById('bomPanel');
+      if (bomPanel) bomPanel.style.display = 'block';
+    }
+  }
+
+  // --- Render the rich SELECTED COMPANION · MODULE card (Page 1) --------------
+  if (resolvedMod) {
+    var modPanel = document.getElementById('modDetail');
+    if (modPanel) {
+      document.getElementById('modDetailEyebrow').innerHTML =
+        'Selected Companion · LED Retrofit Module' + (resolvedMod.hero ? ' · ★ Recommended Pair' : '');
+      document.getElementById('modDetailTitle').textContent =
+        resolvedMod.family + ' — ' + resolvedMod.size + ' module · ' + resolvedMod.tier + ' tier · matches ' + resolvedMod.matches;
+      document.getElementById('modDetailSku').textContent = resolvedMod.sku;
+      document.getElementById('modDetailGrid').innerHTML = [
+        cell('Module Size',     resolvedMod.size + (resolvedMod.closestFit ? ' (closest fit)' : '')),
+        cell('Wattage',         resolvedMod.wattage),
+        cell('Lumens',          resolvedMod.lumens),
+        cell('Efficacy',        resolvedMod.lpw),
+        cell('CCT Options',     resolvedMod.cctOptions),
+        cell('CRI',             resolvedMod.cri),
+        cell('DLC Tier',        resolvedMod.dlc),
+        cell('Warranty',        resolvedMod.warranty)
+      ].join('');
+      document.getElementById('modDetailRationale').innerHTML =
+        '<strong>Why this pair:</strong> ' + resolvedMod.rationale +
+        (resolvedMod.datasheet
+          ? ' <a href="' + resolvedMod.datasheet + '" target="_blank" style="color:var(--brand-red); font-weight:700;">↓ ' + resolvedMod.family + ' Datasheet</a>'
+          : '');
+      modPanel.classList.add('show');
+    }
+  }
+
+  // --- Render the SELECTED COMPANION · A19 LAMP card (Page 1) -----------------
+  if (resolvedLamp) {
+    var lampPanel = document.getElementById('lampDetail');
+    if (lampPanel) {
+      document.getElementById('lampDetailTitle').textContent =
+        'A19 LED · ' + resolvedLamp.label + ' · medium-base';
+      document.getElementById('lampDetailSku').textContent = resolvedLamp.sku;
+      document.getElementById('lampDetailGrid').innerHTML = [
+        cell('Wattage',     resolvedLamp.wattage),
+        cell('Lumens',      resolvedLamp.lumens),
+        cell('Efficacy',    resolvedLamp.lpw),
+        cell('CCT',         resolvedLamp.cct),
+        cell('Base',        'E26 medium-base'),
+        cell('Compatible',  'CRC4 + CRC6 (E26 path)'),
+        cell('Application', 'Omnidirectional ambient'),
+        cell('Note',        base === 'T24' ? '⚠ Not JA8 — pair with /E26 SKU' : 'Works with /E26 SKU')
+      ].join('');
+      lampPanel.innerHTML = lampPanel.innerHTML; // no-op, ensures DOM stays consistent
+      document.getElementById('lampDetailRationale').innerHTML =
+        '<strong>Why this lamp:</strong> A19 LED at <strong>' + resolvedLamp.lumens + '</strong> for general ambient applications (closet · pantry · service-room · corridor). Single SKU pattern <code>LTA19F800xxMB</code> covers 5 CCT variants (xx = first 2 chars of CCT). E26 base only — for the T24 install path, swap in a JA8-qualified PAR30 or one of the multi-fⒶMILY LED retrofit modules above.';
+      lampPanel.classList.add('show');
+    }
+  }
+
+  // Helper for the spec-grid cell template
+  function cell(key, val) {
+    return '<div class="companion-spec-cell">' +
+             '<div class="companion-spec-key">' + key + '</div>' +
+             '<div class="companion-spec-val">' + val + '</div>' +
+           '</div>';
+  }
+
+  // --- Flag the picked row in the Page 2 Companion table with ★ SELECTED -----
+  if (module) {
+    var row = document.querySelector('tr[data-mod-row="' + module + '"]');
+    if (row) row.classList.add('is-selected');
+  }
+  if (lamp) {
+    var lampRow = document.querySelector('tr[data-lamp-row="A19"]');
+    if (lampRow) lampRow.classList.add('is-selected');
+  }
+
+  // --- LIVE DATE ---
+  var d = new Date();
+  var liveDate = document.getElementById('liveDate');
+  if (liveDate) liveDate.textContent = d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+  var revStr = d.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit' }).replace('/', '-');
+  var revDate = document.getElementById('revDate');
+  if (revDate) revDate.textContent = revStr;
+  document.querySelectorAll('.rev-date').forEach(function(el) { el.textContent = revStr; });
+
+  // --- AUTO-PRINT ---
+  // Fires window.print() 600 ms after load — long enough for the browser to
+  // paint the 4 pages and load the hero image. Skippable with ?autoprint=0.
+  if (autoprint) {
+    window.addEventListener('load', function() {
+      setTimeout(function() { window.print(); }, 600);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
+

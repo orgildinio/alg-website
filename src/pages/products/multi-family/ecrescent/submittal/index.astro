@@ -1,0 +1,944 @@
+---
+/**
+ * LSMT eCrescent — Submittal Sheet — Submittal Generator
+ * Route: /products/multi-family/ecrescent/submittal/
+ * 
+ * Standalone print-optimized page. No site header/footer.
+ * URL params auto-populate the submittal fields.
+ * Fires window.print() 600ms after load (suppress with ?autoprint=0).
+ * 
+ * Source: submittal_ecrescent.html
+ */
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LSMT eCrescent — Submittal Sheet</title>
+
+<!--
+  ALG eCRESCENT SUBMITTAL TEMPLATE v1
+  ===================================
+  Reads URL query params from the §8 configurator and auto-fills:
+    - Catalog number (4 page headers + project info form)
+    - Quick spec grid (Lumens / Wattage / CCT / CRI / Beam / Voltage)
+    - Ordering code visual breakdown (LSMT · &#123;ss&#125;&#123;ww&#125; · -S5E · [/P|/24PK|])
+    - Companion BOM list (constⒶNT EM driver + approved dimmer)
+    - Photometric polar plot + IES file name + peak intensity per size+CCT
+
+  Param schema (matches buildSubmittalUrl() in mockup_ecrescent_pdp_v1.html):
+    ?sku=LSMT615-S5E[/P|/24PK|]
+    &size=410|615   &wattage=10|15
+    &sensor=NONE|P  &pack=SINGLE|24PK
+    [&emergency=CRC6-EM/JBS|CRC6-EM/JBW|CRCU-EM/JBM|EM15-HMB|EM15-170DC]
+    [&dimmer=LEV-6672|LEV-DSL06|LUT-MACL153M|LUT-PD6WCL]
+    [&autoprint=1]     ← auto-trigger window.print() on load (default behavior)
+
+  Print: page auto-fires window.print() 600 ms after load. The user gets the
+  browser's Save-as-PDF dialog without an extra click. To suppress, append
+  &autoprint=0 to the URL.
+-->
+
+<style>
+  /* ============= PRINT-OPTIMIZED CSS ============= */
+  @page {
+    size: letter portrait;
+    margin: 0.5in 0.6in;
+  }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+    .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+    .page:last-of-type { page-break-after: auto; }
+  }
+
+  /* ============= TYPE + COLOR TOKENS — match eCrescent PDP palette ============= */
+  :root {
+    --brand-red: #E3353C;
+    --ink: #0E0E10;
+    --ink-2: #2A2A2D;
+    --muted: #6B6B70;
+    --rule: #DCDEE2;
+    --rule-strong: #A6A4A0;
+    --tint: #F1ECE3;        /* warm-paper background — matches PDP --bg-darker */
+    --hi: #FFF6E5;
+    --grn: #0FAE7C;
+    --yel: #FDD85E;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Sora', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.5pt;
+    line-height: 1.4;
+    background: #E8E6E2;
+  }
+  body { padding: 24px 12px; }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 24px;
+    padding: 0.55in 0.65in;
+    background: white;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  h1, h2, h3, h4 { font-family: 'Sora', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+  .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+  .aa { font-family: 'Sora', sans-serif; }   /* Ⓐ glyph wrapper — same font as body, no special handling */
+
+  /* ============= PAGE HEADER (every page) ============= */
+  .submittal-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+  .submittal-head .brand-mark {
+    width: 28px; height: 28px; background: var(--brand-red);
+    display: inline-block;
+  }
+  .submittal-head .brand-name {
+    font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1;
+  }
+  .submittal-head .brand-sub {
+    font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .submittal-head .catalog-block { text-align: right; }
+  .submittal-head .catalog-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .submittal-head .catalog-number {
+    font-size: 12pt; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+    border: 1.5px solid var(--ink);
+    padding: 4px 10px; display: inline-block;
+    letter-spacing: 0.5pt;
+  }
+
+  /* ============= PROJECT INFO FORM ============= */
+  .project-info {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    border: 1px solid var(--rule-strong); margin-bottom: 14px;
+  }
+  .pi-cell {
+    padding: 6px 9px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    min-height: 38px;
+  }
+  .pi-cell:nth-child(3n) { border-right: none; }
+  .pi-cell:nth-child(n+4) { border-bottom: none; }
+  .pi-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .pi-value {
+    border-bottom: 1px dotted var(--rule-strong); min-height: 14px; padding-top: 2px;
+  }
+
+  /* ============= PRODUCT TITLE BAND ============= */
+  .product-title { margin: 14px 0 14px; }
+  .product-title h1 { font-size: 22pt; line-height: 1; margin: 0; }
+  .product-title .tagline {
+    font-size: 10pt; color: var(--ink-2); margin-top: 4px; line-height: 1.3;
+  }
+
+  /* ============= HERO + QUICK SPECS GRID ============= */
+  .at-a-glance {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; margin-bottom: 12px;
+  }
+  .hero-img {
+    background: var(--tint); border: 1px solid var(--rule);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-img img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+  .qs-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  }
+  .qs-cell {
+    border: 1px solid var(--rule-strong); padding: 8px 10px; min-height: 56px;
+  }
+  .qs-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 3px;
+  }
+  .qs-value { font-size: 14pt; font-weight: 700; line-height: 1.05; }
+  .qs-unit { font-size: 8pt; font-weight: 400; color: var(--muted); margin-left: 2px; }
+
+  /* ============= FEATURE BAND ============= */
+  .feature-band {
+    background: var(--ink); color: white;
+    padding: 8px 14px;
+    display: flex; gap: 18px; align-items: center;
+    margin-bottom: 12px;
+  }
+  .feature-band .fb-pill {
+    background: var(--brand-red); color: white;
+    font-size: 7pt; font-weight: 700; letter-spacing: 1.2pt;
+    padding: 3px 7px; text-transform: uppercase;
+  }
+  .feature-band .fb-features { font-size: 9pt; line-height: 1.3; }
+  .feature-band .fb-features strong { font-weight: 700; }
+
+  /* ============= COMPANION BOM PANEL (page 1) ============= */
+  .bom-panel {
+    border: 1px dashed var(--brand-red);
+    background: rgba(227, 53, 60, 0.04);
+    padding: 10px 14px; margin: 10px 0 12px;
+  }
+  .bom-eyebrow {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .bom-list {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4px 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 9pt;
+  }
+  .bom-list li { display: flex; gap: 6px; }
+  .bom-list li .plus { color: var(--brand-red); font-weight: 700; }
+  .bom-list li .pair-name {
+    font-family: 'Sora', sans-serif; font-size: 8pt; color: var(--muted); display: block;
+  }
+
+  /* ============= APPROVAL SIGNATURE BLOCK ============= */
+  .approval-block {
+    display: grid; grid-template-columns: 2fr 1fr; gap: 18px;
+    margin-top: 14px; padding-top: 8px;
+    border-top: 1px dashed var(--rule-strong);
+  }
+  .approval-cell {
+    display: grid; grid-template-columns: max-content 1fr;
+    gap: 8px; align-items: end; font-size: 8pt;
+  }
+  .approval-line { border-bottom: 1px solid var(--ink); height: 16px; }
+
+  /* ============= SECTION HEAD (page 2+) ============= */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 4px; margin-bottom: 10px; margin-top: 4px;
+  }
+  .section-head h2 { font-size: 14pt; line-height: 1; }
+  .section-head .section-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= SPEC TABLE ============= */
+  .spec-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  .spec-table th, .spec-table td {
+    text-align: left; padding: 5px 8px;
+    border-bottom: 1px solid var(--rule); vertical-align: top;
+  }
+  .spec-table .spec-section-head td {
+    background: var(--tint);
+    font-weight: 700; font-size: 9pt; letter-spacing: 0.3pt;
+    border-bottom: 1px solid var(--rule-strong);
+    padding: 6px 8px;
+  }
+  .spec-table .spec-attr { width: 30%; font-weight: 600; color: var(--ink-2); }
+  .spec-table .spec-val  { width: 70%; }
+
+  /* ============= ORDERING CODE MATRIX ============= */
+  .order-code {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px;
+    margin-bottom: 10px;
+  }
+  .order-segment {
+    background: var(--tint); border: 1px solid var(--rule-strong);
+    padding: 8px 6px; text-align: center;
+  }
+  .order-segment.active {
+    background: var(--brand-red); color: white; border-color: var(--brand-red);
+  }
+  .order-segment.fixed {
+    background: var(--ink); color: white; border-color: var(--ink);
+  }
+  .order-seg-label {
+    font-size: 7pt; letter-spacing: 1pt; text-transform: uppercase;
+    margin-bottom: 4px; opacity: 0.85;
+  }
+  .order-seg-value {
+    font-family: 'JetBrains Mono', monospace; font-size: 11pt; font-weight: 700;
+  }
+  .order-matrix { width: 100%; border-collapse: collapse; font-size: 7.5pt; }
+  .order-matrix th, .order-matrix td {
+    border: 1px solid var(--rule); padding: 4px 6px; text-align: left;
+    vertical-align: top;
+  }
+  .order-matrix th {
+    background: var(--ink); color: white;
+    font-size: 7pt; letter-spacing: 1pt; text-transform: uppercase;
+  }
+  .order-matrix .code {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; width: 80px;
+  }
+
+  /* ============= DIMENSIONS LAYOUT ============= */
+  .dim-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 14px; }
+  .dim-view {
+    border: 1px solid var(--rule-strong);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    background: white; position: relative; overflow: hidden;
+  }
+  .dim-view img, .dim-view svg { width: 100%; height: 100%; object-fit: contain; }
+  .dim-view-label {
+    position: absolute; top: 4px; left: 6px;
+    font-size: 7pt; letter-spacing: 1pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= PHOTOMETRIC DATA ============= */
+  .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .photo-polar {
+    border: 1px solid var(--rule-strong); padding: 10px;
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    background: white; overflow: hidden;
+  }
+  .photo-polar svg { width: 100%; height: 100%; }
+  .photo-summary { border: 1px solid var(--rule); }
+  .photo-summary table { width: 100%; border-collapse: collapse; font-size: 8pt; }
+  .photo-summary table td {
+    padding: 4px 8px; border-bottom: 1px solid var(--rule);
+  }
+  .photo-summary table tr:last-child td { border-bottom: none; }
+  .photo-summary td:first-child { color: var(--muted); }
+  .photo-summary td:last-child {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; text-align: right;
+  }
+
+  /* ============= CERTIFICATIONS ============= */
+  .certs {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 8px 10px; border: 1px solid var(--rule); margin-top: 10px;
+  }
+  .cert-badge {
+    font-size: 7.5pt; font-weight: 700;
+    border: 1.5px solid var(--ink); padding: 3px 8px;
+    letter-spacing: 0.6pt; text-transform: uppercase;
+  }
+  .cert-badge.brand { border-color: var(--brand-red); color: var(--brand-red); }
+
+  /* ============= PAGE FOOTER ============= */
+  .page-foot {
+    position: absolute;
+    bottom: 0.4in; left: 0.65in; right: 0.65in;
+    display: flex; justify-content: space-between;
+    font-size: 7pt; color: var(--muted);
+    padding-top: 6px; border-top: 1px solid var(--rule);
+  }
+
+  /* ============= NO-PRINT CONTROLS BAR ============= */
+  .controls {
+    max-width: 8.5in; margin: 0 auto 18px;
+    background: white; padding: 14px 18px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  }
+  .controls .ctrl-label {
+    font-size: 9pt; font-weight: 600; color: var(--muted);
+    letter-spacing: 0.5pt; text-transform: uppercase;
+  }
+  .controls .ctrl-value {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11pt;
+  }
+  .controls button {
+    background: var(--brand-red); color: white;
+    border: none; padding: 8px 16px;
+    font-family: inherit; font-weight: 700; font-size: 9pt;
+    letter-spacing: 0.5pt; text-transform: uppercase;
+    cursor: pointer; margin-left: auto;
+  }
+  .controls button:hover { background: #B0252B; }
+  .controls .ctrl-back {
+    background: transparent; color: var(--ink); border: 1px solid var(--ink);
+    margin-left: 8px;
+  }
+  .controls .ctrl-back:hover { background: var(--ink); color: white; }
+</style>
+</head>
+<body>
+
+<!-- ============= NO-PRINT CONTROLS BAR =============
+     The Save-as-PDF button stays accessible after the auto-print fires —
+     in case the user dismissed the print dialog and wants a second shot.
+     The Back-to-Configurator link rewinds to the PDP using document.referrer. -->
+<div class="controls no-print">
+  <div>
+    <div class="ctrl-label">Configured SKU</div>
+    <div class="ctrl-value" id="liveSku">LSMT615-S5E</div>
+  </div>
+  <div>
+    <div class="ctrl-label">Generated</div>
+    <div class="ctrl-value" id="liveDate" style="font-size:9pt; font-weight:400;">—</div>
+  </div>
+  <button onclick="window.print()">Save as PDF →</button>
+  <button class="ctrl-back" onclick="history.length > 1 ? history.back() : window.close()">← Back to Configurator</button>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — AT A GLANCE                                          -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum">LSMT615-S5E</div>
+    </div>
+  </div>
+
+  <div class="project-info">
+    <div class="pi-cell"><div class="pi-label">Project</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Type</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Catalog #</div><div class="pi-value" id="piCatNum"></div></div>
+    <div class="pi-cell"><div class="pi-label">Prepared By</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Notes</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Date</div><div class="pi-value"></div></div>
+  </div>
+
+  <div class="product-title">
+    <h1 id="productTitle">eCrescent Series · 6″ Surface-Mount Disk Downlight</h1>
+    <div class="tagline" id="productTagline">
+      Multi-fⒶMILY ECO-tier IP65 wet-rated surface-mount disk &middot; 5-CCTselect 2700/3000/3500/4000/5000K &middot; 120° wide-flood (back-lit polycarbonate) &middot; ETL / ENERGY&nbsp;STAR / JA8-2022 / FCC / RoHS / IP65 Wet &middot; Built-in PIR option (/P) &middot; Emergency-driver compatible &middot; Dual install (J-box surface OR 5″/6″ recessed-can retrofit) &middot; 24-pack contractor carton
+    </div>
+  </div>
+
+  <div class="at-a-glance">
+    <div class="hero-img">
+      <!-- Real eCrescent hero image. JS swaps to ecrescent-4in or ecrescent-6in
+           based on the size param (and to ecrescent-pir if sensor=P).
+           mix-blend-mode: multiply preserves the white finish against the warm
+           hero panel. -->
+      <img id="heroImg" src="/products/multi-family/ecrescent/assets/ecrescent/ecrescent-6in-hero-1.png"
+           alt="LSMT eCrescent — 6″ surface-mount disk downlight, white finish, IP65 wet, front 3/4 angle" />
+    </div>
+    <div class="qs-grid">
+      <div class="qs-cell">
+        <div class="qs-label">Lumens (4000K)</div>
+        <div class="qs-value" id="qsLumens">910<span class="qs-unit">lm</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Wattage</div>
+        <div class="qs-value" id="qsWatts">15<span class="qs-unit">W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Efficacy</div>
+        <div class="qs-value" id="qsLpw">61<span class="qs-unit">lm/W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CCT (selectable)</div>
+        <div class="qs-value">2700-5000<span class="qs-unit">K</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CRI · Lifetime</div>
+        <div class="qs-value">≥ 90 · 50,000 <span class="qs-unit">hr</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Beam · Voltage</div>
+        <div class="qs-value">120° · 120<span class="qs-unit">V</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feature-band">
+    <div class="fb-pill">5-IN-1 STACK</div>
+    <div class="fb-features">
+      <strong>IP65 wet</strong> &middot; <strong>5-CCTselect</strong> dip-switch (2700/3000/3500/4000/5000K) &middot;
+      <strong>built-in PIR option</strong> (/P · 10s/1m/10m hold) &middot;
+      <strong>EM-driver compatible</strong> (5 const<span class="aa">Ⓐ</span>NT bricks) &middot;
+      <strong>dual install</strong> (J-box surface OR 5″/6″ can retrofit · conversion kit included)
+    </div>
+  </div>
+
+  <!-- Companion BOM — only shows when at least one companion is selected.
+       Populated by JS from the URL params (emergency / sensor / housing_can). -->
+  <div class="bom-panel" id="bomPanel" style="display:none;">
+    <div class="bom-eyebrow">Pair-With · Separate Line Items</div>
+    <ul class="bom-list" id="bomList"></ul>
+  </div>
+
+  <div class="approval-block">
+    <div class="approval-cell">
+      <span><strong>Approved by</strong></span>
+      <div class="approval-line"></div>
+    </div>
+    <div class="approval-cell">
+      <span><strong>Date</strong></span>
+      <div class="approval-line"></div>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LSMT eCrescent submittal · ENERGY STAR + JA8 + IP65 Wet · Specifications subject to change</div>
+    <div>Rev. <span id="revDate">2026-05</span> · Page 1 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — SPECIFICATIONS                                       -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum2">LSMT615-S5E</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Specifications</h2>
+    <div class="section-eyebrow" id="specEyebrow">LSMT eCrescent · 4″ + 6″ Surface-Mount Disk Downlight (White · IP65 Wet · Optional Built-In PIR)</div>
+  </div>
+
+  <table class="spec-table">
+    <tbody>
+      <tr class="spec-section-head"><td colspan="2">Construction</td></tr>
+      <tr><td class="spec-attr">Housing</td><td class="spec-val">Lightweight 6063 aluminum frame · low-profile back-lit form factor · 0.95″ depth · twist-lock removable polycarbonate diffuser · onboard high-efficacy driver</td></tr>
+      <tr><td class="spec-attr">Lens / Diffuser</td><td class="spec-val">Frosted polycarbonate diffuser with even back-lit distribution · 120° wide-flood from centered Samsung 2835 LM80 LED array</td></tr>
+      <tr><td class="spec-attr">Finish</td><td class="spec-val">White only · powder-coat over 6063 aluminum frame</td></tr>
+      <tr><td class="spec-attr">Ingress / Location</td><td class="spec-val">IP65 Wet-location listed · suitable for indoor + outdoor / coastal / corridor / patio / balcony soffit / parking-deck stair installs · waterproof sealant required at lens edge for IP65 finish</td></tr>
+      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">−10°F to +125°F (−23°C to +52°C) ambient — wider range than most disk-light competitors (Halo HLCE: 32-104°F)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">LED &amp; Optics</td></tr>
+      <tr><td class="spec-attr">LED Source</td><td class="spec-val">Samsung 2835 LM80 IP-Protected Chip · 50,000-hr L70 lumen maintenance</td></tr>
+      <tr><td class="spec-attr">CCT (5-CCTselect)</td><td class="spec-val">Field-selectable via back-of-disk dip switch: 2700K / 3000K / 3500K / 4000K / 5000K — no SKU change required, single fixture covers any spec</td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val">≥ 90 CRI per SellSheet badge · meets CA Title-24 JA8-2022 high-efficacy threshold (R9 inferred via JA8 listing; not explicitly published)</td></tr>
+      <tr><td class="spec-attr">Beam Distribution</td><td class="spec-val">120° wide-flood from back-lit polycarbonate diffuser — single beam shape, no field-replaceable optic, identical between 4″ and 6″ sizes</td></tr>
+      <tr><td class="spec-attr">Lumen Output (4000K)</td><td class="spec-val">See Page 4 for full 2-size × 5-CCT lumen matrix · 600 lm @ 4000K (4″ · 10W) · 910 lm @ 4000K (6″ · 15W) · efficacy 60 lm/W (4″) · 61 lm/W (6″)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Driver &amp; Electrical</td></tr>
+      <tr><td class="spec-attr">Voltage</td><td class="spec-val">120V AC · 60 Hz (per Install Guide)</td></tr>
+      <tr><td class="spec-attr">Driver</td><td class="spec-val">Onboard high-efficacy driver · integral · sealed (not driverless — eCrescent uses a constant-current driver inside the disk)</td></tr>
+      <tr><td class="spec-attr">Dimming</td><td class="spec-val">100% to 5% with any LED-compatible dimmer · approved Leviton (5 SKUs: 6672, RNL06, IPL06, DSL06, 6674) · approved Lutron (13 SKUs incl. MACL-153M, PD-6WCL, MA-R, full list per Install Guide)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Built-in PIR Option (/P SKU variant only)</td></tr>
+      <tr><td class="spec-attr">Sensor Type</td><td class="spec-val">Factory-integrated Passive Infrared (PIR) at the disk rim · ships only on LSMT615-S5E/P (6″ · 15W)</td></tr>
+      <tr><td class="spec-attr">Hold Time</td><td class="spec-val">Selectable via second back-of-disk dip switch: <strong>10 sec</strong> (closets / storage) · <strong>1 min</strong> (stairwells / hallways) · <strong>10 min</strong> (lobbies / common rooms)</td></tr>
+      <tr><td class="spec-attr">Standard Variant</td><td class="spec-val">LSMT410-S5E and LSMT615-S5E ship without PIR — pair with a wall-switch occupancy sensor or wire to an EM driver for code-required egress</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Emergency Driver Compatibility (separate SKU)</td></tr>
+      <tr><td class="spec-attr">Compatible EM Drivers</td><td class="spec-val">CRC6-EM/JBS · CRC6-EM/JBW · CRCU-EM/JBM · EM15-HMB · EM15-170DC — all const<span class="aa">Ⓐ</span>NT family field-install bricks</td></tr>
+      <tr><td class="spec-attr">Egress Performance</td><td class="spec-val">≥ 90 minutes at reduced lumens during power loss · UL 924 / NFPA 101 § 7.9 / IBC § 1008.3 means-of-egress compliant</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Mounting</td></tr>
+      <tr><td class="spec-attr">Surface (Standard)</td><td class="spec-val">4″ disk: 4″ J-box (3.5″ hole spacing) · 6″ disk: 3″ J-box (2.75″) OR 4″ J-box (3.5″) · 2 mounting screws + 3 wire nuts included</td></tr>
+      <tr><td class="spec-attr">Recessed Retrofit</td><td class="spec-val">Drop into existing 5″ or 6″ recessed cans with included conversion kit: 2 spring iron supports + 2 mounting irons + 1 E26 base whip — no separate accessory order required</td></tr>
+      <tr><td class="spec-attr">Install Time</td><td class="spec-val">15–20 min per fixture (per Install Guide) · ladder + safety glasses only · no specialty tools</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
+      <tr><td class="spec-attr">Standards</td><td class="spec-val">ETL listed (US + Canada) · ENERGY STAR certified · JA8-2022 high-efficacy · CA Title-24 Part 6 ready · IP65 Wet Location · FCC Title 47 Part 15B · RoHS · Type Non-IC (not for direct contact with insulation)</td></tr>
+      <tr><td class="spec-attr">Rebate-Ready</td><td class="spec-val">ENERGY STAR + JA8 paths qualify for residential utility-rebate programs at PG&amp;E, SCE, SDG&amp;E, and most state IOUs · ECO tier (not DLC-listed) so commercial DLC-required programs do not apply · search "LSMT" at archipelagolighting.com/pages/rebate-center</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val">5-year limited (luminaire) · all 5 active SKUs (LSMT410-S5E, LSMT410-S5E/24PK, LSMT615-S5E, LSMT615-S5E/24PK, LSMT615-S5E/P) ship QuickShip</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LSMT eCrescent submittal · ENERGY STAR + JA8 + IP65 Wet · Specifications subject to change</div>
+    <div>Rev. <span class="rev-date">2026-05</span> · Page 2 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 3 — DIMENSIONS & MOUNTING                                -->
+<!-- ============================================================ -->
+<div class="page" id="page-3">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum3">LSMT615-S5E</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Dimensions &amp; Mounting</h2>
+    <div class="section-eyebrow">Top + Side views · Surface-mount J-Box specs · 5″/6″ recessed-can retrofit · const<span class="aa">Ⓐ</span>NT EM driver pairing</div>
+  </div>
+
+  <div class="dim-grid">
+    <div class="dim-view" id="dimView">
+      <div class="dim-view-label">Top + Side views (in)</div>
+      <!-- Inline SVG dimension diagram — covers both 4″ + 6″ sizes; JS swaps
+           the labels (Ø + emit Ø + depth) based on the size param. -->
+      <svg id="dimSvg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Top view — circle (disk face seen from below) -->
+        <g transform="translate(110, 70)">
+          <text x="0" y="-8" font-family="JetBrains Mono, monospace" font-size="9" fill="#6B6B70" letter-spacing="1">TOP · DISK FACE</text>
+          <!-- Outer trim ring -->
+          <circle cx="60" cy="60" r="58" fill="none" stroke="#0E0E10" stroke-width="1.4"/>
+          <!-- Inner emit aperture (back-lit polycarbonate diffuser) -->
+          <circle cx="60" cy="60" r="42" fill="rgba(227, 53, 60, 0.06)" stroke="#A6A4A0" stroke-width="0.6"/>
+          <!-- Center LED engine marker (Samsung 2835 array · back-lit) -->
+          <circle cx="60" cy="60" r="2" fill="#E3353C"/>
+          <line x1="2" y1="60" x2="118" y2="60" stroke="#A6A4A0" stroke-width="0.5"/>
+          <text id="dimTopWidth" x="60" y="138" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#0E0E10" font-weight="700">Ø 7.32″</text>
+          <text id="dimAperture" x="60" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70" dx="0" dy="22">Ø 5.28″ emit</text>
+        </g>
+        <!-- Side view — surface-mounted disk silhouette -->
+        <g transform="translate(260, 70)">
+          <text x="0" y="-8" font-family="JetBrains Mono, monospace" font-size="9" fill="#6B6B70" letter-spacing="1">SIDE · SURFACE MOUNT</text>
+          <!-- ceiling line (dashed) -->
+          <line x1="-8" y1="40" x2="120" y2="40" stroke="#0E0E10" stroke-width="0.8"/>
+          <line x1="-8" y1="44" x2="120" y2="44" stroke="#A6A4A0" stroke-width="0.4" stroke-dasharray="1,1"/>
+          <!-- J-box (above ceiling) -->
+          <rect x="40" y="20" width="40" height="20" fill="#F1ECE3" stroke="#A6A4A0" stroke-width="0.8"/>
+          <text x="60" y="34" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#6B6B70">J-BOX</text>
+          <!-- Disk body (below ceiling, low-profile · 0.95″ thick) -->
+          <rect x="14" y="40" width="92" height="14" fill="#F1ECE3" stroke="#0E0E10" stroke-width="1.2"/>
+          <!-- Onboard driver brick on top of disk body -->
+          <rect x="34" y="32" width="52" height="8" fill="rgba(0,0,0,0.06)" stroke="#A6A4A0" stroke-width="0.6"/>
+          <text x="60" y="38" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5" fill="#6B6B70">ONBOARD DRIVER</text>
+          <!-- Diffuser face (red accent line) -->
+          <line x1="14" y1="54" x2="106" y2="54" stroke="#E3353C" stroke-width="1.2"/>
+          <!-- Centered LED engine indicator -->
+          <circle cx="60" cy="47" r="2" fill="#E3353C"/>
+          <!-- depth dim -->
+          <text id="dimDepth" x="60" y="76" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#0E0E10" font-weight="700">depth 0.95″</text>
+          <text id="dimRecess" x="60" y="90" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#6B6B70">surface mount · 0″ recess</text>
+        </g>
+      </svg>
+    </div>
+
+    <div>
+      <table class="spec-table">
+        <tbody>
+          <tr class="spec-section-head"><td colspan="2">Dimensions (in)</td></tr>
+          <tr><td class="spec-attr">Outer Diameter</td><td class="spec-val" id="specOd">7.32″ (LSMT615)</td></tr>
+          <tr><td class="spec-attr">Lens Emit Ø</td><td class="spec-val" id="specAp">5.28″ (LSMT615)</td></tr>
+          <tr><td class="spec-attr">Disk Depth</td><td class="spec-val" id="specDepth">0.95″ (low-profile back-lit form factor)</td></tr>
+          <tr><td class="spec-attr">Recess</td><td class="spec-val" id="specRecess">0″ — surface-mount disk, no ceiling cut-out</td></tr>
+          <tr><td class="spec-attr">J-Box Compatibility</td><td class="spec-val" id="specCutout">3″ J-box (2.75″ hole spacing) OR 4″ J-box (3.5″ hole spacing) — varies per size</td></tr>
+          <tr class="spec-section-head"><td colspan="2">In-the-Box Hardware</td></tr>
+          <tr><td class="spec-attr">Mounting</td><td class="spec-val">2 mounting screws + 3 wire nuts (L/N/G)</td></tr>
+          <tr><td class="spec-attr">Conversion Kit</td><td class="spec-val">2 spring iron supports + 2 mounting irons + 1 E26 base whip · for 5″/6″ recessed-can retrofit (eliminates separate accessory order)</td></tr>
+          <tr><td class="spec-attr">Single Unit Pkg</td><td class="spec-val">Single-fixture retail box</td></tr>
+          <tr><td class="spec-attr">Contractor Carton</td><td class="spec-val" id="specWeight">24-pack master carton available (LSMT410-S5E/24PK · LSMT615-S5E/24PK)</td></tr>
+          <tr class="spec-section-head"><td colspan="2">Mount Path</td></tr>
+          <tr><td class="spec-attr">Surface (Std)</td><td class="spec-val" id="mountStd">3″ or 4″ standard J-box · 2 screws · 0″ recess</td></tr>
+          <tr><td class="spec-attr">Recessed (Retrofit)</td><td class="spec-val" id="mountT24">5″ or 6″ existing recessed can · spring iron + E26 whip from included kit</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LSMT eCrescent submittal · ENERGY STAR + JA8 + IP65 Wet · Specifications subject to change</div>
+    <div>Rev. <span class="rev-date">2026-05</span> · Page 3 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 4 — ORDERING CODE & PHOTOMETRICS                         -->
+<!-- ============================================================ -->
+<div class="page" id="page-4">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum4">LSMT615-S5E</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Ordering Information</h2>
+    <div class="section-eyebrow">Configure your catalog number</div>
+  </div>
+
+  <!-- ORDERING CODE VISUAL BREAKDOWN — 5 segments matching the eCrescent SKU pattern:
+         LSMT&#123;ss&#125;&#123;ww&#125;-S5E[/P|][/24PK|]
+       The S5E segment is the fixed family designator; the optional /P (sensor)
+       and /24PK (pack) segments echo the configured selection. -->
+  <div class="order-code" style="grid-template-columns: repeat(5, 1fr);">
+    <div class="order-segment active"><div class="order-seg-label">Family</div><div class="order-seg-value">LSMT</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Size &amp; Wattage</div><div class="order-seg-value" id="ocHousing">615</div></div>
+    <div class="order-segment fixed"><div class="order-seg-label">CCT · Gen</div><div class="order-seg-value">-S5E</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Sensor</div><div class="order-seg-value" id="ocSensor">—</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Pack</div><div class="order-seg-value" id="ocPack">—</div></div>
+  </div>
+
+  <table class="order-matrix">
+    <thead>
+      <tr>
+        <th style="width:14%">Segment</th>
+        <th>Available Codes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="code">LSMT</td><td>Multi-fⒶMILY surface-mount disk family prefix</td></tr>
+      <tr><td class="code">410 / 615</td><td>Size &amp; wattage — 4″/10W · 6″/15W (the only two sizes in the eCrescent active SKU set)</td></tr>
+      <tr><td class="code">-S5E</td><td>Family designator — 5-CCTselect (S5) + eCrescent (E) · fixed across all SKUs</td></tr>
+      <tr><td class="code">/P</td><td>Built-in PIR option — appended only on LSMT615-S5E/P (6″ only · selectable 10s/1m/10m hold time via second back-of-disk dip switch)</td></tr>
+      <tr><td class="code">/24PK</td><td>24-pack contractor carton — appended for bulk orders · mutually exclusive with /P (no Active SKU combines PIR + 24PK)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ACTIVE SKU TABLE — 5 valid combinations -->
+  <table class="order-matrix" style="margin-top: 10px;">
+    <thead>
+      <tr>
+        <th style="width:30%">Active SKU</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="code">LSMT410-S5E</td><td>4″ · 10W · 600 lm @ 4000K · 5-CCTselect · standard single-fixture box</td></tr>
+      <tr><td class="code">LSMT410-S5E/24PK</td><td>4″ · 10W · 24-pack contractor master carton</td></tr>
+      <tr><td class="code">LSMT615-S5E</td><td>6″ · 15W · 910 lm @ 4000K · 5-CCTselect · standard single-fixture box</td></tr>
+      <tr><td class="code">LSMT615-S5E/24PK</td><td>6″ · 15W · 24-pack contractor master carton</td></tr>
+      <tr><td class="code">LSMT615-S5E/P</td><td>6″ · 15W · built-in PIR with selectable 10s/1m/10m hold time · single-fixture box</td></tr>
+    </tbody>
+  </table>
+
+  <!-- PHOTOMETRIC DATA — single 120° wide-flood (edge-lit PMMA) beam.
+       Polar plot is a static illustration (one beam type for all SKUs);
+       the lumens/peak/IES values vary per housing+CCT combination. -->
+  <div class="section-head" style="margin-top: 16px;">
+    <h2>Photometric Data</h2>
+    <div class="section-eyebrow" id="photoEyebrow">120° wide-flood (back-lit polycarbonate) · LSMT615 · 15W · 4000K · eCrescent · white · IP65 wet</div>
+  </div>
+
+  <div class="photo-grid">
+    <div class="photo-polar">
+      <!-- Inline polar plot — 120° wide-flood (back-lit) IESNA semi-circle. -->
+      <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
+        <!-- Grid arcs -->
+        <g fill="none" stroke="#A6A4A0" stroke-width="0.4">
+          <path d="M 40 140 A 80 80 0 0 1 200 140"/>
+          <path d="M 60 140 A 60 60 0 0 1 180 140"/>
+          <path d="M 80 140 A 40 40 0 0 1 160 140"/>
+          <path d="M 100 140 A 20 20 0 0 1 140 140"/>
+        </g>
+        <!-- Spokes -->
+        <g stroke="#A6A4A0" stroke-width="0.4">
+          <line x1="120" y1="140" x2="40" y2="140"/>
+          <line x1="120" y1="140" x2="200" y2="140"/>
+          <line x1="120" y1="140" x2="120" y2="60"/>
+          <line x1="120" y1="140" x2="60" y2="80"/>
+          <line x1="120" y1="140" x2="180" y2="80"/>
+        </g>
+        <!-- 120° beam curve — wide-flood, semi-circle filled -->
+        <path d="M 120 140 L 40 90 Q 120 30 200 90 Z" fill="rgba(227,53,60,0.22)" stroke="#E3353C" stroke-width="1.4"/>
+        <!-- Axis labels -->
+        <text x="120" y="56" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70">0°</text>
+        <text x="48" y="76" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70">90°</text>
+        <text x="192" y="76" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70">90°</text>
+        <text x="120" y="160" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#0E0E10" font-weight="700">120° BEAM · WIDE-FLOOD</text>
+      </svg>
+    </div>
+
+    <div class="photo-summary">
+      <table>
+        <tbody>
+          <tr><td>Peak Intensity (est.)</td><td id="photoPeak">290 cd</td></tr>
+          <tr><td>Total Lumen Output</td><td id="photoLumens">910 lm</td></tr>
+          <tr><td>Beam Angle</td><td>120°</td></tr>
+          <tr><td>Optic</td><td>Back-lit polycarbonate diffuser</td></tr>
+          <tr><td>Source</td><td>Samsung 2835 LM80</td></tr>
+          <tr><td>CRI</td><td>≥ 90 (per SellSheet)</td></tr>
+          <tr><td>L70 Lumen Maint.</td><td>50,000 hr</td></tr>
+          <tr><td>IES File</td><td id="photoIesFile">LSMT615-S5 (4000K)_IESNA2002.IES</td></tr>
+          <tr><td>IES Bundle</td><td><span style="color:var(--muted);">10 IES files on disk · WorkDrive bundle URL pending engineering registration</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CERTIFICATIONS — eCrescent ECO-tier 6-cert stack: ETL · ENERGY STAR · JA8-2022 ·
+       FCC · RoHS · IP65 Wet Location. Brand red highlights the multifamily-permit-critical
+       ones (JA8-2022 unlocks CA Title-24 paths). -->
+  <div class="certs">
+    <span class="cert-badge brand">JA8-2022</span>
+    <span class="cert-badge brand">ENERGY STAR</span>
+    <span class="cert-badge brand">IP65 Wet</span>
+    <span class="cert-badge">ETL</span>
+    <span class="cert-badge">FCC 47 / 15B</span>
+    <span class="cert-badge">RoHS</span>
+    <span class="cert-badge">CA Title-24 Part 6</span>
+    <span class="cert-badge">5-Yr Warranty</span>
+    <span class="cert-badge">50,000 hr L70</span>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LSMT eCrescent submittal · ENERGY STAR + JA8 + IP65 Wet · Specifications subject to change</div>
+    <div>Rev. <span class="rev-date">2026-05</span> · Page 4 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============= URL PARAM POPULATION + AUTO-PRINT ============= -->
+<script>
+(function() {
+  // --- PARSE URL PARAMS · eCrescent configurator → submittal pipeline ---
+  // Canonical params: sku · size · wattage · sensor · pack
+  //                 + companion: emergency (5 const⒝NT EM SKUs) · dimmer (4 approved)
+  var params = new URLSearchParams(window.location.search);
+  var sku       = params.get('sku')       || 'LSMT615-S5E';
+  var size      = params.get('size')      || '615';
+  var sensor    = params.get('sensor')    || 'NONE';   // NONE | P
+  var pack      = params.get('pack')      || 'SINGLE'; // SINGLE | 24PK
+  var emergency = params.get('emergency') || '';
+  var dimmer    = params.get('dimmer')    || '';
+  var autoprint = params.get('autoprint') !== '0';   // default ON
+
+  // --- 2-SIZE LOOKUP TABLE (LSMT-eCrescent-Datasheet.pdf § Model Specifications) ---
+  // Lumens are 4000K (the configurator's representative CCT); peak cd from a
+  // calibrated 120° wide-flood cosine model (lumens / π).
+  // Both sizes ship in single-fixture retail boxes AND in 24-pack contractor cartons.
+  var sizeData = {
+    '410': { in: 4, watt: 10, lumens: '600', lpw: '60', peak: '191', diameter: '5.98″ (152mm)', emit: '4.03″ (102mm)', depth: '0.95″', jbox: '4″ J-box (3.5″ hole spacing)', heroImg: 'assets/ecrescent/ecrescent-4in-hero-1.png' },
+    '615': { in: 6, watt: 15, lumens: '910', lpw: '61', peak: '290', diameter: '7.32″ (186mm)', emit: '5.28″ (134mm)', depth: '0.95″', jbox: '3″ J-box (2.75″) OR 4″ J-box (3.5″)', heroImg: 'assets/ecrescent/ecrescent-6in-hero-1.png' }
+  };
+  var sd = sizeData[size] || sizeData['615'];
+
+  // --- AUTOFILL CATALOG NUMBER (4 page headers + project info form + control bar) ---
+  document.querySelectorAll('#catNum, #catNum2, #catNum3, #catNum4, #liveSku').forEach(function(el) {
+    el.textContent = sku;
+  });
+  var pi = document.getElementById('piCatNum');
+  if (pi) pi.textContent = sku;
+
+  // --- AUTOFILL PRODUCT TITLE ---
+  // PIR variant gets "with Built-in PIR" suffix; pack variant adds "24-Pack Carton" tag.
+  var titleSuffix = '';
+  if (sensor === 'P')   titleSuffix += ' · Built-in PIR (/P)';
+  if (pack === '24PK')  titleSuffix += ' · 24-Pack Contractor Carton';
+  document.getElementById('productTitle').textContent =
+    'eCrescent Series · ' + sd.in + '″ · ' + sd.watt + 'W · Surface-Mount Disk Downlight (White · IP65 Wet)' + titleSuffix;
+
+  // --- AUTOFILL QUICK SPECS (4000K representative row) ---
+  document.getElementById('qsLumens').innerHTML = sd.lumens + '<span class="qs-unit">lm</span>';
+  document.getElementById('qsWatts').innerHTML  = sd.watt   + '<span class="qs-unit">W</span>';
+  document.getElementById('qsLpw').innerHTML    = sd.lpw    + '<span class="qs-unit">lm/W</span>';
+
+  // --- AUTOFILL HERO IMAGE — eCrescent White-only · sensor=P swaps to PIR photo ---
+  var heroImg = document.getElementById('heroImg');
+  if (heroImg) {
+    if (sensor === 'P' && size === '615') {
+      heroImg.src = 'assets/ecrescent/ecrescent-pir-2.png';
+      heroImg.alt = 'LSMT615-S5E/P eCrescent — 6″ disk with built-in PIR sensor at the rim';
+    } else {
+      heroImg.src = sd.heroImg;
+      heroImg.alt = 'LSMT' + size + '-S5E eCrescent — ' + sd.in + '″ surface-mount disk downlight, white finish, IP65 wet';
+    }
+  }
+
+  // --- AUTOFILL ORDERING CODE BREAKDOWN (Page 4) ---
+  // eCrescent SKU pattern: LSMT{ss}{ww}-S5E[/P|][/24PK|]
+  //   ocHousing = 3-digit size+wattage (410 or 615)
+  //   ocSensor  = "/P" or "—"
+  //   ocPack    = "/24PK" or "—"
+  document.getElementById('ocHousing').textContent = size;
+  var ocSensor = document.getElementById('ocSensor');
+  if (ocSensor) ocSensor.textContent = (sensor === 'P') ? '/P' : '—';
+  var ocPack = document.getElementById('ocPack');
+  if (ocPack) ocPack.textContent = (pack === '24PK') ? '/24PK' : '—';
+
+  // --- AUTOFILL DIMENSIONS (Page 3) per size ---
+  var specOd     = document.getElementById('specOd');     if (specOd)     specOd.textContent     = sd.diameter + ' (LSMT' + size + ')';
+  var specAp     = document.getElementById('specAp');     if (specAp)     specAp.textContent     = sd.emit + ' (back-lit polycarbonate diffuser face)';
+  var specCutout = document.getElementById('specCutout'); if (specCutout) specCutout.textContent = sd.jbox;
+  var specRecess = document.getElementById('specRecess'); if (specRecess) specRecess.textContent = '0″ — surface-mount disk · no ceiling cut-out';
+  var specDepth  = document.getElementById('specDepth');  if (specDepth)  specDepth.textContent  = sd.depth + ' (low-profile back-lit form factor)';
+  var specWeight = document.getElementById('specWeight');
+  if (specWeight) {
+    if (pack === '24PK') {
+      specWeight.textContent = '24-pack master carton — currently configured (LSMT' + size + '-S5E/24PK)';
+    } else {
+      specWeight.textContent = '24-pack master carton available (append /24PK to SKU)';
+    }
+  }
+  var mountStd   = document.getElementById('mountStd');   if (mountStd)   mountStd.textContent   = sd.jbox + ' · 2 screws · 0″ recess';
+  var mountT24   = document.getElementById('mountT24');   if (mountT24)   mountT24.textContent   = '5″ or 6″ existing recessed can · spring iron + E26 whip from included conversion kit';
+  var dimTopW    = document.getElementById('dimTopWidth');if (dimTopW)    dimTopW.textContent    = 'Ø ' + sd.diameter;
+  var dimAp      = document.getElementById('dimAperture');if (dimAp)      dimAp.textContent      = 'Ø ' + sd.emit + ' emit';
+  var dimDp      = document.getElementById('dimDepth');   if (dimDp)      dimDp.textContent      = 'depth ' + sd.depth;
+  var dimRc      = document.getElementById('dimRecess');  if (dimRc)      dimRc.textContent      = 'surface mount · 0″ recess';
+
+  // --- AUTOFILL PHOTOMETRIC PAGE 4 ---
+  document.getElementById('photoEyebrow').textContent =
+    '120° wide-flood (back-lit polycarbonate) · LSMT' + size + ' · ' + sd.watt + 'W · 4000K · eCrescent · white · IP65 wet' +
+    (sensor === 'P' ? ' · /P built-in PIR variant' : '');
+  document.getElementById('photoPeak').textContent    = sd.peak + ' cd';
+  document.getElementById('photoLumens').textContent  = sd.lumens + ' lm';
+  // IES filename uses the legacy LSMT-S5 (not S5E) bundle suffix · same photometric output
+  document.getElementById('photoIesFile').textContent = 'LSMT' + size + '-S5 (4000K)_IESNA2002.IES';
+
+  // --- COMPANION BOM (Page 1) — eCrescent ladder ---
+  // 5 const⒝NT EM driver SKUs + 4 approved-dimmer SKUs (matching §7 + §8 of the PDP).
+  // Both companion fields are independent — user can pick zero, one, or both.
+  var pairMap = {
+    // const⒝NT EM driver ladder (separate-line SKUs)
+    'CRC6-EM/JBS':   { sku: 'CRC6-EM/JBS',  name: 'CRC6-EM/JBS — Small J-Box Surface EM (UL 924 · ≥90 min egress)' },
+    'CRC6-EM/JBW':   { sku: 'CRC6-EM/JBW',  name: 'CRC6-EM/JBW — Wall-Mount J-Box EM (4″ wall box)' },
+    'CRCU-EM/JBM':   { sku: 'CRCU-EM/JBM',  name: 'CRCU-EM/JBM — Universal J-Box EM (4″ or 6″ J-box)' },
+    'EM15-HMB':      { sku: 'EM15-HMB',     name: 'EM15-HMB — High-Mount 15W EM (matches LSMT615 at near-rated output)' },
+    'EM15-170DC':    { sku: 'EM15-170DC',   name: 'EM15-170DC — 170VDC Remote-Mount EM (separated emergency circuit)' },
+    // Approved dimmer ladder (separate-line SKUs · representative pick from 18-SKU list)
+    'LEV-6672':      { sku: 'Leviton 6672',     name: 'Leviton 6672 — Decora Rotary 600W LED (also: RNL06, IPL06, 6674)' },
+    'LEV-DSL06':     { sku: 'Leviton DSL06',    name: 'Leviton DSL06 — Decora Slide+Toggle 600W LED' },
+    'LUT-MACL153M':  { sku: 'Lutron MACL-153M', name: 'Lutron MACL-153M — Maestro CL Multi-Location 150W LED (also: TGCL-153PH-LA, MA-R)' },
+    'LUT-PD6WCL':    { sku: 'Lutron PD-6WCL',   name: 'Lutron PD-6WCL — Caseta Wireless Smart Dimmer 150W LED (Smart Bridge required)' }
+  };
+  var bomEntries = [];
+  if (emergency) bomEntries.push(pairMap[emergency]);
+  if (dimmer)    bomEntries.push(pairMap[dimmer]);
+  bomEntries = bomEntries.filter(Boolean);
+
+  if (bomEntries.length) {
+    var bomList = document.getElementById('bomList');
+    if (bomList) {
+      bomList.innerHTML = bomEntries.map(function(e) {
+        return '<li><span class="plus">+</span><span><strong>' + e.sku + '</strong>' +
+               '<span class="pair-name">' + e.name + '</span></span></li>';
+      }).join('');
+      var bomPanel = document.getElementById('bomPanel');
+      if (bomPanel) bomPanel.style.display = 'block';
+    }
+  }
+
+  // --- LIVE DATE ---
+  var d = new Date();
+  var liveDate = document.getElementById('liveDate');
+  if (liveDate) liveDate.textContent = d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+  var revStr = d.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit' }).replace('/', '-');
+  var revDate = document.getElementById('revDate');
+  if (revDate) revDate.textContent = revStr;
+  document.querySelectorAll('.rev-date').forEach(function(el) { el.textContent = revStr; });
+
+  // --- AUTO-PRINT ---
+  // Fires window.print() 600 ms after load — long enough for the browser to
+  // paint the 4 pages and load the hero image. Skippable with ?autoprint=0.
+  if (autoprint) {
+    window.addEventListener('load', function() {
+      setTimeout(function() { window.print(); }, 600);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,1089 @@
+---
+/**
+ * LDRS Radius-II — Submittal Sheet — Submittal Generator
+ * Route: /products/multi-family/radius-ii/submittal/
+ * 
+ * Standalone print-optimized page. No site header/footer.
+ * URL params auto-populate the submittal fields.
+ * Fires window.print() 600ms after load (suppress with ?autoprint=0).
+ * 
+ * Source: submittal_radius-ii.html
+ */
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LDRS Radius-II — Submittal Sheet</title>
+
+<!--
+  ALG RADIUS-II SUBMITTAL TEMPLATE v1
+  ===================================
+  Reads URL query params from the §8 configurator and auto-fills:
+    - Catalog number (4 page headers + project info form)
+    - Quick spec grid (Lumens / Wattage / CCT / CRI / Beam / Voltage)
+    - Ordering code visual breakdown (LDRS · &#123;ss&#125;&#123;ww&#125; · -R2S5 · &#123;B|F&#125;)
+    - Companion BOM list (EMB · ⒶCS sensor · NCP plate · dimmer)
+    - Per-accessory full spec block on Page 2 (Eclipse-II canonical pattern)
+    - Photometric polar plot + IES file name + peak intensity per size+CCT
+
+  Param schema (matches buildSubmittalUrl() in mockup_radius-ii_pdp_v1.html):
+    ?sku=LDRS612-R2S5F
+    &size=409|612|818   &wattage=9|12|18
+    &trim=B|F
+    [&emergency=CRCU-EM24-JBM]            (constⒶNT Mid-Power EMB · UL 924)
+    [&sensor=MSP-SRI-8CM|MSP-SRI-40CM]    (contrⒶLS by ⒶCS · BLE SigMesh)
+    [&tgrid=TGK-NOJB|TGK-JB]              (Universal NCP plate · w/ or w/o J-Box)
+    [&dimmer=LEV-6674|LEV-DDE06|LUT-MACL153M|LUT-DVCL153P]
+    [&autoprint=1]     ← auto-trigger window.print() on load (default behavior)
+
+  Print: page auto-fires window.print() 600 ms after load. The user gets the
+  browser's Save-as-PDF dialog without an extra click. To suppress, append
+  &autoprint=0 to the URL.
+-->
+
+<style>
+  /* ============= PRINT-OPTIMIZED CSS ============= */
+  @page {
+    size: letter portrait;
+    margin: 0.5in 0.6in;
+  }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+    .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+    .page:last-of-type { page-break-after: auto; }
+  }
+
+  /* ============= TYPE + COLOR TOKENS — match Radius-II PDP palette ============= */
+  :root {
+    --brand-red: #E3353C;
+    --ink: #0E0E10;
+    --ink-2: #2A2A2D;
+    --muted: #6B6B70;
+    --rule: #DCDEE2;
+    --rule-strong: #A6A4A0;
+    --tint: #F1ECE3;        /* warm-paper background — matches PDP --bg-darker */
+    --hi: #FFF6E5;
+    --grn: #0FAE7C;
+    --yel: #FDD85E;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Sora', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.5pt;
+    line-height: 1.4;
+    background: #E8E6E2;
+  }
+  body { padding: 24px 12px; }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 24px;
+    padding: 0.55in 0.65in;
+    background: white;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  h1, h2, h3, h4 { font-family: 'Sora', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+  .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+  .aa { font-family: 'Sora', sans-serif; }   /* Ⓐ glyph wrapper — same font as body, no special handling */
+
+  /* ============= PAGE HEADER (every page) ============= */
+  .submittal-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+  .submittal-head .brand-mark {
+    width: 28px; height: 28px; background: var(--brand-red);
+    display: inline-block;
+  }
+  .submittal-head .brand-name {
+    font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1;
+  }
+  .submittal-head .brand-sub {
+    font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .submittal-head .catalog-block { text-align: right; }
+  .submittal-head .catalog-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .submittal-head .catalog-number {
+    font-size: 12pt; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+    border: 1.5px solid var(--ink);
+    padding: 4px 10px; display: inline-block;
+    letter-spacing: 0.5pt;
+  }
+
+  /* ============= PROJECT INFO FORM ============= */
+  .project-info {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    border: 1px solid var(--rule-strong); margin-bottom: 14px;
+  }
+  .pi-cell {
+    padding: 6px 9px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    min-height: 38px;
+  }
+  .pi-cell:nth-child(3n) { border-right: none; }
+  .pi-cell:nth-child(n+4) { border-bottom: none; }
+  .pi-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .pi-value {
+    border-bottom: 1px dotted var(--rule-strong); min-height: 14px; padding-top: 2px;
+  }
+
+  /* ============= PRODUCT TITLE BAND ============= */
+  .product-title { margin: 14px 0 14px; }
+  .product-title h1 { font-size: 22pt; line-height: 1; margin: 0; }
+  .product-title .tagline {
+    font-size: 10pt; color: var(--ink-2); margin-top: 4px; line-height: 1.3;
+  }
+
+  /* ============= HERO + QUICK SPECS GRID ============= */
+  .at-a-glance {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; margin-bottom: 12px;
+  }
+  .hero-img {
+    background: var(--tint); border: 1px solid var(--rule);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-img img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+  .qs-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  }
+  .qs-cell {
+    border: 1px solid var(--rule-strong); padding: 8px 10px; min-height: 56px;
+  }
+  .qs-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 3px;
+  }
+  .qs-value { font-size: 14pt; font-weight: 700; line-height: 1.05; }
+  .qs-unit { font-size: 8pt; font-weight: 400; color: var(--muted); margin-left: 2px; }
+
+  /* ============= FEATURE BAND ============= */
+  .feature-band {
+    background: var(--ink); color: white;
+    padding: 8px 14px;
+    display: flex; gap: 18px; align-items: center;
+    margin-bottom: 12px;
+  }
+  .feature-band .fb-pill {
+    background: var(--brand-red); color: white;
+    font-size: 7pt; font-weight: 700; letter-spacing: 1.2pt;
+    padding: 3px 7px; text-transform: uppercase;
+  }
+  .feature-band .fb-features { font-size: 9pt; line-height: 1.3; }
+  .feature-band .fb-features strong { font-weight: 700; }
+
+  /* ============= COMPANION BOM PANEL (page 1) ============= */
+  .bom-panel {
+    border: 1px dashed var(--brand-red);
+    background: rgba(227, 53, 60, 0.04);
+    padding: 10px 14px; margin: 10px 0 12px;
+  }
+  .bom-eyebrow {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .bom-list {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4px 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 9pt;
+  }
+  .bom-list li { display: flex; gap: 6px; }
+  .bom-list li .plus { color: var(--brand-red); font-weight: 700; }
+  .bom-list li .pair-name {
+    font-family: 'Sora', sans-serif; font-size: 8pt; color: var(--muted); display: block;
+  }
+
+  /* ============= APPROVAL SIGNATURE BLOCK ============= */
+  .approval-block {
+    display: grid; grid-template-columns: 2fr 1fr; gap: 18px;
+    margin-top: 14px; padding-top: 8px;
+    border-top: 1px dashed var(--rule-strong);
+  }
+  .approval-cell {
+    display: grid; grid-template-columns: max-content 1fr;
+    gap: 8px; align-items: end; font-size: 8pt;
+  }
+  .approval-line { border-bottom: 1px solid var(--ink); height: 16px; }
+
+  /* ============= SECTION HEAD (page 2+) ============= */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 4px; margin-bottom: 10px; margin-top: 4px;
+  }
+  .section-head h2 { font-size: 14pt; line-height: 1; }
+  .section-head .section-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= SPEC TABLE ============= */
+  .spec-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  .spec-table th, .spec-table td {
+    text-align: left; padding: 5px 8px;
+    border-bottom: 1px solid var(--rule); vertical-align: top;
+  }
+  .spec-table .spec-section-head td {
+    background: var(--tint);
+    font-weight: 700; font-size: 9pt; letter-spacing: 0.3pt;
+    border-bottom: 1px solid var(--rule-strong);
+    padding: 6px 8px;
+  }
+  .spec-table .spec-attr { width: 30%; font-weight: 600; color: var(--ink-2); }
+  .spec-table .spec-val  { width: 70%; }
+
+  /* ============= ORDERING CODE MATRIX ============= */
+  .order-code {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px;
+    margin-bottom: 10px;
+  }
+  .order-segment {
+    background: var(--tint); border: 1px solid var(--rule-strong);
+    padding: 8px 6px; text-align: center;
+  }
+  .order-segment.active {
+    background: var(--brand-red); color: white; border-color: var(--brand-red);
+  }
+  .order-segment.fixed {
+    background: var(--ink); color: white; border-color: var(--ink);
+  }
+  .order-seg-label {
+    font-size: 7pt; letter-spacing: 1pt; text-transform: uppercase;
+    margin-bottom: 4px; opacity: 0.85;
+  }
+  .order-seg-value {
+    font-family: 'JetBrains Mono', monospace; font-size: 11pt; font-weight: 700;
+  }
+  .order-matrix { width: 100%; border-collapse: collapse; font-size: 7.5pt; }
+  .order-matrix th, .order-matrix td {
+    border: 1px solid var(--rule); padding: 4px 6px; text-align: left;
+    vertical-align: top;
+  }
+  .order-matrix th {
+    background: var(--ink); color: white;
+    font-size: 7pt; letter-spacing: 1pt; text-transform: uppercase;
+  }
+  .order-matrix .code {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; width: 80px;
+  }
+
+  /* ============= DIMENSIONS LAYOUT ============= */
+  .dim-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 14px; }
+  .dim-view {
+    border: 1px solid var(--rule-strong);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    background: white; position: relative; overflow: hidden;
+  }
+  .dim-view img, .dim-view svg { width: 100%; height: 100%; object-fit: contain; }
+  .dim-view-label {
+    position: absolute; top: 4px; left: 6px;
+    font-size: 7pt; letter-spacing: 1pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= PHOTOMETRIC DATA ============= */
+  .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .photo-polar {
+    border: 1px solid var(--rule-strong); padding: 10px;
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    background: white; overflow: hidden;
+  }
+  .photo-polar svg { width: 100%; height: 100%; }
+  .photo-summary { border: 1px solid var(--rule); }
+  .photo-summary table { width: 100%; border-collapse: collapse; font-size: 8pt; }
+  .photo-summary table td {
+    padding: 4px 8px; border-bottom: 1px solid var(--rule);
+  }
+  .photo-summary table tr:last-child td { border-bottom: none; }
+  .photo-summary td:first-child { color: var(--muted); }
+  .photo-summary td:last-child {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; text-align: right;
+  }
+
+  /* ============= CERTIFICATIONS ============= */
+  .certs {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 8px 10px; border: 1px solid var(--rule); margin-top: 10px;
+  }
+  .cert-badge {
+    font-size: 7.5pt; font-weight: 700;
+    border: 1.5px solid var(--ink); padding: 3px 8px;
+    letter-spacing: 0.6pt; text-transform: uppercase;
+  }
+  .cert-badge.brand { border-color: var(--brand-red); color: var(--brand-red); }
+
+  /* ============= PAGE FOOTER ============= */
+  .page-foot {
+    position: absolute;
+    bottom: 0.4in; left: 0.65in; right: 0.65in;
+    display: flex; justify-content: space-between;
+    font-size: 7pt; color: var(--muted);
+    padding-top: 6px; border-top: 1px solid var(--rule);
+  }
+
+  /* ============= NO-PRINT CONTROLS BAR ============= */
+  .controls {
+    max-width: 8.5in; margin: 0 auto 18px;
+    background: white; padding: 14px 18px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  }
+  .controls .ctrl-label {
+    font-size: 9pt; font-weight: 600; color: var(--muted);
+    letter-spacing: 0.5pt; text-transform: uppercase;
+  }
+  .controls .ctrl-value {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11pt;
+  }
+  .controls button {
+    background: var(--brand-red); color: white;
+    border: none; padding: 8px 16px;
+    font-family: inherit; font-weight: 700; font-size: 9pt;
+    letter-spacing: 0.5pt; text-transform: uppercase;
+    cursor: pointer; margin-left: auto;
+  }
+  .controls button:hover { background: #B0252B; }
+  .controls .ctrl-back {
+    background: transparent; color: var(--ink); border: 1px solid var(--ink);
+    margin-left: 8px;
+  }
+  .controls .ctrl-back:hover { background: var(--ink); color: white; }
+</style>
+</head>
+<body>
+
+<!-- ============= NO-PRINT CONTROLS BAR =============
+     The Save-as-PDF button stays accessible after the auto-print fires —
+     in case the user dismissed the print dialog and wants a second shot.
+     The Back-to-Configurator link rewinds to the PDP using document.referrer. -->
+<div class="controls no-print">
+  <div>
+    <div class="ctrl-label">Configured SKU</div>
+    <div class="ctrl-value" id="liveSku">LDRS612-R2S5F</div>
+  </div>
+  <div>
+    <div class="ctrl-label">Generated</div>
+    <div class="ctrl-value" id="liveDate" style="font-size:9pt; font-weight:400;">—</div>
+  </div>
+  <button onclick="window.print()">Save as PDF →</button>
+  <button class="ctrl-back" onclick="history.length > 1 ? history.back() : window.close()">← Back to Configurator</button>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — AT A GLANCE                                          -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum">LDRS612-R2S5F</div>
+    </div>
+  </div>
+
+  <div class="project-info">
+    <div class="pi-cell"><div class="pi-label">Project</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Type</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Catalog #</div><div class="pi-value" id="piCatNum"></div></div>
+    <div class="pi-cell"><div class="pi-label">Prepared By</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Notes</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Date</div><div class="pi-value"></div></div>
+  </div>
+
+  <div class="product-title">
+    <h1 id="productTitle">Radius-II Series · 6″ Slim Wafer Recessed Downlight (Flat Trim)</h1>
+    <div class="tagline" id="productTagline">
+      Multi-fⒶMILY PRO-tier slim wafer recessed downlight &middot; 0.38&Prime; ultra-slim &middot; 3 sizes (4&Prime; / 6&Prime; / <strong>8&Prime;</strong>) &middot; 5-CCTselect 2700/3000/3500/4000/5000K &middot; 115° edge-lit PMMA optic &middot; CCT dip switch on the Plug-n-Play J-Box &middot; ETL / ENERGY&nbsp;STAR / Title-24 / JA8 / RoHS / Wet Location &middot; const<span class="aa" aria-hidden="true">Ⓐ</span>NT CRCU-EM24/JBM Mid-Power EMB (24W &middot; UL 924 &middot; 90 min) &middot; contr<span class="aa" aria-hidden="true">Ⓐ</span>LS by <span class="aa" aria-hidden="true">Ⓐ</span>CS PIR sensors (8 FT in-unit &middot; 40 FT high-bay) &middot; Universal NCP rough-in (4&Prime;&ndash;10&Prime; apertures)
+    </div>
+  </div>
+
+  <div class="at-a-glance">
+    <div class="hero-img">
+      <!-- Real Radius-II hero image. JS swaps to radius-ii-4in or radius-ii-6in
+           based on the size param (8″ uses 6″ photo as stand-in — no 8″ hero
+           photography on disk yet). mix-blend-mode: multiply preserves the
+           white finish against the warm hero panel. -->
+      <img id="heroImg" src="/products/multi-family/radius-ii/assets/radius-ii/radius-ii-6in-hero-1.png"
+           alt="LDRS Radius-II — 6″ slim wafer recessed downlight, white finish, edge-lit PMMA, front 3/4 angle" />
+    </div>
+    <div class="qs-grid">
+      <div class="qs-cell">
+        <div class="qs-label">Lumens (4000K)</div>
+        <div class="qs-value" id="qsLumens">1,041<span class="qs-unit">lm</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Wattage</div>
+        <div class="qs-value" id="qsWatts">12<span class="qs-unit">W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Efficacy</div>
+        <div class="qs-value" id="qsLpw">87<span class="qs-unit">lm/W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CCT (selectable)</div>
+        <div class="qs-value">2700-5000<span class="qs-unit">K</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CRI · Lifetime</div>
+        <div class="qs-value">≥ 90 · 50,000 <span class="qs-unit">hr</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Beam · Voltage</div>
+        <div class="qs-value">115° · 120<span class="qs-unit">V</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feature-band">
+    <div class="fb-pill">7-AMPLIFIER STACK</div>
+    <div class="fb-features">
+      <strong>3 sizes incl. 8&Prime;</strong> &middot;
+      <strong>5-CCT on the Plug-n-Play J-Box</strong> (not the disk) &middot;
+      <strong>const<span class="aa" aria-hidden="true">Ⓐ</span>NT</strong> Mid-Power EMB (24W &middot; 90 min) &middot;
+      <strong>contr<span class="aa" aria-hidden="true">Ⓐ</span>LS by <span class="aa" aria-hidden="true">Ⓐ</span>CS</strong> BLE-Mesh sensors &middot;
+      <strong>Universal NCP</strong> (4&Prime;&ndash;10&Prime; rough-in) &middot;
+      <strong>Wet Location</strong> across all 6 base SKUs
+    </div>
+  </div>
+
+  <!-- Companion BOM — only shows when at least one companion is selected.
+       Populated by JS from the URL params (emergency / sensor / housing_can). -->
+  <div class="bom-panel" id="bomPanel" style="display:none;">
+    <div class="bom-eyebrow">Pair-With · Separate Line Items</div>
+    <ul class="bom-list" id="bomList"></ul>
+  </div>
+
+  <div class="approval-block">
+    <div class="approval-cell">
+      <span><strong>Approved by</strong></span>
+      <div class="approval-line"></div>
+    </div>
+    <div class="approval-cell">
+      <span><strong>Date</strong></span>
+      <div class="approval-line"></div>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LDRS Radius-II submittal · ETL + ENERGY STAR + Title-24/JA8 + Wet Location · Specifications subject to change</div>
+    <div>Rev. <span id="revDate">2026-05</span> · Page 1 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — SPECIFICATIONS                                       -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum2">LDRS612-R2S5F</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Specifications</h2>
+    <div class="section-eyebrow" id="specEyebrow">LDRS Radius-II · 4″ + 6″ + 8″ Slim Wafer Recessed Downlight (White · Wet Location · Baffle or Flat Trim)</div>
+  </div>
+
+  <table class="spec-table">
+    <tbody>
+      <tr class="spec-section-head"><td colspan="2">Construction</td></tr>
+      <tr><td class="spec-attr">Housing</td><td class="spec-val">Stamped aluminum heat-sink (passive heat dissipation) · ultra-slim 0.38″ wafer profile · spring-loaded retention clips with 6N–8N elasticity force · plenum-rated quick-connect cable from disk to remote J-Box</td></tr>
+      <tr><td class="spec-attr">Lens / Diffuser</td><td class="spec-val">PMMA frosted lens (no-yellowing — PMMA stays clear for decades while polycarbonate yellows in 3-5 years under continuous UV) · edge-lit distribution: light enters perimeter of lens guide, disperses uniformly across the diffuser face with no glare or dark spots</td></tr>
+      <tr><td class="spec-attr">Finish</td><td class="spec-val">White (standard) · Matte Black + Copper detachable trim plate accessories available (LDRS-&#123;4|6|8&#125;R1/TBK · LDRS-&#123;4|6|8&#125;R1/TCR — see Page 4 ordering matrix)</td></tr>
+      <tr><td class="spec-attr">Trim Style</td><td class="spec-val">Baffle (B) — glare-control ribbing for direct-view applications · Flat (F) — standard low-profile aesthetic · both ship in same retail box format with same mounting kit</td></tr>
+      <tr><td class="spec-attr">Ingress / Location</td><td class="spec-val">Wet-location listed (uniformly across all 3 sizes × 2 trims = 6 SKUs) · suitable for indoor + outdoor in dry, damp, and wet locations · NEC-compliant closet installs · suitable for use in closets per NEC guidelines</td></tr>
+      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">−22°F to +105°F (−30°C to +41°C) ambient — wider range than most slim-wafer competitors (Halo HLB: 32–104°F)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">LED &amp; Optics</td></tr>
+      <tr><td class="spec-attr">LED Source</td><td class="spec-val">High-flux mid-power LED engine · 50,000-hr L70 lumen maintenance · LM80 chip lifetime testing per Datasheet · ANSI C78.377-2017 chromaticity tolerance</td></tr>
+      <tr><td class="spec-attr">CCT (5-CCTselect)</td><td class="spec-val">Field-selectable via dip switch <strong>on the Plug-n-Play J-Box</strong> (not the disk — install-ergonomics differentiator vs Halo HLB / NICOR DLR / Lotus / Lithonia which all put the switch on the disk face): 2700K / 3000K / 3500K / 4000K / 5000K — no SKU change required, single fixture covers any spec. Color temperature warrantied to shift no more than 180K over warranty period.</td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val">≥ 90 CRI TruColor (per Datasheet Highlights table) · meets CA Title-24 JA8 high-efficacy threshold</td></tr>
+      <tr><td class="spec-attr">Beam Distribution</td><td class="spec-val">115° edge-lit beam from PMMA optic — no field-replaceable optic. Per Datasheet polar plots: LDRS409 measures C0/180 = 115.3° / C90/270 = 115.4°; LDRS612 measures C0/180 = 116° / C90/270 = 115.9° — effectively a 115° even-distribution beam across both sizes.</td></tr>
+      <tr><td class="spec-attr">Lumen Output (4000K)</td><td class="spec-val">See Page 4 for full 2-size × 5-CCT lumen matrix · 644 lm @ 4000K (4″ · 9W · 72 lm/W) · 1,041 lm @ 4000K (6″ · 12W · 87 lm/W) · 1,474 lm @ 4000K (8″ · 18W · 82 lm/W). LDRS8 peak is 1,504 lm @ 3500K. <em>Datasheet "Up to 96 LM/W" claim does not match calculated peak from lumen matrix (86.8 lm/W on LDRS6 @ 4000K) — flagged for engineering reconciliation.</em></td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Driver &amp; Electrical</td></tr>
+      <tr><td class="spec-attr">Voltage</td><td class="spec-val">120V AC · 60 Hz (single voltage — not 120-277V universal)</td></tr>
+      <tr><td class="spec-attr">Driver</td><td class="spec-val">Constant-current driver in <strong>remote Plug-n-Play J-Box</strong> · electronically isolated · plenum-rated quick-connect cable from disk to J-Box · J-Box sized for AWG12 to AWG20 supply cable with strain-relief design</td></tr>
+      <tr><td class="spec-attr">Power Factor</td><td class="spec-val">&gt; 0.9 Non-Flicker</td></tr>
+      <tr><td class="spec-attr">THD</td><td class="spec-val">&lt; 15%</td></tr>
+      <tr><td class="spec-attr">Dimming</td><td class="spec-val">TRIAC + ELV · 5% to 100% (per Datasheet page 1) · approved 12-SKU dimmer list (6 Leviton + 6 Lutron — see Page 4 dimmer matrix)</td></tr>
+
+      <!-- Selected Companion Accessory Specs · DYNAMIC ----------------------
+           Replaces the previously static rows. JS reads URL params (emergency,
+           sensor, tgrid, dimmer) and injects a section-head + spec rows for
+           each selected accessory by inserting BEFORE this anchor row using
+           ACC_SPEC_TABLE. Anchor stays display:none in the rendered table.
+           Eclipse-II canonical pattern per James 2026-05-10. -->
+      <tr id="accSpecAnchor" style="display:none"><td colspan="2"></td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Mounting</td></tr>
+      <tr><td class="spec-attr">Standard Install</td><td class="spec-val">Direct-cutout install — no housing or can required. Cutout: Ø 4 21/64″ (for LDRS4) · Ø 6 19/64″ (for LDRS6) · Ø 8 5/64″ (for LDRS8). Wafer drops into cutout, spring clips lock from above.</td></tr>
+      <tr><td class="spec-attr">Plug-n-Play J-Box</td><td class="spec-val">Remote driver J-Box mounts above the ceiling in the cavity, plenum-rated quick-connect cable to the wafer. Color-select dip switch on J-Box face. Mount J-Box to joist or T-grid drop · J-Box buckle design for easy access.</td></tr>
+      <tr><td class="spec-attr">New Construction · Retrofit</td><td class="spec-val">Suitable for new construction OR retrofit applications. Fits inside most 4″ and 6″ recessed housings (no existing recessed housing required). For drop-ceiling commercial install, pair with the T-Grid Installation Kit (4″ + 6″ only).</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
+      <tr><td class="spec-attr">Standards</td><td class="spec-val">ETL listed (US + Canada · UL 1598) · ENERGY STAR certified · CA Title-24 Part 6 + JA8 compliant · Wet Location listed · RoHS</td></tr>
+      <tr><td class="spec-attr">Rebate-Ready</td><td class="spec-val">ENERGY STAR + JA8 paths qualify for residential + light-commercial utility-rebate programs at PG&amp;E, SCE, SDG&amp;E, and most state IOUs · PRO tier — typical offset 25-50% of fixture cost on a property-wide retrofit · Radius-II is not DLC-listed (commercial DLC-required rebate programs do not apply; for DLC paths see Eclipse-II PRO+) · search "LDRS" at archipelagolighting.com/pages/rebate-center</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val">5-year limited (luminaire · light output · driver performance · fixture finish) · 50,000-hour L70 rated life · all 6 active SKUs ship QuickShip</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LDRS Radius-II submittal · ETL + ENERGY STAR + Title-24/JA8 + Wet Location · Specifications subject to change</div>
+    <div>Rev. <span class="rev-date">2026-05</span> · Page 2 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 3 — DIMENSIONS & MOUNTING                                -->
+<!-- ============================================================ -->
+<div class="page" id="page-3">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum3">LDRS612-R2S5F</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Dimensions &amp; Mounting</h2>
+    <div class="section-eyebrow">Top + Side views · Slim wafer ultra-thin profile · Plug-n-Play J-Box · spring-clip retention · T-Grid Kit drop-ceiling option</div>
+  </div>
+
+  <div class="dim-grid">
+    <div class="dim-view" id="dimView">
+      <div class="dim-view-label">Top + Side views (in)</div>
+      <!-- Inline SVG dimension diagram — covers both 4″ + 6″ sizes; JS swaps
+           the labels (Ø + emit Ø + depth) based on the size param. -->
+      <svg id="dimSvg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Top view — circle (disk face seen from below) -->
+        <g transform="translate(110, 70)">
+          <text x="0" y="-8" font-family="JetBrains Mono, monospace" font-size="9" fill="#6B6B70" letter-spacing="1">TOP · DISK FACE</text>
+          <!-- Outer trim ring -->
+          <circle cx="60" cy="60" r="58" fill="none" stroke="#0E0E10" stroke-width="1.4"/>
+          <!-- Inner emit aperture (back-lit polycarbonate diffuser) -->
+          <circle cx="60" cy="60" r="42" fill="rgba(227, 53, 60, 0.06)" stroke="#A6A4A0" stroke-width="0.6"/>
+          <!-- Center LED engine marker (Samsung 2835 array · back-lit) -->
+          <circle cx="60" cy="60" r="2" fill="#E3353C"/>
+          <line x1="2" y1="60" x2="118" y2="60" stroke="#A6A4A0" stroke-width="0.5"/>
+          <text id="dimTopWidth" x="60" y="138" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#0E0E10" font-weight="700">Ø 7.32″</text>
+          <text id="dimAperture" x="60" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70" dx="0" dy="22">Ø 5.28″ emit</text>
+        </g>
+        <!-- Side view — surface-mounted disk silhouette -->
+        <g transform="translate(260, 70)">
+          <text x="0" y="-8" font-family="JetBrains Mono, monospace" font-size="9" fill="#6B6B70" letter-spacing="1">SIDE · SURFACE MOUNT</text>
+          <!-- ceiling line (dashed) -->
+          <line x1="-8" y1="40" x2="120" y2="40" stroke="#0E0E10" stroke-width="0.8"/>
+          <line x1="-8" y1="44" x2="120" y2="44" stroke="#A6A4A0" stroke-width="0.4" stroke-dasharray="1,1"/>
+          <!-- J-box (above ceiling) -->
+          <rect x="40" y="20" width="40" height="20" fill="#F1ECE3" stroke="#A6A4A0" stroke-width="0.8"/>
+          <text x="60" y="34" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#6B6B70">J-BOX</text>
+          <!-- Disk body (below ceiling, low-profile · 0.95″ thick) -->
+          <rect x="14" y="40" width="92" height="14" fill="#F1ECE3" stroke="#0E0E10" stroke-width="1.2"/>
+          <!-- Onboard driver brick on top of disk body -->
+          <rect x="34" y="32" width="52" height="8" fill="rgba(0,0,0,0.06)" stroke="#A6A4A0" stroke-width="0.6"/>
+          <text x="60" y="38" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5" fill="#6B6B70">ONBOARD DRIVER</text>
+          <!-- Diffuser face (red accent line) -->
+          <line x1="14" y1="54" x2="106" y2="54" stroke="#E3353C" stroke-width="1.2"/>
+          <!-- Centered LED engine indicator -->
+          <circle cx="60" cy="47" r="2" fill="#E3353C"/>
+          <!-- depth dim -->
+          <text id="dimDepth" x="60" y="76" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#0E0E10" font-weight="700">depth 0.95″</text>
+          <text id="dimRecess" x="60" y="90" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#6B6B70">surface mount · 0″ recess</text>
+        </g>
+      </svg>
+    </div>
+
+    <div>
+      <table class="spec-table">
+        <tbody>
+          <tr class="spec-section-head"><td colspan="2">Dimensions (in)</td></tr>
+          <tr><td class="spec-attr">Outer Diameter</td><td class="spec-val" id="specOd">6.69″ (LDRS612)</td></tr>
+          <tr><td class="spec-attr">Hole Cutout</td><td class="spec-val" id="specAp">Ø 6 19/64″ (~6.30″)</td></tr>
+          <tr><td class="spec-attr">Wafer Depth</td><td class="spec-val" id="specDepth">0.38″ (ultra-slim wafer · per Datasheet — typo correction: "ft" → in)</td></tr>
+          <tr><td class="spec-attr">Recess</td><td class="spec-val" id="specRecess">Wafer recesses into ceiling cutout · 0″ projection below ceiling line</td></tr>
+          <tr><td class="spec-attr">J-Box</td><td class="spec-val" id="specCutout">Plug-n-Play J-Box mounts remote (above ceiling) · plenum-rated quick-connect cable to wafer · NO housing or can required at the wafer cutout</td></tr>
+          <tr class="spec-section-head"><td colspan="2">In-the-Box Components</td></tr>
+          <tr><td class="spec-attr">Disk + J-Box</td><td class="spec-val">Slim wafer disk + remote Plug-n-Play J-Box · plenum-rated quick-connect cable pre-installed between them</td></tr>
+          <tr><td class="spec-attr">Retention</td><td class="spec-val">Spring-loaded retention clips · 6N–8N elasticity force · pre-installed on the wafer</td></tr>
+          <tr><td class="spec-attr">Single Unit Pkg</td><td class="spec-val">Single-fixture retail box</td></tr>
+          <tr><td class="spec-attr">Contractor Carton</td><td class="spec-val" id="specWeight">12-pack master carton available (per disk packaging on file: LDRS612-R2S5F 12-Pack)</td></tr>
+          <tr class="spec-section-head"><td colspan="2">Mount Path</td></tr>
+          <tr><td class="spec-attr">Standard Install</td><td class="spec-val" id="mountStd">Direct cutout · spring clips lock from above · pop-in install · no can or housing</td></tr>
+          <tr><td class="spec-attr">Drop-Ceiling (Opt)</td><td class="spec-val" id="mountT24">T-Grid Installation Kit (LDRS-&#123;4|6&#125;R1/TGK · QuickShip · 4″ + 6″ only) — lay-in to 2×2 or 2×4 ceiling tile without cutting</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LDRS Radius-II submittal · ETL + ENERGY STAR + Title-24/JA8 + Wet Location · Specifications subject to change</div>
+    <div>Rev. <span class="rev-date">2026-05</span> · Page 3 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 4 — ORDERING CODE & PHOTOMETRICS                         -->
+<!-- ============================================================ -->
+<div class="page" id="page-4">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum4">LDRS612-R2S5F</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Ordering Information</h2>
+    <div class="section-eyebrow">Configure your catalog number</div>
+  </div>
+
+  <!-- ORDERING CODE VISUAL BREAKDOWN — 4 segments matching the Radius-II SKU pattern:
+         LDRS&#123;ss&#125;&#123;ww&#125;-R2S5&#123;B|F&#125;
+       The -R2S5 segment is the fixed family designator (Radius-II + 5-CCTselect);
+       the trim segment (B or F) appends directly with no separator. -->
+  <div class="order-code" style="grid-template-columns: repeat(4, 1fr);">
+    <div class="order-segment active"><div class="order-seg-label">Family</div><div class="order-seg-value">LDRS</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Size &amp; Wattage</div><div class="order-seg-value" id="ocHousing">612</div></div>
+    <div class="order-segment fixed"><div class="order-seg-label">Gen · CCT</div><div class="order-seg-value">-R2S5</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Trim</div><div class="order-seg-value" id="ocSensor">F</div></div>
+  </div>
+
+  <table class="order-matrix">
+    <thead>
+      <tr>
+        <th style="width:14%">Segment</th>
+        <th>Available Codes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="code">LDRS</td><td>Multi-fⒶMILY LED Slim Wafer family prefix</td></tr>
+      <tr><td class="code">409 / 612 / 818</td><td>Size &amp; wattage — 4″/9W · 6″/12W · <strong>8″/18W</strong> (3 sizes in the Radius-II active SKU set; 8″ is the rare-size differentiator vs Halo HLB / NICOR DLR / DMF DRD2 which all stop at 6″)</td></tr>
+      <tr><td class="code">-R2S5</td><td>Family designator — Radius-II (R2) + 5-CCTselect (S5) · fixed across all SKUs · CCT set on the Plug-n-Play J-Box dip switch</td></tr>
+      <tr><td class="code">B / F</td><td>Trim style — Baffle (B · glare-control ribbing) or Flat (F · standard low-profile aesthetic)</td></tr>
+      <tr><td class="code">+ Accessories</td><td>CRCU-EM24/JBM (24W constⒶNT Universal-Mount EMB) · MSP-SRI/8CM/HD/ACS + MSP-SRI/40CM/HD/ACS (contrⒶLS by ⒶCS PIR sensors) · LDRS-4R1/TGK + LDRS-6R1/TGK (Universal NCP plates · with/without integrated J-Box) · 4 Datasheet-listed dimmers — all separate-line accessory SKUs (see Page 1 Pair-With panel + Page 2 Selected Companion specs)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ACTIVE SKU TABLE — 6 valid combinations -->
+  <table class="order-matrix" style="margin-top: 10px;">
+    <thead>
+      <tr>
+        <th style="width:30%">Active SKU</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="code">LDRS409-R2S5B</td><td>4″ · 9W · 644 lm @ 4000K · 5-CCTselect · Baffle trim</td></tr>
+      <tr><td class="code">LDRS409-R2S5F</td><td>4″ · 9W · 644 lm @ 4000K · 5-CCTselect · Flat trim</td></tr>
+      <tr><td class="code">LDRS612-R2S5B</td><td>6″ · 12W · 1,041 lm @ 4000K · 5-CCTselect · Baffle trim</td></tr>
+      <tr><td class="code">LDRS612-R2S5F</td><td>6″ · 12W · 1,041 lm @ 4000K · 5-CCTselect · Flat trim · <strong>high-volume multifamily SKU</strong></td></tr>
+      <tr><td class="code">LDRS818-R2S5B</td><td>8″ · 18W · 1,504 lm @ 3500K · 5-CCTselect · Baffle trim · <strong>rare-size hero</strong></td></tr>
+      <tr><td class="code">LDRS818-R2S5F</td><td>8″ · 18W · 1,504 lm @ 3500K · 5-CCTselect · Flat trim · <strong>rare-size hero</strong></td></tr>
+    </tbody>
+  </table>
+
+  <!-- PHOTOMETRIC DATA — single 120° wide-flood (edge-lit PMMA) beam.
+       Polar plot is a static illustration (one beam type for all SKUs);
+       the lumens/peak/IES values vary per housing+CCT combination. -->
+  <div class="section-head" style="margin-top: 16px;">
+    <h2>Photometric Data</h2>
+    <div class="section-eyebrow" id="photoEyebrow">115° edge-lit PMMA · LDRS612 · 12W · 4000K · Radius-II · white · wet location</div>
+  </div>
+
+  <div class="photo-grid">
+    <div class="photo-polar">
+      <!-- Inline polar plot — 115° edge-lit PMMA IESNA semi-circle. -->
+      <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
+        <!-- Grid arcs -->
+        <g fill="none" stroke="#A6A4A0" stroke-width="0.4">
+          <path d="M 40 140 A 80 80 0 0 1 200 140"/>
+          <path d="M 60 140 A 60 60 0 0 1 180 140"/>
+          <path d="M 80 140 A 40 40 0 0 1 160 140"/>
+          <path d="M 100 140 A 20 20 0 0 1 140 140"/>
+        </g>
+        <!-- Spokes -->
+        <g stroke="#A6A4A0" stroke-width="0.4">
+          <line x1="120" y1="140" x2="40" y2="140"/>
+          <line x1="120" y1="140" x2="200" y2="140"/>
+          <line x1="120" y1="140" x2="120" y2="60"/>
+          <line x1="120" y1="140" x2="60" y2="80"/>
+          <line x1="120" y1="140" x2="180" y2="80"/>
+        </g>
+        <!-- 115° beam curve — edge-lit PMMA, semi-circle filled -->
+        <path d="M 120 140 L 42 88 Q 120 32 198 88 Z" fill="rgba(227,53,60,0.22)" stroke="#E3353C" stroke-width="1.4"/>
+        <!-- Axis labels -->
+        <text x="120" y="56" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70">0°</text>
+        <text x="48" y="76" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70">90°</text>
+        <text x="192" y="76" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70">90°</text>
+        <text x="120" y="160" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#0E0E10" font-weight="700">115° BEAM · EDGE-LIT PMMA</text>
+      </svg>
+    </div>
+
+    <div class="photo-summary">
+      <table>
+        <tbody>
+          <tr><td>Peak Intensity (est.)</td><td id="photoPeak">331 cd</td></tr>
+          <tr><td>Total Lumen Output</td><td id="photoLumens">1,041 lm</td></tr>
+          <tr><td>Beam Angle</td><td>115° (per Datasheet polar plots)</td></tr>
+          <tr><td>Optic</td><td>Edge-lit PMMA frosted lens</td></tr>
+          <tr><td>Source</td><td>High-flux mid-power LED engine</td></tr>
+          <tr><td>CRI</td><td>≥ 90 TruColor (per Datasheet)</td></tr>
+          <tr><td>L70 Lumen Maint.</td><td>50,000 hr</td></tr>
+          <tr><td>IES File</td><td id="photoIesFile">LDRS612-R2S5_4000K.IES</td></tr>
+          <tr><td>IES Bundle</td><td><a href="https://workdrive.archipelagolighting.com/external/24149363bf3929276162eac63b530e4522bf989b9cbbb5a7c7203cd6d69951dd" target="_blank" rel="noopener" style="color:var(--brand-red);">Download (4″ + 6″ · 8″ pending)</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CERTIFICATIONS — Radius-II PRO-tier 5-cert stack per Datasheet page 2:
+       ETL · Title 24 · ENERGY STAR · RoHS · Wet Location. Brand red highlights
+       the multifamily-permit-critical ones (Title-24/JA8 + ENERGY STAR). -->
+  <div class="certs">
+    <span class="cert-badge brand">JA8 / Title-24</span>
+    <span class="cert-badge brand">ENERGY STAR</span>
+    <span class="cert-badge brand">Wet Location</span>
+    <span class="cert-badge">ETL · UL 1598</span>
+    <span class="cert-badge">RoHS</span>
+    <span class="cert-badge">CA Title-24 Part 6</span>
+    <span class="cert-badge">5-Yr Warranty</span>
+    <span class="cert-badge">50,000 hr L70</span>
+    <span class="cert-badge">PF &gt; 0.9</span>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LDRS Radius-II submittal · ETL + ENERGY STAR + Title-24/JA8 + Wet Location · Specifications subject to change</div>
+    <div>Rev. <span class="rev-date">2026-05</span> · Page 4 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============= URL PARAM POPULATION + AUTO-PRINT ============= -->
+<script>
+(function() {
+  // --- PARSE URL PARAMS · Radius-II configurator → submittal pipeline ---
+  // Canonical params: sku · size · wattage · trim
+  //                 + companions: emergency (CRCU-EM24/JBM) · sensor (MSP-SRI 8CM|40CM)
+  //                 · tgrid (TGK-NOJB | TGK-JB · universal-aperture NCP plates)
+  //                 · dimmer (4 approved · Leviton + Lutron)
+  // Updated 2026-05-10 to match §7 Compatible Accessories ladder. Each selected
+  // companion populates: (a) the Page 1 BOM panel + (b) a dynamic full-specs
+  // section on Page 2 (Eclipse-II canonical pattern).
+  var params = new URLSearchParams(window.location.search);
+  var sku       = params.get('sku')       || 'LDRS612-R2S5F';
+  var size      = params.get('size')      || '612';
+  var trim      = params.get('trim')      || 'F';     // B | F
+  var emergency = params.get('emergency') || '';
+  var sensor    = params.get('sensor')    || '';
+  var tgrid     = params.get('tgrid')     || '';
+  var dimmer    = params.get('dimmer')    || '';
+  var autoprint = params.get('autoprint') !== '0';   // default ON
+
+  // --- 3-SIZE LOOKUP TABLE (LDRS-Radius-II_Datasheet.pdf § Model Specifications) ---
+  // Lumens are 4000K (the configurator's representative CCT) for 4″ + 6″, 3500K
+  // for 8″ (LDRS818 peaks at 1504 lm @ 3500K, slightly above the 4000K cell).
+  // Peak cd from Datasheet polar plots (LDRS409 + LDRS612) and synthesized from
+  // 115° edge-lit cosine model for 8″ (no published 8″ polar plot yet).
+  // Hole cutout dimensions per Datasheet page 4 (depth column "ft" → corrected to in).
+  // 8″ uses 6″ photo as hero stand-in (no 8″ hero photography on disk yet).
+  var sizeData = {
+    '409': { in: 4, watt: 9,  lumens: '644',   defCct: '4000', lpw: '72', peak: '205', diameter: '4.92″ (125mm)', emit: 'Ø 4 21/64″ cutout', depth: '0.38″', heroImg: 'assets/radius-ii/radius-ii-4in-hero-1.png' },
+    '612': { in: 6, watt: 12, lumens: '1,041', defCct: '4000', lpw: '87', peak: '331', diameter: '6.69″ (170mm)', emit: 'Ø 6 19/64″ cutout', depth: '0.38″', heroImg: 'assets/radius-ii/radius-ii-6in-hero-1.png' },
+    '818': { in: 8, watt: 18, lumens: '1,504', defCct: '3500', lpw: '84', peak: '479', diameter: '8.82″ (224mm)', emit: 'Ø 8 5/64″ cutout',  depth: '0.39″', heroImg: 'assets/radius-ii/radius-ii-6in-hero-1.png' }  // 8″ hero pending
+  };
+  var sd = sizeData[size] || sizeData['612'];
+
+  // --- AUTOFILL CATALOG NUMBER (4 page headers + project info form + control bar) ---
+  document.querySelectorAll('#catNum, #catNum2, #catNum3, #catNum4, #liveSku').forEach(function(el) {
+    el.textContent = sku;
+  });
+  var pi = document.getElementById('piCatNum');
+  if (pi) pi.textContent = sku;
+
+  // --- AUTOFILL PRODUCT TITLE ---
+  // Trim suffix added based on B/F selection.
+  var trimLabel = (trim === 'B') ? 'Baffle Trim' : 'Flat Trim';
+  document.getElementById('productTitle').textContent =
+    'Radius-II Series · ' + sd.in + '″ · ' + sd.watt + 'W · Slim Wafer Recessed Downlight (White · ' + trimLabel + ')';
+
+  // --- AUTOFILL QUICK SPECS (4000K representative row · 3500K for LDRS818) ---
+  document.getElementById('qsLumens').innerHTML = sd.lumens + '<span class="qs-unit">lm</span>';
+  document.getElementById('qsWatts').innerHTML  = sd.watt   + '<span class="qs-unit">W</span>';
+  document.getElementById('qsLpw').innerHTML    = sd.lpw    + '<span class="qs-unit">lm/W</span>';
+
+  // --- AUTOFILL HERO IMAGE — Radius-II White-only ---
+  var heroImg = document.getElementById('heroImg');
+  if (heroImg) {
+    heroImg.src = sd.heroImg;
+    heroImg.alt = 'LDRS' + size + '-R2S5' + trim + ' Radius-II — ' + sd.in + '″ slim wafer recessed downlight, white finish, ' + trimLabel + ', edge-lit PMMA';
+  }
+
+  // --- AUTOFILL ORDERING CODE BREAKDOWN (Page 4) ---
+  // Radius-II SKU pattern: LDRS{ss}{ww}-R2S5{B|F}
+  //   ocHousing = 3-digit size+wattage (409, 612, or 818)
+  //   ocSensor  = trim segment (B or F · re-using the eCrescent ocSensor element ID)
+  document.getElementById('ocHousing').textContent = size;
+  var ocSensor = document.getElementById('ocSensor');
+  if (ocSensor) ocSensor.textContent = trim;
+
+  // --- AUTOFILL DIMENSIONS (Page 3) per size ---
+  var specOd     = document.getElementById('specOd');     if (specOd)     specOd.textContent     = sd.diameter + ' (LDRS' + size + ')';
+  var specAp     = document.getElementById('specAp');     if (specAp)     specAp.textContent     = sd.emit;
+  var specCutout = document.getElementById('specCutout'); if (specCutout) specCutout.textContent = 'Plug-n-Play J-Box mounts remote (above ceiling) · plenum-rated quick-connect cable to wafer · NO housing or can required at the wafer cutout';
+  var specRecess = document.getElementById('specRecess'); if (specRecess) specRecess.textContent = 'Wafer recesses into ceiling cutout · 0″ projection below ceiling line';
+  var specDepth  = document.getElementById('specDepth');  if (specDepth)  specDepth.textContent  = sd.depth + ' (ultra-slim wafer · per Datasheet — typo correction: "ft" → in)';
+  var specWeight = document.getElementById('specWeight'); if (specWeight) specWeight.textContent = '12-pack master carton available (per disk packaging on file: LDRS' + size + '-R2S5' + trim + ' 12-Pack)';
+  var mountStd   = document.getElementById('mountStd');   if (mountStd)   mountStd.textContent   = 'Direct cutout · spring clips lock from above · pop-in install · no can or housing';
+  var mountT24   = document.getElementById('mountT24');   if (mountT24)   mountT24.textContent   = 'Universal NCP plate (LDRS-4R1/TGK plate-only · LDRS-6R1/TGK plate + integrated LCDL-SE/JCB J-Box) fits 4″/6″/8″/10″ apertures · joist + T-grid mounting · constⒶNT CRCU-EM24/JBM (24W · UL 924 · 90 min) pairs with all 3 Radius-II sizes';
+  var dimTopW    = document.getElementById('dimTopWidth');if (dimTopW)    dimTopW.textContent    = 'Ø ' + sd.diameter;
+  var dimAp      = document.getElementById('dimAperture');if (dimAp)      dimAp.textContent      = sd.emit;
+  var dimDp      = document.getElementById('dimDepth');   if (dimDp)      dimDp.textContent      = 'depth ' + sd.depth;
+  var dimRc      = document.getElementById('dimRecess');  if (dimRc)      dimRc.textContent      = 'slim wafer · 0″ projection';
+
+  // --- AUTOFILL PHOTOMETRIC PAGE 4 ---
+  document.getElementById('photoEyebrow').textContent =
+    '115° edge-lit PMMA · LDRS' + size + ' · ' + sd.watt + 'W · ' + sd.defCct + 'K · Radius-II · white · wet location · ' + trimLabel +
+    (size === '818' ? ' · 8″ photometrics not yet published — see footnote' : '');
+  document.getElementById('photoPeak').textContent    = sd.peak + ' cd';
+  document.getElementById('photoLumens').textContent  = sd.lumens + ' lm';
+  document.getElementById('photoIesFile').textContent = 'LDRS' + size + '-R2S5_' + sd.defCct + 'K.IES' + (size === '818' ? ' (8″ pending)' : '');
+
+  // --- COMPANION BOM (Page 1) + DYNAMIC ACCESSORY SPECS (Page 2) ---
+  // 9 accessory SKUs (matching §7 + §8 of the PDP):
+  //   1 constⒶNT EMB (CRCU-EM24/JBM)
+  // + 2 contrⒶLS by ⒶCS sensors (MSP-SRI/8CM · MSP-SRI/40CM)
+  // + 2 NCP rough-in plates (LDRS-4R1/TGK plate-only · LDRS-6R1/TGK plate + J-Box)
+  // + 4 Approved Dimmers (Leviton + Lutron · Datasheet-listed)
+  // All 4 companion fields independent — pick zero or any combination.
+  var pairMap = {
+    // constⒶNT EMB
+    'CRCU-EM24-JBM': { sku: 'CRCU-EM24/JBM',       name: 'CRCU-EM24/JBM — 24W Universal-Mount EMB (4/5/6/7″ J-Box · UL 924 · ≥90 min egress)' },
+    // contrⒶLS by ⒶCS
+    'MSP-SRI-8CM':   { sku: 'MSP-SRI/8CM/HD/ACS',  name: 'MSP-SRI/8CM/ⒶCS — 8 FT Wide-Area PIR (BLE SigMesh · 500-node mesh · DLC NLC Qualified · in-unit)' },
+    'MSP-SRI-40CM':  { sku: 'MSP-SRI/40CM/HD/ACS', name: 'MSP-SRI/40CM/ⒶCS — 40 FT High-Bay PIR (BLE SigMesh · 500-node mesh · DLC NLC Qualified · high-bay)' },
+    // New Construction Plates (LCDL-SE/NCP universal — fits 4″/6″/8″/10″)
+    'TGK-NOJB':      { sku: 'LDRS-4R1/TGK',        name: 'LDRS-4R1/TGK — Universal NCP plate · no integrated J-Box (lower line cost · BYO J-Box)' },
+    'TGK-JB':        { sku: 'LDRS-6R1/TGK',        name: 'LDRS-6R1/TGK — Universal NCP plate + integrated LCDL-SE/JCB Soft Conduit J-Box (higher line cost · saves field-mount step)' },
+    // Approved dimmer ladder (separate-line SKUs · 4 of 12 Datasheet-listed)
+    'LEV-6674':      { sku: 'Leviton 6674',     name: 'Leviton 6674 — Decora Dimmer (3% to 93% dim · Datasheet-listed · sister SKUs: ELECT/V/ART 40201, 6633-P, 6613, 66EV, DDE06)' },
+    'LEV-DDE06':     { sku: 'Leviton DDE06',    name: 'Leviton DDE06 — Digital Decora (3% to 93% dim · programmable · Datasheet-listed)' },
+    'LUT-MACL153M':  { sku: 'Lutron MACL-153M', name: 'Lutron MACL-153M — Maestro CL Multi-Location (6% to 91% dim · 3-way/4-way · Datasheet-listed)' },
+    'LUT-DVCL153P':  { sku: 'Lutron DVCL-153P', name: 'Lutron DVCL-153P — Diva CL paddle+slide (8% to 93% dim · Datasheet-listed · sister SKUs: CTCL-153P, SCL-153P, SELV-303P, DVSCELM-300P)' }
+  };
+
+  // --- ACC_SPEC_TABLE · full spec rows for the dynamic Page-2 accessory section.
+  // Each entry: section-head + spec rows (key + value). JS injects a section-head
+  // <tr.spec-section-head> followed by spec rows <tr><td.spec-attr><td.spec-val>
+  // before the #accSpecAnchor element. Mirrors the configurator's ACC modal data
+  // map for visual + content parity. Eclipse-II canonical pattern.
+  var ACC_SPEC_TABLE = {
+    'CRCU-EM24-JBM': {
+      sectionHead: 'Selected Companion · constⒶNT CRCU-EM24/JBM (separate SKU)',
+      specs: [
+        ['Output Power',      '24 W · constant-power'],
+        ['Runtime',           '≥ 90 min at reduced lumens (UL 924)'],
+        ['Input Voltage',     '120 V AC · 50/60 Hz'],
+        ['Battery',           'LiFePO4 · 24-hr recharge · 5-yr design life'],
+        ['Mount',             'Universal cover · fits 4″ / 5″ / 6″ / 7″ round + octagonal J-Box openings'],
+        ['Compatible With',   'all 3 LDRS Radius-II sizes (4″ / 6″ / 8″)'],
+        ['Egress Performance','≥ 90 min · NFPA 101 § 7.9 · IBC § 1008.3 means-of-egress compliant'],
+        ['Certification',     'UL 924 · CSA C22.2 No.141 · CEC Title 20']
+      ]
+    },
+    'MSP-SRI-8CM': {
+      sectionHead: 'Selected Companion · contrⒶLS by ⒶCS · MSP-SRI/8CM/HD/ACS (separate SKU)',
+      specs: [
+        ['Detection Tech',    'PIR Wide-Area · ceiling-mount'],
+        ['Max Mount Height',  '8 ft (2.4 m)'],
+        ['Network',           'BLE SigMesh · up to 500-node mesh'],
+        ['Input Voltage',     '120-277 V AC'],
+        ['Commissioning',     'ⒶCS by ALG App (iOS) · zone scheduling · OTA firmware'],
+        ['Application',       'In-unit ceilings (closets, baths, laundry, leasing offices, amenity rooms)'],
+        ['IP Rating',         'IP20 (interior) · −20°C to +50°C operating range'],
+        ['Certification',     'UL Listed · DLC NLC Qualified for utility rebates']
+      ]
+    },
+    'MSP-SRI-40CM': {
+      sectionHead: 'Selected Companion · contrⒶLS by ⒶCS · MSP-SRI/40CM/HD/ACS (separate SKU)',
+      specs: [
+        ['Detection Tech',    'PIR Wide-Area · High-Detection'],
+        ['Max Mount Height',  '40 ft (12 m)'],
+        ['Network',           'BLE SigMesh · up to 500-node mesh (shared with 8CM session)'],
+        ['Input Voltage',     '120-277 V AC'],
+        ['Commissioning',     'ⒶCS by ALG App (iOS)'],
+        ['Application',       'Parking decks · stairwells · mechanical rooms · tall amenity ceilings'],
+        ['IP Rating',         'IP20 (interior) · −20°C to +50°C operating range'],
+        ['Certification',     'UL Listed · DLC NLC Qualified for utility rebates']
+      ]
+    },
+    'TGK-NOJB': {
+      sectionHead: 'Selected Companion · LDRS-4R1/TGK Universal NCP — plate only (separate SKU)',
+      specs: [
+        ['Aperture Compatibility', '4″ (Ø4 21/64″) · 6″ (Ø6 1/2″) · 8″ (Ø8 7/64″) · 10″ (Ø10 1/16″) — concentric scribe rings'],
+        ['Material',               'Galvanized iron stamped plate'],
+        ['Plate Size',             '23.74″ × 11.02″ (603 × 280 mm)'],
+        ['Mount Options',          'New-construction joist · T-grid drop ceiling'],
+        ['Joist Compatibility',    'Standard 16″ and 24″ joist spacing · pre-slotted'],
+        ['J-Box Bundle',           'NOT included — bring your own (existing in-ceiling wiring or contractor preference)'],
+        ['Compatible',             'LDRS Radius-II 4″/6″/8″ + LCDL commercial downlight family'],
+        ['Lead Time',              'QuickShip']
+      ]
+    },
+    'TGK-JB': {
+      sectionHead: 'Selected Companion · LDRS-6R1/TGK Universal NCP — plate + integrated J-Box (separate SKU)',
+      specs: [
+        ['Aperture Compatibility', '4″ · 6″ · 8″ · 10″ (same universal plate as LDRS-4R1/TGK)'],
+        ['Material',               'Galvanized iron plate + factory-mounted J-Box'],
+        ['Plate Size',             '23.74″ × 11.02″ (603 × 280 mm)'],
+        ['Integrated J-Box',       'LCDL-SE/JCB Soft Conduit J-Box · pre-attached at correct offset for commercial downlight extraction'],
+        ['Mount Options',          'New-construction joist · T-grid drop ceiling'],
+        ['Cost vs. Plate-Only',    'Higher PO line cost · saves field-mount J-Box step on multi-unit rough-ins'],
+        ['Compatible',             'LDRS Radius-II 4″/6″/8″ + LCDL commercial downlight family'],
+        ['Lead Time',              'QuickShip']
+      ]
+    },
+    'LEV-6674': {
+      sectionHead: 'Selected Companion · Leviton 6674 Decora Dimmer (separate SKU)',
+      specs: [
+        ['Type',          'Decora paddle dimmer (TRIAC + ELV)'],
+        ['Min Output',    '10 mA'],
+        ['Max Output',    '268 mA'],
+        ['Dim Range',     '3% to 93%'],
+        ['Compatible',    'All 3 Radius-II sizes (4″ · 6″ · 8″)'],
+        ['Sister SKUs',   'ELECT/V/ART 40201 · 6633-P · 6613 · 66EV · DDE06']
+      ]
+    },
+    'LEV-DDE06': {
+      sectionHead: 'Selected Companion · Leviton DDE06 Digital Decora (separate SKU)',
+      specs: [
+        ['Type',          'Digital Decora · programmable scenes'],
+        ['Min Output',    '9 mA'],
+        ['Max Output',    '266 mA'],
+        ['Dim Range',     '3% to 93%'],
+        ['Compatible',    'All 3 Radius-II sizes (4″ · 6″ · 8″)'],
+        ['Wall-Plate',    'Decora-style']
+      ]
+    },
+    'LUT-MACL153M': {
+      sectionHead: 'Selected Companion · Lutron MACL-153M Maestro CL (separate SKU)',
+      specs: [
+        ['Type',          'Maestro CL · multi-location (3-way/4-way with companion remote)'],
+        ['Min Output',    '18 mA'],
+        ['Max Output',    '260 mA'],
+        ['Dim Range',     '6% to 91%'],
+        ['Multi-Location','3-way / 4-way with companion remote'],
+        ['Compatible',    'All 3 Radius-II sizes (4″ · 6″ · 8″)']
+      ]
+    },
+    'LUT-DVCL153P': {
+      sectionHead: 'Selected Companion · Lutron DVCL-153P Diva CL (separate SKU)',
+      specs: [
+        ['Type',          'Diva CL · paddle + slide'],
+        ['Min Output',    '23 mA'],
+        ['Max Output',    '267 mA'],
+        ['Dim Range',     '8% to 93%'],
+        ['Compatible',    'All 3 Radius-II sizes (4″ · 6″ · 8″)'],
+        ['Sister SKUs',   'CTCL-153P · SCL-153P · SELV-303P · DVSCELM-300P']
+      ]
+    }
+  };
+
+  var bomEntries = [];
+  if (emergency) bomEntries.push(pairMap[emergency]);
+  if (sensor)    bomEntries.push(pairMap[sensor]);
+  if (tgrid)     bomEntries.push(pairMap[tgrid]);
+  if (dimmer)    bomEntries.push(pairMap[dimmer]);
+  bomEntries = bomEntries.filter(Boolean);
+
+  if (bomEntries.length) {
+    var bomList = document.getElementById('bomList');
+    if (bomList) {
+      bomList.innerHTML = bomEntries.map(function(e) {
+        return '<li><span class="plus">+</span><span><strong>' + e.sku + '</strong>' +
+               '<span class="pair-name">' + e.name + '</span></span></li>';
+      }).join('');
+      var bomPanel = document.getElementById('bomPanel');
+      if (bomPanel) bomPanel.style.display = 'block';
+    }
+  }
+
+  // --- Page 2 · Dynamic Selected-Companion Accessory Specs section ---
+  // For each selected companion, insert a section-head row + spec rows before
+  // the #accSpecAnchor placeholder. Eclipse-II canonical pattern: BOM panel on
+  // Page 1 lists the SKUs; this Page-2 block surfaces the full spec sheet for
+  // each — so submitting the PDF to a spec writer includes the EM driver's
+  // wattage, runtime, certs, mount options, etc. inline.
+  var anchor = document.getElementById('accSpecAnchor');
+  if (anchor) {
+    var selectedAcc = [emergency, sensor, tgrid, dimmer].filter(Boolean);
+    selectedAcc.forEach(function(key) {
+      var entry = ACC_SPEC_TABLE[key];
+      if (!entry) return;
+      var html = '<tr class="spec-section-head"><td colspan="2">' + entry.sectionHead + '</td></tr>';
+      entry.specs.forEach(function(s) {
+        html += '<tr><td class="spec-attr">' + s[0] + '</td><td class="spec-val">' + s[1] + '</td></tr>';
+      });
+      anchor.insertAdjacentHTML('beforebegin', html);
+    });
+  }
+
+  // --- LIVE DATE ---
+  var d = new Date();
+  var liveDate = document.getElementById('liveDate');
+  if (liveDate) liveDate.textContent = d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+  var revStr = d.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit' }).replace('/', '-');
+  var revDate = document.getElementById('revDate');
+  if (revDate) revDate.textContent = revStr;
+  document.querySelectorAll('.rev-date').forEach(function(el) { el.textContent = revStr; });
+
+  // --- AUTO-PRINT ---
+  // Fires window.print() 600 ms after load — long enough for the browser to
+  // paint the 4 pages and load the hero image. Skippable with ?autoprint=0.
+  if (autoprint) {
+    window.addEventListener('load', function() {
+      setTimeout(function() { window.print(); }, 600);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
+
