@@ -32,6 +32,25 @@
   --color-state-legacy: #757575;     /* LEGACY — grey */
   /* NEVER use a "CLEARANCE" badge — banned per §3.7 */
 
+  /* ── Canonical dark-editorial tokens (hoisted 2026-05-10 · Rebate Center port)
+     Source of truth for all dark-surface pages on staging.
+     Raw HSL triplets where noted — vendor composes hsl(var(--…) / alpha). ── */
+  --brand-red: #F32740;              /* Alias for dark-surface pages — same hex as --color-alg-red */
+  --brand-red-dark: #C5162C;         /* Hover state on dark surfaces */
+  --brand-red-hsl: 353 80% 55%;      /* Raw HSL triplet — used by Encentivizer Layer-B overrides */
+  --bg-page:    #1c2025;             /* Dark page background */
+  --bg-card:    #2a2e34;             /* Card surface */
+  --bg-spec:    #22262b;             /* Spec / inset surface */
+  --bg-deepest: #15181c;             /* Deepest surface (hero, breadcrumb band) */
+  --text-primary:   #ECEDEF;         /* Primary text on dark */
+  --text-secondary: #A8AEB7;         /* Secondary text on dark */
+  --text-muted:     #6E7682;         /* Muted / caption text on dark */
+  --line:        rgba(255,255,255,0.08);   /* Subtle dividers on dark */
+  --line-medium: rgba(255,255,255,0.14);   /* Medium dividers on dark */
+  --line-strong: rgba(255,255,255,0.22);   /* Strong dividers on dark */
+  --font-body: 'Lato', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; /* Body alias for dark pages */
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace; /* Mono — eyebrows, stats */
+
   /* Typography */
   --font-sans: 'Lato', system-ui, -apple-system, sans-serif;
   --font-display: 'Lato', system-ui, -apple-system, sans-serif;

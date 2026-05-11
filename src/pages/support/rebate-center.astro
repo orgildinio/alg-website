@@ -1,0 +1,311 @@
+---
+/**
+ * support/rebate-center.astro
+ *
+ * Rebate Center — staging port of the Encentivizer Catalog widget page.
+ * URL: /support/rebate-center
+ * Breadcrumb: HOME › SUPPORT › REBATE CENTER
+ *
+ * Source: Claude Design · rebate-center.astro (2026-05-08)
+ * Corrections applied (2026-05-10 per MANUS_REBATE_CENTER_2026-05-10.md §B):
+ *   B1: Breadcrumb path changed from Tools → Support
+ *   B2: Hero meta line changed from "Tools · Rebate Lookup" → "Support · Rebate Lookup"
+ *   B3: File saved at src/pages/support/rebate-center.astro
+ *   B4: Layout import updated to BaseLayout (staging convention)
+ *
+ * Do NOT ship: app.jsx, widget-mock.jsx, live-widget.jsx, chrome.jsx, tweaks-panel.jsx
+ * The real page uses only vendor widget_base.js + this .astro file.
+ *
+ * TODO(rollout): Remove __rewriteProductLinks MutationObserver when either:
+ *   (a) Encentivizer admin Product table updated to staging URLs, or
+ *   (b) staging is cut over to production.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const TENANT_TOKEN = 'ba57525e-4f24-4f91-a237-e7a435b319dd';
+const WIDGET_VER   = '2.0.2.4';
+---
+
+<BaseLayout
+  title="Rebate Center · Archipelago Lighting Group"
+  description="Find utility rebates for any ALG SKU. Filter by ZIP code, state, utility, or program type — programs across all 50 states."
+  bodyClass="page-rebate-center"
+>
+  {/* §B1: Breadcrumb — Support path (not Tools) */}
+  <nav class="rebate-breadcrumb" aria-label="Breadcrumb">
+    <div class="rebate-breadcrumb-inner">
+      <a href="/">Home</a>
+      <span class="bc-sep">›</span>
+      <a href="/support">Support</a>
+      <span class="bc-sep">›</span>
+      <span class="bc-current">Rebate Center</span>
+    </div>
+  </nav>
+
+  <main class="rebate-page" data-pagefind-body>
+    <header class="rebate-hero">
+      <div>
+        {/* §B2: Meta line — Support · Rebate Lookup */}
+        <div class="rebate-hero-meta">Support · Rebate Lookup</div>
+        <h1>Rebate Center</h1>
+        <p class="deck">
+          Find utility rebates for any ALG SKU. Filter by ZIP code, state, utility,
+          or program type — programs across all 50 states.
+        </p>
+        <p class="rebate-help">
+          Tip: search by SKU on the <strong>Home</strong> tab. Use <strong>Controls</strong>
+          to model retrofit savings, and <strong>Settings</strong> to toggle table columns.
+        </p>
+      </div>
+      <aside class="rebate-hero-stats">
+        <div><div class="rebate-stat-v">3,200+</div><div class="rebate-stat-k">Programs · 50 states</div></div>
+        <div><div class="rebate-stat-v">24</div><div class="rebate-stat-k">Filter columns</div></div>
+        <div><div class="rebate-stat-v">v{WIDGET_VER}</div><div class="rebate-stat-k">Encentivizer Catalog</div></div>
+      </aside>
+    </header>
+
+    <section class="howitworks" aria-label="How the Rebate Center works">
+      <article class="hiw-step">
+        <div class="hiw-num">1</div>
+        <h3 class="hiw-title">Search by SKU or category</h3>
+        <p class="hiw-body">Enter a part number on the <strong>Home</strong> tab, or pick a fixture category. Results pull from utility programs across all 50 states.</p>
+      </article>
+      <article class="hiw-step">
+        <div class="hiw-num">2</div>
+        <h3 class="hiw-title">Narrow to your utility</h3>
+        <p class="hiw-body">Add a ZIP code to filter for prescriptive and custom rebates from your specific utility — or use State + Utility for a manual lookup.</p>
+      </article>
+      <article class="hiw-step">
+        <div class="hiw-num">3</div>
+        <h3 class="hiw-title">Pull cutsheets and apply</h3>
+        <p class="hiw-body">Open the DLC® / ENERGY STAR® screenshot and ALG spec sheet directly from the result row. Submit them with your utility's rebate paperwork.</p>
+      </article>
+    </section>
+
+    {/*
+      The widget container — same inline-DIV pattern as production.
+      `widget_base.js` reads `data-token` and bootstraps the catalog
+      widget into `#ee_widget_main` inside this container.
+      Do NOT wrap in an iframe. Do NOT add React children inside this div.
+    */}
+    <div id="ee_widget_container"
+         class="ee-catalog-widget"
+         data-token={TENANT_TOKEN}
+         data-version={WIDGET_VER}>
+    </div>
+  </main>
+
+  {/* Vendor bootstrap — defer load, single instance */}
+  <script src="https://cdn.encentivizer.com/widgets/widget_base.js" is:inline defer></script>
+
+  {/*
+    TODO(rollout): Remove this block when the Encentivizer admin's Product table
+    has been updated to point at staging URLs, or when staging cuts over to production.
+    Rewrites Product Page links from www.archipelagolighting.com → staging.archipelagolighting.com.
+  */}
+  <script is:inline>
+    const __rewriteProductLinks = () => {
+      document
+        .querySelectorAll('#ee_widget_container a[href^="https://www.archipelagolighting.com/products/"]')
+        .forEach((a) => {
+          a.href = a.href.replace('www.archipelagolighting.com', 'staging.archipelagolighting.com');
+        });
+    };
+    if (window.MutationObserver) {
+      const mo = new MutationObserver(__rewriteProductLinks);
+      const c = document.getElementById('ee_widget_container');
+      if (c) mo.observe(c, { childList: true, subtree: true });
+    }
+  </script>
+
+  <style is:global>
+    /* ============================================================
+       REBATE CENTER — page chrome
+       Tokens reference brand.css :root (hoisted 2026-05-10).
+       ============================================================ */
+
+    /* Breadcrumb band */
+    .rebate-breadcrumb {
+      padding: 10px 32px;
+      border-bottom: 1px solid var(--line);
+      background: var(--bg-deepest);
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .rebate-breadcrumb-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .rebate-breadcrumb a { color: inherit; text-decoration: none; }
+    .rebate-breadcrumb a:hover { color: var(--text-primary); }
+    .rebate-breadcrumb .bc-sep { margin: 0 10px; }
+    .rebate-breadcrumb .bc-current { color: var(--text-primary); font-weight: 700; }
+
+    /* Page wrapper */
+    .rebate-page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px 64px;
+      background: var(--bg-page);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Override body background for this page */
+    body.page-rebate-center {
+      background: var(--bg-page);
+    }
+
+    .rebate-hero {
+      padding: 32px 0 28px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: end;
+    }
+    .rebate-hero-meta {
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--brand-red); margin-bottom: 12px;
+    }
+    .rebate-hero h1 {
+      font-family: var(--font-body); font-weight: 900;
+      font-size: 56px; line-height: 1.02; letter-spacing: -0.02em;
+      margin: 0 0 16px; color: var(--text-primary);
+    }
+    .rebate-hero .deck { font-size: 17px; color: var(--text-secondary); max-width: 680px; margin: 0 0 12px; }
+    .rebate-hero .rebate-help { font-size: 13px; color: var(--text-muted); margin: 0; max-width: 680px; }
+    .rebate-hero .rebate-help strong {
+      color: var(--text-primary); font-family: var(--font-mono);
+      font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+      font-weight: 600; padding: 2px 6px; background: var(--bg-card);
+      border-radius: 3px; margin: 0 2px;
+    }
+
+    .rebate-hero-stats {
+      display: grid; grid-template-columns: repeat(3, auto); gap: 24px;
+      padding: 20px 24px;
+      background: var(--bg-spec);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--brand-red);
+    }
+    .rebate-stat-v {
+      font-family: var(--font-mono); font-size: 22px; font-weight: 700;
+      color: var(--text-primary); line-height: 1; white-space: nowrap;
+    }
+    .rebate-stat-k {
+      font-family: var(--font-mono); font-size: 10.5px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted); margin-top: 6px; white-space: nowrap;
+    }
+
+    .howitworks {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+      margin-bottom: 32px;
+      border: 1px solid var(--line); border-radius: 4px;
+      overflow: hidden; background: var(--bg-spec);
+    }
+    .hiw-step { padding: 24px 28px; border-right: 1px solid var(--line); }
+    .hiw-step:last-child { border-right: 0; }
+    .hiw-num {
+      font-family: var(--font-mono); font-size: 26px; font-weight: 700;
+      color: var(--brand-red); line-height: 1; margin-bottom: 12px;
+    }
+    .hiw-title {
+      font-size: 16px; font-weight: 700; color: var(--text-primary);
+      margin: 0 0 6px; letter-spacing: -0.01em;
+    }
+    .hiw-body { font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.55; }
+    .hiw-step strong { color: var(--text-primary); font-weight: 700; }
+
+    /* ============================================================
+       LAYER-B WIDGET OVERRIDES — host-page only, prod untouched
+       Tokens are stored as raw HSL component triplets (H S% L%)
+       so the widget can compose `hsl(var(--…) / 8%)` alpha mixes.
+       DO NOT wrap these values in hsl() — vendor does that at use site.
+       ============================================================ */
+    #ee_widget_container {
+      /* Surfaces */
+      --ee-widget-background:          222 14% 18%;
+      --ee-widget-foreground:          0 0% 92%;
+      --ee-widget-card:                220 11% 14%;
+      --ee-widget-card-foreground:     0 0% 92%;
+      --ee-widget-popover:             220 11% 12%;
+      --ee-widget-popover-foreground:  0 0% 92%;
+      --ee-widget-muted:               222 12% 22%;
+      --ee-widget-muted-foreground:    220 7% 60%;
+
+      /* Borders / inputs */
+      --ee-widget-border:              0 0% 100%;
+      --ee-widget-input:               0 0% 100%;
+      --ee-widget-ring:                var(--brand-red-hsl);
+      --ee-widget-radius:              0.5rem;
+
+      /* Brand activation */
+      --ee-widget-primary:             var(--brand-red-hsl);
+      --ee-widget-primary-foreground:  0 0% 100%;
+      --ee-widget-secondary:           220 11% 22%;
+      --ee-widget-secondary-foreground:0 0% 92%;
+      --ee-widget-accent:              var(--brand-red-hsl);
+      --ee-widget-accent-foreground:   0 0% 100%;
+      --ee-widget-destructive:         0 72% 51%;
+      --ee-widget-destructive-foreground: 0 0% 100%;
+
+      /* Sidebar (filter dropdowns, column selector) */
+      --ee-widget-sidebar-background:  220 11% 14%;
+      --ee-widget-sidebar-foreground:  0 0% 92%;
+      --ee-widget-sidebar-primary:     var(--brand-red-hsl);
+      --ee-widget-sidebar-primary-foreground: 0 0% 100%;
+      --ee-widget-sidebar-accent:      220 11% 22%;
+      --ee-widget-sidebar-accent-foreground: 0 0% 92%;
+      --ee-widget-sidebar-border:      0 0% 100%;
+      --ee-widget-sidebar-ring:        var(--brand-red-hsl);
+
+      /* ag-Grid table */
+      --ag-accent-color:                  hsl(var(--ee-widget-primary));
+      --ag-row-hover-color:               hsl(var(--ee-widget-primary) / 8%);
+      --ag-selected-row-background-color: hsl(var(--ee-widget-primary) / 20%);
+      --ag-background-color:              hsl(var(--ee-widget-card));
+      --ag-foreground-color:              hsl(var(--ee-widget-foreground));
+      --ag-header-background-color:       hsl(var(--ee-widget-muted));
+      --ag-border-color:                  hsla(0, 0%, 100%, 0.08);
+
+      /* OverlayScrollbars */
+      --os-handle-bg:       hsla(0, 0%, 100%, 0.20);
+      --os-handle-bg-hover: hsla(0, 0%, 100%, 0.28);
+
+      background: hsl(var(--ee-widget-background));
+      color: hsl(var(--ee-widget-foreground));
+      padding: 8px;
+      min-height: 600px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    /* ============================================================
+       RESPONSIVE — page chrome only; widget has its own cascade
+       ============================================================ */
+    @media (max-width: 1100px) {
+      .rebate-hero { grid-template-columns: 1fr; }
+      .howitworks  { grid-template-columns: 1fr; }
+      .hiw-step    { border-right: 0; border-bottom: 1px solid var(--line); }
+      .hiw-step:last-child { border-bottom: 0; }
+    }
+    @media (max-width: 760px) {
+      .rebate-page { padding: 0 16px 48px; }
+      .rebate-breadcrumb { padding: 10px 16px; }
+      .rebate-hero h1 { font-size: 36px; }
+      .rebate-hero .deck { font-size: 15px; }
+      .rebate-hero-stats { grid-template-columns: 1fr; gap: 12px; }
+    }
+  </style>
+</BaseLayout>

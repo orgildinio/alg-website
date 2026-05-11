@@ -23,6 +23,10 @@
 # v2.7.13 — Illuminator series canonical redirect
 /products/illuminator-series/   /products/illuminator/   301
 
+# 2026-05-10 — Rebate Center: legacy Shopify URL → new Astro support route
+/pages/rebate-center              /support/rebate-center             301
+/pages/rebate-center/             /support/rebate-center             301
+
 # v2.7.15 — Bug 4: luxoarch sub-collection URLs → /products/{handle}/ (SEO 301s)
 /collections/luxoarch/heritage          /products/heritage/          301
 /collections/luxoarch/liberty           /products/liberty/           301
