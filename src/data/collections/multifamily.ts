@@ -100,6 +100,7 @@ const multifamilyData = {
       pdpUrl: '/products/multi-family/radius-safezone/',
     },
   ],
+  featuredHeadline: 'Three flagship families from the multi-fⒶMILY collection.',
   familiesHeadline: 'Eight families from the multi-fⒶMILY collection.',
   familiesSubhead: 'Multifamily, garden-style, and mid-rise developments need lighting that works on a per-door budget — and still passes the code inspector on the first walk-through.',
   legacy: {

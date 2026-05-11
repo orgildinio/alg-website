@@ -64,6 +64,7 @@ export interface Props {
       dlc: boolean;
       lineDrawing: string | null;
     }[];
+    featuredHeadline?: string; // Optional override for the Featured section headline
     familiesHeadline: string;
     familiesSubhead: string;
     legacy: { headline: string; body: string; notifyLink: string };
@@ -120,6 +121,7 @@ const anchorSections = [
     collectionName={c.name}
     collectionSlug={c.slug}
     featured={c.featured}
+    featuredHeadline={c.featuredHeadline}
   />
 
   <!-- §7 All families -->

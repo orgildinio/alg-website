@@ -8,6 +8,7 @@
 export interface Props {
   collectionName: string;
   collectionSlug: string;
+  featuredHeadline?: string; // Optional override for the section headline
   featured: {
     family: string;
     subCategory: string;
@@ -19,13 +20,13 @@ export interface Props {
     pdpUrl?: string; // Optional override — when set, VIEW → links to the PDP instead of the sub-collection
   }[];
 }
-const { collectionName, collectionSlug, featured } = Astro.props;
+const { collectionName, collectionSlug, featured, featuredHeadline } = Astro.props;
 ---
 <section class="collection-section collection-section--featured" id="highlights">
   <div class="collection-content">
     <div class="feat-eyebrow">Featured Families</div>
     <div class="feat-header">
-      <h2 class="feat-headline">Five flagship families from the {collectionName} collection.</h2>
+      <h2 class="feat-headline">{featuredHeadline ?? `Five flagship families from the ${collectionName} collection.`}</h2>
     </div>
     <div class="feat-grid">
       {featured.map(f => (
