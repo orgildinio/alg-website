@@ -71,6 +71,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .code-chips { margin-top: 22px; display: flex; gap: 8px; flex-wrap: wrap; }
   .code-chip { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 10px 16px; border: 1px solid rgba(255,255,255,.18); background: transparent; color: rgba(255,255,255,.85); white-space: nowrap; }
   .code-chip .chip-scope { margin-left: 10px; opacity: 0.55; font-size: 9.5px; letter-spacing: .06em; }
+  /* ApplicationFinder interactive states */
+  .app-chip { cursor: pointer; }
+  .app-chip--active { background: var(--color-alg-red) !important; border-color: var(--color-alg-red) !important; color: #fff !important; }
+  .app-chip--active .chip-target { opacity: 1; }
+  .coll-card-wrap--dim { opacity: 0.35; transition: opacity .2s ease; }
+  .coll-card-wrap--highlight { outline: 2px solid var(--color-alg-red); outline-offset: 2px; transition: outline .2s ease; }
+
   .code-chip--constant { border-color: rgba(243,39,64,.6); }
   .code-chip--controls { border-color: rgba(14,53,53,.8); background: rgba(14,53,53,.3); }
   .code-chip--both { border-color: #F5C24A; }
@@ -189,16 +196,16 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
     <div class="code-finder-q">Which code is driving the spec?</div>
     <div class="code-chips">
-      <div class="code-chip code-chip--constant">UL 924<span class="chip-scope">Emergency luminaires &amp; exit signs → const<span style="color:var(--color-alg-red)">Ⓐ</span>NT</span></div>
-      <div class="code-chip code-chip--constant">NFPA 101<span class="chip-scope">Life Safety Code · egress → const<span style="color:var(--color-alg-red)">Ⓐ</span>NT</span></div>
-      <div class="code-chip code-chip--constant">NFPA 110<span class="chip-scope">Emergency power · CBS → const<span style="color:var(--color-alg-red)">Ⓐ</span>NT</span></div>
-      <div class="code-chip code-chip--constant">OSHA 1910.37<span class="chip-scope">Means of egress · workplaces → const<span style="color:var(--color-alg-red)">Ⓐ</span>NT</span></div>
-      <div class="code-chip code-chip--constant">IBC §1008<span class="chip-scope">Means of egress illumination → const<span style="color:var(--color-alg-red)">Ⓐ</span>NT</span></div>
-      <div class="code-chip code-chip--controls">Title 24 P6<span class="chip-scope">CA energy code · controls → contr<span style="color:#F5C24A">Ⓐ</span>LS</span></div>
-      <div class="code-chip code-chip--controls">ASHRAE 90.1<span class="chip-scope">Auto shut-off · daylight → contr<span style="color:#F5C24A">Ⓐ</span>LS</span></div>
-      <div class="code-chip code-chip--controls">IECC C405<span class="chip-scope">Lighting controls · interior → contr<span style="color:#F5C24A">Ⓐ</span>LS</span></div>
-      <div class="code-chip code-chip--controls">DLC NLC5<span class="chip-scope">Networked Lighting Controls v5 → contr<span style="color:#F5C24A">Ⓐ</span>LS</span></div>
-      <div class="code-chip code-chip--both">JLAB<span class="chip-scope">Joint codes · combined systems → Both</span></div>
+      <div class="code-chip code-chip--constant" data-coll="constarch" role="button" tabindex="0">UL 924<span class="chip-scope">Emergency luminaires &amp; exit signs → const<span style="color:var(--color-alg-red)">Ⓐ</span>NT</span></div>
+      <div class="code-chip code-chip--constant" data-coll="constarch" role="button" tabindex="0">NFPA 101<span class="chip-scope">Life Safety Code · egress → const<span style="color:var(--color-alg-red)">Ⓐ</span>NT</span></div>
+      <div class="code-chip code-chip--constant" data-coll="constarch" role="button" tabindex="0">NFPA 110<span class="chip-scope">Emergency power · CBS → const<span style="color:var(--color-alg-red)">Ⓐ</span>NT</span></div>
+      <div class="code-chip code-chip--constant" data-coll="constarch" role="button" tabindex="0">OSHA 1910.37<span class="chip-scope">Means of egress · workplaces → const<span style="color:var(--color-alg-red)">Ⓐ</span>NT</span></div>
+      <div class="code-chip code-chip--constant" data-coll="constarch" role="button" tabindex="0">IBC §1008<span class="chip-scope">Means of egress illumination → const<span style="color:var(--color-alg-red)">Ⓐ</span>NT</span></div>
+      <div class="code-chip code-chip--controls" data-coll="contralsarch" role="button" tabindex="0">Title 24 P6<span class="chip-scope">CA energy code · controls → contr<span style="color:#F5C24A">Ⓐ</span>LS</span></div>
+      <div class="code-chip code-chip--controls" data-coll="contralsarch" role="button" tabindex="0">ASHRAE 90.1<span class="chip-scope">Auto shut-off · daylight → contr<span style="color:#F5C24A">Ⓐ</span>LS</span></div>
+      <div class="code-chip code-chip--controls" data-coll="contralsarch" role="button" tabindex="0">IECC C405<span class="chip-scope">Lighting controls · interior → contr<span style="color:#F5C24A">Ⓐ</span>LS</span></div>
+      <div class="code-chip code-chip--controls" data-coll="contralsarch" role="button" tabindex="0">DLC NLC5<span class="chip-scope">Networked Lighting Controls v5 → contr<span style="color:#F5C24A">Ⓐ</span>LS</span></div>
+      <div class="code-chip code-chip--both" data-coll="both" role="button" tabindex="0">JLAB<span class="chip-scope">Joint codes · combined systems → Both</span></div>
     </div>
   </div>
 
@@ -206,7 +213,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   <div class="collection-grid">
 
     <!-- constⒶNT -->
-    <div>
+    <div data-coll-card="constarch">
       <a href="https://staging.archipelagolighting.com/collections/constarch/" target="_blank" rel="noopener noreferrer" class="coll-card">
         <div class="coll-card-header">
           <div class="eyebrow eyebrow--yellow" style="font-size:11px">Emergency · Egress · Exit · Battery Backup</div>
@@ -260,7 +267,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
 
     <!-- contrⒶLS -->
-    <div>
+    <div data-coll-card="contralsarch">
       <a href="https://staging.archipelagolighting.com/collections/contralsarch/" target="_blank" rel="noopener noreferrer" class="coll-card">
         <div class="coll-card-header coll-card-header--teal">
           <div class="eyebrow eyebrow--yellow" style="font-size:11px">Sensors · Dimming · Network · ⒶCS by ALG App</div>
@@ -408,5 +415,57 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   </div>
 
 </div><!-- /sc-landing -->
+
+
+<script is:inline>
+(function () {
+  /* ApplicationFinder — vanilla JS chip→card highlight */
+  document.addEventListener('DOMContentLoaded', function () {
+    var chips = document.querySelectorAll('[data-coll]');
+    var cards = document.querySelectorAll('[data-coll-card]');
+    if (!chips.length || !cards.length) return;
+
+    function activate(key) {
+      chips.forEach(function (c) {
+        var active = c.dataset.coll === key;
+        c.classList.toggle('app-chip--active', active);
+        c.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      cards.forEach(function (card) {
+        var match = card.dataset.collCard === key;
+        card.classList.toggle('coll-card-wrap--highlight', match);
+        card.classList.toggle('coll-card-wrap--dim', !match);
+      });
+    }
+
+    function deactivate() {
+      chips.forEach(function (c) {
+        c.classList.remove('app-chip--active');
+        c.removeAttribute('aria-pressed');
+      });
+      cards.forEach(function (card) {
+        card.classList.remove('coll-card-wrap--highlight', 'coll-card-wrap--dim');
+      });
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var key = chip.dataset.coll;
+        if (chip.classList.contains('app-chip--active')) {
+          deactivate();
+        } else {
+          activate(key);
+        }
+      });
+      chip.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          chip.click();
+        }
+      });
+    });
+  });
+}());
+</script>
 
 </BaseLayout>

@@ -157,6 +157,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     white-space: nowrap;
   }
   .app-chip .chip-target { margin-left: 10px; opacity: 0.6; font-size: 10px; }
+  /* ApplicationFinder interactive states */
+  .app-chip { cursor: pointer; }
+  .app-chip--active { background: var(--color-alg-red) !important; border-color: var(--color-alg-red) !important; color: #fff !important; }
+  .app-chip--active .chip-target { opacity: 1; }
+  .coll-card-wrap--dim { opacity: 0.35; transition: opacity .2s ease; }
+  .coll-card-wrap--highlight { outline: 2px solid var(--color-alg-red); outline-offset: 2px; transition: outline .2s ease; }
+
   /* Collection grid */
   .collection-grid { padding: 40px 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .coll-card { display: block; text-decoration: none; color: inherit; }
@@ -289,18 +296,18 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
     <div class="app-finder-q">What is the mounting?</div>
     <div class="app-chips">
-      <div class="app-chip">Parking Lot<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Wall-Mount / Entry<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Canopy / Gas Station<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Flood / Building Façade<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Sports Field<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Hospitality / Patio<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Bollard / Pedestrian<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Roadway / DOT<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Post Top / Streetscape<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">High-Mast / Interchange<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Park / Pathway<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Traffic Control<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="luxo" role="button" tabindex="0">Parking Lot<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="luxo" role="button" tabindex="0">Wall-Mount / Entry<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="luxo" role="button" tabindex="0">Canopy / Gas Station<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="luxo" role="button" tabindex="0">Flood / Building Façade<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="luxo" role="button" tabindex="0">Sports Field<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="luxo" role="button" tabindex="0">Hospitality / Patio<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="city" role="button" tabindex="0">Bollard / Pedestrian<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="city" role="button" tabindex="0">Roadway / DOT<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="city" role="button" tabindex="0">Post Top / Streetscape<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="city" role="button" tabindex="0">High-Mast / Interchange<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="city" role="button" tabindex="0">Park / Pathway<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="city" role="button" tabindex="0">Traffic Control<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
     </div>
   </div>
 
@@ -308,7 +315,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   <div class="collection-grid">
 
     <!-- luxoⒶRCH -->
-    <div>
+    <div data-coll-card="luxo">
       <a href="https://staging.archipelagolighting.com/collections/luxoarch/" target="_blank" rel="noopener noreferrer" class="coll-card">
         <div class="coll-card-header">
           <div class="eyebrow eyebrow--yellow" style="font-size:11px">Area · Canopy · Cylinder · Flood · Sports · String · Wall Pack</div>
@@ -392,7 +399,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
 
     <!-- cityⒶRCH -->
-    <div>
+    <div data-coll-card="city">
       <a href="https://staging.archipelagolighting.com/collections/cityarch/" target="_blank" rel="noopener noreferrer" class="coll-card">
         <div class="coll-card-header">
           <div class="eyebrow eyebrow--yellow" style="font-size:11px">Bollard · High-Mast · Pole · Post Top · Roadway · Street Sign · Traffic</div>
@@ -549,5 +556,57 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   </div>
 
 </div><!-- /outdoor-landing -->
+
+
+<script is:inline>
+(function () {
+  /* ApplicationFinder — vanilla JS chip→card highlight */
+  document.addEventListener('DOMContentLoaded', function () {
+    var chips = document.querySelectorAll('[data-coll]');
+    var cards = document.querySelectorAll('[data-coll-card]');
+    if (!chips.length || !cards.length) return;
+
+    function activate(key) {
+      chips.forEach(function (c) {
+        var active = c.dataset.coll === key;
+        c.classList.toggle('app-chip--active', active);
+        c.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      cards.forEach(function (card) {
+        var match = card.dataset.collCard === key;
+        card.classList.toggle('coll-card-wrap--highlight', match);
+        card.classList.toggle('coll-card-wrap--dim', !match);
+      });
+    }
+
+    function deactivate() {
+      chips.forEach(function (c) {
+        c.classList.remove('app-chip--active');
+        c.removeAttribute('aria-pressed');
+      });
+      cards.forEach(function (card) {
+        card.classList.remove('coll-card-wrap--highlight', 'coll-card-wrap--dim');
+      });
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var key = chip.dataset.coll;
+        if (chip.classList.contains('app-chip--active')) {
+          deactivate();
+        } else {
+          activate(key);
+        }
+      });
+      chip.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          chip.click();
+        }
+      });
+    });
+  });
+}());
+</script>
 
 </BaseLayout>

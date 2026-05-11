@@ -69,6 +69,17 @@
 /verticals/retail                    /solutions/warehouse-logistics       301
 /verticals/retail/                   /solutions/warehouse-logistics       301
 
-# 2026-05-10 §B3 — legacy solutions/safety-controls → canonical products/safety-controls
-/solutions/safety-controls           /products/safety-controls            301
-/solutions/safety-controls/          /products/safety-controls            301
+# 2026-05-10 §B — products/* → collections/* (landing page URL move)
+/products/indoor                     /collections/indoor                  301
+/products/indoor/                    /collections/indoor                  301
+/products/outdoor                    /collections/outdoor                 301
+/products/outdoor/                   /collections/outdoor                 301
+/products/lamps                      /collections/lamps                   301
+/products/lamps/                     /collections/lamps                   301
+/products/residential                /collections/residential             301
+/products/residential/               /collections/residential             301
+/products/safety-controls            /collections/safety-controls         301
+/products/safety-controls/           /collections/safety-controls         301
+# 2026-05-10 §B3 — legacy solutions/safety-controls → canonical collections/safety-controls
+/solutions/safety-controls           /collections/safety-controls         301
+/solutions/safety-controls/          /collections/safety-controls         301

@@ -67,6 +67,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .proj-chips { margin-top: 22px; display: flex; gap: 8px; flex-wrap: wrap; }
   .proj-chip { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 10px 16px; border: 1px solid rgba(255,255,255,.18); background: transparent; color: rgba(255,255,255,.85); white-space: nowrap; }
   .proj-chip .chip-target { margin-left: 10px; opacity: 0.6; font-size: 10px; }
+  /* ApplicationFinder interactive states */
+  .app-chip { cursor: pointer; }
+  .app-chip--active { background: var(--color-alg-red) !important; border-color: var(--color-alg-red) !important; color: #fff !important; }
+  .app-chip--active .chip-target { opacity: 1; }
+  .coll-card-wrap--dim { opacity: 0.35; transition: opacity .2s ease; }
+  .coll-card-wrap--highlight { outline: 2px solid var(--color-alg-red); outline-offset: 2px; transition: outline .2s ease; }
+
 
   /* Collection grid */
   .collection-grid { padding: 40px 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -167,12 +174,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
     <div class="proj-finder-q">What is the project?</div>
     <div class="proj-chips">
-      <div class="proj-chip">Single-Family Home<span class="chip-target">→ Consumer</span></div>
-      <div class="proj-chip">Apartment Unit<span class="chip-target">→ Consumer</span></div>
-      <div class="proj-chip">Renovation<span class="chip-target">→ Consumer</span></div>
-      <div class="proj-chip">MDU Common Area<span class="chip-target">→ Multi-Family</span></div>
-      <div class="proj-chip">New Build<span class="chip-target">→ Multi-Family</span></div>
-      <div class="proj-chip">Affordable Housing<span class="chip-target">→ Multi-Family</span></div>
+      <div class="proj-chip" data-coll="consumer" role="button" tabindex="0">Single-Family Home<span class="chip-target">→ Consumer</span></div>
+      <div class="proj-chip" data-coll="consumer" role="button" tabindex="0">Apartment Unit<span class="chip-target">→ Consumer</span></div>
+      <div class="proj-chip" data-coll="consumer" role="button" tabindex="0">Renovation<span class="chip-target">→ Consumer</span></div>
+      <div class="proj-chip" data-coll="multifamily" role="button" tabindex="0">MDU Common Area<span class="chip-target">→ Multi-Family</span></div>
+      <div class="proj-chip" data-coll="multifamily" role="button" tabindex="0">New Build<span class="chip-target">→ Multi-Family</span></div>
+      <div class="proj-chip" data-coll="multifamily" role="button" tabindex="0">Affordable Housing<span class="chip-target">→ Multi-Family</span></div>
     </div>
   </div>
 
@@ -180,7 +187,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   <div class="collection-grid">
 
     <!-- Consumer -->
-    <div>
+    <div data-coll-card="consumer">
       <a href="https://staging.archipelagolighting.com/collections/consumer/" target="_blank" rel="noopener noreferrer" class="coll-card">
         <div class="coll-card-header">
           <div class="eyebrow eyebrow--yellow" style="font-size:11px">Single-Family · In-Unit · Renovation</div>
@@ -234,7 +241,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
 
     <!-- Multi-Family -->
-    <div>
+    <div data-coll-card="multifamily">
       <a href="https://staging.archipelagolighting.com/collections/multi-family/" target="_blank" rel="noopener noreferrer" class="coll-card">
         <div class="coll-card-header">
           <div class="eyebrow eyebrow--yellow" style="font-size:11px">MDU · Affordable Housing · Senior Living</div>
@@ -344,5 +351,57 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   </div>
 
 </div><!-- /residential-landing -->
+
+
+<script is:inline>
+(function () {
+  /* ApplicationFinder — vanilla JS chip→card highlight */
+  document.addEventListener('DOMContentLoaded', function () {
+    var chips = document.querySelectorAll('[data-coll]');
+    var cards = document.querySelectorAll('[data-coll-card]');
+    if (!chips.length || !cards.length) return;
+
+    function activate(key) {
+      chips.forEach(function (c) {
+        var active = c.dataset.coll === key;
+        c.classList.toggle('app-chip--active', active);
+        c.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      cards.forEach(function (card) {
+        var match = card.dataset.collCard === key;
+        card.classList.toggle('coll-card-wrap--highlight', match);
+        card.classList.toggle('coll-card-wrap--dim', !match);
+      });
+    }
+
+    function deactivate() {
+      chips.forEach(function (c) {
+        c.classList.remove('app-chip--active');
+        c.removeAttribute('aria-pressed');
+      });
+      cards.forEach(function (card) {
+        card.classList.remove('coll-card-wrap--highlight', 'coll-card-wrap--dim');
+      });
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var key = chip.dataset.coll;
+        if (chip.classList.contains('app-chip--active')) {
+          deactivate();
+        } else {
+          activate(key);
+        }
+      });
+      chip.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          chip.click();
+        }
+      });
+    });
+  });
+}());
+</script>
 
 </BaseLayout>

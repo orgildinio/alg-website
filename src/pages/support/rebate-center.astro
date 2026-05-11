@@ -13,6 +13,11 @@
  *   B3: File saved at src/pages/support/rebate-center.astro
  *   B4: Layout import updated to BaseLayout (staging convention)
  *
+ * Corrections applied (2026-05-10 per MANUS_GATE_CHECKS_2026-05-10.md §C):
+ *   C1: All dark Layer-B widget overrides stripped — vendor renders its own light card
+ *   C2: Page chrome flipped to light (white bg, --ink text)
+ *   C3: Visual target: production archipelagolighting.com/pages/rebate-center
+ *
  * Do NOT ship: app.jsx, widget-mock.jsx, live-widget.jsx, chrome.jsx, tweaks-panel.jsx
  * The real page uses only vendor widget_base.js + this .astro file.
  *
@@ -120,20 +125,26 @@ const WIDGET_VER   = '2.0.2.4';
 
   <style is:global>
     /* ============================================================
-       REBATE CENTER — page chrome
-       Tokens reference brand.css :root (hoisted 2026-05-10).
+       REBATE CENTER — page chrome (LIGHT theme per §C 2026-05-10)
+       Visual target: production /pages/rebate-center
        ============================================================ */
 
-    /* Breadcrumb band */
+    /* §C2: Light body override — this page is always light */
+    body.page-rebate-center {
+      background: #ffffff;
+      color: var(--ink, #1A1D23);
+    }
+
+    /* Breadcrumb band — light */
     .rebate-breadcrumb {
       padding: 10px 32px;
-      border-bottom: 1px solid var(--line);
-      background: var(--bg-deepest);
-      font-family: var(--font-mono);
+      border-bottom: 1px solid #e5e7eb;
+      background: #f9fafb;
+      font-family: var(--font-mono, 'JetBrains Mono', monospace);
       font-size: 10.5px;
       letter-spacing: .14em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: #6b7280;
     }
     .rebate-breadcrumb-inner {
       max-width: 1440px;
@@ -143,29 +154,24 @@ const WIDGET_VER   = '2.0.2.4';
       gap: 0;
     }
     .rebate-breadcrumb a { color: inherit; text-decoration: none; }
-    .rebate-breadcrumb a:hover { color: var(--text-primary); }
+    .rebate-breadcrumb a:hover { color: var(--ink, #1A1D23); }
     .rebate-breadcrumb .bc-sep { margin: 0 10px; }
-    .rebate-breadcrumb .bc-current { color: var(--text-primary); font-weight: 700; }
+    .rebate-breadcrumb .bc-current { color: var(--ink, #1A1D23); font-weight: 700; }
 
-    /* Page wrapper */
+    /* Page wrapper — light */
     .rebate-page {
       max-width: 1440px;
       margin: 0 auto;
       padding: 0 32px 64px;
-      background: var(--bg-page);
-      color: var(--text-primary);
-      font-family: var(--font-body);
+      background: #ffffff;
+      color: var(--ink, #1A1D23);
+      font-family: var(--font-body, 'Lato', sans-serif);
       -webkit-font-smoothing: antialiased;
-    }
-
-    /* Override body background for this page */
-    body.page-rebate-center {
-      background: var(--bg-page);
     }
 
     .rebate-hero {
       padding: 32px 0 28px;
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid #e5e7eb;
       margin-bottom: 32px;
       display: grid;
       grid-template-columns: 1fr auto;
@@ -173,122 +179,74 @@ const WIDGET_VER   = '2.0.2.4';
       align-items: end;
     }
     .rebate-hero-meta {
-      font-family: var(--font-mono);
+      font-family: var(--font-mono, 'JetBrains Mono', monospace);
       font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--brand-red); margin-bottom: 12px;
+      color: var(--brand-red, #F32740); margin-bottom: 12px;
     }
     .rebate-hero h1 {
-      font-family: var(--font-body); font-weight: 900;
+      font-family: var(--font-body, 'Lato', sans-serif); font-weight: 900;
       font-size: 56px; line-height: 1.02; letter-spacing: -0.02em;
-      margin: 0 0 16px; color: var(--text-primary);
+      margin: 0 0 16px; color: var(--ink, #1A1D23);
     }
-    .rebate-hero .deck { font-size: 17px; color: var(--text-secondary); max-width: 680px; margin: 0 0 12px; }
-    .rebate-hero .rebate-help { font-size: 13px; color: var(--text-muted); margin: 0; max-width: 680px; }
+    .rebate-hero .deck { font-size: 17px; color: #374151; max-width: 680px; margin: 0 0 12px; }
+    .rebate-hero .rebate-help { font-size: 13px; color: #6b7280; margin: 0; max-width: 680px; }
     .rebate-hero .rebate-help strong {
-      color: var(--text-primary); font-family: var(--font-mono);
+      color: var(--ink, #1A1D23); font-family: var(--font-mono, 'JetBrains Mono', monospace);
       font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
-      font-weight: 600; padding: 2px 6px; background: var(--bg-card);
+      font-weight: 600; padding: 2px 6px; background: #f3f4f6;
       border-radius: 3px; margin: 0 2px;
     }
 
     .rebate-hero-stats {
       display: grid; grid-template-columns: repeat(3, auto); gap: 24px;
       padding: 20px 24px;
-      background: var(--bg-spec);
-      border: 1px solid var(--line);
-      border-left: 3px solid var(--brand-red);
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-left: 3px solid var(--brand-red, #F32740);
     }
     .rebate-stat-v {
-      font-family: var(--font-mono); font-size: 22px; font-weight: 700;
-      color: var(--text-primary); line-height: 1; white-space: nowrap;
+      font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 22px; font-weight: 700;
+      color: var(--ink, #1A1D23); line-height: 1; white-space: nowrap;
     }
     .rebate-stat-k {
-      font-family: var(--font-mono); font-size: 10.5px;
+      font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 10.5px;
       letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--text-muted); margin-top: 6px; white-space: nowrap;
+      color: #6b7280; margin-top: 6px; white-space: nowrap;
     }
 
     .howitworks {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
       margin-bottom: 32px;
-      border: 1px solid var(--line); border-radius: 4px;
-      overflow: hidden; background: var(--bg-spec);
+      border: 1px solid #e5e7eb; border-radius: 4px;
+      overflow: hidden; background: #f9fafb;
     }
-    .hiw-step { padding: 24px 28px; border-right: 1px solid var(--line); }
+    .hiw-step { padding: 24px 28px; border-right: 1px solid #e5e7eb; }
     .hiw-step:last-child { border-right: 0; }
     .hiw-num {
-      font-family: var(--font-mono); font-size: 26px; font-weight: 700;
-      color: var(--brand-red); line-height: 1; margin-bottom: 12px;
+      font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 26px; font-weight: 700;
+      color: var(--brand-red, #F32740); line-height: 1; margin-bottom: 12px;
     }
     .hiw-title {
-      font-size: 16px; font-weight: 700; color: var(--text-primary);
+      font-size: 16px; font-weight: 700; color: var(--ink, #1A1D23);
       margin: 0 0 6px; letter-spacing: -0.01em;
     }
-    .hiw-body { font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.55; }
-    .hiw-step strong { color: var(--text-primary); font-weight: 700; }
+    .hiw-body { font-size: 13px; color: #374151; margin: 0; line-height: 1.55; }
+    .hiw-step strong { color: var(--ink, #1A1D23); font-weight: 700; }
 
     /* ============================================================
-       LAYER-B WIDGET OVERRIDES — host-page only, prod untouched
-       Tokens are stored as raw HSL component triplets (H S% L%)
-       so the widget can compose `hsl(var(--…) / 8%)` alpha mixes.
-       DO NOT wrap these values in hsl() — vendor does that at use site.
+       §C1: LAYER-B WIDGET OVERRIDES — brand activation only.
+       Dark surface overrides REMOVED. Vendor renders its own light card.
+       Only red accent + ring + row hover use ALG brand.
        ============================================================ */
     #ee_widget_container {
-      /* Surfaces */
-      --ee-widget-background:          222 14% 18%;
-      --ee-widget-foreground:          0 0% 92%;
-      --ee-widget-card:                220 11% 14%;
-      --ee-widget-card-foreground:     0 0% 92%;
-      --ee-widget-popover:             220 11% 12%;
-      --ee-widget-popover-foreground:  0 0% 92%;
-      --ee-widget-muted:               222 12% 22%;
-      --ee-widget-muted-foreground:    220 7% 60%;
-
-      /* Borders / inputs */
-      --ee-widget-border:              0 0% 100%;
-      --ee-widget-input:               0 0% 100%;
-      --ee-widget-ring:                var(--brand-red-hsl);
-      --ee-widget-radius:              0.5rem;
-
-      /* Brand activation */
-      --ee-widget-primary:             var(--brand-red-hsl);
-      --ee-widget-primary-foreground:  0 0% 100%;
-      --ee-widget-secondary:           220 11% 22%;
-      --ee-widget-secondary-foreground:0 0% 92%;
-      --ee-widget-accent:              var(--brand-red-hsl);
-      --ee-widget-accent-foreground:   0 0% 100%;
-      --ee-widget-destructive:         0 72% 51%;
-      --ee-widget-destructive-foreground: 0 0% 100%;
-
-      /* Sidebar (filter dropdowns, column selector) */
-      --ee-widget-sidebar-background:  220 11% 14%;
-      --ee-widget-sidebar-foreground:  0 0% 92%;
-      --ee-widget-sidebar-primary:     var(--brand-red-hsl);
-      --ee-widget-sidebar-primary-foreground: 0 0% 100%;
-      --ee-widget-sidebar-accent:      220 11% 22%;
-      --ee-widget-sidebar-accent-foreground: 0 0% 92%;
-      --ee-widget-sidebar-border:      0 0% 100%;
-      --ee-widget-sidebar-ring:        var(--brand-red-hsl);
-
-      /* ag-Grid table */
-      --ag-accent-color:                  hsl(var(--ee-widget-primary));
-      --ag-row-hover-color:               hsl(var(--ee-widget-primary) / 8%);
-      --ag-selected-row-background-color: hsl(var(--ee-widget-primary) / 20%);
-      --ag-background-color:              hsl(var(--ee-widget-card));
-      --ag-foreground-color:              hsl(var(--ee-widget-foreground));
-      --ag-header-background-color:       hsl(var(--ee-widget-muted));
-      --ag-border-color:                  hsla(0, 0%, 100%, 0.08);
-
-      /* OverlayScrollbars */
-      --os-handle-bg:       hsla(0, 0%, 100%, 0.20);
-      --os-handle-bg-hover: hsla(0, 0%, 100%, 0.28);
-
-      background: hsl(var(--ee-widget-background));
-      color: hsl(var(--ee-widget-foreground));
-      padding: 8px;
+      --ee-widget-primary: var(--brand-red-hsl, 352 89% 55%);
+      --ee-widget-ring:    var(--brand-red-hsl, 352 89% 55%);
+      --ag-accent-color:   hsl(var(--brand-red-hsl, 352 89% 55%));
+      --ag-row-hover-color: hsl(var(--brand-red-hsl, 352 89% 55%) / 8%);
+      --ag-selected-row-background-color: hsl(var(--brand-red-hsl, 352 89% 55%) / 20%);
+      background: transparent;
+      padding: 0;
       min-height: 600px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
     }
 
     /* ============================================================
@@ -297,7 +255,7 @@ const WIDGET_VER   = '2.0.2.4';
     @media (max-width: 1100px) {
       .rebate-hero { grid-template-columns: 1fr; }
       .howitworks  { grid-template-columns: 1fr; }
-      .hiw-step    { border-right: 0; border-bottom: 1px solid var(--line); }
+      .hiw-step    { border-right: 0; border-bottom: 1px solid #e5e7eb; }
       .hiw-step:last-child { border-bottom: 0; }
     }
     @media (max-width: 760px) {

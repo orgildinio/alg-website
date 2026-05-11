@@ -79,6 +79,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .style-chips { margin-top: 22px; display: flex; gap: 8px; flex-wrap: wrap; }
   .style-chip { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 10px 16px; border: 1px solid rgba(255,255,255,.18); background: transparent; color: rgba(255,255,255,.85); white-space: nowrap; }
   .style-chip .chip-target { margin-left: 10px; opacity: 0.6; font-size: 10px; }
+  /* ApplicationFinder interactive states */
+  .app-chip { cursor: pointer; }
+  .app-chip--active { background: var(--color-alg-red) !important; border-color: var(--color-alg-red) !important; color: #fff !important; }
+  .app-chip--active .chip-target { opacity: 1; }
+  .coll-card-wrap--dim { opacity: 0.35; transition: opacity .2s ease; }
+  .coll-card-wrap--highlight { outline: 2px solid var(--color-alg-red); outline-offset: 2px; transition: outline .2s ease; }
+
 
   /* Collection grid */
   .collection-grid { padding: 40px 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -186,14 +193,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
     <div class="style-finder-q">What is the aesthetic?</div>
     <div class="style-chips">
-      <div class="style-chip">Restaurant<span class="chip-target">→ Signature</span></div>
-      <div class="style-chip">Industrial<span class="chip-target">→ tubul<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</span></div>
-      <div class="style-chip">Vintage<span class="chip-target">→ Nostalgic Decor</span></div>
-      <div class="style-chip">Classic<span class="chip-target">→ Vintage Decor</span></div>
-      <div class="style-chip">Bath / Vanity<span class="chip-target">→ Vintage Decor</span></div>
-      <div class="style-chip">Chandelier<span class="chip-target">→ Vintage Decor</span></div>
-      <div class="style-chip">Café / Pendant<span class="chip-target">→ tubul<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</span></div>
-      <div class="style-chip">Speakeasy<span class="chip-target">→ Nostalgic Decor</span></div>
+      <div class="style-chip" data-coll="signature" role="button" tabindex="0">Restaurant<span class="chip-target">→ Signature</span></div>
+      <div class="style-chip" data-coll="tubularch" role="button" tabindex="0">Industrial<span class="chip-target">→ tubul<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</span></div>
+      <div class="style-chip" data-coll="signature" role="button" tabindex="0">Vintage<span class="chip-target">→ Nostalgic Decor</span></div>
+      <div class="style-chip" data-coll="vintage" role="button" tabindex="0">Classic<span class="chip-target">→ Vintage Decor</span></div>
+      <div class="style-chip" data-coll="vintage" role="button" tabindex="0">Bath / Vanity<span class="chip-target">→ Vintage Decor</span></div>
+      <div class="style-chip" data-coll="vintage" role="button" tabindex="0">Chandelier<span class="chip-target">→ Vintage Decor</span></div>
+      <div class="style-chip" data-coll="tubularch" role="button" tabindex="0">Café / Pendant<span class="chip-target">→ tubul<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</span></div>
+      <div class="style-chip" data-coll="vintage" role="button" tabindex="0">Speakeasy<span class="chip-target">→ Nostalgic Decor</span></div>
     </div>
   </div>
 
@@ -201,7 +208,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   <div class="collection-grid">
 
     <!-- Signature -->
-    <div>
+    <div data-coll-card="signature">
       <a href="https://staging.archipelagolighting.com/collections/signature/" target="_blank" rel="noopener noreferrer" class="coll-card">
         <div class="coll-card-header">
           <div class="eyebrow eyebrow--yellow" style="font-size:11px">Flagship · ENERGY STAR · Dim-to-Warm</div>
@@ -254,7 +261,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
 
     <!-- tubulⒶRCH -->
-    <div>
+    <div data-coll-card="tubularch">
       <a href="https://staging.archipelagolighting.com/collections/tubularch/" target="_blank" rel="noopener noreferrer" class="coll-card">
         <div class="coll-card-header">
           <div class="eyebrow eyebrow--yellow" style="font-size:11px">Tubular · T-Series · Filament</div>
@@ -299,7 +306,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
 
     <!-- Nostalgic Decor -->
-    <div>
+    <div data-coll-card="vintage">
       <a href="https://staging.archipelagolighting.com/collections/nostalgic-decor/" target="_blank" rel="noopener noreferrer" class="coll-card">
         <div class="coll-card-header">
           <div class="eyebrow eyebrow--yellow" style="font-size:11px">Edison · ST · Amber Glass</div>
@@ -344,7 +351,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
 
     <!-- Vintage Decor -->
-    <div>
+    <div data-coll-card="vintage">
       <a href="https://staging.archipelagolighting.com/collections/vintage-decor/" target="_blank" rel="noopener noreferrer" class="coll-card">
         <div class="coll-card-header">
           <div class="eyebrow eyebrow--yellow" style="font-size:11px">Globe · A-Shape · Candelabra</div>

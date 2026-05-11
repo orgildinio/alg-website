@@ -207,14 +207,15 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     border: 1px solid rgba(255,255,255,.18);
     background: transparent;
     color: rgba(255,255,255,.85);
-    cursor: default;
     white-space: nowrap;
   }
-  .app-chip .chip-target {
-    margin-left: 10px;
-    opacity: 0.6;
-    font-size: 10px;
-  }
+  .app-chip .chip-target { margin-left: 10px; opacity: 0.6; font-size: 10px; }
+  /* ApplicationFinder interactive states */
+  .app-chip { cursor: pointer; }
+  .app-chip--active { background: var(--color-alg-red) !important; border-color: var(--color-alg-red) !important; color: #fff !important; }
+  .app-chip--active .chip-target { opacity: 1; }
+  .coll-card-wrap--dim { opacity: 0.35; transition: opacity .2s ease; }
+  .coll-card-wrap--highlight { outline: 2px solid var(--color-alg-red); outline-offset: 2px; transition: outline .2s ease; }
 
   /* ── Collection cards ── */
   .collection-grid {
@@ -650,16 +651,16 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
     <div class="app-finder-q">What is the ceiling?</div>
     <div class="app-chips">
-      <div class="app-chip">Warehouse<span class="chip-target">→ lampar<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Manufacturing<span class="chip-target">→ lampar<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Cold-Storage<span class="chip-target">→ lampar<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Office<span class="chip-target">→ plano<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Retail<span class="chip-target">→ plano<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Healthcare<span class="chip-target">→ plano<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">K-12<span class="chip-target">→ plano<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Higher-Ed<span class="chip-target">→ plano<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Parking Garage<span class="chip-target">→ lampar<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
-      <div class="app-chip">Auto-Service<span class="chip-target">→ lampar<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="lampar" role="button" tabindex="0">Warehouse<span class="chip-target">→ lampar<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="lampar" role="button" tabindex="0">Manufacturing<span class="chip-target">→ lampar<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="lampar" role="button" tabindex="0">Cold-Storage<span class="chip-target">→ lampar<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="plano" role="button" tabindex="0">Office<span class="chip-target">→ plano<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="plano" role="button" tabindex="0">Retail<span class="chip-target">→ plano<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="plano" role="button" tabindex="0">Healthcare<span class="chip-target">→ plano<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="plano" role="button" tabindex="0">K-12<span class="chip-target">→ plano<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="plano" role="button" tabindex="0">Higher-Ed<span class="chip-target">→ plano<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="lampar" role="button" tabindex="0">Parking Garage<span class="chip-target">→ lampar<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip" data-coll="lampar" role="button" tabindex="0">Auto-Service<span class="chip-target">→ lampar<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
     </div>
   </div>
 
@@ -667,7 +668,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   <div class="collection-grid">
 
     <!-- lamparⒶRCH -->
-    <div>
+    <div data-coll-card="lampar">
       <a href="https://staging.archipelagolighting.com/collections/lamparch/" target="_blank" rel="noopener noreferrer" class="coll-card">
         <div class="coll-card-header">
           <div class="eyebrow eyebrow--yellow" style="font-size:11px">High Bay · Linear · Strip · Vapor Tight</div>
@@ -778,7 +779,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
 
     <!-- planoⒶRCH -->
-    <div>
+    <div data-coll-card="plano">
       <a href="https://staging.archipelagolighting.com/collections/planoarch/" target="_blank" rel="noopener noreferrer" class="coll-card">
         <div class="coll-card-header">
           <div class="eyebrow eyebrow--yellow" style="font-size:11px">Flat Panel · Backlit · Troffer · Edge-Lit</div>
@@ -972,5 +973,58 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   </div>
 
 </div><!-- /indoor-landing -->
+
+<script is:inline>
+(function () {
+  /* ApplicationFinder — vanilla JS chip→card highlight
+     Works on any page that uses data-coll="{key}" on chips
+     and data-coll-card="{key}" on card wrappers. */
+  document.addEventListener('DOMContentLoaded', function () {
+    var chips = document.querySelectorAll('[data-coll]');
+    var cards = document.querySelectorAll('[data-coll-card]');
+    if (!chips.length || !cards.length) return;
+
+    function activate(key) {
+      chips.forEach(function (c) {
+        var active = c.dataset.coll === key;
+        c.classList.toggle('app-chip--active', active);
+        c.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      cards.forEach(function (card) {
+        var match = card.dataset.collCard === key;
+        card.classList.toggle('coll-card-wrap--highlight', match);
+        card.classList.toggle('coll-card-wrap--dim', !match);
+      });
+    }
+
+    function deactivate() {
+      chips.forEach(function (c) {
+        c.classList.remove('app-chip--active');
+        c.removeAttribute('aria-pressed');
+      });
+      cards.forEach(function (card) {
+        card.classList.remove('coll-card-wrap--highlight', 'coll-card-wrap--dim');
+      });
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var key = chip.dataset.coll;
+        if (chip.classList.contains('app-chip--active')) {
+          deactivate();
+        } else {
+          activate(key);
+        }
+      });
+      chip.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          chip.click();
+        }
+      });
+    });
+  });
+}());
+</script>
 
 </BaseLayout>
