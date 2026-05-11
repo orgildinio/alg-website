@@ -58,6 +58,8 @@ const multifamilyData = {
       skuCount: 12,
       dlc: true,
       lineDrawing: null,
+      pdpUrl: '/products/multi-family/nebula-ii/',
+      pdpUrl: '/products/multi-family/nebula-ii/',
     },
     {
       family: 'Eclipse-II',
@@ -67,6 +69,8 @@ const multifamilyData = {
       skuCount: 16,
       dlc: true,
       lineDrawing: null,
+      pdpUrl: '/products/multi-family/eclipse-ii/',
+      pdpUrl: '/products/multi-family/eclipse-ii/',
     },
     {
       family: 'Radius SafeZone',

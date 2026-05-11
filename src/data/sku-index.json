@@ -11437,7 +11437,8 @@
           "ccts": [],
           "voltages": [],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/multi-family/gehry/"
         },
         {
           "family": "eCrescent",
@@ -11459,7 +11460,8 @@
           "mount_types": [
             "Surface Mount"
           ],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/multi-family/ecrescent/"
         },
         {
           "family": "Nebula-II",
@@ -11481,7 +11483,8 @@
           "mount_types": [
             "Recessed Mount"
           ],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/multi-family/nebula-ii/"
         },
         {
           "family": "Orbit",
@@ -11503,7 +11506,8 @@
           "mount_types": [
             "Recessed Mount"
           ],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/multi-family/orbit-i/"
         },
         {
           "family": "Eclipse-II",
@@ -11525,7 +11529,8 @@
           "mount_types": [
             "Surface Mount"
           ],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/multi-family/eclipse-ii/"
         },
         {
           "family": "Lunar Eclipse",
@@ -11547,7 +11552,8 @@
           "mount_types": [
             "Surface Mount"
           ],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/multi-family/lunar-eclipse/"
         },
         {
           "family": "Radius-II",
@@ -11569,7 +11575,8 @@
           "mount_types": [
             "Recessed Mount"
           ],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/multi-family/radius-ii/"
         },
         {
           "family": "Radius SafeZone",
