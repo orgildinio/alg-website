@@ -1,0 +1,553 @@
+---
+/**
+ * products/outdoor/index.astro
+ * Outdoor Commercial & Municipal Landing Page
+ *
+ * Directs to luxoⒶRCH (commercial perimeter) and cityⒶRCH (municipal streetscape).
+ * Ported from outdoor/outdoor-landing.jsx + outdoor-shared.jsx.
+ *
+ * Calibration patches applied (same as indoor):
+ *   --brand #E3353C → var(--color-alg-red) #F32740
+ *   --font-sans 'Sora' → 'Lato'
+ *   UtilityBar/footer chrome stripped
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Outdoor Commercial & Municipal Lighting · luxoⒶRCH × cityⒶRCH · ALG"
+  description="ALG's two outdoor collections — luxoⒶRCH commercial perimeter and cityⒶRCH municipal streetscape — cover every outdoor pole, wall, canopy, and roadway. DLC Premium. TAA available."
+  bodyClass="page-outdoor-landing"
+>
+
+<style>
+  .outdoor-landing {
+    --brand:      var(--color-alg-red);
+    --brand-dark: var(--color-alg-red-dark);
+    --ink:        var(--color-ink);
+    --ink2:       var(--color-ink-soft);
+    --ink3:       var(--color-ink-mute);
+    --c1:         var(--color-bg-soft);
+    --c2:         var(--color-bg-strong);
+    --c3:         var(--color-border);
+    --yellow:     #F5C24A;
+    --font-mono:  'JetBrains Mono', ui-monospace, monospace;
+    width: 100%;
+    background: #fff;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+  }
+  .breadcrumb-band {
+    padding: 12px 56px;
+    border-bottom: 1px solid var(--color-border);
+    background: #fff;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+    display: flex;
+    align-items: center;
+  }
+  .breadcrumb-band a { color: inherit; text-decoration: none; }
+  .breadcrumb-band a:hover { color: var(--color-alg-red); }
+  .bc-sep { margin: 0 10px; }
+  .bc-current { color: var(--color-ink); font-weight: 700; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+  }
+  .eyebrow--yellow { color: #F5C24A; }
+  .eyebrow--brand  { color: var(--color-alg-red); }
+  .eyebrow--faint  { color: rgba(255,255,255,.55); }
+  .hero-section {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    min-height: 520px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .hero-accent-bar {
+    background: var(--color-alg-red);
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 24px 0;
+  }
+  .hero-accent-label {
+    transform: rotate(-90deg);
+    transform-origin: bottom left;
+    position: absolute;
+    bottom: 36px;
+    left: 56px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .hero-accent-dot {
+    position: absolute;
+    top: 28px;
+    left: 28px;
+    width: 12px;
+    height: 12px;
+    background: #F5C24A;
+  }
+  .hero-content {
+    padding: 64px 56px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hero-h1 {
+    margin: 18px 0 0;
+    font-size: 80px;
+    line-height: 0.98;
+    letter-spacing: -.025em;
+    font-weight: 800;
+  }
+  .hero-h1 .x-sep {
+    color: var(--color-ink-mute);
+    margin: 0 16px;
+    font-weight: 300;
+  }
+  .hero-deck {
+    margin-top: 24px;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--color-ink-soft);
+    max-width: 880px;
+  }
+  .hero-stats {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    gap: 14px;
+  }
+  .stat-block {
+    padding: 14px 16px;
+    border-left: 3px solid var(--color-alg-red);
+    background: var(--color-bg-soft);
+  }
+  .stat-block .sv { font-size: 20px; font-weight: 700; line-height: 1.05; white-space: nowrap; color: var(--color-ink); }
+  .stat-block .sk { margin-top: 6px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--color-ink-mute); }
+  /* App finder */
+  .app-finder {
+    background: var(--color-ink);
+    color: #fff;
+    padding: 32px 56px;
+  }
+  .app-finder-header { display: flex; align-items: baseline; justify-content: space-between; }
+  .app-finder-q { margin-top: 18px; font-size: 26px; font-weight: 700; letter-spacing: -.005em; max-width: 920px; }
+  .app-chips { margin-top: 22px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .app-chip {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: transparent;
+    color: rgba(255,255,255,.85);
+    white-space: nowrap;
+  }
+  .app-chip .chip-target { margin-left: 10px; opacity: 0.6; font-size: 10px; }
+  /* Collection grid */
+  .collection-grid { padding: 40px 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .coll-card { display: block; text-decoration: none; color: inherit; }
+  .coll-card-header { background: var(--color-ink); color: #fff; padding: 32px 36px 28px; position: relative; transition: background .25s ease; }
+  .coll-card-header:hover { background: var(--color-alg-red); }
+  .coll-name { margin-top: 16px; font-size: 56px; line-height: 1; letter-spacing: -.025em; font-weight: 800; white-space: nowrap; }
+  .coll-name .a-enc { color: var(--color-alg-red); }
+  .coll-card-header:hover .coll-name .a-enc { color: #F5C24A; }
+  .coll-tagline { margin-top: 14px; font-size: 14.5px; line-height: 1.55; color: rgba(255,255,255,.85); max-width: 520px; }
+  .coll-stats { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--color-bg-soft); }
+  .coll-stat-cell { padding: 16px 18px; border-bottom: 1px solid var(--color-border); }
+  .coll-stat-cell:first-child { border-left: 3px solid var(--color-alg-red); }
+  .coll-stat-cell + .coll-stat-cell { border-left: 1px solid var(--color-border); }
+  .coll-stat-v { font-size: 18px; font-weight: 700; line-height: 1.05; color: var(--color-ink); white-space: nowrap; }
+  .coll-stat-k { margin-top: 6px; font-family: var(--font-mono); font-size: 9.5px; color: var(--color-ink-mute); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* Family rows */
+  .family-block { background: #fff; padding: 24px 36px 20px; border: 1px solid var(--color-border); border-top: none; }
+  .cat-bar { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 6px; border-bottom: 2px solid var(--color-ink); }
+  .cat-bar-title { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--color-ink); }
+  .cat-bar-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-mute); }
+  .family-row { display: grid; grid-template-columns: 64px 120px 1fr auto; gap: 16px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--color-bg-strong); }
+  .family-thumb { width: 56px; height: 40px; background: var(--color-bg-soft); border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; }
+  .family-thumb svg { width: 100%; height: 100%; }
+  .family-code { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; color: var(--color-alg-red); }
+  .family-name { font-size: 13.5px; font-weight: 600; margin-top: 2px; color: var(--color-ink); }
+  .family-spec { font-family: var(--font-mono); font-size: 11.5px; color: var(--color-ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .family-spec .tier { color: var(--color-ink); }
+  .family-spec .sep { color: var(--color-ink-mute); margin: 0 8px; }
+  .badge-active { display: inline-block; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 2px 8px; background: #0FAE7C; color: #fff; white-space: nowrap; }
+  .coll-cta { background: var(--color-alg-red); color: #fff; padding: 20px 36px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; transition: background .15s ease; }
+  .coll-cta:hover { background: var(--color-alg-red-dark); color: #fff; }
+  .coll-cta-label { font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+  .coll-cta-url { font-family: var(--font-mono); font-size: 11.5px; color: rgba(255,255,255,.85); letter-spacing: .06em; }
+  /* Decision helper */
+  .decision-strip {
+    margin: 8px 56px 40px;
+    background: var(--color-bg-soft);
+    border: 1px solid var(--color-border);
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 24px;
+    align-items: center;
+  }
+  .decision-body { font-size: 13.5px; color: var(--color-ink-soft); line-height: 1.55; }
+  .decision-btn {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .decision-btn--outline { border: 1px solid var(--color-ink); color: var(--color-ink); }
+  .decision-btn--filled  { background: var(--color-ink); color: #fff; }
+  /* Why ALG */
+  .why-section { padding: 40px 56px 56px; background: var(--color-bg-soft); }
+  .why-header { display: flex; align-items: baseline; justify-content: space-between; }
+  .why-h2 { margin-top: 12px; font-size: 36px; font-weight: 800; letter-spacing: -.01em; line-height: 1.08; max-width: 940px; }
+  .why-tiles { margin-top: 28px; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .why-tile { padding: 24px 28px; background: #fff; border: 1px solid var(--color-border); border-left: 3px solid var(--color-alg-red); position: relative; }
+  .why-tile + .why-tile { margin-left: -1px; }
+  .why-tile-title { margin-top: 12px; font-size: 19px; font-weight: 700; line-height: 1.25; }
+  .why-tile-body { margin-top: 10px; font-size: 13px; line-height: 1.6; color: var(--color-ink-soft); }
+  /* FAQ */
+  .faq-section { padding: 40px 56px 56px; background: #fff; }
+  .faq-header { display: flex; align-items: baseline; justify-content: space-between; }
+  .faq-h2 { margin-top: 12px; font-size: 36px; font-weight: 800; letter-spacing: -.01em; line-height: 1.08; max-width: 940px; }
+  .faq-list { margin-top: 24px; border: 1px solid var(--color-border); border-top: 3px solid var(--color-alg-red); background: #fff; }
+  .faq-item { border-top: 1px solid var(--color-bg-strong); }
+  .faq-item:first-child { border-top: none; }
+  .faq-q { padding: 18px 22px; display: grid; grid-template-columns: 32px 1fr; gap: 14px; align-items: center; }
+  .faq-num { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--color-alg-red); letter-spacing: .06em; }
+  .faq-text { font-size: 15.5px; font-weight: 600; color: var(--color-ink); letter-spacing: -.005em; }
+  .faq-a { padding: 4px 22px 22px 68px; font-size: 13.5px; line-height: 1.65; color: var(--color-ink-soft); background: var(--color-bg-soft); }
+  /* Contact */
+  .contact-block { background: var(--color-ink); color: #fff; padding: 56px 56px; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; }
+  .contact-brand-name { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+  .contact-brand-name .a-enc { color: var(--color-alg-red); }
+  .contact-desc { margin-top: 10px; font-size: 13px; line-height: 1.6; color: rgba(255,255,255,.78); max-width: 380px; }
+  .contact-col-head { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #F5C24A; }
+  .contact-col-lines { margin-top: 12px; font-family: var(--font-mono); font-size: 11.5px; color: rgba(255,255,255,.85); line-height: 1.85; }
+</style>
+
+<div class="outdoor-landing">
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb-band" aria-label="Breadcrumb">
+    <a href="/">Home</a><span class="bc-sep">›</span>
+    <a href="/collections">Products</a><span class="bc-sep">›</span>
+    <span class="bc-current">Outdoor</span>
+    <span class="bc-sep">·</span>
+    <span style="color:var(--color-ink-mute)">21 + 11 Families · 217 Active SKUs · 16 Applications</span>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-section">
+    <div class="hero-accent-bar">
+      <div class="hero-accent-label">Outdoor · Commercial &amp; Municipal · 2026</div>
+      <div class="hero-accent-dot"></div>
+    </div>
+    <div class="hero-content">
+      <div class="eyebrow" style="font-size:11.5px">Two Collections · One Decision</div>
+      <h1 class="hero-h1">
+        <span>luxo<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</span>
+        <span class="x-sep">×</span>
+        <span>city<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</span>
+      </h1>
+      <p class="hero-deck">
+        ALG's two outdoor collections — <em>commercial perimeter</em> and <em>municipal streetscape</em> — cover every
+        outdoor pole, wall, canopy, and roadway we ship to. Pick by mounting form, by application,
+        or by tier. Spec-grade. DLC Premium. TAA available.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-block"><div class="sv">2 Collections</div><div class="sk">luxo<span style="color:var(--color-alg-red)">Ⓐ</span>RCH · city<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</div></div>
+        <div class="stat-block"><div class="sv">32 Families</div><div class="sk">217 Active SKUs</div></div>
+        <div class="stat-block"><div class="sv">16 Apps</div><div class="sk">Wall Pack → Roadway</div></div>
+        <div class="stat-block"><div class="sv">DLC · TAA</div><div class="sk">Rebate &amp; Gov-Ready</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLICATION FINDER -->
+  <div class="app-finder">
+    <div class="app-finder-header">
+      <div class="eyebrow eyebrow--yellow" style="font-size:11.5px">Application Finder · 02</div>
+      <div class="eyebrow eyebrow--faint" style="font-size:11px">Browse by application type</div>
+    </div>
+    <div class="app-finder-q">What is the mounting?</div>
+    <div class="app-chips">
+      <div class="app-chip">Parking Lot<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Wall-Mount / Entry<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Canopy / Gas Station<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Flood / Building Façade<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Sports Field<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Hospitality / Patio<span class="chip-target">→ luxo<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Bollard / Pedestrian<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Roadway / DOT<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Post Top / Streetscape<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">High-Mast / Interchange<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Park / Pathway<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Traffic Control<span class="chip-target">→ city<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+    </div>
+  </div>
+
+  <!-- COLLECTION CARDS -->
+  <div class="collection-grid">
+
+    <!-- luxoⒶRCH -->
+    <div>
+      <a href="https://staging.archipelagolighting.com/collections/luxoarch/" target="_blank" rel="noopener noreferrer" class="coll-card">
+        <div class="coll-card-header">
+          <div class="eyebrow eyebrow--yellow" style="font-size:11px">Area · Canopy · Cylinder · Flood · Sports · String · Wall Pack</div>
+          <div class="coll-name">luxo<span class="a-enc">Ⓐ</span>RCH</div>
+          <p class="coll-tagline">Outdoor lighting for the commercial perimeter. Area lights, canopies, cylinders, floods, sports lighters, string lights and the full wall-pack family — for parking lots, perimeter, façade, sports fields, hospitality patios, and big-box retail.</p>
+        </div>
+        <div class="coll-stats">
+          <div class="coll-stat-cell"><div class="coll-stat-v">21 Families</div><div class="coll-stat-k">Active in luxo<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">140 SKUs</div><div class="coll-stat-k">Active Across Tiers</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">10 Apps</div><div class="coll-stat-k">Area → Wall Pack · Cutoff</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">DLC Premium</div><div class="coll-stat-k">Listed on PRO Tier</div></div>
+        </div>
+        <div class="family-block">
+          <div class="cat-bar"><span class="cat-bar-title">Form Factors</span><span class="cat-bar-tag">10 Families · All Active</span></div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><line x1="60" y1="6" x2="60" y2="34" stroke="#1A1D23" stroke-width="2"/><rect x="42" y="34" width="36" height="14" fill="#1A1D23"/><ellipse cx="60" cy="72" rx="44" ry="22" fill="#fff" stroke="#1A1D23" stroke-width="2"/><ellipse cx="60" cy="72" rx="36" ry="16" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">AREA</div><div class="family-name">Area Light</div></div>
+            <div class="family-spec"><span class="tier">Heritage · Liberty</span><span class="sep">·</span>4 · 25 SKUs · ECO/PRO · 300W / 450W max · DLC Premium</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="46" width="76" height="22" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><rect x="14" y="68" width="92" height="14" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">CNPY</div><div class="family-name">Canopy</div></div>
+            <div class="family-spec"><span class="tier">Navigator · Pathfinder</span><span class="sep">·</span>3 · 4 SKUs · ECO/PRO · 100W / 110W max · DLC Premium</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><line x1="60" y1="6" x2="60" y2="36" stroke="#1A1D23" stroke-width="2"/><rect x="44" y="36" width="32" height="48" rx="16" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/></svg></div>
+            <div><div class="family-code">CYL</div><div class="family-name">Cylinder</div></div>
+            <div class="family-spec"><span class="tier">Aura</span><span class="sep">·</span>4 SKUs · PRO · 45W max · 30/40/50K · 120–277V · DLC Premium</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="14" y="36" width="92" height="48" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><line x1="14" y1="60" x2="106" y2="60" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">FLD</div><div class="family-name">Flood Light</div></div>
+            <div class="family-spec"><span class="tier">Everest</span><span class="sep">·</span>8 SKUs · ECO · 150W max · 40/50K · 120–277V · DLC Premium</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><line x1="60" y1="6" x2="60" y2="30" stroke="#1A1D23" stroke-width="3"/><rect x="10" y="30" width="100" height="60" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><line x1="10" y1="60" x2="110" y2="60" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">SPT</div><div class="family-name">Sports Lighting</div></div>
+            <div class="family-spec"><span class="tier">Illuminator · Radiator · Beacon</span><span class="sep">·</span>5 families · 27 SKUs · PRO/PRO+ · 480–1200W</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><circle cx="30" cy="60" r="8" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="60" r="8" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="90" cy="60" r="8" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><line x1="14" y1="60" x2="106" y2="60" stroke="#9CA0A8" stroke-dasharray="3 3"/></svg></div>
+            <div><div class="family-code">STR</div><div class="family-name">String Light</div></div>
+            <div class="family-spec"><span class="tier">LSL Series</span><span class="sep">·</span>19 SKUs · ECO · 16W max · 22/24/27/30K · 120V</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="46" width="76" height="28" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><rect x="22" y="46" width="76" height="8" fill="#1A1D23"/></svg></div>
+            <div><div class="family-code">WP-A</div><div class="family-name">Wall Pack · Architectural</div></div>
+            <div class="family-spec"><span class="tier">Anaheim · Atlanta</span><span class="sep">·</span>2 families · 12 SKUs · ECO/PRO · 80W / 120W max · DLC Premium</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="46" width="76" height="28" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><line x1="22" y1="60" x2="98" y2="60" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">WP-C</div><div class="family-name">Wall Pack · Classic</div></div>
+            <div class="family-spec"><span class="tier">Guardian · Shield · Sentinel</span><span class="sep">·</span>3 families · 13 SKUs · ECO/PRO · 120W max · DLC Premium</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="52" width="76" height="22" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><path d="M22 74 L60 90 L98 74" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">WP-E</div><div class="family-name">Wall Pack · Entryway</div></div>
+            <div class="family-spec"><span class="tier">Ramparts · Wedge-I</span><span class="sep">·</span>2 families · 6 SKUs · ECO · 20W max · 30/40/50K · DLC Premium</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="46" width="76" height="28" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><rect x="22" y="74" width="76" height="6" fill="#1A1D23"/></svg></div>
+            <div><div class="family-code">WP-F</div><div class="family-name">Wall Pack · Full-Cutoff</div></div>
+            <div class="family-spec"><span class="tier">Watchtower · Nightwatch</span><span class="sep">·</span>2 families · 15 SKUs · ECO/PRO · 100W / 120W max · full-cutoff</div>
+            <span class="badge-active">Active</span>
+          </div>
+        </div>
+        <a href="https://staging.archipelagolighting.com/collections/luxoarch/" target="_blank" rel="noopener noreferrer" class="coll-cta">
+          <span class="coll-cta-label">View luxo<span style="color:#F5C24A">Ⓐ</span>RCH Collection</span>
+          <span class="coll-cta-url">staging.archipelagolighting.com/collections/luxoarch/ →</span>
+        </a>
+      </a>
+    </div>
+
+    <!-- cityⒶRCH -->
+    <div>
+      <a href="https://staging.archipelagolighting.com/collections/cityarch/" target="_blank" rel="noopener noreferrer" class="coll-card">
+        <div class="coll-card-header">
+          <div class="eyebrow eyebrow--yellow" style="font-size:11px">Bollard · High-Mast · Pole · Post Top · Roadway · Street Sign · Traffic</div>
+          <div class="coll-name">city<span class="a-enc">Ⓐ</span>RCH</div>
+          <p class="coll-tagline">Street and roadway luminaires for municipal and utility applications. Bollards, high-mast lighters, decorative poles, post tops, cobra-head roadway luminaires, street-sign fixtures and traffic-control lamps.</p>
+        </div>
+        <div class="coll-stats">
+          <div class="coll-stat-cell"><div class="coll-stat-v">11 Families</div><div class="coll-stat-k">Active in city<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">77 SKUs</div><div class="coll-stat-k">Active Across Tiers</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">6 Apps</div><div class="coll-stat-k">Bollard → Roadway</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">TAA · DLC</div><div class="coll-stat-k">Government-Ready</div></div>
+        </div>
+        <div class="family-block">
+          <div class="cat-bar"><span class="cat-bar-title">Form Factors</span><span class="cat-bar-tag">7 Families · All Active</span></div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="48" y="20" width="24" height="80" rx="4" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><ellipse cx="60" cy="20" rx="12" ry="6" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">BLD</div><div class="family-name">Bollard</div></div>
+            <div class="family-spec"><span class="tier">Sentry</span><span class="sep">·</span>4 SKUs · PRO · 26W max · 30/40K · 120–277V · DLC Premium</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><line x1="60" y1="6" x2="60" y2="40" stroke="#1A1D23" stroke-width="3"/><ellipse cx="60" cy="60" rx="50" ry="24" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><ellipse cx="60" cy="60" rx="38" ry="16" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">HM</div><div class="family-name">High Mast</div></div>
+            <div class="family-spec"><span class="tier">OmniMax</span><span class="sep">·</span>10 SKUs · PRO+ · 750W max · 40/50K · 277–480V · DLC Premium</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="54" y="10" width="12" height="100" fill="#1A1D23"/><rect x="40" y="10" width="40" height="16" rx="2" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">PL</div><div class="family-name">Pole</div></div>
+            <div class="family-spec"><span class="tier">Redwood · Sequoia</span><span class="sep">·</span>2 families · 2 SKUs · decorative pole bodies for site / streetscape</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><line x1="60" y1="6" x2="60" y2="40" stroke="#1A1D23" stroke-width="2"/><circle cx="60" cy="60" r="28" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="60" r="18" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">PT</div><div class="family-name">Post Top</div></div>
+            <div class="family-spec"><span class="tier">Unity · Symmetry</span><span class="sep">·</span>2 families · 31 SKUs · ECO/PRO · 150W / 160W max · DLC Premium</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><line x1="60" y1="6" x2="60" y2="40" stroke="#1A1D23" stroke-width="2"/><path d="M14 40 Q60 40 106 40 L96 80 L24 80 Z" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/></svg></div>
+            <div><div class="family-code">RDW</div><div class="family-name">Roadway</div></div>
+            <div class="family-spec"><span class="tier">Abbey</span><span class="sep">·</span>11 SKUs · PRO · 150W max · 30/40/50K · 120–277V · DLC Premium</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="14" y="36" width="92" height="48" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><line x1="14" y1="60" x2="106" y2="60" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">SS</div><div class="family-name">Street Sign</div></div>
+            <div class="family-spec"><span class="tier">Alpine</span><span class="sep">·</span>14 SKUs · surface mount · municipal way-finding &amp; signage</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><circle cx="60" cy="40" r="20" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="80" r="20" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="40" r="10" fill="#EEEDF0" stroke="#9CA0A8"/><circle cx="60" cy="80" r="10" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">TC</div><div class="family-name">Traffic Control Lamp</div></div>
+            <div class="family-spec"><span class="tier">LPAR Series</span><span class="sep">·</span>3 SKUs · PRO · 14W max · PAR retrofit · traffic signal heads</div>
+            <span class="badge-active">Active</span>
+          </div>
+        </div>
+        <a href="https://staging.archipelagolighting.com/collections/cityarch/" target="_blank" rel="noopener noreferrer" class="coll-cta">
+          <span class="coll-cta-label">View city<span style="color:#F5C24A">Ⓐ</span>RCH Collection</span>
+          <span class="coll-cta-url">staging.archipelagolighting.com/collections/cityarch/ →</span>
+        </a>
+      </a>
+    </div>
+
+  </div><!-- /collection-grid -->
+
+  <!-- DECISION HELPER -->
+  <div class="decision-strip">
+    <div class="eyebrow eyebrow--brand" style="font-size:11px">Field Reality:</div>
+    <div class="decision-body">
+      If the fixture mounts to a <strong>building or canopy</strong>, it lives in <strong>luxo<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</strong>.
+      If it mounts to a <strong>pole, post, or bollard</strong> in the public right-of-way, it lives in <strong>city<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</strong>.
+      Sports lighters, parking-lot poles and large-area shoeboxes belong to luxo<span style="color:var(--color-alg-red)">Ⓐ</span>RCH; high-mast and roadway cobra-heads belong to city<span style="color:var(--color-alg-red)">Ⓐ</span>RCH.
+    </div>
+    <a href="https://staging.archipelagolighting.com/collections/luxoarch/" target="_blank" rel="noopener noreferrer" class="decision-btn decision-btn--outline">luxo<span style="color:var(--color-alg-red)">Ⓐ</span>RCH →</a>
+    <a href="https://staging.archipelagolighting.com/collections/cityarch/" target="_blank" rel="noopener noreferrer" class="decision-btn decision-btn--filled">city<span style="color:var(--color-alg-red)">Ⓐ</span>RCH →</a>
+  </div>
+
+  <!-- WHY ALG -->
+  <section class="why-section">
+    <div class="why-header">
+      <div class="eyebrow eyebrow--brand" style="font-size:12px">Why ALG · 04</div>
+      <div class="eyebrow" style="font-size:11px">Spec · TAA · Stock</div>
+    </div>
+    <h2 class="why-h2">The catalog is the document. Every claim ships on the spec sheet.</h2>
+    <div class="why-tiles">
+      <div class="why-tile">
+        <div class="eyebrow eyebrow--brand" style="font-size:10.5px">Spec-Grade</div>
+        <div class="why-tile-title">DLC Premium across the PRO tier</div>
+        <div class="why-tile-body">Every workhorse outdoor SKU certified for utility rebates. 80+ CRI standard. Tested L70 lifetimes published on every spec sheet.</div>
+      </div>
+      <div class="why-tile">
+        <div class="eyebrow eyebrow--brand" style="font-size:10.5px">TAA Available</div>
+        <div class="why-tile-title">Government-ready SKUs in both collections</div>
+        <div class="why-tile-body">TAA-compliant variants in luxo<span style="color:var(--color-alg-red)">Ⓐ</span>RCH wall packs and city<span style="color:var(--color-alg-red)">Ⓐ</span>RCH post tops. Required for federal, military, and many state procurement specs.</div>
+      </div>
+      <div class="why-tile">
+        <div class="eyebrow eyebrow--brand" style="font-size:10.5px">Stocked Deep</div>
+        <div class="why-tile-title">Five US warehouses · 3-day delivery</div>
+        <div class="why-tile-body">West-Coast, Midwest, and East-Coast distribution. Hundreds of Thousands Available to Ship. Real lead times, not promises.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="faq-header">
+      <div class="eyebrow eyebrow--brand" style="font-size:12px">Spec Questions · 07</div>
+      <div class="eyebrow" style="font-size:11px">Frequently asked · pro buyer</div>
+    </div>
+    <h2 class="faq-h2">The questions a contractor asks before pricing the job.</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">01</div><div class="faq-text">What is the difference between luxoⒶRCH and cityⒶRCH?</div></div>
+        <div class="faq-a">luxo<span style="color:var(--color-alg-red)">Ⓐ</span>RCH is the commercial perimeter collection — area lights, wall packs, canopies, cylinders, floods, sports lighters, and string lights for private property. city<span style="color:var(--color-alg-red)">Ⓐ</span>RCH is the municipal streetscape collection — bollards, post tops, roadway cobra-heads, high-mast, street signs, and traffic lamps for public right-of-way. The rule: if it mounts to a building or private lot, it's luxo<span style="color:var(--color-alg-red)">Ⓐ</span>RCH; if it mounts to a pole in the street or park, it's city<span style="color:var(--color-alg-red)">Ⓐ</span>RCH.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">02</div><div class="faq-text">Are these DLC Premium listed?</div></div>
+        <div class="faq-a">Yes. Every PRO and PRO+ SKU in both collections is DLC Premium listed. ECO tier is DLC Standard. DLC listing numbers are on every spec sheet and in the DLC QPL. Utility rebates apply to PRO and PRO+ in most programs.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">03</div><div class="faq-text">What TAA-compliant options are available?</div></div>
+        <div class="faq-a">TAA-compliant variants are available in the luxo<span style="color:var(--color-alg-red)">Ⓐ</span>RCH wall-pack families (Anaheim, Atlanta, Guardian, Sentinel) and in the city<span style="color:var(--color-alg-red)">Ⓐ</span>RCH post-top families (Unity, Symmetry). Order suffix -TAA. Lead time is standard; no premium. Required for GSA, federal, and many state procurement specs.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">04</div><div class="faq-text">What pole and mounting hardware ships with outdoor fixtures?</div></div>
+        <div class="faq-a">luxo<span style="color:var(--color-alg-red)">Ⓐ</span>RCH area lights and floods mount on 14–40 ft square steel poles via slip-fitter or square-arm bracket. city<span style="color:var(--color-alg-red)">Ⓐ</span>RCH OmniMax high-mast supports 60–120 ft poles in 2 / 3 / 4-head configurations. Symmetry post tops accept 3" tenon. Pole and arm SKUs ship from the same warehouse.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">05</div><div class="faq-text">What is the standard warranty on outdoor fixtures?</div></div>
+        <div class="faq-a">PRO and PRO+ tier carry a 7-year standard warranty covering driver, LED engine, finish and surge protection. ECO tier carries 5 years. No registration required; the original PO is the warranty document. IP66 housings are sealed for life — no field gasket service.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="contact-block">
+    <div>
+      <div class="contact-brand-name">luxo<span class="a-enc">Ⓐ</span>RCH &amp; city<span class="a-enc">Ⓐ</span>RCH</div>
+      <div class="contact-desc">Spec-grade outdoor luminaires from Archipelago Lighting Group. DLC Premium across the PRO tier. TAA available. 7-year standard warranty. Hundreds of Thousands Available to Ship.</div>
+    </div>
+    <div>
+      <div class="contact-col-head">Headquarters</div>
+      <div class="contact-col-lines"><div>4615 State Street</div><div>Montclair, CA 91763</div></div>
+    </div>
+    <div>
+      <div class="contact-col-head">USA Production</div>
+      <div class="contact-col-lines"><div>9345 Sycamore Canyon Blvd</div><div>Riverside, CA 92508</div></div>
+    </div>
+    <div>
+      <div class="contact-col-head">Contact</div>
+      <div class="contact-col-lines"><div>+1 (866) 912-3220</div><div>sales@archipelagolighting.com</div><div>archipelagolighting.com</div></div>
+    </div>
+  </div>
+
+</div><!-- /outdoor-landing -->
+
+</BaseLayout>

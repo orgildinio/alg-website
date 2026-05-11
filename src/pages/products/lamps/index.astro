@@ -1,0 +1,483 @@
+---
+/**
+ * products/lamps/index.astro
+ * Decorative Lamps Landing Page
+ *
+ * Covers 4 lamp collections: Signature, tubulⒶRCH, Nostalgic Decor, Vintage Decor.
+ * Ported from lamps/lamps-landing.jsx + lamps-shared.jsx.
+ *
+ * Calibration patches applied:
+ *   --brand #E3353C → var(--color-alg-red)
+ *   --font-sans 'Sora' → 'Lato'
+ *   UtilityBar/footer chrome stripped
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Decorative LED Lamps · Signature · tubulⒶRCH · Nostalgic · Vintage · ALG"
+  description="Four collections of decorative filament-style LED lamps from ALG — restaurant-grade dim-to-warm, architectural T-tubes, Edison amber glass, and globe/candelabra shapes. ENERGY STAR. Title 20."
+  bodyClass="page-lamps-landing"
+>
+
+<style>
+  .lamps-landing {
+    --brand:      var(--color-alg-red);
+    --brand-dark: var(--color-alg-red-dark);
+    --ink:        var(--color-ink);
+    --ink2:       var(--color-ink-soft);
+    --ink3:       var(--color-ink-mute);
+    --c1:         var(--color-bg-soft);
+    --c2:         var(--color-bg-strong);
+    --c3:         var(--color-border);
+    --yellow:     #F5C24A;
+    --amber:      #E8A020;
+    --font-mono:  'JetBrains Mono', ui-monospace, monospace;
+    width: 100%;
+    background: #fff;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+  }
+  .breadcrumb-band {
+    padding: 12px 56px;
+    border-bottom: 1px solid var(--color-border);
+    background: #fff;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+    display: flex;
+    align-items: center;
+  }
+  .breadcrumb-band a { color: inherit; text-decoration: none; }
+  .breadcrumb-band a:hover { color: var(--color-alg-red); }
+  .bc-sep { margin: 0 10px; }
+  .bc-current { color: var(--color-ink); font-weight: 700; }
+  .eyebrow { font-family: var(--font-mono); font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--color-ink-mute); }
+  .eyebrow--yellow { color: #F5C24A; }
+  .eyebrow--brand  { color: var(--color-alg-red); }
+  .eyebrow--amber  { color: #E8A020; }
+  .eyebrow--faint  { color: rgba(255,255,255,.55); }
+
+  /* Hero */
+  .hero-section { display: grid; grid-template-columns: 120px 1fr; min-height: 480px; border-bottom: 1px solid var(--color-border); }
+  .hero-accent-bar { background: var(--color-alg-red); position: relative; display: flex; align-items: flex-end; padding: 24px 0; }
+  .hero-accent-label { transform: rotate(-90deg); transform-origin: bottom left; position: absolute; bottom: 36px; left: 56px; font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; color: #fff; white-space: nowrap; }
+  .hero-accent-dot { position: absolute; top: 28px; left: 28px; width: 12px; height: 12px; background: #F5C24A; }
+  .hero-content { padding: 64px 56px 48px; display: flex; flex-direction: column; justify-content: center; }
+  .hero-h1 { margin: 18px 0 0; font-size: 72px; line-height: 0.98; letter-spacing: -.025em; font-weight: 800; }
+  .hero-deck { margin-top: 24px; font-size: 17px; line-height: 1.55; color: var(--color-ink-soft); max-width: 880px; }
+  .hero-stats { margin-top: 28px; display: grid; grid-template-columns: repeat(4, max-content); gap: 14px; }
+  .stat-block { padding: 14px 16px; border-left: 3px solid var(--color-alg-red); background: var(--color-bg-soft); }
+  .stat-block .sv { font-size: 20px; font-weight: 700; line-height: 1.05; white-space: nowrap; color: var(--color-ink); }
+  .stat-block .sk { margin-top: 6px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--color-ink-mute); }
+
+  /* Style finder */
+  .style-finder { background: var(--color-ink); color: #fff; padding: 32px 56px; }
+  .style-finder-header { display: flex; align-items: baseline; justify-content: space-between; }
+  .style-finder-q { margin-top: 18px; font-size: 26px; font-weight: 700; letter-spacing: -.005em; max-width: 920px; }
+  .style-chips { margin-top: 22px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .style-chip { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 10px 16px; border: 1px solid rgba(255,255,255,.18); background: transparent; color: rgba(255,255,255,.85); white-space: nowrap; }
+  .style-chip .chip-target { margin-left: 10px; opacity: 0.6; font-size: 10px; }
+
+  /* Collection grid */
+  .collection-grid { padding: 40px 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .coll-card { display: block; text-decoration: none; color: inherit; }
+  .coll-card-header { background: var(--color-ink); color: #fff; padding: 32px 36px 28px; position: relative; transition: background .25s ease; }
+  .coll-card-header:hover { background: var(--color-alg-red); }
+  .coll-name { margin-top: 16px; font-size: 48px; line-height: 1; letter-spacing: -.025em; font-weight: 800; white-space: nowrap; }
+  .coll-name .a-enc { color: var(--color-alg-red); }
+  .coll-card-header:hover .coll-name .a-enc { color: #F5C24A; }
+  .coll-flag { position: absolute; top: 18px; right: 24px; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--color-ink); background: #F5C24A; padding: 4px 10px; }
+  .coll-tagline { margin-top: 14px; font-size: 14.5px; line-height: 1.55; color: rgba(255,255,255,.85); max-width: 520px; }
+  .coll-stats { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--color-bg-soft); }
+  .coll-stat-cell { padding: 16px 18px; border-bottom: 1px solid var(--color-border); }
+  .coll-stat-cell:first-child { border-left: 3px solid var(--color-alg-red); }
+  .coll-stat-cell + .coll-stat-cell { border-left: 1px solid var(--color-border); }
+  .coll-stat-v { font-size: 18px; font-weight: 700; line-height: 1.05; color: var(--color-ink); white-space: nowrap; }
+  .coll-stat-k { margin-top: 6px; font-family: var(--font-mono); font-size: 9.5px; color: var(--color-ink-mute); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* Family rows */
+  .family-block { background: #fff; padding: 24px 36px 20px; border: 1px solid var(--color-border); border-top: none; }
+  .cat-bar { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 6px; border-bottom: 2px solid var(--color-ink); }
+  .cat-bar-title { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--color-ink); }
+  .cat-bar-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-mute); }
+  .family-row { display: grid; grid-template-columns: 56px 96px 1fr; gap: 16px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--color-bg-strong); }
+  .family-thumb { width: 48px; height: 64px; background: var(--color-bg-soft); border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; }
+  .family-thumb svg { width: 100%; height: 100%; }
+  .family-code { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; color: var(--color-alg-red); }
+  .family-name { font-size: 13.5px; font-weight: 600; margin-top: 2px; color: var(--color-ink); }
+  .family-spec { font-family: var(--font-mono); font-size: 11px; color: var(--color-ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .coll-cta { background: var(--color-alg-red); color: #fff; padding: 20px 36px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; transition: background .15s ease; }
+  .coll-cta:hover { background: var(--color-alg-red-dark); color: #fff; }
+  .coll-cta-label { font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+  .coll-cta-url { font-family: var(--font-mono); font-size: 11.5px; color: rgba(255,255,255,.85); letter-spacing: .06em; }
+
+  /* Why ALG */
+  .why-section { padding: 40px 56px 56px; background: var(--color-bg-soft); }
+  .why-header { display: flex; align-items: baseline; justify-content: space-between; }
+  .why-h2 { margin-top: 12px; font-size: 36px; font-weight: 800; letter-spacing: -.01em; line-height: 1.08; max-width: 940px; }
+  .why-tiles { margin-top: 28px; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .why-tile { padding: 24px 28px; background: #fff; border: 1px solid var(--color-border); border-left: 3px solid var(--color-alg-red); }
+  .why-tile + .why-tile { margin-left: -1px; }
+  .why-tile-title { margin-top: 12px; font-size: 19px; font-weight: 700; line-height: 1.25; }
+  .why-tile-body { margin-top: 10px; font-size: 13px; line-height: 1.6; color: var(--color-ink-soft); }
+
+  /* FAQ */
+  .faq-section { padding: 40px 56px 56px; background: #fff; }
+  .faq-h2 { margin-top: 12px; font-size: 36px; font-weight: 800; letter-spacing: -.01em; line-height: 1.08; max-width: 940px; }
+  .faq-list { margin-top: 24px; border: 1px solid var(--color-border); border-top: 3px solid var(--color-alg-red); background: #fff; }
+  .faq-item { border-top: 1px solid var(--color-bg-strong); }
+  .faq-item:first-child { border-top: none; }
+  .faq-q { padding: 18px 22px; display: grid; grid-template-columns: 32px 1fr; gap: 14px; align-items: center; }
+  .faq-num { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--color-alg-red); letter-spacing: .06em; }
+  .faq-text { font-size: 15.5px; font-weight: 600; color: var(--color-ink); letter-spacing: -.005em; }
+  .faq-a { padding: 4px 22px 22px 68px; font-size: 13.5px; line-height: 1.65; color: var(--color-ink-soft); background: var(--color-bg-soft); }
+
+  /* Contact */
+  .contact-block { background: var(--color-ink); color: #fff; padding: 56px 56px; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; }
+  .contact-brand-name { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+  .contact-brand-name .a-enc { color: var(--color-alg-red); }
+  .contact-desc { margin-top: 10px; font-size: 13px; line-height: 1.6; color: rgba(255,255,255,.78); max-width: 380px; }
+  .contact-col-head { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #F5C24A; }
+  .contact-col-lines { margin-top: 12px; font-family: var(--font-mono); font-size: 11.5px; color: rgba(255,255,255,.85); line-height: 1.85; }
+</style>
+
+<div class="lamps-landing">
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb-band" aria-label="Breadcrumb">
+    <a href="/">Home</a><span class="bc-sep">›</span>
+    <a href="/collections">Products</a><span class="bc-sep">›</span>
+    <span class="bc-current">Lamps</span>
+    <span class="bc-sep">·</span>
+    <span style="color:var(--color-ink-mute)">4 Collections · Filament LED · ENERGY STAR · Title 20</span>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-section">
+    <div class="hero-accent-bar">
+      <div class="hero-accent-label">Lamps · Decorative Filament LED · 2026</div>
+      <div class="hero-accent-dot"></div>
+    </div>
+    <div class="hero-content">
+      <div class="eyebrow" style="font-size:11.5px">Four Collections · One Aesthetic</div>
+      <h1 class="hero-h1">
+        <span style="color:var(--color-alg-red)">Decorative</span><br>
+        Filament LED
+      </h1>
+      <p class="hero-deck">
+        Four collections of decorative LED lamps — from restaurant-grade dim-to-warm Signature to architectural T-tubes, Edison amber glass, and globe/candelabra shapes.
+        ENERGY STAR. Title 20. JA8 available. Designed to be seen.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-block"><div class="sv">4 Collections</div><div class="sk">Signature · tubul · Nostalgic · Vintage</div></div>
+        <div class="stat-block"><div class="sv">90+ CRI</div><div class="sk">Signature Hospitality Grade</div></div>
+        <div class="stat-block"><div class="sv">2200K</div><div class="sk">Warm Amber Glow</div></div>
+        <div class="stat-block"><div class="sv">E-Star</div><div class="sk">ENERGY STAR · Title 20</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STYLE FINDER -->
+  <div class="style-finder">
+    <div class="style-finder-header">
+      <div class="eyebrow eyebrow--yellow" style="font-size:11.5px">Style Finder · 02</div>
+      <div class="eyebrow eyebrow--faint" style="font-size:11px">Browse by application type</div>
+    </div>
+    <div class="style-finder-q">What is the aesthetic?</div>
+    <div class="style-chips">
+      <div class="style-chip">Restaurant<span class="chip-target">→ Signature</span></div>
+      <div class="style-chip">Industrial<span class="chip-target">→ tubul<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</span></div>
+      <div class="style-chip">Vintage<span class="chip-target">→ Nostalgic Decor</span></div>
+      <div class="style-chip">Classic<span class="chip-target">→ Vintage Decor</span></div>
+      <div class="style-chip">Bath / Vanity<span class="chip-target">→ Vintage Decor</span></div>
+      <div class="style-chip">Chandelier<span class="chip-target">→ Vintage Decor</span></div>
+      <div class="style-chip">Café / Pendant<span class="chip-target">→ tubul<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</span></div>
+      <div class="style-chip">Speakeasy<span class="chip-target">→ Nostalgic Decor</span></div>
+    </div>
+  </div>
+
+  <!-- COLLECTION CARDS -->
+  <div class="collection-grid">
+
+    <!-- Signature -->
+    <div>
+      <a href="https://staging.archipelagolighting.com/collections/signature/" target="_blank" rel="noopener noreferrer" class="coll-card">
+        <div class="coll-card-header">
+          <div class="eyebrow eyebrow--yellow" style="font-size:11px">Flagship · ENERGY STAR · Dim-to-Warm</div>
+          <div class="coll-name">Signature</div>
+          <div class="coll-flag">Flagship</div>
+          <p class="coll-tagline">Restaurant-grade vintage filament. Hand-finished glass, woven filaments, and a 2700K → 2200K incandescent dim curve. Title 20, JA8, and ENERGY STAR. Hospitality and high-end retail.</p>
+        </div>
+        <div class="coll-stats">
+          <div class="coll-stat-cell"><div class="coll-stat-v">4 Forms</div><div class="coll-stat-k">ST · G · T · CA</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">90+ CRI</div><div class="coll-stat-k">Hospitality Grade</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">D-to-W</div><div class="coll-stat-k">2700K → 2200K</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">E-Star</div><div class="coll-stat-k">ENERGY STAR Listed</div></div>
+        </div>
+        <div class="family-block">
+          <div class="cat-bar"><span class="cat-bar-title">Lamp Shapes</span><span class="cat-bar-tag">4 Families · All Active</span></div>
+          <div class="family-row">
+            <div class="family-thumb">
+              <svg viewBox="0 0 120 130" width="48" height="52"><path d="M60 8 C30 8 20 36 28 60 C32 76 38 88 50 96 L70 96 C82 88 88 76 92 60 C100 36 90 8 60 8 Z" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><line x1="54" y1="92" x2="54" y2="60" stroke="#9CA0A8"/><line x1="66" y1="92" x2="66" y2="60" stroke="#9CA0A8"/><path d="M54 60 Q50 50 54 40 Q60 32 66 40 Q70 50 66 60" fill="none" stroke="#E8A020" stroke-width="1"/><rect x="46" y="98" width="28" height="6" fill="#1A1D23"/><path d="M46 104 L74 104 L72 110 L48 110 Z" fill="#1A1D23"/></svg>
+            </div>
+            <div><div class="family-code">ST19</div><div class="family-name">Edison Teardrop</div></div>
+            <div class="family-spec">ST19 / ST21 · 4–7W · 2200–2700K · 90+ CRI · Dim-to-Warm</div>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb">
+              <svg viewBox="0 0 120 130" width="48" height="52"><circle cx="60" cy="52" r="44" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="52" r="10" fill="none" stroke="#E8A020" stroke-width="1"/><line x1="54" y1="86" x2="54" y2="60" stroke="#9CA0A8"/><line x1="66" y1="86" x2="66" y2="60" stroke="#9CA0A8"/><rect x="46" y="98" width="28" height="6" fill="#1A1D23"/><path d="M46 104 L74 104 L72 110 L48 110 Z" fill="#1A1D23"/></svg>
+            </div>
+            <div><div class="family-code">G25</div><div class="family-name">Globe</div></div>
+            <div class="family-spec">G25 / G40 · 4–6W · 2200–2700K · 90+ CRI · Dim-to-Warm</div>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb">
+              <svg viewBox="0 0 120 130" width="48" height="52"><rect x="50" y="8" width="20" height="90" rx="3" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><path d="M58 14 L62 22 L58 30 L62 38 L58 46 L62 54 L58 62 L62 70 L58 78 L62 86 L58 92" fill="none" stroke="#E8A020" stroke-width="1"/><rect x="46" y="98" width="28" height="6" fill="#1A1D23"/><path d="M46 104 L74 104 L72 110 L48 110 Z" fill="#1A1D23"/></svg>
+            </div>
+            <div><div class="family-code">T9</div><div class="family-name">Tubular</div></div>
+            <div class="family-spec">T9 / T14 / T30 · 4–8W · 2200–2700K · 90+ CRI · Phase-Cut</div>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb">
+              <svg viewBox="0 0 120 130" width="48" height="52"><path d="M60 6 C56 18 48 28 50 50 C50 70 54 84 56 96 L64 96 C66 84 70 70 70 50 C72 28 64 18 60 6 Z" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><path d="M60 24 Q58 36 60 48 Q62 60 60 72 Q58 82 60 92" fill="none" stroke="#E8A020" stroke-width="1"/><rect x="46" y="98" width="28" height="6" fill="#1A1D23"/><path d="M46 104 L74 104 L72 110 L48 110 Z" fill="#1A1D23"/></svg>
+            </div>
+            <div><div class="family-code">CA10</div><div class="family-name">Candelabra Flame</div></div>
+            <div class="family-spec">CA10 / B10 · 3–5W · 2200–2700K · 90+ CRI · E12 base</div>
+          </div>
+        </div>
+        <a href="https://staging.archipelagolighting.com/collections/signature/" target="_blank" rel="noopener noreferrer" class="coll-cta">
+          <span class="coll-cta-label">View Signature Collection</span>
+          <span class="coll-cta-url">staging.archipelagolighting.com/collections/signature/ →</span>
+        </a>
+      </a>
+    </div>
+
+    <!-- tubulⒶRCH -->
+    <div>
+      <a href="https://staging.archipelagolighting.com/collections/tubularch/" target="_blank" rel="noopener noreferrer" class="coll-card">
+        <div class="coll-card-header">
+          <div class="eyebrow eyebrow--yellow" style="font-size:11px">Tubular · T-Series · Filament</div>
+          <div class="coll-name">tubul<span class="a-enc">Ⓐ</span>RCH</div>
+          <p class="coll-tagline">Vertical, architectural, all glass. Long T9, T14, and T30 tubes for sconces, exposed pendants, and bare-socket fixtures. Filament forward — designed to be seen.</p>
+        </div>
+        <div class="coll-stats">
+          <div class="coll-stat-cell"><div class="coll-stat-v">3 Lengths</div><div class="coll-stat-k">T9 · T14 · T30</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">80+ CRI</div><div class="coll-stat-k">Filament Visible</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">15,000h</div><div class="coll-stat-k">Rated Life</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">E26</div><div class="coll-stat-k">Medium Base</div></div>
+        </div>
+        <div class="family-block">
+          <div class="cat-bar"><span class="cat-bar-title">Lamp Shapes</span><span class="cat-bar-tag">3 Families · All Active</span></div>
+          <div class="family-row">
+            <div class="family-thumb">
+              <svg viewBox="0 0 120 130" width="48" height="52"><rect x="50" y="8" width="20" height="90" rx="3" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><path d="M58 14 L62 22 L58 30 L62 38 L58 46 L62 54 L58 62 L62 70 L58 78 L62 86 L58 92" fill="none" stroke="#E8A020" stroke-width="1"/><rect x="46" y="98" width="28" height="6" fill="#1A1D23"/><path d="M46 104 L74 104 L72 110 L48 110 Z" fill="#1A1D23"/></svg>
+            </div>
+            <div><div class="family-code">T9</div><div class="family-name">T9 Tube · Short</div></div>
+            <div class="family-spec">T9 · 4W · 2700/3000K · 80+ CRI · 120V · phase-cut</div>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb">
+              <svg viewBox="0 0 120 130" width="48" height="52"><rect x="50" y="8" width="20" height="90" rx="3" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><path d="M58 14 L62 22 L58 30 L62 38 L58 46 L62 54 L58 62 L62 70 L58 78 L62 86 L58 92" fill="none" stroke="#E8A020" stroke-width="1"/><rect x="46" y="98" width="28" height="6" fill="#1A1D23"/><path d="M46 104 L74 104 L72 110 L48 110 Z" fill="#1A1D23"/></svg>
+            </div>
+            <div><div class="family-code">T14</div><div class="family-name">T14 Tube · Medium</div></div>
+            <div class="family-spec">T14 · 5W · 2700/3000K · 80+ CRI · 120V · phase-cut</div>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb">
+              <svg viewBox="0 0 120 130" width="48" height="52"><rect x="50" y="8" width="20" height="90" rx="3" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><path d="M58 14 L62 22 L58 30 L62 38 L58 46 L62 54 L58 62 L62 70 L58 78 L62 86 L58 92" fill="none" stroke="#E8A020" stroke-width="1"/><rect x="46" y="98" width="28" height="6" fill="#1A1D23"/><path d="M46 104 L74 104 L72 110 L48 110 Z" fill="#1A1D23"/></svg>
+            </div>
+            <div><div class="family-code">T30</div><div class="family-name">T30 Tube · Long</div></div>
+            <div class="family-spec">T30 · 6–8W · 2700/3000K · 80+ CRI · 120V</div>
+          </div>
+        </div>
+        <a href="https://staging.archipelagolighting.com/collections/tubularch/" target="_blank" rel="noopener noreferrer" class="coll-cta">
+          <span class="coll-cta-label">View tubul<span style="color:#F5C24A">Ⓐ</span>RCH Collection</span>
+          <span class="coll-cta-url">staging.archipelagolighting.com/collections/tubularch/ →</span>
+        </a>
+      </a>
+    </div>
+
+    <!-- Nostalgic Decor -->
+    <div>
+      <a href="https://staging.archipelagolighting.com/collections/nostalgic-decor/" target="_blank" rel="noopener noreferrer" class="coll-card">
+        <div class="coll-card-header">
+          <div class="eyebrow eyebrow--yellow" style="font-size:11px">Edison · ST · Amber Glass</div>
+          <div class="coll-name">Nostalgic Decor</div>
+          <p class="coll-tagline">Warm amber, visible filament. ST64, ST21, and ST19 Edison-shape lamps with amber-tinted glass and a single hairpin filament. The classic speakeasy / craft-coffee aesthetic.</p>
+        </div>
+        <div class="coll-stats">
+          <div class="coll-stat-cell"><div class="coll-stat-v">3 Sizes</div><div class="coll-stat-k">ST19 · ST21 · ST64</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">2200K</div><div class="coll-stat-k">Amber Glow</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">Phase-Cut</div><div class="coll-stat-k">Standard Dimming</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">E26</div><div class="coll-stat-k">Medium Base</div></div>
+        </div>
+        <div class="family-block">
+          <div class="cat-bar"><span class="cat-bar-title">Lamp Shapes</span><span class="cat-bar-tag">3 Families · All Active</span></div>
+          <div class="family-row">
+            <div class="family-thumb">
+              <svg viewBox="0 0 120 130" width="48" height="52"><path d="M60 8 C30 8 20 36 28 60 C32 76 38 88 50 96 L70 96 C82 88 88 76 92 60 C100 36 90 8 60 8 Z" fill="#FFF8E8" stroke="#1A1D23" stroke-width="1.5"/><line x1="54" y1="92" x2="54" y2="60" stroke="#9CA0A8"/><line x1="66" y1="92" x2="66" y2="60" stroke="#9CA0A8"/><path d="M54 60 Q50 50 54 40 Q60 32 66 40 Q70 50 66 60" fill="none" stroke="#E8A020" stroke-width="1.5"/><rect x="46" y="98" width="28" height="6" fill="#1A1D23"/><path d="M46 104 L74 104 L72 110 L48 110 Z" fill="#1A1D23"/></svg>
+            </div>
+            <div><div class="family-code">ST19</div><div class="family-name">ST19 Mini Edison</div></div>
+            <div class="family-spec">ST19 · 4W · 2200K · amber glass · 80+ CRI</div>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb">
+              <svg viewBox="0 0 120 130" width="48" height="52"><path d="M60 8 C30 8 20 36 28 60 C32 76 38 88 50 96 L70 96 C82 88 88 76 92 60 C100 36 90 8 60 8 Z" fill="#FFF8E8" stroke="#1A1D23" stroke-width="1.5"/><line x1="54" y1="92" x2="54" y2="60" stroke="#9CA0A8"/><line x1="66" y1="92" x2="66" y2="60" stroke="#9CA0A8"/><path d="M54 60 Q50 50 54 40 Q60 32 66 40 Q70 50 66 60" fill="none" stroke="#E8A020" stroke-width="1.5"/><rect x="46" y="98" width="28" height="6" fill="#1A1D23"/><path d="M46 104 L74 104 L72 110 L48 110 Z" fill="#1A1D23"/></svg>
+            </div>
+            <div><div class="family-code">ST21</div><div class="family-name">ST21 Edison</div></div>
+            <div class="family-spec">ST21 · 4–6W · 2200/2700K · amber · phase-cut</div>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb">
+              <svg viewBox="0 0 120 130" width="48" height="52"><path d="M60 8 C30 8 20 36 28 60 C32 76 38 88 50 96 L70 96 C82 88 88 76 92 60 C100 36 90 8 60 8 Z" fill="#FFF8E8" stroke="#1A1D23" stroke-width="1.5"/><line x1="50" y1="92" x2="50" y2="32" stroke="#E8A020" stroke-width="1"/><line x1="58" y1="92" x2="58" y2="28" stroke="#E8A020" stroke-width="1"/><line x1="66" y1="92" x2="66" y2="28" stroke="#E8A020" stroke-width="1"/><line x1="74" y1="92" x2="74" y2="32" stroke="#E8A020" stroke-width="1"/><rect x="46" y="98" width="28" height="6" fill="#1A1D23"/><path d="M46 104 L74 104 L72 110 L48 110 Z" fill="#1A1D23"/></svg>
+            </div>
+            <div><div class="family-code">ST64</div><div class="family-name">ST64 Squirrel-Cage</div></div>
+            <div class="family-spec">ST64 · 6W · 2200K · amber · vintage cage filament</div>
+          </div>
+        </div>
+        <a href="https://staging.archipelagolighting.com/collections/nostalgic-decor/" target="_blank" rel="noopener noreferrer" class="coll-cta">
+          <span class="coll-cta-label">View Nostalgic Decor Collection</span>
+          <span class="coll-cta-url">staging.archipelagolighting.com/collections/nostalgic-decor/ →</span>
+        </a>
+      </a>
+    </div>
+
+    <!-- Vintage Decor -->
+    <div>
+      <a href="https://staging.archipelagolighting.com/collections/vintage-decor/" target="_blank" rel="noopener noreferrer" class="coll-card">
+        <div class="coll-card-header">
+          <div class="eyebrow eyebrow--yellow" style="font-size:11px">Globe · A-Shape · Candelabra</div>
+          <div class="coll-name">Vintage Decor</div>
+          <p class="coll-tagline">Mixed-shape decorative LED. G25 / G40 globes, A19 dome, and CA10 candelabra flame lamps for chandeliers, bath bars, and wall sconces. Clear and frosted glass.</p>
+        </div>
+        <div class="coll-stats">
+          <div class="coll-stat-cell"><div class="coll-stat-v">4 Forms</div><div class="coll-stat-k">G · A · CA</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">2700–3000K</div><div class="coll-stat-k">CCT Range</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">E26 / E12</div><div class="coll-stat-k">Base Options</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">Frost / Clear</div><div class="coll-stat-k">Glass Options</div></div>
+        </div>
+        <div class="family-block">
+          <div class="cat-bar"><span class="cat-bar-title">Lamp Shapes</span><span class="cat-bar-tag">4 Families · All Active</span></div>
+          <div class="family-row">
+            <div class="family-thumb">
+              <svg viewBox="0 0 120 130" width="48" height="52"><circle cx="60" cy="52" r="44" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="52" r="10" fill="none" stroke="#E8A020" stroke-width="1"/><line x1="54" y1="86" x2="54" y2="60" stroke="#9CA0A8"/><line x1="66" y1="86" x2="66" y2="60" stroke="#9CA0A8"/><rect x="46" y="98" width="28" height="6" fill="#1A1D23"/><path d="M46 104 L74 104 L72 110 L48 110 Z" fill="#1A1D23"/></svg>
+            </div>
+            <div><div class="family-code">G25</div><div class="family-name">G25 Globe</div></div>
+            <div class="family-spec">G25 · 4W · 2700/3000K · clear/frosted · 80+ CRI</div>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb">
+              <svg viewBox="0 0 120 130" width="48" height="52"><circle cx="60" cy="52" r="44" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="52" r="10" fill="none" stroke="#E8A020" stroke-width="1"/><line x1="54" y1="86" x2="54" y2="60" stroke="#9CA0A8"/><line x1="66" y1="86" x2="66" y2="60" stroke="#9CA0A8"/><rect x="46" y="98" width="28" height="6" fill="#1A1D23"/><path d="M46 104 L74 104 L72 110 L48 110 Z" fill="#1A1D23"/></svg>
+            </div>
+            <div><div class="family-code">G40</div><div class="family-name">G40 Globe</div></div>
+            <div class="family-spec">G40 · 5W · 2700K · clear · vanity / café</div>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb">
+              <svg viewBox="0 0 120 130" width="48" height="52"><path d="M60 10 C32 10 22 38 28 56 C32 70 40 80 46 92 L74 92 C80 80 88 70 92 56 C98 38 88 10 60 10 Z" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><path d="M46 92 L46 98 L74 98 L74 92" fill="none" stroke="#1A1D23" stroke-width="1.5"/><rect x="46" y="98" width="28" height="6" fill="#1A1D23"/><path d="M46 104 L74 104 L72 110 L48 110 Z" fill="#1A1D23"/></svg>
+            </div>
+            <div><div class="family-code">A19</div><div class="family-name">A19 Standard</div></div>
+            <div class="family-spec">A19 · 8–10W · 2700/3000/4000K · 80+ CRI</div>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb">
+              <svg viewBox="0 0 120 130" width="48" height="52"><path d="M60 6 C56 18 48 28 50 50 C50 70 54 84 56 96 L64 96 C66 84 70 70 70 50 C72 28 64 18 60 6 Z" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><path d="M60 24 Q58 36 60 48 Q62 60 60 72 Q58 82 60 92" fill="none" stroke="#E8A020" stroke-width="1"/><rect x="46" y="98" width="28" height="6" fill="#1A1D23"/><path d="M46 104 L74 104 L72 110 L48 110 Z" fill="#1A1D23"/></svg>
+            </div>
+            <div><div class="family-code">CA10</div><div class="family-name">CA10 Candelabra</div></div>
+            <div class="family-spec">CA10 / B10 · 3–5W · 2700K · E12 base · phase-cut</div>
+          </div>
+        </div>
+        <a href="https://staging.archipelagolighting.com/collections/vintage-decor/" target="_blank" rel="noopener noreferrer" class="coll-cta">
+          <span class="coll-cta-label">View Vintage Decor Collection</span>
+          <span class="coll-cta-url">staging.archipelagolighting.com/collections/vintage-decor/ →</span>
+        </a>
+      </a>
+    </div>
+
+  </div><!-- /collection-grid -->
+
+  <!-- WHY ALG -->
+  <section class="why-section">
+    <div class="why-header">
+      <div class="eyebrow eyebrow--brand" style="font-size:12px">Why ALG · 04</div>
+      <div class="eyebrow" style="font-size:11px">Spec · ENERGY STAR · Stock</div>
+    </div>
+    <h2 class="why-h2">The lamp is the fixture. Every shape ships with a spec sheet.</h2>
+    <div class="why-tiles">
+      <div class="why-tile">
+        <div class="eyebrow eyebrow--brand" style="font-size:10.5px">ENERGY STAR</div>
+        <div class="why-tile-title">Signature is Title 20 and JA8 compliant</div>
+        <div class="why-tile-body">ENERGY STAR listed across all four Signature shapes. JA8-rated when ordered with the JA8 driver option. Meets California Title 20 for residential applications.</div>
+      </div>
+      <div class="why-tile">
+        <div class="eyebrow eyebrow--brand" style="font-size:10.5px">Dim-to-Warm</div>
+        <div class="why-tile-title">2700K → 2200K incandescent dim curve</div>
+        <div class="why-tile-body">Signature dims like an incandescent — warmer as it dims. Phase-cut leading-edge or trailing-edge wall dimmer. Lutron, Leviton, Legrand compatibility list on every spec sheet.</div>
+      </div>
+      <div class="why-tile">
+        <div class="eyebrow eyebrow--brand" style="font-size:10.5px">Stocked Deep</div>
+        <div class="why-tile-title">Sample cartons ship same-week</div>
+        <div class="why-tile-body">Hospitality and retail spec writers can request sample cartons from Riverside, CA. Core SKUs in all four collections ship within 3 business days. No minimum order.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="why-header">
+      <div class="eyebrow eyebrow--brand" style="font-size:12px">Spec Questions · 07</div>
+      <div class="eyebrow" style="font-size:11px">Frequently asked · spec writer &amp; designer</div>
+    </div>
+    <h2 class="faq-h2">The questions a designer asks before specifying the lamp.</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">01</div><div class="faq-text">Are these vintage-look LEDs or actual filament bulbs?</div></div>
+        <div class="faq-a">LED. The amber glass and visible filament strands are real, but the light source is a chip-on-board or filament-style LED inside. You get the look of an Edison incandescent at 4–8W instead of 40–60W, with 15,000-hour rated life.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">02</div><div class="faq-text">Which lamps are dim-to-warm?</div></div>
+        <div class="faq-a">The full Signature line dims 2700K → 2200K on a phase-cut wall dimmer. Vintage Decor G25 and CA10 are dim-to-warm at the PRO+ tier. tubul<span style="color:var(--color-alg-red)">Ⓐ</span>RCH and Nostalgic Decor hold a fixed CCT through the dim curve — pick by warmth, not by transition.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">03</div><div class="faq-text">Are these Title 20 / JA8 compliant for California spec?</div></div>
+        <div class="faq-a">Signature is ENERGY STAR listed and meets Title 20 across all four shapes. Vintage Decor A19 and G25 are JA8-rated when ordered with the JA8 driver option. Nostalgic Decor and tubul<span style="color:var(--color-alg-red)">Ⓐ</span>RCH are decorative-rated; check the spec sheet for the specific application.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">04</div><div class="faq-text">What dimmer should I pair with these?</div></div>
+        <div class="faq-a">Phase-cut leading-edge or trailing-edge wall dimmers from Lutron, Leviton, or Legrand. The compatibility list ships on the spec sheet. Avoid 0–10V — these are decorative E26 / E12 base lamps, not driver-controlled luminaires.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">05</div><div class="faq-text">Do you offer base options other than E26 medium?</div></div>
+        <div class="faq-a">CA10 candelabra ships in E12 candelabra base. Everything else (ST, G, T, A) is E26 medium. We do not currently stock E17 intermediate, GU24 twist-lock, or G9 bi-pin in the lamp program.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">06</div><div class="faq-text">Can I order a sample carton before specifying a project?</div></div>
+        <div class="faq-a">Yes. Sample requests for hospitality and retail spec writers ship same-week from Riverside, CA. Contact your rep or sales@archipelagolighting.com with the project name and the shapes you want to evaluate.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="contact-block">
+    <div>
+      <div class="contact-brand-name">Signature &amp; tubul<span class="a-enc">Ⓐ</span>RCH</div>
+      <div class="contact-desc">Decorative filament LED lamps from Archipelago Lighting Group. ENERGY STAR. Title 20. JA8 available. Dim-to-warm. Hundreds of Thousands Available to Ship.</div>
+    </div>
+    <div>
+      <div class="contact-col-head">Headquarters</div>
+      <div class="contact-col-lines"><div>4615 State Street</div><div>Montclair, CA 91763</div></div>
+    </div>
+    <div>
+      <div class="contact-col-head">USA Production</div>
+      <div class="contact-col-lines"><div>9345 Sycamore Canyon Blvd</div><div>Riverside, CA 92508</div></div>
+    </div>
+    <div>
+      <div class="contact-col-head">Contact</div>
+      <div class="contact-col-lines"><div>+1 (866) 912-3220</div><div>sales@archipelagolighting.com</div><div>archipelagolighting.com</div></div>
+    </div>
+  </div>
+
+</div><!-- /lamps-landing -->
+
+</BaseLayout>

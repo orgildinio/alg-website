@@ -1,0 +1,412 @@
+---
+/**
+ * products/safety-controls/index.astro
+ * Safety & Controls Landing Page
+ *
+ * Covers constⒶNT (emergency/egress) and contrⒶLS (networked controls).
+ * Ported from safety-controls/landing-safety-controls.jsx.
+ *
+ * Calibration patches applied:
+ *   --brand #E3353C → var(--color-alg-red)
+ *   --font-sans 'Sora' → 'Lato'
+ *   UtilityBar/footer chrome stripped
+ *
+ * NOTE: The existing solutions/safety-controls.astro is a separate page
+ * (solutions overview). This is the product landing page.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Safety & Controls · constⒶNT × contrⒶLS · ALG"
+  description="ALG's two safety and controls platforms — constⒶNT emergency/egress and contrⒶLS networked controls — cover every code requirement from UL 924 to Title 24 to ASHRAE 90.1."
+  bodyClass="page-safety-controls-landing"
+>
+
+<style>
+  .sc-landing {
+    --brand:      var(--color-alg-red);
+    --brand-dark: var(--color-alg-red-dark);
+    --ink:        var(--color-ink);
+    --ink2:       var(--color-ink-soft);
+    --ink3:       var(--color-ink-mute);
+    --c1:         var(--color-bg-soft);
+    --c2:         var(--color-bg-strong);
+    --c3:         var(--color-border);
+    --yellow:     #F5C24A;
+    --teal:       #0E3535;
+    --font-mono:  'JetBrains Mono', ui-monospace, monospace;
+    width: 100%;
+    background: #fff;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+  }
+  .breadcrumb-band { padding: 12px 56px; border-bottom: 1px solid var(--color-border); background: #fff; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--color-ink-mute); display: flex; align-items: center; }
+  .breadcrumb-band a { color: inherit; text-decoration: none; }
+  .breadcrumb-band a:hover { color: var(--color-alg-red); }
+  .bc-sep { margin: 0 10px; }
+  .bc-current { color: var(--color-ink); font-weight: 700; }
+  .eyebrow { font-family: var(--font-mono); font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--color-ink-mute); }
+  .eyebrow--yellow { color: #F5C24A; }
+  .eyebrow--brand  { color: var(--color-alg-red); }
+  .eyebrow--faint  { color: rgba(255,255,255,.55); }
+
+  /* Hero */
+  .hero-section { display: grid; grid-template-columns: 120px 1fr; min-height: 520px; border-bottom: 1px solid var(--color-border); }
+  .hero-accent-bar { background: var(--color-alg-red); position: relative; display: flex; align-items: flex-end; padding: 24px 0; }
+  .hero-accent-label { transform: rotate(-90deg); transform-origin: bottom left; position: absolute; bottom: 36px; left: 56px; font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; color: #fff; white-space: nowrap; }
+  .hero-accent-dot { position: absolute; top: 28px; left: 28px; width: 12px; height: 12px; background: #F5C24A; }
+  .hero-content { padding: 72px 56px 56px; display: flex; flex-direction: column; justify-content: center; }
+  .hero-h1 { margin: 18px 0 0; font-size: 72px; line-height: 0.98; letter-spacing: -.025em; font-weight: 800; }
+  .hero-h1 .x-sep { color: var(--color-ink-mute); margin: 0 16px; font-weight: 300; }
+  .hero-deck { margin-top: 24px; font-size: 17px; line-height: 1.55; color: var(--color-ink-soft); max-width: 880px; }
+  .hero-stats { margin-top: 28px; display: grid; grid-template-columns: repeat(4, max-content); gap: 14px; }
+  .stat-block { padding: 14px 16px; border-left: 3px solid var(--color-alg-red); background: var(--color-bg-soft); }
+  .stat-block .sv { font-size: 20px; font-weight: 700; line-height: 1.05; white-space: nowrap; color: var(--color-ink); }
+  .stat-block .sk { margin-top: 6px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--color-ink-mute); }
+
+  /* Code finder */
+  .code-finder { background: var(--color-ink); color: #fff; padding: 32px 56px; }
+  .code-finder-header { display: flex; align-items: baseline; justify-content: space-between; }
+  .code-finder-q { margin-top: 18px; font-size: 26px; font-weight: 700; letter-spacing: -.005em; max-width: 920px; }
+  .code-chips { margin-top: 22px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .code-chip { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 10px 16px; border: 1px solid rgba(255,255,255,.18); background: transparent; color: rgba(255,255,255,.85); white-space: nowrap; }
+  .code-chip .chip-scope { margin-left: 10px; opacity: 0.55; font-size: 9.5px; letter-spacing: .06em; }
+  .code-chip--constant { border-color: rgba(243,39,64,.6); }
+  .code-chip--controls { border-color: rgba(14,53,53,.8); background: rgba(14,53,53,.3); }
+  .code-chip--both { border-color: #F5C24A; }
+
+  /* Collection grid */
+  .collection-grid { padding: 40px 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .coll-card { display: block; text-decoration: none; color: inherit; }
+  .coll-card-header { background: var(--color-ink); color: #fff; padding: 32px 36px 28px; position: relative; transition: background .25s ease; }
+  .coll-card-header--teal { background: #0E3535; }
+  .coll-card-header:hover { background: var(--color-alg-red); }
+  .coll-card-header--teal:hover { background: #143E3E; }
+  .coll-name { margin-top: 16px; font-size: 56px; line-height: 1; letter-spacing: -.025em; font-weight: 800; white-space: nowrap; }
+  .coll-name .a-enc { color: var(--color-alg-red); }
+  .coll-card-header--teal .coll-name .a-enc { color: #F5C24A; }
+  .coll-tagline { margin-top: 14px; font-size: 14.5px; line-height: 1.55; color: rgba(255,255,255,.85); max-width: 520px; }
+  .coll-stats { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--color-bg-soft); }
+  .coll-stat-cell { padding: 16px 18px; border-bottom: 1px solid var(--color-border); }
+  .coll-stat-cell:first-child { border-left: 3px solid var(--color-alg-red); }
+  .coll-stat-cell + .coll-stat-cell { border-left: 1px solid var(--color-border); }
+  .coll-stat-v { font-size: 18px; font-weight: 700; line-height: 1.05; color: var(--color-ink); white-space: nowrap; }
+  .coll-stat-k { margin-top: 6px; font-family: var(--font-mono); font-size: 9.5px; color: var(--color-ink-mute); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* Family rows */
+  .family-block { background: #fff; padding: 24px 36px 20px; border: 1px solid var(--color-border); border-top: none; }
+  .cat-bar { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 6px; border-bottom: 2px solid var(--color-ink); }
+  .cat-bar-title { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--color-ink); }
+  .cat-bar-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-mute); }
+  .family-row { display: grid; grid-template-columns: 64px 120px 1fr auto; gap: 16px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--color-bg-strong); }
+  .family-thumb { width: 56px; height: 40px; background: var(--color-bg-soft); border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; }
+  .family-thumb svg { width: 100%; height: 100%; }
+  .family-code { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; color: var(--color-alg-red); }
+  .family-name { font-size: 13.5px; font-weight: 600; margin-top: 2px; color: var(--color-ink); }
+  .family-spec { font-family: var(--font-mono); font-size: 11px; color: var(--color-ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .badge-active { display: inline-block; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 2px 8px; background: #0FAE7C; color: #fff; white-space: nowrap; }
+  .coll-cta { background: var(--color-alg-red); color: #fff; padding: 20px 36px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; transition: background .15s ease; }
+  .coll-cta--teal { background: #0E3535; }
+  .coll-cta:hover { background: var(--color-alg-red-dark); color: #fff; }
+  .coll-cta--teal:hover { background: #143E3E; color: #fff; }
+  .coll-cta-label { font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+  .coll-cta-url { font-family: var(--font-mono); font-size: 11.5px; color: rgba(255,255,255,.85); letter-spacing: .06em; }
+
+  /* Why ALG */
+  .why-section { padding: 40px 56px 56px; background: var(--color-bg-soft); }
+  .why-header { display: flex; align-items: baseline; justify-content: space-between; }
+  .why-h2 { margin-top: 12px; font-size: 36px; font-weight: 800; letter-spacing: -.01em; line-height: 1.08; max-width: 940px; }
+  .why-tiles { margin-top: 28px; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .why-tile { padding: 24px 28px; background: #fff; border: 1px solid var(--color-border); border-top: 3px solid var(--color-alg-red); }
+  .why-tile + .why-tile { margin-left: -1px; }
+  .why-tile-title { margin-top: 12px; font-size: 19px; font-weight: 700; line-height: 1.25; }
+  .why-tile-body { margin-top: 10px; font-size: 13px; line-height: 1.6; color: var(--color-ink-soft); }
+  .field-reality { margin-top: 24px; padding: 18px 22px; background: #fff; border: 1px solid var(--color-border); border-left: 3px solid var(--color-alg-red); display: flex; gap: 28px; align-items: center; }
+  .field-reality-body { font-size: 13.5px; color: var(--color-ink-soft); line-height: 1.55; }
+
+  /* FAQ */
+  .faq-section { padding: 40px 56px 56px; background: #fff; }
+  .faq-h2 { margin-top: 12px; font-size: 36px; font-weight: 800; letter-spacing: -.01em; line-height: 1.08; max-width: 940px; }
+  .faq-list { margin-top: 24px; border: 1px solid var(--color-border); border-top: 3px solid var(--color-alg-red); background: #fff; }
+  .faq-item { border-top: 1px solid var(--color-bg-strong); }
+  .faq-item:first-child { border-top: none; }
+  .faq-q { padding: 18px 22px; display: grid; grid-template-columns: 32px 1fr; gap: 14px; align-items: center; }
+  .faq-num { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--color-alg-red); letter-spacing: .06em; }
+  .faq-text { font-size: 15.5px; font-weight: 600; color: var(--color-ink); letter-spacing: -.005em; }
+  .faq-a { padding: 4px 22px 22px 68px; font-size: 13.5px; line-height: 1.65; color: var(--color-ink-soft); background: var(--color-bg-soft); }
+
+  /* Contact */
+  .contact-block { background: var(--color-ink); color: #fff; padding: 56px 56px; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; }
+  .contact-brand-name { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+  .contact-brand-name .a-enc { color: var(--color-alg-red); }
+  .contact-desc { margin-top: 10px; font-size: 13px; line-height: 1.6; color: rgba(255,255,255,.78); max-width: 380px; }
+  .contact-col-head { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #F5C24A; }
+  .contact-col-lines { margin-top: 12px; font-family: var(--font-mono); font-size: 11.5px; color: rgba(255,255,255,.85); line-height: 1.85; }
+</style>
+
+<div class="sc-landing">
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb-band" aria-label="Breadcrumb">
+    <a href="/">Home</a><span class="bc-sep">›</span>
+    <a href="/collections">Products</a><span class="bc-sep">›</span>
+    <span class="bc-current">Safety &amp; Controls</span>
+    <span class="bc-sep">·</span>
+    <span style="color:var(--color-ink-mute)">2 Platforms · UL 924 · Title 24 · ASHRAE 90.1</span>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-section">
+    <div class="hero-accent-bar">
+      <div class="hero-accent-label">Safety &amp; Controls · Emergency + Networked · 2026</div>
+      <div class="hero-accent-dot"></div>
+    </div>
+    <div class="hero-content">
+      <div class="eyebrow" style="font-size:11.5px">Two Platforms · One Job</div>
+      <h1 class="hero-h1">
+        const<span style="color:var(--color-alg-red)">Ⓐ</span>NT
+        <span class="x-sep">×</span>
+        contr<span style="color:var(--color-alg-red)">Ⓐ</span>LS
+      </h1>
+      <p class="hero-deck">
+        ALG's two safety and controls platforms — <em>emergency egress</em> and <em>networked controls</em> —
+        cover every code requirement from UL 924 to Title 24 to ASHRAE 90.1. One submittal binder.
+        One warranty card. Both halves of the compliance package.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-block"><div class="sv">2 Platforms</div><div class="sk">const<span style="color:var(--color-alg-red)">Ⓐ</span>NT · contr<span style="color:var(--color-alg-red)">Ⓐ</span>LS</div></div>
+        <div class="stat-block"><div class="sv">UL 924</div><div class="sk">90-Min Discharge · Self-Test</div></div>
+        <div class="stat-block"><div class="sv">Title 24</div><div class="sk">Part 6 · §140.6 · §141.0</div></div>
+        <div class="stat-block"><div class="sv">ⒶCS by ALG</div><div class="sk">BLE Mesh · 250 Nodes</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CODE FINDER -->
+  <div class="code-finder">
+    <div class="code-finder-header">
+      <div class="eyebrow eyebrow--yellow" style="font-size:11.5px">Code Finder · 02</div>
+      <div class="eyebrow eyebrow--faint" style="font-size:11px">Find the right platform for your code requirement</div>
+    </div>
+    <div class="code-finder-q">Which code is driving the spec?</div>
+    <div class="code-chips">
+      <div class="code-chip code-chip--constant">UL 924<span class="chip-scope">Emergency luminaires &amp; exit signs → const<span style="color:var(--color-alg-red)">Ⓐ</span>NT</span></div>
+      <div class="code-chip code-chip--constant">NFPA 101<span class="chip-scope">Life Safety Code · egress → const<span style="color:var(--color-alg-red)">Ⓐ</span>NT</span></div>
+      <div class="code-chip code-chip--constant">NFPA 110<span class="chip-scope">Emergency power · CBS → const<span style="color:var(--color-alg-red)">Ⓐ</span>NT</span></div>
+      <div class="code-chip code-chip--constant">OSHA 1910.37<span class="chip-scope">Means of egress · workplaces → const<span style="color:var(--color-alg-red)">Ⓐ</span>NT</span></div>
+      <div class="code-chip code-chip--constant">IBC §1008<span class="chip-scope">Means of egress illumination → const<span style="color:var(--color-alg-red)">Ⓐ</span>NT</span></div>
+      <div class="code-chip code-chip--controls">Title 24 P6<span class="chip-scope">CA energy code · controls → contr<span style="color:#F5C24A">Ⓐ</span>LS</span></div>
+      <div class="code-chip code-chip--controls">ASHRAE 90.1<span class="chip-scope">Auto shut-off · daylight → contr<span style="color:#F5C24A">Ⓐ</span>LS</span></div>
+      <div class="code-chip code-chip--controls">IECC C405<span class="chip-scope">Lighting controls · interior → contr<span style="color:#F5C24A">Ⓐ</span>LS</span></div>
+      <div class="code-chip code-chip--controls">DLC NLC5<span class="chip-scope">Networked Lighting Controls v5 → contr<span style="color:#F5C24A">Ⓐ</span>LS</span></div>
+      <div class="code-chip code-chip--both">JLAB<span class="chip-scope">Joint codes · combined systems → Both</span></div>
+    </div>
+  </div>
+
+  <!-- COLLECTION CARDS -->
+  <div class="collection-grid">
+
+    <!-- constⒶNT -->
+    <div>
+      <a href="https://staging.archipelagolighting.com/collections/constarch/" target="_blank" rel="noopener noreferrer" class="coll-card">
+        <div class="coll-card-header">
+          <div class="eyebrow eyebrow--yellow" style="font-size:11px">Emergency · Egress · Exit · Battery Backup</div>
+          <div class="coll-name">const<span class="a-enc">Ⓐ</span>NT</div>
+          <p class="coll-tagline">Life-safety, always-on. UL 924 emergency luminaires, exit signs, battery-backup modules and central battery systems for code-required egress, stairwells, corridors and assembly spaces.</p>
+        </div>
+        <div class="coll-stats">
+          <div class="coll-stat-cell"><div class="coll-stat-v">5 Forms</div><div class="coll-stat-k">Exit · EML · EBB · Bug-Eye · CBS</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">90 Minutes</div><div class="coll-stat-k">UL 924 Discharge Standard</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">Self-Test</div><div class="coll-stat-k">Standard On PRO &amp; PRO+</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">7 Yrs</div><div class="coll-stat-k">Standard Warranty</div></div>
+        </div>
+        <div class="family-block">
+          <div class="cat-bar"><span class="cat-bar-title">Form Factors</span><span class="cat-bar-tag">5 Families · All Active</span></div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="14" y="36" width="92" height="48" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><rect x="14" y="36" width="92" height="12" fill="#0FAE7C"/><text x="60" y="48" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fff" letter-spacing="1">EXIT</text><line x1="14" y1="84" x2="106" y2="84" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">EXT</div><div class="family-name">Exit Signs</div></div>
+            <div class="family-spec">LED edge-lit · red/green · 90-min · UL 924 · 120/277V · self-test</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="14" y="36" width="92" height="48" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="60" r="18" fill="#EEEDF0" stroke="#9CA0A8"/><circle cx="60" cy="60" r="8" fill="#fff" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">EML</div><div class="family-name">Emergency LED</div></div>
+            <div class="family-spec">Combo emergency/general · 8–24W EM · 90-min · damp · 5-CCTselect</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="42" width="76" height="36" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><rect x="30" y="50" width="24" height="20" fill="#EEEDF0" stroke="#9CA0A8"/><rect x="66" y="50" width="24" height="20" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">EBB</div><div class="family-name">Battery Backup Module</div></div>
+            <div class="family-spec">7–20W EM output · 90-min · 0–10V passthrough · field-installed</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="36" y="46" width="48" height="28" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="30" cy="60" r="10" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="90" cy="60" r="10" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/></svg></div>
+            <div><div class="family-code">BUG</div><div class="family-name">Bug-Eye / Wall-Pack</div></div>
+            <div class="family-spec">Adjustable lamp heads · 90-min · UL 924 · damp/wet rated</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="22" width="76" height="76" rx="2" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><rect x="30" y="30" width="60" height="60" fill="#EEEDF0" stroke="#9CA0A8"/><text x="60" y="64" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#3A3E47" letter-spacing="1">CBS</text></svg></div>
+            <div><div class="family-code">CBS</div><div class="family-name">Central Battery System</div></div>
+            <div class="family-spec">550–2200W · 90/120-min · 24/48V · NFPA 110 · monitored</div>
+            <span class="badge-active">Active</span>
+          </div>
+        </div>
+        <a href="https://staging.archipelagolighting.com/collections/constarch/" target="_blank" rel="noopener noreferrer" class="coll-cta">
+          <span class="coll-cta-label">View const<span style="color:#F5C24A">Ⓐ</span>NT Collection</span>
+          <span class="coll-cta-url">staging.archipelagolighting.com/collections/constarch/ →</span>
+        </a>
+      </a>
+    </div>
+
+    <!-- contrⒶLS -->
+    <div>
+      <a href="https://staging.archipelagolighting.com/collections/contralsarch/" target="_blank" rel="noopener noreferrer" class="coll-card">
+        <div class="coll-card-header coll-card-header--teal">
+          <div class="eyebrow eyebrow--yellow" style="font-size:11px">Sensors · Dimming · Network · ⒶCS by ALG App</div>
+          <div class="coll-name">contr<span class="a-enc">Ⓐ</span>LS</div>
+          <p class="coll-tagline">Networked control. Occupancy and daylight sensors, 0–10V dimming modules, wireless mesh nodes and the ⒶCS by ALG App gateway — for Title 24, ASHRAE 90.1 and IECC C405 compliance.</p>
+        </div>
+        <div class="coll-stats">
+          <div class="coll-stat-cell"><div class="coll-stat-v">5 Forms</div><div class="coll-stat-k">Sensor · Dim · Net · Wireless · Relay</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">Title 24</div><div class="coll-stat-k">Part 6 · §140.6 · §141.0</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">ⒶCS by ALG</div><div class="coll-stat-k">Bluetooth Mesh · 250 Nodes</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">BACnet</div><div class="coll-stat-k">BMS Integration · PRO+</div></div>
+        </div>
+        <div class="family-block">
+          <div class="cat-bar"><span class="cat-bar-title">Form Factors</span><span class="cat-bar-tag">5 Families · All Active</span></div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="40" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="60" r="26" fill="#EEEDF0" stroke="#9CA0A8"/><circle cx="60" cy="60" r="10" fill="#fff" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">SNS</div><div class="family-name">Occupancy / Daylight</div></div>
+            <div class="family-spec">PIR · ultrasonic · daylight · 360° · 0–10V · CEC Title 24</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="42" width="76" height="36" rx="2" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><line x1="36" y1="60" x2="84" y2="60" stroke="#9CA0A8"/><circle cx="60" cy="60" r="8" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">DIM</div><div class="family-name">0–10V Dimming Module</div></div>
+            <div class="family-spec">1% deep dim · 50–600W · class-2 sink · 120–277V · driver-agnostic</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="32" width="76" height="56" rx="4" fill="#0E3535" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="60" r="16" fill="#143E3E" stroke="#F5C24A" stroke-width="1.5"/><text x="60" y="64" text-anchor="middle" font-family="JetBrains Mono" font-size="7" fill="#F5C24A" letter-spacing="0.5">ⒶCS</text></svg></div>
+            <div><div class="family-code">NET</div><div class="family-name">ⒶCS Network Gateway</div></div>
+            <div class="family-spec">Bluetooth Mesh · 250 nodes · Ethernet/Wi-Fi · BACnet · scheduling</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="36" y="36" width="48" height="48" rx="4" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><path d="M48 60 Q60 48 72 60 Q60 72 48 60 Z" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">WCS</div><div class="family-name">Wireless Control Node</div></div>
+            <div class="family-spec">BLE 5.0 mesh · 0–10V or DALI-2 · self-commissioning · battery-free</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="42" width="76" height="36" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><rect x="34" y="52" width="16" height="16" rx="2" fill="#EEEDF0" stroke="#9CA0A8"/><rect x="70" y="52" width="16" height="16" rx="2" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">RLY</div><div class="family-name">Relay / Power Pack</div></div>
+            <div class="family-spec">20A latching · 120/277V · class-2 control · room-controller mode</div>
+            <span class="badge-active">Active</span>
+          </div>
+        </div>
+        <a href="https://staging.archipelagolighting.com/collections/contralsarch/" target="_blank" rel="noopener noreferrer" class="coll-cta coll-cta--teal">
+          <span class="coll-cta-label">View contr<span style="color:#F5C24A">Ⓐ</span>LS Collection</span>
+          <span class="coll-cta-url">staging.archipelagolighting.com/collections/contralsarch/ →</span>
+        </a>
+      </a>
+    </div>
+
+  </div><!-- /collection-grid -->
+
+  <!-- WHY ALG -->
+  <section class="why-section">
+    <div class="why-header">
+      <div class="eyebrow eyebrow--brand" style="font-size:12px">Why ALG · 04</div>
+      <div class="eyebrow" style="font-size:11px">Spec · Submittal · Warranty</div>
+    </div>
+    <h2 class="why-h2">One submittal binder. One warranty card. Both halves of the compliance package.</h2>
+    <div class="why-tiles">
+      <div class="why-tile">
+        <div class="eyebrow eyebrow--brand" style="font-size:10.5px">One Submittal</div>
+        <div class="why-tile-title">Life-safety and controls on one spec package</div>
+        <div class="why-tile-body">When the egress fixture, the occupancy sensor and the relay all ship from ALG, the contractor pulls one submittal binder and one warranty card. No three-vendor finger-pointing on punch list.</div>
+      </div>
+      <div class="why-tile">
+        <div class="eyebrow eyebrow--brand" style="font-size:10.5px">Code-Aligned</div>
+        <div class="why-tile-title">UL 924 + Title 24 + ASHRAE on the same drawing</div>
+        <div class="why-tile-body">Emergency 90-minute discharge meets UL 924; daylight + occupancy + scheduling meet Title 24 §140.6 and ASHRAE 90.1 §9.4. Every claim ships on the spec sheet, not the marketing page.</div>
+      </div>
+      <div class="why-tile">
+        <div class="eyebrow eyebrow--brand" style="font-size:10.5px">ⒶCS-Ready</div>
+        <div class="why-tile-title">Every PRO+ luminaire pairs with the ⒶCS gateway</div>
+        <div class="why-tile-body">Bluetooth Mesh self-commissioning. Up to 250 nodes per gateway. Scheduling, daylight harvesting, occupancy, and demand response — without a separate panel or PoE backbone.</div>
+      </div>
+    </div>
+    <div class="field-reality">
+      <div class="eyebrow eyebrow--brand" style="font-size:11px">Field Reality:</div>
+      <div class="field-reality-body">
+        The same drawing that pulls <strong>UL 924 emergency egress</strong> almost always pulls <strong>Title 24 occupancy + daylight</strong>.
+        Pricing them together — same rep, same lead time, same warranty — is how the bid gets cleaner and the punch list gets shorter.
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="why-header">
+      <div class="eyebrow eyebrow--brand" style="font-size:12px">Spec Questions · 07</div>
+      <div class="eyebrow" style="font-size:11px">Frequently asked · pro buyer</div>
+    </div>
+    <h2 class="faq-h2">The questions a contractor asks before pricing the job.</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">01</div><div class="faq-text">Is constⒶNT UL 924 listed?</div></div>
+        <div class="faq-a">Yes. Every Beacon-II, Sentry-LX, Lifeline, Watchman and Citadel SKU is UL 924 listed for 90-minute discharge. The UL file number prints on the spec sheet and on the housing label — drop it directly into the AHJ submittal.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">02</div><div class="faq-text">Do contrⒶLS sensors meet Title 24 Part 6 and ASHRAE 90.1?</div></div>
+        <div class="faq-a">Yes. Periscope occupancy and daylight sensors are CEC Title 24 Part 6 §140.6 and §141.0 compliant out of the box, and meet ASHRAE 90.1 §9.4 auto shut-off + daylight-zone requirements. Programming is field-default; no commissioning trip required for code minimum.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">03</div><div class="faq-text">Is the ⒶCS by ALG App a separate panel or part of the luminaire?</div></div>
+        <div class="faq-a">The ⒶCS Hub is a small wall- or DIN-rail gateway — Bluetooth Mesh on one side, Ethernet/Wi-Fi on the other. Every PRO+ luminaire and every PRO+ control node speaks BLE Mesh natively, so the gateway commissions itself. Up to 250 nodes per gateway. No PoE backbone required.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">04</div><div class="faq-text">How many nodes per ⒶCS gateway and is BACnet supported?</div></div>
+        <div class="faq-a">250 nodes per gateway. Multiple gateways federate over Ethernet for larger sites. BACnet/IP is included on the PRO+ gateway for BMS integration; demand response (OpenADR 2.0b) and scheduling ride on the same channel.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">05</div><div class="faq-text">Can I order constⒶNT and contrⒶLS on the same PO?</div></div>
+        <div class="faq-a">Yes — same PO, same warehouse, same lead time. Submittal binder consolidates UL 924, JA8, DLC NLC5 and Title 24 documents under one project number. Warranty is 7 years on PRO and PRO+ across both collections.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">06</div><div class="faq-text">What about retrofit — can ⒶCS retrofit existing 0–10V drivers?</div></div>
+        <div class="faq-a">Yes. The Glide-1V dimming module and MeshNode-5 wireless node attach to any 0–10V driver from any manufacturer. Field commissioning takes ~2 minutes per fixture using the ⒶCS App. No re-wiring of the line-voltage feed.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><div class="faq-num">07</div><div class="faq-text">Does central battery (CBS) meet NFPA 110?</div></div>
+        <div class="faq-a">Citadel CBS systems carry NFPA 110 Type 10 / Class 1.5 listings (10-second transfer, 90-minute runtime). Higher classes (Class 2, Class 6) available on the 2200W chassis. Self-test, monitored output and remote dry-contact alarm standard on PRO+.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="contact-block">
+    <div>
+      <div class="contact-brand-name">const<span class="a-enc">Ⓐ</span>NT &amp; contr<span class="a-enc">Ⓐ</span>LS</div>
+      <div class="contact-desc">Emergency egress and networked controls from Archipelago Lighting Group. UL 924. Title 24. ASHRAE 90.1. 7-year standard warranty. One submittal binder.</div>
+    </div>
+    <div>
+      <div class="contact-col-head">Headquarters</div>
+      <div class="contact-col-lines"><div>4615 State Street</div><div>Montclair, CA 91763</div></div>
+    </div>
+    <div>
+      <div class="contact-col-head">USA Production</div>
+      <div class="contact-col-lines"><div>9345 Sycamore Canyon Blvd</div><div>Riverside, CA 92508</div></div>
+    </div>
+    <div>
+      <div class="contact-col-head">Contact</div>
+      <div class="contact-col-lines"><div>+1 (866) 912-3220</div><div>sales@archipelagolighting.com</div><div>archipelagolighting.com</div></div>
+    </div>
+  </div>
+
+</div><!-- /sc-landing -->
+
+</BaseLayout>

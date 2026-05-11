@@ -1,0 +1,976 @@
+---
+/**
+ * products/indoor/index.astro
+ * Indoor Commercial & Industrial Landing Page
+ *
+ * Directs to lamparⒶRCH (industrial) and planoⒶRCH (flat-ceiling architectural).
+ * Ported from indoor/landing-v3.jsx + landing-shared.jsx.
+ *
+ * Calibration patches applied:
+ *   --brand #E3353C → var(--color-alg-red) #F32740
+ *   --brand-dark #B0252B → var(--color-alg-red-dark) #C41E32
+ *   --font-sans 'Sora' → var(--font-sans) 'Lato'
+ *   --ink #1A1D23 → var(--color-ink) #111111
+ *   --ink2 #3A3E47 → var(--color-ink-soft) #444444
+ *   --ink3 #6B7280 → var(--color-ink-mute) #6B6B6B
+ *   --c1 #F5F4F1 → var(--color-bg-soft) #F7F7F7
+ *   --c2 #EEEDF0 → var(--color-bg-strong) #F0F0F0
+ *   --c3 #DCDEE2 → var(--color-border) #E5E5E5
+ *   --yellow #FDD85E → #F5C24A (site yellow)
+ *   UtilityBar/site chrome stripped (BaseLayout provides Header/Footer)
+ *   Page-local footer strip stripped (BaseLayout Footer handles copyright)
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Indoor Commercial & Industrial Lighting · lamparⒶRCH × planoⒶRCH · ALG"
+  description="ALG's two indoor collections — lamparⒶRCH industrial workhorse and planoⒶRCH flat-ceiling architectural — cover every commercial ceiling we ship to. DLC Premium. 7-year warranty."
+  bodyClass="page-indoor-landing"
+>
+
+<style>
+  /* ── Token bridge: map source JSX vars to site tokens ── */
+  .indoor-landing {
+    --brand:       var(--color-alg-red);
+    --brand-dark:  var(--color-alg-red-dark);
+    --ink:         var(--color-ink);
+    --ink2:        var(--color-ink-soft);
+    --ink3:        var(--color-ink-mute);
+    --c1:          var(--color-bg-soft);
+    --c2:          var(--color-bg-strong);
+    --c3:          var(--color-border);
+    --yellow:      #F5C24A;
+    --font-sans:   var(--font-sans, 'Lato', system-ui, sans-serif);
+    --font-mono:   'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+
+    width: 100%;
+    background: #fff;
+    font-family: var(--font-sans);
+    color: var(--ink);
+  }
+
+  /* ── Breadcrumb band ── */
+  .breadcrumb-band {
+    padding: 12px 56px;
+    border-bottom: 1px solid var(--color-border);
+    background: #fff;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10.5px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .breadcrumb-band a { color: inherit; text-decoration: none; }
+  .breadcrumb-band a:hover { color: var(--color-alg-red); }
+  .bc-sep { margin: 0 10px; }
+  .bc-current { color: var(--color-ink); font-weight: 700; }
+
+  /* ── Eyebrow ── */
+  .eyebrow {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+  }
+  .eyebrow--yellow { color: #F5C24A; }
+  .eyebrow--brand  { color: var(--color-alg-red); }
+  .eyebrow--faint  { color: rgba(255,255,255,.55); }
+
+  /* ── MarkA (collection name with red Ⓐ) ── */
+  .mark-a .a-enc { color: var(--color-alg-red); }
+
+  /* ── Stat block ── */
+  .stat-block {
+    padding: 14px 16px;
+    border-left: 3px solid var(--color-alg-red);
+    background: var(--color-bg-soft);
+  }
+  .stat-block .sv {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.05;
+    white-space: nowrap;
+    color: var(--color-ink);
+  }
+  .stat-block .sk {
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10.5px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+  }
+
+  /* ── Hero ── */
+  .hero-section {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    min-height: 540px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .hero-accent-bar {
+    background: var(--color-alg-red);
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 24px 0;
+  }
+  .hero-accent-label {
+    transform: rotate(-90deg);
+    transform-origin: bottom left;
+    position: absolute;
+    bottom: 36px;
+    left: 56px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .hero-accent-dot {
+    position: absolute;
+    top: 28px;
+    left: 28px;
+    width: 12px;
+    height: 12px;
+    background: #F5C24A;
+  }
+  .hero-content {
+    padding: 72px 56px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hero-h1 {
+    margin: 18px 0 0;
+    font-size: 80px;
+    line-height: 0.98;
+    letter-spacing: -.025em;
+    font-weight: 800;
+  }
+  .hero-h1 .x-sep {
+    color: var(--color-ink-mute);
+    margin: 0 16px;
+    font-weight: 300;
+  }
+  .hero-deck {
+    margin-top: 24px;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--color-ink-soft);
+    max-width: 880px;
+  }
+  .hero-stats {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    gap: 14px;
+  }
+
+  /* ── Application Finder ── */
+  .app-finder {
+    background: var(--color-ink);
+    color: #fff;
+    padding: 32px 56px;
+  }
+  .app-finder-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .app-finder-q {
+    margin-top: 18px;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -.005em;
+    max-width: 920px;
+  }
+  .app-chips {
+    margin-top: 22px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .app-chip {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: transparent;
+    color: rgba(255,255,255,.85);
+    cursor: default;
+    white-space: nowrap;
+  }
+  .app-chip .chip-target {
+    margin-left: 10px;
+    opacity: 0.6;
+    font-size: 10px;
+  }
+
+  /* ── Collection cards ── */
+  .collection-grid {
+    padding: 40px 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .coll-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .coll-card-header {
+    background: var(--color-ink);
+    color: #fff;
+    padding: 32px 36px 28px;
+    position: relative;
+  }
+  .coll-card-header:hover {
+    background: var(--color-alg-red);
+  }
+  .coll-name {
+    margin-top: 16px;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -.025em;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .coll-name .a-enc { color: var(--color-alg-red); }
+  .coll-card-header:hover .coll-name .a-enc { color: #F5C24A; }
+  .coll-tagline {
+    margin-top: 14px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: rgba(255,255,255,.85);
+    max-width: 520px;
+  }
+  .coll-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--color-bg-soft);
+  }
+  .coll-stat-cell {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .coll-stat-cell:first-child { border-left: 3px solid var(--color-alg-red); }
+  .coll-stat-cell + .coll-stat-cell { border-left: 1px solid var(--color-border); }
+  .coll-stat-v {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+  .coll-stat-k {
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9.5px;
+    color: var(--color-ink-mute);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Flagship families */
+  .flagship-block {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-top: none;
+    padding: 20px 36px 14px;
+  }
+  .cat-bar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--color-ink);
+  }
+  .cat-bar-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+  .cat-bar-tag {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+  }
+  .flagship-grid {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+  }
+  .flagship-card {
+    border: 1px solid var(--color-border);
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+  .flagship-thumb {
+    height: 76px;
+    background: var(--color-bg-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .flagship-thumb svg { width: 100%; height: 100%; }
+  .flagship-info { padding: 10px 12px 12px; }
+  .flagship-app {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .flagship-name {
+    margin-top: 4px;
+    font-size: 14.5px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .flagship-star { color: var(--color-alg-red); font-size: 13px; }
+  .flagship-stat {
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10.5px;
+    color: var(--color-ink-soft);
+    letter-spacing: .02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Family rows */
+  .family-block {
+    background: #fff;
+    padding: 24px 36px 20px;
+    border: 1px solid var(--color-border);
+    border-top: none;
+  }
+  .family-row {
+    display: grid;
+    grid-template-columns: 64px 96px 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--color-bg-strong);
+  }
+  .family-thumb {
+    width: 56px;
+    height: 40px;
+    background: var(--color-bg-soft);
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .family-thumb svg { width: 100%; height: 100%; }
+  .family-code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    color: var(--color-alg-red);
+  }
+  .family-name {
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-top: 2px;
+    color: var(--color-ink);
+  }
+  .family-spec {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11.5px;
+    color: var(--color-ink-soft);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .family-spec .tier { color: var(--color-ink); }
+  .family-spec .sep  { color: var(--color-ink-mute); margin: 0 8px; }
+  .badge-active {
+    display: inline-block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    background: #0FAE7C;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  /* CTA bar */
+  .coll-cta {
+    background: var(--color-alg-red);
+    color: #fff;
+    padding: 20px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    transition: background .15s ease;
+  }
+  .coll-cta:hover { background: var(--color-alg-red-dark); color: #fff; }
+  .coll-cta-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+  .coll-cta-url {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11.5px;
+    color: rgba(255,255,255,.85);
+    letter-spacing: .06em;
+  }
+
+  /* ── Why ALG ── */
+  .why-section {
+    padding: 40px 56px 56px;
+    background: var(--color-bg-soft);
+  }
+  .why-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .why-h2 {
+    margin-top: 12px;
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -.01em;
+    line-height: 1.08;
+    max-width: 940px;
+  }
+  .why-tiles {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .why-tile {
+    padding: 24px 28px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-alg-red);
+    position: relative;
+  }
+  .why-tile + .why-tile { margin-left: -1px; }
+  .why-tile-title {
+    margin-top: 12px;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  .why-tile-body {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+  }
+  .field-reality {
+    margin-top: 24px;
+    padding: 18px 22px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-alg-red);
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  .field-reality-body {
+    font-size: 13.5px;
+    color: var(--color-ink-soft);
+    line-height: 1.55;
+  }
+
+  /* ── Get Started strip ── */
+  .get-started {
+    padding: 40px 56px 56px;
+    background: #fff;
+    border-top: 1px solid var(--color-border);
+  }
+  .get-started-grid {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .gs-card {
+    padding: 24px 28px;
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--color-alg-red);
+    display: flex;
+    flex-direction: column;
+  }
+  .gs-card + .gs-card { margin-left: -1px; }
+  .gs-glyph {
+    font-size: 22px;
+    color: var(--color-alg-red);
+    line-height: 1;
+  }
+  .gs-title {
+    margin-top: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  .gs-body {
+    margin-top: 8px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+    flex: 1;
+  }
+  .gs-link {
+    margin-top: 16px;
+    display: inline-block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--color-alg-red);
+    text-decoration: none;
+  }
+  .gs-link:hover { text-decoration: underline; }
+
+  /* ── Contact block ── */
+  .contact-block {
+    background: var(--color-ink);
+    color: #fff;
+    padding: 56px 56px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 32px;
+  }
+  .contact-brand-name {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+  }
+  .contact-brand-name .a-enc { color: var(--color-alg-red); }
+  .contact-desc {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255,255,255,.78);
+    max-width: 380px;
+  }
+  .contact-col-head {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #F5C24A;
+  }
+  .contact-col-lines {
+    margin-top: 12px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11.5px;
+    color: rgba(255,255,255,.85);
+    line-height: 1.85;
+  }
+</style>
+
+<div class="indoor-landing">
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb-band" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span class="bc-sep">›</span>
+    <a href="/collections">Products</a>
+    <span class="bc-sep">›</span>
+    <span class="bc-current">Indoor</span>
+    <span class="bc-sep">·</span>
+    <span style="color:var(--color-ink-mute)">2 Collections · 9 Form Factors · DLC Premium</span>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-section">
+    <div class="hero-accent-bar">
+      <div class="hero-accent-label">Indoor · Commercial &amp; Industrial · 2026</div>
+      <div class="hero-accent-dot"></div>
+    </div>
+    <div class="hero-content">
+      <div class="eyebrow" style="font-size:11.5px">Two Collections · One Decision</div>
+      <h1 class="hero-h1">
+        <span class="mark-a">lampar<span class="a-enc">Ⓐ</span>RCH</span>
+        <span class="x-sep">×</span>
+        <span class="mark-a">plano<span class="a-enc">Ⓐ</span>RCH</span>
+      </h1>
+      <p class="hero-deck">
+        ALG's two indoor collections — <em>industrial workhorse</em> and <em>flat-ceiling architectural</em> — cover every commercial ceiling
+        we ship to. Pick by form factor, by application, or by tier. Spec-grade. DLC Premium. 7-year warranty.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-block"><div class="sv">2 Collections</div><div class="sk">lampar<span style="color:var(--color-alg-red)">Ⓐ</span>RCH · plano<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</div></div>
+        <div class="stat-block"><div class="sv">9 Form Factors</div><div class="sk">High Bay → Edge-Lit Troffer</div></div>
+        <div class="stat-block"><div class="sv">3 Tiers</div><div class="sk">ECO · PRO · PRO+</div></div>
+        <div class="stat-block"><div class="sv">DLC Premium</div><div class="sk">PRO &amp; PRO+ Standard</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLICATION FINDER -->
+  <div class="app-finder">
+    <div class="app-finder-header">
+      <div class="eyebrow eyebrow--yellow" style="font-size:11.5px">Application Finder · 02</div>
+      <div class="eyebrow eyebrow--faint" style="font-size:11px">Browse by application type</div>
+    </div>
+    <div class="app-finder-q">What is the ceiling?</div>
+    <div class="app-chips">
+      <div class="app-chip">Warehouse<span class="chip-target">→ lampar<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Manufacturing<span class="chip-target">→ lampar<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Cold-Storage<span class="chip-target">→ lampar<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Office<span class="chip-target">→ plano<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Retail<span class="chip-target">→ plano<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Healthcare<span class="chip-target">→ plano<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">K-12<span class="chip-target">→ plano<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Higher-Ed<span class="chip-target">→ plano<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Parking Garage<span class="chip-target">→ lampar<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+      <div class="app-chip">Auto-Service<span class="chip-target">→ lampar<span style="color:var(--color-alg-red)">Ⓐ</span></span></div>
+    </div>
+  </div>
+
+  <!-- COLLECTION CARDS -->
+  <div class="collection-grid">
+
+    <!-- lamparⒶRCH -->
+    <div>
+      <a href="https://staging.archipelagolighting.com/collections/lamparch/" target="_blank" rel="noopener noreferrer" class="coll-card">
+        <div class="coll-card-header">
+          <div class="eyebrow eyebrow--yellow" style="font-size:11px">High Bay · Linear · Strip · Vapor Tight</div>
+          <div class="coll-name">lampar<span class="a-enc">Ⓐ</span>RCH</div>
+          <p class="coll-tagline">Industrial workhorse fixtures. High-bay, linear, strip, retrofit kit and vapor-tight luminaires for warehouses, manufacturing, cold-storage, parking and back-of-house from 14 to 40 ft.</p>
+        </div>
+        <div class="coll-stats">
+          <div class="coll-stat-cell"><div class="coll-stat-v">5 Forms</div><div class="coll-stat-k">High Bay · Linear · Strip · VT · RTK</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">155 lm/W</div><div class="coll-stat-k">PRO+ Efficacy Ceiling</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">14–40 ft</div><div class="coll-stat-k">Mounting Range</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">IP65</div><div class="coll-stat-k">Wash-Down Available</div></div>
+        </div>
+        <!-- Flagship families -->
+        <div class="flagship-block">
+          <div class="cat-bar"><span class="cat-bar-title">Flagship Families</span><span class="cat-bar-tag">5 of 5</span></div>
+          <div class="flagship-grid">
+            <div class="flagship-card">
+              <div class="flagship-thumb">
+                <svg viewBox="0 0 120 120"><line x1="60" y1="6" x2="60" y2="34" stroke="#1A1D23" stroke-width="2"/><rect x="42" y="34" width="36" height="14" fill="#1A1D23"/><ellipse cx="60" cy="72" rx="44" ry="22" fill="#fff" stroke="#1A1D23" stroke-width="2"/><ellipse cx="60" cy="72" rx="36" ry="16" fill="#EEEDF0" stroke="#9CA0A8"/><ellipse cx="60" cy="72" rx="22" ry="9" fill="#fff" stroke="#9CA0A8"/></svg>
+              </div>
+              <div class="flagship-info">
+                <div class="flagship-app">Round High Bay · PRO+</div>
+                <div class="flagship-name">Icarus-III <span class="flagship-star">⭐</span></div>
+                <div class="flagship-stat">300W max · 14 SKUs</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb">
+                <svg viewBox="0 0 120 120"><line x1="38" y1="8" x2="38" y2="34" stroke="#1A1D23" stroke-width="2"/><line x1="82" y1="8" x2="82" y2="34" stroke="#1A1D23" stroke-width="2"/><rect x="14" y="42" width="92" height="22" fill="#1A1D23"/><rect x="14" y="64" width="92" height="14" fill="#fff" stroke="#9CA0A8"/><line x1="32" y1="64" x2="32" y2="78" stroke="#9CA0A8"/><line x1="56" y1="64" x2="56" y2="78" stroke="#9CA0A8"/><line x1="80" y1="64" x2="80" y2="78" stroke="#9CA0A8"/></svg>
+              </div>
+              <div class="flagship-info">
+                <div class="flagship-app">Linear High Bay · PRO</div>
+                <div class="flagship-name">Titan-II</div>
+                <div class="flagship-stat">225W max · 9 SKUs</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb">
+                <svg viewBox="0 0 120 120"><rect x="6" y="50" width="108" height="20" fill="#1A1D23"/><rect x="6" y="70" width="108" height="6" fill="#fff" stroke="#9CA0A8"/><line x1="20" y1="50" x2="20" y2="40" stroke="#1A1D23"/><line x1="100" y1="50" x2="100" y2="40" stroke="#1A1D23"/></svg>
+              </div>
+              <div class="flagship-info">
+                <div class="flagship-app">Linear Strip · PRO</div>
+                <div class="flagship-name">Hallmark</div>
+                <div class="flagship-stat">4FT/8FT · 12 SKUs</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb">
+                <svg viewBox="0 0 120 120"><rect x="6" y="46" width="108" height="28" rx="14" fill="#fff" stroke="#1A1D23" stroke-width="2"/><rect x="14" y="52" width="92" height="16" rx="8" fill="#EEEDF0" stroke="#9CA0A8"/><circle cx="14" cy="60" r="4" fill="#1A1D23"/><circle cx="106" cy="60" r="4" fill="#1A1D23"/></svg>
+              </div>
+              <div class="flagship-info">
+                <div class="flagship-app">Vapor Tight · PRO</div>
+                <div class="flagship-name">Eureka-II</div>
+                <div class="flagship-stat">IP65 · 8 SKUs</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb">
+                <svg viewBox="0 0 120 120"><rect x="14" y="36" width="92" height="48" fill="#fff" stroke="#1A1D23"/><rect x="22" y="44" width="76" height="32" fill="#EEEDF0" stroke="#9CA0A8" stroke-dasharray="3 3"/><text x="60" y="65" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#3A3E47" letter-spacing="1">RTK</text></svg>
+              </div>
+              <div class="flagship-info">
+                <div class="flagship-app">Retrofit Kit · ECO</div>
+                <div class="flagship-name">Universal</div>
+                <div class="flagship-stat">35–200W · 6 SKUs</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Family rows -->
+        <div class="family-block">
+          <div class="cat-bar"><span class="cat-bar-title">Form Factors</span><span class="cat-bar-tag">5 Families · All Active</span></div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><line x1="60" y1="6" x2="60" y2="34" stroke="#1A1D23" stroke-width="2"/><rect x="42" y="34" width="36" height="14" fill="#1A1D23"/><ellipse cx="60" cy="72" rx="44" ry="22" fill="#fff" stroke="#1A1D23" stroke-width="2"/><ellipse cx="60" cy="72" rx="36" ry="16" fill="#EEEDF0" stroke="#9CA0A8"/><ellipse cx="60" cy="72" rx="22" ry="9" fill="#fff" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">RHB</div><div class="family-name">Round High Bay</div></div>
+            <div class="family-spec"><span class="tier">Icarus-III · Jupiter-II</span><span class="sep">·</span>12,000–45,000 lm · 80–300W · 35/40/50K · 0–10V · 120–277V</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><line x1="38" y1="8" x2="38" y2="34" stroke="#1A1D23" stroke-width="2"/><line x1="82" y1="8" x2="82" y2="34" stroke="#1A1D23" stroke-width="2"/><rect x="14" y="42" width="92" height="22" fill="#1A1D23"/><rect x="14" y="64" width="92" height="14" fill="#fff" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">LHB</div><div class="family-name">Linear High Bay</div></div>
+            <div class="family-spec"><span class="tier">Tiny · Titan-II</span><span class="sep">·</span>14,000–36,000 lm · 100–225W · 35/40/50K · 0–10V · 120–277V</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="6" y="50" width="108" height="20" fill="#1A1D23"/><rect x="6" y="70" width="108" height="6" fill="#fff" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">STR</div><div class="family-name">Linear Strip</div></div>
+            <div class="family-spec"><span class="tier">Vanguard · Hallmark</span><span class="sep">·</span>4FT/8FT · 22–66W · 35/40/50K · 0–10V · 120–277V · DLC Premium</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="6" y="46" width="108" height="28" rx="14" fill="#fff" stroke="#1A1D23" stroke-width="2"/><rect x="14" y="52" width="92" height="16" rx="8" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">VT</div><div class="family-name">Vapor Tight</div></div>
+            <div class="family-spec"><span class="tier">Eureka-II</span><span class="sep">·</span>IP65 · 4FT/8FT · 30–80W · 40/50K · 0–10V · wash-down rated</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="14" y="36" width="92" height="48" fill="#fff" stroke="#1A1D23"/><rect x="22" y="44" width="76" height="32" fill="#EEEDF0" stroke="#9CA0A8" stroke-dasharray="3 3"/></svg></div>
+            <div><div class="family-code">RTK</div><div class="family-name">Retrofit Kit</div></div>
+            <div class="family-spec"><span class="tier">Per category</span><span class="sep">·</span>Re-lamp existing housing · 35–200W · 35/40/50K · 120–277V</div>
+            <span class="badge-active">Active</span>
+          </div>
+        </div>
+        <div class="coll-cta">
+          <span class="coll-cta-label">View lampar<span style="color:#F5C24A">Ⓐ</span>RCH Collection</span>
+          <span class="coll-cta-url">staging.archipelagolighting.com/collections/lamparch/ →</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- planoⒶRCH -->
+    <div>
+      <a href="https://staging.archipelagolighting.com/collections/planoarch/" target="_blank" rel="noopener noreferrer" class="coll-card">
+        <div class="coll-card-header">
+          <div class="eyebrow eyebrow--yellow" style="font-size:11px">Flat Panel · Backlit · Troffer · Edge-Lit</div>
+          <div class="coll-name">plano<span class="a-enc">Ⓐ</span>RCH</div>
+          <p class="coll-tagline">Flat-ceiling architectural fixtures. Flat-panel, backlit, volumetric and edge-lit troffer luminaires for office, retail, healthcare, K-12, higher-ed and back-of-house ceilings.</p>
+        </div>
+        <div class="coll-stats">
+          <div class="coll-stat-cell"><div class="coll-stat-v">4 Forms</div><div class="coll-stat-k">Panel · Backlit · Troffer · Edge-Lit</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">150 lm/W</div><div class="coll-stat-k">PRO Efficacy Standard</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">5-CCTselect</div><div class="coll-stat-k">Field-Selectable on PRO+</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">7 Yrs</div><div class="coll-stat-k">Standard Warranty</div></div>
+        </div>
+        <!-- Flagship families -->
+        <div class="flagship-block">
+          <div class="cat-bar"><span class="cat-bar-title">Flagship Families</span><span class="cat-bar-tag">5 of 4</span></div>
+          <div class="flagship-grid">
+            <div class="flagship-card">
+              <div class="flagship-thumb">
+                <svg viewBox="0 0 120 120"><rect x="14" y="14" width="92" height="92" fill="#EEEDF0" stroke="#9CA0A8"/><rect x="22" y="22" width="76" height="76" fill="#fff" stroke="#9CA0A8"/></svg>
+              </div>
+              <div class="flagship-info">
+                <div class="flagship-app">Backlit Panel · PRO+</div>
+                <div class="flagship-name">BLP-S <span class="flagship-star">⭐</span></div>
+                <div class="flagship-stat">60W max · 8 SKUs</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb">
+                <svg viewBox="0 0 120 120"><rect x="14" y="22" width="92" height="76" fill="#EEEDF0" stroke="#9CA0A8"/><rect x="22" y="30" width="76" height="60" fill="#fff" stroke="#9CA0A8"/><line x1="22" y1="60" x2="98" y2="60" stroke="#9CA0A8" stroke-dasharray="2 3"/><line x1="60" y1="30" x2="60" y2="90" stroke="#9CA0A8" stroke-dasharray="2 3"/></svg>
+              </div>
+              <div class="flagship-info">
+                <div class="flagship-app">Flat Panel · PRO</div>
+                <div class="flagship-name">FP-Pro</div>
+                <div class="flagship-stat">55W max · 12 SKUs</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb">
+                <svg viewBox="0 0 120 120"><rect x="14" y="34" width="92" height="52" fill="#fff" stroke="#9CA0A8"/><rect x="14" y="34" width="92" height="6" fill="#3A3E47"/><rect x="14" y="80" width="92" height="6" fill="#3A3E47"/></svg>
+              </div>
+              <div class="flagship-info">
+                <div class="flagship-app">Edge-Lit Troffer · PRO+</div>
+                <div class="flagship-name">EDG-LG</div>
+                <div class="flagship-stat">48W max · 6 SKUs</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb">
+                <svg viewBox="0 0 120 120"><rect x="10" y="36" width="100" height="48" fill="#EEEDF0" stroke="#9CA0A8"/><rect x="16" y="42" width="88" height="36" fill="#fff" stroke="#9CA0A8"/><line x1="30" y1="42" x2="30" y2="78" stroke="#9CA0A8"/><line x1="50" y1="42" x2="50" y2="78" stroke="#9CA0A8"/><line x1="70" y1="42" x2="70" y2="78" stroke="#9CA0A8"/><line x1="90" y1="42" x2="90" y2="78" stroke="#9CA0A8"/></svg>
+              </div>
+              <div class="flagship-info">
+                <div class="flagship-app">Volumetric Troffer · PRO</div>
+                <div class="flagship-name">Volux</div>
+                <div class="flagship-stat">50W max · 7 SKUs</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb">
+                <svg viewBox="0 0 120 120"><rect x="14" y="22" width="92" height="76" fill="#EEEDF0" stroke="#9CA0A8"/><rect x="22" y="30" width="76" height="60" fill="#fff" stroke="#9CA0A8"/></svg>
+              </div>
+              <div class="flagship-info">
+                <div class="flagship-app">Flat Panel · ECO</div>
+                <div class="flagship-name">FP-Eco</div>
+                <div class="flagship-stat">40W max · 9 SKUs</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Family rows -->
+        <div class="family-block">
+          <div class="cat-bar"><span class="cat-bar-title">Form Factors</span><span class="cat-bar-tag">4 Families · All Active</span></div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="14" y="22" width="92" height="76" fill="#EEEDF0" stroke="#9CA0A8"/><rect x="22" y="30" width="76" height="60" fill="#fff" stroke="#9CA0A8"/><line x1="22" y1="60" x2="98" y2="60" stroke="#9CA0A8" stroke-dasharray="2 3"/><line x1="60" y1="30" x2="60" y2="90" stroke="#9CA0A8" stroke-dasharray="2 3"/></svg></div>
+            <div><div class="family-code">FP</div><div class="family-name">Flat Panel</div></div>
+            <div class="family-spec"><span class="tier">ECO · PRO · PRO+</span><span class="sep">·</span>2x2 / 2x4 / 1x4 · 30–55W · 35/40/50K · 0–10V · selectable</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="14" y="14" width="92" height="92" fill="#EEEDF0" stroke="#9CA0A8"/><rect x="22" y="22" width="76" height="76" fill="#fff" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">BLP</div><div class="family-name">Backlit Panel</div></div>
+            <div class="family-spec"><span class="tier">PRO · PRO+</span><span class="sep">·</span>2x2 / 2x4 · 30–60W · 35/40/50K · 5-CCTselect · 5-WATTselect</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="10" y="36" width="100" height="48" fill="#EEEDF0" stroke="#9CA0A8"/><rect x="16" y="42" width="88" height="36" fill="#fff" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">TRF</div><div class="family-name">Volumetric Troffer</div></div>
+            <div class="family-spec"><span class="tier">ECO · PRO</span><span class="sep">·</span>2x2 / 2x4 · 30–50W · 35/40/50K · 0–10V · 120–277V</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="14" y="34" width="92" height="52" fill="#fff" stroke="#9CA0A8"/><rect x="14" y="34" width="92" height="6" fill="#3A3E47"/><rect x="14" y="80" width="92" height="6" fill="#3A3E47"/></svg></div>
+            <div><div class="family-code">EDG</div><div class="family-name">Edge-Lit Troffer</div></div>
+            <div class="family-spec"><span class="tier">PRO · PRO+</span><span class="sep">·</span>2x2 / 2x4 · 28–48W · 35/40/50K · DLC Premium · low-glare</div>
+            <span class="badge-active">Active</span>
+          </div>
+        </div>
+        <div class="coll-cta">
+          <span class="coll-cta-label">View plano<span style="color:#F5C24A">Ⓐ</span>RCH Collection</span>
+          <span class="coll-cta-url">staging.archipelagolighting.com/collections/planoarch/ →</span>
+        </div>
+      </a>
+    </div>
+
+  </div><!-- /collection-grid -->
+
+  <!-- WHY ALG -->
+  <section class="why-section">
+    <div class="why-header">
+      <div class="eyebrow eyebrow--brand" style="font-size:12px">Why ALG · 04</div>
+      <div class="eyebrow" style="font-size:11px">Spec · Stock · Warranty</div>
+    </div>
+    <h2 class="why-h2">The catalog is the document. Every claim ships on the spec sheet.</h2>
+    <div class="why-tiles">
+      <div class="why-tile">
+        <div class="eyebrow eyebrow--brand" style="font-size:10.5px">Spec-Grade</div>
+        <div class="why-tile-title">DLC Premium across the PRO tier</div>
+        <div class="why-tile-body">Every workhorse SKU certified for utility rebates. 150 lm/W minimum on PRO; 155 lm/W on PRO+. 80+ CRI standard.</div>
+      </div>
+      <div class="why-tile">
+        <div class="eyebrow eyebrow--brand" style="font-size:10.5px">Stocked Deep</div>
+        <div class="why-tile-title">Hundreds of Thousands Available to Ship</div>
+        <div class="why-tile-body">Riverside, CA production with West-Coast logistics. Real lead times, not promises. Order direct or through your rep.</div>
+      </div>
+      <div class="why-tile">
+        <div class="eyebrow eyebrow--brand" style="font-size:10.5px">7-Year Warranty</div>
+        <div class="why-tile-title">Standard on every PRO and PRO+ fixture</div>
+        <div class="why-tile-body">ECO carries a 5-year warranty. Drivers, LEDs, and finish included. No registration step required.</div>
+      </div>
+    </div>
+    <div class="field-reality">
+      <div class="eyebrow eyebrow--brand" style="font-size:11px">Field Reality:</div>
+      <div class="field-reality-body">
+        On most bids, the contractor needs <strong>one ECO line for budget</strong>, <strong>one PRO line that meets DLC Premium</strong>,
+        and a <strong>flagship PRO+ option</strong> for the spec writer. ALG ships all three, in both indoor collections, from West-Coast stock.
+      </div>
+    </div>
+  </section>
+
+  <!-- GET STARTED -->
+  <section class="get-started">
+    <div class="why-header">
+      <div class="eyebrow eyebrow--brand" style="font-size:12px">Get Started · 05</div>
+      <div class="eyebrow" style="font-size:11px">Layout · Sample · Distributor · Rep</div>
+    </div>
+    <div class="get-started-grid">
+      <div class="gs-card">
+        <div class="gs-glyph">⊞</div>
+        <div class="gs-title">Request a Layout</div>
+        <div class="gs-body">Submit a project floor plan and fixture list. Photometric layout for warehouse, office, retail or healthcare returned within 48 hours.</div>
+        <a href="/support/layout-request" class="gs-link">Start layout →</a>
+      </div>
+      <div class="gs-card">
+        <div class="gs-glyph">◈</div>
+        <div class="gs-title">Request a Sample</div>
+        <div class="gs-body">Request a physical sample of any active lampar<span style="color:var(--color-alg-red)">Ⓐ</span>RCH or plano<span style="color:var(--color-alg-red)">Ⓐ</span>RCH family. Ships in 3 business days.</div>
+        <a href="/support/sample-request" class="gs-link">Request sample →</a>
+      </div>
+      <div class="gs-card">
+        <div class="gs-glyph">◎</div>
+        <div class="gs-title">Find a Distributor</div>
+        <div class="gs-body">Find a stocking distributor near your project site. Five US warehouses carry core indoor SKUs.</div>
+        <a href="/find-a-distributor" class="gs-link">Find distributor →</a>
+      </div>
+      <div class="gs-card">
+        <div class="gs-glyph">◉</div>
+        <div class="gs-title">Find a Rep</div>
+        <div class="gs-body">Connect with a local sales rep for specification support, pricing, and project tracking.</div>
+        <a href="/find-a-rep" class="gs-link">Find rep →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="contact-block">
+    <div>
+      <div class="contact-brand-name">lampar<span class="a-enc">Ⓐ</span>RCH &amp; plano<span class="a-enc">Ⓐ</span>RCH</div>
+      <div class="contact-desc">Spec-grade indoor C&amp;I luminaires from Archipelago Lighting Group. DLC Premium across the PRO tier. 7-year standard warranty. Hundreds of Thousands Available to Ship.</div>
+    </div>
+    <div>
+      <div class="contact-col-head">Headquarters</div>
+      <div class="contact-col-lines"><div>4615 State Street</div><div>Montclair, CA 91763</div></div>
+    </div>
+    <div>
+      <div class="contact-col-head">USA Production</div>
+      <div class="contact-col-lines"><div>9345 Sycamore Canyon Blvd</div><div>Riverside, CA 92508</div></div>
+    </div>
+    <div>
+      <div class="contact-col-head">Contact</div>
+      <div class="contact-col-lines"><div>+1 (866) 912-3220</div><div>sales@archipelagolighting.com</div><div>archipelagolighting.com</div></div>
+    </div>
+  </div>
+
+</div><!-- /indoor-landing -->
+
+</BaseLayout>

@@ -1,0 +1,348 @@
+---
+/**
+ * products/residential/index.astro
+ * Residential Landing Page
+ *
+ * Covers Consumer (single-family) and Multi-Family (MDU) collections.
+ * Ported from residential/landing-v1.jsx + landing-shared.jsx.
+ *
+ * Calibration patches applied:
+ *   --brand #E3353C → var(--color-alg-red)
+ *   --font-sans 'Sora' → 'Lato'
+ *   UtilityBar/footer chrome stripped
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Residential Lighting · Consumer × Multi-Family · ALG"
+  description="ALG's two residential collections — Consumer single-family and Multi-Family MDU — cover every residential ceiling, wall, and exterior we ship to. JA8 where code calls it. 5-year warranty."
+  bodyClass="page-residential-landing"
+>
+
+<style>
+  .residential-landing {
+    --brand:      var(--color-alg-red);
+    --brand-dark: var(--color-alg-red-dark);
+    --ink:        var(--color-ink);
+    --ink2:       var(--color-ink-soft);
+    --ink3:       var(--color-ink-mute);
+    --c1:         var(--color-bg-soft);
+    --c2:         var(--color-bg-strong);
+    --c3:         var(--color-border);
+    --yellow:     #F5C24A;
+    --font-mono:  'JetBrains Mono', ui-monospace, monospace;
+    width: 100%;
+    background: #fff;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+  }
+  .breadcrumb-band { padding: 12px 56px; border-bottom: 1px solid var(--color-border); background: #fff; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--color-ink-mute); display: flex; align-items: center; }
+  .breadcrumb-band a { color: inherit; text-decoration: none; }
+  .breadcrumb-band a:hover { color: var(--color-alg-red); }
+  .bc-sep { margin: 0 10px; }
+  .bc-current { color: var(--color-ink); font-weight: 700; }
+  .eyebrow { font-family: var(--font-mono); font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--color-ink-mute); }
+  .eyebrow--yellow { color: #F5C24A; }
+  .eyebrow--brand  { color: var(--color-alg-red); }
+  .eyebrow--faint  { color: rgba(255,255,255,.55); }
+
+  /* Hero */
+  .hero-section { display: grid; grid-template-columns: 120px 1fr; min-height: 520px; border-bottom: 1px solid var(--color-border); }
+  .hero-accent-bar { background: var(--color-alg-red); position: relative; display: flex; align-items: flex-end; padding: 24px 0; }
+  .hero-accent-label { transform: rotate(-90deg); transform-origin: bottom left; position: absolute; bottom: 36px; left: 56px; font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; color: #fff; white-space: nowrap; }
+  .hero-accent-dot { position: absolute; top: 28px; left: 28px; width: 12px; height: 12px; background: #F5C24A; }
+  .hero-content { padding: 72px 56px 56px; display: flex; flex-direction: column; justify-content: center; }
+  .hero-h1 { margin: 18px 0 0; font-size: 80px; line-height: 0.98; letter-spacing: -.025em; font-weight: 800; }
+  .hero-h1 .x-sep { color: var(--color-ink-mute); margin: 0 16px; font-weight: 300; }
+  .hero-deck { margin-top: 24px; font-size: 17px; line-height: 1.55; color: var(--color-ink-soft); max-width: 880px; }
+  .hero-stats { margin-top: 28px; display: grid; grid-template-columns: repeat(4, max-content); gap: 14px; }
+  .stat-block { padding: 14px 16px; border-left: 3px solid var(--color-alg-red); background: var(--color-bg-soft); }
+  .stat-block .sv { font-size: 20px; font-weight: 700; line-height: 1.05; white-space: nowrap; color: var(--color-ink); }
+  .stat-block .sk { margin-top: 6px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--color-ink-mute); }
+
+  /* Project finder */
+  .proj-finder { background: var(--color-ink); color: #fff; padding: 32px 56px; }
+  .proj-finder-header { display: flex; align-items: baseline; justify-content: space-between; }
+  .proj-finder-q { margin-top: 18px; font-size: 26px; font-weight: 700; letter-spacing: -.005em; max-width: 920px; }
+  .proj-chips { margin-top: 22px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .proj-chip { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 10px 16px; border: 1px solid rgba(255,255,255,.18); background: transparent; color: rgba(255,255,255,.85); white-space: nowrap; }
+  .proj-chip .chip-target { margin-left: 10px; opacity: 0.6; font-size: 10px; }
+
+  /* Collection grid */
+  .collection-grid { padding: 40px 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .coll-card { display: block; text-decoration: none; color: inherit; }
+  .coll-card-header { background: var(--color-ink); color: #fff; padding: 32px 36px 28px; position: relative; transition: background .25s ease; }
+  .coll-card-header:hover { background: var(--color-alg-red); }
+  .coll-name { margin-top: 16px; font-size: 56px; line-height: 1; letter-spacing: -.025em; font-weight: 800; white-space: nowrap; }
+  .coll-name .a-enc { color: var(--color-alg-red); }
+  .coll-card-header:hover .coll-name .a-enc { color: #F5C24A; }
+  .coll-tagline { margin-top: 14px; font-size: 14.5px; line-height: 1.55; color: rgba(255,255,255,.85); max-width: 520px; }
+  .coll-stats { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--color-bg-soft); }
+  .coll-stat-cell { padding: 16px 18px; border-bottom: 1px solid var(--color-border); }
+  .coll-stat-cell:first-child { border-left: 3px solid var(--color-alg-red); }
+  .coll-stat-cell + .coll-stat-cell { border-left: 1px solid var(--color-border); }
+  .coll-stat-v { font-size: 18px; font-weight: 700; line-height: 1.05; color: var(--color-ink); white-space: nowrap; }
+  .coll-stat-k { margin-top: 6px; font-family: var(--font-mono); font-size: 9.5px; color: var(--color-ink-mute); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* Family rows */
+  .family-block { background: #fff; padding: 24px 36px 20px; border: 1px solid var(--color-border); border-top: none; }
+  .cat-bar { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 6px; border-bottom: 2px solid var(--color-ink); }
+  .cat-bar-title { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--color-ink); }
+  .cat-bar-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-mute); }
+  .family-row { display: grid; grid-template-columns: 64px 120px 1fr auto; gap: 16px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--color-bg-strong); }
+  .family-thumb { width: 56px; height: 40px; background: var(--color-bg-soft); border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; }
+  .family-thumb svg { width: 100%; height: 100%; }
+  .family-code { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; color: var(--color-alg-red); }
+  .family-name { font-size: 13.5px; font-weight: 600; margin-top: 2px; color: var(--color-ink); }
+  .family-spec { font-family: var(--font-mono); font-size: 11px; color: var(--color-ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .badge-active { display: inline-block; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 2px 8px; background: #0FAE7C; color: #fff; white-space: nowrap; }
+  .coll-cta { background: var(--color-alg-red); color: #fff; padding: 20px 36px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; transition: background .15s ease; }
+  .coll-cta:hover { background: var(--color-alg-red-dark); color: #fff; }
+  .coll-cta-label { font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+  .coll-cta-url { font-family: var(--font-mono); font-size: 11.5px; color: rgba(255,255,255,.85); letter-spacing: .06em; }
+
+  /* Why ALG */
+  .why-section { padding: 40px 56px 56px; background: var(--color-bg-soft); }
+  .why-header { display: flex; align-items: baseline; justify-content: space-between; }
+  .why-h2 { margin-top: 12px; font-size: 36px; font-weight: 800; letter-spacing: -.01em; line-height: 1.08; max-width: 940px; }
+  .why-tiles { margin-top: 28px; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .why-tile { padding: 24px 28px; background: #fff; border: 1px solid var(--color-border); border-left: 3px solid var(--color-alg-red); }
+  .why-tile + .why-tile { margin-left: -1px; }
+  .why-tile-title { margin-top: 12px; font-size: 19px; font-weight: 700; line-height: 1.25; }
+  .why-tile-body { margin-top: 10px; font-size: 13px; line-height: 1.6; color: var(--color-ink-soft); }
+  .field-reality { margin-top: 24px; padding: 18px 22px; background: #fff; border: 1px solid var(--color-border); border-left: 3px solid var(--color-alg-red); display: flex; gap: 28px; align-items: center; }
+  .field-reality-body { font-size: 13.5px; color: var(--color-ink-soft); line-height: 1.55; }
+
+  /* Contact */
+  .contact-block { background: var(--color-ink); color: #fff; padding: 56px 56px; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; }
+  .contact-brand-name { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+  .contact-brand-name .a-enc { color: var(--color-alg-red); }
+  .contact-desc { margin-top: 10px; font-size: 13px; line-height: 1.6; color: rgba(255,255,255,.78); max-width: 380px; }
+  .contact-col-head { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #F5C24A; }
+  .contact-col-lines { margin-top: 12px; font-family: var(--font-mono); font-size: 11.5px; color: rgba(255,255,255,.85); line-height: 1.85; }
+</style>
+
+<div class="residential-landing">
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb-band" aria-label="Breadcrumb">
+    <a href="/">Home</a><span class="bc-sep">›</span>
+    <a href="/collections">Products</a><span class="bc-sep">›</span>
+    <span class="bc-current">Residential</span>
+    <span class="bc-sep">·</span>
+    <span style="color:var(--color-ink-mute)">2 Collections · 10 Categories · JA8 · UL 924</span>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-section">
+    <div class="hero-accent-bar">
+      <div class="hero-accent-label">Residential · Consumer &amp; Multi-Family · 2026</div>
+      <div class="hero-accent-dot"></div>
+    </div>
+    <div class="hero-content">
+      <div class="eyebrow" style="font-size:11.5px">Two Collections · One Decision</div>
+      <h1 class="hero-h1">
+        Consumer
+        <span class="x-sep">×</span>
+        Multi-Family
+      </h1>
+      <p class="hero-deck">
+        ALG's two residential collections — <em>retail-channel single-family</em> and <em>contractor-pack MDU</em> —
+        cover the residential ceiling, wall and exterior we ship to. Pick by space, by project type, or by category.
+        Spec-grade. JA8 where it matters. 5-year warranty.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-block"><div class="sv">2 Collections</div><div class="sk">Consumer · Multi-Family</div></div>
+        <div class="stat-block"><div class="sv">10 Categories</div><div class="sk">Recessed → Emergency</div></div>
+        <div class="stat-block"><div class="sv">JA8 · UL 924</div><div class="sk">Where Code Calls It Out</div></div>
+        <div class="stat-block"><div class="sv">5-Yr Warranty</div><div class="sk">Residential Standard</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT FINDER -->
+  <div class="proj-finder">
+    <div class="proj-finder-header">
+      <div class="eyebrow eyebrow--yellow" style="font-size:11.5px">Project Finder · 02</div>
+      <div class="eyebrow eyebrow--faint" style="font-size:11px">Browse by project type</div>
+    </div>
+    <div class="proj-finder-q">What is the project?</div>
+    <div class="proj-chips">
+      <div class="proj-chip">Single-Family Home<span class="chip-target">→ Consumer</span></div>
+      <div class="proj-chip">Apartment Unit<span class="chip-target">→ Consumer</span></div>
+      <div class="proj-chip">Renovation<span class="chip-target">→ Consumer</span></div>
+      <div class="proj-chip">MDU Common Area<span class="chip-target">→ Multi-Family</span></div>
+      <div class="proj-chip">New Build<span class="chip-target">→ Multi-Family</span></div>
+      <div class="proj-chip">Affordable Housing<span class="chip-target">→ Multi-Family</span></div>
+    </div>
+  </div>
+
+  <!-- COLLECTION CARDS -->
+  <div class="collection-grid">
+
+    <!-- Consumer -->
+    <div>
+      <a href="https://staging.archipelagolighting.com/collections/consumer/" target="_blank" rel="noopener noreferrer" class="coll-card">
+        <div class="coll-card-header">
+          <div class="eyebrow eyebrow--yellow" style="font-size:11px">Single-Family · In-Unit · Renovation</div>
+          <div class="coll-name">Consumer</div>
+          <p class="coll-tagline">Single-family residential fixtures with retail-channel depth. Recessed, surface, under-cabinet, exterior and replacement lamps for single-family homes, in-unit retrofits and renovation work. JA8 / Energy Star where called out.</p>
+        </div>
+        <div class="coll-stats">
+          <div class="coll-stat-cell"><div class="coll-stat-v">5 Categories</div><div class="coll-stat-k">Recessed · Surface · UC · Ext · Lamp</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">90+ CRI</div><div class="coll-stat-k">Standard on Recessed &amp; Surface</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">5-CCTselect</div><div class="coll-stat-k">On Recessed Downlights</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">5 Yr Warranty</div><div class="coll-stat-k">Residential Standard</div></div>
+        </div>
+        <div class="family-block">
+          <div class="cat-bar"><span class="cat-bar-title">Categories</span><span class="cat-bar-tag">5 Families · All Active</span></div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="40" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="60" r="28" fill="#EEEDF0" stroke="#9CA0A8"/><circle cx="60" cy="60" r="14" fill="#fff" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">RDL</div><div class="family-name">Recessed Downlights</div></div>
+            <div class="family-spec">Canless 4" / 6" · 9–15W · 5-CCTselect · 90+ CRI · ETL · JA8</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="46" width="76" height="28" rx="4" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="60" r="10" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">FCM</div><div class="family-name">Surface / Flush Mounts</div></div>
+            <div class="family-spec">7" / 11" / 13" · 12–24W · 27/30/35/40/50K · damp-rated</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="6" y="52" width="108" height="16" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><line x1="20" y1="52" x2="20" y2="68" stroke="#9CA0A8"/><line x1="40" y1="52" x2="40" y2="68" stroke="#9CA0A8"/><line x1="60" y1="52" x2="60" y2="68" stroke="#9CA0A8"/><line x1="80" y1="52" x2="80" y2="68" stroke="#9CA0A8"/><line x1="100" y1="52" x2="100" y2="68" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">UCB</div><div class="family-name">Under-Cabinet</div></div>
+            <div class="family-spec">12" / 18" / 24" / 36" · 5–15W · linkable · 30/40K · 120V</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="46" width="76" height="28" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><rect x="22" y="46" width="76" height="8" fill="#1A1D23"/></svg></div>
+            <div><div class="family-code">EXT</div><div class="family-name">Exterior · Wall &amp; Post</div></div>
+            <div class="family-spec">Wall pack · sconce · post-top · 10–25W · IP65 · dusk-to-dawn</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><path d="M60 10 C32 10 22 38 28 56 C32 70 40 80 46 92 L74 92 C80 80 88 70 92 56 C98 38 88 10 60 10 Z" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><path d="M46 92 L46 98 L74 98 L74 92" fill="none" stroke="#1A1D23" stroke-width="1.5"/></svg></div>
+            <div><div class="family-code">LMP</div><div class="family-name">Replacement Lamps</div></div>
+            <div class="family-spec">A19 / BR30 / PAR38 / GU10 · 8–14W · 27/30K · dimmable</div>
+            <span class="badge-active">Active</span>
+          </div>
+        </div>
+        <a href="https://staging.archipelagolighting.com/collections/consumer/" target="_blank" rel="noopener noreferrer" class="coll-cta">
+          <span class="coll-cta-label">View Consumer Collection</span>
+          <span class="coll-cta-url">staging.archipelagolighting.com/collections/consumer/ →</span>
+        </a>
+      </a>
+    </div>
+
+    <!-- Multi-Family -->
+    <div>
+      <a href="https://staging.archipelagolighting.com/collections/multi-family/" target="_blank" rel="noopener noreferrer" class="coll-card">
+        <div class="coll-card-header">
+          <div class="eyebrow eyebrow--yellow" style="font-size:11px">MDU · Affordable Housing · Senior Living</div>
+          <div class="coll-name">Multi-Family</div>
+          <p class="coll-tagline">Spec-grade fixtures for property-wide builds. Recessed, stairwell, exterior, vapor-tight and emergency egress fixtures for MDU corridors, common areas, exteriors and back-of-house. Contractor-pack quantities. Sensor-ready.</p>
+        </div>
+        <div class="coll-stats">
+          <div class="coll-stat-cell"><div class="coll-stat-v">5 Categories</div><div class="coll-stat-k">Recessed · Stair · Ext · VT · EMG</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">Sensor-Ready</div><div class="coll-stat-k">On Stairwell &amp; Corridor</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">UL 924</div><div class="coll-stat-k">Emergency &amp; Egress</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">Pack Quantities</div><div class="coll-stat-k">6 / 12 / 24 ct Contractor</div></div>
+        </div>
+        <div class="family-block">
+          <div class="cat-bar"><span class="cat-bar-title">Categories</span><span class="cat-bar-tag">5 Families · All Active</span></div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="40" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="60" r="28" fill="#EEEDF0" stroke="#9CA0A8"/><circle cx="60" cy="60" r="14" fill="#fff" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">RDL</div><div class="family-name">Recessed Downlights · Pack</div></div>
+            <div class="family-spec">Contractor 6/12-pack · 4" / 6" · 9–15W · 5-CCT · ETL · JA8</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="14" y="22" width="92" height="76" fill="#EEEDF0" stroke="#9CA0A8"/><rect x="22" y="30" width="76" height="60" fill="#fff" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">STW</div><div class="family-name">Stairwell &amp; Corridor</div></div>
+            <div class="family-spec">14" / 16" · 20–28W · sensor-ready · vandal-resistant · 0–10V</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="46" width="76" height="28" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><rect x="22" y="46" width="76" height="8" fill="#1A1D23"/></svg></div>
+            <div><div class="family-code">EXT</div><div class="family-name">Exterior · Wall Pack</div></div>
+            <div class="family-spec">20–60W · IP65 · photocell · dusk-to-dawn · 120–277V</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="6" y="46" width="108" height="28" rx="14" fill="#fff" stroke="#1A1D23" stroke-width="2"/><rect x="14" y="52" width="92" height="16" rx="8" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
+            <div><div class="family-code">VTS</div><div class="family-name">Vapor-Tight · Small</div></div>
+            <div class="family-spec">Laundry / mechanical · 4FT · 25–40W · IP65 · 120–277V</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="36" width="76" height="48" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><rect x="22" y="36" width="76" height="12" fill="#0FAE7C"/><text x="60" y="48" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fff" letter-spacing="1">EXIT</text></svg></div>
+            <div><div class="family-code">EMG</div><div class="family-name">Emergency &amp; Egress</div></div>
+            <div class="family-spec">EXIT signs · battery-backup · 90-min runtime · UL 924</div>
+            <span class="badge-active">Active</span>
+          </div>
+        </div>
+        <a href="https://staging.archipelagolighting.com/collections/multi-family/" target="_blank" rel="noopener noreferrer" class="coll-cta">
+          <span class="coll-cta-label">View Multi-Family Collection</span>
+          <span class="coll-cta-url">staging.archipelagolighting.com/collections/multi-family/ →</span>
+        </a>
+      </a>
+    </div>
+
+  </div><!-- /collection-grid -->
+
+  <!-- WHY ALG -->
+  <section class="why-section">
+    <div class="why-header">
+      <div class="eyebrow eyebrow--brand" style="font-size:12px">Why ALG · 04</div>
+      <div class="eyebrow" style="font-size:11px">Spec · Stock · Warranty</div>
+    </div>
+    <h2 class="why-h2">The catalog is the document. Every claim ships on the spec sheet.</h2>
+    <div class="why-tiles">
+      <div class="why-tile">
+        <div class="eyebrow eyebrow--brand" style="font-size:10.5px">JA8 · Energy Star</div>
+        <div class="why-tile-title">Code-compliant where it matters</div>
+        <div class="why-tile-body">JA8 on recessed downlights for Title-24 jurisdictions. Energy Star labels on the categories that qualify. We list it on the spec sheet, not in the marketing copy.</div>
+      </div>
+      <div class="why-tile">
+        <div class="eyebrow eyebrow--brand" style="font-size:10.5px">Stocked Deep</div>
+        <div class="why-tile-title">Hundreds of Thousands Available to Ship</div>
+        <div class="why-tile-body">Riverside, CA production with West-Coast logistics. Real lead times for property-wide rollouts. Order direct, through your rep, or through retail partners.</div>
+      </div>
+      <div class="why-tile">
+        <div class="eyebrow eyebrow--brand" style="font-size:10.5px">5-Year Warranty</div>
+        <div class="why-tile-title">Standard on every residential SKU</div>
+        <div class="why-tile-body">Drivers, LEDs and finish included. No registration step. Multi-Family contractor packs ship with batch documentation for the property file.</div>
+      </div>
+    </div>
+    <div class="field-reality">
+      <div class="eyebrow eyebrow--brand" style="font-size:11px">Field Reality:</div>
+      <div class="field-reality-body">
+        Same LED engine, two channels. Single-family contractors order Consumer in eaches; MDU developers
+        order Multi-Family in 12 ct contractor packs with batch documentation. The fixture on the
+        ceiling can be the same — the box, the price and the paperwork are not.
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="contact-block">
+    <div>
+      <div class="contact-brand-name">Consumer &amp; Multi-Family</div>
+      <div class="contact-desc">Spec-grade residential luminaires from Archipelago Lighting Group. JA8 where code calls it. 5-year standard warranty. Hundreds of Thousands Available to Ship.</div>
+    </div>
+    <div>
+      <div class="contact-col-head">Headquarters</div>
+      <div class="contact-col-lines"><div>4615 State Street</div><div>Montclair, CA 91763</div></div>
+    </div>
+    <div>
+      <div class="contact-col-head">USA Production</div>
+      <div class="contact-col-lines"><div>9345 Sycamore Canyon Blvd</div><div>Riverside, CA 92508</div></div>
+    </div>
+    <div>
+      <div class="contact-col-head">Contact</div>
+      <div class="contact-col-lines"><div>+1 (866) 912-3220</div><div>sales@archipelagolighting.com</div><div>archipelagolighting.com</div></div>
+    </div>
+  </div>
+
+</div><!-- /residential-landing -->
+
+</BaseLayout>
