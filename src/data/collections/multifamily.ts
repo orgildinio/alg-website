@@ -34,43 +34,40 @@ const multifamilyData = {
     { value: 'TAA', label: 'Available'    },
     { value: '5 US',label: 'Warehouses'   },
   ],
-  // C2: 4-bucket application taxonomy per §A2
+  // C2: 4-bucket application taxonomy per §A2 (canonical)
   // appMulti maps to the sub_category values in sku-index.json (comma-separated)
   // C6: skuCount updated per §A2 canonical counts
   applications: [
-    {
-      name: 'Common Areas',
-      slug: 'common-areas',
-      skuCount: 31,
-      // eCrescent (Surface Mount) + Nebula-II (Recessed) + Radius-II (Recessed) + Radius SafeZone (SafeZone)
-      appMulti: 'Surface Mount,Recessed Downlights,SafeZone Downlights',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>',
-    },
-    {
-      name: 'Inside the Unit',
-      slug: 'inside-the-unit',
-      skuCount: 23,
-      // Orbit-I (Recessed) + Eclipse-II (Surface Mount) + Radius-II (Recessed)
-      appMulti: 'Recessed Downlights,Surface Mount',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
-    },
-    {
-      name: 'Code & Inspection',
-      slug: 'code-and-inspection',
-      skuCount: 16,
-      // Gehry (Housing Cans) + Radius SafeZone (SafeZone Downlights)
-      appMulti: 'Housing Cans,SafeZone Downlights',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
-    },
     {
       name: 'Housing Cans',
       slug: 'housing-cans',
       skuCount: 8,
       appMulti: 'Housing Cans',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l4 4"/></svg>',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>',
+    },
+    {
+      name: 'Recessed Downlights',
+      slug: 'recessed-downlights',
+      skuCount: 22,
+      appMulti: 'Recessed Downlights',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>',
+    },
+    {
+      name: 'SafeZone Downlights',
+      slug: 'safezone-downlights',
+      skuCount: 8,
+      appMulti: 'SafeZone Downlights',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
+    },
+    {
+      name: 'Surface Mount',
+      slug: 'surface-mount',
+      skuCount: 21,
+      appMulti: 'Surface Mount',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
     },
   ],
-  // C5: Corrected from "Five flagship families" to "Three flagship families"
+  // C5: familiesHeadline updated to reflect 8 total families
   featured: [
     {
       family: 'Nebula-II',
@@ -103,7 +100,7 @@ const multifamilyData = {
       pdpUrl: '/products/multi-family/radius-safezone/',
     },
   ],
-  familiesHeadline: 'Three flagship families from the multi-fⒶMILY collection.',
+  familiesHeadline: 'Eight families from the multi-fⒶMILY collection.',
   familiesSubhead: 'Multifamily, garden-style, and mid-rise developments need lighting that works on a per-door budget — and still passes the code inspector on the first walk-through.',
   legacy: {
     headline: 'Discontinued families.',
