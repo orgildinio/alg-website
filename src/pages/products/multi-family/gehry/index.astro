@@ -490,10 +490,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     width: 100%;
     height: 100%;
     object-fit: contain;
-    /* Photographed product on white/light bg dissolves into the warm-paper page bg
-       via multiply blend; preserves the volumetric shading that gives the white
-       finish form, without an aggressive cutout that would erase the white body. */
-    mix-blend-mode: multiply;
     filter: contrast(1.04) saturate(1.02) drop-shadow(0 16px 24px rgba(0,0,0,0.18));
   }
   .slide-tag {

@@ -11415,7 +11415,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/multi-family/gehry/"
+          "pdpUrl": "/products/multi-family/gehry/",
+          "card_image": "/products/multi-family/card-images/gehry-card.png"
         },
         {
           "family": "eCrescent",
@@ -11438,7 +11439,8 @@
             "Surface Mount"
           ],
           "taa": false,
-          "pdpUrl": "/products/multi-family/ecrescent/"
+          "pdpUrl": "/products/multi-family/ecrescent/",
+          "card_image": "/products/multi-family/card-images/ecrescent-card.png"
         },
         {
           "family": "Nebula-II",
@@ -11461,7 +11463,8 @@
             "Recessed Mount"
           ],
           "taa": false,
-          "pdpUrl": "/products/multi-family/nebula-ii/"
+          "pdpUrl": "/products/multi-family/nebula-ii/",
+          "card_image": "/products/multi-family/card-images/nebula-ii-card.png"
         },
         {
           "family": "Orbit-I",
@@ -11484,7 +11487,8 @@
             "Recessed Mount"
           ],
           "taa": false,
-          "pdpUrl": "/products/multi-family/orbit-i/"
+          "pdpUrl": "/products/multi-family/orbit-i/",
+          "card_image": "/products/multi-family/card-images/orbit-i-card.png"
         },
         {
           "family": "Eclipse-II",
@@ -11507,7 +11511,8 @@
             "Surface Mount"
           ],
           "taa": false,
-          "pdpUrl": "/products/multi-family/eclipse-ii/"
+          "pdpUrl": "/products/multi-family/eclipse-ii/",
+          "card_image": "/products/multi-family/card-images/eclipse-ii-card.png"
         },
         {
           "family": "Lunar Eclipse",
@@ -11530,7 +11535,8 @@
             "Surface Mount"
           ],
           "taa": false,
-          "pdpUrl": "/products/multi-family/lunar-eclipse/"
+          "pdpUrl": "/products/multi-family/lunar-eclipse/",
+          "card_image": "/products/multi-family/card-images/lunar-eclipse-card.png"
         },
         {
           "family": "Radius-II",
@@ -11553,7 +11559,8 @@
             "Recessed Mount"
           ],
           "taa": false,
-          "pdpUrl": "/products/multi-family/radius-ii/"
+          "pdpUrl": "/products/multi-family/radius-ii/",
+          "card_image": "/products/multi-family/card-images/radius-ii-card.png"
         },
         {
           "family": "Radius SafeZone",
@@ -11576,7 +11583,8 @@
             "Recessed Mount"
           ],
           "taa": false,
-          "pdpUrl": "/products/multi-family/radius-safezone/"
+          "pdpUrl": "/products/multi-family/radius-safezone/",
+          "card_image": "/products/multi-family/card-images/radius-safezone-card.png"
         }
       ]
     },

@@ -490,10 +490,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     width: 100%;
     height: 100%;
     object-fit: contain;
-    /* Photographed product on white/light bg dissolves into the warm-paper page bg
-       via multiply blend; preserves the volumetric shading that gives the white
-       finish form, without an aggressive cutout that would erase the white body. */
-    mix-blend-mode: multiply;
     filter: contrast(1.04) saturate(1.02) drop-shadow(0 16px 24px rgba(0,0,0,0.18));
   }
   .slide-tag {
@@ -3741,7 +3737,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
                geometry (one drawing covers all 5 sizes); the diameter +
                depth labels swap dynamically via JS as the user clicks the
                size tab. Per Datasheet § Sizing & Measurements table. -->
-          <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg" id="dimSvg" style="display:block; width:100%; height:auto;">
+          <svg viewBox="0 0 600 320" width="600" height="320" id="dimSvg" style="display:block; width:100%; height:auto;">
 
             <!-- ============= TOP VIEW (left · puck face from below) ============= -->
             <text x="140" y="36" text-anchor="middle" fill="rgba(0,0,0,0.55)" font-size="11" font-family="JetBrains Mono, monospace" letter-spacing="1.5">TOP VIEW &middot; PUCK FACE</text>
