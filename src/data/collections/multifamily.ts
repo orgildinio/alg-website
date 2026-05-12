@@ -76,7 +76,7 @@ const multifamilyData = {
       maxWattage: 20,
       skuCount: 12,
       dlc: true,
-      lineDrawing: null,
+      lineDrawing: '/products/multi-family/card-images/nebula-ii-card.png',
       pdpUrl: '/products/multi-family/nebula-ii/',
     },
     {
@@ -86,7 +86,7 @@ const multifamilyData = {
       maxWattage: 18,
       skuCount: 13,
       dlc: true,
-      lineDrawing: null,
+      lineDrawing: '/products/multi-family/card-images/eclipse-ii-card.png',
       pdpUrl: '/products/multi-family/eclipse-ii/',
     },
     {
@@ -96,7 +96,7 @@ const multifamilyData = {
       maxWattage: 15,
       skuCount: 8,
       dlc: true,
-      lineDrawing: null,
+      lineDrawing: '/products/multi-family/card-images/radius-safezone-card.png',
       pdpUrl: '/products/multi-family/radius-safezone/',
     },
   ],
