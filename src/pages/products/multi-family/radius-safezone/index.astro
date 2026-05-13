@@ -31,7 +31,12 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     })}</script>
   </Fragment>
 <style is:global>
-  :root {
+  html body.page-radius-safezone-pdp { background: #FAFAFA !important; color: #0E0E10 !important; }
+  body.page-radius-safezone-pdp h1,
+  body.page-radius-safezone-pdp h2,
+  body.page-radius-safezone-pdp h3 { font-family: 'Sora', 'Lato', system-ui, sans-serif !important; }
+  body.page-radius-safezone-pdp .footer-cta { display: none !important; }
+  body.page-radius-safezone-pdp {
     --brand-red: #F32740;
     --tier-proplus-bg: #2a1f10;
     --tier-proplus-border: rgba(255,196,87,0.45);

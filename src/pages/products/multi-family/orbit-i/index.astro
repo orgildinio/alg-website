@@ -33,7 +33,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   </Fragment>
 
 <style is:global>
-  :root {
+  body.page-orbit-i-pdp {
     --brand-red: #F32740;
     --brand-red-deep: #c81835;
     --tier-pro-bg: #1a1a2a;
@@ -186,7 +186,11 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: var(--bg-page); color: var(--text-primary); }
+  html body.page-orbit-i-pdp { background: #FAFAFA !important; color: #0E0E10 !important; }
+  body.page-orbit-i-pdp h1,
+  body.page-orbit-i-pdp h2,
+  body.page-orbit-i-pdp h3 { font-family: 'Sora', 'Lato', system-ui, sans-serif !important; }
+  body.page-orbit-i-pdp .footer-cta { display: none !important; }
   body {
     font-family: 'Lato', system-ui, -apple-system, sans-serif;
     line-height: 1.55;
