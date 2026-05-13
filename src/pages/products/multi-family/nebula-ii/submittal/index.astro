@@ -702,59 +702,10 @@
 
   <div class="photo-grid">
     <div class="photo-polar">
-      <!-- Real LM-79 polar plot · viewBox 240×180 · center (120,140) · max-radius 80px = peak cd.
-           Generated 2026-05-09 from the 10 LDRR Nebula-II IES files
-           (parse_nebula_ies_submittal.py · Catmull-Rom smoothed cubic-bezier).
-           JS swaps the path d-strings on load based on housing param. -->
-      <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg" id="polarSvg">
-        <!-- Concentric candela rings · 25% / 50% / 75% / 100% of peak -->
-        <g fill="none" stroke="#C4C2BE" stroke-width="0.4">
-          <path d="M 40 140 A 80 80 0 0 1 200 140"/>
-          <path d="M 60 140 A 60 60 0 0 1 180 140"/>
-          <path d="M 80 140 A 40 40 0 0 1 160 140"/>
-          <path d="M 100 140 A 20 20 0 0 1 140 140"/>
-        </g>
-        <!-- Cd ring labels (peak %) — sits just left of the 0° spoke -->
-        <g font-family="JetBrains Mono, monospace" font-size="5" fill="#8A8580" text-anchor="end">
-          <text x="118" y="63">100%</text>
-          <text x="118" y="83">75%</text>
-          <text x="118" y="103">50%</text>
-          <text x="118" y="123">25%</text>
-        </g>
-        <!-- Angle spokes · 0°, ±30°, ±60°, ±90° -->
-        <g stroke="#C4C2BE" stroke-width="0.4">
-          <line x1="120" y1="140" x2="120" y2="60"/>
-          <line x1="120" y1="140" x2="80.0" y2="70.7"/>
-          <line x1="120" y1="140" x2="160.0" y2="70.7"/>
-          <line x1="120" y1="140" x2="50.7" y2="100.0"/>
-          <line x1="120" y1="140" x2="189.3" y2="100.0"/>
-          <line x1="120" y1="140" x2="40" y2="140"/>
-          <line x1="120" y1="140" x2="200" y2="140"/>
-        </g>
-        <!-- Angle labels -->
-        <g font-family="JetBrains Mono, monospace" font-size="6" fill="#6B6B70">
-          <text x="120" y="55" text-anchor="middle">0°</text>
-          <text x="78" y="66" text-anchor="end">30°</text>
-          <text x="162" y="66" text-anchor="start">30°</text>
-          <text x="46" y="98" text-anchor="end">60°</text>
-          <text x="194" y="98" text-anchor="start">60°</text>
-          <text x="38" y="146" text-anchor="end">90°</text>
-          <text x="202" y="146" text-anchor="start">90°</text>
-        </g>
-        <!-- Cosine baseline (Lambertian reference) — soft dotted curve -->
-        <path d="M 40 140 A 80 80 0 0 1 200 140" fill="none" stroke="#9A958E" stroke-width="0.5" stroke-dasharray="1.5,2" opacity="0.55"/>
-        <!-- IES-derived candela curves · right + left halves · filled wedge -->
-        <g id="polarCurve">
-          <path id="polarRight" d="" fill="rgba(227,53,60,0.20)" stroke="#E3353C" stroke-width="1.3" stroke-linejoin="round"/>
-          <path id="polarLeft"  d="" fill="rgba(227,53,60,0.20)" stroke="#E3353C" stroke-width="1.3" stroke-linejoin="round"/>
-        </g>
-        <!-- Plot title (housing+CCT updated by JS) -->
-        <text x="120" y="172" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#0E0E10" font-weight="700"
-              id="polarTitle">100° BEAM · LDRR410 · 4000K</text>
-        <!-- Peak cd marker (numeric, sits inside top of curve) -->
-        <text x="120" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#E3353C" font-weight="700"
-              id="polarPeakLabel">— cd</text>
-      </svg>
+      <img id="polarImg"
+           src="assets/photometrics/nebula-ii_615_4000.svg"
+           alt="nebula-ii photometric distribution — LM-79 tested"
+           style="width:100%; height:100%; object-fit:contain;" />
     </div>
 
     <div class="photo-summary">
@@ -913,6 +864,11 @@
   // those assets don't exist on disk. The PNG below carries the white-finish
   // 6″ unit at high resolution. CSS already applies a drop-shadow.
   document.getElementById('heroImg').src = 'assets/photos/nebula-ii/6in/Nebula-II-6in-1.png';
+  // Issue 6 — photometric polar plot: swap per size+CCT
+  var polarImg = document.getElementById('polarImg');
+  if (polarImg) {
+    polarImg.src = 'assets/photometrics/nebula-ii_' + housing + '_' + cct + '.svg';
+  }
 
   // --- AUTOFILL ORDERING CODE BREAKDOWN ---
   document.getElementById('ocHousing').textContent = housing;

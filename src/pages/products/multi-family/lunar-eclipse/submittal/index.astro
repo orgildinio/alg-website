@@ -427,7 +427,7 @@
       <!-- Real Lunar Eclipse hero image. Production overrides this src to the
            Shopify CDN. mix-blend-mode: multiply preserves the white finish
            against the warm-paper hero panel. -->
-      <img id="heroImg" src="/products/multi-family/lunar-eclipse/assets/finishes/nebula-ii-finish-white.webp"
+      <img id="heroImg" src="assets/finishes/eclipse-ii-finish-white.png"
            alt="LDLL Lunar Eclipse downlight — trimless black, front 3/4 angle" />
     </div>
     <div class="qs-grid">
@@ -699,32 +699,10 @@
 
   <div class="photo-grid">
     <div class="photo-polar">
-      <!-- Inline polar plot — 120° wide-flood (edge-lit PMMA) IESNA semi-circle. Same form
-           as the Section 6 photo SVG so the look is consistent. -->
-      <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
-        <!-- Grid arcs -->
-        <g fill="none" stroke="#A6A4A0" stroke-width="0.4">
-          <path d="M 40 140 A 80 80 0 0 1 200 140"/>
-          <path d="M 60 140 A 60 60 0 0 1 180 140"/>
-          <path d="M 80 140 A 40 40 0 0 1 160 140"/>
-          <path d="M 100 140 A 20 20 0 0 1 140 140"/>
-        </g>
-        <!-- Spokes -->
-        <g stroke="#A6A4A0" stroke-width="0.4">
-          <line x1="120" y1="140" x2="40" y2="140"/>
-          <line x1="120" y1="140" x2="200" y2="140"/>
-          <line x1="120" y1="140" x2="120" y2="60"/>
-          <line x1="120" y1="140" x2="60" y2="80"/>
-          <line x1="120" y1="140" x2="180" y2="80"/>
-        </g>
-        <!-- 100° beam curve — wide-flood, semi-circle filled -->
-        <path d="M 120 140 L 50 80 Q 120 30 190 80 Z" fill="rgba(227,53,60,0.18)" stroke="#E3353C" stroke-width="1.4"/>
-        <!-- 0° label -->
-        <text x="120" y="56" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70">0°</text>
-        <text x="48" y="76" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70">90°</text>
-        <text x="192" y="76" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70">90°</text>
-        <text x="120" y="160" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#0E0E10" font-weight="700">100° BEAM · WIDE-FLOOD</text>
-      </svg>
+      <img id="polarImg"
+           src="assets/photometrics/lunar-eclipse_0918_4000.svg"
+           alt="lunar-eclipse photometric distribution — LM-79 tested"
+           style="width:100%; height:100%; object-fit:contain;" />
     </div>
 
     <div class="photo-summary">
@@ -809,6 +787,12 @@
   // --- AUTOFILL HERO IMAGE — Lunar Eclipse is Black-only ---
   var heroImg = document.getElementById('heroImg');
   if (heroImg) heroImg.src = 'assets/finishes/lunar-eclipse-finish-black.png';
+
+  // Issue 6 — photometric polar plot: swap per size+CCT
+  var polarImg = document.getElementById('polarImg');
+  if (polarImg) {
+    polarImg.src = 'assets/photometrics/lunar-eclipse_' + housing + '_' + cct + '.svg';
+  }
 
   // --- AUTOFILL ORDERING CODE BREAKDOWN ---
   // Lunar Eclipse SKU pattern: LDLL{nn}{ww}-LE1S5/B

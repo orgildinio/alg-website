@@ -3376,17 +3376,13 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   }
 </style>
 
-<!-- Breadcrumb — STAGING-LOCKED .breadcrumb-band pattern -->
+<!-- Breadcrumb — 4-segment canonical pattern -->
 <nav class="breadcrumb-band" aria-label="Breadcrumb">
   <a href="/">HOME</a>
   <span class="bc-sep">›</span>
   <a href="/collections">PRODUCTS</a>
   <span class="bc-sep">›</span>
-  <a href="/collections/indoor">INDOOR</a>
-  <span class="bc-sep">›</span>
-  <span class="bc-plain">RESIDENTIAL · MULTI-FAMILY</span>
-  <span class="bc-sep">›</span>
-  <a href="/collections/multi-family">multi-f<span class="aa">Ⓐ</span>MILY</a>
+  <a href="/collections/multi-family">RESIDENTIAL &middot; MULTI-F<span class="aa">Ⓐ</span>MILY</a>
   <span class="bc-sep">›</span>
   <span class="bc-current">CRC GEHRY SERIES</span>
 </nav>
@@ -3862,7 +3858,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
               </tbody>
             </table>
             <div class="spec-table-foot">★ <em>Photometric reference baseline = <strong>75W PAR30 incandescent lamp</strong> per Datasheet page 2. The actual installed footcandles with a modern 12W LED PAR30 will be ~16% of these values (12W &divide; 75W). For LED-paired install photometric data, see the <a href="#family">multi-f<span class="aa">Ⓐ</span>MILY LED retrofit module family</a> &mdash; eCrescent / Radius-II / Eclipse-II / Lunar Eclipse all drop into the Gehry housing.</em></div>
-            <div class="spec-table-foot" style="margin-top:6px; font-style:italic; color:var(--text-muted); font-size:11px;">Datasheet honesty markers: wordmark says <strong>planoARCH</strong> but Active_SKUs Collection = <strong>multi-f<span class="aa">Ⓐ</span>MILY</strong> (consistent family error · Active_SKUs wins); housing material = <strong>die-formed aluminum</strong> per newer Datasheet (older 2023 QuickSheet says "steel" &mdash; flagged for engineering reconciliation); HQ address typo on Datasheet ("7345 Sycamore" should be <strong>9345 Sycamore</strong> per all other multi-fⒶMILY collateral); photometric data = 75W PAR30 incandescent reference, 30+ years stale &mdash; modern LED install delivers ~16% of these footcandles.</div>
+            <div class="spec-table-foot" style="margin-top:6px; font-style:italic; color:var(--text-muted); font-size:11px;">Datasheet honesty markers: wordmark says <strong>planoARCH</strong> but Active_SKUs Collection = <strong>multi-f<span class="aa">Ⓐ</span>MILY</strong> (consistent family error · Active_SKUs wins); housing material = <strong>die-formed aluminum</strong> per newer Datasheet (older 2023 QuickSheet says "steel" &mdash; flagged for engineering reconciliation); HQ address typo on Datasheet ("7345 Sycamore" should be <strong>9345 Sycamore</strong> per all other multi-f<span class="aa">Ⓐ</span>MILY collateral); photometric data = 75W PAR30 incandescent reference, 30+ years stale &mdash; modern LED install delivers ~16% of these footcandles.</div>
           </div>
         </div>
       </div>
@@ -4432,7 +4428,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 
     <!-- Cross-reference: alternate multi-fⒶMILY LED modules that also drop into a
          T.24-equipped Gehry J-Box. Nebula-II + Orbit-I are the recommended retrofit
-         lamps (above); the modules below are the broader multi-fⒶMILY family. -->
+         lamps (above); the modules below are the broader multi-f<span class="aa">Ⓐ</span>MILY family. -->
     <div style="margin-top: 32px; background: rgba(243, 39, 64, 0.04); border: 1px solid rgba(243, 39, 64, 0.18); border-radius: 8px; padding: 24px;">
       <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
         <div>
@@ -5517,8 +5513,8 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
         <strong>We respond same business day.</strong>
       </div>
       <div class="closing-cta-buttons">
-        <a href="/contact/" class="closing-cta-btn solid">Contact Sales</a>
-        <a href="/contact/?type=layout" class="closing-cta-btn">Request Layout</a>
+        <a href="/contact/" class="closing-cta-btn outline">Contact Sales</a>
+        <a href="/contact/?type=layout" class="closing-cta-btn outline">Request Layout</a>
       </div>
     </div>
   </div>
@@ -5674,7 +5670,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 (function() {
   var data = {
     '4': [
-      { lamp: 'RL Series LED Module', watt: 'per module', base: 'E26 + T24', note: 'multi-f<span class="aa">Ⓐ</span>MILY native pair ★', def: true  },
+      { lamp: 'RL Series LED Module', watt: 'per module', base: 'E26 + T24', note: 'multi-fⒶMILY native pair ★', def: true  },
       { lamp: 'PAR30 (LED)',          watt: '12W',  base: 'E26 + T24', note: 'JA8-capable · universal lamp',    def: false },
       { lamp: 'PAR30 (Incandescent)', watt: '75W',  base: 'E26 only',  note: 'Datasheet photometric baseline',  def: false },
       { lamp: 'R30',                  watt: '75W',  base: 'E26 only',  note: '&mdash;',                          def: false },
@@ -5682,7 +5678,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
       { lamp: 'A19',                  watt: '60W',  base: 'E26 only',  note: '&mdash;',                          def: false }
     ],
     '6': [
-      { lamp: 'RL Series LED Module', watt: 'per module', base: 'E26 + T24', note: 'multi-f<span class="aa">Ⓐ</span>MILY native pair ★', def: true  },
+      { lamp: 'RL Series LED Module', watt: 'per module', base: 'E26 + T24', note: 'multi-fⒶMILY native pair ★', def: true  },
       { lamp: 'PAR30 (LED)',          watt: '12W',  base: 'E26 + T24', note: 'JA8-capable · universal lamp',    def: false },
       { lamp: 'PAR30 (Incandescent)', watt: '75W',  base: 'E26 only',  note: 'Datasheet photometric baseline',  def: false },
       { lamp: 'PAR38',                watt: '75W',  base: 'E26 only',  note: 'CRC6 only (large flood)',         def: false },

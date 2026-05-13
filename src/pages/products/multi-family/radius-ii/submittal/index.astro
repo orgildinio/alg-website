@@ -729,31 +729,10 @@
 
   <div class="photo-grid">
     <div class="photo-polar">
-      <!-- Inline polar plot — 115° edge-lit PMMA IESNA semi-circle. -->
-      <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
-        <!-- Grid arcs -->
-        <g fill="none" stroke="#A6A4A0" stroke-width="0.4">
-          <path d="M 40 140 A 80 80 0 0 1 200 140"/>
-          <path d="M 60 140 A 60 60 0 0 1 180 140"/>
-          <path d="M 80 140 A 40 40 0 0 1 160 140"/>
-          <path d="M 100 140 A 20 20 0 0 1 140 140"/>
-        </g>
-        <!-- Spokes -->
-        <g stroke="#A6A4A0" stroke-width="0.4">
-          <line x1="120" y1="140" x2="40" y2="140"/>
-          <line x1="120" y1="140" x2="200" y2="140"/>
-          <line x1="120" y1="140" x2="120" y2="60"/>
-          <line x1="120" y1="140" x2="60" y2="80"/>
-          <line x1="120" y1="140" x2="180" y2="80"/>
-        </g>
-        <!-- 115° beam curve — edge-lit PMMA, semi-circle filled -->
-        <path d="M 120 140 L 42 88 Q 120 32 198 88 Z" fill="rgba(227,53,60,0.22)" stroke="#E3353C" stroke-width="1.4"/>
-        <!-- Axis labels -->
-        <text x="120" y="56" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70">0°</text>
-        <text x="48" y="76" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70">90°</text>
-        <text x="192" y="76" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70">90°</text>
-        <text x="120" y="160" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#0E0E10" font-weight="700">115° BEAM · EDGE-LIT PMMA</text>
-      </svg>
+      <img id="polarImg"
+           src="assets/photometrics/radius-ii_612_4000.svg"
+           alt="radius-ii photometric distribution — LM-79 tested"
+           style="width:100%; height:100%; object-fit:contain;" />
     </div>
 
     <div class="photo-summary">
@@ -851,6 +830,12 @@
   // --- AUTOFILL HERO IMAGE — Radius-II White-only ---
   var heroImg = document.getElementById('heroImg');
   if (heroImg) {
+
+  // Issue 6 — photometric polar plot: swap per size+CCT
+  var polarImg = document.getElementById('polarImg');
+  if (polarImg) {
+    polarImg.src = 'assets/photometrics/radius-ii_' + housing + '_' + cct + '.svg';
+  }
     heroImg.src = sd.heroImg;
     heroImg.alt = 'LDRS' + size + '-R2S5' + trim + ' Radius-II — ' + sd.in + '″ slim wafer recessed downlight, white finish, ' + trimLabel + ', edge-lit PMMA';
   }
