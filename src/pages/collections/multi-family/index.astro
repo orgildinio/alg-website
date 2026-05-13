@@ -1,5 +1,116 @@
 ---
-import CollectionPageLayout from '../../../layouts/CollectionPageLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CollectionStatStrip from '../../../components/collection/CollectionStatStrip.astro';
+import CollectionApplications from '../../../components/collection/CollectionApplications.astro';
+import CollectionRedBanner from '../../../components/collection/CollectionRedBanner.astro';
+import CollectionFeatured from '../../../components/collection/CollectionFeatured.astro';
+import CollectionAllFamilies from '../../../components/collection/CollectionAllFamilies.astro';
+import CollectionLegacy from '../../../components/collection/CollectionLegacy.astro';
+import CollectionGetStarted from '../../../components/collection/CollectionGetStarted.astro';
+import CollectionRelated from '../../../components/collection/CollectionRelated.astro';
+import CollectionAnchorNav from '../../../components/CollectionAnchorNav.astro';
 import data from '../../../data/collections/multifamily';
+const c = data;
+const anchorSections = [
+  { id: 'hero',         label: 'Overview'    },
+  { id: 'stats',        label: 'Quick stats' },
+  { id: 'applications', label: 'Applications'},
+  { id: 'highlights',   label: 'Featured'    },
+  { id: 'families',     label: 'All families'},
+  { id: 'legacy',       label: 'Legacy'      },
+  { id: 'get-started',  label: 'Get started' },
+  { id: 'related',      label: 'Related'     },
+];
 ---
-<CollectionPageLayout collection={data} />
+<BaseLayout title={`${c.titleAscii} | Archipelago Lighting Group`} description={c.description}>
+  <!-- Pagefind breadcrumb meta (invisible) -->
+  <span data-pagefind-meta={`breadcrumb:${c.parentVertical} > ${c.parentSubVertical} . ${c.name}`} data-pagefind-ignore="all" style="display:none"></span>
+  {c.searchKeywords && <span data-pagefind-meta={`keywords:${c.searchKeywords}`} data-pagefind-ignore="all" style="display:none"></span>}
+
+  <!-- CFG-MF-15: 4-segment breadcrumb — collection page variant -->
+  <nav class="mf-breadcrumb-band" aria-label="Breadcrumb">
+    <a href="https://staging.archipelagolighting.com/">HOME</a>
+    <span class="mf-bc-sep">›</span>
+    <span class="mf-bc-plain">PRODUCTS</span>
+    <span class="mf-bc-sep">›</span>
+    <a href="https://staging.archipelagolighting.com/collections/residential/">RESIDENTIAL</a>
+    <span class="mf-bc-sep mf-bc-sep-dot">·</span>
+    <span class="mf-bc-current">multi-f<span class="aa">Ⓐ</span>MILY</span>
+  </nav>
+
+  <!-- §2 HERO (inlined from CollectionHero — preserves all existing styles) -->
+  <section class="mf-collection-section mf-collection-section--hero" id="hero">
+    <div class="mf-collection-content">
+      <div class="mf-hero-eyebrow">RESIDENTIAL · MULTI-FAMILY COLLECTION</div>
+      <h1 class="mf-hero-wordmark" data-pagefind-weight="10" set:html={c.headlineLine}></h1>
+      <p class="mf-hero-desc" set:html={c.description}></p>
+      <div class="mf-hero-pills">
+        {c.pillRow.map((pill: string) => <span class="mf-hero-pill">{pill}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <CollectionStatStrip statStrip={c.statStrip} />
+  <CollectionApplications applications={c.applications} />
+  <CollectionRedBanner redBanner={c.redBanner} />
+  <CollectionFeatured
+    collectionName={c.name}
+    collectionSlug={c.slug}
+    featured={c.featured}
+    featuredHeadline={c.featuredHeadline}
+  />
+  <CollectionAllFamilies
+    collectionSlug={c.slug}
+    familiesHeadline={c.familiesHeadline}
+    familiesSubhead={c.familiesSubhead}
+  />
+  <CollectionLegacy legacy={c.legacy} />
+  <CollectionGetStarted getStarted={c.getStarted} />
+  <section aria-label="Safety &amp; Controls cross-promo" style="background:#111111;color:white;padding:4rem 2rem;">
+    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;">
+      <div>
+        <p style="font-family:'Lato',system-ui,sans-serif;font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:#F32740;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;"><span style="display:block;width:2rem;height:2px;background:#F32740;"></span>SAFETY &amp; CONTROLS</p>
+        <h2 style="font-weight:700;font-size:clamp(1.5rem,3vw,2rem);margin-bottom:0.75rem;">Looking for emergency drivers + advanced controls?</h2>
+        <p style="opacity:0.65;max-width:540px;line-height:1.6;">Safety &amp; Controls — const<span class="aa">Ⓐ</span>NT emergency egress + contr<span class="aa">Ⓐ</span>LS dimming, sensors, daylight harvesting.</p>
+      </div>
+      <a href="/solutions/safety-controls/" style="display:inline-flex;align-items:center;padding:0.75rem 1.5rem;background:#F32740;color:white;font-family:'Lato',system-ui,sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;white-space:nowrap;">LEARN MORE →</a>
+    </div>
+  </section>
+  <CollectionRelated relatedCollections={c.relatedCollections} />
+  <CollectionAnchorNav sections={anchorSections} />
+</BaseLayout>
+
+<style is:global>
+  .mf-breadcrumb-band {
+    padding: 10px 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #666;
+    background: var(--bg2, #f5f5f3);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .mf-breadcrumb-band a { color: #666; text-decoration: none; }
+  .mf-breadcrumb-band a:hover { color: #F32740; }
+  .mf-bc-sep { color: #c8ccd3; margin: 0 8px; }
+  .mf-bc-sep-dot { margin: 0 6px !important; }
+  .mf-bc-plain { color: #666; }
+  .mf-bc-current { color: #000; font-weight: 600; }
+  .mf-bc-current .aa { color: #F32740; }
+  .mf-collection-section--hero { background: #1a1f2e; color: #fff; }
+  .mf-collection-content { max-width: 1280px; margin-inline: auto; padding-inline: 32px; width: 100%; }
+  .mf-collection-section--hero .mf-collection-content { padding-top: 72px; padding-bottom: 80px; }
+  .mf-hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase; color: #F32740; margin-bottom: 24px; }
+  .mf-hero-wordmark { font-family: 'Lato', system-ui, sans-serif; font-size: clamp(72px, 10vw, 128px); font-weight: 900; letter-spacing: -0.03em; line-height: 0.95; color: #fff; margin: 0 0 28px; display: flex; align-items: baseline; flex-wrap: wrap; gap: 0; text-transform: none; }
+  .mf-hero-wordmark .aa { color: #F32740; font-size: inherit; font-weight: inherit; }
+  .mf-hero-desc { font-size: 1rem; line-height: 1.55; color: rgba(255,255,255,0.70); max-width: 920px; margin-bottom: 32px; }
+  @media (min-width: 1024px) { .mf-hero-desc { white-space: nowrap; overflow: visible; } }
+  .mf-hero-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .mf-hero-pill { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; border: 1px solid #F32740; border-radius: 2px; padding: 6px 14px; white-space: nowrap; }
+  @media (max-width: 767px) { .mf-hero-wordmark { font-size: clamp(52px, 14vw, 72px); } }
+</style>
