@@ -11,6 +11,7 @@
  *   - PRO+ tier badge
  *   - Links back to /collections/multi-family/
  *   - "Full PDP coming soon" notice
+ *   - §3 Motion section (2026-05-13)
  */
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 ---
@@ -38,9 +39,16 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   body.page-radius-safezone-pdp .footer-cta { display: none !important; }
   body.page-radius-safezone-pdp {
     --brand-red: #F32740;
+    --brand-red-deep: #c81835;
     --tier-proplus-bg: #2a1f10;
     --tier-proplus-border: rgba(255,196,87,0.45);
     --tier-proplus-color: #ffc457;
+    --bg-page: #FAFAFA;
+    --text-primary: #0E0E10;
+    --text-secondary: rgba(14,17,16,0.78);
+    --text-muted: rgba(14,17,16,0.55);
+    --line: rgba(0,0,0,0.08);
+    --line-medium: rgba(0,0,0,0.18);
   }
   .rsz-page {
     font-family: 'Lato', system-ui, sans-serif;
@@ -225,6 +233,130 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   .rsz-spec-table tr:last-child td { border-bottom: none; }
   .rsz-spec-table td:first-child { color: #888; font-size: 0.8rem; }
   .rsz-body { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+  /* ── §3 Motion section ── */
+  .motion-section {
+    background: var(--bg-page);
+    padding: 88px 0 96px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .motion-section .motion-player { margin: 12px 0 32px; }
+  .motion-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  .motion-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brand-red);
+    margin: 0 0 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .motion-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--brand-red);
+  }
+  .motion-title {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 38px;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+    margin: 0 0 18px 0;
+    color: var(--text-primary);
+  }
+  .motion-sub {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 720px;
+    margin: 0 0 28px 0;
+  }
+  .motion-player {
+    position: relative;
+    background: #000;
+    aspect-ratio: 16 / 9;
+    max-width: 1400px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .motion-player video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .motion-progress {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: rgba(255,255,255,0.18); z-index: 3;
+  }
+  .motion-progress-bar {
+    height: 100%; background: var(--brand-red);
+    width: 0; transition: width 60ms linear;
+  }
+  .motion-caption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 18px 28px 22px;
+    background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0) 100%);
+    color: #fff;
+    pointer-events: none;
+  }
+  .motion-caption-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 6px;
+  }
+  .motion-caption-title {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.25;
+    max-width: 760px;
+  }
+  .motion-dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .motion-dots button {
+    background: transparent;
+    border: 1px solid var(--line-medium);
+    color: var(--text-muted);
+    padding: 8px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.16s;
+    border-radius: 2px;
+  }
+  .motion-dots button.active {
+    background: var(--brand-red);
+    color: #fff;
+    border-color: var(--brand-red);
+  }
+  .motion-dots button:hover:not(.active) {
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+  }
+  @media (max-width: 720px) {
+    .motion-title { font-size: 28px; }
+    .motion-caption-title { font-size: 16px; }
+  }
 </style>
 
 <div class="rsz-page">
@@ -268,8 +400,8 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- Body -->
-  <div class="rsz-body">
+  <!-- §2 Pricing / Specs (stub) -->
+  <div class="rsz-body" id="pricing">
     <!-- Coming-soon notice + known specs -->
     <div class="rsz-coming-soon">
       <h2>Full product detail page coming soon.</h2>
@@ -306,9 +438,44 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
         </tbody>
       </table>
     </div>
+  </div>
 
-    <!-- Family band — same 8 families as other multi-family PDPs -->
-    <section aria-label="Other multi-fAMILY families" style="margin-top:3rem;padding-bottom:3rem;">
+  <!-- §3 Motion — Engineering In Motion (2026-05-13) -->
+  <section class="motion-section" id="motion" aria-label="Radius SafeZone in motion">
+
+    <div class="motion-inner">
+      <p class="motion-eyebrow">Engineering In Motion</p>
+      <h2 class="motion-title">See the Radius SafeZone in action.</h2>
+      <p class="motion-sub">
+        Two short clips covering the SafeZone story &mdash; the two-hour fire-rated assembly that holds the
+        ceiling&rsquo;s UL&nbsp;263 rating, and the plug-and-play J-Box install that keeps the
+        slim-wafer 5-minute spec on the project.
+      </p>
+    </div>
+
+    <!-- Full-bleed video player — edge to edge -->
+    <div class="motion-player">
+      <div class="motion-progress"><div class="motion-progress-bar" id="motionProgressBar"></div></div>
+      <video
+        id="motionVideo"
+        autoplay
+        muted
+        playsinline
+        preload="metadata"
+        poster=""
+      ></video>
+      <div class="motion-caption" id="motionCaption" aria-live="polite"></div>
+    </div>
+
+    <div class="motion-inner">
+      <div class="motion-dots" id="motionDots" role="tablist"></div>
+    </div>
+
+  </section>
+
+  <!-- §4 Family band — same 8 families as other multi-family PDPs -->
+  <div class="rsz-body">
+    <section aria-label="Other multi-fAMILY families" id="highlights" style="margin-top:3rem;padding-bottom:3rem;">
       <p style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:#F32740;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;">
         <span style="display:block;width:2rem;height:2px;background:#F32740;"></span>
         OTHER FAMILIES IN MULTI-F<span style="font-family:inherit;">Ⓐ</span>MILY
@@ -341,4 +508,97 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     </section>
   </div>
 </div>
+
+<script>
+// Section 3 — Motion video carousel (Radius SafeZone · 2 clips · 2026-05-13)
+(function() {
+  var clips = [
+    {
+      url:    '/assets/motion/radius-safezone-motion-1-fire-rated.mp4',
+      poster: '/assets/motion/radius-safezone-motion-1-poster.jpg',
+      tag:    '2-HOUR FIRE-RATED',
+      title:  'Two-hour fire-rated assembly. UL 263 + ASTM E119 compliant ceiling penetration.'
+    },
+    {
+      url:    '/assets/motion/radius-safezone-motion-2-jbox.mp4',
+      poster: '/assets/motion/radius-safezone-motion-2-poster.jpg',
+      tag:    'PLUG-N-PLAY J-BOX',
+      title:  'Remote J-Box + quick-connect cable. Slim wafer installs in under 5 minutes.'
+    }
+  ];
+  function init() {
+    var video    = document.getElementById('motionVideo');
+    var caption  = document.getElementById('motionCaption');
+    var dotsRow  = document.getElementById('motionDots');
+    var progress = document.getElementById('motionProgressBar');
+    if (!video || !caption || !dotsRow || !progress) return;
+    var idx = 0;
+    var ticker;
+    var DURATION = 7000; // 7s per clip auto-advance (matches the longer of the 2 clips)
+
+    function set(i) {
+      idx = (i + clips.length) % clips.length;
+      var c = clips[idx];
+      video.src    = c.url;
+      if (c.poster) video.poster = c.poster;
+      video.load();
+      var play = video.play();
+      if (play && typeof play.catch === 'function') play.catch(function(){});
+      caption.innerHTML =
+        '<div class="motion-caption-eyebrow">' + (idx + 1).toString().padStart(2, '0') + ' / ' +
+        clips.length.toString().padStart(2, '0') + ' · ' + c.tag + '</div>' +
+        '<div class="motion-caption-title">' + c.title + '</div>';
+      dotsRow.querySelectorAll('button').forEach(function(b, n) {
+        b.classList.toggle('active', n === idx);
+        b.setAttribute('aria-selected', n === idx ? 'true' : 'false');
+      });
+      progress.style.width = '0%';
+    }
+
+    // Build dots
+    dotsRow.innerHTML = clips.map(function(c, n) {
+      var num = (n + 1).toString().padStart(2, '0');
+      return '<button type="button" data-i="' + n + '" role="tab"' +
+             (n === 0 ? ' class="active" aria-selected="true"' : ' aria-selected="false"') +
+             '>' + num + ' &middot; ' + c.tag + '</button>';
+    }).join('');
+    dotsRow.querySelectorAll('button').forEach(function(b) {
+      b.addEventListener('click', function() {
+        clearInterval(ticker);
+        set(parseInt(b.dataset.i, 10));
+        startTicker();
+      });
+    });
+
+    // Progress bar — animates to 100% over the auto-advance window
+    function startTicker() {
+      var start = Date.now();
+      progress.style.width = '0%';
+      ticker = setInterval(function() {
+        var pct = Math.min(100, ((Date.now() - start) / DURATION) * 100);
+        progress.style.width = pct + '%';
+        if (pct >= 100) {
+          clearInterval(ticker);
+          set(idx + 1);
+          startTicker();
+        }
+      }, 60);
+    }
+
+    // If a clip fails to load, skip to next after a brief moment
+    video.addEventListener('error', function() {
+      clearInterval(ticker);
+      setTimeout(function() { set(idx + 1); startTicker(); }, 500);
+    });
+
+    set(0);
+    startTicker();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
 </BaseLayout>
