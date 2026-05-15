@@ -190,7 +190,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   body.page-gehry-pdp h1,
   body.page-gehry-pdp h2,
   body.page-gehry-pdp h3 { font-family: 'Sora', 'Lato', system-ui, sans-serif !important; }
-  body.page-gehry-pdp .footer-cta { display: none !important; }
   body {
     font-family: 'Lato', system-ui, -apple-system, sans-serif;
     line-height: 1.55;
@@ -367,10 +366,10 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     color: var(--tier-proplus-color);
   }
   .hero h2 {
-    font-size: 44px;
+    font-size: 32px;
     font-weight: 700;
-    line-height: 1.05;
-    margin: 16px 0 20px;
+    line-height: 1.1;
+    margin: 12px 0 16px;
     letter-spacing: -0.005em;
     /* white-space:nowrap removed 2026-05-08 — was causing the title to bleed
        under the hero image column when the title is long. Now wraps cleanly
@@ -1154,7 +1153,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   .tac-mesh-overlay {
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle at 1.2px 1.2px, rgba(243,39,64,0.78) 1.2px, transparent 1.6px);
+    background-image: radial-gradient(circle at 1.2px 1.2px, rgba(243,39,64,0.92) 1.5px, transparent 2px);
     background-size: 14px 14px;
     -webkit-mask-image: radial-gradient(circle at 25% 50%,
       black 0%,
@@ -1261,17 +1260,17 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     background: var(--brand-red);
   }
   .tac-title {
-    font-size: 44px;
+    font-size: 36px;
     font-weight: 700;
-    line-height: 1.05;
+    line-height: 1.08;
     letter-spacing: -0.005em;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
   }
   .tac-desc {
-    font-size: 15.5px;
+    font-size: 14.5px;
     color: var(--text-secondary);
-    line-height: 1.65;
-    margin-bottom: 28px;
+    line-height: 1.6;
+    margin-bottom: 20px;
   }
   /* Callout block — button-styled, multi-platform-ready */
   .tac-callout {
@@ -3403,9 +3402,9 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
       </p>
 
       <div class="hero-stats">
-        <span><strong>Lamp envelope:</strong> PAR30/38 · R30 · BR30/40 · A19 (up to 75W)</span>
+        <span><strong>Light Sources:</strong> Retrofit LED Downlight, E26-Base Lamps</span>
         <span><strong>Ceiling:</strong> 1/2&Prime;&ndash;1-3/8&Prime; adj.</span>
-        <span><strong>Joist:</strong> 24&Prime; (12&Prime; field-shortenable)</span>
+        <span><strong>Joist:</strong> 12-24&Prime; (adjustable)</span>
       </div>
 
       <div class="ideal-card">
@@ -3413,10 +3412,10 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
         <div class="ideal-tiles">
           <div class="ideal-tile">
             <div class="ideal-icon">
-              <svg viewBox="0 0 32 32″ fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 16 L16 4 L28 16"/>
-                <path d="M6 14 L6 28 L26 28 L26 14"/>
-                <rect x="13" y="18" width="6" height="10"/>
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 16 L16 4 L28 16" fill="none"/>
+                <path d="M6 14 L6 28 L26 28 L26 14" fill="none"/>
+                <rect x="13" y="18" width="6" height="10" fill="none"/>
                 <line x1="10" y1="22" x2="12" y2="22"/>
                 <line x1="20" y1="22" x2="22" y2="22"/>
               </svg>
@@ -3765,7 +3764,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
             <span class="meta-stat-sub">+ R30 · A19 · BR30 · BR40 · LED retrofit</span>
           </div>
         </div>
-      </div>
 
       <div>
         <div class="spec-meta-key">Finish</div>
@@ -3773,12 +3771,22 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <div class="finish-swatches">
             <div class="finish-swatch fs-silver" title="Aluminum"></div>
           </div>
+
+      <div>
+        <div class="spec-meta-key">Warranty</div>
+        <div class="meta-stat">
+          <div class="meta-stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22 a10 10 0 1 1 10-10"/>
+              <polyline points="22 6 22 12 16 12"/>
+              <polyline points="9 12 12 15 17 9"/>
+            </svg>
+          </div>
           <div class="meta-stat-text">
-            <span class="meta-stat-num">Aluminum</span>
-            <span class="meta-stat-sub">die-formed · unbadged</span>
+            <span class="meta-stat-num">5 yr · 50k hr</span>
+            <span class="meta-stat-sub">L70 lifetime</span>
           </div>
         </div>
-      </div>
 
       <div>
         <div class="spec-meta-key">Construction</div>
@@ -3801,7 +3809,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
             <span class="meta-stat-sub">+ pre-installed bar hangers + J-Box</span>
           </div>
         </div>
-      </div>
 
       <div>
         <div class="spec-meta-key">Location Rating</div>
@@ -3817,24 +3824,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
             <span class="meta-stat-sub">indoor only · NOT outdoor wet</span>
           </div>
         </div>
-      </div>
-
-      <div>
-        <div class="spec-meta-key">Warranty</div>
-        <div class="meta-stat">
-          <div class="meta-stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22 a10 10 0 1 1 10-10"/>
-              <polyline points="22 6 22 12 16 12"/>
-              <polyline points="9 12 12 15 17 9"/>
-            </svg>
-          </div>
-          <div class="meta-stat-text">
-            <span class="meta-stat-num">5 yr · 50k hr</span>
-            <span class="meta-stat-sub">L70 lifetime</span>
-          </div>
-        </div>
-      </div>
 
     </div>
 
@@ -3849,9 +3838,9 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
             <table class="spec-table" id="specTable">
               <thead>
                 <tr>
-                  <th>Lamp Type</th>
+                  <th>Light Source</th>
                   <th>Max Wattage</th>
-                  <th>Base Path</th>
+                  <th>Base</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -4460,7 +4449,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
               <td>10W / 15W</td>
               <td>856 / 1,150 lm</td>
               <td>100&deg; wide-flood</td>
-              <td><a href="https://workdrive.archipelagolighting.com/external/6d298bb2d56fc5a39bb1e25265aa9aadc9875525bf78f0a5421131b22d9fe434" target="_blank" rel="noopener" style="color:var(--brand-red);">Live (10 IES)</a></td>
+              <td><a href="https://workdrive.archipelagolighting.com/external/6d298bb2d56fc5a39bb1e25265aa9aadc9875525bf78f0a5421131b22d9fe434" target="_blank" rel="noopener" style="color:var(--brand-red); font-weight:700;">IES Download</a></td>
               <td><a href="https://workdrive.archipelagolighting.com/external/f85531794c0da1dc848e3037781aa1c19322c21c93a074d4d85c74792b5f83ba" target="_blank" rel="noopener" style="color:var(--brand-red); font-weight:700;">↓ Datasheet</a></td>
             </tr>
             <tr>
@@ -4468,7 +4457,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
               <td>10W / 15W</td>
               <td>720 / 1,193 lm</td>
               <td>60&deg; gimbal &middot; 60&deg; tilt + 360&deg; rot</td>
-              <td>URL pending</td>
+              <td style="color:var(--text-muted); font-style:italic;">Pending</td>
               <td><a href="https://workdrive.archipelagolighting.com/external/668f4316a802c0182814c58dbef7f987ba01d2d73117eaba0fa8dda5a0b90d1f" target="_blank" rel="noopener" style="color:var(--brand-red); font-weight:700;">↓ Datasheet</a></td>
             </tr>
             <tr>
@@ -4476,7 +4465,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
               <td>10W / 15W</td>
               <td>600 / 910 lm</td>
               <td>120&deg; wide-flood (back-lit)</td>
-              <td>WorkDrive (10 IES)</td>
+              <td><a href="https://workdrive.archipelagolighting.com" target="_blank" rel="noopener" style="color:var(--brand-red); font-weight:700;">IES Download</a></td>
               <td><a href="#" data-doc-url-pending="LSMT-eCrescent-Datasheet.pdf" style="color:var(--brand-red); font-weight:700;">↓ Datasheet</a></td>
             </tr>
             <tr>
@@ -4500,7 +4489,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
               <td>10W / 15W / 18W</td>
               <td>790 / 1,185 / 1,510 lm</td>
               <td>120&deg; edge-lit puck (IP65 · black)</td>
-              <td>WorkDrive (15 IES)</td>
+              <td><a href="https://workdrive.archipelagolighting.com" target="_blank" rel="noopener" style="color:var(--brand-red); font-weight:700;">IES Download</a></td>
               <td><a href="#" data-doc-url-pending="LDLL-LunarEclipse-Datasheet.pdf" style="color:var(--brand-red); font-weight:700;">↓ Datasheet</a></td>
             </tr>
           </tbody>
@@ -5507,19 +5496,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     </div>
   </div>
 
-  <!-- 10C — Final red CTA strip ================================================ -->
-  <div class="closing-cta-strip">
-    <div class="closing-cta-strip-inner">
-      <div class="closing-cta-msg">
-        Need a quote, layout, sample, or rebate match?
-        <strong>We respond same business day.</strong>
-      </div>
-      <div class="closing-cta-buttons">
-        <a href="/contact/" class="closing-cta-btn outline">Contact Sales</a>
-        <a href="/contact/?type=layout" class="closing-cta-btn outline">Request Layout</a>
-      </div>
-    </div>
-  </div>
+  <!-- CTA strip rendered by shared Footer component -->
 
 </section>
 
@@ -5672,22 +5649,18 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 (function() {
   var data = {
     '4': [
-      { lamp: 'RL Series LED Module', watt: 'per module', base: 'E26 + T24', note: 'multi-fⒶMILY native pair ★', def: true  },
-      { lamp: 'PAR30 (LED)',          watt: '12W',  base: 'E26 + T24', note: 'JA8-capable · universal lamp',    def: false },
-      { lamp: 'PAR30 (Incandescent)', watt: '75W',  base: 'E26 only',  note: 'Datasheet photometric baseline',  def: false },
-      { lamp: 'R30',                  watt: '75W',  base: 'E26 only',  note: '&mdash;',                          def: false },
-      { lamp: 'BR30',                 watt: '65W',  base: 'E26 only',  note: '&mdash;',                          def: false },
-      { lamp: 'A19',                  watt: '60W',  base: 'E26 only',  note: '&mdash;',                          def: false }
+      { lamp: 'LDRR4',  watt: '10W',       base: 'T.24 QuickConnect', note: 'multi-fⒶMILY Native Pair ★', def: true  },
+      { lamp: 'LDGR4',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
+      { lamp: 'LSMT4',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
+      { lamp: 'LDRS4',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
+      { lamp: 'LDLL4',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false }
     ],
     '6': [
-      { lamp: 'RL Series LED Module', watt: 'per module', base: 'E26 + T24', note: 'multi-fⒶMILY native pair ★', def: true  },
-      { lamp: 'PAR30 (LED)',          watt: '12W',  base: 'E26 + T24', note: 'JA8-capable · universal lamp',    def: false },
-      { lamp: 'PAR30 (Incandescent)', watt: '75W',  base: 'E26 only',  note: 'Datasheet photometric baseline',  def: false },
-      { lamp: 'PAR38',                watt: '75W',  base: 'E26 only',  note: 'CRC6 only (large flood)',         def: false },
-      { lamp: 'R30',                  watt: '75W',  base: 'E26 only',  note: '&mdash;',                          def: false },
-      { lamp: 'BR30',                 watt: '65W',  base: 'E26 only',  note: '&mdash;',                          def: false },
-      { lamp: 'BR40',                 watt: 'per lamp', base: 'E26 only', note: 'CRC6 only (large reflector)', def: false },
-      { lamp: 'A19',                  watt: '60W',  base: 'E26 only',  note: '&mdash;',                          def: false }
+      { lamp: 'LDRR6',  watt: '15W',       base: 'T.24 QuickConnect', note: 'multi-fⒶMILY Native Pair ★', def: true  },
+      { lamp: 'LDGR6',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
+      { lamp: 'LSMT6',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
+      { lamp: 'LDRS6',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
+      { lamp: 'LDLL6',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false }
     ]
   };
   // Dimensions per CRC6-Gehry-Datasheet.pdf page 2 § Sizing & Measurements.
