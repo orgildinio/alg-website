@@ -669,30 +669,34 @@ const skusJson = JSON.stringify(skus);
     border-color: rgba(255,255,255,0.18);
     box-shadow: 0 6px 24px rgba(0,0,0,0.3);
   }
-  /* Fix 1 · SafeZone fire-rated tile — subtle ember radial gradient */
+  /* SafeZone fire-rated tile — vivid fire glow from below */
   .fam-card[data-family="Radius SafeZone"] {
     background:
-      radial-gradient(ellipse 80% 60% at 50% 110%,
-        rgba(255, 99, 32, 0.18) 0%,
-        rgba(255, 60, 30, 0.08) 30%,
-        rgba(20, 23, 27, 0) 65%),
-      radial-gradient(ellipse 60% 40% at 50% 90%,
-        rgba(243, 39, 64, 0.10) 0%,
+      radial-gradient(ellipse 70% 50% at 50% 115%,
+        rgba(255, 160, 30, 0.72) 0%,
+        rgba(255, 80, 10, 0.50) 25%,
+        rgba(200, 30, 10, 0.28) 50%,
+        rgba(20, 23, 27, 0) 75%),
+      radial-gradient(ellipse 90% 40% at 50% 100%,
+        rgba(220, 40, 10, 0.35) 0%,
         rgba(20, 23, 27, 0) 70%),
-      linear-gradient(180deg, #1a1518 0%, #14171b 50%, #1a1216 100%);
+      linear-gradient(180deg, #14171b 0%, #16110e 60%, #1e0d06 100%);
+    border-color: rgba(255, 100, 20, 0.35);
+    box-shadow: 0 4px 20px rgba(220, 80, 10, 0.25);
   }
   .fam-card[data-family="Radius SafeZone"]:hover {
     background:
-      radial-gradient(ellipse 80% 60% at 50% 105%,
-        rgba(255, 99, 32, 0.22) 0%,
-        rgba(255, 60, 30, 0.10) 30%,
-        rgba(20, 23, 27, 0) 65%),
-      radial-gradient(ellipse 60% 40% at 50% 85%,
-        rgba(243, 39, 64, 0.13) 0%,
+      radial-gradient(ellipse 70% 55% at 50% 112%,
+        rgba(255, 175, 40, 0.85) 0%,
+        rgba(255, 90, 10, 0.60) 25%,
+        rgba(200, 30, 10, 0.35) 50%,
+        rgba(20, 23, 27, 0) 75%),
+      radial-gradient(ellipse 90% 45% at 50% 98%,
+        rgba(220, 40, 10, 0.45) 0%,
         rgba(20, 23, 27, 0) 70%),
-      linear-gradient(180deg, #1a1518 0%, #14171b 50%, #1a1216 100%);
-    border-color: rgba(243, 99, 32, 0.30);
-    box-shadow: 0 6px 24px rgba(180, 60, 20, 0.20);
+      linear-gradient(180deg, #14171b 0%, #16110e 60%, #1e0d06 100%);
+    border-color: rgba(255, 120, 20, 0.55);
+    box-shadow: 0 6px 32px rgba(220, 80, 10, 0.40);
   }
   .fc-top {
     display: flex;
