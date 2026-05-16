@@ -750,8 +750,9 @@
   // Canonical params: sku · housing · wattage · finish (always B)
   //                 + companion: emergency · sensor (no bilevel · no jbx)
   var params = new URLSearchParams(window.location.search);
-  var sku       = params.get('sku')       || 'LDLL0918-LE1S5/B';
-  var housing   = params.get('housing')   || '0918';
+  var sku       = params.get('sku')       || 'LDLL09-LE1S5/B';
+  var housing   = params.get('housing')   || '09';
+  var pack      = params.get('pack')      || 'SINGLE';
   var finish    = params.get('finish')    || 'B';
   var emergency = params.get('emergency') || '';
   var sensor    = params.get('sensor')    || '';
@@ -762,11 +763,11 @@
   // calibrated 120° wide-flood cosine model (lumens / π).
   // Carton: 12-pack for 5″ · 6-pack for 7/9″ (Datasheet p.4).
   var sizeData = {
-    '0510': { in: 5, watt: 10, lumens: '790',   lpw: '79', peak: '252', diameter: '5.71″ (145mm)', depth: '0.98″', carton: '12-pack' },
-    '0715': { in: 7, watt: 15, lumens: '1,185', lpw: '79', peak: '377', diameter: '7.48″ (190mm)', depth: '1.10″', carton: '6-pack'  },
-    '0918': { in: 9, watt: 18, lumens: '1,510', lpw: '84', peak: '481', diameter: '8.86″ (225mm)', depth: '1.10″', carton: '6-pack'  }
+    '05': { in: 5, watt: 10, lumens: '790',   lpw: '79', peak: '252', diameter: '5.71″ (145mm)', depth: '0.98″', carton: '12-pack' },
+    '07': { in: 7, watt: 15, lumens: '1,185', lpw: '79', peak: '377', diameter: '7.48″ (190mm)', depth: '1.10″', carton: '6-pack'  },
+    '09': { in: 9, watt: 18, lumens: '1,510', lpw: '84', peak: '481', diameter: '8.86″ (225mm)', depth: '1.10″', carton: '6-pack'  }
   };
-  var sd = sizeData[housing] || sizeData['0918'];
+  var sd = sizeData[housing] || sizeData['09'];
 
   // --- AUTOFILL CATALOG NUMBER (4 page headers + project info form + control bar) ---
   document.querySelectorAll('#catNum, #catNum2, #catNum3, #catNum4, #liveSku').forEach(function(el) {
@@ -810,7 +811,11 @@
   var specCutout = document.getElementById('specCutout'); if (specCutout) specCutout.textContent = '— (no cut-out · mounts on standard 2.75″ or 3.50″ J-box)';
   var specRecess = document.getElementById('specRecess'); if (specRecess) specRecess.textContent = '0″ (surface-mount · flush)';
   var specDepth  = document.getElementById('specDepth');  if (specDepth)  specDepth.textContent  = sd.depth + ' (overall puck depth)';
-  var specWeight = document.getElementById('specWeight'); if (specWeight) specWeight.textContent = sd.carton + ' contractor carton (per Datasheet p.4)';
+  var specWeight = document.getElementById('specWeight');
+  if (specWeight) {
+    var packLabel = pack === '24PK' ? '24-pack contractor carton' : (sd.carton + ' (single-unit standard)');
+    specWeight.textContent = packLabel + ' (per Datasheet p.4)';
+  }
   var mountStd   = document.getElementById('mountStd');   if (mountStd)   mountStd.textContent   = '2.75″ standard J-box';
   var mountT24   = document.getElementById('mountT24');   if (mountT24)   mountT24.textContent   = '3.50″ standard J-box';
   var dimTopW    = document.getElementById('dimTopWidth');if (dimTopW)    dimTopW.textContent    = 'Ø ' + sd.diameter;

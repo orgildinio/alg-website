@@ -3727,9 +3727,9 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     <div class="spec-body">
       <div class="spec-body-left">
         <div class="spec-watt-tabs" role="tablist">
-          <button type="button" class="spec-watt-tab active" data-w="0510" role="tab" aria-selected="true">LDLL0510 · 5&Prime; · 10W</button>
-          <button type="button" class="spec-watt-tab" data-w="0715" role="tab" aria-selected="false">LDLL0715 · 7&Prime; · 15W</button>
-          <button type="button" class="spec-watt-tab" data-w="0918" role="tab" aria-selected="false">LDLL0918 · 9&Prime; · 18W</button>
+          <button type="button" class="spec-watt-tab active" data-w="05" role="tab" aria-selected="true">LDLL05 · 5&Prime; · 10W</button>
+          <button type="button" class="spec-watt-tab" data-w="07" role="tab" aria-selected="false">LDLL07 · 7&Prime; · 15W</button>
+          <button type="button" class="spec-watt-tab" data-w="09" role="tab" aria-selected="false">LDLL09 · 9&Prime; · 18W</button>
         </div>
         <div class="spec-table-wrap-outer">
           <div class="spec-table-wrap">
@@ -3747,7 +3747,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
                 <!-- populated by JS based on active model -->
               </tbody>
             </table>
-            <div class="spec-table-foot">★ <em>Peak-efficacy CCT · 5-CCT dip-switch on the back of the housing — change CCT in the field without a SKU swap. <strong>LDLL0918 hits 84 lm/W</strong> at 4000K — Lunar Eclipse peak efficacy across the 3-size ladder. CRI &ge;90 across the entire matrix; R9 inferred via JA8-2022 listing.</em></div>
+            <div class="spec-table-foot">★ <em>Peak-efficacy CCT · 5-CCT dip-switch on the back of the housing — change CCT in the field without a SKU swap. <strong>LDLL09 hits 84 lm/W</strong> at 4000K — Lunar Eclipse peak efficacy across the 3-size ladder. CRI &ge;90 across the entire matrix; R9 inferred via JA8-2022 listing.</em></div>
           </div>
         </div>
       </div>
@@ -4545,31 +4545,23 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <div class="cfg-field" data-field="housing" style="grid-column: 1 / -1;">
             <div class="cfg-field-label">Aperture &amp; Wattage <span class="req">*</span></div>
             <div class="cfg-chips">
-              <button type="button" class="cfg-chip" data-field="housing" data-val="0510" data-code="0510">
+              <button type="button" class="cfg-chip" data-field="housing" data-val="05" data-code="05">
                 <span class="cfg-chip-stock qs">QS</span>
                 <span class="cfg-chip-val">5&Prime; · 10W</span>
                 <span class="cfg-chip-code">LDLL0510</span>
               </button>
-              <button type="button" class="cfg-chip" data-field="housing" data-val="0715" data-code="0715">
+              <button type="button" class="cfg-chip" data-field="housing" data-val="07" data-code="07">
                 <span class="cfg-chip-stock qs">QS</span>
                 <span class="cfg-chip-val">7&Prime; · 15W</span>
                 <span class="cfg-chip-code">LDLL0715</span>
               </button>
-              <button type="button" class="cfg-chip" data-field="housing" data-val="0918" data-code="0918">
+              <button type="button" class="cfg-chip" data-field="housing" data-val="09" data-code="09">
                 <span class="cfg-chip-stock qs">QS</span>
                 <span class="cfg-chip-val">9&Prime; · 18W</span>
                 <span class="cfg-chip-code">LDLL0918</span>
               </button>
-              <button type="button" class="cfg-chip" data-field="housing" data-val="1121" data-code="1121">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">11&Prime; · 21W ★</span>
-                <span class="cfg-chip-code">LDLL0918</span>
-              </button>
-              <button type="button" class="cfg-chip" data-field="housing" data-val="1324" data-code="1324">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">13&Prime; · 24W</span>
-                <span class="cfg-chip-code">LDLL0918</span>
-              </button>
+              
+              
             </div>
           </div>
 
@@ -4591,6 +4583,24 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 
           <!-- (Shape field removed — Lunar Eclipse ships Round only · no Square variant.
                That's an Eclipse-II differentiator. Same for Finish: Lunar Eclipse is Black-only.) -->
+
+          <!-- Pack Configuration — Required -->
+          <div class="cfg-field" data-field="pack" style="grid-column: 1 / -1;">
+            <div class="cfg-field-label">Pack Configuration <span class="req">*</span></div>
+            <div class="cfg-chips">
+              <button type="button" class="cfg-chip" data-field="pack" data-val="SINGLE" data-code="">
+                <span class="cfg-chip-stock qs">QS</span>
+                <span class="cfg-chip-val">Single Unit &#9733;</span>
+                <span class="cfg-chip-code">Standard</span>
+              </button>
+              <button type="button" class="cfg-chip" data-field="pack" data-val="24PK" data-code="24PK">
+                <span class="cfg-chip-stock qs">QS</span>
+                <span class="cfg-chip-val">24-Pack Carton</span>
+                <span class="cfg-chip-code">+ /24PK</span>
+              </button>
+            </div>
+            <div class="cfg-field-notes" style="margin-top:6px; font-size:10px; color:var(--text-muted); letter-spacing:0.04em;">Single unit ships individually. 24-pack contractor carton available for bulk orders.</div>
+          </div>
 
         </div>
       </div>
@@ -4893,7 +4903,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           </div>
         </div>
         <div class="docs-card-title">IES Photometric Library</div>
-        <div class="docs-card-desc">Shared IES bundle for the LDLL family (Eclipse-II + Lunar Eclipse use the same edge-lit PMMA optic). Tested by EVERFINE GO-2000B-V1 system, manufacturer KOK. Use the 5/7/9&Prime; files for Lunar Eclipse; the 11/13&Prime; files apply to Eclipse-II only. Drop into AGi32, Visual, DIALux, or Revit for layout simulation.</div>
+        <div class="docs-card-desc">Shared IES bundle for the LDLL family (Eclipse-II + Lunar Eclipse use the same edge-lit PMMA optic). Tested by EVERFINE GO-2000B-V1 system, manufacturer KOK. Use the 5/7/9&Prime; files for Lunar Eclipse; the 11/13&Prime; files apply to Eclipse-II only. (Lunar Eclipse ships 3 sizes only — 5/7/9&Prime;.) Drop into AGi32, Visual, DIALux, or Revit for layout simulation.</div>
         <div class="docs-card-foot">
           <span class="docs-card-cta">
             Download
@@ -4903,7 +4913,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
         </div>
       </a>
 
-      <a href="submittal_lunar-eclipse.html?sku=LDLL0918-LE1S5/B" target="_blank" rel="noopener" class="docs-card">
+      <a href="submittal_lunar-eclipse.html?sku=LDLL09-LE1S5/B" target="_blank" rel="noopener" class="docs-card">
         <div class="docs-card-head">
           <div class="docs-card-icon">
             <!-- Document with stamp icon -->
@@ -5476,21 +5486,21 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 // 4000K is the bold (default) row per Datasheet footnote.
 (function() {
   var data = {
-    '0510': [
+    '05': [
       { watt: '10W', lumens: '710 lm',   lpw: '71 lm/W', cct: '2700K', volt: '120Vac', def: false },
       { watt: '10W', lumens: '730 lm',   lpw: '73 lm/W', cct: '3000K', volt: '120Vac', def: false },
       { watt: '10W', lumens: '780 lm',   lpw: '78 lm/W', cct: '3500K', volt: '120Vac', def: false },
       { watt: '10W', lumens: '790 lm ★', lpw: '79 lm/W', cct: '4000K', volt: '120Vac', def: true  },
       { watt: '10W', lumens: '760 lm',   lpw: '76 lm/W', cct: '5000K', volt: '120Vac', def: false }
     ],
-    '0715': [
+    '07': [
       { watt: '15W', lumens: '1,065 lm',   lpw: '71 lm/W', cct: '2700K', volt: '120Vac', def: false },
       { watt: '15W', lumens: '1,095 lm',   lpw: '73 lm/W', cct: '3000K', volt: '120Vac', def: false },
       { watt: '15W', lumens: '1,140 lm',   lpw: '76 lm/W', cct: '3500K', volt: '120Vac', def: false },
       { watt: '15W', lumens: '1,185 lm ★', lpw: '79 lm/W', cct: '4000K', volt: '120Vac', def: true  },
       { watt: '15W', lumens: '1,125 lm',   lpw: '75 lm/W', cct: '5000K', volt: '120Vac', def: false }
     ],
-    '0918': [
+    '09': [
       { watt: '18W', lumens: '1,420 lm',   lpw: '79 lm/W', cct: '2700K', volt: '120Vac', def: false },
       { watt: '18W', lumens: '1,440 lm',   lpw: '80 lm/W', cct: '3000K', volt: '120Vac', def: false },
       { watt: '18W', lumens: '1,495 lm',   lpw: '83 lm/W', cct: '3500K', volt: '120Vac', def: false },
@@ -5501,9 +5511,9 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   // Dimensions per Lunar Eclipse Datasheet § Sizing & Measurements (page 4).
   // Note Lunar Eclipse is THICKER than Eclipse-II in the same sizes (0.98-1.10″ vs 0.79-0.98″)
   var dims = {
-    '0510': { diam: '5.71″ (145mm)', depth: '0.98″', sku: 'LDLL0510-LE1' },
-    '0715': { diam: '7.48″ (190mm)', depth: '1.10″', sku: 'LDLL0715-LE1' },
-    '0918': { diam: '8.86″ (225mm)', depth: '1.10″', sku: 'LDLL0918-LE1' }
+    '05': { diam: '5.71″ (145mm)', depth: '0.98″', sku: 'LDLL05-LE1' },
+    '07': { diam: '7.48″ (190mm)', depth: '1.10″', sku: 'LDLL07-LE1' },
+    '09': { diam: '8.86″ (225mm)', depth: '1.10″', sku: 'LDLL09-LE1' }
   };
   var tbody = document.getElementById('specTableBody');
   var tabs = document.querySelectorAll('.spec-watt-tab');
@@ -5976,7 +5986,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   // Companion pairings (separate SKU, not part of fixture order code):
   //   emergency (6 const⒝NT EMBs) · sensor (4 contr⒝LS by ⒝CS) ·
   //   bilevel (LDLL-E2/MSP/W · 7/9″ only) · jbx (LDLL-E2/JBX · any size).
-  var REQUIRED  = ['housing', 'finish'];
+  var REQUIRED  = ['housing', 'finish', 'pack'];
   var OPTIONAL  = ['emergency', 'sensor'];
   // No multi-select fields — every chip group on Lunar Eclipse is single-pick.
   var MULTI     = [];
@@ -5994,9 +6004,10 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   //   finish      /{W|B}                 — leading slash
   // SKU_ORDER drives the segment order after the prefix+housing+LE1S5 block.
   // Lunar Eclipse: just /B (Black only · single finish · no shape segment).
-  var SKU_ORDER = ['finish'];
+  var SKU_ORDER = ['finish', 'pack'];
   var SEP = {
-    finish: '/'
+    finish: '/',
+    pack: '/'
   };
 
   // Lookup tables for live spec computation. Per Lunar Eclipse Datasheet § Model
@@ -6005,9 +6016,9 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   // not per-cell; back-calculated 4000K efficacy is 79-84 lm/W.
   var SPEC_TABLE = {
     housing: {
-      '0510': { name: '5″ · 10W', wattage: '10W', lumens: '790 lm @ 4000K',   lpw: '79 lm/W' },
-      '0715': { name: '7″ · 15W', wattage: '15W', lumens: '1,185 lm @ 4000K', lpw: '79 lm/W' },
-      '0918': { name: '9″ · 18W', wattage: '18W', lumens: '1,510 lm @ 4000K', lpw: '84 lm/W' }
+      '05': { name: '5″ · 10W', wattage: '10W', lumens: '790 lm @ 4000K',   lpw: '79 lm/W' },
+      '07': { name: '7″ · 15W', wattage: '15W', lumens: '1,185 lm @ 4000K', lpw: '79 lm/W' },
+      '09': { name: '9″ · 18W', wattage: '18W', lumens: '1,510 lm @ 4000K', lpw: '84 lm/W' }
     },
     finish: {
       'B': 'Black'
@@ -6136,7 +6147,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
         // Fixed family designators: -LE1S5 (Lunar Eclipse-1 + 5-CCTselect).
         html += '-LE1S5';
       } else {
-        html += '<span class="placeholder">[0510|0715|0918]</span>-LE1S5';
+        html += '<span class="placeholder">[05|07|09]</span>-LE1S5';
       }
 
       // Walk SKU_ORDER — Lunar Eclipse only has /finish (always /B).
@@ -6160,7 +6171,8 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     }
     function placeholderFor(k) {
       return ({
-        finish: '[B]'
+        finish: '[B]',
+        pack: '[SINGLE|24PK]'
       })[k] || '[' + k.toUpperCase() + ']';
     }
 

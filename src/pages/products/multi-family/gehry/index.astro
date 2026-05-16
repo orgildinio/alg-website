@@ -3854,6 +3854,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
                 <!-- populated by JS based on active size -->
               </tbody>
             </table>
+            <div class="spec-table-foot" style="margin-top:4px;">¹ <em>LDLL (Lunar Eclipse) smallest size is 5″ — does not natively fit the 4″ or 6″ Gehry housing aperture. Use a 4″→5″ reducer ring (4″ tab) or 6″→7″ reducer ring (6″ tab) for a compatible install. No T.24 QuickConnect path — LDLL uses standard E26 socket via the reducer adapter.</em></div>
             <div class="spec-table-foot">★ <em>Photometric reference baseline = <strong>75W PAR30 incandescent lamp</strong> per Datasheet page 2. The actual installed footcandles with a modern 12W LED PAR30 will be ~16% of these values (12W &divide; 75W). For LED-paired install photometric data, see the <a href="#family">multi-f<span class="aa">Ⓐ</span>MILY LED retrofit module family</a> &mdash; eCrescent / Radius-II / Eclipse-II / Lunar Eclipse all drop into the Gehry housing.</em></div>
             <div class="spec-table-foot" style="margin-top:6px; font-style:italic; color:var(--text-muted); font-size:11px;">Datasheet honesty markers: wordmark says <strong>planoARCH</strong> but Active_SKUs Collection = <strong>multi-f<span class="aa">Ⓐ</span>MILY</strong> (consistent family error · Active_SKUs wins); housing material = <strong>die-formed aluminum</strong> per newer Datasheet (older 2023 QuickSheet says "steel" &mdash; flagged for engineering reconciliation); HQ address typo on Datasheet ("7345 Sycamore" should be <strong>9345 Sycamore</strong> per all other multi-f<span class="aa">Ⓐ</span>MILY collateral); photometric data = 75W PAR30 incandescent reference, 30+ years stale &mdash; modern LED install delivers ~16% of these footcandles.</div>
           </div>
@@ -5655,18 +5656,18 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 (function() {
   var data = {
     '4': [
-      { lamp: 'LDRR4',  watt: '10W',       base: 'T.24 QuickConnect', note: 'multi-fⒶMILY Native Pair ★', def: true  },
-      { lamp: 'LDGR4',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
-      { lamp: 'LSMT4',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
-      { lamp: 'LDRS4',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
-      { lamp: 'LDLL4',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false }
+      { lamp: 'LDRR4',  watt: '10W',  base: 'T.24 QuickConnect', note: 'multi-fⒶMILY Native Pair ★', def: true  },
+      { lamp: 'LDGR4',  watt: '10W',  base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
+      { lamp: 'LSMT4',  watt: '10W',  base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
+      { lamp: 'LDRS4',  watt: '9W',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
+      { lamp: 'LDLL¹',  watt: '&mdash;', base: '&mdash;',           note: 'closest fit: LDLL05 5″ via reducer ring ¹', def: false }
     ],
     '6': [
-      { lamp: 'LDRR6',  watt: '15W',       base: 'T.24 QuickConnect', note: 'multi-fⒶMILY Native Pair ★', def: true  },
-      { lamp: 'LDGR6',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
-      { lamp: 'LSMT6',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
-      { lamp: 'LDRS6',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
-      { lamp: 'LDLL6',  watt: '&mdash;',   base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false }
+      { lamp: 'LDRR6',  watt: '15W',  base: 'T.24 QuickConnect', note: 'multi-fⒶMILY Native Pair ★', def: true  },
+      { lamp: 'LDGR6',  watt: '15W',  base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
+      { lamp: 'LSMT6',  watt: '15W',  base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
+      { lamp: 'LDRS6',  watt: '12W',  base: 'T.24 QuickConnect', note: 'multi-fⒶMILY',                  def: false },
+      { lamp: 'LDLL¹',  watt: '&mdash;', base: '&mdash;',           note: 'closest fit: LDLL07 7″ via 6″→7″ reducer ¹', def: false }
     ]
   };
   // Dimensions per CRC6-Gehry-Datasheet.pdf page 2 § Sizing & Measurements.

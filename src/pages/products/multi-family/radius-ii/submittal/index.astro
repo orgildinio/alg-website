@@ -793,6 +793,7 @@
   var sensor    = params.get('sensor')    || '';
   var tgrid     = params.get('tgrid')     || '';
   var dimmer    = params.get('dimmer')    || '';
+  var pack      = params.get('pack')      || 'SINGLE';
   var autoprint = params.get('autoprint') !== '0';   // default ON
 
   // --- 3-SIZE LOOKUP TABLE (LDRS-Radius-II_Datasheet.pdf § Model Specifications) ---
@@ -854,7 +855,13 @@
   var specCutout = document.getElementById('specCutout'); if (specCutout) specCutout.textContent = 'Plug-n-Play J-Box mounts remote (above ceiling) · plenum-rated quick-connect cable to wafer · NO housing or can required at the wafer cutout';
   var specRecess = document.getElementById('specRecess'); if (specRecess) specRecess.textContent = 'Wafer recesses into ceiling cutout · 0″ projection below ceiling line';
   var specDepth  = document.getElementById('specDepth');  if (specDepth)  specDepth.textContent  = sd.depth + ' (ultra-slim wafer · per Datasheet — typo correction: "ft" → in)';
-  var specWeight = document.getElementById('specWeight'); if (specWeight) specWeight.textContent = '12-pack master carton available (per disk packaging on file: LDRS' + size + '-R2S5' + trim + ' 12-Pack)';
+  var specWeight = document.getElementById('specWeight');
+  if (specWeight) {
+    var packMatrix = { '409': 'Single/12-pack(MTO)/20-pack', '612': 'Single/12-pack(MTO)/24-pack', '818': 'Single/12-pack(QS)/20-pack' };
+    var packLabels = { 'SINGLE': 'Single unit (standard)', '12PK': '12-pack contractor carton', '20PK': '20-pack contractor carton', '24PK': '24-pack contractor carton' };
+    var packNote = packLabels[pack] || 'Single unit';
+    specWeight.textContent = packNote + ' · ' + sd.in + '″ pack options: ' + (packMatrix[size] || 'Single/12-pack');
+  }
   var mountStd   = document.getElementById('mountStd');   if (mountStd)   mountStd.textContent   = 'Direct cutout · spring clips lock from above · pop-in install · no can or housing';
   var mountT24   = document.getElementById('mountT24');   if (mountT24)   mountT24.textContent   = 'Universal NCP plate (LDRS-4R1/TGK plate-only · LDRS-6R1/TGK plate + integrated LCDL-SE/JCB J-Box) fits 4″/6″/8″/10″ apertures · joist + T-grid mounting · constⒶNT CRCU-EM24/JBM (24W · UL 924 · 90 min) pairs with all 3 Radius-II sizes';
   var dimTopW    = document.getElementById('dimTopWidth');if (dimTopW)    dimTopW.textContent    = 'Ø ' + sd.diameter;

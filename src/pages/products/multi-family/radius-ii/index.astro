@@ -3763,7 +3763,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
                 <!-- populated by JS based on active model -->
               </tbody>
             </table>
-            <div class="spec-table-foot">★ <em>5-CCT dip switch on the back of the <strong>Plug-n-Play J-Box</strong> (not the disk) — set color before the ceiling closes, no fishing for the disk to flip switches post-install. Default ★ row is <strong>4000K across all 3 sizes</strong> (LDRS4 + LDRS6 + LDRS8) — the spec-grade standard CCT per supplier datasheet. 90+ CRI TruColor across the entire matrix per Datasheet. 12-pack contractor carton available as a packaging variant (LDRS612-R2S5F 12-pack on disk).</em></div>
+            <div class="spec-table-foot">★ <em>5-CCT dip switch on the back of the <strong>Plug-n-Play J-Box</strong> (not the disk) — set color before the ceiling closes, no fishing for the disk to flip switches post-install. Default ★ row is <strong>4000K across all 3 sizes</strong> (LDRS4 + LDRS6 + LDRS8) — the spec-grade standard CCT per supplier datasheet. 90+ CRI TruColor across the entire matrix per Datasheet. Pack matrix varies by size: 4&Prime; &rarr; Single/12-pack(MTO)/20-pack &middot; 6&Prime; &rarr; Single/12-pack(MTO)/24-pack &middot; 8&Prime; &rarr; Single/12-pack(QS)/20-pack.</em></div>
             <div class="spec-table-foot" style="margin-top:6px; font-style:italic; color:var(--text-muted); font-size:11px;">Datasheet honesty markers: spec-table prefix typo "LRDS6" / "LRDS8" → corrected to <strong>LDRS</strong>; "Up to 96 lm/W" claim → calculated peak from lumen matrix is <strong>86.8 lm/W</strong> (LDRS6 @ 4000K · 1041&divide;12); depth column unit "ft" on Datasheet page 4 → corrected to <strong>inches</strong>. All flagged for engineering reconciliation.</div>
           </div>
         </div>
@@ -4701,6 +4701,36 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
               </button>
             </div>
             <div class="cfg-field-notes" style="margin-top:6px; font-size:10px; color:var(--text-muted); letter-spacing:0.04em;">★ Flat (F) is the standard low-profile aesthetic. Baffle (B) adds glare-control ribbing for direct-view applications (corridors, bathrooms, conference rooms). Both ship in the same retail box format and pair with the same Matte Black + Copper detachable trim plate accessories.</div>
+          </div>
+
+          <!-- Pack Configuration — Required · per-size matrix -->
+          <div class="cfg-field" data-field="pack" style="grid-column: 1 / -1;">
+            <div class="cfg-field-label">Pack Configuration <span class="req">*</span></div>
+            <div class="cfg-chips">
+              <button type="button" class="cfg-chip" data-field="pack" data-val="SINGLE" data-code="" data-gated-size="409,612,818">
+                <span class="cfg-chip-stock qs">QS</span>
+                <span class="cfg-chip-val">Single Unit &#9733;</span>
+                <span class="cfg-chip-code">Standard</span>
+              </button>
+              <button type="button" class="cfg-chip" data-field="pack" data-val="12PK" data-code="12PK" data-gated-size="409,612,818" data-stock-tier-409="mto" data-stock-tier-612="mto" data-stock-tier-818="qs">
+                <span class="cfg-chip-stock mto">MTO</span>
+                <span class="cfg-chip-val">12-Pack Carton</span>
+                <span class="cfg-chip-code">+ /12PK</span>
+              </button>
+              <button type="button" class="cfg-chip" data-field="pack" data-val="20PK" data-code="20PK" data-gated-size="409,818" data-stock-tier-409="qs" data-stock-tier-818="qs">
+                <span class="cfg-chip-stock qs">QS</span>
+                <span class="cfg-chip-val">20-Pack Carton</span>
+                <span class="cfg-chip-code">+ /20PK</span>
+              </button>
+              <button type="button" class="cfg-chip" data-field="pack" data-val="24PK" data-code="24PK" data-gated-size="612" data-stock-tier-612="qs">
+                <span class="cfg-chip-stock qs">QS</span>
+                <span class="cfg-chip-val">24-Pack Carton</span>
+                <span class="cfg-chip-code">+ /24PK</span>
+              </button>
+            </div>
+            <div class="cfg-field-notes" style="margin-top:6px; font-size:10px; color:var(--text-muted); letter-spacing:0.04em;">
+              Pack matrix: 4&Prime; &rarr; Single/12-pack(MTO)/20-pack &middot; 6&Prime; &rarr; Single/12-pack(MTO)/24-pack &middot; 8&Prime; &rarr; Single/12-pack(QS)/20-pack. MTO = made-to-order, ~4-week lead time.
+            </div>
           </div>
 
         </div>
@@ -6076,7 +6106,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   // Gating: NCP plates + CRCU-EM24/JBM + ⒶCS sensors are all aperture-agnostic
   //   (LCDL-SE/NCP fits 4″/6″/8″/10″; CRCU universal cover fits 4/5/6/7″ J-Box).
   //   No size-gated chips in the new ladder — all chips enabled for all sizes.
-  var REQUIRED  = ['size', 'trim'];
+  var REQUIRED  = ['size', 'trim', 'pack'];
   var OPTIONAL  = ['emergency', 'sensor', 'tgrid', 'dimmer'];
   // No multi-select fields — every chip group on Radius-II is single-pick.
   var MULTI     = [];
@@ -6093,7 +6123,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   //                                        5-CCTselect (S5) family designators.
   //   trim        B or F                  — Baffle or Flat trim style (no slash)
   // SKU_ORDER walks the trim segment after the prefix+size+R2S5 block.
-  var SKU_ORDER = ['trim'];
+  var SKU_ORDER = ['trim', 'pack'];
   var SEP = {
     trim: ''
   };
@@ -6194,6 +6224,17 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
         }
         chip.classList.toggle('disabled', disabled);
         if (disabled && state[f] === v) delete state[f];
+
+        // Per-size stock badge update for pack chips
+        if (f === 'pack' && state.size) {
+          var stockTierKey = 'stockTier' + state.size.charAt(0).toUpperCase() + state.size.slice(1);
+          var tierAttr = chip.dataset['stockTier' + state.size];
+          var stockBadge = chip.querySelector('.cfg-chip-stock');
+          if (stockBadge && tierAttr) {
+            stockBadge.className = 'cfg-chip-stock ' + tierAttr;
+            stockBadge.textContent = tierAttr.toUpperCase();
+          }
+        }
       });
 
       // Required-counter — straight count of REQUIRED keys present in state
@@ -6263,7 +6304,8 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     }
     function placeholderFor(k) {
       return ({
-        trim: '[B|F]'
+        trim: '[B|F]',
+        pack: '[SINGLE|12PK|20PK|24PK]'
       })[k] || '[' + k.toUpperCase() + ']';
     }
 
@@ -6385,6 +6427,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
       if (state.sensor)    paramsObj.sensor    = state.sensor;
       if (state.tgrid)     paramsObj.tgrid     = state.tgrid;
       if (state.dimmer)    paramsObj.dimmer    = state.dimmer;
+      if (state.pack)      paramsObj.pack      = state.pack;
       var params = new URLSearchParams(paramsObj);
       return '/products/multi-family/radius-ii/submittal/?' + params.toString();
     }

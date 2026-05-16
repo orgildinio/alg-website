@@ -669,6 +669,31 @@ const skusJson = JSON.stringify(skus);
     border-color: rgba(255,255,255,0.18);
     box-shadow: 0 6px 24px rgba(0,0,0,0.3);
   }
+  /* Fix 1 · SafeZone fire-rated tile — subtle ember radial gradient */
+  .fam-card[data-family="Radius SafeZone"] {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 110%,
+        rgba(255, 99, 32, 0.18) 0%,
+        rgba(255, 60, 30, 0.08) 30%,
+        rgba(20, 23, 27, 0) 65%),
+      radial-gradient(ellipse 60% 40% at 50% 90%,
+        rgba(243, 39, 64, 0.10) 0%,
+        rgba(20, 23, 27, 0) 70%),
+      linear-gradient(180deg, #1a1518 0%, #14171b 50%, #1a1216 100%);
+  }
+  .fam-card[data-family="Radius SafeZone"]:hover {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 105%,
+        rgba(255, 99, 32, 0.22) 0%,
+        rgba(255, 60, 30, 0.10) 30%,
+        rgba(20, 23, 27, 0) 65%),
+      radial-gradient(ellipse 60% 40% at 50% 85%,
+        rgba(243, 39, 64, 0.13) 0%,
+        rgba(20, 23, 27, 0) 70%),
+      linear-gradient(180deg, #1a1518 0%, #14171b 50%, #1a1216 100%);
+    border-color: rgba(243, 99, 32, 0.30);
+    box-shadow: 0 6px 24px rgba(180, 60, 20, 0.20);
+  }
   .fc-top {
     display: flex;
     align-items: center;
