@@ -634,10 +634,10 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     padding-bottom: 36px;
     margin-bottom: 36px;
     border-bottom: 1px solid var(--line);
-    align-items: start;
+    align-items: stretch;
   }
-  .spec-meta > div { min-width: 0; }
-  .spec-meta > div { flex-shrink: 0; }
+  .spec-meta > div { min-width: 0; display: flex; flex-direction: column; }
+  .spec-meta > div { flex-shrink: 0; padding: 16px 0; }
   .spec-meta-key {
     font-size: 10px;
     font-weight: 700;
@@ -3764,6 +3764,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
             <span class="meta-stat-sub">+ R30 · A19 · BR30 · BR40 · LED retrofit</span>
           </div>
         </div>
+      </div>
 
       <div>
         <div class="spec-meta-key">Finish</div>
@@ -3771,6 +3772,8 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <div class="finish-swatches">
             <div class="finish-swatch fs-silver" title="Aluminum"></div>
           </div>
+        </div>
+      </div>
 
       <div>
         <div class="spec-meta-key">Warranty</div>
@@ -3787,6 +3790,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
             <span class="meta-stat-sub">L70 lifetime</span>
           </div>
         </div>
+      </div>
 
       <div>
         <div class="spec-meta-key">Construction</div>
@@ -3809,6 +3813,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
             <span class="meta-stat-sub">+ pre-installed bar hangers + J-Box</span>
           </div>
         </div>
+      </div>
 
       <div>
         <div class="spec-meta-key">Location Rating</div>
@@ -3824,6 +3829,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
             <span class="meta-stat-sub">indoor only · NOT outdoor wet</span>
           </div>
         </div>
+      </div>
 
     </div>
 
