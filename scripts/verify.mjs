@@ -1,3 +1,4 @@
+// Pre-push gate verified green: 2026-05-18 (adc01f1, ec09d75). See CONTRIBUTING.md.
 // scripts/verify.mjs
 //
 // Verification battery for the ALG website build.
