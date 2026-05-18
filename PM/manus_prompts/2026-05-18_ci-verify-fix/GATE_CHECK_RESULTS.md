@@ -32,10 +32,10 @@ GitHub Actions run for commit `adc01f1`:
 | Push # | Commit | Status | Run ID |
 |--------|--------|--------|--------|
 | 1 (fix) | adc01f1 | ✅ green | 26055253913 |
-| 2 (follow-up) | TBD | pending | — |
-| 3 (follow-up) | TBD | pending | — |
+| 2 (CONTRIBUTING.md + reports) | ec09d75 | ✅ green | 26055520255 |
+| 3 (verify.mjs marker comment) | eb91079 | ✅ green | 26055706616 |
 
-*Pushes 2 and 3 are trivial follow-up commits (CONTRIBUTING.md + PM report files). Results to be updated after CI completes.*
+**All 3 consecutive CI runs passed.**
 
 ---
 
@@ -87,7 +87,7 @@ Added `CONTRIBUTING.md` with the pre-push gate language. The rule is now visible
 |------|--------|
 | F1. Local verify green | ✅ PASS |
 | F2. CI green on fix commit | ✅ PASS |
-| F3. 3 consecutive green CI runs | ⏳ Pending (2 follow-up commits needed) |
+| F3. 3 consecutive green CI runs | ✅ PASS (adc01f1, ec09d75, eb91079) |
 | F4. No weakened checks | ✅ PASS |
 | F5. Reports delivered | ✅ PASS |
 | F6. Backlog acknowledged | ✅ PASS |
