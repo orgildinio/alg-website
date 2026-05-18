@@ -17,7 +17,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 ---
 <BaseLayout
   title="Lunar Eclipse Series — LDLL PRO+ Surface-Mount Puck Downlight | Archipelago Lighting"
-  description="LDLL Lunar Eclipse: PRO+ surface-mount puck downlight, ultra-slim, 5-CCTselect, CRI 90+, premium finish options. Multi-family residential."
+  description="LDLL Lunar Eclipse: PRO+ surface-mount puck downlight, ultra-slim, 5-CCTselect, CRI 90+, premium finish options. multi-family residential."
   bodyClass="page-lunar-eclipse-pdp"
 >
   <Fragment slot="head">
@@ -45,7 +45,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     --tier-proplus-bg: #2a1f10;
     --tier-proplus-border: rgba(255,196,87,0.45);
     --tier-proplus-color: #ffc457;
-    /* === multi-fⒶMILY light palette (replaces Orbit-I's dark canvas).
+    /* === multi-f<span class="aa">Ⓐ</span>MILY light palette (replaces Orbit-I's dark canvas).
        Strategic dark accents are layered via .section-bg-deep on header / footer /
        controls section / closing pillars — see overrides below. === */
     --bg-page: #FAFAFA;
@@ -62,7 +62,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   }
 
   /* ========================================================================
-     MULTI-FⒶMILY GLOBAL RULE — RED BG = WHITE TEXT
+     MULTI-F<span class="aa">Ⓐ</span>MILY GLOBAL RULE — RED BG = WHITE TEXT
      ========================================================================
      Non-negotiable for the multi-family color scheme: every element painted
      with the brand red as background MUST render its foreground text white.
@@ -109,7 +109,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   .tac-callout-tab.active * {
     color: #ffffff !important;
   }
-  /* Ⓐ glyph (CSS-mask) lives by background-color, not text color. Force its
+  /* <span class="aa">Ⓐ</span> glyph (CSS-mask) lives by background-color, not text color. Force its
      mask-fill to white inside any active red surface so the glyph reads. */
   .tac-callout-tab.active .aa,
   .cfg-chip.selected .aa,
@@ -129,7 +129,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     color: #ffffff !important;
     stroke: #ffffff !important;
   }
-  /* === END · MULTI-FⒶMILY RED-BG ENFORCEMENT === */
+  /* === END · MULTI-F<span class="aa">Ⓐ</span>MILY RED-BG ENFORCEMENT === */
 
   /* === Section accent override (per James 2026-05-03 review).
      Sections that were originally dark on Illuminator's canvas now share the
@@ -198,9 +198,9 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     padding-bottom: 120px;
   }
 
-  /* Ⓐ glyph — CSS-masked SVG replacement (rebuilt to fix prior em-zero collapse).
-     The actual Ⓐ Unicode character stays in the markup for accessibility but is hidden via
-     text-indent + overflow. The visible Ⓐ is rendered by mask-image at an explicit em width.
+  /* <span class="aa">Ⓐ</span> glyph — CSS-masked SVG replacement (rebuilt to fix prior em-zero collapse).
+     The actual <span class="aa">Ⓐ</span> Unicode character stays in the markup for accessibility but is hidden via
+     text-indent + overflow. The visible <span class="aa">Ⓐ</span> is rendered by mask-image at an explicit em width.
      IMPORTANT: do NOT set font-size: 0 — that would make em units resolve to 0px and the box
      would collapse, leaving the mask invisible. Inherit font-size; hide the char another way. */
   .aa {
@@ -215,7 +215,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     -webkit-mask-size: contain;       mask-size: contain;
     -webkit-mask-repeat: no-repeat;   mask-repeat: no-repeat;
     -webkit-mask-position: center;    mask-position: center;
-    /* Hide the actual Ⓐ character (kept in DOM for screen readers + copy-paste): */
+    /* Hide the actual <span class="aa">Ⓐ</span> character (kept in DOM for screen readers + copy-paste): */
     text-indent: -9999em;
     overflow: hidden;
     white-space: nowrap;
@@ -223,9 +223,9 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     margin: 0 -0.10em;  /* tighten gap to neighbors — bumped from -0.04em 2026-05-10 */
   }
   /* CFG-MF-13 · Heavy-tracked uppercase contexts (>= 0.12em letter-spacing)
-     need stronger tuck than the base -0.10em. Without these, the Ⓐ glyph
-     still shows visible gaps in labels like "CONTRⒶLS BY ⒶCS" or
-     "CONSTⒶNT EMB". James 2026-05-10. */
+     need stronger tuck than the base -0.10em. Without these, the <span class="aa">Ⓐ</span> glyph
+     still shows visible gaps in labels like "CONTR<span class="aa">Ⓐ</span>LS BY <span class="aa">Ⓐ</span>CS" or
+     "CONST<span class="aa">Ⓐ</span>NT EMB". James 2026-05-10. */
   .acc-card-cat .aa,
   .cfg-field-label .aa {
     margin: 0 -0.14em;
@@ -237,7 +237,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   .hf-tile-tag .aa {
     margin: 0 -0.18em;
   }
-  /* Universal rule: never let the bg color match the Ⓐ color. Use .aa-white on red surfaces. */
+  /* Universal rule: never let the bg color match the <span class="aa">Ⓐ</span> color. Use .aa-white on red surfaces. */
   .aa-white { background-color: var(--text-primary); }
   /* Inherits the parent text color (e.g. inside a link that hovers to a different color). */
   .aa-inherit { background-color: currentColor; }
@@ -1259,7 +1259,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     -webkit-backdrop-filter: blur(8px);
     overflow: hidden;
   }
-  /* Tabs row — single tab today, multi-tab for products with Bi-Level / ⒶCS / SILVAIR / Synapse */
+  /* Tabs row — single tab today, multi-tab for products with Bi-Level / <span class="aa">Ⓐ</span>CS / SILVAIR / Synapse */
   .tac-callout-tabs {
     display: flex;
     background: rgba(0,0,0,0.04);
@@ -1681,7 +1681,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     height: 92%;
     color: var(--text-primary);
   }
-  /* Real product photo (used by Synapse contrⒶLS cards). Same image-box rule
+  /* Real product photo (used by Synapse contr<span class="aa">Ⓐ</span>LS cards). Same image-box rule
      as the SVG silhouettes: image fits within the 168px-tall box, never resizes
      the box. Drop-shadow gives the cutout depth on the dark surface. */
   .acc-card-img .acc-card-photo {
@@ -1957,7 +1957,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
      - 3-CTA finisher row matching the production drawer (P&A primary,
        Submittal PDF, Request Layout)
      The chip pattern + SKU template + dependency engine in the JS below is
-     copy-portable to the proⒶRCH-III / Orbit-I / Symmetry / Titan-II PDPs;
+     copy-portable to the pro<span class="aa">Ⓐ</span>RCH-III / Orbit-I / Symmetry / Titan-II PDPs;
      each just swaps the FIELDS + ENCODE arrays. */
   .cfg-section {
     background: var(--bg-darker);
@@ -2101,7 +2101,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     text-transform: uppercase;
     display: inline-flex;
     align-items: center;
-    gap: 0;  /* was 6px — inserted huge gutter on both sides of Ⓐ glyph in label · CFG-MF-13 fix 2026-05-10 */
+    gap: 0;  /* was 6px — inserted huge gutter on both sides of <span class="aa">Ⓐ</span> glyph in label · CFG-MF-13 fix 2026-05-10 */
   }
   .cfg-field-label .req { color: var(--brand-red); font-weight: 700; }
   .cfg-chips {
@@ -2836,7 +2836,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   /* SECTION 11 — Page closer (Meet the Family · Support · Great Rebates).
      Three layered components:
        (a) closing-family — 4 sister-product cards (Symmetry, Titan-II,
-           proⒶRCH-III, Orbit-I). Cross-shop within the v2 PDP buildout.
+           pro<span class="aa">Ⓐ</span>RCH-III, Orbit-I). Cross-shop within the v2 PDP buildout.
        (b) closing-pillars — 2-up Support + Rebates cards.
        (c) closing-cta-strip — site-wide red CTA bar ("same business day"). */
   .closing-section {
@@ -3427,7 +3427,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
       <div class="carousel-wrap">
         <div class="carousel-track" id="carouselTrack">
           <!-- Real Eclipse-II product photography from the WorkDrive folder
-               (multi-fⒶMILY/LDLL - ECLIPSE/PHOTOS/Eclipse-II/{White,Black}/&#123;size&#125;/).
+               (multi-f<span class="aa">Ⓐ</span>MILY/LDLL - ECLIPSE/PHOTOS/Eclipse-II/{White,Black}/&#123;size&#125;/).
                4 frames span the lineup: 13″ White (largest, hero), 9″ Black
                (mid-size dramatic finish), 5″ White (smallest, lineup variety),
                11″ Black (large, size variety). -->
@@ -3973,13 +3973,13 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 
   <!-- Sensor stack — one SVG per platform · active one fades in.
        Eclipse-II's killer differentiator (the LDLL-E2/MSP/W 1-Pin Plug-n-Play
-       Bi-Level Sensor) leads as the default tab; the broader contrⒶLS by ⒶCS
-       ecosystem (MSP-20CM, EM15-CL constⒶNTLink) is shown as the bridge. -->
+       Bi-Level Sensor) leads as the default tab; the broader contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS
+       ecosystem (MSP-20CM, EM15-CL const<span class="aa">Ⓐ</span>NTLink) is shown as the bridge. -->
   <div class="tac-sensor-area">
 
     <!-- TAB 2 · MSP-40CM-ACS — 40FT high-bay PIR. For parking decks, stairwells,
          elevator lobbies, mailrooms, fitness centers, and common areas with tall
-         ceilings. Same ⒶCS BLE Mesh as MSP-20CM, longer detection cone. -->
+         ceilings. Same <span class="aa">Ⓐ</span>CS BLE Mesh as MSP-20CM, longer detection cone. -->
     <svg class="tac-sensor-svg" data-platform="msp40" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MSP-40CM-ACS 40FT high-bay ceiling-mount PIR sensor">
       <!-- Ceiling line (higher up than 20CM to suggest tall ceiling) -->
       <line x1="40" y1="64" x2="340" y2="64" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.35"/>
@@ -4001,7 +4001,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     </svg>
 
     <!-- TAB 1 (DEFAULT) · MSP-20CM-ACS — 20FT ceiling-mount PIR.
-         Lunar Eclipse joins the broader contrⒶLS by ⒶCS Bluetooth-Mesh
+         Lunar Eclipse joins the broader contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS Bluetooth-Mesh
          ecosystem; MSP-20CM is the standard entry point for in-unit closets,
          leasing offices, lobby zones at typical 8-12 ft ceilings. -->
     <svg class="tac-sensor-svg is-active" data-platform="msp20" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MSP-20CM-ACS 20FT ceiling-mount PIR sensor">
@@ -4057,16 +4057,16 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   <div class="tac-grid">
     <div class="tac-spacer"></div>
     <div class="tac-content">
-      <p class="tac-eyebrow"><span>const<span class="aa aa-inherit" aria-hidden="true">Ⓐ</span>NT &amp; contr<span class="aa aa-inherit" aria-hidden="true">Ⓐ</span>LS</span></p>
+      <p class="tac-eyebrow"><span>const<span class="aa aa-inherit" aria-hidden="true"><span class="aa">Ⓐ</span></span>NT &amp; contr<span class="aa aa-inherit" aria-hidden="true"><span class="aa">Ⓐ</span></span>LS</span></p>
       <h2 class="tac-title">Same contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS Bluetooth-Mesh ecosystem as Eclipse-II.</h2>
       <p class="tac-desc">
         Same Eclipse-II canonical const<span class="aa">Ⓐ</span>NT + <span class="aa">Ⓐ</span>CS ladder: <strong>CRCU-EM24/JBM</strong> universal-mount 24W EMB · <strong>CRC6-EM24/JBS/W,B</strong> 6&Prime; Single-Cover EMB (white + black finishes) · <strong>MSP-20CM</strong> 20-ft <span class="aa">Ⓐ</span>CS PIR · <strong>MSP-40CM</strong> 40-ft <span class="aa">Ⓐ</span>CS PIR · <strong>MSX-LV20</strong> LV controller · <strong>50WM</strong> kinetic switch. <em>No 1-Pin port — for native bi-level, spec Eclipse-II 7&Prime;/9&Prime; with LDLL-E2/MSP/W.</em>
       </p>
 
       <!-- 3-tab callout — Lunar Eclipse Adaptive Control story.
-           Tab 1 (default) = MSP-20CM (entry-tier ⒶCS BLE Mesh PIR).
+           Tab 1 (default) = MSP-20CM (entry-tier <span class="aa">Ⓐ</span>CS BLE Mesh PIR).
            Tab 2 = MSP-40CM (high-bay 40-ft PIR).
-           Tab 3 = CRCU-EM24/JBM (constⒶNT 24W Universal-Mount EMB · Eclipse-II canonical).
+           Tab 3 = CRCU-EM24/JBM (const<span class="aa">Ⓐ</span>NT 24W Universal-Mount EMB · Eclipse-II canonical).
            Note: bilevel tab dropped — Lunar Eclipse has no 1-Pin port. -->
       <div class="tac-callout">
         <div class="tac-callout-tabs" role="tablist">
@@ -4082,7 +4082,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
         </div>
         <div class="tac-callout-body" id="tacCalloutBody">
           <!-- Platform-specific copy. Default = MSP-20CM. Updated by JS on tab click. -->
-          <p id="tacCalloutCopy">Bluetooth-Mesh ceiling-mount PIR with 20-ft maximum mount height — wide-angle 360° coverage for in-unit living, leasing offices, lobby zones, and small amenity rooms with ≤20 ft ceilings. Lunar Eclipse joins the broader contrⒶLS by ⒶCS ladder when the project goes networked. Commissioned via the ⒶCS by ALG App (iOS / Android). 120-277Vac universal · UL listed · IP20 indoor.</p>
+          <p id="tacCalloutCopy">Bluetooth-Mesh ceiling-mount PIR with 20-ft maximum mount height — wide-angle 360° coverage for in-unit living, leasing offices, lobby zones, and small amenity rooms with ≤20 ft ceilings. Lunar Eclipse joins the broader contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS ladder when the project goes networked. Commissioned via the <span class="aa">Ⓐ</span>CS by ALG App (iOS / Android). 120-277Vac universal · UL listed · IP20 indoor.</p>
           <a href="#accessories" class="tac-callout-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <path d="M2 8a15 15 0 0 1 20 0"/>
@@ -4181,7 +4181,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
      Production accessory pattern: dark grid → click card → modal with specs +
      3 CTAs (Pricing & Availability, Data Sheet, Request Quote).
      14 accessories sourced from LDGR Orbit-I datasheet, grouped by category:
-       • contrⒶLS (2)         — DMX, WiFi
+       • contr<span class="aa">Ⓐ</span>LS (2)         — DMX, WiFi
        • Glare Control (2)    — Shield, Visor
        • Mount (2)            — Slip-Fitter, Trunnion
        • Optics (4)           — 20°, 35°, 55°, 90°
@@ -4201,7 +4201,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     </div>
 
     <!-- Filter pills — Eclipse-II ladder per Datasheet § Accessory Guide.
-         12 cards across 3 categories: 6 EMBs + 4 contrⒶLS + 2 Eclipse-II Exclusive.
+         12 cards across 3 categories: 6 EMBs + 4 contr<span class="aa">Ⓐ</span>LS + 2 Eclipse-II Exclusive.
          No Plates / Housing-Cans — Eclipse-II is surface-mount, J-Box install. -->
     <div class="acc-pills" role="tablist" aria-label="Filter accessories by category">
       <button type="button" class="acc-pill active" data-filter="all"  role="tab" aria-selected="true">
@@ -4226,7 +4226,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
            Per Datasheet § Accessory Guide. Two install topologies:
              Field-Install (EM08, EM08-XD, EM15, EM15-CL, EM25) — in-line
              between branch circuit and E26 socket; certified electrician
-             required. constⒶNTLink variant adds NLC integration.
+             required. const<span class="aa">Ⓐ</span>NTLink variant adds NLC integration.
              Quick-Install (EM24-JBM) — pre-wired J-Box for fast remote
              mounting, ceiling-mounted emergency systems. -->
 
@@ -4236,10 +4236,10 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
       <!-- EM15-CL · Field-Install · constⒶNTLink networked variant · QuickShip -->
       <!-- EM25 · Field-Install · 25W mid-power · QuickShip -->
       <!-- EM24-JBM · Quick-Install · 24W with J-Box for recessed mounting · QuickShip -->
-      <!-- ===================== contrⒶLS by ⒶCS (4) =====================
-           Per Datasheet § contrⒶLS by ⒶCS table. Ceiling-mount PIR sensors,
+      <!-- ===================== contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS (4) =====================
+           Per Datasheet § contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS table. Ceiling-mount PIR sensors,
            a low-voltage controller / power-pack, and a kinetic wall switch.
-           All four are Made-to-Order, Bluetooth-Mesh, paired with the ⒶCS
+           All four are Made-to-Order, Bluetooth-Mesh, paired with the <span class="aa">Ⓐ</span>CS
            by ALG App. data-id matches the ACC JS map keys exactly. -->
 
       <!-- MSP-20CM-ACS · Sensor by ⒶCS · 20FT ceiling-mount · MTO -->
@@ -4501,7 +4501,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
      SECTION 8 — Configurator (Build Your Model)
      7 required fields + 5 optional fields. SKU is built live by the JS engine
      below. The chip pattern + SKU encoder is the canonical template — for the
-     other 4 v2 PDPs (proⒶRCH-III, Orbit-I, Symmetry, Titan-II), only the
+     other 4 v2 PDPs (pro<span class="aa">Ⓐ</span>RCH-III, Orbit-I, Symmetry, Titan-II), only the
      CFG_FIELDS + CFG_SPECS_FN need to change.
      Anchor: #configurator (already wired into sticky-nav).
      ============================================================================ -->
@@ -4645,7 +4645,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
             </div>
           </div>
 
-          <!-- contrⒶLS by ⒶCS — full 4-SKU ladder per Datasheet. 2 occupancy
+          <!-- contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS — full 4-SKU ladder per Datasheet. 2 occupancy
                sensors (20-ft and 40-ft mount), 1 controller / power-pack, 1
                kinetic wall switch. All Made-to-Order per Datasheet. -->
           <div class="cfg-field" data-field="sensor" style="grid-column: 1 / -1;">
@@ -4733,7 +4733,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           </div>
 
           <!-- CFG-STATE-1: ship-tier indicator. Eclipse-II fixtures are QS-only
-               across all 5 sizes / 2 finishes / 2 shapes. Companion contrⒶLS
+               across all 5 sizes / 2 finishes / 2 shapes. Companion contr<span class="aa">Ⓐ</span>LS
                sensors are MTO; companion EMBs + Eclipse-II Exclusive accessories
                are QuickShip. Indicator stays live for module signature parity. -->
           <div id="cfgShipTier" style="margin: 12px 0 6px; padding: 10px 14px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.5; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
@@ -4987,7 +4987,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     <!-- Cards organized in 2 rows × 3 cols:
          Row 1 (Surface-Mount + Sister · Eclipse-II's nearest peers):
            Eclipse-II (current · You Are Here) · Lunar Eclipse · Crescent
-         Row 2 (Recessed downlight cousins · cross-shop within multi-fⒶMILY):
+         Row 2 (Recessed downlight cousins · cross-shop within multi-f<span class="aa">Ⓐ</span>MILY):
            Orbit-I (gimbal retrofit) · Nebula-II (fixed-beam retrofit) · Radius (PRO move-up) -->
     <div class="lspl-family-grid">
 
@@ -5131,7 +5131,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 <!-- ============================================================================
      SECTION 11 — Page closer.
      (a) Round Out the Project — 4 cross-line complementary product cards
-         from the v2 PDP buildout (Symmetry, Titan-II, proⒶRCH-III, Orbit-I).
+         from the v2 PDP buildout (Symmetry, Titan-II, pro<span class="aa">Ⓐ</span>RCH-III, Orbit-I).
          Different categories — for the complete venue lighting package.
      (b) Support + Great Rebates — 2-up pillar cards.
      (c) Final red CTA strip — site-wide same-business-day promise.
@@ -5142,7 +5142,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 <section class="closing-section" id="closing">
 
   <!-- 11A — Round Out the Project (cross-line complementary fixtures) ============
-       Multi-family properties don't end at the dwelling unit. The cards below
+       multi-family properties don't end at the dwelling unit. The cards below
        cover the four perimeter zones every multi-family asset needs but the
        LDGR family doesn't address: parking lot · walkway/courtyard · garage
        /storage · leasing-office/amenity. One card per ALG product line, each
@@ -5263,7 +5263,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
             <line x1="16" y1="15" x2="16" y2="15.01"/><line x1="19" y1="15" x2="19" y2="15.01"/>
           </svg>
         </div>
-        <div class="pillar-eyebrow">Multi-Family Support</div>
+        <div class="pillar-eyebrow">multi-family support</div>
         <h3 class="pillar-title">Built for turn-over speed.</h3>
         <p class="pillar-body">
           Hundreds of thousands ship from five US warehouses &mdash; 2-3 day QS lead means a unit
@@ -5386,7 +5386,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
       <path d="M8.5 16a5 5 0 0 1 7 0"/>
       <circle cx="12" cy="20" r="1.4" fill="currentColor"/>
     </svg>
-    <span>contr<span class="aa aa-inherit">Ⓐ</span>LS</span>
+    <span>contr<span class="aa aa-inherit"><span class="aa">Ⓐ</span></span>LS</span>
   </a>
 
   <!-- Photometrics — radiating beam icon, mirrors the polar plot in Section 6 -->

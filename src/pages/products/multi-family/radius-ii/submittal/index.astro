@@ -24,7 +24,7 @@
     - Catalog number (4 page headers + project info form)
     - Quick spec grid (Lumens / Wattage / CCT / CRI / Beam / Voltage)
     - Ordering code visual breakdown (LDRS · &#123;ss&#125;&#123;ww&#125; · -R2S5 · &#123;B|F&#125;)
-    - Companion BOM list (EMB · ⒶCS sensor · NCP plate · dimmer)
+    - Companion BOM list (EMB · <span class="aa">Ⓐ</span>CS sensor · NCP plate · dimmer)
     - Per-accessory full spec block on Page 2 (Eclipse-II canonical pattern)
     - Photometric polar plot + IES file name + peak intensity per size+CCT
 
@@ -32,8 +32,8 @@
     ?sku=LDRS612-R2S5F
     &size=409|612|818   &wattage=9|12|18
     &trim=B|F
-    [&emergency=CRCU-EM24-JBM]            (constⒶNT Mid-Power EMB · UL 924)
-    [&sensor=MSP-SRI-8CM|MSP-SRI-40CM]    (contrⒶLS by ⒶCS · BLE SigMesh)
+    [&emergency=CRCU-EM24-JBM]            (const<span class="aa">Ⓐ</span>NT Mid-Power EMB · UL 924)
+    [&sensor=MSP-SRI-8CM|MSP-SRI-40CM]    (contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS · BLE SigMesh)
     [&tgrid=TGK-NOJB|TGK-JB]              (Universal NCP plate · w/ or w/o J-Box)
     [&dimmer=LEV-6674|LEV-DDE06|LUT-MACL153M|LUT-DVCL153P]
     [&autoprint=1]     ← auto-trigger window.print() on load (default behavior)
@@ -90,7 +90,7 @@
   }
   h1, h2, h3, h4 { font-family: 'Sora', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
   .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
-  .aa { font-family: 'Sora', sans-serif; }   /* Ⓐ glyph wrapper — same font as body, no special handling */
+  .aa { font-family: 'Sora', sans-serif; }   /* <span class="aa">Ⓐ</span> glyph wrapper — same font as body, no special handling */
 
   /* ============= PAGE HEADER (every page) ============= */
   .submittal-head {
@@ -421,7 +421,7 @@
   <div class="product-title">
     <h1 id="productTitle">Radius-II Series · 6″ Slim Wafer Recessed Downlight (Flat Trim)</h1>
     <div class="tagline" id="productTagline">
-      Multi-fⒶMILY PRO-tier slim wafer recessed downlight &middot; 0.38&Prime; ultra-slim &middot; 3 sizes (4&Prime; / 6&Prime; / <strong>8&Prime;</strong>) &middot; 5-CCTselect 2700/3000/3500/4000/5000K &middot; 115° edge-lit PMMA optic &middot; CCT dip switch on the Plug-n-Play J-Box &middot; ETL / ENERGY&nbsp;STAR / Title-24 / JA8 / RoHS / Wet Location &middot; const<span class="aa" aria-hidden="true">Ⓐ</span>NT CRCU-EM24/JBM Mid-Power EMB (24W &middot; UL 924 &middot; 90 min) &middot; contr<span class="aa" aria-hidden="true">Ⓐ</span>LS by <span class="aa" aria-hidden="true">Ⓐ</span>CS PIR sensors (8 FT in-unit &middot; 40 FT high-bay) &middot; Universal NCP rough-in (4&Prime;&ndash;10&Prime; apertures)
+      Multi-f<span class="aa">Ⓐ</span>MILY PRO-tier slim wafer recessed downlight &middot; 0.38&Prime; ultra-slim &middot; 3 sizes (4&Prime; / 6&Prime; / <strong>8&Prime;</strong>) &middot; 5-CCTselect 2700/3000/3500/4000/5000K &middot; 115° edge-lit PMMA optic &middot; CCT dip switch on the Plug-n-Play J-Box &middot; ETL / ENERGY&nbsp;STAR / Title-24 / JA8 / RoHS / Wet Location &middot; const<span class="aa" aria-hidden="true">Ⓐ</span>NT CRCU-EM24/JBM Mid-Power EMB (24W &middot; UL 924 &middot; 90 min) &middot; contr<span class="aa" aria-hidden="true">Ⓐ</span>LS by <span class="aa" aria-hidden="true">Ⓐ</span>CS PIR sensors (8 FT in-unit &middot; 40 FT high-bay) &middot; Universal NCP rough-in (4&Prime;&ndash;10&Prime; apertures)
     </div>
   </div>
 
@@ -693,11 +693,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td class="code">LDRS</td><td>Multi-fⒶMILY LED Slim Wafer family prefix</td></tr>
+      <tr><td class="code">LDRS</td><td>Multi-f<span class="aa">Ⓐ</span>MILY LED Slim Wafer family prefix</td></tr>
       <tr><td class="code">409 / 612 / 818</td><td>Size &amp; wattage — 4″/9W · 6″/12W · <strong>8″/18W</strong> (3 sizes in the Radius-II active SKU set; 8″ is the rare-size differentiator vs Halo HLB / NICOR DLR / DMF DRD2 which all stop at 6″)</td></tr>
       <tr><td class="code">-R2S5</td><td>Family designator — Radius-II (R2) + 5-CCTselect (S5) · fixed across all SKUs · CCT set on the Plug-n-Play J-Box dip switch</td></tr>
       <tr><td class="code">B / F</td><td>Trim style — Baffle (B · glare-control ribbing) or Flat (F · standard low-profile aesthetic)</td></tr>
-      <tr><td class="code">+ Accessories</td><td>CRCU-EM24/JBM (24W constⒶNT Universal-Mount EMB) · MSP-SRI/8CM/HD/ACS + MSP-SRI/40CM/HD/ACS (contrⒶLS by ⒶCS PIR sensors) · LDRS-4R1/TGK + LDRS-6R1/TGK (Universal NCP plates · with/without integrated J-Box) · 4 Datasheet-listed dimmers — all separate-line accessory SKUs (see Page 1 Pair-With panel + Page 2 Selected Companion specs)</td></tr>
+      <tr><td class="code">+ Accessories</td><td>CRCU-EM24/JBM (24W const<span class="aa">Ⓐ</span>NT Universal-Mount EMB) · MSP-SRI/8CM/HD/ACS + MSP-SRI/40CM/HD/ACS (contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS PIR sensors) · LDRS-4R1/TGK + LDRS-6R1/TGK (Universal NCP plates · with/without integrated J-Box) · 4 Datasheet-listed dimmers — all separate-line accessory SKUs (see Page 1 Pair-With panel + Page 2 Selected Companion specs)</td></tr>
     </tbody>
   </table>
 
@@ -863,7 +863,7 @@
     specWeight.textContent = packNote + ' · ' + sd.in + '″ pack options: ' + (packMatrix[size] || 'Single/12-pack');
   }
   var mountStd   = document.getElementById('mountStd');   if (mountStd)   mountStd.textContent   = 'Direct cutout · spring clips lock from above · pop-in install · no can or housing';
-  var mountT24   = document.getElementById('mountT24');   if (mountT24)   mountT24.textContent   = 'Universal NCP plate (LDRS-4R1/TGK plate-only · LDRS-6R1/TGK plate + integrated LCDL-SE/JCB J-Box) fits 4″/6″/8″/10″ apertures · joist + T-grid mounting · constⒶNT CRCU-EM24/JBM (24W · UL 924 · 90 min) pairs with all 3 Radius-II sizes';
+  var mountT24   = document.getElementById('mountT24');   if (mountT24)   mountT24.textContent   = 'Universal NCP plate (LDRS-4R1/TGK plate-only · LDRS-6R1/TGK plate + integrated LCDL-SE/JCB J-Box) fits 4″/6″/8″/10″ apertures · joist + T-grid mounting · const<span class="aa">Ⓐ</span>NT CRCU-EM24/JBM (24W · UL 924 · 90 min) pairs with all 3 Radius-II sizes';
   var dimTopW    = document.getElementById('dimTopWidth');if (dimTopW)    dimTopW.textContent    = 'Ø ' + sd.diameter;
   var dimAp      = document.getElementById('dimAperture');if (dimAp)      dimAp.textContent      = sd.emit;
   var dimDp      = document.getElementById('dimDepth');   if (dimDp)      dimDp.textContent      = 'depth ' + sd.depth;
@@ -888,8 +888,8 @@
     // constⒶNT EMB
     'CRCU-EM24-JBM': { sku: 'CRCU-EM24/JBM',       name: 'CRCU-EM24/JBM — 24W Universal-Mount EMB (4/5/6/7″ J-Box · UL 924 · ≥90 min egress)' },
     // contrⒶLS by ⒶCS
-    'MSP-SRI-8CM':   { sku: 'MSP-SRI/8CM/HD/ACS',  name: 'MSP-SRI/8CM/ⒶCS — 8 FT Wide-Area PIR (BLE SigMesh · 500-node mesh · DLC NLC Qualified · in-unit)' },
-    'MSP-SRI-40CM':  { sku: 'MSP-SRI/40CM/HD/ACS', name: 'MSP-SRI/40CM/ⒶCS — 40 FT High-Bay PIR (BLE SigMesh · 500-node mesh · DLC NLC Qualified · high-bay)' },
+    'MSP-SRI-8CM':   { sku: 'MSP-SRI/8CM/HD/ACS',  name: 'MSP-SRI/8CM/<span class="aa">Ⓐ</span>CS — 8 FT Wide-Area PIR (BLE SigMesh · 500-node mesh · DLC NLC Qualified · in-unit)' },
+    'MSP-SRI-40CM':  { sku: 'MSP-SRI/40CM/HD/ACS', name: 'MSP-SRI/40CM/<span class="aa">Ⓐ</span>CS — 40 FT High-Bay PIR (BLE SigMesh · 500-node mesh · DLC NLC Qualified · high-bay)' },
     // New Construction Plates (LCDL-SE/NCP universal — fits 4″/6″/8″/10″)
     'TGK-NOJB':      { sku: 'LDRS-4R1/TGK',        name: 'LDRS-4R1/TGK — Universal NCP plate · no integrated J-Box (lower line cost · BYO J-Box)' },
     'TGK-JB':        { sku: 'LDRS-6R1/TGK',        name: 'LDRS-6R1/TGK — Universal NCP plate + integrated LCDL-SE/JCB Soft Conduit J-Box (higher line cost · saves field-mount step)' },
@@ -907,7 +907,7 @@
   // map for visual + content parity. Eclipse-II canonical pattern.
   var ACC_SPEC_TABLE = {
     'CRCU-EM24-JBM': {
-      sectionHead: 'Selected Companion · constⒶNT CRCU-EM24/JBM (separate SKU)',
+      sectionHead: 'Selected Companion · const<span class="aa">Ⓐ</span>NT CRCU-EM24/JBM (separate SKU)',
       specs: [
         ['Output Power',      '24 W · constant-power'],
         ['Runtime',           '≥ 90 min at reduced lumens (UL 924)'],
@@ -920,26 +920,26 @@
       ]
     },
     'MSP-SRI-8CM': {
-      sectionHead: 'Selected Companion · contrⒶLS by ⒶCS · MSP-SRI/8CM/HD/ACS (separate SKU)',
+      sectionHead: 'Selected Companion · contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS · MSP-SRI/8CM/HD/ACS (separate SKU)',
       specs: [
         ['Detection Tech',    'PIR Wide-Area · ceiling-mount'],
         ['Max Mount Height',  '8 ft (2.4 m)'],
         ['Network',           'BLE SigMesh · up to 500-node mesh'],
         ['Input Voltage',     '120-277 V AC'],
-        ['Commissioning',     'ⒶCS by ALG App (iOS) · zone scheduling · OTA firmware'],
+        ['Commissioning',     '<span class="aa">Ⓐ</span>CS by ALG App (iOS) · zone scheduling · OTA firmware'],
         ['Application',       'In-unit ceilings (closets, baths, laundry, leasing offices, amenity rooms)'],
         ['IP Rating',         'IP20 (interior) · −20°C to +50°C operating range'],
         ['Certification',     'UL Listed · DLC NLC Qualified for utility rebates']
       ]
     },
     'MSP-SRI-40CM': {
-      sectionHead: 'Selected Companion · contrⒶLS by ⒶCS · MSP-SRI/40CM/HD/ACS (separate SKU)',
+      sectionHead: 'Selected Companion · contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS · MSP-SRI/40CM/HD/ACS (separate SKU)',
       specs: [
         ['Detection Tech',    'PIR Wide-Area · High-Detection'],
         ['Max Mount Height',  '40 ft (12 m)'],
         ['Network',           'BLE SigMesh · up to 500-node mesh (shared with 8CM session)'],
         ['Input Voltage',     '120-277 V AC'],
-        ['Commissioning',     'ⒶCS by ALG App (iOS)'],
+        ['Commissioning',     '<span class="aa">Ⓐ</span>CS by ALG App (iOS)'],
         ['Application',       'Parking decks · stairwells · mechanical rooms · tall amenity ceilings'],
         ['IP Rating',         'IP20 (interior) · −20°C to +50°C operating range'],
         ['Certification',     'UL Listed · DLC NLC Qualified for utility rebates']

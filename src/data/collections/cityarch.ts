@@ -122,6 +122,7 @@ const cityarchData = {
       lineDrawing: null,
     },
   ],
+  featuredHeadline: 'Five flagship families from the cityARCH collection.',
   familiesHeadline: '11 families. One municipal portfolio.',
   familiesSubhead: 'Filter by application, echelon, wattage, CCT, and more.',
   legacy: {

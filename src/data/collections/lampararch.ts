@@ -94,6 +94,7 @@ const lampararchData = {
       lineDrawing: null,
     },
   ],
+  featuredHeadline: 'Five flagship families from the lamparARCH collection.',
   familiesHeadline: 'The PRO line that earns the warehouse.',
   familiesSubhead: 'Linear high-bay, low-bay, vapor-tight, and linear strip — DLC Premium-listed across the catalog, project-specified for warehouse, manufacturing, and distribution-center installs.',
   legacy: {

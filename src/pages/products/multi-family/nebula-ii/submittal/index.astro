@@ -86,7 +86,7 @@
   }
   h1, h2, h3, h4 { font-family: 'Sora', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
   .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
-  .aa { font-family: 'Sora', sans-serif; }   /* Ⓐ glyph wrapper — same font as body, no special handling */
+  .aa { font-family: 'Sora', sans-serif; }   /* <span class="aa">Ⓐ</span> glyph wrapper — same font as body, no special handling */
 
   /* ============= PAGE HEADER (every page) ============= */
   .submittal-head {
@@ -417,7 +417,7 @@
   <div class="product-title">
     <h1 id="productTitle">Nebula-II Series · 4″ Retrofit Downlight</h1>
     <div class="tagline" id="productTagline">
-      Multi-fⒶMILY ECO-tier E26 retrofit · 5-CCTselect 2700/3000/3500/4000/5000K · 100° wide-flood ·
+      Multi-f<span class="aa">Ⓐ</span>MILY ECO-tier E26 retrofit · 5-CCTselect 2700/3000/3500/4000/5000K · 100° wide-flood ·
       JA8 / Title-24 / ENERGY STAR / cETLus / Damp-rated · TRIAC dim 5-100%
     </div>
   </div>
@@ -465,8 +465,8 @@
     <div class="fb-pill">Field-Selectable</div>
     <div class="fb-features">
       <strong>5-CCTselect</strong> back-of-fixture switch · 2700/3000/3500/4000/5000K ·
-      <strong>quickⒶDAPT</strong> E26 screw-base retrofit, snap-on retention ·
-      <strong>truⒶCOLOR</strong> CRI ≥ 90, R9 ≥ 50 (JA8-2022 high-efficacy)
+      <strong>quick<span class="aa">Ⓐ</span>DAPT</strong> E26 screw-base retrofit, snap-on retention ·
+      <strong>tru<span class="aa">Ⓐ</span>COLOR</strong> CRI ≥ 90, R9 ≥ 50 (JA8-2022 high-efficacy)
     </div>
   </div>
 
@@ -539,8 +539,8 @@
       <tr><td class="spec-attr">Inrush</td><td class="spec-val">&lt; 30 A @ 120V — supports 20+ fixtures per 15A circuit</td></tr>
 
       <tr class="spec-section-head"><td colspan="2">Controls &amp; Sensors (optional)</td></tr>
-      <tr><td class="spec-attr">ⒶCS by ALG App</td><td class="spec-val">BLE 5.0 mesh — scenes, schedules, group dimming via mobile app (paired with SD/ⒶCS or HD/ⒶCS sensor accessory)</td></tr>
-      <tr><td class="spec-attr">Sensor Add-On</td><td class="spec-val">MSP-SRI/20CM/HD/ⒶCS — 20FT ceiling-mount BLE SigMesh PIR · in-unit + small commercial · or MSP-SRI/40CM/HD/ⒶCS — 40FT high-bay BLE SigMesh PIR · corridors + common areas (DLC NLC qualified)</td></tr>
+      <tr><td class="spec-attr"><span class="aa">Ⓐ</span>CS by ALG App</td><td class="spec-val">BLE 5.0 mesh — scenes, schedules, group dimming via mobile app (paired with SD/<span class="aa">Ⓐ</span>CS or HD/<span class="aa">Ⓐ</span>CS sensor accessory)</td></tr>
+      <tr><td class="spec-attr">Sensor Add-On</td><td class="spec-val">MSP-SRI/20CM/HD/<span class="aa">Ⓐ</span>CS — 20FT ceiling-mount BLE SigMesh PIR · in-unit + small commercial · or MSP-SRI/40CM/HD/<span class="aa">Ⓐ</span>CS — 40FT high-bay BLE SigMesh PIR · corridors + common areas (DLC NLC qualified)</td></tr>
       <tr><td class="spec-attr">Emergency</td><td class="spec-val">CRCU-EM24/JBM — 24W J-box quick-install emergency LED driver · UL 924 · 90-min runtime · LiFePO4 self-protecting battery · CEC Title-24 §1006/§1007 egress compliant</td></tr>
 
       <tr class="spec-section-head"><td colspan="2">Mounting</td></tr>
@@ -682,7 +682,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td class="code">LDRR</td><td>Multi-fⒶMILY downlight family prefix</td></tr>
+      <tr><td class="code">LDRR</td><td>Multi-f<span class="aa">Ⓐ</span>MILY downlight family prefix</td></tr>
       <tr><td class="code">410 / 615</td><td>Aperture &amp; wattage — 410 (4″ · 10 W) · 615 (6″ · 15 W)</td></tr>
       <tr><td class="code">S5</td><td>5-CCTselect — fixed family designator (CCT switched at install on the back of the fixture)</td></tr>
       <tr><td class="code">N2</td><td>Nebula-II generation — fixed family designator</td></tr>
@@ -935,17 +935,17 @@
   // Keeps the legacy EM23/SD/HD keys mapped to the new SKUs so any old
   // bookmarked URL still resolves to a valid line item.
   var pairMap = {
-    'CRCU_EM24':  { sku: 'CRCU-EM24/JBM',       name: 'constⒶNT 24W J-Box Quick-Install Emergency LED Driver · UL 924 · 90-min runtime' },
-    'MSP_SRI_20': { sku: 'MSP-SRI/20CM/HD/ACS', name: 'contrⒶLS · 20FT Ceiling-Mount BLE SigMesh PIR Sensor (low-bay coverage)' },
-    'MSP_SRI_40': { sku: 'MSP-SRI/40CM/HD/ACS', name: 'contrⒶLS · 40FT High-Bay BLE SigMesh PIR Sensor (DLC NLC qualified)' },
+    'CRCU_EM24':  { sku: 'CRCU-EM24/JBM',       name: 'const<span class="aa">Ⓐ</span>NT 24W J-Box Quick-Install Emergency LED Driver · UL 924 · 90-min runtime' },
+    'MSP_SRI_20': { sku: 'MSP-SRI/20CM/HD/ACS', name: 'contr<span class="aa">Ⓐ</span>LS · 20FT Ceiling-Mount BLE SigMesh PIR Sensor (low-bay coverage)' },
+    'MSP_SRI_40': { sku: 'MSP-SRI/40CM/HD/ACS', name: 'contr<span class="aa">Ⓐ</span>LS · 40FT High-Bay BLE SigMesh PIR Sensor (DLC NLC qualified)' },
     'CRC4_E26':   { sku: 'CRC4-SB/E26',         name: 'Gehry · 4″ Pre-Wired Construction Can (E26 socket)' },
     'CRC4_T24':   { sku: 'CRC4-SB/T24',         name: 'Gehry · 4″ IC-Rated Title-24 Can (T24 air-tight)' },
     'CRC6_E26':   { sku: 'CRC6-SB/E26',         name: 'Gehry · 6″ Pre-Wired Construction Can (E26 socket)' },
     'CRC6_T24':   { sku: 'CRC6-SB/T24',         name: 'Gehry · 6″ IC-Rated Title-24 Can (T24 air-tight)' },
     // Legacy fallbacks · old URL params still resolve.
-    'EM23':       { sku: 'CRCU-EM24/JBM',       name: 'constⒶNT 24W Emergency LED Driver (legacy alias EM23)' },
-    'SD':         { sku: 'MSP-SRI/20CM/HD/ACS', name: 'contrⒶLS · 20FT Ceiling-Mount BLE SigMesh PIR (legacy alias SD)' },
-    'HD':         { sku: 'MSP-SRI/40CM/HD/ACS', name: 'contrⒶLS · 40FT High-Bay BLE SigMesh PIR (legacy alias HD)' }
+    'EM23':       { sku: 'CRCU-EM24/JBM',       name: 'const<span class="aa">Ⓐ</span>NT 24W Emergency LED Driver (legacy alias EM23)' },
+    'SD':         { sku: 'MSP-SRI/20CM/HD/ACS', name: 'contr<span class="aa">Ⓐ</span>LS · 20FT Ceiling-Mount BLE SigMesh PIR (legacy alias SD)' },
+    'HD':         { sku: 'MSP-SRI/40CM/HD/ACS', name: 'contr<span class="aa">Ⓐ</span>LS · 40FT High-Bay BLE SigMesh PIR (legacy alias HD)' }
   };
   var bomEntries = [];
   if (emergency)  bomEntries.push(pairMap[emergency]);

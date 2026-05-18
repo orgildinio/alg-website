@@ -139,6 +139,7 @@ const luxoarchData = {
       lineDrawing: '/images/family-cards/luxoarch/sentinel.png',
     },
   ],
+  featuredHeadline: 'Five flagship families from the luxoARCH collection.',
   familiesHeadline: '21 families. One outdoor portfolio.',
   familiesSubhead: 'Filter by application, echelon, wattage, CCT, and more.',
   legacy: {

@@ -24,7 +24,7 @@
     - Catalog number (4 page headers + project info form)
     - Quick spec grid (Lumens / Wattage / CCT / CRI / Beam / Voltage)
     - Ordering code visual breakdown (LSMT · &#123;ss&#125;&#123;ww&#125; · -S5E · [/P|/24PK|])
-    - Companion BOM list (constⒶNT EM driver + approved dimmer)
+    - Companion BOM list (const<span class="aa">Ⓐ</span>NT EM driver + approved dimmer)
     - Photometric polar plot + IES file name + peak intensity per size+CCT
 
   Param schema (matches buildSubmittalUrl() in mockup_ecrescent_pdp_v1.html):
@@ -87,7 +87,7 @@
   }
   h1, h2, h3, h4 { font-family: 'Sora', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
   .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
-  .aa { font-family: 'Sora', sans-serif; }   /* Ⓐ glyph wrapper — same font as body, no special handling */
+  .aa { font-family: 'Sora', sans-serif; }   /* <span class="aa">Ⓐ</span> glyph wrapper — same font as body, no special handling */
 
   /* ============= PAGE HEADER (every page) ============= */
   .submittal-head {
@@ -418,7 +418,7 @@
   <div class="product-title">
     <h1 id="productTitle">eCrescent Series · 6″ Surface-Mount Disk Downlight</h1>
     <div class="tagline" id="productTagline">
-      Multi-fⒶMILY ECO-tier IP65 wet-rated surface-mount disk &middot; 5-CCTselect 2700/3000/3500/4000/5000K &middot; 120° wide-flood (back-lit polycarbonate) &middot; ETL / ENERGY&nbsp;STAR / JA8-2022 / FCC / RoHS / IP65 Wet &middot; Built-in PIR option (/P) &middot; Emergency-driver compatible &middot; Dual install (J-box surface OR 5″/6″ recessed-can retrofit) &middot; 24-pack contractor carton
+      Multi-f<span class="aa">Ⓐ</span>MILY ECO-tier IP65 wet-rated surface-mount disk &middot; 5-CCTselect 2700/3000/3500/4000/5000K &middot; 120° wide-flood (back-lit polycarbonate) &middot; ETL / ENERGY&nbsp;STAR / JA8-2022 / FCC / RoHS / IP65 Wet &middot; Built-in PIR option (/P) &middot; Emergency-driver compatible &middot; Dual install (J-box surface OR 5″/6″ recessed-can retrofit) &middot; 24-pack contractor carton
     </div>
   </div>
 
@@ -687,7 +687,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td class="code">LSMT</td><td>Multi-fⒶMILY surface-mount disk family prefix</td></tr>
+      <tr><td class="code">LSMT</td><td>Multi-f<span class="aa">Ⓐ</span>MILY surface-mount disk family prefix</td></tr>
       <tr><td class="code">410 / 615</td><td>Size &amp; wattage — 4″/10W · 6″/15W (the only two sizes in the eCrescent active SKU set)</td></tr>
       <tr><td class="code">-S5E</td><td>Family designator — 5-CCTselect (S5) + eCrescent (E) · fixed across all SKUs</td></tr>
       <tr><td class="code">/P</td><td>Built-in PIR option — appended only on LSMT615-S5E/P (6″ only · selectable 10s/1m/10m hold time via second back-of-disk dip switch)</td></tr>

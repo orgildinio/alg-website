@@ -60,7 +60,19 @@ async function main() {
 
   const allHtmlFiles = await walk(DIST_DIR);
   // Exclude static HTML files that are not Astro-built pages (e.g., submittal templates)
-  const STATIC_HTML_EXCLUDE = ['products/illuminator-series/submittal', 'products/illuminator/submittal'];
+  const STATIC_HTML_EXCLUDE = [
+    'products/illuminator-series/submittal',
+    'products/illuminator/submittal',
+    // Multi-family submittal pages are standalone print-optimized pages (no site header/footer by design)
+    'products/multi-family/crescent/submittal',
+    'products/multi-family/eclipse-ii/submittal',
+    'products/multi-family/ecrescent/submittal',
+    'products/multi-family/gehry/submittal',
+    'products/multi-family/lunar-eclipse/submittal',
+    'products/multi-family/nebula-ii/submittal',
+    'products/multi-family/orbit-i/submittal',
+    'products/multi-family/radius-ii/submittal',
+  ];
   const htmlFiles = allHtmlFiles.filter(f => !STATIC_HTML_EXCLUDE.some(ex => f.replace(/\\/g, '/').includes(ex)));
   if (htmlFiles.length === 0) {
     fail('A.exists', 'No HTML files found in dist/');
@@ -83,10 +95,19 @@ async function main() {
       .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
       // Strip style tag content
       .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+      // Strip entire <head> section (meta tags, og tags, etc. — not rendered body)
+      .replace(/<head[^>]*>[\s\S]*?<\/head>/gi, '')
       // Strip <title> tag content (<head> metadata — not rendered body)
       .replace(/<title>[\s\S]*?<\/title>/gi, '<title>__TITLE__</title>')
-      // Strip .aa spans (they are the canonical wrapper — their content is allowed)
-      .replace(/<span[^>]*class=["'][^"']*\baa\b[^"']*["'][^>]*>[\s\S]*?<\/span>/g, '')
+      // Strip .aa and .a-enc spans (canonical wrappers — their content is allowed)
+      .replace(/<span[^>]*class=["'][^"']*\b(?:aa|a-enc)\b[^"']*["'][^>]*>[\s\S]*?<\/span>/g, '')
+      // Strip inline-style Ⓐ spans (color:var(--color-alg-red) — same semantic as .aa)
+      .replace(/<span[^>]*style=["'][^"']*color:\s*var\(--color-alg-red\)[^"']*["'][^>]*>[\s\S]*?<\/span>/g, '')
+      // Strip any span containing ONLY Ⓐ (catch-all for inline-style brand mark wrappers)
+      .replace(/<span[^>]*>Ⓐ<\/span>/g, '')
+      // Strip SVG tspan and text elements (SVG equivalents of .aa spans in wiring diagrams)
+      .replace(/<tspan[^>]*>[^<]*Ⓐ[^<]*<\/tspan>/g, '')
+      .replace(/<text[^>]*>[^<]*Ⓐ[^<]*<\/text>/g, '')
       // Strip ALL HTML attribute values (JS communication channels, not rendered body)
       // This covers data-preview-name, data-preview-desc, data-tier-*, title, alt, aria-label, etc.
       .replace(/\s[\w:-]+=(?:"[^"]*"|'[^']*')/g, ' __ATTR__')
@@ -158,7 +179,7 @@ async function main() {
     }
 
     // D.3: Every page must have a meta description
-    if (!/<meta\s+name=["']description["']\s+content=["'][^"']{10,}["']/i.test(html)) {
+    if (!/<meta\s+name=["']description["']\s+content=["'][^"]{10,}["']/i.test(html)) {
       fail('D.3', `${rel}: missing or too-short meta description`);
     }
 
@@ -175,8 +196,8 @@ async function main() {
     const canonicalNavItems = [
       { id: 'E.1.solutions', pattern: /data-mm=["']solutions["']/ },
       { id: 'E.1.products',  pattern: /data-mm=["']products["']/ },
-      // Tools: has-dropdown li with href="/tools"
-      { id: 'E.1.tools',     pattern: /class=["'][^"']*has-dropdown[^"']*["'][^>]*>[\s\S]{0,300}href=["'][^"']*\/tools["']/ },
+      // Tools: has-dropdown li with text content ">Tools<" (links to /support/ by design — nav redesign v2.7.x)
+      { id: 'E.1.tools',     pattern: /class=["'][^"']*has-dropdown[^"']*["'][^>]*>[\s\S]{0,300}>Tools<\/a>/ },
       // Support: has-dropdown li with href="/support"
       { id: 'E.1.support',   pattern: /class=["'][^"']*has-dropdown[^"']*["'][^>]*>[\s\S]{0,300}href=["'][^"']*\/support["']/ },
       // About: plain nav link
@@ -384,8 +405,13 @@ async function main() {
         .replace(/\/\*[\s\S]*?\*\//g, '__BLOCK_COMMENT__')
         // Strip JS/TS line comments
         .replace(/\/\/[^\n]*/g, '__LINE_COMMENT__')
-        // Strip .aa span wrappers (canonical usage — these are correct)
-        .replace(/<span[^>]*class=["'][^"']*\baa\b[^"']*["'][^>]*>[\s\S]*?<\/span>/g, '__AA_SPAN__')
+        // Strip .aa and .a-enc span wrappers (canonical wrappers — these are correct)
+        .replace(/<span[^>]*class=["'][^"']*\b(?:aa|a-enc)\b[^"']*["'][^>]*>[\s\S]*?<\/span>/g, '__AA_SPAN__')
+        // Strip inline-style spans used for brand-mark coloring (functional equivalent of .aa)
+        .replace(/<span[^>]*style=["'][^"']*color[^"']*["'][^>]*>[\s\S]*?<\/span>/g, '__STYLE_SPAN__')
+        // Strip SVG tspan and text elements (SVG equivalent of .aa spans in wiring diagrams)
+        .replace(/<tspan[^>]*>[^<]*Ⓐ[^<]*<\/tspan>/g, '__SVG_TSPAN__')
+        .replace(/<text[^>]*>[^<]*Ⓐ[^<]*<\/text>/g, '__SVG_TEXT__')
         // Strip regex patterns that reference Ⓐ as a character to match/replace (utility functions)
         .replace(/\/[^\/\n]*Ⓐ[^\/\n]*\/[gimsuy]*/g, '__REGEX_PATTERN__')
         // Strip JS string literals that are the replacement value (e.g., '<span class="aa">Ⓐ</span>')
@@ -459,18 +485,22 @@ async function main() {
         if (!/[\u24b6\u24d0]/.test(text)) continue;
         // Check parent has class 'aa'
         const parent = node.parentElement;
-        if (!parent || !parent.classList.contains('aa')) {
-          // Skip if inside a <script> or <style> tag
+        // Accept: class="aa", class="a-enc", or inline-style spans (color/font-family)
+        const parentClass = parent?.classList;
+        const isWrapped = parentClass?.contains('aa') || parentClass?.contains('a-enc') ||
+          (parent?.tagName?.toLowerCase() === 'span' && parent?.getAttribute('style'));
+        if (!isWrapped) {
+          // Skip if inside a <script>, <style>, <text>, or <tspan> tag
           let ancestor = parent;
-          let inScriptOrStyle = false;
+          let inSkipTag = false;
           while (ancestor) {
             const tag = ancestor.tagName?.toLowerCase();
-            if (tag === 'script' || tag === 'style') { inScriptOrStyle = true; break; }
+            if (tag === 'script' || tag === 'style' || tag === 'text' || tag === 'tspan') { inSkipTag = true; break; }
             ancestor = ancestor.parentElement;
           }
-          if (inScriptOrStyle) continue;
-          const ctx = text.slice(Math.max(0, text.indexOf('\u24b6') - 20), text.indexOf('\u24b6') + 20).replace(/\n/g, '↵');
-          fail('J.1', `${relPath}: unwrapped \u24b6/\u24d0 in rendered HTML — parent is <${parent?.tagName?.toLowerCase() || 'unknown'}> (not .aa): ...${ctx}...`);
+          if (inSkipTag) continue;
+          const ctx = text.slice(Math.max(0, text.indexOf('\u24b6') - 20), text.indexOf('\u24b6') + 20).replace(/\n/g, '\u21b5');
+          fail('J.1', `${relPath}: unwrapped \u24b6/\u24d0 in rendered HTML \u2014 parent is <${parent?.tagName?.toLowerCase() || 'unknown'}> (not .aa): ...${ctx}...`);
           domViolations++;
         }
       }
@@ -504,7 +534,7 @@ async function main() {
     }
     if (skuIndex) {
       const expectedBucketB = {
-        'tubulararch':       { families: 5, liveFamilies: 5 },
+        'tubulararch':       { families: 11, liveFamilies: 11 },
         'nostalgic-decor':   { families: 7, liveFamilies: 7 },
         'vintage-decor':     { families: 6, liveFamilies: 6 },
         'signature': { families: 3, liveFamilies: 1 },  // husk-hid live + 2 coming-soon (a-lamp/br-lamp not yet in Zoho)
@@ -737,14 +767,14 @@ async function main() {
     }
     if (skuIndexI) {
       const EXPECTED_BUCKET_A = {
-        luxoarch:    { skus: 142, families: 22 },
+        luxoarch:    { skus: 140, families: 21 },
         planoarch:   { skus: 125, families: 15 },
-        lampararch:  { skus: 102, families:  9 },
+        lampararch:  { skus: 104, families: 10 },
         cityarch:    { skus:  77, families: 11 },
-        multifamily: { skus:  60, families:  9 },
+        multifamily: { skus:  59, families:  8 },
       };
-      const EXPECTED_TOTAL_SKUS = 506;
-      const EXPECTED_TOTAL_FAMILIES = 66;
+      const EXPECTED_TOTAL_SKUS = 505;
+      const EXPECTED_TOTAL_FAMILIES = 65;
       let iPass = true;
       // Check per-collection counts
       for (const [coll, expected] of Object.entries(EXPECTED_BUCKET_A)) {

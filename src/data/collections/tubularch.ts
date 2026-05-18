@@ -89,6 +89,7 @@ const tubularchData = {
       lineDrawing: null,
     },
   ],
+  featuredHeadline: 'Five form factors from the tubulARCH collection.',
   familiesHeadline: 'Five form factors. One spec language.',
   familiesSubhead: 'T5, T8, PL, PLL, and U-Bend LED retrofit lamps — UL-certified, DLC-listed, ballast-tested.',
   legacy: {

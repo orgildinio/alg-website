@@ -24,7 +24,7 @@
     - Catalog number (4 page headers + project info form)
     - Quick spec grid (Lumens / Wattage / CCT / CRI / Beam / Voltage)
     - Ordering code visual breakdown (LDLL · &#123;nn&#125;&#123;ww&#125; · -E2S5 · /Finish · [/Shape])
-    - Companion BOM list (constⒶNT EMB · contrⒶLS by ⒶCS · LDLL-E2/MSP/W · LDLL-E2/JBX)
+    - Companion BOM list (const<span class="aa">Ⓐ</span>NT EMB · contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS · LDLL-E2/MSP/W · LDLL-E2/JBX)
     - Photometric polar plot + IES file name + peak intensity by size+CCT
 
   Param schema (matches buildSubmittalUrl() in mockup_eclipse-ii_pdp_v1.html):
@@ -86,7 +86,7 @@
   }
   h1, h2, h3, h4 { font-family: 'Sora', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
   .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
-  .aa { font-family: 'Sora', sans-serif; }   /* Ⓐ glyph wrapper — same font as body, no special handling */
+  .aa { font-family: 'Sora', sans-serif; }   /* <span class="aa">Ⓐ</span> glyph wrapper — same font as body, no special handling */
 
   /* ============= PAGE HEADER (every page) ============= */
   .submittal-head {
@@ -417,7 +417,7 @@
   <div class="product-title">
     <h1 id="productTitle">Eclipse-II Series · 4″ Retrofit Downlight</h1>
     <div class="tagline" id="productTagline">
-      Multi-fⒶMILY PRO-tier surface-mount J-box install · 5-CCTselect 2700/3000/3500/4000/5000K · 120° wide-flood (edge-lit PMMA) ·
+      Multi-f<span class="aa">Ⓐ</span>MILY PRO-tier surface-mount J-box install · 5-CCTselect 2700/3000/3500/4000/5000K · 120° wide-flood (edge-lit PMMA) ·
       JA8 / Title-24 / ENERGY STAR / cETLus / Damp-rated · TRIAC dim 5-100% · 24-pack contractor carton
     </div>
   </div>
@@ -463,7 +463,7 @@
     <div class="fb-features">
       <strong>5-CCTselect</strong> back-of-fixture switch · 2700/3000/3500/4000/5000K ·
       <strong>driverless edge-lit PMMA</strong> surface-mount on standard 2.75″ or 3.50″ J-box ·
-      <strong>truⒶCOLOR</strong> CRI ≥ 90, R9 ≥ 50 (JA8-2022 high-efficacy)
+      <strong>tru<span class="aa">Ⓐ</span>COLOR</strong> CRI ≥ 90, R9 ≥ 50 (JA8-2022 high-efficacy)
     </div>
   </div>
 
@@ -536,7 +536,7 @@
       <tr><td class="spec-attr">Inrush</td><td class="spec-val">&lt; 30 A @ 120V — supports 20+ fixtures per 15A circuit</td></tr>
 
       <tr class="spec-section-head"><td colspan="2">Controls &amp; Sensors (optional)</td></tr>
-      <tr><td class="spec-attr">ⒶCS by ALG App</td><td class="spec-val">BLE 5.0 mesh — scenes, schedules, group dimming via mobile app (paired with SD/ⒶCS or HD/ⒶCS sensor accessory)</td></tr>
+      <tr><td class="spec-attr"><span class="aa">Ⓐ</span>CS by ALG App</td><td class="spec-val">BLE 5.0 mesh — scenes, schedules, group dimming via mobile app (paired with SD/<span class="aa">Ⓐ</span>CS or HD/<span class="aa">Ⓐ</span>CS sensor accessory)</td></tr>
       <tr><td class="spec-attr">Sensor Add-On</td><td class="spec-val">SD/ACS — single-element PIR · 12-ft cone · or HD/ACS — dual-tech PIR + microwave + photo cell · 24-ft cone with daylight harvest</td></tr>
       <tr><td class="spec-attr">Emergency</td><td class="spec-val">EM23 — 90-min battery brick (UL 924) · CEC Title-24 §1006/§1007 egress compliant</td></tr>
 
@@ -679,7 +679,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td class="code">LDLL</td><td>Multi-fⒶMILY downlight family prefix</td></tr>
+      <tr><td class="code">LDLL</td><td>Multi-f<span class="aa">Ⓐ</span>MILY downlight family prefix</td></tr>
       <tr><td class="code">0510 / 0715 / 0918 / 1121 / 1324</td><td>Aperture &amp; wattage — 5″/10W · 7″/15W · 9″/18W · 11″/21W (peak 103 lm/W ★) · 13″/24W</td></tr>
       <tr><td class="code">S5</td><td>5-CCTselect — fixed family designator (CCT switched at install on the back of the fixture)</td></tr>
       <tr><td class="code">E2</td><td>Eclipse-II generation — fixed family designator</td></tr>
@@ -840,14 +840,14 @@
     'EM08':           { sku: 'EM08',            name: 'EM08 — 8W Field-Install BBU' },
     'EM08-XD':        { sku: 'EM08-XD',         name: 'EM08-XD — 8W Extended-Discharge 180 min' },
     'EM15':           { sku: 'EM15',            name: 'EM15 — 15W Field-Install BBU' },
-    'EM15-CL':        { sku: 'EM15-CL',         name: 'EM15-CL — 15W + constⒶNTLink (NLC self-test)' },
+    'EM15-CL':        { sku: 'EM15-CL',         name: 'EM15-CL — 15W + const<span class="aa">Ⓐ</span>NTLink (NLC self-test)' },
     'EM25':           { sku: 'EM25',            name: 'EM25 — 25W High-Output BBU' },
     'EM24-JBM':       { sku: 'CRCU-EM24/JBM',   name: 'EM24 — 24W J-Box Quick-Install (remote mount)' },
     // contr⒝LS by ⒝CS
-    'MSP-20CM':       { sku: 'MSP-20CM-ACS',    name: 'MSP-20CM/ⒶCS — 20 FT Wide-Angle PIR' },
-    'MSP-40CM':       { sku: 'MSP-40CM-ACS',    name: 'MSP-40CM/ⒶCS — 40 FT High-Bay PIR' },
-    'MSX-LV20':       { sku: 'MSX-LV20-ACS',    name: 'MSX-LV20/ⒶCS — Low-Voltage Controller / Power Pack' },
-    '50WM':           { sku: '50WM-ACS',        name: '50WM/ⒶCS — Battery-Free Kinetic Switch' },
+    'MSP-20CM':       { sku: 'MSP-20CM-ACS',    name: 'MSP-20CM/<span class="aa">Ⓐ</span>CS — 20 FT Wide-Angle PIR' },
+    'MSP-40CM':       { sku: 'MSP-40CM-ACS',    name: 'MSP-40CM/<span class="aa">Ⓐ</span>CS — 40 FT High-Bay PIR' },
+    'MSX-LV20':       { sku: 'MSX-LV20-ACS',    name: 'MSX-LV20/<span class="aa">Ⓐ</span>CS — Low-Voltage Controller / Power Pack' },
+    '50WM':           { sku: '50WM-ACS',        name: '50WM/<span class="aa">Ⓐ</span>CS — Battery-Free Kinetic Switch' },
     // Eclipse-II Exclusive
     'MSP':            { sku: 'LDLL-E2/MSP/W',   name: 'LDLL-E2/MSP/W — 1-Pin Plug-n-Play Bi-Level Sensor' },
     'JBX':            { sku: 'LDLL-E2/JBX',     name: 'LDLL-E2/JBX — Emergency Battery J-Box (Eclipse-II)' }

@@ -86,7 +86,7 @@
   }
   h1, h2, h3, h4 { font-family: 'Sora', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
   .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
-  .aa { font-family: 'Sora', sans-serif; }   /* Ⓐ glyph wrapper — same font as body, no special handling */
+  .aa { font-family: 'Sora', sans-serif; }   /* <span class="aa">Ⓐ</span> glyph wrapper — same font as body, no special handling */
 
   /* ============= PAGE HEADER (every page) ============= */
   .submittal-head {
@@ -417,7 +417,7 @@
   <div class="product-title">
     <h1 id="productTitle">Orbit-I Series · 4″ Retrofit Downlight</h1>
     <div class="tagline" id="productTagline">
-      Multi-fⒶMILY ECO-tier E26 retrofit · 5-CCTselect 2700/3000/3500/4000/5000K · 100° wide-flood (60° tilt + 360° rotation gimbal) ·
+      Multi-f<span class="aa">Ⓐ</span>MILY ECO-tier E26 retrofit · 5-CCTselect 2700/3000/3500/4000/5000K · 100° wide-flood (60° tilt + 360° rotation gimbal) ·
       JA8 / Title-24 / ENERGY STAR / cETLus / Damp-rated · TRIAC dim 5-100% · 24-pack contractor carton
     </div>
   </div>
@@ -462,8 +462,8 @@
     <div class="fb-pill">Field-Selectable</div>
     <div class="fb-features">
       <strong>5-CCTselect</strong> back-of-fixture switch · 2700/3000/3500/4000/5000K ·
-      <strong>quickⒶDAPT</strong> E26 screw-base retrofit, snap-on retention ·
-      <strong>truⒶCOLOR</strong> CRI ≥ 90, R9 ≥ 50 (JA8-2022 high-efficacy)
+      <strong>quick<span class="aa">Ⓐ</span>DAPT</strong> E26 screw-base retrofit, snap-on retention ·
+      <strong>tru<span class="aa">Ⓐ</span>COLOR</strong> CRI ≥ 90, R9 ≥ 50 (JA8-2022 high-efficacy)
     </div>
   </div>
 
@@ -536,7 +536,7 @@
       <tr><td class="spec-attr">Inrush</td><td class="spec-val">&lt; 30 A @ 120V — supports 20+ fixtures per 15A circuit</td></tr>
 
       <tr class="spec-section-head"><td colspan="2">Controls &amp; Sensors (optional)</td></tr>
-      <tr><td class="spec-attr">ⒶCS by ALG App</td><td class="spec-val">BLE 5.0 mesh — scenes, schedules, group dimming via mobile app (paired with SD/ⒶCS or HD/ⒶCS sensor accessory)</td></tr>
+      <tr><td class="spec-attr"><span class="aa">Ⓐ</span>CS by ALG App</td><td class="spec-val">BLE 5.0 mesh — scenes, schedules, group dimming via mobile app (paired with SD/<span class="aa">Ⓐ</span>CS or HD/<span class="aa">Ⓐ</span>CS sensor accessory)</td></tr>
       <tr><td class="spec-attr">Sensor Add-On</td><td class="spec-val">SD/ACS — single-element PIR · 12-ft cone · or HD/ACS — dual-tech PIR + microwave + photo cell · 24-ft cone with daylight harvest</td></tr>
       <tr><td class="spec-attr">Emergency</td><td class="spec-val">EM23 — 90-min battery brick (UL 924) · CEC Title-24 §1006/§1007 egress compliant</td></tr>
 
@@ -679,7 +679,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td class="code">LDGR</td><td>Multi-fⒶMILY downlight family prefix</td></tr>
+      <tr><td class="code">LDGR</td><td>Multi-f<span class="aa">Ⓐ</span>MILY downlight family prefix</td></tr>
       <tr><td class="code">410 / 615</td><td>Aperture &amp; wattage — 410 (4″ · 10 W) · 615 (6″ · 15 W)</td></tr>
       <tr><td class="code">S5</td><td>5-CCTselect — fixed family designator (CCT switched at install on the back of the fixture)</td></tr>
       <tr><td class="code">N2</td><td>Orbit-I generation — fixed family designator</td></tr>
@@ -858,8 +858,8 @@
   // Maps companion code → friendly name pulled from Section 7 ACC data.
   var pairMap = {
     'EM23':       { sku: 'EM23',        name: 'EM23 — 90-Min Emergency Battery' },
-    'SD':         { sku: 'SD/ACS',      name: 'SD/ⒶCS — Snap-On PIR Sensor' },
-    'HD':         { sku: 'HD/ACS',      name: 'HD/ⒶCS — Dual-Tech + Daylight' },
+    'SD':         { sku: 'SD/ACS',      name: 'SD/<span class="aa">Ⓐ</span>CS — Snap-On PIR Sensor' },
+    'HD':         { sku: 'HD/ACS',      name: 'HD/<span class="aa">Ⓐ</span>CS — Dual-Tech + Daylight' },
     'CRC4_E26':   { sku: 'CRC4-SB/E26', name: '4″ Pre-Wired Construction Can' },
     'CRC4_T24':   { sku: 'CRC4-SB/T24', name: '4″ IC-Rated Title-24 Can' },
     'CRC6_E26':   { sku: 'CRC6-SB/E26', name: '6″ Pre-Wired Construction Can' },
