@@ -3377,7 +3377,412 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <div class="feature-chip-icon">
             <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="30" cy="30" r="26" stroke-width="1.4" opacity="0.35"/>
-              <img
+              <!-- 3 nested wafer disks · 4″ + 6″ + 8″ -->
+              <circle cx="30" cy="30" r="6" stroke="currentColor" stroke-width="1.4" fill="none"/>
+              <circle cx="30" cy="30" r="11" stroke="currentColor" stroke-width="1.2" fill="none" opacity="0.7"/>
+              <circle cx="30" cy="30" r="16" stroke="#F32740" stroke-width="1.6" fill="rgba(243,39,64,0.06)"/>
+              <text x="30" y="48" text-anchor="middle" fill="#F32740" stroke="#F32740" stroke-width="0.4" font-size="6" font-family="JetBrains Mono, monospace" font-weight="700" letter-spacing="0.8">4 · 6 · 8&Prime;</text>
+            </svg>
+          </div>
+          <div class="feature-chip-label">3 SIZES &middot; INCL. 8&Prime;</div>
+        </div>
+
+        <!-- 5-CCT on the J-Box (not the disk) — install-ergonomics differentiator -->
+        <div class="feature-chip">
+          <div class="feature-chip-icon">
+            <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="30" cy="30" r="26" stroke-width="1.4" opacity="0.35"/>
+              <!-- J-Box silhouette + dip switch on its face -->
+              <rect x="14" y="22" width="22" height="16" rx="1.5" stroke="currentColor" stroke-width="1.4" fill="none"/>
+              <line x1="36" y1="30" x2="44" y2="30" stroke="currentColor" stroke-width="1.4"/>
+              <circle cx="46" cy="30" r="3" stroke="currentColor" stroke-width="1.2" fill="rgba(243,39,64,0.18)"/>
+              <!-- 5 dip-switch pins -->
+              <rect x="17" y="26" width="2" height="8" fill="#F32740"/>
+              <rect x="20" y="26" width="2" height="8" fill="#F32740"/>
+              <rect x="23" y="26" width="2" height="8" fill="#F32740"/>
+              <rect x="26" y="26" width="2" height="8" fill="#F32740"/>
+              <rect x="29" y="26" width="2" height="8" fill="#F32740"/>
+              <text x="30" y="51" text-anchor="middle" fill="#F32740" stroke="#F32740" stroke-width="0.3" font-size="5.5" font-family="JetBrains Mono, monospace" letter-spacing="1">ON J-BOX</text>
+            </svg>
+          </div>
+          <div class="feature-chip-label">5-CCT ON THE J-BOX</div>
+        </div>
+
+        <!-- 6 TRIM ACCESSORIES (Matte Black + Copper × 3 sizes) — catalog-listed finish ladder -->
+        <div class="feature-chip">
+          <div class="feature-chip-icon">
+            <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="30" cy="30" r="26" stroke-width="1.4" opacity="0.35"/>
+              <!-- 3 trim-ring stacks · Black + Copper -->
+              <circle cx="20" cy="26" r="6" stroke="#1a1a1a" stroke-width="1.6" fill="none"/>
+              <circle cx="20" cy="26" r="3" stroke="#1a1a1a" stroke-width="0.6" fill="none" opacity="0.5"/>
+              <circle cx="40" cy="26" r="6" stroke="#C97A4A" stroke-width="1.6" fill="none"/>
+              <circle cx="40" cy="26" r="3" stroke="#C97A4A" stroke-width="0.6" fill="none" opacity="0.5"/>
+              <text x="30" y="46" text-anchor="middle" fill="#F32740" stroke="#F32740" stroke-width="0.4" font-size="9" font-family="JetBrains Mono, monospace" font-weight="700">×6</text>
+              <text x="30" y="56" text-anchor="middle" fill="#F32740" stroke="#F32740" stroke-width="0.3" font-size="5" font-family="JetBrains Mono, monospace" letter-spacing="1">BLK + COPPER</text>
+            </svg>
+          </div>
+          <div class="feature-chip-label">6 TRIM ACCESSORIES</div>
+        </div>
+
+        <!-- T-GRID INSTALLATION KIT — drop-ceiling commercial unlock -->
+        <div class="feature-chip">
+          <div class="feature-chip-icon">
+            <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="30" cy="30" r="26" stroke-width="1.4" opacity="0.35"/>
+              <!-- T-grid pattern · 4 rectangular tiles + grid lines -->
+              <rect x="15" y="17" width="14" height="12" stroke="currentColor" stroke-width="1.2" fill="none"/>
+              <rect x="31" y="17" width="14" height="12" stroke="currentColor" stroke-width="1.2" fill="none"/>
+              <rect x="15" y="31" width="14" height="12" stroke="currentColor" stroke-width="1.2" fill="none"/>
+              <rect x="31" y="31" width="14" height="12" stroke="currentColor" stroke-width="1.2" fill="none"/>
+              <!-- Wafer disk in one tile -->
+              <circle cx="22" cy="23" r="3.5" fill="#F32740"/>
+              <text x="30" y="56" text-anchor="middle" fill="#F32740" stroke="#F32740" stroke-width="0.3" font-size="5.5" font-family="JetBrains Mono, monospace" letter-spacing="1">DROP-CEILING</text>
+            </svg>
+          </div>
+          <div class="feature-chip-label">T-GRID INSTALLATION KIT</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="carousel-wrap">
+        <div class="carousel-track" id="carouselTrack">
+          <!-- Real Radius-II product photography from the WorkDrive folder
+               (multi-fⒶMILY/LDRS - RADIUS/PHOTOS/LDRS - Radius-II/).
+               4 frames span the product story:
+                 1. 6″ hero (LDRS612, lit 4000K) — signature shot
+                 2. 6″ Plug-n-Play J-Box exploded view — install amplifier
+                 3. 4″ hero (LDRS409) — small-size variety
+                 4. 4″ in-context lit — full-room amplifier shot -->
+          <div class="carousel-slide">
+            <img class="slide-img"
+                 src="assets/radius-ii/radius-ii-6in-hero-1.png"
+                 alt="LDRS612-R2S5F Radius-II — 6″ slim wafer recessed downlight, white finish, lit at 4000K, front 3/4 hero showing the 0.38″ ultra-slim profile and edge-lit PMMA optic"
+                 loading="eager" />
+          </div>
+          <div class="carousel-slide">
+            <img class="slide-img"
+                 src="assets/radius-ii/radius-ii-6in-hero-2.png"
+                 alt="Radius-II Plug-n-Play J-Box system — exploded view showing the 6″ wafer disk + remote driver J-Box with electronically isolated 5-CCTselect dip switch on the J-Box face (not the disk)"
+                 loading="lazy" />
+          </div>
+          <div class="carousel-slide">
+            <img class="slide-img"
+                 src="assets/radius-ii/radius-ii-4in-hero-1.png"
+                 alt="LDRS409-R2S5F Radius-II — 4″ smallest size in white, 9W / 644 lm at 4000K, front view showing the centered edge-lit PMMA lens and 0.38″ ultra-slim profile"
+                 loading="lazy" />
+          </div>
+          <div class="carousel-slide">
+            <img class="slide-img"
+                 src="assets/radius-ii/radius-ii-4in-hero-7.png"
+                 alt="LDRS409-R2S5F Radius-II — 4″ wafer in installed context showing edge-lit even distribution from the PMMA optic, recessed flush to the ceiling, ideal for multifamily corridors and common areas"
+                 loading="lazy" />
+          </div>
+        </div>
+        <div class="carousel-dots" id="carouselDots">
+          <span class="active" data-i="0"></span>
+          <span data-i="1"></span>
+          <span data-i="2"></span>
+          <span data-i="3"></span>
+        </div>
+      </div>
+
+      <!-- Compliance row — California-spec lead (JA8 / T.20 / T.24) + supporting marks.
+           Each cert mark renders as inline SVG sized identically to the production-CDN
+           ETL / RoHS marks (~48px square, monochrome circular stamp). JA8 / T.20 / T.24 /
+           Damp are custom-drawn since CEC does not publish official downloadable logos for
+           those listings; visual style mirrors ETL's serif-italic-on-black-circle mark. -->
+      <div class="hero-compliance" aria-label="Certifications">
+        <!-- ETL Listed — production CDN -->
+        <div class="cb">
+          <img src="https://www.archipelagolighting.com/cdn/shop/t/24/assets/etl.svg" alt="ETL Listed" />
+          <div class="cb-label">ETL Listed</div>
+        </div>
+        <!-- Title 24 — California Title 24 Part 6 + JA8 compliant per Datasheet -->
+        <div class="cb">
+          <svg class="cb-img" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="California Title 24 Part 6 + JA8 compliant">
+            <circle cx="24" cy="24" r="22" fill="none" stroke="#7d7d7d" stroke-width="1.4"/>
+            <circle cx="24" cy="24" r="19.5" fill="none" stroke="#7d7d7d" stroke-width="0.5" opacity="0.55"/>
+            <text x="24" y="17.5" text-anchor="middle" fill="#7d7d7d" font-family="'JetBrains Mono', monospace" font-size="5.2" letter-spacing="1" font-weight="700">CALIFORNIA</text>
+            <text x="24" y="31.5" text-anchor="middle" fill="#7d7d7d" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="13" font-weight="700" letter-spacing="0.3">T.24</text>
+            <text x="24" y="39.5" text-anchor="middle" fill="#7d7d7d" font-family="'JetBrains Mono', monospace" font-size="4.4" letter-spacing="0.8" opacity="0.7">JA8</text>
+          </svg>
+          <div class="cb-label">Title 24 / JA8</div>
+        </div>
+        <!-- RoHS Compliant — production CDN -->
+        <div class="cb">
+          <img src="https://www.archipelagolighting.com/cdn/shop/t/24/assets/rohs.svg" alt="RoHS Compliant" />
+          <div class="cb-label">RoHS</div>
+        </div>
+        <!-- WET LOCATION — Radius-II ships uniformly Wet across all SKUs (no Damp variant) -->
+        <div class="cb">
+          <svg class="cb-img" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Suitable for wet locations">
+            <circle cx="24" cy="24" r="22" fill="none" stroke="#7d7d7d" stroke-width="1.4"/>
+            <circle cx="24" cy="24" r="19.5" fill="none" stroke="#7d7d7d" stroke-width="0.5" opacity="0.55"/>
+            <path d="M19 13 Q14 19 14 23 a5 5 0 0 0 10 0 Q24 19 19 13 Z" fill="#7d7d7d" stroke="none" opacity="0.92"/>
+            <path d="M29 17 Q24 23 24 27 a5 5 0 0 0 10 0 Q34 23 29 17 Z" fill="#7d7d7d" stroke="none" opacity="0.92"/>
+            <text x="24" y="42" text-anchor="middle" fill="#7d7d7d" font-family="'JetBrains Mono', monospace" font-size="5.2" letter-spacing="1.2" font-weight="700">WET LOC</text>
+          </svg>
+          <div class="cb-label">Wet Location</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="feature-band" aria-label="Product feature highlights" style="display:none">
+
+  <div class="feature-band-inner">
+    <div class="feature-icons">
+
+      <div class="feature-chip">
+        <div class="feature-chip-icon">
+          <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="30" cy="30" r="26" stroke-width="1.4" opacity="0.35"/>
+            <line x1="16" y1="22" x2="32" y2="22"/>
+            <line x1="16" y1="30" x2="44" y2="30"/>
+            <line x1="16" y1="38" x2="38" y2="38"/>
+            <circle cx="44" cy="30" r="3.5" fill="#F32740" stroke="#F32740"/>
+          </svg>
+        </div>
+        <div class="feature-chip-label">WATTSELECT</div>
+      </div>
+
+      <div class="feature-chip">
+        <div class="feature-chip-icon">
+          <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="30" cy="30" r="26" stroke-width="1.4" opacity="0.35"/>
+            <path d="M16 26 a22 22 0 0 1 28 0"/>
+            <path d="M21 32 a14 14 0 0 1 18 0"/>
+            <path d="M26 38 a6 6 0 0 1 8 0"/>
+            <circle cx="30" cy="44" r="2.5" fill="#F32740" stroke="#F32740"/>
+          </svg>
+        </div>
+        <div class="feature-chip-label">CONTR<span class="aa">Ⓐ</span>LS-READY</div>
+      </div>
+
+      <div class="feature-chip">
+        <div class="feature-chip-icon">
+          <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="30" cy="30" r="26" stroke-width="1.4" opacity="0.35"/>
+            <path d="M30 16 L21 44 L39 44 Z"/>
+            <ellipse cx="30" cy="16" rx="5" ry="1.8" fill="#F32740" stroke="#F32740"/>
+            <line x1="30" y1="20" x2="30" y2="42" stroke-dasharray="2 3" opacity="0.55"/>
+          </svg>
+        </div>
+        <div class="feature-chip-label">PRO<span class="aa">Ⓐ</span>PTICS™</div>
+      </div>
+
+      <div class="feature-chip">
+        <div class="feature-chip-icon">
+          <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="30" cy="30" r="26" stroke-width="1.4" opacity="0.35"/>
+            <path d="M30 14 L44 18 L44 32 Q44 40 30 46 Q16 40 16 32 L16 18 Z"/>
+            <path d="M31 21 L24 32 L30 32 L27 41 L36 28 L30 28 L33 21 Z" fill="#F32740" stroke="#F32740" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="feature-chip-label">SURGE<span class="aa">Ⓐ</span>RMOR</div>
+      </div>
+
+      <div class="feature-chip">
+        <div class="feature-chip-icon">
+          <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="30" cy="30" r="26" stroke-width="1.4" opacity="0.35"/>
+            <line x1="20" y1="14" x2="20" y2="46"/>
+            <path d="M20 16 Q30 18 40 16 Q40 22 40 28 Q30 30 20 28 Z" fill="#F32740" stroke="#F32740"/>
+            <circle cx="26" cy="22" r="0.9" fill="#ffffff" stroke="none"/>
+            <circle cx="32" cy="22" r="0.9" fill="#ffffff" stroke="none"/>
+            <circle cx="38" cy="22" r="0.9" fill="#ffffff" stroke="none"/>
+          </svg>
+        </div>
+        <div class="feature-chip-label">TAA COMPLIANT</div>
+      </div>
+
+    </div>
+
+    <div class="compliance-badges" aria-label="Certifications">
+      <div class="cb">
+        <div class="cb-mark cb-circle">DLC</div>
+        <div class="cb-label">Listed</div>
+      </div>
+      <div class="cb">
+        <div class="cb-mark cb-diamond"><span>ETL</span></div>
+        <div class="cb-label">Listed</div>
+      </div>
+      <div class="cb">
+        <div class="cb-mark cb-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 12 10 16 18 8"/>
+          </svg>
+        </div>
+        <div class="cb-label">RoHS</div>
+      </div>
+      <div class="cb">
+        <div class="cb-mark cb-circle">DLC+</div>
+        <div class="cb-label">Premium</div>
+      </div>
+      <div class="cb">
+        <div class="cb-mark cb-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 4 Q6 12 6 16 a6 6 0 0 0 12 0 Q18 12 12 4 Z"/>
+          </svg>
+        </div>
+        <div class="cb-label">Wet Loc</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="spec-section" id="specifications" aria-label="Model Specifications">
+  <div class="spec-inner">
+
+    <div class="spec-header">
+      <h2>Model Specifications</h2>
+      <a href="https://workdrive.archipelagolighting.com/external/668f4316a802c0182814c58dbef7f987ba01d2d73117eaba0fa8dda5a0b90d1f" target="_blank" rel="noopener" class="spec-download">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download Data Sheet
+      </a>
+    </div>
+
+    <div class="spec-meta">
+
+      <div>
+        <div class="spec-meta-key">Beam Angle</div>
+        <div class="meta-stat">
+          <div class="meta-stat-icon">
+            <!-- Wide-flood beam icon: cone radiating downward -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="6" r="2.5" fill="currentColor"/>
+              <path d="M4 22 L8 9"/>
+              <path d="M20 22 L16 9"/>
+              <path d="M4 22 L20 22"/>
+            </svg>
+          </div>
+          <div class="meta-stat-text">
+            <span class="meta-stat-num">115°</span>
+            <span class="meta-stat-sub">edge-lit PMMA distribution</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="spec-meta-key">Finish &middot; Trim</div>
+        <div class="finish-swatches">
+          <div class="finish-swatch fs-white is-default" title="White · Standard ★"></div>
+          <div class="finish-swatch fs-black" title="Matte Black trim plate (LDRS-{4|6|8}R1/TBK accessory)"></div>
+          <div class="finish-swatch fs-bronze" title="Copper trim plate (LDRS-{4|6|8}R1/TCR accessory)"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="spec-meta-key">Architecture</div>
+        <div class="meta-stat">
+          <div class="meta-stat-icon">
+            <!-- Slim wafer + remote J-Box icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Thin disc -->
+              <ellipse cx="9" cy="14" rx="6" ry="1.6" stroke="currentColor"/>
+              <!-- Quick-connect cable to J-Box -->
+              <path d="M14 14 Q17 12 19 11" stroke="#F32740" stroke-width="1.3"/>
+              <!-- Plug-n-Play J-Box silhouette -->
+              <rect x="17" y="6" width="6" height="6" rx="0.5" stroke="#F32740" stroke-width="1.2" fill="rgba(243,39,64,0.12)"/>
+              <line x1="18" y1="8" x2="22" y2="8" stroke="#F32740" stroke-width="0.6"/>
+              <line x1="18" y1="10" x2="22" y2="10" stroke="#F32740" stroke-width="0.6"/>
+            </svg>
+          </div>
+          <div class="meta-stat-text">
+            <span class="meta-stat-num">Edge-Lit + J-Box</span>
+            <span class="meta-stat-sub">PMMA optic &middot; 0.38&Prime; deep wafer</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="spec-meta-key">Weather Resistance</div>
+        <div class="meta-stat">
+          <div class="meta-stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 4 Q4 11 4 14 a5 5 0 0 0 10 0 Q14 11 9 4 Z" fill="#F32740" fill-opacity="0.18"/>
+              <path d="M16 9 Q12 14 12 17 a4 4 0 0 0 8 0 Q20 14 16 9 Z" fill="#F32740" fill-opacity="0.18"/>
+            </svg>
+          </div>
+          <div class="meta-stat-text">
+            <span class="meta-stat-num">Wet Location</span>
+            <span class="meta-stat-sub">indoor / outdoor &middot; all SKUs</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="spec-meta-key">Warranty</div>
+        <div class="meta-stat">
+          <div class="meta-stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22 a10 10 0 1 1 10-10"/>
+              <polyline points="22 6 22 12 16 12"/>
+              <polyline points="9 12 12 15 17 9"/>
+            </svg>
+          </div>
+          <div class="meta-stat-text">
+            <span class="meta-stat-num">5 yr · 50k hr</span>
+            <span class="meta-stat-sub">L70 lifetime</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="spec-body">
+      <div class="spec-body-left">
+        <div class="spec-watt-tabs" role="tablist">
+          <button type="button" class="spec-watt-tab active" data-w="409" role="tab" aria-selected="true">LDRS4 · 4&Prime; · 9W</button>
+          <button type="button" class="spec-watt-tab" data-w="612" role="tab" aria-selected="false">LDRS6 · 6&Prime; · 12W</button>
+          <button type="button" class="spec-watt-tab" data-w="818" role="tab" aria-selected="false">LDRS8 · 8&Prime; · 18W ★</button>
+        </div>
+        <div class="spec-table-wrap-outer">
+          <div class="spec-table-wrap">
+            <table class="spec-table" id="specTable">
+              <thead>
+                <tr>
+                  <th>Watt</th>
+                  <th>Lumens</th>
+                  <th>lm/W</th>
+                  <th>CCT</th>
+                  <th>Voltage</th>
+                </tr>
+              </thead>
+              <tbody id="specTableBody">
+                <!-- populated by JS based on active model -->
+              </tbody>
+            </table>
+            <div class="spec-table-foot">★ <em>5-CCT dip switch on the back of the <strong>Plug-n-Play J-Box</strong> (not the disk) — set color before the ceiling closes, no fishing for the disk to flip switches post-install. Default ★ row is <strong>4000K across all 3 sizes</strong> (LDRS4 + LDRS6 + LDRS8) — the spec-grade standard CCT per supplier datasheet. 90+ CRI TruColor across the entire matrix per Datasheet. 12-pack contractor carton available as a packaging variant (LDRS612-R2S5F 12-pack on disk).</em></div>
+            <div class="spec-table-foot" style="margin-top:6px; font-style:italic; color:var(--text-muted); font-size:11px;">Datasheet honesty markers: spec-table prefix typo "LRDS6" / "LRDS8" → corrected to <strong>LDRS</strong>; "Up to 96 lm/W" claim → calculated peak from lumen matrix is <strong>86.8 lm/W</strong> (LDRS6 @ 4000K · 1041&divide;12); depth column unit "ft" on Datasheet page 4 → corrected to <strong>inches</strong>. All flagged for engineering reconciliation.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec-dim">
+        <div class="spec-dim-head">
+          <h3>Dimensions</h3>
+          <small>(For the selected size)</small>
+        </div>
+        <button type="button" class="spec-dim-zoom" aria-label="View larger image">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="11" y1="8" x2="11" y2="14"/>
+            <line x1="8" y1="11" x2="14" y2="11"/>
+            <path d="m21 21-3-3"/>
+          </svg>
+        </button>
+        <div class="spec-dim-image" id="dimImageHost">
+          <img
                id="dimImg"
                data-dim-409="/products/multi-family/dimensions/radius-ii-4in-dimensions.svg"
                data-dim-612="/products/multi-family/dimensions/radius-ii-6in-dimensions.svg"
@@ -3391,12 +3796,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 
   </div>
 </section>
-<!-- SECTION 4 — Highlights & Features (visual collage)
-     7-tile amplifier layout per radius-ii_knowledge_pack.md §2 Best-in-Class Amplifier Matrix.
-     Each tile = one competitor blind spot we're claiming in the slim-wafer category.
-     Hero tile leads with the 8″ slim wafer (Halo HLB / NICOR DLR / DMF DRD2 stop at 6″).
-     Then CCT-on-J-Box, 6 trim accessories, T-Grid kit, Wet Location, EM driver options,
-     Plug-n-Play J-Box system. Each tile maps to a specific competitor blind spot. -->
+
 <section class="hf-section" id="highlights" aria-label="Radius-II Highlights and Features">
   <div class="hf-inner">
 
