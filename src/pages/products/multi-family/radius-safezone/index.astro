@@ -438,6 +438,60 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
       </table>
     </div>
   </div>
+      <!-- Dimension drawings — per-size SVG swap (added 2026-05-18) -->
+      <div class="rsz-dim-section" style="margin-top:2rem;">
+        <h3 style="font-size:0.85rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-secondary); margin-bottom:0.5rem;">Dimensions</h3>
+        <div class="rsz-dim-chips" style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem;">
+          <button type="button" class="rsz-dim-chip active" data-sz="3" style="padding:0.3rem 0.75rem; border:1px solid rgba(255,255,255,0.15); border-radius:4px; background:rgba(255,255,255,0.05); color:var(--text-primary); font-size:0.8rem; cursor:pointer;">3&Prime;</button>
+          <button type="button" class="rsz-dim-chip" data-sz="4" style="padding:0.3rem 0.75rem; border:1px solid rgba(255,255,255,0.15); border-radius:4px; background:rgba(255,255,255,0.05); color:var(--text-primary); font-size:0.8rem; cursor:pointer;">4&Prime;</button>
+          <button type="button" class="rsz-dim-chip" data-sz="6" style="padding:0.3rem 0.75rem; border:1px solid rgba(255,255,255,0.15); border-radius:4px; background:rgba(255,255,255,0.05); color:var(--text-primary); font-size:0.8rem; cursor:pointer;">6&Prime;</button>
+          <button type="button" class="rsz-dim-chip" data-sz="8" style="padding:0.3rem 0.75rem; border:1px solid rgba(255,255,255,0.15); border-radius:4px; background:rgba(255,255,255,0.05); color:var(--text-primary); font-size:0.8rem; cursor:pointer;">8&Prime;</button>
+        </div>
+        <img
+          id="dimImg"
+          data-dim-3="/products/multi-family/dimensions/radius-safezone-3in-dimensions.svg"
+          data-dim-4="/products/multi-family/dimensions/radius-safezone-4in-dimensions.svg"
+          data-dim-6="/products/multi-family/dimensions/radius-safezone-6in-dimensions.svg"
+          data-dim-8="/products/multi-family/dimensions/radius-safezone-8in-dimensions.svg"
+          src="/products/multi-family/dimensions/radius-safezone-4in-dimensions.svg"
+          alt="Radius SafeZone 4″ dimensional drawing — trim OD 5-3/4″, aperture 4-3/4″, depth 11/16″"
+          style="display:block; width:100%; height:auto; max-height:320px; object-fit:contain;" />
+      </div>
+
+      <script>
+      (function() {
+        var dimAlt = {
+          '3': 'Radius SafeZone 3″ dimensional drawing — trim OD 4-7/16″, aperture 3-9/16″, depth 11/16″',
+          '4': 'Radius SafeZone 4″ dimensional drawing — trim OD 5-3/4″, aperture 4-3/4″, depth 11/16″',
+          '6': 'Radius SafeZone 6″ dimensional drawing — trim OD 7-13/16″, aperture 6-13/16″, depth 11/16″',
+          '8': 'Radius SafeZone 8″ dimensional drawing — trim OD 9-3/4″, aperture 8-7/8″, depth 11/16″'
+        };
+        var img = document.getElementById('dimImg');
+        var chips = document.querySelectorAll('.rsz-dim-chip');
+        if (!img || !chips.length) return;
+        chips.forEach(function(chip) {
+          chip.addEventListener('click', function() {
+            chips.forEach(function(c) { c.classList.remove('active'); c.style.background = 'rgba(255,255,255,0.05)'; c.style.borderColor = 'rgba(255,255,255,0.15)'; });
+            chip.classList.add('active');
+            chip.style.background = 'rgba(243,39,64,0.15)';
+            chip.style.borderColor = '#F32740';
+            var sz = chip.getAttribute('data-sz');
+            var url = img.getAttribute('data-dim-' + sz);
+            if (url) { img.src = url; img.alt = dimAlt[sz] || ''; }
+          });
+        });
+        // Set 4" as default active (matches spec table default)
+        var defaultChip = document.querySelector('.rsz-dim-chip[data-sz="4"]');
+        if (defaultChip) {
+          chips.forEach(function(c) { c.classList.remove('active'); });
+          defaultChip.classList.add('active');
+          defaultChip.style.background = 'rgba(243,39,64,0.15)';
+          defaultChip.style.borderColor = '#F32740';
+          img.src = img.getAttribute('data-dim-4');
+          img.alt = dimAlt['4'];
+        }
+      })();
+      </script>
 
   <!-- §3 Motion — Engineering In Motion (2026-05-13) -->
   <section class="motion-section" id="motion" aria-label="Radius SafeZone in motion">

@@ -3796,90 +3796,16 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           </svg>
         </button>
         <div class="spec-dim-image" id="dimImageHost">
-          <!-- Inline SVG — Eclipse-II surface-mount puck architecture. Generic
-               geometry (one drawing covers all 5 sizes); the diameter +
-               depth labels swap dynamically via JS as the user clicks the
-               size tab. Per Datasheet § Sizing & Measurements table. -->
-          <svg viewBox="0 0 600 320" width="600" height="320" id="dimSvg" style="display:block; width:100%; height:auto;">
-
-            <!-- ============= TOP VIEW (left · puck face from below) ============= -->
-            <text x="140" y="36" text-anchor="middle" fill="rgba(0,0,0,0.55)" font-size="11" font-family="JetBrains Mono, monospace" letter-spacing="1.5">TOP VIEW &middot; PUCK FACE</text>
-
-            <g stroke="#1a1a1a" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <!-- Outer trim ring · die-cast aluminum -->
-              <circle cx="140" cy="125" r="78"/>
-              <!-- Inner edge-lit lens area (PMMA frosted) -->
-              <circle cx="140" cy="125" r="68" stroke="#3a3a3a" stroke-width="0.8" opacity="0.55"/>
-              <!-- Center LED-engine ring marker (subtle suggestion of edge-lit guide) -->
-              <circle cx="140" cy="125" r="4" fill="#F32740" stroke="#F32740"/>
-              <!-- 1-Pin sensor port (small notch on edge — Eclipse-II exclusive) -->
-              <rect x="207" y="121" width="6" height="8" fill="#F32740" stroke="#F32740"/>
-            </g>
-
-            <!-- TOP VIEW dimension lines in ALG RED -->
-            <g stroke="#F32740" stroke-width="0.9" fill="none">
-              <!-- Outer OD diameter — bottom horizontal -->
-              <line x1="62"  y1="220" x2="218" y2="220"/>
-              <line x1="62"  y1="214" x2="62"  y2="226"/>
-              <line x1="218" y1="214" x2="218" y2="226"/>
-            </g>
-            <text id="dimDiamLabel" x="140" y="237" text-anchor="middle" fill="#F32740" font-size="11" font-family="JetBrains Mono, monospace" font-weight="700">&#216; 5.51&Prime; (140mm)</text>
-            <text x="140" y="252" text-anchor="middle" fill="rgba(0,0,0,0.55)" font-size="9" font-family="JetBrains Mono, monospace">overall trim diameter</text>
-            <text x="217" y="116" fill="#F32740" font-size="8" font-family="JetBrains Mono, monospace" font-weight="700">1-PIN</text>
-            <text x="218" y="138" fill="#F32740" font-size="6.5" font-family="JetBrains Mono, monospace">port (7/9″ only)</text>
-
-            <!-- Vertical separator -->
-            <line x1="320" y1="40" x2="320" y2="280" stroke="rgba(0,0,0,0.12)" stroke-width="1" stroke-dasharray="3 5"/>
-
-            <!-- ============= SIDE VIEW (right · ultra-slim profile) ============= -->
-            <text x="475" y="36" text-anchor="middle" fill="rgba(0,0,0,0.55)" font-size="11" font-family="JetBrains Mono, monospace" letter-spacing="1.5">SIDE VIEW &middot; SURFACE MOUNT</text>
-
-            <g stroke="#1a1a1a" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <!-- Ceiling line (dashed) — runs across the upper area -->
-              <line x1="345" y1="100" x2="600" y2="100" stroke-dasharray="3 4" opacity="0.55"/>
-              <!-- Mounting bracket (small disc above ceiling — for 2.75″/3.5″ J-Box) -->
-              <line x1="453" y1="100" x2="453" y2="92"/>
-              <line x1="497" y1="100" x2="497" y2="92"/>
-              <line x1="453" y1="92"  x2="497" y2="92"/>
-              <text x="475" y="86" text-anchor="middle" fill="rgba(0,0,0,0.45)" font-size="6.5" font-family="JetBrains Mono, monospace" letter-spacing="0.8">J-BOX BRACKET (2.75″ / 3.5″)</text>
-              <!-- Eclipse-II puck body — flush against ceiling, ultra-thin disc -->
-              <!-- Top edge (against ceiling) -->
-              <line x1="378" y1="100" x2="572" y2="100"/>
-              <!-- Bottom edge (puck face below ceiling) -->
-              <line x1="378" y1="118" x2="572" y2="118"/>
-              <!-- Left + right curved edges -->
-              <path d="M378 100 Q374 109 378 118"/>
-              <path d="M572 100 Q576 109 572 118"/>
-              <!-- Edge-lit LED engine ring inside (subtle horizontal hatch) -->
-              <line x1="385" y1="108" x2="565" y2="108" stroke="#3a3a3a" stroke-width="0.6" opacity="0.6"/>
-              <!-- 1-Pin sensor pigtail dangling from one edge -->
-              <path d="M572 109 C 580 109, 584 116, 584 124 L 584 138" stroke="#F32740" stroke-width="1.2"/>
-              <circle cx="584" cy="142" r="3.5" fill="#F32740"/>
-              <text x="588" y="145" fill="#F32740" font-size="6.5" font-family="JetBrains Mono, monospace">1-Pin</text>
-            </g>
-
-            <!-- SIDE VIEW dimension lines in ALG RED -->
-            <g stroke="#F32740" stroke-width="0.9" fill="none">
-              <!-- OD diameter (bottom horizontal · matches top view) -->
-              <line x1="378" y1="160" x2="572" y2="160"/>
-              <line x1="378" y1="154" x2="378" y2="166"/>
-              <line x1="572" y1="154" x2="572" y2="166"/>
-              <!-- Depth (left vertical · puck top to puck bottom — the "ultra-slim" callout) -->
-              <line x1="345" y1="100" x2="345" y2="118"/>
-              <line x1="339" y1="100" x2="351" y2="100"/>
-              <line x1="339" y1="118" x2="351" y2="118"/>
-            </g>
-            <text id="dimSideDiamLabel" x="475" y="175" text-anchor="middle" fill="#F32740" font-size="11" font-family="JetBrains Mono, monospace" font-weight="700">&#216; 5.51&Prime; (140mm)</text>
-            <text id="dimDepthLabel" x="335" y="113" text-anchor="end" fill="#F32740" font-size="11" font-family="JetBrains Mono, monospace" font-weight="700">0.79&Prime;</text>
-            <text x="335" y="125" text-anchor="end" fill="rgba(0,0,0,0.55)" font-size="9" font-family="JetBrains Mono, monospace">depth</text>
-
-            <!-- Annotation -->
-            <text x="475" y="200" text-anchor="middle" fill="rgba(0,0,0,0.55)" font-size="9" font-family="JetBrains Mono, monospace" letter-spacing="0.5">die-cast aluminum trim &middot; PMMA edge-lit lens &middot; driverless AC-direct</text>
-
-            <!-- Footnote — full size table (independent of active tab) -->
-            <text x="300" y="295" text-anchor="middle" fill="rgba(0,0,0,0.55)" font-size="9.5" font-family="JetBrains Mono, monospace" letter-spacing="0.4">Sizes: 5&Prime; (5.51 OD &middot; 0.79 D) &middot; 7&Prime; (7.48 &middot; 0.82) &middot; 9&Prime; (8.86 &middot; 0.79) &middot; 11&Prime; (10.98 &middot; 0.98) &middot; 13&Prime; (12.80 &middot; 0.98) &middot; per Datasheet &sect; Sizing &amp; Measurements</text>
-
-          </svg>
+          <img
+               id="dimImg"
+               data-dim-0510="/products/multi-family/dimensions/eclipse-ii-5in-dimensions.svg"
+               data-dim-0715="/products/multi-family/dimensions/eclipse-ii-7in-dimensions.svg"
+               data-dim-0918="/products/multi-family/dimensions/eclipse-ii-9in-dimensions.svg"
+               data-dim-1121="/products/multi-family/dimensions/eclipse-ii-11in-dimensions.svg"
+               data-dim-1324="/products/multi-family/dimensions/eclipse-ii-13in-dimensions.svg"
+               src="/products/multi-family/dimensions/eclipse-ii-9in-dimensions.svg"
+               alt="Eclipse-II 9″ dimensional drawing — trim Ø 8.86″, depth 0.79″"
+               style="display:block; width:100%; height:auto; max-height:320px; object-fit:contain;" />
         </div>
       </div>
     </div>
@@ -5590,17 +5516,23 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
              '</tr>';
     }).join('');
   }
-  // Swap the Dimensions inline-SVG labels to match the active size tab.
-  // Top-view diameter, side-view diameter, and depth all update simultaneously.
+  // Swap the Dimensions image to match the active size tab.
+  // Updated 2026-05-18: replaced inline SVG with real engineering SVGs.
+  var dimAlt = {
+    '0510': 'Eclipse-II 5″ dimensional drawing — trim Ø 5.51″, depth 0.79″',
+    '0715': 'Eclipse-II 7″ dimensional drawing — trim Ø 7.48″, depth 0.82″',
+    '0918': 'Eclipse-II 9″ dimensional drawing — trim Ø 8.86″, depth 0.79″',
+    '1121': 'Eclipse-II 11″ dimensional drawing — trim Ø 10.98″, depth 0.98″',
+    '1324': 'Eclipse-II 13″ dimensional drawing — trim Ø 12.80″, depth 0.98″'
+  };
   function swapDim(w) {
-    var d = dims[w];
-    if (!d) return;
-    var topDiam  = document.getElementById('dimDiamLabel');
-    var sideDiam = document.getElementById('dimSideDiamLabel');
-    var depth    = document.getElementById('dimDepthLabel');
-    if (topDiam)  topDiam.textContent  = 'Ø ' + d.diam;
-    if (sideDiam) sideDiam.textContent = 'Ø ' + d.diam;
-    if (depth)    depth.textContent    = d.depth;
+    var img = document.getElementById('dimImg');
+    if (!img) return;
+    var url = img.getAttribute('data-dim-' + w);
+    if (url) {
+      img.src = url;
+      if (dimAlt[w]) img.alt = dimAlt[w];
+    }
   }
   tabs.forEach(function(t) {
     t.addEventListener('click', function() {

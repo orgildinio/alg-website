@@ -3748,13 +3748,13 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <!-- No external dim asset for Orbit yet (engineering pending).
                Inline SVG below renders by default — round retrofit downlight
                with Orbit-correct dims per Datasheet § Sizing table. -->
-          <img id="dimImg"
-               data-dim-410="assets/dimensions/orbit-410-dimensions.svg"
-               data-dim-615="assets/dimensions/orbit-615-dimensions.svg"
-               src="/products/multi-family/orbit-i/assets/dimensions/orbit-410-dimensions.svg"
-               alt="LDGR410 Orbit-I dimensions — 2.44″ aperture, 5.12″ (130mm) trim OD, 2.40″ depth"
-               onerror="this.style.display='none'; var fb=document.getElementById('dimSvg'); if(fb) fb.style.display='block';"
-               style="display:none" />
+          <img
+               id="dimImg"
+               data-dim-410="/products/multi-family/dimensions/orbit-i-4in-dimensions.svg"
+               data-dim-615="/products/multi-family/dimensions/orbit-i-6in-dimensions.svg"
+               src="/products/multi-family/dimensions/orbit-i-4in-dimensions.svg"
+               alt="Orbit-I 4″ dimensional drawing — aperture 2.44″, trim Ø 5.12″, depth 2.40″"
+               style="display:block; width:100%; height:auto; max-height:320px; object-fit:contain;" />
           <!-- Inline SVG dim drawing — visible by default since the external
                img above is hidden until/unless an engineering-supplied SVG
                replaces it. Round retrofit downlight per Datasheet § Sizing. -->
@@ -5679,16 +5679,19 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
              '</tr>';
     }).join('');
   }
-  // Swap the Dimensions image to match the active housing tab (LDGR4 vs LDGR6)
+  // Swap the Dimensions image to match the active size tab.
+  // Updated 2026-05-18: replaced inline SVG with real engineering SVGs.
+  var dimAlt = {
+    '410': 'Orbit-I 4″ dimensional drawing — aperture 2.44″, trim Ø 5.12″, depth 2.40″',
+    '615': 'Orbit-I 6″ dimensional drawing — aperture 3.80″, trim Ø 7.38″, depth 2.40″'
+  };
   function swapDim(w) {
     var img = document.getElementById('dimImg');
     if (!img) return;
     var url = img.getAttribute('data-dim-' + w);
     if (url) {
       img.src = url;
-      img.alt = (w === '615')
-        ? 'LDGR615 Orbit-I dimensions — 3.80″ aperture, 7.38″ trim OD, 2.40″ depth'
-        : 'LDGR410 Orbit-I dimensions — 2.44″ aperture, 5.12″ trim OD, 2.40″ depth';
+      if (dimAlt[w]) img.alt = dimAlt[w];
     }
   }
   tabs.forEach(function(t) {
