@@ -22,12 +22,14 @@ interface Props {
   title: string;
   description?: string;
   bodyClass?: string;
+  hideFooterCta?: boolean;
 }
 
 const {
   title,
   description = 'Archipelago Lighting Group — commercial and industrial LED lighting. Specified. Stocked. Shipped.',
-  bodyClass = ''
+  bodyClass = '',
+  hideFooterCta = false
 } = Astro.props;
 ---
 <!doctype html>
@@ -56,6 +58,6 @@ const {
     <main id="main" data-pagefind-body>
       <slot />
     </main>
-    <Footer data-pagefind-ignore />
+    <Footer hideFooterCta={hideFooterCta} data-pagefind-ignore />
   </body>
 </html>

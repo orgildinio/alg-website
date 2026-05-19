@@ -13,6 +13,10 @@
  *       Col 5: Support
  *   - Sub-footer: single line with both addresses, phone, URL
  */
+interface Props {
+  hideFooterCta?: boolean;
+}
+const { hideFooterCta = false } = Astro.props;
 const year = new Date().getFullYear();
 const buildHash = (import.meta.env.PUBLIC_BUILD_HASH || 'dev').slice(0, 7);
 const buildTimeRaw = import.meta.env.PUBLIC_BUILD_TIME;
@@ -21,7 +25,8 @@ const buildTime = buildTimeRaw
   : 'local';
 ---
 
-<!-- FOOTER CTA STRIP -->
+<!-- FOOTER CTA STRIP (suppressed when page has its own closing-section) -->
+{!hideFooterCta && (
 <div class="footer-cta" data-pagefind-ignore>
   <div class="footer-cta-inner">
     <div class="footer-cta-msg">
@@ -34,6 +39,7 @@ const buildTime = buildTimeRaw
     </div>
   </div>
 </div>
+)}
 
 <!-- FOOTER BODY -->
 <footer class="site-footer" aria-label="Site footer" data-pagefind-ignore>

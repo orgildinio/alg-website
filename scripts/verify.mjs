@@ -73,6 +73,8 @@ async function main() {
     'products/multi-family/nebula-ii/submittal',
     'products/multi-family/orbit-i/submittal',
     'products/multi-family/radius-ii/submittal',
+    // luxoARCH submittal templates are standalone print-optimized pages (no site header/footer by design)
+    'products/heritage/submittal_template',
   ];
   const htmlFiles = allHtmlFiles.filter(f => !STATIC_HTML_EXCLUDE.some(ex => f.replace(/\\/g, '/').includes(ex)));
   if (htmlFiles.length === 0) {
@@ -859,6 +861,46 @@ async function main() {
       if (jPass) {
         console.log('\u2705 Group J: Null-echelon handling PASS (no echelon badges on null-echelon families)');
       }
+    }
+  }
+
+  // === GROUP Q: CONTENT DISCIPLINE — closing-CTA dedup + dev-commentary leak (CFG-COWORK-9, v2.7.9) ===
+  //
+  // Q.1: No luxoARCH PDP renders more than one closing-CTA region.
+  // Q.2: No internal build commentary leaked to production HTML.
+  {
+    const luxoarchSlugs = [
+      'anaheim','atlanta','aura','everest','guardian','heritage','illuminator',
+      'liberty','navigator','nightwatch','pathfinder','radiator','ramparts',
+      'sentinel','watchtower','wedge'
+    ];
+    let qPass = true;
+    const fs = await import('node:fs');
+    for (const slug of luxoarchSlugs) {
+      const fp = htmlFiles.find(f => f.replace(/\\/g, '/').includes(`/products/${slug}/index.html`));
+      if (!fp) continue;
+      const html = fs.readFileSync(fp, 'utf-8');
+      // Q.1 — no PDP renders more than one closing-CTA region
+      const closingHits = (html.match(/Need a quote, layout, sample, or rebate match/g) || []).length;
+      if (closingHits > 1) {
+        fail('Q.1', `${fp}: ${closingHits} closing-CTA bars found; expected 1`);
+        qPass = false;
+      }
+      // Q.2 — no internal build commentary leaked to production
+      const devLeakPatterns = [
+        /PDP \u00b7 v\d+ SECTION \d+[^<]{0,40}IN REVIEW/i,
+        /build proceeds section-by-section per PDP_BUILD_PLAYBOOK/i,
+        /WorkDrive URLs LIVE per Active_SKUs/i,
+      ];
+      for (const p of devLeakPatterns) {
+        if (p.test(html)) {
+          fail('Q.2', `${fp}: dev-commentary leak matched ${p}`);
+          qPass = false;
+        }
+      }
+    }
+    if (qPass) {
+      console.log('\u2705 Group Q: Content discipline PASS (no duplicate closing-CTA bars, no dev-commentary leaks)');
     }
   }
 
