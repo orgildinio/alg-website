@@ -118,6 +118,28 @@
     padding: 4px 10px; display: inline-block;
     letter-spacing: 0.5pt;
   }
+  /* ===== EDITABLE CATALOG NUMBER ===== */
+  .editable-catalog {
+    cursor: text;
+    border-bottom: 1px dashed transparent;
+    transition: border-bottom-color .15s ease;
+  }
+  .editable-catalog:hover { border-bottom-color: var(--brand-red, #F32740); }
+  .editable-catalog:focus {
+    outline: 2px solid var(--brand-red, #F32740);
+    outline-offset: 2px;
+    border-bottom-color: transparent;
+  }
+  @media print {
+    .editable-catalog,
+    .editable-catalog:hover,
+    .editable-catalog:focus {
+      cursor: auto;
+      border-bottom: 0 !important;
+      outline: 0 !important;
+    }
+  }
+
 
   /* ============= PROJECT INFO FORM ============= */
   .project-info {
@@ -402,7 +424,7 @@
     </div>
     <div class="catalog-block">
       <div class="catalog-eyebrow">Catalog Number</div>
-      <div class="catalog-number" id="catNum">LSMT615-S5E</div>
+      <div class="catalog-number editable-catalog" id="catNum" contenteditable="true" spellcheck="false">LSMT615-S5E</div>
     </div>
   </div>
 
@@ -798,6 +820,69 @@
   });
   var pi = document.getElementById('piCatNum');
   if (pi) pi.textContent = sku;
+
+  // ===== EDITABLE CATALOG NUMBER (§C 2026-05-18) =====
+  (function setupEditableCatalogNumber(){
+    var originalSku = sku;
+    var editor = document.getElementById('catNum');
+    if (!editor) return;
+    function sweepTextNodes(root, fromStr, toStr){
+      if (!fromStr || fromStr === toStr) return;
+      var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(n){
+          var p = n.parentNode;
+          while (p) {
+            if (p === editor) return NodeFilter.FILTER_REJECT;
+            if (p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT;
+            p = p.parentNode;
+          }
+          return n.nodeValue.indexOf(fromStr) !== -1 ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+        }
+      });
+      var nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach(function(n){ n.nodeValue = n.nodeValue.split(fromStr).join(toStr); });
+    }
+    function applyOverride(newVal){
+      var override = (newVal || '').replace(/[\r\n]+/g, ' ').trim().slice(0, 40);
+      if (!override) override = originalSku;
+      ['catNum2', 'catNum3', 'catNum4', 'piCatNum', 'liveSku'].forEach(function(id){
+        var el = document.getElementById(id);
+        if (el) el.textContent = override;
+      });
+      var spec = document.getElementById('specsEyebrow');
+      if (spec) {
+        var parts = spec.textContent.split(' · ');
+        if (parts.length === 2) spec.textContent = parts[0] + ' · ' + override;
+      }
+      sweepTextNodes(document.body, originalSku, override);
+      document.title = document.title.replace(originalSku, override);
+    }
+    var currentDisplay = originalSku;
+    editor.addEventListener('input', function(){
+      var newVal = (editor.textContent || '').replace(/[\r\n]+/g, ' ').slice(0, 40);
+      sweepTextNodes(document.body, currentDisplay, newVal || originalSku);
+      ['catNum2', 'catNum3', 'catNum4', 'piCatNum', 'liveSku'].forEach(function(id){
+        var el = document.getElementById(id);
+        if (el) el.textContent = newVal || originalSku;
+      });
+      var spec = document.getElementById('specsEyebrow');
+      if (spec) {
+        var parts = spec.textContent.split(' · ');
+        if (parts.length === 2) spec.textContent = parts[0] + ' · ' + (newVal || originalSku);
+      }
+      document.title = document.title.replace(currentDisplay, newVal || originalSku);
+      currentDisplay = newVal || originalSku;
+    });
+    editor.addEventListener('blur', function(){
+      var v = editor.textContent.trim();
+      if (!v) { editor.textContent = originalSku; applyOverride(originalSku); currentDisplay = originalSku; }
+    });
+    editor.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') { e.preventDefault(); editor.blur(); }
+    });
+  })();
+
 
   // --- AUTOFILL PRODUCT TITLE ---
   // PIR variant gets "with Built-in PIR" suffix; pack variant adds "24-Pack Carton" tag.
