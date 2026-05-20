@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LPAR · Submittal Sheet</title>
+
+<!--
+  ALG SUBMITTAL TEMPLATE · LPAR LED Traffic PAR38 v1
+  ===================================================
+  Reads URL query params populated by mockup_lpar_pdp_v1.html Section 8 (the
+  Configurator) and auto-fills the catalog number + quick specs + ordering
+  breakdown + EVP confirm-beacon context for a project-stampable PDF.
+
+  Example invocation (matches the configurator's Generate Submittal PDF CTA):
+    submittal_lpar.html?sku=LPAR38C90030K1&lumens=900&cct=30K
+
+  Print: File → Print → Save as PDF (letter portrait) → 2-page submittal.
+
+  AUTHORITATIVE 3-SKU MATRIX (Zoho Books verified 2026-05-19):
+    LPAR38C39048K1  ·  7W ·  390lm · 4800K · White-Body · QS (1,082 stock · EVP confirm beacon)
+    LPAR38C90030K1  · 10W ·  900lm · 3000K · Black-Body · QS (1,008 stock · MDOT Approved)
+    LPAR38C150030K1 · 14W · 1500lm · 3000K · White-Body · QS (2,868 stock · legacy flagship)
+
+  CFG-SUB-1 V2 (snapshot-then-rederive) built in from first save.
+-->
+
+<style>
+  /* ============= PRINT-OPTIMIZED CSS ============= */
+  @page { size: letter portrait; margin: 0.5in 0.6in; }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+    .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+    .page:last-of-type { page-break-after: auto; }
+  }
+
+  :root {
+    --brand-red: #F32740;
+    --ink: #0E0E10;
+    --ink-2: #2A2A2D;
+    --muted: #6B6B70;
+    --rule: #D8D6D2;
+    --rule-strong: #A6A4A0;
+    --tint: #F6F4F0;
+    --hi: #FFF6E5;
+    --qs: #2C7A4A;
+    --qs-tint: #E0F2E5;
+    --mto: #B36A00;
+    --mto-tint: #FFF2DA;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Lato', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.5pt;
+    line-height: 1.4;
+    background: #E8E6E2;
+  }
+  body { padding: 24px 12px; }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 24px;
+    padding: 0.55in 0.65in;
+    background: white;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  h1, h2, h3, h4 { font-family: 'Lato', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+  .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+
+  /* Ⓐ glyph — currentColor SVG mask, falls back to literal Ⓐ */
+  .aa {
+    display: inline-block;
+    width: 0.85em; height: 0.85em;
+    vertical-align: -0.06em;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10.5' fill='none' stroke='%23000' stroke-width='1.6'/><text x='12' y='17' font-family='Arial, sans-serif' font-size='14' font-weight='700' text-anchor='middle' fill='%23000'>A</text></svg>") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10.5' fill='none' stroke='%23000' stroke-width='1.6'/><text x='12' y='17' font-family='Arial, sans-serif' font-size='14' font-weight='700' text-anchor='middle' fill='%23000'>A</text></svg>") no-repeat center / contain;
+  }
+
+  /* ============= PAGE HEADER (every page) ============= */
+  .submittal-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+  .submittal-head .brand-mark {
+    width: 28px; height: 28px; background: var(--brand-red);
+    display: inline-block;
+  }
+  .submittal-head .brand-name {
+    font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1;
+  }
+  .submittal-head .brand-sub {
+    font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .submittal-head .catalog-block { text-align: right; }
+  .catalog-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .catalog-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5pt; font-weight: 700; color: var(--ink);
+    letter-spacing: 0.5pt;
+  }
+
+  /* CFG-SUB-1 · Editable Catalog Number (James 2026-05-18 playbook rule).
+     User types a project-specific label (e.g., "ABC-001") and every visible
+     instance of the original SKU on the page sweeps to match. Session-only. */
+  .editable-catalog {
+    cursor: text;
+    border-bottom: 1px dashed transparent;
+    transition: border-bottom-color .15s ease;
+  }
+  .editable-catalog:hover { border-bottom-color: var(--brand-red); }
+  .editable-catalog:focus {
+    outline: 2px solid var(--brand-red);
+    outline-offset: 2px;
+    border-bottom-color: transparent;
+  }
+  @media print {
+    .editable-catalog,
+    .editable-catalog:hover,
+    .editable-catalog:focus {
+      cursor: auto;
+      border-bottom: 0 !important;
+      outline: 0 !important;
+    }
+  }
+
+  /* ============= COVER BANNER (Page 1) ============= */
+  .cover-banner {
+    background: var(--ink);
+    color: white;
+    padding: 22px 24px;
+    margin-bottom: 16px;
+    display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px;
+  }
+  .cover-banner h1 {
+    font-size: 22pt; font-weight: 700; color: white; margin-bottom: 4px;
+  }
+  .cover-banner .cover-sub {
+    font-size: 10pt; color: rgba(255,255,255,0.75); margin-bottom: 8px;
+  }
+  .cover-banner .cover-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5pt; letter-spacing: 1pt;
+    color: var(--brand-red); text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .cover-banner .cover-tagline {
+    font-size: 10pt; line-height: 1.5; color: rgba(255,255,255,0.85);
+  }
+  .cover-banner .qs-pill {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--qs-tint); color: var(--qs);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt; font-weight: 700; letter-spacing: 1pt;
+    border-radius: 2px; text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .cover-banner .mto-pill {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--mto-tint); color: var(--mto);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt; font-weight: 700; letter-spacing: 1pt;
+    border-radius: 2px; text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* Project block — top of Page 1, fillable by spec engineer */
+  .proj-block {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+    padding: 8px 0 12px; border-bottom: 1px solid var(--rule); margin-bottom: 14px;
+  }
+  .proj-cell {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .proj-label {
+    font-size: 7pt; letter-spacing: 1.2pt;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .proj-line {
+    border-bottom: 1px solid var(--ink);
+    height: 14px;
+  }
+
+  /* Quick Specs grid — 5 large stats */
+  .quickspec-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px; margin-bottom: 14px;
+  }
+  .qs-cell {
+    border: 1px solid var(--rule);
+    background: var(--tint);
+    padding: 8px 10px;
+    text-align: center;
+  }
+  .qs-label {
+    font-size: 6.5pt; letter-spacing: 1.2pt;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 3px;
+  }
+  .qs-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14pt; font-weight: 700; line-height: 1.05;
+    color: var(--ink);
+  }
+  .qs-unit {
+    font-size: 8pt; font-weight: 400; color: var(--muted);
+    margin-left: 3px;
+  }
+
+  /* Section heads */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 4px; margin: 14px 0 10px;
+  }
+  .section-head h2 {
+    font-size: 11pt; letter-spacing: 0.4pt;
+  }
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.5pt; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 1pt;
+  }
+
+  /* Tagline (above ordering breakdown) */
+  .tagline-block {
+    background: var(--hi);
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    border-left: 3px solid var(--brand-red);
+    font-size: 9pt; line-height: 1.5;
+  }
+  .tagline-block strong { font-weight: 700; }
+
+  /* Ordering Code visual breakdown */
+  .order-code {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .order-segment {
+    border: 1px solid var(--rule);
+    padding: 6px 4px 7px;
+    text-align: center;
+    background: var(--tint);
+    min-width: 0;
+  }
+  .order-segment.active {
+    background: var(--ink); color: white;
+    border-color: var(--ink);
+  }
+  .order-segment.fixed { background: var(--ink-2); color: white; border-color: var(--ink-2); }
+  .order-segment.optional { background: white; color: var(--muted); }
+  .order-seg-label {
+    font-size: 6pt; letter-spacing: 1pt;
+    text-transform: uppercase; margin-bottom: 1px;
+    opacity: 0.7;
+  }
+  .order-seg-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5pt; font-weight: 700;
+  }
+
+  /* Ordering matrix — full table */
+  .order-matrix {
+    width: 100%; border-collapse: collapse;
+    font-size: 8.5pt; margin-bottom: 10px;
+  }
+  .order-matrix th, .order-matrix td {
+    border: 1px solid var(--rule);
+    padding: 4px 7px;
+    vertical-align: top;
+    text-align: left;
+  }
+  .order-matrix th {
+    background: var(--tint);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4pt; font-size: 7.5pt;
+  }
+  .order-matrix .code {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    background: var(--tint);
+    white-space: nowrap;
+    width: 18%;
+  }
+  .order-matrix tr.active-row .code {
+    background: var(--brand-red); color: white;
+  }
+  .order-matrix tr.active-row td {
+    background: var(--hi);
+  }
+
+  /* Anatomy block — full-width image + 6 callout grid */
+  .anat-block {
+    margin-bottom: 12px;
+  }
+  .anat-figure {
+    background: var(--tint);
+    border: 1px solid var(--rule);
+    padding: 12px;
+    margin-bottom: 8px;
+    aspect-ratio: 2.2 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .anat-figure img { max-width: 100%; max-height: 100%; }
+  .anat-callouts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    font-size: 8pt;
+  }
+  .anat-cell {
+    border: 1px solid var(--rule);
+    padding: 4px 6px;
+  }
+  .anat-cell-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7pt; font-weight: 700;
+    color: var(--brand-red); margin-right: 4px;
+  }
+
+  /* Spec table — used on page 2 */
+  .spec-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 8.5pt;
+  }
+  .spec-table td {
+    border: 1px solid var(--rule);
+    padding: 4px 8px;
+    vertical-align: top;
+  }
+  .spec-table .spec-section-head td {
+    background: var(--ink); color: white;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5pt; font-size: 7.5pt;
+    padding: 5px 8px;
+  }
+  .spec-table .spec-attr {
+    background: var(--tint);
+    font-weight: 700;
+    width: 32%;
+  }
+  .spec-table .spec-val strong { font-weight: 700; }
+
+  /* Dimensions + Photometric layout */
+  .dim-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .dim-view {
+    border: 1px solid var(--rule);
+    background: var(--tint);
+    padding: 8px;
+  }
+  .dim-view-label {
+    font-size: 7pt; letter-spacing: 1pt;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .dim-view img { width: 100%; height: auto; }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .photo-polar {
+    border: 1px solid var(--rule);
+    background: #0E0E10;
+    padding: 8px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .photo-polar img { max-width: 100%; max-height: 100%; }
+  .photo-polar.fallback {
+    color: var(--muted); font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt; text-align: center;
+  }
+  .photo-summary table {
+    width: 100%; border-collapse: collapse;
+    font-size: 8.5pt;
+  }
+  .photo-summary td {
+    border-bottom: 1px solid var(--rule);
+    padding: 4px 6px;
+  }
+  .photo-summary td:first-child {
+    color: var(--muted); width: 45%;
+  }
+  .photo-summary td:last-child {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+  }
+
+  /* Certifications row */
+  .certs {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 10px; background: var(--tint);
+    border: 1px solid var(--rule);
+    margin-top: 10px;
+  }
+  .cert-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.5pt; font-weight: 700;
+    padding: 3px 7px;
+    background: white; border: 1px solid var(--rule-strong);
+    letter-spacing: 0.5pt;
+  }
+  .cert-badge.brand { background: var(--ink); color: white; border-color: var(--ink); }
+
+  /* Footer */
+  .page-foot {
+    position: absolute;
+    bottom: 0.35in; left: 0.65in; right: 0.65in;
+    border-top: 1px solid var(--rule);
+    padding-top: 5px;
+    display: flex; justify-content: space-between;
+    font-size: 7pt; color: var(--muted);
+  }
+
+  /* No-print actions bar (top of doc) */
+  .actions-bar {
+    max-width: 8.5in; margin: 0 auto 14px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px;
+    background: var(--ink); color: white;
+    font-size: 9pt;
+  }
+  .actions-bar .btn {
+    background: var(--brand-red); color: white;
+    border: 0; padding: 6px 14px;
+    font-weight: 700; cursor: pointer;
+    font-family: inherit; font-size: 9pt;
+  }
+  .actions-bar a { color: white; text-decoration: underline; opacity: 0.85; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- NO-PRINT ACTIONS BAR — at the top, hidden when printed       -->
+<!-- ============================================================ -->
+<div class="actions-bar no-print">
+  <div>
+    LPAR · LED Traffic PAR38 · Submittal Sheet · <span id="liveSku" class="mono"></span>
+  </div>
+  <div>
+    <a href="#" onclick="history.back(); return false;">← Back to Configurator</a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — COVER · QUICK SPECS · ANATOMY · ORDERING CODE       -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+  <!-- Header -->
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number <span class="no-print" style="font-family:'JetBrains Mono',monospace; font-size:7pt; color:var(--brand-red); letter-spacing:0.6pt; margin-left:6px;">✎ click to edit</span></div>
+      <div class="catalog-number editable-catalog" id="catNum" contenteditable="true" spellcheck="false">LPAR38C90030K1</div>
+    </div>
+  </div>
+
+  <!-- Cover banner -->
+  <div class="cover-banner">
+    <div>
+      <div class="cover-tag">city<span class="aa"></span>RCH · PRO TRAFFIC LAMP · LPAR-I</div>
+      <h1>LPAR</h1>
+      <div class="cover-sub">LED PAR38 Traffic Lamp · 25&deg; Clear Optics · E26 Medium Screw Base</div>
+      <div class="cover-tagline" id="taglineLumens">
+        Spec-grade EVP confirm-beacon lamp. <strong id="taglineWatts">7W / 10W / 14W</strong> at
+        <strong id="taglineCct">390 / 900 / 1,500 lm</strong>.
+        Direct-replace screw-in for Opticom, STROBECOM, and legacy E26 PAR38 sockets.
+        3-year / 25,000-hour limited warranty.
+      </div>
+    </div>
+    <div style="text-align: right;">
+      <div class="cover-tag" style="color:white; opacity:0.6;">Stock Status</div>
+      <div id="stockPill" class="qs-pill">QuickShip · 3-5 day</div>
+      <div style="font-size: 8pt; color: rgba(255,255,255,0.65); margin-top: 6px; line-height: 1.4;">
+        All 3 SKUs are QuickShip.<br/>120Vac · Triac dimmable · ships individually.
+      </div>
+    </div>
+  </div>
+
+  <!-- Project block -->
+  <div class="proj-block">
+    <div class="proj-cell">
+      <div class="proj-label">Project Name</div>
+      <div class="proj-line"></div>
+    </div>
+    <div class="proj-cell">
+      <div class="proj-label">Project Number</div>
+      <div class="proj-line"></div>
+    </div>
+    <div class="proj-cell">
+      <div class="proj-label">Fixture Schedule</div>
+      <div class="proj-line"></div>
+    </div>
+    <div class="proj-cell">
+      <div class="proj-label">Issue Date</div>
+      <div class="proj-line" id="liveDate"></div>
+    </div>
+  </div>
+
+  <!-- Quick Specs -->
+  <div class="quickspec-grid">
+    <div class="qs-cell">
+      <div class="qs-label">Lumens</div>
+      <div class="qs-value" id="qsLumens">900<span class="qs-unit">lm</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">Wattage</div>
+      <div class="qs-value" id="qsWatts">10<span class="qs-unit">W</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">Efficacy</div>
+      <div class="qs-value" id="qsEfficacy">90<span class="qs-unit">lm/W</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">Voltage</div>
+      <div class="qs-value" id="qsVoltage">120<span class="qs-unit">Vac</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">CCT</div>
+      <div class="qs-value" id="qsCct">3000<span class="qs-unit">K</span></div>
+    </div>
+  </div>
+
+  <!-- Tagline / hero claim -->
+  <div class="tagline-block">
+    <strong>One family. Three authoritative SKUs.</strong> LPAR is the EVP confirm-beacon lamp built specifically
+    for emergency-vehicle pre-emption signal heads (Opticom, STROBECOM, Federal Signal). Direct screw-in to existing
+    E26 PAR38 sockets — no controller rewire. CRI 93, FCC Part 15 compliant for RF-dense cabinets, dielectric grease
+    on the base for socket longevity. <strong id="taglineMdot">Black-Body 900lm variant MDOT-listed</strong> — the
+    only PAR38 LED on the Michigan QPL. 3-year / 25,000-hour limited warranty.
+  </div>
+
+  <!-- Ordering Code visual breakdown -->
+  <div class="section-head">
+    <h2>Ordering Code</h2>
+    <div class="section-eyebrow">5 segments · Family · Lamp · Optic · Lumens · CCT · Gen</div>
+  </div>
+
+  <div class="order-code" style="grid-template-columns: repeat(5, 1fr);">
+    <div class="order-segment active"><div class="order-seg-label">Family</div><div class="order-seg-value">LPAR</div></div>
+    <div class="order-segment fixed"><div class="order-seg-label">Lamp</div><div class="order-seg-value">38</div></div>
+    <div class="order-segment fixed"><div class="order-seg-label">Optic</div><div class="order-seg-value">C</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Lumens · CCT</div><div class="order-seg-value" id="ocLumensCct">90030K</div></div>
+    <div class="order-segment fixed"><div class="order-seg-label">Gen</div><div class="order-seg-value">1</div></div>
+  </div>
+
+  <table class="order-matrix">
+    <thead>
+      <tr>
+        <th>Segment</th>
+        <th>Available Codes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="code">LPAR</td><td>LED PAR-form-factor traffic / spec lamp family</td></tr>
+      <tr><td class="code">38</td><td>Lamp envelope — PAR38 size (4.76&Prime; &Oslash; bulb)</td></tr>
+      <tr><td class="code">C</td><td>Optic — <strong>C</strong> Clear · 25&deg; narrow flood (sharp confirm-beacon throw)</td></tr>
+      <tr id="rowLumens"><td class="code">390 · 900 · 1500</td><td>Lumens · Wattage · Body — <strong>390</strong> (7W · 4800K · White-Body · QS) · <strong>900</strong> (10W · 3000K · Black-Body · MDOT-listed · QS) · <strong>1500</strong> (14W · 3000K · White-Body · QS)</td></tr>
+      <tr id="rowCct"><td class="code">30K · 48K</td><td>CCT — <strong>30K</strong> 3000K Warm White (900 + 1500 lumens) · <strong>48K</strong> 4800K Cool White (390 lumens only)</td></tr>
+      <tr><td class="code">1</td><td>Generation — Gen-1 marker (every active LPAR ships as Gen-1)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Authoritative 3-SKU matrix -->
+  <table class="order-matrix" style="margin-top: 6px;">
+    <thead>
+      <tr>
+        <th>Catalog Number</th>
+        <th>Specifications</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="skuRow_390"><td class="code">LPAR38C39048K1</td><td><strong>7W · 390 lm · 4800K Cool White · White-Body</strong> · EVP confirm-beacon variant · UPC 815109025140</td></tr>
+      <tr id="skuRow_900"><td class="code">LPAR38C90030K1</td><td><strong>10W · 900 lm · 3000K Warm White · Black-Body</strong> · ★ MDOT Approved · -40&deg;F to 165&deg;F · UPC 815109028806</td></tr>
+      <tr id="skuRow_1500"><td class="code">LPAR38C150030K1</td><td><strong>14W · 1,500 lm · 3000K Warm White · White-Body</strong> · legacy general-traffic flagship · UPC 815109028813</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LPAR Traffic PAR38 submittal · Specifications subject to change</div>
+    <div>Rev. <span id="revDate">2026-05</span> · Page 1 of 2</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — SPECS · DIMENSIONS · PHOTOMETRICS · CERTIFICATIONS -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum2">LPAR38C90030K1</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Detailed Specifications</h2>
+    <div class="section-eyebrow">LPAR · LED Traffic PAR38 · EVP Confirm Beacon</div>
+  </div>
+
+  <table class="spec-table">
+    <tbody>
+      <tr class="spec-section-head"><td colspan="2">Optical &amp; Performance</td></tr>
+      <tr><td class="spec-attr">Optic / Distribution</td><td class="spec-val">Clear 25&deg; narrow flood · sharp confirm-beacon throw · single-axis beam</td></tr>
+      <tr><td class="spec-attr">CCT (selected)</td><td class="spec-val" id="specCct">3000K Warm White</td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val">CRI 93 · R9 65+ · R13 94+ (high reds + skin tones for EVP signal visibility)</td></tr>
+      <tr><td class="spec-attr" id="specLumLabel">Output · Lumens</td><td class="spec-val" id="specLumRow">10W input · 900 lm output · 90 lm/W · Black-Body housing</td></tr>
+      <tr><td class="spec-attr">Peak Intensity</td><td class="spec-val" id="specPeakCd">~3,420 cd (linear-scaled from 1,500lm reference 5,700 cd test)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Electrical</td></tr>
+      <tr><td class="spec-attr">Input Voltage</td><td class="spec-val">120Vac · 50/60Hz · single-input (NOT universal · 120V only)</td></tr>
+      <tr><td class="spec-attr">Dimming</td><td class="spec-val">Triac dimmable · compatible with most line-voltage 120V Triac dimmers · non-flicker</td></tr>
+      <tr><td class="spec-attr">Power Factor</td><td class="spec-val">PF &gt; 0.90 at full load</td></tr>
+      <tr><td class="spec-attr">RF / EMI</td><td class="spec-val">FCC Title 47 Part 15B compliant · tested for RF-dense traffic-cabinet environments (cellular modem, EVP detector, controller, Triac dimmer, surge protector co-located)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Construction &amp; Socket</td></tr>
+      <tr><td class="spec-attr">Base</td><td class="spec-val">E26 medium screw base · brass contacts with dielectric grease (factory-applied) for socket longevity in sealed cabinets</td></tr>
+      <tr><td class="spec-attr">Housing</td><td class="spec-val">Cast aluminum body · heat-sink fin geometry · thermal<span class="aa"></span>RMOR cabinet-thermal design</td></tr>
+      <tr><td class="spec-attr">Body Color (selected)</td><td class="spec-val" id="specBody">Black-Body (MDOT non-reflective housing for sealed-cabinet light containment)</td></tr>
+      <tr><td class="spec-attr">Dimensions</td><td class="spec-val">4.76&Prime; (121 mm) &Oslash; bulb &times; 5.23&Prime; (133 mm) overall length</td></tr>
+      <tr><td class="spec-attr">Net Weight</td><td class="spec-val">~10.14 lb / case of 12 (~0.85 lb per lamp)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
+      <tr><td class="spec-attr">Listings</td><td class="spec-val" id="specListings">cULus Listed · FCC Title 47 Part 15B · RoHS · Wet Location · MDOT QPL-listed</td></tr>
+      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">&minus;40&deg;F to +165&deg;F (&minus;40&deg;C to +74&deg;C) · sealed cabinet thermal envelope</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val">3-year limited · 25,000-hour rated lifetime</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Dimensions + EVP Socket Compatibility — side-by-side -->
+  <div class="section-head" style="margin-top: 14px;">
+    <h2>Dimensions &amp; EVP Socket Compatibility</h2>
+    <div class="section-eyebrow">4.76&Prime; &Oslash; PAR38 · E26 medium screw base · 25&deg; clear optic</div>
+  </div>
+
+  <div class="dim-grid">
+    <div>
+      <div class="dim-view">
+        <div class="dim-view-label">PAR38 Bulb · Front + Side</div>
+        <img src="assets/lpar/LPAR-Dimensions_outlines.svg"
+             alt="LPAR PAR38 dimensions — front and side outline views · 4.76 in diameter at the lens · 5.23 in overall length · E26 medium screw base at the bottom"
+             id="dimImg"
+             style="max-height: 220px;"
+             onerror="this.style.display='none';" />
+      </div>
+    </div>
+
+    <div>
+      <div class="dim-view">
+        <div class="dim-view-label">EVP Confirm-Beacon Socket Compatibility</div>
+        <table class="photo-summary" style="font-size: 8pt;">
+          <tbody>
+            <tr><td>Opticom OL11 / OL12</td><td>Direct fit</td></tr>
+            <tr><td>TOMAR STROBECOM II</td><td>Direct fit</td></tr>
+            <tr><td>Federal Signal Opticom EVP</td><td>Direct fit</td></tr>
+            <tr><td>Generic E26 PAR38 · 120Vac</td><td>Direct fit</td></tr>
+            <tr><td>Socket Type</td><td>E26 medium screw</td></tr>
+            <tr><td>Mounting Hardware</td><td>None required</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <table class="photo-summary" style="margin-top: 8px;">
+    <tbody>
+      <tr><td>Beam Angle</td><td>25&deg; Narrow Flood · Clear Optic</td></tr>
+      <tr><td>Peak Lumen Output</td><td id="photoLumens">900 lm</td></tr>
+      <tr><td>Peak Efficacy</td><td id="photoEff">90 lm/W</td></tr>
+      <tr><td>Peak Intensity</td><td id="photoPeak">~3,420 cd (linear-scaled from 1,500 lm test)</td></tr>
+      <tr><td>Photometric Reference</td><td>1,500 lm SKU tested at 5,700 cd @ 0&deg; · 390 lm and 900 lm SKUs scaled linearly</td></tr>
+      <tr><td>IES File</td><td id="photoIesFile">Not published — PAR38 lamps are tested in-fixture (signal-head + lamp), not as isolated lamps · isolated-lamp IES not available</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Certifications row -->
+  <div class="certs" id="certsRow">
+    <span class="cert-badge">cULus Listed</span>
+    <span class="cert-badge">FCC 47 / 15B</span>
+    <span class="cert-badge">RoHS</span>
+    <span class="cert-badge">Wet Location</span>
+    <span class="cert-badge" id="mdotBadge" style="display: none;">MDOT Approved</span>
+    <span class="cert-badge brand">3-yr / 25k-hr</span>
+    <span class="cert-badge brand">thermal<span class="aa"></span>RMOR</span>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LPAR Traffic PAR38 submittal · Specifications subject to change</div>
+    <div>Rev. <span class="mono">2026-05</span> · Page 2 of 2</div>
+  </div>
+</div>
+
+
+<script>
+/* =============================================================================
+   SUBMITTAL AUTO-FILL · LPAR LED Traffic PAR38
+   ----------------------------------------------------------------------------
+   Reads URL query params from the Section 8 configurator and stamps the live
+   catalog number, ordering breakdown, quick specs, stock pill, and EVP context
+   across both pages.
+
+   Parameters:
+     sku    — full canonical SKU (auto-built upstream)
+     lumens — 390 | 900 | 1500
+     cct    — 30K | 48K
+
+   AUTHORITATIVE 3-SKU MATRIX (Zoho Books 2026-05-19, all QS):
+     LPAR38C39048K1  ·  7W ·  390lm · 4800K · White-Body
+     LPAR38C90030K1  · 10W ·  900lm · 3000K · Black-Body · MDOT
+     LPAR38C150030K1 · 14W · 1500lm · 3000K · White-Body
+   ============================================================================= */
+(function() {
+
+  // ---- Authoritative QS combos — all 3 LPAR SKUs are QuickShip (Zoho 2026-05-19) ----
+  var QS_COMBOS = new Set([
+    'LPAR38C39048K1',
+    'LPAR38C90030K1',
+    'LPAR38C150030K1'
+  ]);
+
+  // ---- Lumens-class specs · keyed on lumens segment ----
+  var LUMENS_DATA = {
+    '390': {
+      label: 'LPAR38C-390',
+      watts: 7,  lumens: 390,  lpw: 56,
+      body: 'White-Body',  cct: '48K', cctLabel: '4800K Cool White',
+      peakCd: '~1,480 cd (linear-scaled)',
+      sku: 'LPAR38C39048K1',
+      upc: '815109025140',
+      stock: 1082,
+      tagline: 'EVP confirm-beacon variant · cool white for max visibility against amber signal heads',
+      mdot: false
+    },
+    '900': {
+      label: 'LPAR38C-900',
+      watts: 10, lumens: 900,  lpw: 90,
+      body: 'Black-Body',  cct: '30K', cctLabel: '3000K Warm White',
+      peakCd: '~3,420 cd (linear-scaled from 1,500 lm reference)',
+      sku: 'LPAR38C90030K1',
+      upc: '815109028806',
+      stock: 1008,
+      tagline: 'MDOT-listed Black-Body · -40°F to 165°F · the only PAR38 LED on the Michigan QPL',
+      mdot: true
+    },
+    '1500': {
+      label: 'LPAR38C-1500',
+      watts: 14, lumens: 1500, lpw: 107,
+      body: 'White-Body',  cct: '30K', cctLabel: '3000K Warm White',
+      peakCd: '5,700 cd @ 0° (tested · LM-79)',
+      sku: 'LPAR38C150030K1',
+      upc: '815109028813',
+      stock: 2868,
+      tagline: 'Legacy general-traffic flagship · highest output of the family',
+      mdot: false
+    }
+  };
+
+  // ---- Parse URL params ----
+  var params = new URLSearchParams(window.location.search);
+  var sku    = params.get('sku')    || 'LPAR38C90030K1';
+  var lumens = params.get('lumens') || '900';
+  var cct    = params.get('cct')    || '30K';
+
+  // If lumens/cct not in URL but sku is, parse from sku
+  // SKU pattern: LPAR38C{lumens}{cctTens}K1  (e.g., LPAR38C150030K1, LPAR38C39048K1, LPAR38C90030K1)
+  if (sku) {
+    var m = sku.match(/^LPAR38C(\d{3,4})(\d{2})K1$/);
+    if (m) {
+      lumens = m[1] || lumens;
+      cct    = m[2] + 'K' || cct;
+    }
+  }
+
+  // Resolve lookup; safe fallback
+  var data = LUMENS_DATA[lumens] || LUMENS_DATA['900'];
+  // Re-derive sku from canonical lookup so the displayed SKU is always valid
+  // (URL params may have invalid lumens/cct combinations — clamp to the canonical map)
+  sku = data.sku;
+
+  // Combo-aware QS lookup (all 3 SKUs are QS, but keep the gate for future drift)
+  var isQS = QS_COMBOS.has(sku);
+
+  // ---- Stamp all the catalog-number slots ----
+  document.querySelectorAll('#catNum, #catNum2, #liveSku').forEach(function(el) {
+    el.textContent = sku;
+  });
+
+  // ---- Stock pill ----
+  var pill = document.getElementById('stockPill');
+  if (isQS) {
+    pill.className = 'qs-pill';
+    pill.textContent = 'QuickShip · 3-5 day';   // CFG-INV-1 · no inventory counts in customer-facing copy
+  } else {
+    pill.className = 'mto-pill';
+    pill.textContent = 'Made-to-Order · 4-6 wk';
+  }
+
+  // ---- Cover banner taglines ----
+  document.getElementById('taglineWatts').textContent =
+    data.watts + 'W · ' + data.lumens.toLocaleString() + ' lm · ' + data.body;
+  document.getElementById('taglineCct').textContent = data.cctLabel;
+  document.getElementById('taglineMdot').textContent = data.mdot
+    ? 'This SKU is the MDOT-listed Black-Body 900 lm variant'
+    : data.lumens === 900
+      ? 'Black-Body 900lm variant MDOT-listed'
+      : 'Black-Body 900lm variant MDOT-listed (this SKU: ' + data.body + ')';
+
+  // ---- Quick Specs ----
+  document.getElementById('qsLumens').innerHTML   = data.lumens.toLocaleString() + '<span class="qs-unit">lm</span>';
+  document.getElementById('qsWatts').innerHTML    = data.watts + '<span class="qs-unit">W</span>';
+  document.getElementById('qsEfficacy').innerHTML = data.lpw + '<span class="qs-unit">lm/W</span>';
+  document.getElementById('qsVoltage').innerHTML  = '120<span class="qs-unit">Vac</span>';
+  document.getElementById('qsCct').innerHTML      = data.cctLabel.split(' ')[0].replace('K','') + '<span class="qs-unit">K</span>';
+
+  // ---- Ordering Code segments ----
+  document.getElementById('ocLumensCct').textContent = lumens + data.cct;
+
+  // ---- Highlight active rows in the ordering matrix ----
+  document.querySelectorAll('#rowLumens, #rowCct').forEach(function(tr) {
+    tr.classList.add('active-row');
+  });
+  // Highlight the matching SKU row in the 3-SKU matrix
+  var skuRow = document.getElementById('skuRow_' + lumens);
+  if (skuRow) skuRow.classList.add('active-row');
+
+  // ---- Page 2 — Detailed Specs ----
+  document.getElementById('specCct').textContent = data.cctLabel;
+  document.getElementById('specLumLabel').textContent = 'Output · ' + data.label;
+  document.getElementById('specLumRow').textContent =
+    data.watts + 'W input · ' + data.lumens.toLocaleString() + ' lm output · ' +
+    data.lpw + ' lm/W · ' + data.body + ' housing';
+  document.getElementById('specPeakCd').textContent = data.peakCd;
+  document.getElementById('specBody').textContent = data.mdot
+    ? 'Black-Body — MDOT non-reflective housing for sealed-cabinet light containment'
+    : data.body + ' (non-MDOT variants ship in standard white housing)';
+  document.getElementById('specListings').textContent = data.mdot
+    ? 'cULus Listed · FCC Title 47 Part 15B · RoHS · Wet Location · MDOT QPL-listed'
+    : 'cULus Listed · FCC Title 47 Part 15B · RoHS · Wet Location';
+
+  // ---- MDOT cert badge — only show on the MDOT-listed 900lm Black-Body SKU ----
+  var mdotBadge = document.getElementById('mdotBadge');
+  if (mdotBadge) mdotBadge.style.display = data.mdot ? '' : 'none';
+
+  // ---- Photometric summary ----
+  document.getElementById('photoLumens').textContent = data.lumens.toLocaleString() + ' lm';
+  document.getElementById('photoEff').textContent    = data.lpw + ' lm/W';
+  document.getElementById('photoPeak').textContent   = data.peakCd;
+
+  // ---- Issue date ----
+  var d = new Date();
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('liveDate').textContent =
+    months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  document.getElementById('revDate').textContent =
+    d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+
+  // ============================================================================
+  // CFG-SUB-1 · Editable Catalog Number with full-page text sweep · session-only
+  // ----------------------------------------------------------------------------
+  // James 2026-05-18 playbook rule. User types a project-specific label into the
+  // top-right Catalog Number box (e.g., "ABC-001") and every visible instance of
+  // the ORIGINAL SKU on the page swaps to match in real time.
+  //
+  // IMPORTANT — snapshot-then-rederive pattern (V2 fix 2026-05-18 PM)
+  // ----------------------------------------------------------------------------
+  // V1 of this code tracked a `currentDisplay` and swept `currentDisplay → newVal`
+  // on every keystroke. That was catastrophic: after one keystroke turned the SKU
+  // into "A", the next keystroke swept "A → AB" across the WHOLE page, replacing
+  // every literal "A" in "ARCHIPELAGO", "BOLLARD", "AVAILABLE", "Anchor", etc.
+  //
+  // V2 fixes it by SNAPSHOTTING the original text of every node that contains
+  // `originalSku` at load time, then on each input event re-deriving each node's
+  // text from its cached original via originalText.split(originalSku).join(override).
+  // The sweep is idempotent and only ever matches the full original SKU string —
+  // partial intermediate states (single chars, prefixes) can never propagate.
+  //
+  // Edits don't touch <a href>, data-*, scripts, styles, or the `sku` JS variable.
+  // ============================================================================
+  (function setupEditableCatalogNumber() {
+    var originalSku = sku;
+    var editor = document.getElementById('catNum');
+    if (!editor) return;
+
+    // Seed document.title with the SKU so Save-as-PDF picks up a useful filename
+    // AND so the title sweep below has originalSku to find on user override.
+    if (document.title.indexOf(originalSku) === -1) {
+      document.title = originalSku + ' · ' + document.title;
+    }
+    var originalTitle = document.title;
+
+    // ── SNAPSHOT — record original text of every node that contains originalSku ──
+    // Skips <script>, <style>, and the editor itself. Captured once, at load.
+    var matchedNodes = []; // [{node, originalText}, ...]
+    (function snapshot() {
+      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(n) {
+          var p = n.parentNode;
+          while (p) {
+            if (p === editor) return NodeFilter.FILTER_REJECT;
+            if (p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT;
+            p = p.parentNode;
+          }
+          return n.nodeValue.indexOf(originalSku) !== -1
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        }
+      });
+      while (walker.nextNode()) {
+        matchedNodes.push({ node: walker.currentNode, originalText: walker.currentNode.nodeValue });
+      }
+    })();
+
+    // ── APPLY — re-derive every matched node from its cached original ──
+    // Idempotent. Calling applyOverride('X') then applyOverride('YZ') is exactly
+    // the same as starting fresh and calling applyOverride('YZ') directly.
+    function applyOverride(newDisplay) {
+      var override = newDisplay || originalSku;
+      matchedNodes.forEach(function(item) {
+        item.node.nodeValue = item.originalText.split(originalSku).join(override);
+      });
+      document.title = originalTitle.split(originalSku).join(override);
+    }
+
+    editor.addEventListener('input', function() {
+      // Strip newlines, cap at 40 chars. Don't re-write editor.textContent — caret would jump.
+      var raw = (editor.textContent || '').replace(/[\r\n]+/g, ' ').slice(0, 40);
+      var nextDisplay = raw.trim() ? raw : originalSku;
+      applyOverride(nextDisplay);
+    });
+
+    editor.addEventListener('blur', function() {
+      // Empty field on blur → restore original everywhere
+      var v = editor.textContent.trim();
+      if (!v) {
+        editor.textContent = originalSku;
+        applyOverride(originalSku);
+      }
+    });
+
+    // Keep field single-line — Enter commits + blurs
+    editor.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        editor.blur();
+      }
+    });
+  })();
+})();
+</script>
+
+</body>
+</html>

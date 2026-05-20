@@ -75,6 +75,13 @@ async function main() {
     'products/multi-family/radius-ii/submittal',
     // luxoARCH submittal templates are standalone print-optimized pages (no site header/footer by design)
     'products/heritage/submittal_template',
+    'products/lbol-sentry-bollard/submittal_sentry',
+    'products/lrdw-abbey-roadway/submittal_abbey',
+    'products/lhmf-omnimax-high-mast/submittal_omnimax',
+    'products/lptp-symmetry-post-top/submittal_symmetry',
+    'products/lptp-unity-post-top/submittal_unity',
+    'products/lpar-traffic-par38/submittal_lpar',
+    'products/ly-t10-slimline-sign-lamp/submittal_lyt10',
     // cityARCH PDP mockups are standalone HTML (self-contained nav/styles; no Astro BaseLayout by design)
     'products/lbol-sentry-bollard',
     'products/lrdw-abbey-roadway',

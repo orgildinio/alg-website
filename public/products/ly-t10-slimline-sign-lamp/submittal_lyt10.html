@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LY-T10 · Submittal Sheet</title>
+
+<!--
+  ALG SUBMITTAL TEMPLATE · LY-T10 LED Slimline T10 Sign Lamp v1
+  ==============================================================
+  Reads URL query params populated by mockup_lyt10_pdp_v1.html Section 8 (the
+  Configurator) and auto-fills the catalog number + quick specs + ordering
+  breakdown + clearance-stock context for a project-stampable PDF.
+
+  Example invocation (matches the configurator's Generate Submittal PDF CTA):
+    submittal_lyt10.html?sku=LY-T10L2400-44W-50K-A&length=2400&cct=50
+
+  Print: File → Print → Save as PDF (letter portrait) → 2-page submittal.
+
+  AUTHORITATIVE 4-SKU MATRIX (Zoho Books verified 2026-05-19, all CLEARANCE/QS):
+    LY-T10L1200-32W       · 4ft · 32W · 1200lm · 5000K
+    LY-T10L1800-38W-50K-A · 6ft · 38W · 1800lm · 5000K
+    LY-T10L2400-44W-50K-A · 8ft · 44W · 2400lm · 5000K
+    LY-T10L2400-44W-HO    · 8ft · 44W · 2400lm · 4100K
+
+  CFG-SUB-1 V2 (snapshot-then-rederive) built in from first save.
+-->
+
+<style>
+  /* ============= PRINT-OPTIMIZED CSS ============= */
+  @page { size: letter portrait; margin: 0.5in 0.6in; }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+    .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+    .page:last-of-type { page-break-after: auto; }
+  }
+
+  :root {
+    --brand-red: #F32740;
+    --ink: #0E0E10;
+    --ink-2: #2A2A2D;
+    --muted: #6B6B70;
+    --rule: #D8D6D2;
+    --rule-strong: #A6A4A0;
+    --tint: #F6F4F0;
+    --hi: #FFF6E5;
+    --qs: #2C7A4A;
+    --qs-tint: #E0F2E5;
+    --mto: #B36A00;
+    --mto-tint: #FFF2DA;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Lato', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.5pt;
+    line-height: 1.4;
+    background: #E8E6E2;
+  }
+  body { padding: 24px 12px; }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 24px;
+    padding: 0.55in 0.65in;
+    background: white;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  h1, h2, h3, h4 { font-family: 'Lato', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+  .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+
+  /* Ⓐ glyph — currentColor SVG mask, falls back to literal Ⓐ */
+  .aa {
+    display: inline-block;
+    width: 0.85em; height: 0.85em;
+    vertical-align: -0.06em;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10.5' fill='none' stroke='%23000' stroke-width='1.6'/><text x='12' y='17' font-family='Arial, sans-serif' font-size='14' font-weight='700' text-anchor='middle' fill='%23000'>A</text></svg>") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10.5' fill='none' stroke='%23000' stroke-width='1.6'/><text x='12' y='17' font-family='Arial, sans-serif' font-size='14' font-weight='700' text-anchor='middle' fill='%23000'>A</text></svg>") no-repeat center / contain;
+  }
+
+  /* ============= PAGE HEADER (every page) ============= */
+  .submittal-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+  .submittal-head .brand-mark {
+    width: 28px; height: 28px; background: var(--brand-red);
+    display: inline-block;
+  }
+  .submittal-head .brand-name {
+    font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1;
+  }
+  .submittal-head .brand-sub {
+    font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .submittal-head .catalog-block { text-align: right; }
+  .catalog-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .catalog-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5pt; font-weight: 700; color: var(--ink);
+    letter-spacing: 0.5pt;
+  }
+
+  /* CFG-SUB-1 · Editable Catalog Number (James 2026-05-18 playbook rule).
+     User types a project-specific label (e.g., "ABC-001") and every visible
+     instance of the original SKU on the page sweeps to match. Session-only. */
+  .editable-catalog {
+    cursor: text;
+    border-bottom: 1px dashed transparent;
+    transition: border-bottom-color .15s ease;
+  }
+  .editable-catalog:hover { border-bottom-color: var(--brand-red); }
+  .editable-catalog:focus {
+    outline: 2px solid var(--brand-red);
+    outline-offset: 2px;
+    border-bottom-color: transparent;
+  }
+  @media print {
+    .editable-catalog,
+    .editable-catalog:hover,
+    .editable-catalog:focus {
+      cursor: auto;
+      border-bottom: 0 !important;
+      outline: 0 !important;
+    }
+  }
+
+  /* ============= COVER BANNER (Page 1) ============= */
+  .cover-banner {
+    background: var(--ink);
+    color: white;
+    padding: 22px 24px;
+    margin-bottom: 16px;
+    display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px;
+  }
+  .cover-banner h1 {
+    font-size: 22pt; font-weight: 700; color: white; margin-bottom: 4px;
+  }
+  .cover-banner .cover-sub {
+    font-size: 10pt; color: rgba(255,255,255,0.75); margin-bottom: 8px;
+  }
+  .cover-banner .cover-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5pt; letter-spacing: 1pt;
+    color: var(--brand-red); text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .cover-banner .cover-tagline {
+    font-size: 10pt; line-height: 1.5; color: rgba(255,255,255,0.85);
+  }
+  .cover-banner .qs-pill {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--qs-tint); color: var(--qs);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt; font-weight: 700; letter-spacing: 1pt;
+    border-radius: 2px; text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .cover-banner .mto-pill {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--mto-tint); color: var(--mto);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt; font-weight: 700; letter-spacing: 1pt;
+    border-radius: 2px; text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* Project block — top of Page 1, fillable by spec engineer */
+  .proj-block {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+    padding: 8px 0 12px; border-bottom: 1px solid var(--rule); margin-bottom: 14px;
+  }
+  .proj-cell {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .proj-label {
+    font-size: 7pt; letter-spacing: 1.2pt;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .proj-line {
+    border-bottom: 1px solid var(--ink);
+    height: 14px;
+  }
+
+  /* Quick Specs grid — 5 large stats */
+  .quickspec-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px; margin-bottom: 14px;
+  }
+  .qs-cell {
+    border: 1px solid var(--rule);
+    background: var(--tint);
+    padding: 8px 10px;
+    text-align: center;
+  }
+  .qs-label {
+    font-size: 6.5pt; letter-spacing: 1.2pt;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 3px;
+  }
+  .qs-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14pt; font-weight: 700; line-height: 1.05;
+    color: var(--ink);
+  }
+  .qs-unit {
+    font-size: 8pt; font-weight: 400; color: var(--muted);
+    margin-left: 3px;
+  }
+
+  /* Section heads */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 4px; margin: 14px 0 10px;
+  }
+  .section-head h2 {
+    font-size: 11pt; letter-spacing: 0.4pt;
+  }
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.5pt; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 1pt;
+  }
+
+  /* Tagline (above ordering breakdown) */
+  .tagline-block {
+    background: var(--hi);
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    border-left: 3px solid var(--brand-red);
+    font-size: 9pt; line-height: 1.5;
+  }
+  .tagline-block strong { font-weight: 700; }
+
+  /* Ordering Code visual breakdown */
+  .order-code {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .order-segment {
+    border: 1px solid var(--rule);
+    padding: 6px 4px 7px;
+    text-align: center;
+    background: var(--tint);
+    min-width: 0;
+  }
+  .order-segment.active {
+    background: var(--ink); color: white;
+    border-color: var(--ink);
+  }
+  .order-segment.fixed { background: var(--ink-2); color: white; border-color: var(--ink-2); }
+  .order-segment.optional { background: white; color: var(--muted); }
+  .order-seg-label {
+    font-size: 6pt; letter-spacing: 1pt;
+    text-transform: uppercase; margin-bottom: 1px;
+    opacity: 0.7;
+  }
+  .order-seg-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5pt; font-weight: 700;
+  }
+
+  /* Ordering matrix — full table */
+  .order-matrix {
+    width: 100%; border-collapse: collapse;
+    font-size: 8.5pt; margin-bottom: 10px;
+  }
+  .order-matrix th, .order-matrix td {
+    border: 1px solid var(--rule);
+    padding: 4px 7px;
+    vertical-align: top;
+    text-align: left;
+  }
+  .order-matrix th {
+    background: var(--tint);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4pt; font-size: 7.5pt;
+  }
+  .order-matrix .code {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    background: var(--tint);
+    white-space: nowrap;
+    width: 18%;
+  }
+  .order-matrix tr.active-row .code {
+    background: var(--brand-red); color: white;
+  }
+  .order-matrix tr.active-row td {
+    background: var(--hi);
+  }
+
+  /* Anatomy block — full-width image + 6 callout grid */
+  .anat-block {
+    margin-bottom: 12px;
+  }
+  .anat-figure {
+    background: var(--tint);
+    border: 1px solid var(--rule);
+    padding: 12px;
+    margin-bottom: 8px;
+    aspect-ratio: 2.2 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .anat-figure img { max-width: 100%; max-height: 100%; }
+  .anat-callouts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    font-size: 8pt;
+  }
+  .anat-cell {
+    border: 1px solid var(--rule);
+    padding: 4px 6px;
+  }
+  .anat-cell-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7pt; font-weight: 700;
+    color: var(--brand-red); margin-right: 4px;
+  }
+
+  /* Spec table — used on page 2 */
+  .spec-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 8.5pt;
+  }
+  .spec-table td {
+    border: 1px solid var(--rule);
+    padding: 4px 8px;
+    vertical-align: top;
+  }
+  .spec-table .spec-section-head td {
+    background: var(--ink); color: white;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5pt; font-size: 7.5pt;
+    padding: 5px 8px;
+  }
+  .spec-table .spec-attr {
+    background: var(--tint);
+    font-weight: 700;
+    width: 32%;
+  }
+  .spec-table .spec-val strong { font-weight: 700; }
+
+  /* Dimensions + Photometric layout */
+  .dim-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .dim-view {
+    border: 1px solid var(--rule);
+    background: var(--tint);
+    padding: 8px;
+  }
+  .dim-view-label {
+    font-size: 7pt; letter-spacing: 1pt;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .dim-view img { width: 100%; height: auto; }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .photo-polar {
+    border: 1px solid var(--rule);
+    background: #0E0E10;
+    padding: 8px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .photo-polar img { max-width: 100%; max-height: 100%; }
+  .photo-polar.fallback {
+    color: var(--muted); font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt; text-align: center;
+  }
+  .photo-summary table {
+    width: 100%; border-collapse: collapse;
+    font-size: 8.5pt;
+  }
+  .photo-summary td {
+    border-bottom: 1px solid var(--rule);
+    padding: 4px 6px;
+  }
+  .photo-summary td:first-child {
+    color: var(--muted); width: 45%;
+  }
+  .photo-summary td:last-child {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+  }
+
+  /* Certifications row */
+  .certs {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 10px; background: var(--tint);
+    border: 1px solid var(--rule);
+    margin-top: 10px;
+  }
+  .cert-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.5pt; font-weight: 700;
+    padding: 3px 7px;
+    background: white; border: 1px solid var(--rule-strong);
+    letter-spacing: 0.5pt;
+  }
+  .cert-badge.brand { background: var(--ink); color: white; border-color: var(--ink); }
+
+  /* Footer */
+  .page-foot {
+    position: absolute;
+    bottom: 0.35in; left: 0.65in; right: 0.65in;
+    border-top: 1px solid var(--rule);
+    padding-top: 5px;
+    display: flex; justify-content: space-between;
+    font-size: 7pt; color: var(--muted);
+  }
+
+  /* No-print actions bar (top of doc) */
+  .actions-bar {
+    max-width: 8.5in; margin: 0 auto 14px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px;
+    background: var(--ink); color: white;
+    font-size: 9pt;
+  }
+  .actions-bar .btn {
+    background: var(--brand-red); color: white;
+    border: 0; padding: 6px 14px;
+    font-weight: 700; cursor: pointer;
+    font-family: inherit; font-size: 9pt;
+  }
+  .actions-bar a { color: white; text-decoration: underline; opacity: 0.85; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- NO-PRINT ACTIONS BAR — at the top, hidden when printed       -->
+<!-- ============================================================ -->
+<div class="actions-bar no-print">
+  <div>
+    LY-T10 · LED Slimline T10 Sign Lamp · Submittal Sheet · <span id="liveSku" class="mono"></span>
+  </div>
+  <div>
+    <a href="#" onclick="history.back(); return false;">← Back to Configurator</a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — COVER · QUICK SPECS · ANATOMY · ORDERING CODE       -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+  <!-- Header -->
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number <span class="no-print" style="font-family:'JetBrains Mono',monospace; font-size:7pt; color:var(--brand-red); letter-spacing:0.6pt; margin-left:6px;">✎ click to edit</span></div>
+      <div class="catalog-number editable-catalog" id="catNum" contenteditable="true" spellcheck="false">LY-T10L2400-44W-50K-A</div>
+    </div>
+  </div>
+
+  <!-- Cover banner -->
+  <div class="cover-banner">
+    <div>
+      <div class="cover-tag">city<span class="aa"></span>RCH · ECO SIGN LAMP · LY-T10</div>
+      <h1>LY-T10</h1>
+      <div class="cover-sub">LED Slimline T10 Sign Lamp · True Single-Pin Slimline Base · 1.25&Prime; &Oslash;</div>
+      <div class="cover-tagline" id="taglineLumens">
+        Direct-replace LED for fluorescent T10 slimline sign-cabinet lamps.
+        <strong id="taglineWatts">32W / 38W / 44W</strong> at
+        <strong id="taglineLums">1,200 / 1,800 / 2,400 lm</strong> across 4ft / 6ft / 8ft. Drops into
+        existing historical T10 sockets &mdash; no adapter sleeves, no ballast bypass. Zero mercury,
+        RoHS compliant, ETL US/C cross-border listed. 3-year / 25,000-hour warranty.
+      </div>
+    </div>
+    <div style="text-align: right;">
+      <div class="cover-tag" style="color:white; opacity:0.6;">Stock Status</div>
+      <div id="stockPill" class="qs-pill">QuickShip · 3-5 day</div>
+      <div style="font-size: 8pt; color: rgba(255,255,255,0.65); margin-top: 6px; line-height: 1.4;">
+        <strong style="color:#ffb14d;">CLEARANCE INVENTORY</strong> &mdash; while supplies last.<br/>No re-production planned.
+      </div>
+    </div>
+  </div>
+
+  <!-- Project block -->
+  <div class="proj-block">
+    <div class="proj-cell">
+      <div class="proj-label">Project Name</div>
+      <div class="proj-line"></div>
+    </div>
+    <div class="proj-cell">
+      <div class="proj-label">Project Number</div>
+      <div class="proj-line"></div>
+    </div>
+    <div class="proj-cell">
+      <div class="proj-label">Fixture Schedule</div>
+      <div class="proj-line"></div>
+    </div>
+    <div class="proj-cell">
+      <div class="proj-label">Issue Date</div>
+      <div class="proj-line" id="liveDate"></div>
+    </div>
+  </div>
+
+  <!-- Quick Specs -->
+  <div class="quickspec-grid">
+    <div class="qs-cell">
+      <div class="qs-label">Lumens</div>
+      <div class="qs-value" id="qsLumens">2,400<span class="qs-unit">lm</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">Wattage</div>
+      <div class="qs-value" id="qsWatts">44<span class="qs-unit">W</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">Efficacy</div>
+      <div class="qs-value" id="qsEfficacy">54.5<span class="qs-unit">lm/W</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">Length</div>
+      <div class="qs-value" id="qsLength">8<span class="qs-unit">ft</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">CCT</div>
+      <div class="qs-value" id="qsCct">5000<span class="qs-unit">K</span></div>
+    </div>
+  </div>
+
+  <!-- Tagline / hero claim -->
+  <div class="tagline-block">
+    <strong>The only true single-pin LED replacement for fluorescent T10 slimline sign lamps.</strong>
+    Most "T10 LED replacements" are T8 lamps with adapter sleeves or R17d/HO double-ended lamps for
+    legacy fixtures. LY-T10 ships the actual slimline T10 single-pin form factor that drops directly
+    into the historical sign-fixture socket &mdash; no adapter sleeves, no ballast bypass, no housing
+    modification. Zero mercury (the fluorescent it replaces does), RoHS, ETL US/C cross-border listed
+    for US + Canada DOT projects.
+    <strong style="color:#B36A00;">CLEARANCE INVENTORY &mdash; stock-on-hand defines availability;
+    no re-production is planned.</strong>
+  </div>
+
+  <!-- Ordering Code visual breakdown -->
+  <div class="section-head">
+    <h2>Ordering Code</h2>
+    <div class="section-eyebrow">Variable-segment SKU · Family · Length+Wattage · CCT</div>
+  </div>
+
+  <div class="order-code" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="order-segment active"><div class="order-seg-label">Family</div><div class="order-seg-value">LY-T10</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Length · Watts</div><div class="order-seg-value" id="ocLenWatt">L2400-44W</div></div>
+    <div class="order-segment active"><div class="order-seg-label">CCT</div><div class="order-seg-value" id="ocCct">50K-A</div></div>
+  </div>
+
+  <table class="order-matrix">
+    <thead>
+      <tr>
+        <th>Segment</th>
+        <th>Available Codes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="code">LY-T10</td><td>LED Slimline T10 Sign Lamp family · True Single-Pin Slimline base · 1.25&Prime; &Oslash;</td></tr>
+      <tr id="rowLength"><td class="code">L1200-32W · L1800-38W · L2400-44W</td><td>Length &middot; Lumens &middot; Wattage &mdash; <strong>L1200-32W</strong> (4ft · 1,200 lm · 32W) · <strong>L1800-38W</strong> (6ft · 1,800 lm · 38W) · <strong>L2400-44W</strong> (8ft · 2,400 lm · 44W)</td></tr>
+      <tr id="rowCct"><td class="code">50K-A · HO</td><td>CCT &mdash; <strong>50K-A</strong> 5000K Cool White (universal · all lengths) · <strong>HO</strong> 4100K Warm White (8ft only)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Authoritative 4-SKU matrix -->
+  <table class="order-matrix" style="margin-top: 6px;">
+    <thead>
+      <tr>
+        <th>Catalog Number</th>
+        <th>Specifications · Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="skuRow_1200_50"><td class="code">LY-T10L1200-32W</td><td><strong>4ft · 32W · 1,200 lm · 5000K · Single-Pin Slimline base</strong> · 37.5 lm/W · UPC 819313028508 · clearance</td></tr>
+      <tr id="skuRow_1800_50"><td class="code">LY-T10L1800-38W-50K-A</td><td><strong>6ft · 38W · 1,800 lm · 5000K · Single-Pin Slimline base</strong> · 47.4 lm/W · UPC 819313028515 · clearance</td></tr>
+      <tr id="skuRow_2400_50"><td class="code">LY-T10L2400-44W-50K-A</td><td><strong>8ft · 44W · 2,400 lm · 5000K · Single-Pin Slimline base</strong> · 54.5 lm/W · UPC 819313028522 · clearance · ★ volume center</td></tr>
+      <tr id="skuRow_2400_41"><td class="code">LY-T10L2400-44W-HO</td><td><strong>8ft · 44W · 2,400 lm · 4100K · Single-Pin Slimline base</strong> · 54.5 lm/W · UPC 819313028539 · clearance · warm-white variant</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LY-T10 Slimline T10 Sign Lamp submittal · Specifications subject to change</div>
+    <div>Rev. <span id="revDate">2026-05</span> · Page 1 of 2</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — SPECS · DIMENSIONS · PHOTOMETRICS · CERTIFICATIONS -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum2">LY-T10L2400-44W-50K-A</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Detailed Specifications</h2>
+    <div class="section-eyebrow">LY-T10 · LED Slimline T10 Sign Lamp · Single-Pin Slimline Base</div>
+  </div>
+
+  <table class="spec-table">
+    <tbody>
+      <tr class="spec-section-head"><td colspan="2">Optical &amp; Performance</td></tr>
+      <tr><td class="spec-attr">Distribution</td><td class="spec-val">360&deg; omni-directional &mdash; matches fluorescent T10 illumination character for internally-lit sign cabinets</td></tr>
+      <tr><td class="spec-attr">CCT (selected)</td><td class="spec-val" id="specCct">5000K Cool White</td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val">&ge; 70 (typical)</td></tr>
+      <tr><td class="spec-attr" id="specLenLabel">Length · Output</td><td class="spec-val" id="specLenRow">8ft · 44W input · 2,400 lm output · 54.5 lm/W</td></tr>
+      <tr><td class="spec-attr">Color Consistency</td><td class="spec-val">Tight LED binning per length-class · color uniformity along the lamp</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Electrical</td></tr>
+      <tr><td class="spec-attr">Input Voltage</td><td class="spec-val">120&ndash;277VAC &middot; 50/60Hz &middot; Universal</td></tr>
+      <tr><td class="spec-attr">Driver</td><td class="spec-val">Integrated LED driver &middot; non-dimmable &middot; direct line-voltage input</td></tr>
+      <tr><td class="spec-attr">Ballast Compatibility</td><td class="spec-val">Ballast bypass &mdash; LY-T10 drives directly from line voltage. Remove or bypass existing fluorescent ballast on retrofit.</td></tr>
+      <tr><td class="spec-attr">Power Factor</td><td class="spec-val">PF &gt; 0.90</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Construction &amp; Base</td></tr>
+      <tr><td class="spec-attr">Base</td><td class="spec-val">Single-Pin Slimline (Fa8) &mdash; direct fit for historical T10 sign-cabinet sockets. No adapter sleeves, no R17d/HO conversion.</td></tr>
+      <tr><td class="spec-attr">Housing</td><td class="spec-val">Linear glass / polycarbonate hybrid tube &middot; 1.25&Prime; (32 mm) &Oslash;</td></tr>
+      <tr><td class="spec-attr" id="specDim">Dimensions (selected)</td><td class="spec-val" id="specDimRow">8ft &middot; 93.2&Prime; face-to-face &middot; 1.25&Prime; (32 mm) &Oslash; tube</td></tr>
+      <tr><td class="spec-attr">Net Weight</td><td class="spec-val">~1.5 lb (8ft) · ~1.0 lb (6ft) · ~0.7 lb (4ft) approx.</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
+      <tr><td class="spec-attr">Listings</td><td class="spec-val">ETL US/C Listed &middot; RoHS &middot; No Mercury &middot; FCC Part 15</td></tr>
+      <tr><td class="spec-attr">Cross-Border</td><td class="spec-val">ETL US/C dual-listing &mdash; qualifies for US + Canada DOT projects without separate Canadian listing or paperwork</td></tr>
+      <tr><td class="spec-attr">Fluorescent Comparison</td><td class="spec-val">Replaces legacy fluorescent T10 slimline sign-cabinet lamps &middot; zero mercury vs fluorescent's ~3-15 mg/lamp &middot; no hazmat disposal &middot; no fluorescent-phaseout exposure (CA &middot; WA &middot; NY &middot; CT)</td></tr>
+      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">&minus;4&deg;F to +113&deg;F (&minus;20&deg;C to +45&deg;C)</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val">3-year limited &middot; 25,000-hour rated lifetime</td></tr>
+      <tr><td class="spec-attr">Stock Status</td><td class="spec-val" id="specStock"><strong style="color:#B36A00;">CLEARANCE</strong> &mdash; while supplies last.. No re-production planned.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Dimensions + Length-class compatibility — side-by-side -->
+  <div class="section-head" style="margin-top: 14px;">
+    <h2>Dimensions &amp; Sign-Cabinet Compatibility</h2>
+    <div class="section-eyebrow">Length-class face-to-face · 1.25&Prime; &Oslash; · Single-Pin Slimline base</div>
+  </div>
+
+  <div class="dim-grid">
+    <div>
+      <div class="dim-view">
+        <div class="dim-view-label">Linear T10 Lamp · Length-Class Reference</div>
+        <img src="assets/lyt10/LYT10-Dimensions_outlines.svg"
+             alt="LY-T10 dimensions — linear T10 lamp · 1.25 inch diameter · face-to-face 47.2 in for 4ft / 69.2 in for 6ft / 93.2 in for 8ft"
+             id="dimImg"
+             style="max-height: 220px;"
+             onerror="this.style.display='none';" />
+      </div>
+    </div>
+
+    <div>
+      <div class="dim-view">
+        <div class="dim-view-label">Length-Class Comparison Table</div>
+        <table class="photo-summary" style="font-size: 8pt;">
+          <tbody>
+            <tr><td>4ft &middot; L1200-32W</td><td>47.2&Prime; F-to-F &middot; 32W &middot; 1,200 lm</td></tr>
+            <tr><td>6ft &middot; L1800-38W</td><td>69.2&Prime; F-to-F &middot; 38W &middot; 1,800 lm</td></tr>
+            <tr><td>8ft &middot; L2400-44W</td><td>93.2&Prime; F-to-F &middot; 44W &middot; 2,400 lm</td></tr>
+            <tr><td>Tube &Oslash;</td><td>1.25&Prime; (32 mm) all lengths</td></tr>
+            <tr><td>Base</td><td>Single-Pin Slimline (Fa8)</td></tr>
+            <tr><td>Mounting</td><td>Drops into existing T10 socket &mdash; no modification</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <table class="photo-summary" style="margin-top: 8px;">
+    <tbody>
+      <tr><td>Form Factor</td><td>True T10 Slimline (NOT a T8-with-adapter or R17d/HO conversion)</td></tr>
+      <tr><td>Beam Character</td><td>360&deg; omni-directional &middot; matches fluorescent T10 illumination pattern</td></tr>
+      <tr><td>Driver</td><td>Integrated &middot; ballast bypass required on retrofit</td></tr>
+      <tr><td>Mercury Content</td><td>Zero &middot; RoHS compliant (replaces ~3&ndash;15 mg per fluorescent T10)</td></tr>
+      <tr><td>Cross-Border Listing</td><td>ETL US/C dual-listing for US + Canada DOT projects</td></tr>
+      <tr><td>Photometric Test File</td><td>Not published &mdash; sign-cabinet retrofits are typically specified by length-class + lumen output, not by IES distribution</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Certifications row -->
+  <div class="certs" id="certsRow">
+    <span class="cert-badge">ETL US/C</span>
+    <span class="cert-badge">FCC 47 / 15</span>
+    <span class="cert-badge">RoHS</span>
+    <span class="cert-badge brand">No Mercury</span>
+    <span class="cert-badge brand">3-yr / 25k-hr</span>
+    <span class="cert-badge" style="background:#FFF2DA; color:#B36A00; border-color:#B36A00;">CLEARANCE</span>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LY-T10 Slimline T10 Sign Lamp submittal · Specifications subject to change</div>
+    <div>Rev. <span class="mono">2026-05</span> · Page 2 of 2</div>
+  </div>
+</div>
+
+
+<script>
+/* =============================================================================
+   SUBMITTAL AUTO-FILL · LY-T10 LED Slimline T10 Sign Lamp
+   ----------------------------------------------------------------------------
+   Reads URL query params from the Section 8 configurator and stamps the live
+   catalog number, ordering breakdown, quick specs, stock pill, and
+   length-class context across both pages.
+
+   Parameters:
+     sku    — full canonical SKU (auto-built upstream)
+     length — 1200 | 1800 | 2400  (lumens segment, maps 1:1 to length-class)
+     cct    — 50 (5000K) | 41 (4100K, 8ft only)
+
+   AUTHORITATIVE 4-SKU MATRIX (Zoho Books 2026-05-19, all CLEARANCE/QS):
+     LY-T10L1200-32W       · 4ft · 32W · 1200lm · 5000K
+     LY-T10L1800-38W-50K-A · 6ft · 38W · 1800lm · 5000K
+     LY-T10L2400-44W-50K-A · 8ft · 44W · 2400lm · 5000K
+     LY-T10L2400-44W-HO    · 8ft · 44W · 2400lm · 4100K
+   ============================================================================= */
+(function() {
+
+  // ---- Authoritative QS combos — all 4 SKUs in clearance stock (Zoho 2026-05-19) ----
+  var QS_COMBOS = new Set([
+    'LY-T10L1200-32W',
+    'LY-T10L1800-38W-50K-A',
+    'LY-T10L2400-44W-50K-A',
+    'LY-T10L2400-44W-HO'
+  ]);
+
+  // ---- (length, cct) → SKU map ---- (encoding varies, direct lookup is cleaner)
+  var SKU_MAP = {
+    '1200_50': 'LY-T10L1200-32W',
+    '1800_50': 'LY-T10L1800-38W-50K-A',
+    '2400_50': 'LY-T10L2400-44W-50K-A',
+    '2400_41': 'LY-T10L2400-44W-HO'
+  };
+
+  // ---- Length-class specs · keyed on lumens segment (1:1 with length) ----
+  var LENGTH_DATA = {
+    '1200': {
+      label: '4ft', face: '47.2', watts: 32, lumens: 1200, lpw: 37.5,
+      lenWattCode: 'L1200-32W',
+      tagline: '4ft slimline T10 · 32W · 1,200 lm · 47.2" face-to-face',
+      validCct: ['50'],
+      stockByCct: { '50': 26 }
+    },
+    '1800': {
+      label: '6ft', face: '69.2', watts: 38, lumens: 1800, lpw: 47.4,
+      lenWattCode: 'L1800-38W',
+      tagline: '6ft slimline T10 · 38W · 1,800 lm · 69.2" face-to-face',
+      validCct: ['50'],
+      stockByCct: { '50': 196 }
+    },
+    '2400': {
+      label: '8ft', face: '93.2', watts: 44, lumens: 2400, lpw: 54.5,
+      lenWattCode: 'L2400-44W',
+      tagline: '8ft slimline T10 · 44W · 2,400 lm · 93.2" face-to-face · ★ volume center',
+      validCct: ['50', '41'],
+      stockByCct: { '50': 600, '41': 71 }
+    }
+  };
+
+  // ---- CCT labels ----
+  var CCT_DATA = {
+    '50': { label: '5000K Cool White', short: '5000', code: '50K-A' },
+    '41': { label: '4100K Warm White', short: '4100', code: 'HO' }
+  };
+
+  // ---- Parse URL params ----
+  var params = new URLSearchParams(window.location.search);
+  var sku    = params.get('sku')    || 'LY-T10L2400-44W-50K-A';
+  var length = params.get('length') || '2400';
+  var cct    = params.get('cct')    || '50';
+
+  // If length/cct not in URL but sku is, parse from sku
+  // Pattern variants:
+  //   LY-T10L{lumens}-{watts}W                  (4ft only: LY-T10L1200-32W)
+  //   LY-T10L{lumens}-{watts}W-{cct}K-A         (5000K variants: -50K-A suffix)
+  //   LY-T10L{lumens}-{watts}W-HO               (4100K variant: -HO suffix)
+  if (sku) {
+    var m = sku.match(/^LY-T10L(\d+)-\d+W(-50K-A|-HO)?$/);
+    if (m) {
+      length = m[1] || length;
+      cct = m[2] === '-HO' ? '41' : '50';
+    }
+  }
+
+  // Resolve / clamp via canonical map — invalid combos snap to a valid SKU
+  var resolvedSku = SKU_MAP[length + '_' + cct];
+  if (!resolvedSku) {
+    // Default fallback to 8ft / 5000K (highest stock + universal CCT)
+    length = '2400'; cct = '50';
+    resolvedSku = SKU_MAP['2400_50'];
+  }
+  sku = resolvedSku;
+
+  // ---- Derived values ----
+  var data = LENGTH_DATA[length] || LENGTH_DATA['2400'];
+  var cctData = CCT_DATA[cct] || CCT_DATA['50'];
+  var stock = (data.stockByCct[cct] != null) ? data.stockByCct[cct] : 0;
+  var isQS = QS_COMBOS.has(sku);
+
+  // ---- Stamp all the catalog-number slots ----
+  document.querySelectorAll('#catNum, #catNum2, #liveSku').forEach(function(el) {
+    el.textContent = sku;
+  });
+
+  // ---- Stock pill ----
+  var pill = document.getElementById('stockPill');
+  if (isQS) {
+    pill.className = 'qs-pill';
+    pill.textContent = 'QuickShip · 3-5 day';
+  } else {
+    pill.className = 'mto-pill';
+    pill.textContent = 'Out of Stock · No re-production';
+  }
+
+  // ---- Cover banner taglines ----
+  document.getElementById('taglineWatts').textContent =
+    data.watts + 'W · ' + data.label + ' · ' + cctData.label;
+  document.getElementById('taglineLums').textContent =
+    data.lumens.toLocaleString() + ' lm · ' + data.lpw + ' lm/W';
+
+  // ---- Quick Specs ----
+  document.getElementById('qsLumens').innerHTML   = data.lumens.toLocaleString() + '<span class="qs-unit">lm</span>';
+  document.getElementById('qsWatts').innerHTML    = data.watts + '<span class="qs-unit">W</span>';
+  document.getElementById('qsEfficacy').innerHTML = data.lpw + '<span class="qs-unit">lm/W</span>';
+  document.getElementById('qsLength').innerHTML   = data.label.replace('ft','') + '<span class="qs-unit">ft</span>';
+  document.getElementById('qsCct').innerHTML      = cctData.short + '<span class="qs-unit">K</span>';
+
+  // ---- Ordering Code segments ----
+  document.getElementById('ocLenWatt').textContent = data.lenWattCode;
+  document.getElementById('ocCct').textContent     = cctData.code;
+
+  // ---- Highlight active rows in the ordering matrix ----
+  document.querySelectorAll('#rowLength, #rowCct').forEach(function(tr) {
+    tr.classList.add('active-row');
+  });
+  // Highlight the matching SKU row in the 4-SKU matrix
+  var skuRow = document.getElementById('skuRow_' + length + '_' + cct);
+  if (skuRow) skuRow.classList.add('active-row');
+
+  // ---- Page 2 — Detailed Specs ----
+  document.getElementById('specCct').textContent = cctData.label;
+  document.getElementById('specLenLabel').textContent = 'Length · Output (selected)';
+  document.getElementById('specLenRow').textContent =
+    data.label + ' · ' + data.watts + 'W input · ' +
+    data.lumens.toLocaleString() + ' lm output · ' + data.lpw + ' lm/W';
+  document.getElementById('specDimRow').textContent =
+    data.label + ' · ' + data.face + '" face-to-face · 1.25" (32 mm) Ø tube';
+  // CFG-INV-1 · specStockCount inventory-display removed 2026-05-20
+
+  // ---- Issue date ----
+  var d = new Date();
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('liveDate').textContent =
+    months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  document.getElementById('revDate').textContent =
+    d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+
+  // ============================================================================
+  // CFG-SUB-1 · Editable Catalog Number with full-page text sweep · session-only
+  // ----------------------------------------------------------------------------
+  // James 2026-05-18 playbook rule. User types a project-specific label into the
+  // top-right Catalog Number box (e.g., "ABC-001") and every visible instance of
+  // the ORIGINAL SKU on the page swaps to match in real time.
+  //
+  // IMPORTANT — snapshot-then-rederive pattern (V2 fix 2026-05-18 PM)
+  // ----------------------------------------------------------------------------
+  // V1 of this code tracked a `currentDisplay` and swept `currentDisplay → newVal`
+  // on every keystroke. That was catastrophic: after one keystroke turned the SKU
+  // into "A", the next keystroke swept "A → AB" across the WHOLE page, replacing
+  // every literal "A" in "ARCHIPELAGO", "BOLLARD", "AVAILABLE", "Anchor", etc.
+  //
+  // V2 fixes it by SNAPSHOTTING the original text of every node that contains
+  // `originalSku` at load time, then on each input event re-deriving each node's
+  // text from its cached original via originalText.split(originalSku).join(override).
+  // The sweep is idempotent and only ever matches the full original SKU string —
+  // partial intermediate states (single chars, prefixes) can never propagate.
+  //
+  // Edits don't touch <a href>, data-*, scripts, styles, or the `sku` JS variable.
+  // ============================================================================
+  (function setupEditableCatalogNumber() {
+    var originalSku = sku;
+    var editor = document.getElementById('catNum');
+    if (!editor) return;
+
+    // Seed document.title with the SKU so Save-as-PDF picks up a useful filename
+    // AND so the title sweep below has originalSku to find on user override.
+    if (document.title.indexOf(originalSku) === -1) {
+      document.title = originalSku + ' · ' + document.title;
+    }
+    var originalTitle = document.title;
+
+    // ── SNAPSHOT — record original text of every node that contains originalSku ──
+    // Skips <script>, <style>, and the editor itself. Captured once, at load.
+    var matchedNodes = []; // [{node, originalText}, ...]
+    (function snapshot() {
+      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(n) {
+          var p = n.parentNode;
+          while (p) {
+            if (p === editor) return NodeFilter.FILTER_REJECT;
+            if (p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT;
+            p = p.parentNode;
+          }
+          return n.nodeValue.indexOf(originalSku) !== -1
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        }
+      });
+      while (walker.nextNode()) {
+        matchedNodes.push({ node: walker.currentNode, originalText: walker.currentNode.nodeValue });
+      }
+    })();
+
+    // ── APPLY — re-derive every matched node from its cached original ──
+    // Idempotent. Calling applyOverride('X') then applyOverride('YZ') is exactly
+    // the same as starting fresh and calling applyOverride('YZ') directly.
+    function applyOverride(newDisplay) {
+      var override = newDisplay || originalSku;
+      matchedNodes.forEach(function(item) {
+        item.node.nodeValue = item.originalText.split(originalSku).join(override);
+      });
+      document.title = originalTitle.split(originalSku).join(override);
+    }
+
+    editor.addEventListener('input', function() {
+      // Strip newlines, cap at 40 chars. Don't re-write editor.textContent — caret would jump.
+      var raw = (editor.textContent || '').replace(/[\r\n]+/g, ' ').slice(0, 40);
+      var nextDisplay = raw.trim() ? raw : originalSku;
+      applyOverride(nextDisplay);
+    });
+
+    editor.addEventListener('blur', function() {
+      // Empty field on blur → restore original everywhere
+      var v = editor.textContent.trim();
+      if (!v) {
+        editor.textContent = originalSku;
+        applyOverride(originalSku);
+      }
+    });
+
+    // Keep field single-line — Enter commits + blurs
+    editor.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        editor.blur();
+      }
+    });
+  })();
+})();
+</script>
+
+</body>
+</html>
