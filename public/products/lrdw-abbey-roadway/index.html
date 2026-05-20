@@ -3278,7 +3278,30 @@ select.cfg-select {
   .cfg-legend-key.mto {
     text-align: left !important;
   }
-</style>
+
+/* CFG-TYPE-1 · Canonical typography lock — Lato !important wins over Shopify Cormorant override.
+   Codified 2026-05-20 PM after James caught H1/H2 rendering in Cormorant Garamond serif on live staging.
+   Mirrors Heritage's working pattern (body.heritage-pdp h1, body.heritage-pdp h2). */
+body.cityarch-pdp h1,
+body.cityarch-pdp h2,
+body.cityarch-pdp h3,
+body.cityarch-pdp .hero h1,
+body.cityarch-pdp .hero h2,
+body.cityarch-pdp section h2,
+body.cityarch-pdp section h3,
+body.cityarch-pdp .acc-card-title,
+body.cityarch-pdp .spec-section-title {
+  font-family: 'Lato', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-weight: 700 !important;
+}
+body.cityarch-pdp p,
+body.cityarch-pdp li,
+body.cityarch-pdp span:not([class*="mono"]):not([class*="cfg"]):not([class*="-code"]),
+body.cityarch-pdp .hero-narrative,
+body.cityarch-pdp .acc-card-copy {
+  font-family: 'Lato', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+  </style>
 <!-- ════════════════════════════════════════════════════════════════════
      CFG-CHROME-3 · Canonical chrome hydrator (Option C · 2026-05-20 PM)
      James directive: cityⒶRCH PDPs must show Heritage's exact chrome.
@@ -3317,7 +3340,7 @@ select.cfg-select {
         copy.textContent = s.textContent;
         document.head.appendChild(copy);
       });
-      // 3. Site header — insert as first child of <body>
+      // 3. Site header — insert as first child of <body class="cityarch-pdp">
       var srcHeader = doc.querySelector('#site-header');
       if (srcHeader && !document.querySelector('#site-header')) {
         document.body.insertBefore(srcHeader, document.body.firstChild);

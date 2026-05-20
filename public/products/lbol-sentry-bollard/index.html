@@ -3457,7 +3457,30 @@ select.cfg-select {
   .cfg-legend-key.mto {
     text-align: left !important;
   }
-</style>
+
+/* CFG-TYPE-1 · Canonical typography lock — Lato !important wins over Shopify Cormorant override.
+   Codified 2026-05-20 PM after James caught H1/H2 rendering in Cormorant Garamond serif on live staging.
+   Mirrors Heritage's working pattern (body.heritage-pdp h1, body.heritage-pdp h2). */
+body.cityarch-pdp h1,
+body.cityarch-pdp h2,
+body.cityarch-pdp h3,
+body.cityarch-pdp .hero h1,
+body.cityarch-pdp .hero h2,
+body.cityarch-pdp section h2,
+body.cityarch-pdp section h3,
+body.cityarch-pdp .acc-card-title,
+body.cityarch-pdp .spec-section-title {
+  font-family: 'Lato', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-weight: 700 !important;
+}
+body.cityarch-pdp p,
+body.cityarch-pdp li,
+body.cityarch-pdp span:not([class*="mono"]):not([class*="cfg"]):not([class*="-code"]),
+body.cityarch-pdp .hero-narrative,
+body.cityarch-pdp .acc-card-copy {
+  font-family: 'Lato', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+  </style>
 <!-- ════════════════════════════════════════════════════════════════════
      CFG-CHROME-3 · Canonical chrome hydrator (Option C · 2026-05-20 PM)
      James directive: cityⒶRCH PDPs must show Heritage's exact chrome.
@@ -3496,7 +3519,7 @@ select.cfg-select {
         copy.textContent = s.textContent;
         document.head.appendChild(copy);
       });
-      // 3. Site header — insert as first child of <body>
+      // 3. Site header — insert as first child of <body class="cityarch-pdp">
       var srcHeader = doc.querySelector('#site-header');
       if (srcHeader && !document.querySelector('#site-header')) {
         document.body.insertBefore(srcHeader, document.body.firstChild);
@@ -6379,92 +6402,9 @@ select.cfg-select {
   else init();
 })();
 
-// Section 3 — Motion video carousel
-(function() {
-  // 6 clips sliced from ALG's master Illuminator promo video (the source mp4 lives
-  // in WorkDrive: luxoⒶRCH/LSPL - Sports Lighting/VIDEOS/LSPL - PromoVideo_NoText.mp4).
-  // Each is 8 seconds, 720p, ~0.2-3.5 MB, h.264 + faststart for web playback.
-  // Manus uploads these to Shopify's video CDN at production time and updates the URLs.
-  var clips = [
-    { url: 'assets/motion/illum-motion-1-wattselect.mp4',  tag: 'WATTSELECT',          title: 'Field-selectable wattage — tune the output to the install.' },
-    { url: 'assets/motion/illum-motion-2-poweraim.mp4',    tag: 'POWERⒶIM™',         title: '90° pivot hinge for full-range beam aiming and laser-sight install.' },
-    { url: 'assets/motion/illum-motion-3-trunnion.mp4',    tag: 'TRUNNION MOUNT',      title: 'Trunnion bracket — versatile, field-ready installation.' },
-    { url: 'assets/motion/illum-motion-4-slipfitter.mp4',  tag: 'SLIP-FITTER',         title: 'Slip-fitter mount — pole-top mounting flexibility.' },
-    { url: 'assets/motion/illum-motion-5-stackable.mp4',   tag: 'STACKABLE DESIGN',    title: 'Stackable arrays for limitless field illumination.' },
-    { url: 'assets/motion/illum-motion-6-controls.mp4',    tag: 'CONTRⒶLS-READY',    title: 'Synapse SimplySNAP integration — wireless networked control.' }
-  ];
-  function init() {
-    var video    = document.getElementById('motionVideo');
-    var caption  = document.getElementById('motionCaption');
-    var dotsRow  = document.getElementById('motionDots');
-    var progress = document.getElementById('motionProgressBar');
-    if (!video || !caption || !dotsRow || !progress) return;
-    var idx = 0;
-    var ticker;
+// Section 3 — Motion video carousel REMOVED 2026-05-20 PM
+// Dead-code IIFE stripped (markup was removed 2026-05-07, JS was orphan code referencing illum-motion-*.mp4 from Illuminator clone). DOM elements never existed; init() always early-returned.
 
-    function set(i) {
-      idx = (i + clips.length) % clips.length;
-      var c = clips[idx];
-      video.src = c.url;
-      video.load();
-      var play = video.play();
-      if (play && typeof play.catch === 'function') play.catch(function(){});
-      caption.innerHTML =
-        '<div class="motion-caption-eyebrow">' + (idx + 1).toString().padStart(2, '0') + ' / 06 · ' + c.tag + '</div>' +
-        '<div class="motion-caption-title">' + c.title + '</div>';
-      dotsRow.querySelectorAll('button').forEach(function(b, n) {
-        b.classList.toggle('active', n === idx);
-        b.setAttribute('aria-selected', n === idx ? 'true' : 'false');
-      });
-      progress.style.width = '0%';
-    }
-
-    // Build dots
-    dotsRow.innerHTML = clips.map(function(c, n) {
-      var num = (n + 1).toString().padStart(2, '0');
-      return '<button type="button" data-i="' + n + '" role="tab"' +
-             (n === 0 ? ' class="active" aria-selected="true"' : ' aria-selected="false"') +
-             '>' + num + ' · ' + c.tag + '</button>';
-    }).join('');
-    dotsRow.querySelectorAll('button').forEach(function(b) {
-      b.addEventListener('click', function() {
-        clearInterval(ticker);
-        set(parseInt(b.dataset.i, 10));
-        startTicker();
-      });
-    });
-
-    // Progress bar — animates to 100% over the auto-advance window
-    function startTicker() {
-      var DURATION = 6000; // 6s per clip auto-advance
-      var start = Date.now();
-      progress.style.width = '0%';
-      ticker = setInterval(function() {
-        var pct = Math.min(100, ((Date.now() - start) / DURATION) * 100);
-        progress.style.width = pct + '%';
-        if (pct >= 100) {
-          clearInterval(ticker);
-          set(idx + 1);
-          startTicker();
-        }
-      }, 60);
-    }
-
-    // If a clip fails to load, skip to next after a brief moment
-    video.addEventListener('error', function() {
-      clearInterval(ticker);
-      setTimeout(function() { set(idx + 1); startTicker(); }, 500);
-    });
-
-    set(0);
-    startTicker();
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
 </script>
 <script>
 /* =============================================================================
