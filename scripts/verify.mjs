@@ -75,6 +75,22 @@ async function main() {
     'products/multi-family/radius-ii/submittal',
     // luxoARCH submittal templates are standalone print-optimized pages (no site header/footer by design)
     'products/heritage/submittal_template',
+    // cityARCH PDP mockups are standalone HTML (self-contained nav/styles; no Astro BaseLayout by design)
+    'products/lbol-sentry-bollard',
+    'products/lrdw-abbey-roadway',
+    'products/lhmf-omnimax-high-mast',
+    'products/lptp-symmetry-post-top',
+    'products/lptp-unity-post-top',
+    'products/lpar-traffic-par38',
+    'products/ly-t10-slimline-sign-lamp',
+    // cityARCH submittal pages are standalone print-optimized HTML (no site header/footer by design)
+    'submittal/sentry',
+    'submittal/abbey',
+    'submittal/omnimax',
+    'submittal/symmetry',
+    'submittal/unity',
+    'submittal/lpar',
+    'submittal/lyt10',
   ];
   const htmlFiles = allHtmlFiles.filter(f => !STATIC_HTML_EXCLUDE.some(ex => f.replace(/\\/g, '/').includes(ex)));
   if (htmlFiles.length === 0) {

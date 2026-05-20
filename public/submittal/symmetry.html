@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LPTP Symmetry · Submittal Sheet</title>
+
+<!--
+  ALG SUBMITTAL TEMPLATE · LPTP Symmetry-I Post-Top v2
+  =====================================================
+  Reads URL query params populated by mockup_symmetry_pdp_v1.html Section 9 (the
+  Configurator) and auto-fills the catalog number + quick specs + ordering
+  breakdown + photometric data for a project-stampable PDF.
+
+  Example invocation (matches the configurator's Generate Submittal PDF CTA):
+    submittal_symmetry.html?sku=LPTP130-3CS/27VS1/DB/FD
+        &housing=130&voltage=27V&finish=DB&optic=FD
+
+  Print: File → Print → Save as PDF (letter portrait) → 2-page submittal.
+
+  AUTHORITATIVE 25-SKU MAIN-MATRIX (James 2026-05-19 · 4 QS · 21 MTO):
+    QS (4 SKUs · all LPTP130-3CS/27VS1):
+      LPTP130-3CS/27VS1/B/FD    · Black       · Frosted
+      LPTP130-3CS/27VS1/DB/BL   · Dark Bronze · BeamLogic
+      LPTP130-3CS/27VS1/DB/FD   · Dark Bronze · Frosted   ★ default
+      LPTP130-3CS/27VS1/W/FD    · White       · Frosted   (only W variant)
+    MTO (21 other combos across 090/130/160 × 27V/48V × {B,DB} × {BL,FD})
+
+  ALTERNATE PLATFORMS (4 SKUs · informational footer · not in main encoder):
+    LPTP4W-S3-U{B|D|W}                · 4-WATTselect lamp variant
+    LPTP5W130-5CS-48VS2/3BL/DB        · 5-WATTselect + 5-CCT special build
+
+  CFG-SUB-1 V2 (snapshot-then-rederive) built in from first save.
+-->
+
+<style>
+  /* ============= PRINT-OPTIMIZED CSS ============= */
+  @page { size: letter portrait; margin: 0.5in 0.6in; }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+    .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+    .page:last-of-type { page-break-after: auto; }
+  }
+
+  :root {
+    --brand-red: #F32740;
+    --ink: #0E0E10;
+    --ink-2: #2A2A2D;
+    --muted: #6B6B70;
+    --rule: #D8D6D2;
+    --rule-strong: #A6A4A0;
+    --tint: #F6F4F0;
+    --hi: #FFF6E5;
+    --qs: #2C7A4A;
+    --qs-tint: #E0F2E5;
+    --mto: #B36A00;
+    --mto-tint: #FFF2DA;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Lato', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.5pt;
+    line-height: 1.4;
+    background: #E8E6E2;
+  }
+  body { padding: 24px 12px; }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 24px;
+    padding: 0.55in 0.65in;
+    background: white;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  h1, h2, h3, h4 { font-family: 'Lato', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+  .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+
+  /* Ⓐ glyph — currentColor SVG mask, falls back to literal Ⓐ */
+  .aa {
+    display: inline-block;
+    width: 0.85em; height: 0.85em;
+    vertical-align: -0.06em;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10.5' fill='none' stroke='%23000' stroke-width='1.6'/><text x='12' y='17' font-family='Arial, sans-serif' font-size='14' font-weight='700' text-anchor='middle' fill='%23000'>A</text></svg>") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10.5' fill='none' stroke='%23000' stroke-width='1.6'/><text x='12' y='17' font-family='Arial, sans-serif' font-size='14' font-weight='700' text-anchor='middle' fill='%23000'>A</text></svg>") no-repeat center / contain;
+  }
+
+  /* ============= PAGE HEADER (every page) ============= */
+  .submittal-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+  .submittal-head .brand-mark {
+    width: 28px; height: 28px; background: var(--brand-red);
+    display: inline-block;
+  }
+  .submittal-head .brand-name {
+    font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1;
+  }
+  .submittal-head .brand-sub {
+    font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .submittal-head .catalog-block { text-align: right; }
+  .catalog-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .catalog-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5pt; font-weight: 700; color: var(--ink);
+    letter-spacing: 0.5pt;
+  }
+
+  /* CFG-SUB-1 · Editable Catalog Number (James 2026-05-18 playbook rule).
+     User types a project-specific label (e.g., "ABC-001") and every visible
+     instance of the original SKU on the page sweeps to match. Session-only. */
+  .editable-catalog {
+    cursor: text;
+    border-bottom: 1px dashed transparent;
+    transition: border-bottom-color .15s ease;
+  }
+  .editable-catalog:hover { border-bottom-color: var(--brand-red); }
+  .editable-catalog:focus {
+    outline: 2px solid var(--brand-red);
+    outline-offset: 2px;
+    border-bottom-color: transparent;
+  }
+  @media print {
+    .editable-catalog,
+    .editable-catalog:hover,
+    .editable-catalog:focus {
+      cursor: auto;
+      border-bottom: 0 !important;
+      outline: 0 !important;
+    }
+  }
+
+  /* ============= COVER BANNER (Page 1) ============= */
+  .cover-banner {
+    background: var(--ink);
+    color: white;
+    padding: 22px 24px;
+    margin-bottom: 16px;
+    display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px;
+  }
+  .cover-banner h1 {
+    font-size: 22pt; font-weight: 700; color: white; margin-bottom: 4px;
+  }
+  .cover-banner .cover-sub {
+    font-size: 10pt; color: rgba(255,255,255,0.75); margin-bottom: 8px;
+  }
+  .cover-banner .cover-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5pt; letter-spacing: 1pt;
+    color: var(--brand-red); text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .cover-banner .cover-tagline {
+    font-size: 10pt; line-height: 1.5; color: rgba(255,255,255,0.85);
+  }
+  .cover-banner .qs-pill {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--qs-tint); color: var(--qs);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt; font-weight: 700; letter-spacing: 1pt;
+    border-radius: 2px; text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .cover-banner .mto-pill {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--mto-tint); color: var(--mto);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt; font-weight: 700; letter-spacing: 1pt;
+    border-radius: 2px; text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* Project block — top of Page 1, fillable by spec engineer */
+  .proj-block {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+    padding: 8px 0 12px; border-bottom: 1px solid var(--rule); margin-bottom: 14px;
+  }
+  .proj-cell {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .proj-label {
+    font-size: 7pt; letter-spacing: 1.2pt;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .proj-line {
+    border-bottom: 1px solid var(--ink);
+    height: 14px;
+  }
+
+  /* Quick Specs grid — 5 large stats */
+  .quickspec-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px; margin-bottom: 14px;
+  }
+  .qs-cell {
+    border: 1px solid var(--rule);
+    background: var(--tint);
+    padding: 8px 10px;
+    text-align: center;
+  }
+  .qs-label {
+    font-size: 6.5pt; letter-spacing: 1.2pt;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 3px;
+  }
+  .qs-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14pt; font-weight: 700; line-height: 1.05;
+    color: var(--ink);
+  }
+  .qs-unit {
+    font-size: 8pt; font-weight: 400; color: var(--muted);
+    margin-left: 3px;
+  }
+
+  /* Section heads */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 4px; margin: 14px 0 10px;
+  }
+  .section-head h2 {
+    font-size: 11pt; letter-spacing: 0.4pt;
+  }
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.5pt; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 1pt;
+  }
+
+  /* Tagline (above ordering breakdown) */
+  .tagline-block {
+    background: var(--hi);
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    border-left: 3px solid var(--brand-red);
+    font-size: 9pt; line-height: 1.5;
+  }
+  .tagline-block strong { font-weight: 700; }
+
+  /* Ordering Code visual breakdown */
+  .order-code {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .order-segment {
+    border: 1px solid var(--rule);
+    padding: 6px 4px 7px;
+    text-align: center;
+    background: var(--tint);
+    min-width: 0;
+  }
+  .order-segment.active {
+    background: var(--ink); color: white;
+    border-color: var(--ink);
+  }
+  .order-segment.fixed { background: var(--ink-2); color: white; border-color: var(--ink-2); }
+  .order-segment.optional { background: white; color: var(--muted); }
+  .order-seg-label {
+    font-size: 6pt; letter-spacing: 1pt;
+    text-transform: uppercase; margin-bottom: 1px;
+    opacity: 0.7;
+  }
+  .order-seg-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5pt; font-weight: 700;
+  }
+
+  /* Ordering matrix — full table */
+  .order-matrix {
+    width: 100%; border-collapse: collapse;
+    font-size: 8.5pt; margin-bottom: 10px;
+  }
+  .order-matrix th, .order-matrix td {
+    border: 1px solid var(--rule);
+    padding: 4px 7px;
+    vertical-align: top;
+    text-align: left;
+  }
+  .order-matrix th {
+    background: var(--tint);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4pt; font-size: 7.5pt;
+  }
+  .order-matrix .code {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    background: var(--tint);
+    white-space: nowrap;
+    width: 18%;
+  }
+  .order-matrix tr.active-row .code {
+    background: var(--brand-red); color: white;
+  }
+  .order-matrix tr.active-row td {
+    background: var(--hi);
+  }
+
+  /* Anatomy block — full-width image + 6 callout grid */
+  .anat-block {
+    margin-bottom: 12px;
+  }
+  .anat-figure {
+    background: var(--tint);
+    border: 1px solid var(--rule);
+    padding: 12px;
+    margin-bottom: 8px;
+    aspect-ratio: 2.2 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .anat-figure img { max-width: 100%; max-height: 100%; }
+  .anat-callouts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    font-size: 8pt;
+  }
+  .anat-cell {
+    border: 1px solid var(--rule);
+    padding: 4px 6px;
+  }
+  .anat-cell-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7pt; font-weight: 700;
+    color: var(--brand-red); margin-right: 4px;
+  }
+
+  /* Spec table — used on page 2 */
+  .spec-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 8.5pt;
+  }
+  .spec-table td {
+    border: 1px solid var(--rule);
+    padding: 4px 8px;
+    vertical-align: top;
+  }
+  .spec-table .spec-section-head td {
+    background: var(--ink); color: white;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5pt; font-size: 7.5pt;
+    padding: 5px 8px;
+  }
+  .spec-table .spec-attr {
+    background: var(--tint);
+    font-weight: 700;
+    width: 32%;
+  }
+  .spec-table .spec-val strong { font-weight: 700; }
+
+  /* Dimensions + Photometric layout */
+  .dim-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .dim-view {
+    border: 1px solid var(--rule);
+    background: var(--tint);
+    padding: 8px;
+  }
+  .dim-view-label {
+    font-size: 7pt; letter-spacing: 1pt;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .dim-view img { width: 100%; height: auto; }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .photo-polar {
+    border: 1px solid var(--rule);
+    background: #0E0E10;
+    padding: 8px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .photo-polar img { max-width: 100%; max-height: 100%; }
+  .photo-polar.fallback {
+    color: var(--muted); font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt; text-align: center;
+  }
+  .photo-summary table {
+    width: 100%; border-collapse: collapse;
+    font-size: 8.5pt;
+  }
+  .photo-summary td {
+    border-bottom: 1px solid var(--rule);
+    padding: 4px 6px;
+  }
+  .photo-summary td:first-child {
+    color: var(--muted); width: 45%;
+  }
+  .photo-summary td:last-child {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+  }
+
+  /* Certifications row */
+  .certs {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 10px; background: var(--tint);
+    border: 1px solid var(--rule);
+    margin-top: 10px;
+  }
+  .cert-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.5pt; font-weight: 700;
+    padding: 3px 7px;
+    background: white; border: 1px solid var(--rule-strong);
+    letter-spacing: 0.5pt;
+  }
+  .cert-badge.brand { background: var(--ink); color: white; border-color: var(--ink); }
+
+  /* Footer */
+  .page-foot {
+    position: absolute;
+    bottom: 0.35in; left: 0.65in; right: 0.65in;
+    border-top: 1px solid var(--rule);
+    padding-top: 5px;
+    display: flex; justify-content: space-between;
+    font-size: 7pt; color: var(--muted);
+  }
+
+  /* No-print actions bar (top of doc) */
+  .actions-bar {
+    max-width: 8.5in; margin: 0 auto 14px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px;
+    background: var(--ink); color: white;
+    font-size: 9pt;
+  }
+  .actions-bar .btn {
+    background: var(--brand-red); color: white;
+    border: 0; padding: 6px 14px;
+    font-weight: 700; cursor: pointer;
+    font-family: inherit; font-size: 9pt;
+  }
+  .actions-bar a { color: white; text-decoration: underline; opacity: 0.85; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- NO-PRINT ACTIONS BAR — at the top, hidden when printed       -->
+<!-- ============================================================ -->
+<div class="actions-bar no-print">
+  <div>
+    LPTP Symmetry · LED Post-Top Submittal Sheet · <span id="liveSku" class="mono"></span>
+  </div>
+  <div>
+    <a href="#" onclick="history.back(); return false;">← Back to Configurator</a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — COVER · QUICK SPECS · ANATOMY · ORDERING CODE       -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+  <!-- Header -->
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number <span class="no-print" style="font-family:'JetBrains Mono',monospace; font-size:7pt; color:var(--brand-red); letter-spacing:0.6pt; margin-left:6px;">✎ click to edit</span></div>
+      <div class="catalog-number editable-catalog" id="catNum" contenteditable="true" spellcheck="false">LPTP130-3CS/27VS1/DB/FD</div>
+    </div>
+  </div>
+
+  <!-- Cover banner -->
+  <div class="cover-banner">
+    <div>
+      <div class="cover-tag">city<span class="aa"></span>RCH · PRO POST-TOP · LPTP Symmetry-I</div>
+      <h1>Symmetry</h1>
+      <div class="cover-sub">LED Post-Top Luminaire · 4-WATTselect &middot; 3-CCTselect &middot; V-Yoke Spider Mount</div>
+      <div class="cover-tagline" id="taglineLumens">
+        Spec-grade architectural post-top for streetscapes, parks, plazas, and pedestrian malls.
+        <strong id="taglineWatts">130W max</strong> at
+        <strong id="taglineLums">19,500 lm</strong> &middot;
+        <strong id="taglineCct">3-CCTselect (3000K / 4000K / 5000K dip-switch)</strong>.
+        BeamLogic&trade; directional optic OR Frosted symmetric optic. 5-year / 50,000-hour warranty.
+      </div>
+    </div>
+    <div style="text-align: right;">
+      <div class="cover-tag" style="color:white; opacity:0.6;">Stock Status</div>
+      <div id="stockPill" class="qs-pill">QuickShip · 3-5 day</div>
+      <div style="font-size: 8pt; color: rgba(255,255,255,0.65); margin-top: 6px; line-height: 1.4;">
+        4 of 25 main-matrix SKUs are QS.<br/>All QS combos are LPTP130 + 120-277V.
+      </div>
+    </div>
+  </div>
+
+  <!-- Project block -->
+  <div class="proj-block">
+    <div class="proj-cell">
+      <div class="proj-label">Project Name</div>
+      <div class="proj-line"></div>
+    </div>
+    <div class="proj-cell">
+      <div class="proj-label">Project Number</div>
+      <div class="proj-line"></div>
+    </div>
+    <div class="proj-cell">
+      <div class="proj-label">Fixture Schedule</div>
+      <div class="proj-line"></div>
+    </div>
+    <div class="proj-cell">
+      <div class="proj-label">Issue Date</div>
+      <div class="proj-line" id="liveDate"></div>
+    </div>
+  </div>
+
+  <!-- Quick Specs -->
+  <div class="quickspec-grid">
+    <div class="qs-cell">
+      <div class="qs-label">Peak Lumens</div>
+      <div class="qs-value" id="qsLumens">19,500<span class="qs-unit">lm</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">Wattage (max)</div>
+      <div class="qs-value" id="qsWatts">130<span class="qs-unit">W</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">Efficacy</div>
+      <div class="qs-value" id="qsEfficacy">173<span class="qs-unit">lm/W</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">Voltage</div>
+      <div class="qs-value" id="qsVoltage">120-277<span class="qs-unit">V</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">CCT</div>
+      <div class="qs-value" id="qsCct">3CS<span class="qs-unit">dip</span></div>
+    </div>
+  </div>
+
+  <!-- Tagline / hero claim -->
+  <div class="tagline-block">
+    <strong>One post-top family. Three housing classes. Two optic platforms. 25 main-matrix SKUs.</strong>
+    Symmetry replaces a stock-room of single-spec post-tops with one configurable spec line &mdash; 90 / 130 / 160W
+    housings, 120-277V or 277-480V drivers, Black or Dark Bronze (White on the lone 130/27V/Frosted variant),
+    and either the <strong>BeamLogic&trade;</strong> directional optic or the <strong>Frosted Optics</strong>
+    symmetric optic. Field-tunable CCT via 3-CCTselect dip-switch (3000K / 4000K / 5000K) on every SKU.
+    <strong style="color:#2C7A4A;">4 SKUs are QuickShip (all LPTP130 + 120-277V combinations);
+    the other 21 main-matrix SKUs are MTO with ~4-6 wk lead.</strong>
+  </div>
+
+  <!-- Ordering Code visual breakdown -->
+  <div class="section-head">
+    <h2>Ordering Code</h2>
+    <div class="section-eyebrow">4 segments · Family·Housing · CCT-bundle · Voltage·Series · Finish · Optic</div>
+  </div>
+
+  <div class="order-code" style="grid-template-columns: repeat(5, 1fr);">
+    <div class="order-segment active"><div class="order-seg-label">Family · Housing</div><div class="order-seg-value" id="ocHousing">LPTP130</div></div>
+    <div class="order-segment fixed"><div class="order-seg-label">CCT Bundle</div><div class="order-seg-value">3CS</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Voltage · Series</div><div class="order-seg-value" id="ocVoltage">27VS1</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Finish</div><div class="order-seg-value" id="ocFinish">DB</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Optic</div><div class="order-seg-value" id="ocOptic">FD</div></div>
+  </div>
+
+  <table class="order-matrix">
+    <thead>
+      <tr>
+        <th>Segment</th>
+        <th>Available Codes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="rowHousing"><td class="code">LPTP090 / LPTP130 / LPTP160</td><td>Housing class &mdash; <strong>LPTP090</strong> (36-90W &middot; 11,500 lm peak) &middot; <strong>LPTP130</strong> (52-130W &middot; 19,500 lm peak &middot; volume center, only QS housing) &middot; <strong>LPTP160</strong> (64-160W &middot; 25,500 lm peak)</td></tr>
+      <tr><td class="code">3CS</td><td>3-CCTselect bundle &mdash; every unit ships field-tunable: 3000K &middot; 4000K &middot; 5000K (dip-switch)</td></tr>
+      <tr id="rowVoltage"><td class="code">27VS1 / 48VS1</td><td>Voltage &middot; Series &mdash; <strong>27VS1</strong> 120-277Vac (only QS voltage) &middot; <strong>48VS1</strong> 277-480Vac high-voltage variant</td></tr>
+      <tr id="rowFinish"><td class="code">B / DB / W</td><td>Finish &mdash; <strong>B</strong> Black &middot; <strong>DB</strong> Dark Bronze (★ volume) &middot; <strong>W</strong> White (LPTP130 + 27V + Frosted only &mdash; the lone W-finish SKU)</td></tr>
+      <tr id="rowOptic"><td class="code">BL / FD</td><td>Optic &mdash; <strong>BL</strong> BeamLogic&trade; directional throw + visual-comfort tilt &middot; <strong>FD</strong> Frosted Optics symmetric darkⒶRCH-style distribution</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Authoritative 25-SKU matrix (4 QS · 21 MTO) -->
+  <table class="order-matrix" style="margin-top: 6px;">
+    <thead>
+      <tr>
+        <th>Catalog Number</th>
+        <th>Specifications · Stock (James 2026-05-19)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="skuRow_QS"><td class="code" colspan="2" style="background:#E0F2E5; color:#2C7A4A; text-align: center; padding: 6px;"><strong>★ QuickShip · ships 3-5 day · 4 SKUs (all LPTP130 + 120-277V)</strong></td></tr>
+      <tr id="skuRow_130_27V_B_FD"><td class="code">LPTP130-3CS/27VS1/B/FD</td><td>130W &middot; 120-277V &middot; Black &middot; Frosted Optics &middot; <strong style="color:#2C7A4A;">QS</strong></td></tr>
+      <tr id="skuRow_130_27V_DB_BL"><td class="code">LPTP130-3CS/27VS1/DB/BL</td><td>130W &middot; 120-277V &middot; Dark Bronze &middot; BeamLogic&trade; &middot; <strong style="color:#2C7A4A;">QS</strong></td></tr>
+      <tr id="skuRow_130_27V_DB_FD"><td class="code">LPTP130-3CS/27VS1/DB/FD</td><td>130W &middot; 120-277V &middot; Dark Bronze &middot; Frosted Optics &middot; <strong style="color:#2C7A4A;">★ QS</strong> &middot; default ship config</td></tr>
+      <tr id="skuRow_130_27V_W_FD"><td class="code">LPTP130-3CS/27VS1/W/FD</td><td>130W &middot; 120-277V &middot; White &middot; Frosted Optics &middot; <strong style="color:#2C7A4A;">QS</strong> &middot; the lone White-finish SKU</td></tr>
+      <tr><td class="code" colspan="2" style="background:#FFF2DA; color:#B36A00; text-align: center; padding: 6px;"><strong>MTO · ~4-6 wk lead · 21 SKUs (all housing × voltage × finish × optic combos not listed above)</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LPTP Symmetry-I submittal · Specifications subject to change</div>
+    <div>Rev. <span id="revDate">2026-05</span> · Page 1 of 2</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — SPECS · DIMENSIONS · PHOTOMETRICS · CERTIFICATIONS -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum2">LPTP130-3CS/27VS1/DB/FD</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Detailed Specifications</h2>
+    <div class="section-eyebrow">LPTP Symmetry-I · LED Post-Top · cityⒶRCH PRO Outdoor</div>
+  </div>
+
+  <table class="spec-table">
+    <tbody>
+      <tr class="spec-section-head"><td colspan="2">Optical &amp; Performance</td></tr>
+      <tr><td class="spec-attr" id="specOpticLabel">Optic Platform (selected)</td><td class="spec-val" id="specOpticRow">Frosted Optics &middot; symmetric darkⒶRCH-style distribution &middot; soft visual-comfort character</td></tr>
+      <tr><td class="spec-attr">CCT Bundle (3CS)</td><td class="spec-val">3000K · 4000K · 5000K field-selectable via dip-switch (universal across every active SKU)</td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val">CRI &ge; 80 across all variants</td></tr>
+      <tr><td class="spec-attr" id="specHousingLabel">Housing Class · LPTP130</td><td class="spec-val" id="specHousingRow">52-130W (4-WATTselect dip) &middot; 19,500 lm peak @ 173 lm/W</td></tr>
+      <tr><td class="spec-attr">Peak Intensity</td><td class="spec-val" id="specPeak">19,500 lm / 130W &middot; tested per IESNA LM-79</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Electrical</td></tr>
+      <tr><td class="spec-attr">Input Voltage (selected)</td><td class="spec-val" id="specVoltage">120-277VAC universal &middot; 50/60Hz</td></tr>
+      <tr><td class="spec-attr">Driver</td><td class="spec-val">Constant-current LED driver &middot; PF &gt; 0.90 at full load &middot; THD &lt; 20% &middot; integrated WATTSELECT + CCTselect dip-switches</td></tr>
+      <tr><td class="spec-attr">Surge Protection (base)</td><td class="spec-val">6kV dual-mode (L/N-PE and L-N) per IEEE C62.41 &middot; standard &middot; 10kV / 20kV options via constⒶNT add-on (separate line item)</td></tr>
+      <tr><td class="spec-attr">Controls (optional)</td><td class="spec-val">Bi-Level &middot; Bi-Level + 5-Dial &middot; ⒶCS Mesh + Cloud &middot; SILVAIR Mesh &mdash; all separate line items via contrⒶLS adders</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Construction &amp; Mounting</td></tr>
+      <tr><td class="spec-attr">Housing</td><td class="spec-val">Die-cast aluminum &middot; powder-coat outdoor finish &middot; V-yoke spider mount &middot; round-top form factor</td></tr>
+      <tr><td class="spec-attr">Finish (selected)</td><td class="spec-val" id="specFinish">Dark Bronze · powder-coat outdoor</td></tr>
+      <tr><td class="spec-attr">Standard Mount</td><td class="spec-val">Pole-top (spider yoke) &middot; alternate mounts (Conduit Pendant / Gooseneck / Surface / Wall) available as MTO</td></tr>
+      <tr><td class="spec-attr">Tenon Adapters</td><td class="spec-val">4&Prime; or 5&Prime; Round / Square tenon-adapter accessories (separate line item)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
+      <tr><td class="spec-attr">Listings</td><td class="spec-val">cULus Listed &middot; DLC Listed &middot; FCC Title 47 Part 15B &middot; RoHS &middot; Wet Location</td></tr>
+      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">&minus;40&deg;F to +113&deg;F (&minus;40&deg;C to +45&deg;C)</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val">5-year limited &middot; 50,000-hour rated lifetime</td></tr>
+      <tr><td class="spec-attr">Stock Status</td><td class="spec-val" id="specStock"><strong style="color:#2C7A4A;">★ QuickShip</strong> &middot; ships 3-5 day. (4 of 25 main-matrix SKUs are QS &mdash; all on LPTP130 + 120-277V. Other 21 main-matrix SKUs are MTO with ~4-6 wk lead.)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Dimensions + Photometric — side-by-side -->
+  <div class="section-head" style="margin-top: 14px;">
+    <h2>Dimensions &amp; Photometric Data</h2>
+    <div class="section-eyebrow">Type V semi-circle polar · IES candela source</div>
+  </div>
+
+  <div class="dim-grid">
+    <div>
+      <div class="dim-view">
+        <div class="dim-view-label">Post-Top · Side Profile · V-Yoke Spider Mount</div>
+        <img src="assets/symmetry/Symmetry-Dimensions_outlines.svg"
+             alt="LPTP Symmetry-I dimensions — round-top housing on V-yoke spider mount · driver compartment below LED plane · pole-top engagement"
+             id="dimImg"
+             style="max-height: 220px;"
+             onerror="this.style.display='none';" />
+      </div>
+    </div>
+
+    <div>
+      <div class="dim-view">
+        <div class="dim-view-label">Housing-Class Comparison</div>
+        <table class="photo-summary" style="font-size: 8pt;">
+          <tbody>
+            <tr><td>LPTP090</td><td>36-90W &middot; 11,500 lm &middot; 161 lm/W (FD) / 189 (BL)</td></tr>
+            <tr><td>LPTP130</td><td>52-130W &middot; 19,500 lm &middot; 173 lm/W (FD) / 183 (BL)</td></tr>
+            <tr><td>LPTP160</td><td>64-160W &middot; 25,500 lm &middot; 173 lm/W (FD) / 180 (BL)</td></tr>
+            <tr><td>Mount</td><td>V-yoke spider · pole-top standard</td></tr>
+            <tr><td>CCT (all)</td><td>3CS dip-switch · 3000K / 4000K / 5000K</td></tr>
+            <tr><td>CRI (all)</td><td>&ge; 80</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <table class="photo-summary" style="margin-top: 8px;">
+    <tbody>
+      <tr><td>Peak Intensity (selected)</td><td id="photoPeak">19,500 lm @ 130W (LPTP130 · Frosted Optics)</td></tr>
+      <tr><td>Peak Efficacy</td><td id="photoEff">173 lm/W (LPTP130 + Frosted Optics @ 4000K)</td></tr>
+      <tr><td>Distribution</td><td id="photoDist">Frosted Optics · symmetric · darkⒶRCH-style visual-comfort character</td></tr>
+      <tr><td>Test Standard</td><td>IESNA LM-79 (per-cell)</td></tr>
+      <tr><td>IES Bundle</td><td>Available on WorkDrive · external/1a55938bcd670ee02b6a9c47a64670125d4d64b803727ba0b1ad8c10328e1b5c</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Alternate-platform footer (4-WATTselect + 5W130-5CS) -->
+  <div class="tagline-block" style="margin-top: 10px; font-size: 8.5pt;">
+    <strong>Alternate Symmetry platforms (not represented in the matrix above &mdash; specify separately):</strong>
+    <span class="mono">LPTP4W-S3-UB</span> (4-WATTselect lamp &middot; Black) &middot;
+    <span class="mono">LPTP4W-S3-UD</span> (4-WATTselect lamp &middot; Dark Bronze) &middot;
+    <span class="mono">LPTP4W-S3-UW</span> (4-WATTselect lamp &middot; White) &middot;
+    <span class="mono">LPTP5W130-5CS-48VS2/3BL/DB</span> (5-WATTselect + 5-CCT special build &middot; 130W &middot; 277-480V &middot; BeamLogic T3 &middot; Dark Bronze).
+  </div>
+
+  <!-- Certifications row -->
+  <div class="certs" id="certsRow">
+    <span class="cert-badge">cULus Listed</span>
+    <span class="cert-badge brand">DLC LISTED</span>
+    <span class="cert-badge">FCC 47 / 15B</span>
+    <span class="cert-badge">RoHS</span>
+    <span class="cert-badge">Wet Location</span>
+    <span class="cert-badge brand">5-yr / 50k-hr</span>
+    <span class="cert-badge">CRI &ge; 80</span>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LPTP Symmetry-I submittal · Specifications subject to change</div>
+    <div>Rev. <span class="mono">2026-05</span> · Page 2 of 2</div>
+  </div>
+</div>
+
+
+<script>
+/* =============================================================================
+   SUBMITTAL AUTO-FILL · LPTP Symmetry-I LED Post-Top
+   ----------------------------------------------------------------------------
+   Reads URL query params from the Section 9 configurator and stamps the live
+   catalog number, ordering breakdown, quick specs, and stock pill across
+   both pages.
+
+   Parameters:
+     sku     — full canonical SKU (auto-built upstream)
+     housing — 090 | 130 | 160
+     voltage — 27V (120-277V) | 48V (277-480V)
+     finish  — B (Black) | DB (Dark Bronze) | W (White, 130/27V/FD only)
+     optic   — BL (BeamLogic™) | FD (Frosted Optics)
+
+   AUTHORITATIVE 25-SKU MAIN-MATRIX (James 2026-05-19, 4 QS · 21 MTO):
+     QS (all LPTP130 + 120-277V):
+       LPTP130-3CS/27VS1/B/FD    · Black · Frosted
+       LPTP130-3CS/27VS1/DB/BL   · Dark Bronze · BeamLogic
+       LPTP130-3CS/27VS1/DB/FD   · Dark Bronze · Frosted   ★ default
+       LPTP130-3CS/27VS1/W/FD    · White · Frosted (only W variant)
+     MTO: 21 other housing × voltage × finish × optic combinations.
+   ============================================================================= */
+(function() {
+
+  // ---- Authoritative QS combos — James 2026-05-19 ----
+  var QS_COMBOS = new Set([
+    'LPTP130-3CS/27VS1/B/FD',
+    'LPTP130-3CS/27VS1/DB/BL',
+    'LPTP130-3CS/27VS1/DB/FD',
+    'LPTP130-3CS/27VS1/W/FD'
+  ]);
+
+  // ---- Housing-class specs (knowledge pack §5 · 4000K peak operating point) ----
+  var HOUSING_DATA = {
+    '090': { label: 'LPTP090', minW: 36, maxW: 90,  fdLm: 11500, blLm: 14800, fdLpw: 161, blLpw: 189 },
+    '130': { label: 'LPTP130', minW: 52, maxW: 130, fdLm: 19500, blLm: 20000, fdLpw: 173, blLpw: 183 },
+    '160': { label: 'LPTP160', minW: 64, maxW: 160, fdLm: 19500, blLm: 25500, fdLpw: 173, blLpw: 180 }
+  };
+
+  // ---- Voltage labels ----
+  var VOLT_DATA = {
+    '27V': { code: '27VS1', label: '120-277VAC universal' },
+    '48V': { code: '48VS1', label: '277-480VAC high voltage' }
+  };
+
+  // ---- Finish labels ----
+  var FIN_DATA = {
+    'B':  'Black · powder-coat outdoor',
+    'DB': 'Dark Bronze · powder-coat outdoor',
+    'W':  'White · powder-coat outdoor'
+  };
+
+  // ---- Optic labels ----
+  var OPTIC_DATA = {
+    'BL': { label: 'BeamLogic™', desc: 'directional throw + visual-comfort tilt' },
+    'FD': { label: 'Frosted Optics', desc: 'symmetric · darkⒶRCH-style visual-comfort character' }
+  };
+
+  // ---- Parse URL params ----
+  var params  = new URLSearchParams(window.location.search);
+  var sku     = params.get('sku')     || 'LPTP130-3CS/27VS1/DB/FD';
+  var housing = params.get('housing') || '130';
+  var voltage = params.get('voltage') || '27V';
+  var finish  = params.get('finish')  || 'DB';
+  var optic   = params.get('optic')   || 'FD';
+
+  // If housing/voltage/finish/optic not in URL but sku is, parse from sku
+  // Pattern: LPTP{housing}-3CS/{voltage}S1/{finish}/{optic}
+  if (sku) {
+    var m = sku.match(/^LPTP(\d{3})-3CS\/(\d{2}V)S1\/(B|DB|W)\/(BL|FD)$/);
+    if (m) {
+      housing = m[1] || housing;
+      voltage = m[2] || voltage;
+      finish  = m[3] || finish;
+      optic   = m[4] || optic;
+    }
+  }
+
+  // ---- Compute derived values ----
+  var hData = HOUSING_DATA[housing] || HOUSING_DATA['130'];
+  var vData = VOLT_DATA[voltage]    || VOLT_DATA['27V'];
+  var finLabel = FIN_DATA[finish]   || FIN_DATA['DB'];
+  var oData = OPTIC_DATA[optic]     || OPTIC_DATA['FD'];
+
+  // Peak output depends on housing × optic
+  var peakLm  = (optic === 'BL') ? hData.blLm  : hData.fdLm;
+  var peakLpw = (optic === 'BL') ? hData.blLpw : hData.fdLpw;
+
+  var isQS = QS_COMBOS.has(sku);
+
+  // ---- Stamp all the catalog-number slots ----
+  document.querySelectorAll('#catNum, #catNum2, #liveSku').forEach(function(el) {
+    el.textContent = sku;
+  });
+
+  // ---- Stock pill ----
+  var pill = document.getElementById('stockPill');
+  if (isQS) {
+    pill.className = 'qs-pill';
+    pill.textContent = 'QuickShip · 3-5 day · in stock';
+  } else {
+    pill.className = 'mto-pill';
+    pill.textContent = 'Made-to-Order · ~4-6 wk lead';
+  }
+
+  // ---- Cover banner taglines ----
+  document.getElementById('taglineWatts').textContent =
+    hData.maxW + 'W max · ' + hData.label;
+  document.getElementById('taglineLums').textContent =
+    peakLm.toLocaleString() + ' lm peak · ' + peakLpw + ' lm/W';
+  document.getElementById('taglineCct').textContent = '3-CCTselect (3000K / 4000K / 5000K dip-switch)';
+
+  // ---- Quick Specs ----
+  document.getElementById('qsLumens').innerHTML   = peakLm.toLocaleString() + '<span class="qs-unit">lm</span>';
+  document.getElementById('qsWatts').innerHTML    = hData.maxW + '<span class="qs-unit">W</span>';
+  document.getElementById('qsEfficacy').innerHTML = peakLpw + '<span class="qs-unit">lm/W</span>';
+  document.getElementById('qsVoltage').innerHTML  = (voltage === '27V' ? '120-277' : '277-480') + '<span class="qs-unit">V</span>';
+  document.getElementById('qsCct').innerHTML      = '3CS<span class="qs-unit">dip</span>';
+
+  // ---- Ordering Code segments ----
+  document.getElementById('ocHousing').textContent = 'LPTP' + housing;
+  document.getElementById('ocVoltage').textContent = vData.code;
+  document.getElementById('ocFinish').textContent  = finish;
+  document.getElementById('ocOptic').textContent   = optic;
+
+  // ---- Highlight active rows in the ordering matrix ----
+  document.querySelectorAll('#rowHousing, #rowVoltage, #rowFinish, #rowOptic').forEach(function(tr) {
+    tr.classList.add('active-row');
+  });
+  // Highlight the matching QS-SKU row if applicable
+  var qsRowKey = 'skuRow_' + housing + '_' + voltage + '_' + finish + '_' + optic;
+  var qsRow = document.getElementById(qsRowKey);
+  if (qsRow) qsRow.classList.add('active-row');
+
+  // ---- Page 2 — Detailed Specs ----
+  document.getElementById('specOpticLabel').textContent = 'Optic Platform (selected · ' + optic + ')';
+  document.getElementById('specOpticRow').textContent =
+    oData.label + ' · ' + oData.desc;
+  document.getElementById('specHousingLabel').textContent = 'Housing Class · ' + hData.label;
+  document.getElementById('specHousingRow').textContent =
+    hData.minW + '-' + hData.maxW + 'W (4-WATTselect dip) · ' +
+    peakLm.toLocaleString() + ' lm peak @ ' + peakLpw + ' lm/W';
+  document.getElementById('specPeak').textContent =
+    peakLm.toLocaleString() + ' lm @ ' + hData.maxW + 'W (' + hData.label + ' + ' + oData.label + ') · LM-79 tested';
+  document.getElementById('specVoltage').textContent = vData.label + ' · 50/60Hz';
+  document.getElementById('specFinish').textContent = finLabel;
+  document.getElementById('specStock').innerHTML = isQS
+    ? '<strong style="color:#2C7A4A;">★ QuickShip</strong> · ships 3-5 day. 4 of 25 main-matrix SKUs are QS (all LPTP130 + 120-277V). Other 21 main-matrix SKUs are MTO with ~4-6 wk lead.'
+    : '<strong style="color:#B36A00;">Made-to-Order · ~4-6 wk lead.</strong> (The 4 QS Symmetry SKUs as of 2026-05-19: LPTP130-3CS/27VS1/{B/FD, DB/BL, DB/FD, W/FD}.)';
+
+  // ---- Photometric summary ----
+  document.getElementById('photoPeak').textContent =
+    peakLm.toLocaleString() + ' lm @ ' + hData.maxW + 'W (' + hData.label + ' · ' + oData.label + ')';
+  document.getElementById('photoEff').textContent =
+    peakLpw + ' lm/W (' + hData.label + ' + ' + oData.label + ' @ 4000K)';
+  document.getElementById('photoDist').textContent = oData.label + ' · ' + oData.desc;
+
+  // ---- Issue date ----
+  var d = new Date();
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('liveDate').textContent =
+    months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  document.getElementById('revDate').textContent =
+    d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+
+  // ============================================================================
+  // CFG-SUB-1 · Editable Catalog Number with full-page text sweep · session-only
+  // ----------------------------------------------------------------------------
+  // James 2026-05-18 playbook rule. User types a project-specific label into the
+  // top-right Catalog Number box (e.g., "ABC-001") and every visible instance of
+  // the ORIGINAL SKU on the page swaps to match in real time.
+  //
+  // IMPORTANT — snapshot-then-rederive pattern (V2 fix 2026-05-18 PM)
+  // ----------------------------------------------------------------------------
+  // V1 of this code tracked a `currentDisplay` and swept `currentDisplay → newVal`
+  // on every keystroke. That was catastrophic: after one keystroke turned the SKU
+  // into "A", the next keystroke swept "A → AB" across the WHOLE page, replacing
+  // every literal "A" in "ARCHIPELAGO", "BOLLARD", "AVAILABLE", "Anchor", etc.
+  //
+  // V2 fixes it by SNAPSHOTTING the original text of every node that contains
+  // `originalSku` at load time, then on each input event re-deriving each node's
+  // text from its cached original via originalText.split(originalSku).join(override).
+  // The sweep is idempotent and only ever matches the full original SKU string —
+  // partial intermediate states (single chars, prefixes) can never propagate.
+  //
+  // Edits don't touch <a href>, data-*, scripts, styles, or the `sku` JS variable.
+  // ============================================================================
+  (function setupEditableCatalogNumber() {
+    var originalSku = sku;
+    var editor = document.getElementById('catNum');
+    if (!editor) return;
+
+    // Seed document.title with the SKU so Save-as-PDF picks up a useful filename
+    // AND so the title sweep below has originalSku to find on user override.
+    if (document.title.indexOf(originalSku) === -1) {
+      document.title = originalSku + ' · ' + document.title;
+    }
+    var originalTitle = document.title;
+
+    // ── SNAPSHOT — record original text of every node that contains originalSku ──
+    // Skips <script>, <style>, and the editor itself. Captured once, at load.
+    var matchedNodes = []; // [{node, originalText}, ...]
+    (function snapshot() {
+      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(n) {
+          var p = n.parentNode;
+          while (p) {
+            if (p === editor) return NodeFilter.FILTER_REJECT;
+            if (p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT;
+            p = p.parentNode;
+          }
+          return n.nodeValue.indexOf(originalSku) !== -1
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        }
+      });
+      while (walker.nextNode()) {
+        matchedNodes.push({ node: walker.currentNode, originalText: walker.currentNode.nodeValue });
+      }
+    })();
+
+    // ── APPLY — re-derive every matched node from its cached original ──
+    // Idempotent. Calling applyOverride('X') then applyOverride('YZ') is exactly
+    // the same as starting fresh and calling applyOverride('YZ') directly.
+    function applyOverride(newDisplay) {
+      var override = newDisplay || originalSku;
+      matchedNodes.forEach(function(item) {
+        item.node.nodeValue = item.originalText.split(originalSku).join(override);
+      });
+      document.title = originalTitle.split(originalSku).join(override);
+    }
+
+    editor.addEventListener('input', function() {
+      // Strip newlines, cap at 40 chars. Don't re-write editor.textContent — caret would jump.
+      var raw = (editor.textContent || '').replace(/[\r\n]+/g, ' ').slice(0, 40);
+      var nextDisplay = raw.trim() ? raw : originalSku;
+      applyOverride(nextDisplay);
+    });
+
+    editor.addEventListener('blur', function() {
+      // Empty field on blur → restore original everywhere
+      var v = editor.textContent.trim();
+      if (!v) {
+        editor.textContent = originalSku;
+        applyOverride(originalSku);
+      }
+    });
+
+    // Keep field single-line — Enter commits + blurs
+    editor.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        editor.blur();
+      }
+    });
+  })();
+})();
+</script>
+
+</body>
+</html>
