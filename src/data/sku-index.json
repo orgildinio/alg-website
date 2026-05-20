@@ -7154,9 +7154,7 @@
             100,
             130
           ],
-          "ccts": [
-            "3000K \u2192 5000K"
-          ],
+          "ccts": [],
           "voltage": "120 - 277V",
           "mount_types": [],
           "dlc": "Premium",
@@ -7176,9 +7174,7 @@
           ],
           "ccts": [
             "3000K",
-            "3500K",
             "4000K",
-            "4500K",
             "5000K"
           ],
           "voltage": "277 - 480V",
@@ -7517,8 +7513,7 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/lbol-sentry-bollard/",
-          "card_image": "/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp"
+          "pdpUrl": "/products/lbol-sentry-bollard/"
         },
         {
           "family": "OmniMax",
@@ -7536,8 +7531,7 @@
           ],
           "mount_types": [],
           "taa": true,
-          "pdpUrl": "/products/lhmf-omnimax-high-mast/",
-          "card_image": "/products/lhmf-omnimax-high-mast/assets/omnimax/hero/omnimax-hero-1.webp"
+          "pdpUrl": "/products/lhmf-omnimax-high-mast/"
         },
         {
           "family": "Unity",
@@ -7556,8 +7550,7 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/lptp-unity-post-top/",
-          "card_image": "/products/lptp-unity-post-top/assets/unity/unity-hero-1.webp"
+          "pdpUrl": "/products/lptp-unity-post-top/"
         },
         {
           "family": "Symmetry",
@@ -7568,10 +7561,7 @@
           "dlc": true,
           "ccts": [
             "3000K",
-            "3000K \u2192 5000K",
-            "3500K",
             "4000K",
-            "4500K",
             "5000K"
           ],
           "voltages": [
@@ -7580,14 +7570,13 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/lptp-symmetry-post-top/",
-          "card_image": "/products/lptp-symmetry-post-top/assets/symmetry/hero/symmetry-1-front-round.png"
+          "pdpUrl": "/products/lptp-symmetry-post-top/"
         },
         {
           "family": "Abbey",
           "sub_category": "Roadway",
           "display_echelon": "PRO",
-          "max_wattage": 150,
+          "max_wattage": 300,
           "sku_count": 11,
           "dlc": true,
           "ccts": [
@@ -7601,8 +7590,7 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/lrdw-abbey-roadway/",
-          "card_image": "/products/lrdw-abbey-roadway/assets/abbey/hero/abbey-1-silver-front.png"
+          "pdpUrl": "/products/lrdw-abbey-roadway/"
         },
         {
           "family": "LPAR Series",
@@ -7620,14 +7608,13 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/lpar-traffic-par38/",
-          "card_image": "/products/lpar-traffic-par38/assets/lpar/lpar-hero-1.png"
+          "pdpUrl": "/products/lpar-traffic-par38/"
         },
         {
           "family": "LY-T10",
           "sub_category": "Street Sign Lamp",
           "display_echelon": "ECO",
-          "max_wattage": 10,
+          "max_wattage": 44,
           "sku_count": 4,
           "dlc": true,
           "taa": false,
@@ -7639,8 +7626,7 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "pdpUrl": "/products/ly-t10-slimline-sign-lamp/",
-          "card_image": "/products/ly-t10-slimline-sign-lamp/assets/lyt10/lyt10-hero-1.png"
+          "pdpUrl": "/products/ly-t10-slimline-sign-lamp/"
         }
       ]
     },

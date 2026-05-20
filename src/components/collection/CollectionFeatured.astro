@@ -17,6 +17,8 @@ export interface Props {
     skuCount: number;
     dlc: boolean;
     lineDrawing: string | null;
+    cardImage?: string | null;    // Hero photo fallback when lineDrawing is null
+    cardImageAlt?: string | null; // Alt text for cardImage
     pdpUrl?: string; // Optional override — when set, VIEW → links to the PDP instead of the sub-collection
   }[];
 }
@@ -26,7 +28,7 @@ const { collectionName, collectionSlug, featured, featuredHeadline } = Astro.pro
   <div class="collection-content">
     <div class="feat-eyebrow">Featured Families</div>
     <div class="feat-header">
-      <h2 class="feat-headline">{featuredHeadline ?? `Five flagship families from the ${collectionName} collection.`}</h2>
+      <h2 class="feat-headline">{featuredHeadline ?? `Four flagship families from the ${collectionName} collection.`}</h2>
     </div>
     <div class="feat-grid">
       {featured.map(f => (
@@ -42,7 +44,9 @@ const { collectionName, collectionSlug, featured, featuredHeadline } = Astro.pro
           <div class="feat-img">
             {f.lineDrawing
               ? <img src={f.lineDrawing} alt={`${f.family} line drawing`} loading="lazy" />
-              : <span class="feat-watermark">{f.family}</span>
+              : f.cardImage
+                ? <img src={f.cardImage} alt={f.cardImageAlt ?? f.family} class="feat-product-img" loading="lazy" />
+                : <span class="feat-watermark">{f.family}</span>
             }
           </div>
           <!-- Bottom strip -->
@@ -103,7 +107,7 @@ const { collectionName, collectionSlug, featured, featuredHeadline } = Astro.pro
   /* C3: 5-col grid, square-aspect cards */
   .feat-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
   }
   .feat-card {
@@ -226,6 +230,6 @@ const { collectionName, collectionSlug, featured, featuredHeadline } = Astro.pro
     display: inline-block;
   }
   .feat-view:hover { text-decoration: underline; }
-  @media (max-width: 1199px) { .feat-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 1199px) { .feat-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 767px)  { .feat-grid { grid-template-columns: repeat(2, 1fr); } }
 </style>
