@@ -6577,32 +6577,23 @@ body.cityarch-pdp .acc-card-copy {
 })();
 </script>
 <script id="cfg-type-1-override">
-/* CFG-TYPE-1-OVERRIDE: force Lato on h1/h2 — must win over hydrator-injected cityarch.css */
+/* CFG-TYPE-1-OVERRIDE: force Lato on h1/h2 via inline element.style
+   Inline style wins over all stylesheet rules regardless of cascade order.
+   Runs at DOMContentLoaded + t=2s + t=6s to catch hydrator-added elements. */
 (function() {
-  var CSS = 'body.cityarch-pdp h1,body.cityarch-pdp h2{font-family:Lato,sans-serif!important}';
-  function injectOverride() {
-    var existing = document.getElementById('cfg-type-1-override-style');
-    if (existing) existing.parentNode.removeChild(existing);
-    var s = document.createElement('style');
-    s.id = 'cfg-type-1-override-style';
-    s.textContent = CSS;
-    document.head.appendChild(s);
-  }
-  // Inject immediately
-  injectOverride();
-  // Re-inject after any new <link> or <style> is appended to <head> (hydrator CSS)
-  var obs = new MutationObserver(function(mutations) {
-    var needsReinjection = false;
-    mutations.forEach(function(m) {
-      m.addedNodes.forEach(function(n) {
-        if (n.tagName === 'LINK' || n.tagName === 'STYLE') needsReinjection = true;
-      });
+  function applyLatoFont() {
+    if (!document.body || !document.body.classList.contains('cityarch-pdp')) return;
+    document.querySelectorAll('h1, h2').forEach(function(el) {
+      el.style.setProperty('font-family', 'Lato, sans-serif', 'important');
     });
-    if (needsReinjection) injectOverride();
-  });
-  obs.observe(document.head, { childList: true });
-  // Disconnect after 5 seconds (hydration should be complete by then)
-  setTimeout(function() { obs.disconnect(); injectOverride(); }, 5000);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyLatoFont);
+  } else {
+    applyLatoFont();
+  }
+  setTimeout(applyLatoFont, 2000);
+  setTimeout(applyLatoFont, 6000);
 })();
 </script>
 </body>
