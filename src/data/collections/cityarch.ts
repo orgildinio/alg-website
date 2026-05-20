@@ -15,17 +15,17 @@ const cityarchData = {
   name: 'cityⒶRCH',
   titleAscii: 'CITYARCH',
   headlineLine: 'city<span class="aa">Ⓐ</span>RCH',
-  description: 'Street and roadway luminaires for municipal and utility applications. 11 active families, 77 active SKUs.',
+  description: 'Street and roadway luminaires for municipal and utility applications. 7 active families, 81 active SKUs.',
   pillRow: ['DLC PREMIUM', 'TAA AVAILABLE', '5 US WAREHOUSES', '3-DAY DELIVERY', '6 APPLICATIONS'],
   statStrip: [
-    { value: '11',  label: 'Fixture Families' },
-    { value: '77',  label: 'Active SKUs'       },
+    { value: '7',   label: 'Fixture Families' },
+    { value: '81',  label: 'Active SKUs'       },
     { value: '6',   label: 'Applications'      },
     { value: 'DLC', label: 'Premium Listed'    },
   ],
   redBanner: [
-    { value: '11',  label: 'Families'     },
-    { value: '77',  label: 'Active SKUs'  },
+    { value: '7',   label: 'Families'     },
+    { value: '81',  label: 'Active SKUs'  },
     { value: '6',   label: 'Applications' },
     { value: 'DLC', label: 'Premium'      },
     { value: 'TAA', label: 'Available'    },
@@ -35,7 +35,7 @@ const cityarchData = {
     {
       name: 'Bollard',
       slug: 'bollard',
-      skuCount: 4,
+      skuCount: 22,
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="8" rx="1"/><path d="M7 10h10l1 12H6L7 10z"/></svg>',
     },
     {
@@ -43,12 +43,6 @@ const cityarchData = {
       slug: 'high-mast',
       skuCount: 10,
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M12 6l-6 4h12L12 6z"/><path d="M6 10l-2 2h16l-2-2"/></svg>',
-    },
-    {
-      name: 'Pole',
-      slug: 'pole',
-      skuCount: 17,
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M12 4l-4 3h8L12 4z"/></svg>',
     },
     {
       name: 'Post Top',
@@ -59,13 +53,13 @@ const cityarchData = {
     {
       name: 'Roadway',
       slug: 'roadway',
-      skuCount: 11,
+      skuCount: 23,
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l4-10h10l4 10H3z"/><line x1="12" y1="7" x2="12" y2="2"/></svg>',
     },
     {
-      name: 'Street Sign',
-      slug: 'street-sign',
-      skuCount: 5,
+      name: 'Street Sign Lamp',
+      slug: 'street-sign-lamp',
+      skuCount: 4,
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="8" rx="1"/><line x1="12" y1="2" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="22"/></svg>',
     },
     {
@@ -84,6 +78,7 @@ const cityarchData = {
       skuCount: 29,
       dlc: true,
       lineDrawing: null,
+      pdpUrl: '/products/lptp-symmetry-post-top/',
     },
     {
       family: 'OmniMax',
@@ -93,6 +88,7 @@ const cityarchData = {
       skuCount: 10,
       dlc: true,
       lineDrawing: null,
+      pdpUrl: '/products/lhmf-omnimax-high-mast/',
     },
     {
       family: 'Abbey',
@@ -102,6 +98,7 @@ const cityarchData = {
       skuCount: 11,
       dlc: true,
       lineDrawing: null,
+      pdpUrl: '/products/lrdw-abbey-roadway/',
     },
     {
       family: 'Sentry',
@@ -111,19 +108,11 @@ const cityarchData = {
       skuCount: 4,
       dlc: true,
       lineDrawing: null,
-    },
-    {
-      family: 'Alpine',
-      subCategory: 'Surface Mount',
-      displayEchelon: null,
-      maxWattage: null,
-      skuCount: 14,
-      dlc: false,
-      lineDrawing: null,
+      pdpUrl: '/products/lbol-sentry-bollard/',
     },
   ],
-  featuredHeadline: 'Five flagship families from the cityARCH collection.',
-  familiesHeadline: '11 families. One municipal portfolio.',
+  featuredHeadline: 'Four flagship families from the cityARCH collection.',
+  familiesHeadline: '7 families. One municipal portfolio.',
   familiesSubhead: 'Filter by application, echelon, wattage, CCT, and more.',
   legacy: {
     headline: 'Discontinued families.',

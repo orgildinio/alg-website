@@ -6346,18 +6346,6 @@
           "taa": false
         },
         {
-          "sku": "OSP25T-65G11-D",
-          "family": "Hyperion",
-          "sub_category": "Direct Burial",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
           "sku": "LHMF8W500-50HOM/B/5/RB3",
           "family": "OmniMax",
           "sub_category": "High Mast",
@@ -6586,30 +6574,6 @@
           "mount_types": [],
           "dlc": "Premium",
           "taa": true
-        },
-        {
-          "sku": "SRP410-SM/D/BC/AP30",
-          "family": "Redwood",
-          "sub_category": "Pole",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "SSP410-SM/D/BC/AP30",
-          "family": "Sequoia",
-          "sub_category": "Pole",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
         },
         {
           "sku": "LPTP090-3CS/27VS1/B/BL",
@@ -7439,186 +7403,6 @@
           "taa": false
         },
         {
-          "sku": "LP15DBS-4RG11/D",
-          "family": "Alpine",
-          "sub_category": "Surface Mount",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "LP20DBS-4RG11/D",
-          "family": "Alpine",
-          "sub_category": "Surface Mount",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "OSP10R-3G11-D",
-          "family": "Alpine",
-          "sub_category": "Surface Mount",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "OSP10S-4G11-D",
-          "family": "Alpine",
-          "sub_category": "Surface Mount",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "OSP15R-4G11-D",
-          "family": "Alpine",
-          "sub_category": "Surface Mount",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "OSP15S-4G11-D",
-          "family": "Alpine",
-          "sub_category": "Surface Mount",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "OSP15S-4G11-D/4SBC/PP/AB1025",
-          "family": "Alpine",
-          "sub_category": "Surface Mount",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "OSP20R-4G11-D",
-          "family": "Alpine",
-          "sub_category": "Surface Mount",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "OSP20S-4G11-D",
-          "family": "Alpine",
-          "sub_category": "Surface Mount",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "OSP25R-4G11-D",
-          "family": "Alpine",
-          "sub_category": "Surface Mount",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "OSP25S-4G11-D",
-          "family": "Alpine",
-          "sub_category": "Surface Mount",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "OSP30R-4G11-D",
-          "family": "Alpine",
-          "sub_category": "Surface Mount",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "OSP30S-4G11-B",
-          "family": "Alpine",
-          "sub_category": "Surface Mount",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "OSP30S-4G11-D",
-          "family": "Alpine",
-          "sub_category": "Surface Mount",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
-          "sku": "OSP30T-65G11-D",
-          "family": "Centurion",
-          "sub_category": "Tapered",
-          "display_echelon": "",
-          "wattages": [],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false
-        },
-        {
           "sku": "LPAR38C150030K1",
           "family": "LPAR Series",
           "sub_category": "Traffic Control Lamp",
@@ -7665,6 +7449,54 @@
           "mount_types": [],
           "dlc": null,
           "taa": false
+        },
+        {
+          "family": "LY-T10",
+          "model": "LY-T10-4W-4K",
+          "wattage": 4,
+          "ccts": [
+            "4000K"
+          ],
+          "voltage": "120 - 277V",
+          "dlc": true,
+          "taa": false,
+          "mount_types": []
+        },
+        {
+          "family": "LY-T10",
+          "model": "LY-T10-4W-5K",
+          "wattage": 4,
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "dlc": true,
+          "taa": false,
+          "mount_types": []
+        },
+        {
+          "family": "LY-T10",
+          "model": "LY-T10-10W-4K",
+          "wattage": 10,
+          "ccts": [
+            "4000K"
+          ],
+          "voltage": "120 - 277V",
+          "dlc": true,
+          "taa": false,
+          "mount_types": []
+        },
+        {
+          "family": "LY-T10",
+          "model": "LY-T10-10W-5K",
+          "wattage": 10,
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "dlc": true,
+          "taa": false,
+          "mount_types": []
         }
       ],
       "families": [
@@ -7684,19 +7516,9 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false
-        },
-        {
-          "family": "Hyperion",
-          "sub_category": "Direct Burial",
-          "display_echelon": "",
-          "max_wattage": 0,
-          "sku_count": 1,
-          "dlc": false,
-          "ccts": [],
-          "voltages": [],
-          "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/lbol-sentry-bollard/",
+          "card_image": "/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp"
         },
         {
           "family": "OmniMax",
@@ -7713,31 +7535,9 @@
             "277 - 480V"
           ],
           "mount_types": [],
-          "taa": true
-        },
-        {
-          "family": "Redwood",
-          "sub_category": "Pole",
-          "display_echelon": "",
-          "max_wattage": 0,
-          "sku_count": 1,
-          "dlc": false,
-          "ccts": [],
-          "voltages": [],
-          "mount_types": [],
-          "taa": false
-        },
-        {
-          "family": "Sequoia",
-          "sub_category": "Pole",
-          "display_echelon": "",
-          "max_wattage": 0,
-          "sku_count": 1,
-          "dlc": false,
-          "ccts": [],
-          "voltages": [],
-          "mount_types": [],
-          "taa": false
+          "taa": true,
+          "pdpUrl": "/products/lhmf-omnimax-high-mast/",
+          "card_image": "/products/lhmf-omnimax-high-mast/assets/omnimax/hero/omnimax-hero-1.webp"
         },
         {
           "family": "Unity",
@@ -7755,7 +7555,9 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/lptp-unity-post-top/",
+          "card_image": "/products/lptp-unity-post-top/assets/unity/unity-hero-1.webp"
         },
         {
           "family": "Symmetry",
@@ -7777,7 +7579,9 @@
             "277 - 480V"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/lptp-symmetry-post-top/",
+          "card_image": "/products/lptp-symmetry-post-top/assets/symmetry/hero/symmetry-1-front-round.png"
         },
         {
           "family": "Abbey",
@@ -7796,31 +7600,9 @@
             "347 - 480V"
           ],
           "mount_types": [],
-          "taa": false
-        },
-        {
-          "family": "Alpine",
-          "sub_category": "Surface Mount",
-          "display_echelon": "",
-          "max_wattage": 0,
-          "sku_count": 14,
-          "dlc": false,
-          "ccts": [],
-          "voltages": [],
-          "mount_types": [],
-          "taa": false
-        },
-        {
-          "family": "Centurion",
-          "sub_category": "Tapered",
-          "display_echelon": "",
-          "max_wattage": 0,
-          "sku_count": 1,
-          "dlc": false,
-          "ccts": [],
-          "voltages": [],
-          "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/lrdw-abbey-roadway/",
+          "card_image": "/products/lrdw-abbey-roadway/assets/abbey/hero/abbey-1-silver-front.png"
         },
         {
           "family": "LPAR Series",
@@ -7837,7 +7619,28 @@
             "120V ONLY"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/lpar-traffic-par38/",
+          "card_image": "/products/lpar-traffic-par38/assets/lpar/lpar-hero-1.png"
+        },
+        {
+          "family": "LY-T10",
+          "sub_category": "Street Sign Lamp",
+          "display_echelon": "ECO",
+          "max_wattage": 10,
+          "sku_count": 4,
+          "dlc": true,
+          "taa": false,
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V"
+          ],
+          "mount_types": [],
+          "pdpUrl": "/products/ly-t10-slimline-sign-lamp/",
+          "card_image": "/products/ly-t10-slimline-sign-lamp/assets/lyt10/lyt10-hero-1.png"
         }
       ]
     },

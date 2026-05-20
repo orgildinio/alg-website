@@ -789,11 +789,11 @@ async function main() {
         luxoarch:    { skus: 140, families: 21 },
         planoarch:   { skus: 125, families: 15 },
         lampararch:  { skus: 104, families: 10 },
-        cityarch:    { skus:  77, families: 11 },
+        cityarch:    { skus:  63, families:  7 },  // updated 2026-05-20: 5 no-PDP families removed (-18 SKUs), LY-T10 added (+4 SKUs)
         multifamily: { skus:  59, families:  8 },
       };
-      const EXPECTED_TOTAL_SKUS = 505;
-      const EXPECTED_TOTAL_FAMILIES = 65;
+      const EXPECTED_TOTAL_SKUS = 491;  // updated 2026-05-20: cityarch 77→63 (-14 net)
+      const EXPECTED_TOTAL_FAMILIES = 61;  // updated 2026-05-20: cityarch -4 net (removed 5, added 1)
       let iPass = true;
       // Check per-collection counts
       for (const [coll, expected] of Object.entries(EXPECTED_BUCKET_A)) {
