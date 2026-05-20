@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Symmetry-Series — cityⒶRCH · v1 MOCKUP</title>
+<title>Symmetry-Series — cityⒶRCH</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
@@ -95,18 +95,7 @@
 
   a { color: inherit; text-decoration: none; }
 
-  /* MOCKUP banner */
-  .mockup-banner {
-    background: #FF9F1C;
-    color: #14171b;
-    padding: 6px 16px;
-    text-align: center;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
+  /* CFG-CHROME-2 · .mockup-banner CSS stripped 2026-05-20 PM */
   /* Site header — IDENTICAL to Heritage + Sentinel + Illuminator (golden baseline) */
   .site-header {
     background: var(--bg-page);
@@ -2674,11 +2663,83 @@ select.cfg-select {
     text-align: left !important;
   }
 </style>
+<!-- ════════════════════════════════════════════════════════════════════
+     CFG-CHROME-3 · Canonical chrome hydrator (Option C · 2026-05-20 PM)
+     James directive: cityⒶRCH PDPs must show Heritage's exact chrome.
+     Astro layout wrapper does NOT inject for cityⒶRCH routes — verified
+     via Chrome MCP DOM walk (document.querySelectorAll('header').length=0).
+     This script fetches /products/heritage/ same-origin, extracts its
+     <head> CSS + #site-header + .site-footer, injects into this page.
+     Runs immediately (placed early in <head>) so chrome appears before
+     content paint where possible.
+     ════════════════════════════════════════════════════════════════════ -->
+<script>
+(function hydrateChrome() {
+  // Skip on Cowork-local file:// previews — Heritage path won't resolve
+  if (location.protocol === 'file:') return;
+  fetch('/products/heritage/', { credentials: 'same-origin' })
+    .then(function (r) { return r.text(); })
+    .then(function (html) {
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      // 1. CSS links from Heritage <head> (skip third-party — only same-origin Astro bundles)
+      var existingHrefs = {};
+      Array.prototype.forEach.call(document.head.querySelectorAll('link[rel="stylesheet"]'), function (l) {
+        existingHrefs[l.getAttribute('href')] = true;
+      });
+      Array.prototype.forEach.call(doc.head.querySelectorAll('link[rel="stylesheet"]'), function (l) {
+        var href = l.getAttribute('href');
+        if (!href || existingHrefs[href]) return;
+        if (href.indexOf('unpkg.com') !== -1 || href.indexOf('leaflet') !== -1) return; // skip leaflet
+        var copy = document.createElement('link');
+        copy.rel = 'stylesheet';
+        copy.href = href;
+        document.head.appendChild(copy);
+      });
+      // 2. Inline <style> blocks from Heritage <head>
+      Array.prototype.forEach.call(doc.head.querySelectorAll('style'), function (s) {
+        var copy = document.createElement('style');
+        copy.textContent = s.textContent;
+        document.head.appendChild(copy);
+      });
+      // 3. Site header — insert as first child of <body>
+      var srcHeader = doc.querySelector('#site-header');
+      if (srcHeader && !document.querySelector('#site-header')) {
+        document.body.insertBefore(srcHeader, document.body.firstChild);
+      }
+      // 4. Site footer — append as last child of <body>
+      var srcFooter = doc.querySelector('footer.site-footer');
+      if (srcFooter && !document.querySelector('footer.site-footer')) {
+        document.body.appendChild(srcFooter);
+      }
+      // 5. Defensive: strip any leftover mockup-banner that snuck through
+      Array.prototype.forEach.call(document.querySelectorAll('.mockup-banner'), function (el) {
+        el.parentNode.removeChild(el);
+      });
+      // 6. Hydrate any chrome-internal scripts (mega menu accordion, search modal, etc.)
+      Array.prototype.forEach.call(doc.head.querySelectorAll('script[src]'), function (s) {
+        var src = s.getAttribute('src');
+        if (!src || src.indexOf('unpkg') !== -1) return;
+        // Only re-load same-origin chrome scripts not already on page
+        var have = false;
+        Array.prototype.forEach.call(document.head.querySelectorAll('script[src]'), function (x) {
+          if (x.getAttribute('src') === src) have = true;
+        });
+        if (have) return;
+        var copy = document.createElement('script');
+        copy.src = src;
+        copy.async = false;
+        document.head.appendChild(copy);
+      });
+    })
+    .catch(function (e) {
+      console.warn('[CFG-CHROME-3 hydrator] failed:', e);
+    });
+})();
+</script>
+
 </head>
 <body class="symmetry-pdp">
-<div class="mockup-banner">
-  SYMMETRY-SERIES PDP · v1 SECTION 1+2 (HEADER + HERO) — v2 datasheet rebuild · review in progress
-</div>
+<!-- CFG-CHROME-2 · .mockup-banner stripped 2026-05-20 PM — dev artifact must not ship to staging -->
 <!-- CFG-CHROME-1 · inline <header class="site-header"> removed 2026-05-20 PM — canonical chrome comes from Astro layout (utility-bar + main header + mega menu + REQUEST SAMPLE/LAYOUT CTAs), inline replaces it and breaks the brand. See Heritage as reference: <header id="site-header" data-pagefind-ignore="">. -->
 <!-- Breadcrumb — cityⒶRCH adaptation. Production page reads
      "Outdoor | cityⒶRCH / LPTP | Symmetry" — surfaced here as the breadcrumb
@@ -2991,14 +3052,14 @@ select.cfg-select {
            ordering table). -->
 <div aria-label="Certifications" class="hero-compliance">
 <div class="cb">
-<img alt="UL/cUL Listed" src="https://www.archipelagolighting.com/cdn/shop/t/24/assets/etl.svg"/>
+<img alt="UL/cUL Listed" src="/products/illuminator/assets/certs/etl.svg"/>
 <div class="cb-label">UL Listed</div>
 </div>
 <div class="cb">
 <!-- DLC LISTED (NOT Premium per CFG-RBT-1) — datasheet says LISTED.
                Premium application likely in flight at 197 lm/W peak but no
                QPL ID issued; do not claim Premium until ID is in hand. -->
-<img alt="DLC Listed" src="https://www.archipelagolighting.com/cdn/shop/t/24/assets/dlc.svg"/>
+<img alt="DLC Listed" src="/products/illuminator/assets/certs/dlc.svg"/>
 <div class="cb-label">DLC Listed</div>
 </div>
 <div class="cb">
@@ -3009,11 +3070,11 @@ select.cfg-select {
 <div class="cb-label">FCC</div>
 </div>
 <div class="cb">
-<img alt="RoHS Compliant" src="https://www.archipelagolighting.com/cdn/shop/t/24/assets/rohs.svg"/>
+<img alt="RoHS Compliant" src="/products/illuminator/assets/certs/rohs.svg"/>
 <div class="cb-label">RoHS</div>
 </div>
 <div class="cb">
-<img alt="Suitable for Wet Location" src="https://www.archipelagolighting.com/cdn/shop/t/24/assets/wet-location.svg"/>
+<img alt="Suitable for Wet Location" src="/products/illuminator/assets/certs/wet-location.svg"/>
 <div class="cb-label">Wet Location</div>
 </div>
 </div>
