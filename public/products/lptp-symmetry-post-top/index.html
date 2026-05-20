@@ -2761,7 +2761,7 @@ body.cityarch-pdp .acc-card-copy {
 </script>
 
 </head>
-<body class="symmetry-pdp">
+<body class="symmetry-pdp cityarch-pdp">
 <!-- CFG-CHROME-2 · .mockup-banner stripped 2026-05-20 PM — dev artifact must not ship to staging -->
 <!-- CFG-CHROME-1 · inline <header class="site-header"> removed 2026-05-20 PM — canonical chrome comes from Astro layout (utility-bar + main header + mega menu + REQUEST SAMPLE/LAYOUT CTAs), inline replaces it and breaks the brand. See Heritage as reference: <header id="site-header" data-pagefind-ignore="">. -->
 <!-- Breadcrumb — cityⒶRCH adaptation. Production page reads
@@ -6431,7 +6431,7 @@ body.cityarch-pdp .acc-card-copy {
    Runs at DOMContentLoaded + t=2s + t=6s to catch hydrator-added elements. */
 (function() {
   function applyLatoFont() {
-    if (!document.body || !document.body.classList.contains('cityarch-pdp')) return;
+    if (!document.body) return;  // apply regardless of body class
     document.querySelectorAll('h1, h2').forEach(function(el) {
       el.style.setProperty('font-family', 'Lato, sans-serif', 'important');
     });
