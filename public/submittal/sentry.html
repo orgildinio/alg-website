@@ -686,7 +686,7 @@
         <img id="photoPolarImg"
              src="assets/sentry/photometrics/sentry-lbol26-5000k.svg"
              alt="Sentry LBOL bollard photometric distribution — Type V 360° full cutoff polar plot from IES test data"
-             onerror="this.parentElement.innerHTML='<span>IES polar plot · Type V 360° · pending Mester delivery</span>'; this.parentElement.classList.add('fallback');" />
+             onerror="this.parentElement.innerHTML='<span>IES polar plot · Type V 360° · pending · awaiting ALG release</span>'; this.parentElement.classList.add('fallback');" />
       </div>
     </div>
   </div>
@@ -698,7 +698,7 @@
       <tr><td>Peak Efficacy</td><td id="photoEff">145 lm/W (LBOL24 · 19W cell)</td></tr>
       <tr><td>Distribution</td><td>Type V · 360° · Full Cutoff · Zero Uplight</td></tr>
       <tr><td>Test Standard</td><td>IESNA LM-79 (in lab) · LM-80 lumen maintenance verified</td></tr>
-      <tr><td>IES File</td><td id="photoIesFile">LBOL24-3CS-S1.IES · pending complete coverage from Mester</td></tr>
+      <tr><td>IES File</td><td id="photoIesFile">LBOL24-3CS-S1.IES · pending · awaiting ALG release</td></tr>
     </tbody>
   </table>
 
@@ -911,7 +911,7 @@
   document.getElementById('photoLumens').textContent = wcData.peakLumens.toLocaleString() + ' lm';
   document.getElementById('photoEff').textContent    = wcData.lpwMax + ' lm/W (' + wcData.label + ' max)';
   document.getElementById('photoIesFile').textContent =
-    'LBOL' + wc + '-3CS-S1.IES · partial coverage available · full IES bundle pending Mester';
+    'LBOL' + wc + '-3CS-S1.IES · partial coverage available · full IES bundle pending · awaiting ALG release';
 
   // ---- Issue date ----
   var d = new Date();
