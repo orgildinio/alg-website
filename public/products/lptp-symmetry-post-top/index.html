@@ -2710,6 +2710,9 @@ body.cityarch-pdp .acc-card-copy {
         if (have) return;
         var copy = document.createElement('script');
         copy.src = src;
+        // CFG-CHROME-4 · preserve type=module so Astro ES-module hoisted scripts execute correctly
+        var scriptType = s.getAttribute('type');
+        if (scriptType) copy.type = scriptType;
         copy.async = false;
         document.head.appendChild(copy);
       });
