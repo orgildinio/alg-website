@@ -91,7 +91,46 @@
   a { color: inherit; text-decoration: none; }
 
   /* CFG-CHROME-2 · .mockup-banner CSS stripped 2026-05-20 PM */
-  /* CFG-CHROME-3 · dead site-header CSS removed — chrome owned by Astro hydrator */
+  /* Site header */
+  .site-header {
+    background: var(--bg-page);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 80;
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .logo { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+  .logo-mark { width: 50px; height: 50px; background: var(--brand-red); flex-shrink: 0; }
+  .logo-text { font-weight: 700; font-size: 18px; line-height: 1; letter-spacing: 0.02em; }
+  .logo-text small {
+    font-size: 9px; letter-spacing: 0.22em; opacity: 0.55;
+    display: block; margin-top: 5px; font-weight: 400;
+  }
+  nav.primary { display: flex; gap: 28px; font-size: 14px; font-weight: 400; }
+  nav.primary a {
+    padding: 8px 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.18s, color 0.18s;
+  }
+  nav.primary a:hover { border-bottom-color: var(--brand-red); }
+  .header-actions { display: flex; gap: 12px; align-items: center; }
+  .icon-btn {
+    width: 38px; height: 38px;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--text-secondary);
+  }
+  .icon-btn:hover { color: var(--text-primary); }
+  .icon-btn svg { width: 20px; height: 20px; }
 
   /* Breadcrumb — STAGING LOCKED PATTERN (.breadcrumb-band) */
   .breadcrumb-band {
@@ -3320,48 +3359,6 @@ body.cityarch-pdp .acc-card-copy {
       Array.prototype.forEach.call(document.querySelectorAll('.mockup-banner'), function (el) {
         el.parentNode.removeChild(el);
       });
-      // CFG-CHROME-5 · Re-init scroll-hide after hydration (hoisted script ran before fetch resolved)
-      (function initScrollHide() {
-        var h = document.querySelector('.site-nav');
-        var m = document.querySelector('#site-header');
-        if (!h || !m) return;
-        if (h.dataset.scrollHideInit) return; // already attached
-        h.dataset.scrollHideInit = '1';
-        var isMobile = function() { return window.matchMedia('(max-width:768px)').matches; };
-        var getTarget = function() { return isMobile() ? m : h; };
-        var HIDE_THRESHOLD = 80, HIDE_THRESHOLD_MOBILE = 60;
-        var REVEAL_DELTA = 10, REVEAL_DELTA_MOBILE = 8;
-        var lastY = window.scrollY, accumulated = 0, ticking = false, menuOpen = false;
-        function syncBodyClass() {
-          var hidden = !isMobile() && h.classList.contains('is-hidden');
-          document.documentElement.classList.toggle('is-main-nav-hidden', hidden);
-        }
-        function onScroll() {
-          if (ticking) return;
-          ticking = true;
-          requestAnimationFrame(function() {
-            var y = window.scrollY;
-            var delta = y - lastY;
-            var target = getTarget();
-            var hideAt = isMobile() ? HIDE_THRESHOLD_MOBILE : HIDE_THRESHOLD;
-            var revealAt = isMobile() ? REVEAL_DELTA_MOBILE : REVEAL_DELTA;
-            if (menuOpen) { lastY = y; ticking = false; return; }
-            if (y <= 0) { target.classList.remove('is-hidden'); accumulated = 0; lastY = y; syncBodyClass(); ticking = false; return; }
-            if (delta > 0) { accumulated = 0; if (y > hideAt) target.classList.add('is-hidden'); }
-            else if (delta < 0) { accumulated += -delta; if (accumulated >= revealAt) target.classList.remove('is-hidden'); }
-            syncBodyClass();
-            lastY = y;
-            ticking = false;
-          });
-        }
-        window.addEventListener('scroll', onScroll, { passive: true });
-        // Pause hide when mega menu is open
-        var mmItems = document.querySelectorAll('.has-dropdown');
-        Array.prototype.forEach.call(mmItems, function(item) {
-          item.addEventListener('mouseenter', function() { menuOpen = true; });
-          item.addEventListener('mouseleave', function() { menuOpen = false; });
-        });
-      })();
       // 6. Hydrate any chrome-internal scripts (mega menu accordion, search modal, etc.)
       Array.prototype.forEach.call(doc.head.querySelectorAll('script[src]'), function (s) {
         var src = s.getAttribute('src');
@@ -3374,9 +3371,6 @@ body.cityarch-pdp .acc-card-copy {
         if (have) return;
         var copy = document.createElement('script');
         copy.src = src;
-        // CFG-CHROME-4 · preserve type=module so Astro ES-module hoisted scripts execute correctly
-        var scriptType = s.getAttribute('type');
-        if (scriptType) copy.type = scriptType;
         copy.async = false;
         document.head.appendChild(copy);
       });
@@ -3388,7 +3382,7 @@ body.cityarch-pdp .acc-card-copy {
 </script>
 
 </head>
-<body class="cityarch-pdp">
+<body>
 <!-- CFG-CHROME-2 · .mockup-banner stripped 2026-05-20 PM — dev artifact must not ship to staging -->
 <!-- CFG-CHROME-1 · inline <header class="site-header"> removed 2026-05-20 PM — canonical chrome comes from Astro layout (utility-bar + main header + mega menu + REQUEST SAMPLE/LAYOUT CTAs), inline replaces it and breaks the brand. See Heritage as reference: <header id="site-header" data-pagefind-ignore="">. -->
 <!-- Breadcrumb — STAGING-LOCKED .breadcrumb-band pattern · cityⒶRCH PRO+ High Mast path -->
@@ -3993,7 +3987,7 @@ body.cityarch-pdp .acc-card-copy {
 <div class="hf-row-2">
 <div class="hf-tile hf-tile-grad-2">
 <div class="hf-tile-image">
-<img alt="Macro of the OmniMax 8-position WATTSELECT dial behind the access door — labeled 25/40/50/60/70/80/90/100% positions for field commissioning the wattage to the IES target" src="assets/highlights/omnimax-hf-2-wattselect.svg"/>
+<img alt="Macro of the OmniMax 8-position WATTSELECT dial behind the access door — labeled 25/40/50/60/70/80/90/100% positions for field commissioning the wattage to the IES target" src="assets/highlights/omnimax-hf-2-wattselect.webp"/>
 </div>
 <div class="hf-tile-overlay">
 <div class="hf-tile-tag">Field-Adjustable</div>
@@ -4003,7 +3997,7 @@ body.cityarch-pdp .acc-card-copy {
 </div>
 <div class="hf-tile hf-tile-grad-3">
 <div class="hf-tile-image">
-<img alt="Brand-red 107,250 lumen + 143 lm/W badge layered over a port container terminal night shot — OmniMax 750W cell delivering wide-area uniform Type-V coverage" src="assets/highlights/omnimax-hf-3-efficacy.svg"/>
+<img alt="Brand-red 107,250 lumen + 143 lm/W badge layered over a port container terminal night shot — OmniMax 750W cell delivering wide-area uniform Type-V coverage" src="assets/highlights/omnimax-hf-3-efficacy.webp"/>
 </div>
 <div class="hf-tile-overlay">
 <div class="hf-tile-tag">Output</div>
@@ -4016,7 +4010,7 @@ body.cityarch-pdp .acc-card-copy {
 <div class="hf-row-2">
 <div class="hf-tile hf-tile-grad-4">
 <div class="hf-tile-image">
-<img alt="10-year warranty shield badge with 100,000 hour lumen-maintenance ring — OmniMax 24/7-rated reliability for port + highway + military deployments" src="assets/highlights/omnimax-hf-4-warranty.svg"/>
+<img alt="10-year warranty shield badge with 100,000 hour lumen-maintenance ring — OmniMax 24/7-rated reliability for port + highway + military deployments" src="assets/highlights/omnimax-hf-4-warranty.webp"/>
 </div>
 <div class="hf-tile-overlay">
 <div class="hf-tile-tag">Warranty</div>
@@ -4026,7 +4020,7 @@ body.cityarch-pdp .acc-card-copy {
 </div>
 <div class="hf-tile hf-tile-grad-5 hf-tile-controls">
 <div class="hf-tile-image">
-<img alt="Macro of OmniMax die-cast aluminum heat-sink fins with optional 20kV surge protection module visible inside the driver compartment — coastal-grade thermalⒶRMOR construction with wetⒶGUARD IP65 sealing" src="assets/highlights/omnimax-hf-5-build.svg"/>
+<img alt="Macro of OmniMax die-cast aluminum heat-sink fins with optional 20kV surge protection module visible inside the driver compartment — coastal-grade thermalⒶRMOR construction with wetⒶGUARD IP65 sealing" src="assets/highlights/omnimax-hf-5-build.webp"/>
 </div>
 <div class="hf-tile-overlay">
 <div class="hf-tile-tag">Build</div>
@@ -4246,7 +4240,7 @@ body.cityarch-pdp .acc-card-copy {
       title: '165° optical rotation + 8-step WATTSELECT — field-set the output without dropping the pole.' },
     { s: 100, e: 110, tag: 'LIT AT DUSK',
       title: 'Up to 750W per fixture · 105,000 lm peak · Belling Test BLC2009004E-A verified.' },
-    { s: 122, e: 138, tag: 'APPLICATION',
+    { s: 122, e: 130, tag: 'APPLICATION',
       title: 'Container terminals · sports fields · port aprons · large parking — high-mast at work.' }
   ];
 
@@ -4790,7 +4784,7 @@ body.cityarch-pdp .acc-card-copy {
 <button class="acc-card" data-cat="photocell" data-id="acc-pc-um3" type="button">
 <div class="acc-card-img">
 <span class="acc-card-img-tag">UM3 · 120-277V</span>
-<img alt="3-pin twist-lock photocell — ANSI C136.10 dusk-to-dawn photocontrol for 120-277V universal voltage" class="acc-card-photo" loading="lazy" src="assets/accessories/omnimax-pc-um3.webp"/>
+<img alt="3-pin twist-lock photocell — ANSI C136.10 dusk-to-dawn photocontrol for 120-277V universal voltage" class="acc-card-photo" loading="lazy" src="assets/accessories/omnimax-pc-um3.jpg"/>
 </div>
 <div class="acc-card-body">
 <div class="acc-card-cat">Photocell · Universal Voltage</div>
@@ -4802,7 +4796,7 @@ body.cityarch-pdp .acc-card-copy {
 <button class="acc-card" data-cat="photocell" data-id="acc-pc-hm3" type="button">
 <div class="acc-card-img">
 <span class="acc-card-img-tag">HM3 · 277-480V</span>
-<img alt="3-pin twist-lock photocell — ANSI C136.10 dusk-to-dawn photocontrol for 277-480V high voltage" class="acc-card-photo" loading="lazy" src="assets/accessories/omnimax-pc-hm3.webp"/>
+<img alt="3-pin twist-lock photocell — ANSI C136.10 dusk-to-dawn photocontrol for 277-480V high voltage" class="acc-card-photo" loading="lazy" src="assets/accessories/omnimax-pc-hm3.jpg"/>
 </div>
 <div class="acc-card-body">
 <div class="acc-card-cat">Photocell · High Voltage</div>
@@ -4943,7 +4937,7 @@ body.cityarch-pdp .acc-card-copy {
         Reset all options
       </button>
 </div>
-<!-- CFG-CFG-1 · Asymmetric Row-Rails Configurator (cityⒶRCH migration · 2026-05-19) --><div class="cfg-body split-60-40"><div class="cfg-col cfg-col-req"><div class="cfg-col-head"><div class="cfg-col-title cfg-col-title-required">Required</div><div class="cfg-col-meta">6 fields · all must be set</div></div><div class="cfg-rows"><div class="cfg-row" data-field="housing"><div class="cfg-row-l"><span class="cfg-row-label">Wattage Class<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="housing">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip" data-code="8W500" data-field="housing" data-val="500" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">LHMF8W500 · 125-500W</span></span></button><button class="cfg-chip selected" data-code="8W750" data-field="housing" data-star="1" data-val="750" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">LHMF8W750 · 200-750W</span><span class="cfg-chip-star">★</span></span></button></div></div><div class="cfg-row" data-field="cct"><div class="cfg-row-l"><span class="cfg-row-label">CCT<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="cct">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(1, 1fr);"><button class="cfg-chip selected locked" data-code="50" data-field="cct" data-star="1" data-val="50" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">5000K</span><span class="cfg-chip-star">★</span></span></button></div></div><div class="cfg-row" data-field="voltage"><div class="cfg-row-l"><span class="cfg-row-label">Input Voltage<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="voltage">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip selected" data-code="U" data-field="voltage" data-star="1" data-val="U" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">120–277V</span><span class="cfg-chip-star">★</span></span></button><button class="cfg-chip" data-code="H" data-field="voltage" data-val="H" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">277–480V</span></span></button></div></div><div class="cfg-row" data-field="distribution"><div class="cfg-row-l"><span class="cfg-row-label">Distribution<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="distribution">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(4, 1fr);"><button class="cfg-chip" data-code="2" data-field="distribution" data-val="2" type="button"><span class="cfg-chip-stripe mto"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Type II</span></span></button><button class="cfg-chip" data-code="3" data-field="distribution" data-val="3" type="button"><span class="cfg-chip-stripe mto"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Type III</span></span></button><button class="cfg-chip" data-code="4" data-field="distribution" data-val="4" type="button"><span class="cfg-chip-stripe mto"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Type IV</span></span></button><button class="cfg-chip selected" data-code="5" data-field="distribution" data-star="1" data-val="5" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Type V</span><span class="cfg-chip-star">★</span></span></button></div></div><div class="cfg-row" data-field="finish"><div class="cfg-row-l"><span class="cfg-row-label">Finish<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="finish">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip selected" data-code="B" data-field="finish" data-star="1" data-val="B" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-sw" style="background:#1a1a1a;"></span><span class="cfg-chip-label">Black</span><span class="cfg-chip-star">★</span></span></button><button class="cfg-chip" data-code="S" data-field="finish" data-val="S" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-sw" style="background:#b8b8b8;"></span><span class="cfg-chip-label">Silver</span></span></button></div></div><div class="cfg-row" data-field="photocell"><div class="cfg-row-l"><span class="cfg-row-label">Photocell Receptacle<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="photocell">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(1, 1fr);"><button class="cfg-chip selected locked" data-code="RB3" data-field="photocell" data-star="1" data-val="RB3" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">3-Pin Twist-Lock</span><span class="cfg-chip-star">★</span></span></button></div></div></div></div><div class="cfg-col cfg-col-opt cfg-col-optional-flex"><div class="cfg-col-head"><div class="cfg-col-title">Optional</div><div class="cfg-col-meta">1 add-ons · pick any combination</div></div><div class="cfg-rows"><div class="cfg-row cfg-row-stack" data-field="taa"><div class="cfg-row-l cfg-row-l-stack"><span class="cfg-row-label">TAA Compliance</span><span class="cfg-row-code is-empty" data-field-code="taa">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip selected" data-code="" data-field="taa" data-star="1" data-val="STD" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Standard</span><span class="cfg-chip-star">★</span></span></button><button class="cfg-chip" data-code="-TAA" data-field="taa" data-val="TAA" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">TAA Compliant</span></span></button></div></div></div><div aria-label="Configurator marker legend" class="cfg-legend"><div class="cfg-legend-row"><span class="cfg-legend-key star">★</span><span class="cfg-legend-val">Factory-default ship configuration</span></div><div class="cfg-legend-row"><span class="cfg-legend-key qs"><span class="cfg-legend-stripe qs"></span></span><span class="cfg-legend-val">QuickShip · 3-5 day lead</span></div><div class="cfg-legend-row"><span class="cfg-legend-key mto"><span class="cfg-legend-stripe mto"></span></span><span class="cfg-legend-val">Made-to-Order · 4-6 week lead</span></div></div></div></div>
+<!-- CFG-CFG-1 · Asymmetric Row-Rails Configurator (cityⒶRCH migration · 2026-05-19) --><div class="cfg-body split-60-40"><div class="cfg-col cfg-col-req"><div class="cfg-col-head"><div class="cfg-col-title cfg-col-title-required">Required</div><div class="cfg-col-meta">6 fields · all must be set</div></div><div class="cfg-rows"><div class="cfg-row" data-field="housing"><div class="cfg-row-l"><span class="cfg-row-label">Wattage Class<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="housing">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip" data-code="8W500" data-field="housing" data-val="500" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">LHMF8W500 · 125-500W</span></span></button><button class="cfg-chip selected" data-code="8W750" data-field="housing" data-star="1" data-val="750" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">LHMF8W750 · 200-750W</span><span class="cfg-chip-star">★</span></span></button></div></div><div class="cfg-row" data-field="cct"><div class="cfg-row-l"><span class="cfg-row-label">CCT<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="cct">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(1, 1fr);"><button class="cfg-chip selected locked" data-code="50" data-field="cct" data-star="1" data-val="50" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">5000K</span><span class="cfg-chip-star">★</span></span></button></div></div><div class="cfg-row" data-field="voltage"><div class="cfg-row-l"><span class="cfg-row-label">Input Voltage<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="voltage">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip selected" data-code="U" data-field="voltage" data-star="1" data-val="U" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">120–277V</span><span class="cfg-chip-star">★</span></span></button><button class="cfg-chip" data-code="H" data-field="voltage" data-val="H" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">277–480V</span></span></button></div></div><div class="cfg-row" data-field="distribution"><div class="cfg-row-l"><span class="cfg-row-label">Distribution<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="distribution">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(4, 1fr);"><button class="cfg-chip" data-code="2" data-field="distribution" data-val="2" type="button"><span class="cfg-chip-stripe mto"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Type II</span></span></button><button class="cfg-chip" data-code="3" data-field="distribution" data-val="3" type="button"><span class="cfg-chip-stripe mto"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Type III</span></span></button><button class="cfg-chip" data-code="4" data-field="distribution" data-val="4" type="button"><span class="cfg-chip-stripe mto"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Type IV</span></span></button><button class="cfg-chip selected" data-code="5" data-field="distribution" data-star="1" data-val="5" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Type V</span><span class="cfg-chip-star">★</span></span></button></div></div><div class="cfg-row" data-field="finish"><div class="cfg-row-l"><span class="cfg-row-label">Finish<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="finish">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip selected" data-code="B" data-field="finish" data-star="1" data-val="B" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-sw" style="background:#1a1a1a;"></span><span class="cfg-chip-label">Black</span><span class="cfg-chip-star">★</span></span></button><button class="cfg-chip" data-code="S" data-field="finish" data-val="S" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-sw" style="background:#b8b8b8;"></span><span class="cfg-chip-label">Silver</span></span></button></div></div><div class="cfg-row" data-field="photocell"><div class="cfg-row-l"><span class="cfg-row-label">Photocell Receptacle<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="photocell">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(1, 1fr);"><button class="cfg-chip selected locked" data-code="RB3" data-field="photocell" data-star="1" data-val="RB3" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">3-Pin Twist-Lock</span><span class="cfg-chip-star">★</span></span></button></div></div></div></div><div class="cfg-col cfg-col-opt cfg-col-optional-flex"><div class="cfg-col-head"><div class="cfg-col-title">Optional</div><div class="cfg-col-meta">3 add-ons · pick any combination</div></div><div class="cfg-rows"><div class="cfg-row cfg-row-stack" data-field="gv"><div class="cfg-row-l cfg-row-l-stack"><span class="cfg-row-label">Glare Visor</span><span class="cfg-row-code is-empty" data-field-code="gv">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(1, 1fr);"><button class="cfg-chip" data-code="/GV" data-field="gv" data-val="GV" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Add Glare Visor · forward-throw hood</span></span></button></div></div><div class="cfg-row cfg-row-stack" data-field="sp"><div class="cfg-row-l cfg-row-l-stack"><span class="cfg-row-label">Surge Protection</span><span class="cfg-row-code is-empty" data-field-code="sp">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip" data-code="/SP10" data-field="sp" data-val="SP10" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">10 kA · Standard</span></span></button><button class="cfg-chip" data-code="/SP20" data-field="sp" data-val="SP20" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">20 kA · Heavy-Duty</span></span></button></div></div><div class="cfg-row cfg-row-stack" data-field="taa"><div class="cfg-row-l cfg-row-l-stack"><span class="cfg-row-label">TAA Compliance</span><span class="cfg-row-code is-empty" data-field-code="taa">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip selected" data-code="" data-field="taa" data-star="1" data-val="STD" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Standard</span><span class="cfg-chip-star">★</span></span></button><button class="cfg-chip" data-code="-TAA" data-field="taa" data-val="TAA" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">TAA Compliant</span></span></button></div></div></div><div aria-label="Configurator marker legend" class="cfg-legend"><div class="cfg-legend-row"><span class="cfg-legend-key star">★</span><span class="cfg-legend-val">Factory-default ship configuration</span></div><div class="cfg-legend-row"><span class="cfg-legend-key qs"><span class="cfg-legend-stripe qs"></span></span><span class="cfg-legend-val">QuickShip · 3-5 day lead</span></div><div class="cfg-legend-row"><span class="cfg-legend-key mto"><span class="cfg-legend-stripe mto"></span></span><span class="cfg-legend-val">Made-to-Order · 4-6 week lead</span></div></div></div></div>
 </div>
 <!-- ============== LIVE PREVIEW CARD ============== -->
 <div class="cfg-preview-wrap">
@@ -5175,7 +5169,7 @@ body.cityarch-pdp .acc-card-copy {
         </a>
 <!-- TAA Certificate of Compliance link REMOVED 2026-05-20 PM per James — hide until URL exists.
        Restore when OmniMax TAA cert PDF lands on WorkDrive. -->
-<a target="_blank" rel="noopener" class="docs-secondary-link" href="https://workdrive.archipelagolighting.com/external/db01406307e682a18496bacda8a07254e3e96734484ef20c08fb4fc37f2daac6">
+<a class="docs-secondary-link" href="https://workdrive.archipelagolighting.com/external/db01406307e682a18496bacda8a07254e3e96734484ef20c08fb4fc37f2daac6" target="_blank" rel="noopener">
 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><path d="M12 2 L20 6 V12 C20 17 16 21 12 22 C8 21 4 17 4 12 V6 Z"></path></svg>
           Warranty Statement (10-Year)
         </a>
@@ -6720,26 +6714,6 @@ body.cityarch-pdp .acc-card-copy {
   } else {
     init();
   }
-})();
-</script>
-<script id="cfg-type-1-override">
-/* CFG-TYPE-1-OVERRIDE: force Lato on h1/h2 via inline element.style
-   Inline style wins over all stylesheet rules regardless of cascade order.
-   Runs at DOMContentLoaded + t=2s + t=6s belt-and-suspenders. */
-(function() {
-  function applyLatoFont() {
-    if (!document.body) return;  // apply regardless of body class
-    document.querySelectorAll('h1, h2').forEach(function(el) {
-      el.style.setProperty('font-family', 'Lato, sans-serif', 'important');
-    });
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyLatoFont);
-  } else {
-    applyLatoFont();
-  }
-  setTimeout(applyLatoFont, 2000);
-  setTimeout(applyLatoFont, 6000);
 })();
 </script>
 </body>
