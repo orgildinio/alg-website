@@ -6719,7 +6719,7 @@ body.cityarch-pdp .acc-card-copy {
 <script id="cfg-type-1-override">
 /* CFG-TYPE-1-OVERRIDE: force Lato on h1/h2 via inline element.style
    Inline style wins over all stylesheet rules regardless of cascade order.
-   Runs at DOMContentLoaded + t=2s + t=6s to catch hydrator-added elements. */
+   Runs at DOMContentLoaded + t=2s + t=6s belt-and-suspenders. */
 (function() {
   function applyLatoFont() {
     if (!document.body) return;  // apply regardless of body class
