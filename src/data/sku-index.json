@@ -7513,7 +7513,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/lbol-sentry-bollard/"
+          "pdpUrl": "/products/lbol-sentry-bollard/",
+          "card_image": "/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp"
         },
         {
           "family": "OmniMax",
@@ -7531,7 +7532,8 @@
           ],
           "mount_types": [],
           "taa": true,
-          "pdpUrl": "/products/lhmf-omnimax-high-mast/"
+          "pdpUrl": "/products/lhmf-omnimax-high-mast/",
+          "card_image": "/products/lhmf-omnimax-high-mast/assets/omnimax/hero/omnimax-hero-1.webp"
         },
         {
           "family": "Unity",
@@ -7550,7 +7552,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/lptp-unity-post-top/"
+          "pdpUrl": "/products/lptp-unity-post-top/",
+          "card_image": "/products/lptp-unity-post-top/assets/unity/unity-hero-1.webp"
         },
         {
           "family": "Symmetry",
@@ -7570,7 +7573,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/lptp-symmetry-post-top/"
+          "pdpUrl": "/products/lptp-symmetry-post-top/",
+          "card_image": "/products/lptp-symmetry-post-top/assets/symmetry/hero/symmetry-1-front-round.png"
         },
         {
           "family": "Abbey",
@@ -7590,7 +7594,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/lrdw-abbey-roadway/"
+          "pdpUrl": "/products/lrdw-abbey-roadway/",
+          "card_image": "/products/lrdw-abbey-roadway/assets/abbey/abbey-hero-1.webp"
         },
         {
           "family": "LPAR Series",
@@ -7608,7 +7613,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/lpar-traffic-par38/"
+          "pdpUrl": "/products/lpar-traffic-par38/",
+          "card_image": "/products/lpar-traffic-par38/assets/lpar/lpar-hero-1.png"
         },
         {
           "family": "LY-T10",
@@ -7626,7 +7632,8 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "pdpUrl": "/products/ly-t10-slimline-sign-lamp/"
+          "pdpUrl": "/products/ly-t10-slimline-sign-lamp/",
+          "card_image": "/products/ly-t10-slimline-sign-lamp/assets/lyt10/lyt10-hero-1.png"
         }
       ]
     },

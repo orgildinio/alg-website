@@ -78,6 +78,8 @@ const cityarchData = {
       skuCount: 10,
       dlc: true,
       lineDrawing: null,
+      cardImage: '/products/lhmf-omnimax-high-mast/assets/omnimax/hero/omnimax-hero-1.webp',
+      cardImageAlt: 'OmniMax high mast luminaire',
       pdpUrl: '/products/lhmf-omnimax-high-mast/',
     },
     {
@@ -88,6 +90,8 @@ const cityarchData = {
       skuCount: 4,
       dlc: true,
       lineDrawing: null,
+      cardImage: '/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp',
+      cardImageAlt: 'Sentry bollard luminaire',
       pdpUrl: '/products/lbol-sentry-bollard/',
     },
     {
@@ -98,6 +102,8 @@ const cityarchData = {
       skuCount: 11,
       dlc: true,
       lineDrawing: null,
+      cardImage: '/products/lrdw-abbey-roadway/assets/abbey/abbey-hero-1.webp',
+      cardImageAlt: 'Abbey roadway luminaire',
       pdpUrl: '/products/lrdw-abbey-roadway/',
     },
     {
@@ -108,6 +114,8 @@ const cityarchData = {
       skuCount: 29,
       dlc: true,
       lineDrawing: null,
+      cardImage: '/products/lptp-symmetry-post-top/assets/symmetry/hero/symmetry-1-front-round.png',
+      cardImageAlt: 'Symmetry post top luminaire',
       pdpUrl: '/products/lptp-symmetry-post-top/',
     },
   ],
