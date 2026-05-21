@@ -2698,6 +2698,48 @@ body.cityarch-pdp .acc-card-copy {
       Array.prototype.forEach.call(document.querySelectorAll('.mockup-banner'), function (el) {
         el.parentNode.removeChild(el);
       });
+      // CFG-CHROME-5 · Re-init scroll-hide after hydration (hoisted script ran before fetch resolved)
+      (function initScrollHide() {
+        var h = document.querySelector('.site-nav');
+        var m = document.querySelector('#site-header');
+        if (!h || !m) return;
+        if (h.dataset.scrollHideInit) return; // already attached
+        h.dataset.scrollHideInit = '1';
+        var isMobile = function() { return window.matchMedia('(max-width:768px)').matches; };
+        var getTarget = function() { return isMobile() ? m : h; };
+        var HIDE_THRESHOLD = 80, HIDE_THRESHOLD_MOBILE = 60;
+        var REVEAL_DELTA = 10, REVEAL_DELTA_MOBILE = 8;
+        var lastY = window.scrollY, accumulated = 0, ticking = false, menuOpen = false;
+        function syncBodyClass() {
+          var hidden = !isMobile() && h.classList.contains('is-hidden');
+          document.documentElement.classList.toggle('is-main-nav-hidden', hidden);
+        }
+        function onScroll() {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(function() {
+            var y = window.scrollY;
+            var delta = y - lastY;
+            var target = getTarget();
+            var hideAt = isMobile() ? HIDE_THRESHOLD_MOBILE : HIDE_THRESHOLD;
+            var revealAt = isMobile() ? REVEAL_DELTA_MOBILE : REVEAL_DELTA;
+            if (menuOpen) { lastY = y; ticking = false; return; }
+            if (y <= 0) { target.classList.remove('is-hidden'); accumulated = 0; lastY = y; syncBodyClass(); ticking = false; return; }
+            if (delta > 0) { accumulated = 0; if (y > hideAt) target.classList.add('is-hidden'); }
+            else if (delta < 0) { accumulated += -delta; if (accumulated >= revealAt) target.classList.remove('is-hidden'); }
+            syncBodyClass();
+            lastY = y;
+            ticking = false;
+          });
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        // Pause hide when mega menu is open
+        var mmItems = document.querySelectorAll('.has-dropdown');
+        Array.prototype.forEach.call(mmItems, function(item) {
+          item.addEventListener('mouseenter', function() { menuOpen = true; });
+          item.addEventListener('mouseleave', function() { menuOpen = false; });
+        });
+      })();
       // 6. Hydrate any chrome-internal scripts (mega menu accordion, search modal, etc.)
       Array.prototype.forEach.call(doc.head.querySelectorAll('script[src]'), function (s) {
         var src = s.getAttribute('src');
