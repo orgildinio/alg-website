@@ -8,10 +8,21 @@
  * Exempt from Group H structural lock (H.1 only checks pages that use CollectionPageLayout).
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import HomeRetailProof from '../../components/HomeRetailProof.astro';
+import retailerCatalog from '../../data/consumer_retailers.json';
+
+// §5 retailer scaffold helpers
+const categories = retailerCatalog.categories;
+function getBrowseState(cat: any) {
+  if (!cat.retailers || cat.retailers.length === 0) return { state: 'disabled' as const };
+  if (cat.retailers.length === 1) return { state: 'single' as const, url: cat.retailers[0].url, name: cat.retailers[0].name };
+  return { state: 'multi' as const, retailers: cat.retailers };
+}
+const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
 ---
 <BaseLayout
   title="Consumer & Retail — Archipelago Lighting Group"
-  description="Six categories. Six aisles. One catalog. Archipelago's residential and retail capabilities for large retail buyers and OEM partners."
+  description="Shop ALG by aisle — six everyday-lighting categories, from the garage to the garden. Archipelago's residential and retail capabilities for large retail buyers and OEM partners."
   bodyClass="page-consumer"
 >
 
@@ -34,7 +45,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <section class="c-hero">
   <div class="c-hero-inner">
     <div class="c-hero-eyebrow">Consumer &amp; Retail · Capabilities Overview</div>
-    <h1 class="c-hero-h1">Six categories. <span class="c-accent">Six aisles.</span><br>One catalog.</h1>
+    <!-- §8 lifestyle hero image slot — supply path: set heroImage in consumer_retailers.json or pass as frontmatter -->
+    <div class="c-hero-img-slot" aria-hidden="true">
+      <!-- To supply: add a <img src="/images/consumer/hero-lifestyle.jpg" alt="..." class="c-hero-img" /> here when asset is ready -->
+      <div class="c-hero-img-placeholder"></div>
+    </div>
+    <h1 class="c-hero-h1">Shop <span class="c-accent">ALG</span> by aisle.</h1>
+    <p class="c-hero-tagline">Six everyday-lighting categories, from the garage to the garden.</p>
     <p class="c-hero-sub">From the garage to the garden, from the campsite to the cocktail party — Archipelago's residential and retail capabilities, organized the way your shoppers actually browse.</p>
     <div class="c-hero-meta">
       <span><strong>6</strong> categories</span>
@@ -124,7 +141,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <div class="c-retail-stat"><span class="c-retail-stat-val">9</span><span class="c-retail-stat-lbl">National retail accounts</span></div>
       <div class="c-retail-stat"><span class="c-retail-stat-val">30+</span><span class="c-retail-stat-lbl">Years supplying shelves</span></div>
       <div class="c-retail-stat"><span class="c-retail-stat-val">85M+</span><span class="c-retail-stat-lbl">Units shipped</span></div>
-      <div class="c-retail-stat"><span class="c-retail-stat-val">5</span><span class="c-retail-stat-lbl">US warehouses</span></div>
+      <!-- §1 production footprint stat (consumer-page-only; replaces warehouse stat per v27x) -->
+      <div class="c-retail-stat c-retail-stat--production">
+        <span class="c-retail-stat-val c-retail-stat-val--sm">US · Thailand · China · Vietnam · Mexico*</span>
+        <span class="c-retail-stat-lbl">Global production footprint</span>
+      </div>
+      <p class="c-stat-footnote">*Mexico: C&amp;I segment only.</p>
     </div>
     <div class="c-retail-grid-eyebrow">National Big-Box Retailers</div>
     <div class="c-retail-grid">
@@ -151,7 +173,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       Section 01 · Home
       <span class="c-seg-num">01 / 06</span>
     </div>
-    <h2 class="c-seg-title">The catchall aisle — and the broadest reach.</h2>
+    <!-- §3 category section header -->
+    <h2 class="c-seg-heading">Home</h2>
+    <!-- §8 category image slot — supply: /images/consumer/home-lifestyle.jpg -->
+    <div class="c-seg-img-slot" aria-hidden="true">
+      <!-- <img src="/images/consumer/home-lifestyle.jpg" alt="Home lighting" class="c-seg-img" /> -->
+      <div class="c-seg-img-placeholder" data-aisle="home"></div>
+    </div>
+    <p class="c-seg-tagline">The catchall aisle — and the broadest reach.</p>
     <p class="c-seg-lead">Garage lights, security floods, pathway markers, shop fixtures — everyday lighting that lives in every American home and the home-improvement aisle that supplies it.</p>
     <p class="c-seg-body">Built for the homeowner who knows what they need. Built for the retailer who needs SKUs that move. Impulse-friendly shop lights. Photocell-controlled security floods. Pathway lighting that borrows control know-how from commercial.</p>
     <div class="c-expanding">
@@ -163,7 +192,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </ul>
     </div>
     <div class="c-seg-ctas">
-      <a href="/support/catalog-request?aisle=home" class="c-btn-primary">Browse Home Catalog</a>
+      <!-- §5 retailer scaffold: home -->
+      {(() => { const s = getBrowseState(catMap['home']); return s.state === 'disabled' ? (<button class="c-btn-primary c-btn-coming-soon" disabled aria-disabled="true">Retailers coming soon</button>) : s.state === 'single' ? (<a href={s.url} class="c-btn-primary" target="_blank" rel="noopener">Shop Home</a>) : (<details class="c-retailer-chooser"><summary class="c-btn-primary">Shop Home</summary><ul class="c-retailer-list">{s.retailers.map((r: any) => (<li><a href={r.url} target="_blank" rel="noopener">{r.name}</a></li>))}</ul></details>); })()}
       <a href="/find-a-distributor" class="c-btn-secondary">Find a Retailer</a>
     </div>
   </div>
@@ -204,7 +234,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       Section 02 · Garden &amp; Horticultural
       <span class="c-seg-num">02 / 06</span>
     </div>
-    <h2 class="c-seg-title">Grow lights for the serious gardener.</h2>
+    <!-- §3 category section header -->
+    <h2 class="c-seg-heading">Garden</h2>
+    <!-- §8 category image slot — supply: /images/consumer/garden-lifestyle.jpg -->
+    <div class="c-seg-img-slot" aria-hidden="true">
+      <!-- <img src="/images/consumer/garden-lifestyle.jpg" alt="Garden lighting" class="c-seg-img" /> -->
+      <div class="c-seg-img-placeholder" data-aisle="garden"></div>
+    </div>
+    <p class="c-seg-tagline">Grow lights for the serious gardener.</p>
     <p class="c-seg-lead">PolyGrow horticultural fixtures. Outdoor garden ambient lighting. Pathway and accent for the landscape that gets curated, not just maintained.</p>
     <p class="c-seg-body">The serious home gardener needs lighting the big-box generic LED aisle doesn't carry. PAR-tuned spectrum options, full-spectrum vegetative, and bloom-stage fixtures — plus outdoor accent / pathway for customers who care how the garden looks at night.</p>
     <div class="c-expanding">
@@ -215,7 +252,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </ul>
     </div>
     <div class="c-seg-ctas">
-      <a href="/support/catalog-request?aisle=garden" class="c-btn-primary">Browse Garden Catalog</a>
+      <!-- §5 retailer scaffold: garden -->
+      {(() => { const s = getBrowseState(catMap['garden']); return s.state === 'disabled' ? (<button class="c-btn-primary c-btn-coming-soon" disabled aria-disabled="true">Retailers coming soon</button>) : s.state === 'single' ? (<a href={s.url} class="c-btn-primary" target="_blank" rel="noopener">Shop Garden</a>) : (<details class="c-retailer-chooser"><summary class="c-btn-primary">Shop Garden</summary><ul class="c-retailer-list">{s.retailers.map((r: any) => (<li><a href={r.url} target="_blank" rel="noopener">{r.name}</a></li>))}</ul></details>); })()}
       <a href="/collections/polygrow" class="c-btn-secondary">Explore PolyGrow</a>
     </div>
   </div>
@@ -246,7 +284,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       Section 03 · Work
       <span class="c-seg-num">03 / 06</span>
     </div>
-    <h2 class="c-seg-title">Job-site lighting that takes a hit.</h2>
+    <!-- §3 category section header -->
+    <h2 class="c-seg-heading">Work</h2>
+    <!-- §8 category image slot — supply: /images/consumer/work-lifestyle.jpg -->
+    <div class="c-seg-img-slot" aria-hidden="true">
+      <!-- <img src="/images/consumer/work-lifestyle.jpg" alt="Work lighting" class="c-seg-img" /> -->
+      <div class="c-seg-img-placeholder" data-aisle="work"></div>
+    </div>
+    <p class="c-seg-tagline">Job-site lighting that takes a hit.</p>
     <p class="c-seg-lead">Portable work lights. Magnetic shop lights. Temporary job-site fixtures. The lighting that goes in the back of the truck and comes home with paint on it.</p>
     <p class="c-seg-body">Built for the contractor who's tired of renting job-site lighting and decided to buy once. Drop-resistant housings. Magnetic mounts. Corded options for the trades that wire as they go.</p>
     <div class="c-expanding">
@@ -257,7 +302,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </ul>
     </div>
     <div class="c-seg-ctas">
-      <a href="/support/catalog-request?aisle=work" class="c-btn-primary">Browse Work Catalog</a>
+      <!-- §5 retailer scaffold: work -->
+      {(() => { const s = getBrowseState(catMap['work']); return s.state === 'disabled' ? (<button class="c-btn-primary c-btn-coming-soon" disabled aria-disabled="true">Retailers coming soon</button>) : s.state === 'single' ? (<a href={s.url} class="c-btn-primary" target="_blank" rel="noopener">Shop Work</a>) : (<details class="c-retailer-chooser"><summary class="c-btn-primary">Shop Work</summary><ul class="c-retailer-list">{s.retailers.map((r: any) => (<li><a href={r.url} target="_blank" rel="noopener">{r.name}</a></li>))}</ul></details>); })()}
       <a href="/support/for-contractors" class="c-btn-secondary">For Contractors</a>
     </div>
   </div>
@@ -286,7 +332,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       Section 04 · Auto &amp; Utility
       <span class="c-seg-num">04 / 06</span>
     </div>
-    <h2 class="c-seg-title">Trouble lights for the trouble-shooter.</h2>
+    <!-- §3 category section header -->
+    <h2 class="c-seg-heading">Auto</h2>
+    <!-- §8 category image slot — supply: /images/consumer/auto-lifestyle.jpg -->
+    <div class="c-seg-img-slot" aria-hidden="true">
+      <!-- <img src="/images/consumer/auto-lifestyle.jpg" alt="Auto lighting" class="c-seg-img" /> -->
+      <div class="c-seg-img-placeholder" data-aisle="auto"></div>
+    </div>
+    <p class="c-seg-tagline">Trouble lights for the trouble-shooter.</p>
     <p class="c-seg-lead">Inspection lighting. Mobile mechanic essentials. Truck-bed work lights — the aisle that lives next to the OBD-II scanner.</p>
     <p class="c-seg-body">Dropped-from-the-hood-prop tested. Magnetic mounts that stick to fenders. Hooks that hang anywhere. Cords long enough to reach the rear differential. New section, real products — starting with our 75-watt trouble light.</p>
     <!-- Featured product: CTL75-M -->
@@ -307,7 +360,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <a href="/support/sample-request?sku=CTL75-M" class="c-fp-cta">View Product</a>
     </div>
     <div class="c-seg-ctas">
-      <a href="/support/catalog-request?aisle=auto" class="c-btn-primary">Browse Auto Catalog</a>
+      <!-- §5 retailer scaffold: auto -->
+      {(() => { const s = getBrowseState(catMap['auto']); return s.state === 'disabled' ? (<button class="c-btn-primary c-btn-coming-soon" disabled aria-disabled="true">Retailers coming soon</button>) : s.state === 'single' ? (<a href={s.url} class="c-btn-primary" target="_blank" rel="noopener">Shop Auto</a>) : (<details class="c-retailer-chooser"><summary class="c-btn-primary">Shop Auto</summary><ul class="c-retailer-list">{s.retailers.map((r: any) => (<li><a href={r.url} target="_blank" rel="noopener">{r.name}</a></li>))}</ul></details>); })()}
       <a href="/find-a-distributor" class="c-btn-secondary">Find a Retailer</a>
     </div>
   </div>
@@ -338,7 +392,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       Section 05 · Camping &amp; Outdoor Recreation
       <span class="c-seg-num">05 / 06</span>
     </div>
-    <h2 class="c-seg-title">Solar work lights off the grid.</h2>
+    <!-- §3 category section header -->
+    <h2 class="c-seg-heading">Camping</h2>
+    <!-- §8 category image slot — supply: /images/consumer/camping-lifestyle.jpg -->
+    <div class="c-seg-img-slot" aria-hidden="true">
+      <!-- <img src="/images/consumer/camping-lifestyle.jpg" alt="Camping lighting" class="c-seg-img" /> -->
+      <div class="c-seg-img-placeholder" data-aisle="camping"></div>
+    </div>
+    <p class="c-seg-tagline">Solar work lights off the grid.</p>
     <p class="c-seg-lead">USB-solar charged. Real output. Real runtime. Compact form factors that earn a spot in the gear bin.</p>
     <p class="c-seg-body">Built for overlanders who care about specs more than packaging claims: real lumens, USB-C charging, solar topping during daylight, and mounts that work on tents and rigs.</p>
     <!-- Featured product: SWL-1000 -->
@@ -367,7 +428,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </ul>
     </div>
     <div class="c-seg-ctas">
-      <a href="/support/catalog-request?aisle=camping" class="c-btn-primary">Browse Camping Catalog</a>
+      <!-- §5 retailer scaffold: camping -->
+      {(() => { const s = getBrowseState(catMap['camping']); return s.state === 'disabled' ? (<button class="c-btn-primary c-btn-coming-soon" disabled aria-disabled="true">Retailers coming soon</button>) : s.state === 'single' ? (<a href={s.url} class="c-btn-primary" target="_blank" rel="noopener">Shop Camping</a>) : (<details class="c-retailer-chooser"><summary class="c-btn-primary">Shop Camping</summary><ul class="c-retailer-list">{s.retailers.map((r: any) => (<li><a href={r.url} target="_blank" rel="noopener">{r.name}</a></li>))}</ul></details>); })()}
       <a href="/find-a-distributor" class="c-btn-secondary">Find a Retailer</a>
     </div>
   </div>
@@ -399,7 +461,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       Section 06 · Party &amp; Decorative
       <span class="c-seg-num">06 / 06</span>
     </div>
-    <h2 class="c-seg-title">String lights for the long evening.</h2>
+    <!-- §3 category section header -->
+    <h2 class="c-seg-heading">Party</h2>
+    <!-- §8 category image slot — supply: /images/consumer/party-lifestyle.jpg -->
+    <div class="c-seg-img-slot" aria-hidden="true">
+      <!-- <img src="/images/consumer/party-lifestyle.jpg" alt="Party lighting" class="c-seg-img" /> -->
+      <div class="c-seg-img-placeholder" data-aisle="party"></div>
+    </div>
+    <p class="c-seg-tagline">String lights for the long evening.</p>
     <p class="c-seg-lead">LED festoon. Bistro string lights. Café-style decorative that survives more than one season.</p>
     <p class="c-seg-body">The category is dominated by single-use seasonal junk. We make the version that survives backyard parties, winter holidays, and the wedding season. Commercial-grade shells in residential SKU sizes. Outdoor cord constructions. Shatter-resistant materials.</p>
     <div class="c-expanding">
@@ -410,7 +479,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </ul>
     </div>
     <div class="c-seg-ctas">
-      <a href="/support/catalog-request?aisle=party" class="c-btn-primary">Browse Party Catalog</a>
+      <!-- §5 retailer scaffold: party -->
+      {(() => { const s = getBrowseState(catMap['party']); return s.state === 'disabled' ? (<button class="c-btn-primary c-btn-coming-soon" disabled aria-disabled="true">Retailers coming soon</button>) : s.state === 'single' ? (<a href={s.url} class="c-btn-primary" target="_blank" rel="noopener">Shop Party</a>) : (<details class="c-retailer-chooser"><summary class="c-btn-primary">Shop Party</summary><ul class="c-retailer-list">{s.retailers.map((r: any) => (<li><a href={r.url} target="_blank" rel="noopener">{r.name}</a></li>))}</ul></details>); })()}
       <a href="/collections/string-lights" class="c-btn-secondary">Explore String Lights</a>
     </div>
   </div>
@@ -434,6 +504,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </svg>
   </div>
 </section>
+
+<!-- ============================================================
+     TRUSTED BY RETAIL AMERICA — §7 reuse of HomeRetailProof component
+     ============================================================ -->
+<HomeRetailProof />
 
 <!-- ============================================================
      CAPABILITY PROOF
@@ -1421,6 +1496,189 @@ html {
   .c-subnav { grid-template-columns: repeat(2, 1fr); }
   .c-subnav-item:nth-child(2n) { border-right: 0; }
   .c-subnav-item:nth-child(3n) { border-right: 1px solid var(--ink4); }
+}
+
+/* ============================================================
+   v27x NEW ELEMENTS
+   ============================================================ */
+
+/* §1 production footprint stat */
+.c-retail-stat--production {
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 200px;
+}
+.c-retail-stat-val--sm {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.c-stat-footnote {
+  font-size: 11px;
+  color: var(--ink3);
+  margin: 4px 0 0 0;
+  font-style: italic;
+  grid-column: 1 / -1;
+}
+
+/* §2 hero tagline (Option A subhead) */
+.c-hero-tagline {
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.75);
+  margin: -10px auto 20px;
+  max-width: 600px;
+  line-height: 1.4;
+}
+
+/* §3 category section heading */
+.c-seg-heading {
+  font-family: 'Lato', system-ui, sans-serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 0 0 12px 0;
+  line-height: 1.0;
+  /* inherits section color via parent .c-seg-content */
+}
+.c-seg--home .c-seg-heading { color: var(--c-home); }
+.c-seg--garden .c-seg-heading { color: #9eddb5; }
+.c-seg--work .c-seg-heading { color: var(--c-work); }
+.c-seg--auto .c-seg-heading { color: #7aa6ff; }
+.c-seg--camping .c-seg-heading { color: #7adbb5; }
+.c-seg--party .c-seg-heading { color: #dba9d4; }
+
+/* §3 category tagline (replaces c-seg-title) */
+.c-seg-tagline {
+  font-family: 'Lato', system-ui, sans-serif;
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 600;
+  margin: 0 0 14px 0;
+  line-height: 1.3;
+  opacity: 0.85;
+}
+.c-seg--home .c-seg-tagline { color: var(--ink); }
+.c-seg--garden .c-seg-tagline,
+.c-seg--work .c-seg-tagline,
+.c-seg--auto .c-seg-tagline,
+.c-seg--camping .c-seg-tagline,
+.c-seg--party .c-seg-tagline { color: rgba(255,255,255,0.85); }
+
+/* §4 + §5 Coming soon disabled button */
+.c-btn-coming-soon {
+  background: var(--brand);
+  color: #fff;
+  opacity: 0.55;
+  cursor: not-allowed;
+  border: none;
+  padding: 11px 20px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-family: inherit;
+}
+.c-btn-coming-soon:hover { background: var(--brand); opacity: 0.55; }
+
+/* §5 retailer chooser (multi-retailer state) */
+.c-retailer-chooser {
+  display: inline-block;
+  position: relative;
+}
+.c-retailer-chooser > summary {
+  list-style: none;
+  cursor: pointer;
+}
+.c-retailer-chooser > summary::-webkit-details-marker { display: none; }
+.c-retailer-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--ink4);
+  border-radius: 4px;
+  padding: 6px 0;
+  margin: 0;
+  list-style: none;
+  min-width: 180px;
+  z-index: 50;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+.c-retailer-list li a {
+  display: block;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+}
+.c-retailer-list li a:hover { background: var(--bg2); color: var(--brand); }
+
+/* §8 hero image slot */
+.c-hero-img-slot {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 28px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.c-hero-img-placeholder {
+  height: 240px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.08) 100%);
+  border: 1px dashed rgba(255,255,255,0.15);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.c-hero-img-placeholder::after {
+  content: 'Lifestyle image — asset pending';
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+}
+.c-hero-img { width: 100%; height: 240px; object-fit: cover; border-radius: 8px; }
+
+/* §8 category image slots */
+.c-seg-img-slot {
+  width: 100%;
+  margin: 0 0 16px 0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.c-seg-img-placeholder {
+  height: 140px;
+  border: 1px dashed rgba(255,255,255,0.12);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.03);
+}
+.c-seg--home .c-seg-img-placeholder {
+  border-color: rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.03);
+}
+.c-seg-img-placeholder::after {
+  content: attr(data-aisle) ' lifestyle — asset pending';
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.15);
+}
+.c-seg--home .c-seg-img-placeholder::after { color: rgba(0,0,0,0.15); }
+.c-seg-img { width: 100%; height: 140px; object-fit: cover; border-radius: 6px; }
+
+@media (max-width: 480px) {
+  .c-hero-img-placeholder { height: 160px; }
+  .c-seg-img-placeholder { height: 100px; }
 }
 </style>
 

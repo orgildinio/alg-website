@@ -1,0 +1,18 @@
+{
+  "_comment": "Single source of truth for Consumer & Retail 'Browse by category' buttons. Each category's `retailers` array is empty until James delivers the retailer e-commerce URLs. While a category has zero retailer links, its Browse button renders in a disabled 'Coming soon' state (NOT a dead link). To go live: fill the `retailers` array for a category, rebuild. No code edits, no Manus round-trip.",
+  "_status_rule": "If retailers[] is empty -> button shows 'Coming soon' disabled state. If retailers[] has >=1 entry -> button is active; single entry links direct, multiple entries open a retailer chooser.",
+  "categories": [
+    { "key": "home",    "order": 1, "label": "Home",    "blurb": "Everyday lighting that lives in every American home and the home-improvement aisle that supplies it.", "retailers": [] },
+    { "key": "garden",  "order": 2, "label": "Garden",  "blurb": "Outdoor, pathway, and landscape lighting for the garden and yard.", "retailers": [] },
+    { "key": "work",    "order": 3, "label": "Work",    "blurb": "Shop, garage, and job-site work lighting.", "retailers": [] },
+    { "key": "auto",    "order": 4, "label": "Auto",    "blurb": "Inspection lighting, mobile mechanic essentials, and truck-bed work lights.", "retailers": [] },
+    { "key": "camping", "order": 5, "label": "Camping", "blurb": "Solar work lights and portable lighting for off-the-grid recreation.", "retailers": [] },
+    { "key": "party",   "order": 6, "label": "Party",   "blurb": "String lights and decorative lighting for events and gatherings.", "retailers": [] }
+  ],
+  "retailer_entry_shape": {
+    "_doc": "When James delivers URLs, each retailers[] entry uses this shape.",
+    "name": "Retailer display name (e.g. The Home Depot)",
+    "url": "https://full-product-listing-url",
+    "logo": "optional path to retailer logo asset"
+  }
+}
