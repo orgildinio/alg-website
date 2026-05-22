@@ -1,0 +1,938 @@
+---
+/**
+ * support/library.astro
+ *
+ * Library / Resources page — route: /support/library
+ * Design source: Claude Design "Production Baseline" (V1 artboard)
+ * Re-skinned to ALG canonical tokens per v27x_LibraryPage prompt.
+ *
+ * Data source: src/data/library_catalog.json (single source of truth)
+ * Update path: edit WorkDrive URL Dashboard → Export JSON →
+ *   node scripts/build_library_catalog.mjs → commit regenerated catalog.
+ *
+ * CFG-CHROME-1/2: No inlined header/footer/utility-bar.
+ * BaseLayout injects the shell. This file is CONTENT-ONLY.
+ *
+ * Token re-skin applied (Design → ALG canonical):
+ *   Font family:   Design default → var(--font-sans) = 'Lato', system-ui, sans-serif
+ *   Brand red:     Design accent  → #F32740 (--color-alg-red)
+ *   Warm panel bg: Design cream   → #F5EFE3 (matches .mm-col-main / "Trusted by Retail America" band)
+ *   Active state:  Design green   → #2E7D32 (--color-state-active)
+ *   Ink/text:      Design default → var(--color-ink) = #111111
+ *   Ink-soft:      Design muted   → var(--color-ink-soft) = #444444
+ *   Ink-mute:      Design caption → var(--color-ink-mute) = #6B6B6B
+ *   Border:        Design divider → var(--color-border) = #E5E5E5
+ *   Bg-soft:       Design panel   → var(--color-bg-soft) = #F7F7F7
+ *   Bg-strong:     Design card    → var(--color-bg-strong) = #F0F0F0
+ *
+ * Collateral gap (§4.4): Option 1 — families with doc_count === 0 are hidden.
+ *   Library = documents that exist. Doc-less families are not listed.
+ *
+ * Ⓐ rendering: catalog stores literal Ⓐ; renderAa() wraps it in <span class="aa">.
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import catalogData from '../../data/library_catalog.json';
+
+// ── Data ─────────────────────────────────────────────────────────────────────
+
+const catalog = catalogData.catalog;
+const slotLabels = catalogData.slot_labels;
+
+// Only families with at least one doc (§4.4 option 1)
+const rows = catalog.filter(e => e.doc_count > 0);
+
+// ── Computed filter counts (never hardcoded) ──────────────────────────────────
+
+// Doc type: families with that slot populated
+const docTypeCounts: Record<string, number> = {};
+for (const slot of Object.keys(slotLabels)) {
+  docTypeCounts[slotLabels[slot as keyof typeof slotLabels]] = rows.filter(e => slot in e.docs).length;
+}
+
+// Collection: sum of doc_count per collection
+const collectionCounts: Record<string, number> = {};
+for (const e of rows) {
+  collectionCounts[e.collection] = (collectionCounts[e.collection] || 0) + e.doc_count;
+}
+
+// Vertical: sum of doc_count per vertical
+const verticalCounts: Record<string, number> = {};
+for (const e of rows) {
+  verticalCounts[e.vertical] = (verticalCounts[e.vertical] || 0) + e.doc_count;
+}
+
+// Tier: sum of doc_count per tier (exclude empty-string tier from display)
+const tierCounts: Record<string, number> = {};
+for (const e of rows) {
+  if (e.tier) {
+    tierCounts[e.tier] = (tierCounts[e.tier] || 0) + e.doc_count;
+  }
+}
+
+// Ordered lists for filter rail
+const docTypeOrder = ['Datasheet', 'Install Guide', 'Quick Sheet', 'Sell Sheet', 'IES Bundle'];
+const collectionOrder = Object.entries(collectionCounts)
+  .sort((a, b) => b[1] - a[1])
+  .map(([k]) => k);
+const verticalOrder = ['Indoor', 'Outdoor', 'Residential'];
+const tierOrder = ['ECO', 'PRO', 'PRO+'];
+
+// Total doc count for "All" chip
+const totalDocCount = rows.reduce((sum, e) => sum + e.doc_count, 0);
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+/**
+ * Wrap the Ⓐ glyph in <span class="aa"> for brand-red rendering.
+ * Per site renderAa() convention. No naked Ⓐ in output.
+ */
+function renderAa(text: string): string {
+  return text.replace(/Ⓐ/g, '<span class="aa">Ⓐ</span>');
+}
+
+// Slot display order
+const SLOT_ORDER = ['datasheet', 'install', 'quick', 'sell', 'ies'] as const;
+---
+
+<BaseLayout
+  title="Document Library · Archipelago Lighting Group"
+  description="Download datasheets, install guides, quick sheets, sell sheets, and IES bundles for every ALG product family."
+  bodyClass="page-library"
+>
+  <div class="lib-page">
+
+    {/* ── Breadcrumb ── */}
+    <nav class="lib-breadcrumb" aria-label="Breadcrumb">
+      <div class="lib-breadcrumb-inner">
+        <a href="/">Home</a>
+        <span class="bc-sep">›</span>
+        <a href="/support">Support</a>
+        <span class="bc-sep">›</span>
+        <span class="bc-current">Document Library</span>
+      </div>
+    </nav>
+
+    {/* ── Hero ── */}
+    <header class="lib-hero">
+      <div class="lib-hero-inner">
+        <div class="lib-hero-meta">Support · Document Library</div>
+        <h1 class="lib-hero-h1">Document Library</h1>
+        <p class="lib-hero-deck">
+          Datasheets, install guides, quick sheets, sell sheets, and IES bundles
+          for every <Fragment set:html={renderAa('ⒶLG')} /> product family — one place, always current.
+        </p>
+        <div class="lib-hero-stats">
+          <span class="lib-hero-stat"><strong>{totalDocCount}</strong> documents</span>
+          <span class="lib-hero-stat-sep">·</span>
+          <span class="lib-hero-stat"><strong>{rows.length}</strong> product families</span>
+          <span class="lib-hero-stat-sep">·</span>
+          <span class="lib-hero-stat"><strong>{collectionOrder.length}</strong> collections</span>
+        </div>
+      </div>
+    </header>
+
+    {/* ── Popular chips ── */}
+    <div class="lib-chips-bar">
+      <div class="lib-chips-inner">
+        <span class="lib-chips-label">Quick filter:</span>
+        <button class="lib-chip lib-chip--active" data-filter-type="all" data-filter-value="all">
+          All <span class="lib-chip-count">{totalDocCount}</span>
+        </button>
+        {docTypeOrder.map(dt => (
+          <button class="lib-chip" data-filter-type="doctype" data-filter-value={dt}>
+            {dt} <span class="lib-chip-count">{docTypeCounts[dt] || 0}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    {/* ── Featured 2026 Collection hero band ── */}
+    <div class="lib-featured-band">
+      <div class="lib-featured-inner">
+        <div class="lib-featured-eyebrow">Featured · 2026 Collection</div>
+        <div class="lib-featured-title">
+          <Fragment set:html={renderAa('cityⒶRCH')} /> · <Fragment set:html={renderAa('luxoⒶRCH')} /> · <Fragment set:html={renderAa('planoⒶRCH')} />
+        </div>
+        <p class="lib-featured-sub">
+          Full collateral packages now available — datasheets, install guides, IES bundles, and quick sheets for the 2026 commercial lineup.
+        </p>
+      </div>
+    </div>
+
+    {/* ── Main 3-column layout ── */}
+    <div class="lib-body">
+
+      {/* ── Left rail: Spec Packet + Spec Tools + Filter ── */}
+      <aside class="lib-rail" id="lib-rail">
+
+        {/* Spec Packet */}
+        <div class="lib-rail-card lib-rail-card--cream">
+          <div class="lib-rail-card-eyebrow">Spec Packet</div>
+          <div class="lib-rail-card-title">Full Catalog PDF</div>
+          <p class="lib-rail-card-body">Every datasheet, install guide, and IES bundle in one download. Updated quarterly.</p>
+          <a href="https://workdrive.archipelagolighting.com/external/db01406307e682a18496bacda8a07254e3e96734484ef20c08fb4fc37f2daac6" target="_blank" rel="noopener" class="lib-rail-cta">
+            Download Spec Packet
+          </a>
+        </div>
+
+        {/* Spec Tools */}
+        <div class="lib-rail-card">
+          <div class="lib-rail-card-eyebrow">Spec Tools</div>
+          <ul class="lib-rail-links">
+            <li><a href="/support/rebate-center">Rebate Center</a></li>
+            <li><a href="/specifier">Specifier Hub</a></li>
+            <li><a href="/contractor">Contractor Hub</a></li>
+          </ul>
+        </div>
+
+        {/* Filter rail */}
+        <div class="lib-filter" id="lib-filter">
+
+          <div class="lib-filter-section" id="filter-doctype">
+            <button class="lib-filter-head" aria-expanded="true" aria-controls="filter-doctype-body">
+              <span>Doc Type</span>
+              <svg class="lib-filter-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg>
+            </button>
+            <ul class="lib-filter-list" id="filter-doctype-body">
+              {docTypeOrder.map(dt => (
+                <li>
+                  <label class="lib-filter-item">
+                    <input type="checkbox" class="lib-filter-cb" data-filter-type="doctype" data-filter-value={dt} />
+                    <span class="lib-filter-label">{dt}</span>
+                    <span class="lib-filter-count">{docTypeCounts[dt] || 0}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="lib-filter-section" id="filter-collection">
+            <button class="lib-filter-head" aria-expanded="true" aria-controls="filter-collection-body">
+              <span>Collection</span>
+              <svg class="lib-filter-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg>
+            </button>
+            <ul class="lib-filter-list" id="filter-collection-body">
+              {collectionOrder.map(col => (
+                <li>
+                  <label class="lib-filter-item">
+                    <input type="checkbox" class="lib-filter-cb" data-filter-type="collection" data-filter-value={col} />
+                    <span class="lib-filter-label" set:html={renderAa(col)} />
+                    <span class="lib-filter-count">{collectionCounts[col] || 0}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="lib-filter-section" id="filter-vertical">
+            <button class="lib-filter-head" aria-expanded="false" aria-controls="filter-vertical-body">
+              <span>Vertical</span>
+              <svg class="lib-filter-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg>
+            </button>
+            <ul class="lib-filter-list lib-filter-list--collapsed" id="filter-vertical-body">
+              {verticalOrder.filter(v => verticalCounts[v]).map(v => (
+                <li>
+                  <label class="lib-filter-item">
+                    <input type="checkbox" class="lib-filter-cb" data-filter-type="vertical" data-filter-value={v} />
+                    <span class="lib-filter-label">{v}</span>
+                    <span class="lib-filter-count">{verticalCounts[v] || 0}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="lib-filter-section" id="filter-tier">
+            <button class="lib-filter-head" aria-expanded="false" aria-controls="filter-tier-body">
+              <span>Tier</span>
+              <svg class="lib-filter-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg>
+            </button>
+            <ul class="lib-filter-list lib-filter-list--collapsed" id="filter-tier-body">
+              {tierOrder.filter(t => tierCounts[t]).map(t => (
+                <li>
+                  <label class="lib-filter-item">
+                    <input type="checkbox" class="lib-filter-cb" data-filter-type="tier" data-filter-value={t} />
+                    <span class="lib-filter-label">{t}</span>
+                    <span class="lib-filter-count">{tierCounts[t] || 0}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+        </div>{/* /lib-filter */}
+      </aside>
+
+      {/* ── Document table ── */}
+      <section class="lib-table-wrap" aria-label="Document table">
+        <div class="lib-table-head">
+          <div class="lib-table-count">
+            Showing <span id="lib-visible-count">{rows.length}</span> of {rows.length} families
+          </div>
+          <div class="lib-table-sort-label">Sorted by collection</div>
+        </div>
+
+        <table class="lib-table" id="lib-table">
+          <thead>
+            <tr>
+              <th class="lib-th lib-th--family">Family</th>
+              <th class="lib-th lib-th--collection">Collection</th>
+              <th class="lib-th lib-th--tier">Tier</th>
+              <th class="lib-th lib-th--skus">SKUs</th>
+              <th class="lib-th lib-th--docs">Documents</th>
+            </tr>
+          </thead>
+          <tbody id="lib-tbody">
+            {rows.map(entry => (
+              <tr
+                class="lib-row"
+                data-collection={entry.collection}
+                data-vertical={entry.vertical}
+                data-tier={entry.tier}
+                data-doctypes={Object.keys(entry.docs).map(s => slotLabels[s as keyof typeof slotLabels]).join(',')}
+              >
+                <td class="lib-td lib-td--family">
+                  <span class="lib-family-name">{entry.family}</span>
+                  {entry.application && (
+                    <span class="lib-family-app">{entry.application}</span>
+                  )}
+                </td>
+                <td class="lib-td lib-td--collection">
+                  <span set:html={renderAa(entry.collection)} />
+                </td>
+                <td class="lib-td lib-td--tier">
+                  {entry.tier ? (
+                    <span class={`lib-tier-badge lib-tier-badge--${entry.tier.toLowerCase().replace('+', 'plus')}`}>
+                      {entry.tier}
+                    </span>
+                  ) : (
+                    <span class="lib-tier-badge lib-tier-badge--none">—</span>
+                  )}
+                </td>
+                <td class="lib-td lib-td--skus">
+                  <span class="lib-sku-count">{entry.sku_count} SKUs</span>
+                </td>
+                <td class="lib-td lib-td--docs">
+                  <div class="lib-doc-links">
+                    {SLOT_ORDER.filter(slot => slot in entry.docs).map(slot => {
+                      const doc = entry.docs[slot as keyof typeof entry.docs] as { label: string; url: string };
+                      return (
+                        <a
+                          href={doc.url}
+                          target="_blank"
+                          rel="noopener"
+                          class={`lib-doc-link lib-doc-link--${slot}`}
+                          aria-label={`${entry.family} ${doc.label}`}
+                        >
+                          {doc.label}
+                        </a>
+                      );
+                    })}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div class="lib-table-empty" id="lib-empty" style="display:none">
+          <p>No documents match the selected filters.</p>
+          <button class="lib-clear-btn" id="lib-clear-btn">Clear filters</button>
+        </div>
+      </section>
+
+    </div>{/* /lib-body */}
+  </div>{/* /lib-page */}
+</BaseLayout>
+
+<style>
+/* ── Library page styles ─────────────────────────────────────────────────────
+   All tokens sourced from brand.css / global.css — no hardcoded values.
+   Brand red: var(--color-alg-red) = #F32740
+   Warm cream: #F5EFE3 (matches .mm-col-main)
+   Font: var(--font-sans) = 'Lato', system-ui, sans-serif
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.page-library {
+  background: var(--color-bg);
+}
+
+/* Breadcrumb */
+.lib-breadcrumb {
+  background: var(--color-bg-soft);
+  border-bottom: 1px solid var(--color-border);
+}
+.lib-breadcrumb-inner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+  padding-block: 10px;
+  font-size: 0.8125rem;
+  color: var(--color-ink-mute);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.lib-breadcrumb-inner a {
+  color: var(--color-ink-soft);
+  text-decoration: none;
+}
+.lib-breadcrumb-inner a:hover { color: var(--color-alg-red); }
+.bc-sep { color: var(--color-border-strong); }
+.bc-current { color: var(--color-ink); font-weight: 600; }
+
+/* Hero */
+.lib-hero {
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: clamp(32px, 5vw, 56px);
+}
+.lib-hero-inner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+.lib-hero-meta {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-alg-red);
+  margin-bottom: 10px;
+}
+.lib-hero-h1 {
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin: 0 0 12px;
+}
+.lib-hero-deck {
+  font-size: 1rem;
+  color: var(--color-ink-soft);
+  max-width: 620px;
+  margin: 0 0 20px;
+  line-height: 1.6;
+}
+.lib-hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--color-ink-mute);
+}
+.lib-hero-stat strong { color: var(--color-ink); font-weight: 700; }
+.lib-hero-stat-sep { color: var(--color-border-strong); }
+
+/* Chips bar */
+.lib-chips-bar {
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: 12px;
+}
+.lib-chips-inner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.lib-chips-label {
+  font-size: 0.8125rem;
+  color: var(--color-ink-mute);
+  font-weight: 600;
+  margin-right: 4px;
+}
+.lib-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  transition: background 120ms, border-color 120ms, color 120ms;
+}
+.lib-chip:hover {
+  border-color: var(--color-alg-red);
+  color: var(--color-alg-red);
+}
+.lib-chip--active {
+  background: var(--color-alg-red);
+  border-color: var(--color-alg-red);
+  color: #fff;
+  font-weight: 600;
+}
+.lib-chip--active:hover {
+  background: var(--color-alg-red-dark);
+  border-color: var(--color-alg-red-dark);
+  color: #fff;
+}
+.lib-chip-count {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+/* Featured band */
+.lib-featured-band {
+  background: #F5EFE3;
+  border-bottom: 1px solid var(--color-border);
+  padding-block: 20px;
+}
+.lib-featured-inner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+.lib-featured-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-alg-red);
+  margin-bottom: 4px;
+}
+.lib-featured-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-bottom: 4px;
+}
+.lib-featured-sub {
+  font-size: 0.875rem;
+  color: var(--color-ink-soft);
+  margin: 0;
+}
+
+/* Body layout */
+.lib-body {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+  padding-block: 32px;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .lib-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Rail */
+.lib-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: calc(var(--header-bottom, 90px) + 16px);
+}
+
+/* Rail cards */
+.lib-rail-card {
+  background: var(--color-bg-soft);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 16px;
+}
+.lib-rail-card--cream {
+  background: #F5EFE3;
+  border-color: #e0d5c3;
+}
+.lib-rail-card-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-alg-red);
+  margin-bottom: 4px;
+}
+.lib-rail-card-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-bottom: 6px;
+}
+.lib-rail-card-body {
+  font-size: 0.8125rem;
+  color: var(--color-ink-soft);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+.lib-rail-cta {
+  display: inline-block;
+  padding: 7px 14px;
+  background: var(--color-alg-red);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 120ms;
+}
+.lib-rail-cta:hover {
+  background: var(--color-alg-red-dark);
+  color: #fff;
+}
+.lib-rail-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.lib-rail-links a {
+  font-size: 0.875rem;
+  color: var(--color-ink-soft);
+  text-decoration: none;
+  padding: 4px 0;
+  display: block;
+}
+.lib-rail-links a:hover { color: var(--color-alg-red); }
+
+/* Filter */
+.lib-filter {
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.lib-filter-section {
+  border-bottom: 1px solid var(--color-border);
+}
+.lib-filter-section:last-child { border-bottom: none; }
+.lib-filter-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--color-bg);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  text-align: left;
+  transition: background 120ms;
+}
+.lib-filter-head:hover { background: var(--color-bg-soft); }
+.lib-filter-chevron {
+  width: 14px;
+  height: 14px;
+  color: var(--color-ink-mute);
+  transition: transform 200ms;
+  flex-shrink: 0;
+}
+.lib-filter-head[aria-expanded="false"] .lib-filter-chevron {
+  transform: rotate(-90deg);
+}
+.lib-filter-list {
+  list-style: none;
+  padding: 6px 0;
+  margin: 0;
+  background: var(--color-bg);
+}
+.lib-filter-list--collapsed { display: none; }
+.lib-filter-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  cursor: pointer;
+  font-size: 0.8125rem;
+  color: var(--color-ink-soft);
+  transition: background 100ms;
+}
+.lib-filter-item:hover { background: var(--color-bg-soft); }
+.lib-filter-cb {
+  accent-color: var(--color-alg-red);
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.lib-filter-label { flex: 1; }
+.lib-filter-count {
+  font-size: 0.75rem;
+  color: var(--color-ink-mute);
+  background: var(--color-bg-strong);
+  padding: 1px 6px;
+  border-radius: 10px;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* Table */
+.lib-table-wrap {
+  min-width: 0;
+}
+.lib-table-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 0.8125rem;
+  color: var(--color-ink-mute);
+}
+.lib-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.lib-th {
+  text-align: left;
+  padding: 8px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-ink-mute);
+  border-bottom: 2px solid var(--color-border);
+  white-space: nowrap;
+}
+.lib-th--docs { min-width: 260px; }
+.lib-row {
+  border-bottom: 1px solid var(--color-border);
+  transition: background 100ms;
+}
+.lib-row:hover { background: var(--color-bg-soft); }
+.lib-row[data-hidden="true"] { display: none; }
+.lib-td {
+  padding: 10px 10px;
+  vertical-align: middle;
+  color: var(--color-ink);
+}
+.lib-family-name {
+  font-weight: 600;
+  display: block;
+}
+.lib-family-app {
+  font-size: 0.75rem;
+  color: var(--color-ink-mute);
+  display: block;
+  margin-top: 2px;
+}
+.lib-sku-count {
+  font-size: 0.75rem;
+  color: var(--color-ink-mute);
+  white-space: nowrap;
+}
+
+/* Tier badges */
+.lib-tier-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.lib-tier-badge--eco  { background: #E8F5E9; color: #1B5E20; }
+.lib-tier-badge--pro  { background: #E3F2FD; color: #0D47A1; }
+.lib-tier-badge--proplus { background: #F3E5F5; color: #4A148C; }
+.lib-tier-badge--none { background: var(--color-bg-strong); color: var(--color-ink-mute); }
+
+/* Doc links */
+.lib-doc-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.lib-doc-link {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--color-border);
+  color: var(--color-ink-soft);
+  background: var(--color-bg);
+  transition: background 100ms, border-color 100ms, color 100ms;
+  white-space: nowrap;
+}
+.lib-doc-link:hover {
+  background: var(--color-alg-red);
+  border-color: var(--color-alg-red);
+  color: #fff;
+}
+
+/* Empty state */
+.lib-table-empty {
+  padding: 48px 0;
+  text-align: center;
+  color: var(--color-ink-mute);
+}
+.lib-clear-btn {
+  margin-top: 12px;
+  padding: 8px 20px;
+  background: var(--color-alg-red);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.lib-clear-btn:hover { background: var(--color-alg-red-dark); }
+</style>
+
+<script>
+// ── Library page filter logic ─────────────────────────────────────────────────
+// Pure client-side filtering — no server round-trip.
+// Active filters are stored in a Set per dimension; rows are shown/hidden
+// based on whether they match ALL active filter dimensions (AND logic across
+// dimensions, OR logic within a dimension).
+
+(function () {
+  const tbody     = document.getElementById('lib-tbody');
+  const emptyMsg  = document.getElementById('lib-empty');
+  const countEl   = document.getElementById('lib-visible-count');
+  const clearBtn  = document.getElementById('lib-clear-btn');
+
+  if (!tbody) return;
+
+  const rows = Array.from(tbody.querySelectorAll('tr.lib-row'));
+
+  // Active filters: { doctype: Set, collection: Set, vertical: Set, tier: Set }
+  const active = {
+    doctype:    new Set(),
+    collection: new Set(),
+    vertical:   new Set(),
+    tier:       new Set(),
+  };
+
+  function applyFilters() {
+    let visible = 0;
+    for (const row of rows) {
+      const col      = row.dataset.collection || '';
+      const vert     = row.dataset.vertical   || '';
+      const tier     = row.dataset.tier       || '';
+      const doctypes = (row.dataset.doctypes  || '').split(',').filter(Boolean);
+
+      const matchDoctype    = active.doctype.size    === 0 || [...active.doctype].some(v => doctypes.includes(v));
+      const matchCollection = active.collection.size === 0 || active.collection.has(col);
+      const matchVertical   = active.vertical.size   === 0 || active.vertical.has(vert);
+      const matchTier       = active.tier.size       === 0 || active.tier.has(tier);
+
+      const show = matchDoctype && matchCollection && matchVertical && matchTier;
+      row.dataset.hidden = show ? 'false' : 'true';
+      if (show) visible++;
+    }
+    if (countEl) countEl.textContent = String(visible);
+    if (emptyMsg) emptyMsg.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  // Checkbox filters
+  document.querySelectorAll('.lib-filter-cb').forEach(cb => {
+    cb.addEventListener('change', function () {
+      const el   = this as HTMLInputElement;
+      const type = el.dataset.filterType as keyof typeof active;
+      const val  = el.dataset.filterValue || '';
+      if (el.checked) {
+        active[type].add(val);
+      } else {
+        active[type].delete(val);
+      }
+      applyFilters();
+      syncChips();
+    });
+  });
+
+  // Chip filters
+  document.querySelectorAll('.lib-chip').forEach(chip => {
+    chip.addEventListener('click', function () {
+      const el   = this as HTMLButtonElement;
+      const type = el.dataset.filterType || '';
+      const val  = el.dataset.filterValue || '';
+
+      if (type === 'all') {
+        clearAll();
+        return;
+      }
+
+      // Toggle chip active state
+      const isActive = el.classList.contains('lib-chip--active');
+      if (isActive) {
+        el.classList.remove('lib-chip--active');
+        (active as any)[type]?.delete(val);
+      } else {
+        el.classList.add('lib-chip--active');
+        (active as any)[type]?.add(val);
+      }
+
+      // Sync corresponding checkbox
+      const cb = document.querySelector(`.lib-filter-cb[data-filter-type="${type}"][data-filter-value="${val}"]`) as HTMLInputElement | null;
+      if (cb) cb.checked = !isActive;
+
+      // Deactivate "All" chip if any filter is active
+      const allChip = document.querySelector('.lib-chip[data-filter-type="all"]');
+      if (allChip) {
+        const anyActive = Object.values(active).some(s => s.size > 0);
+        allChip.classList.toggle('lib-chip--active', !anyActive);
+      }
+
+      applyFilters();
+    });
+  });
+
+  // Collapsible filter sections
+  document.querySelectorAll('.lib-filter-head').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const el       = this as HTMLButtonElement;
+      const expanded = el.getAttribute('aria-expanded') === 'true';
+      el.setAttribute('aria-expanded', String(!expanded));
+      const bodyId = el.getAttribute('aria-controls');
+      if (bodyId) {
+        const body = document.getElementById(bodyId);
+        if (body) body.classList.toggle('lib-filter-list--collapsed', expanded);
+      }
+    });
+  });
+
+  function clearAll() {
+    // Reset all checkboxes
+    document.querySelectorAll('.lib-filter-cb').forEach(cb => {
+      (cb as HTMLInputElement).checked = false;
+    });
+    // Reset active sets
+    for (const key of Object.keys(active)) {
+      (active as any)[key].clear();
+    }
+    // Reset chips
+    document.querySelectorAll('.lib-chip').forEach(c => c.classList.remove('lib-chip--active'));
+    const allChip = document.querySelector('.lib-chip[data-filter-type="all"]');
+    if (allChip) allChip.classList.add('lib-chip--active');
+    applyFilters();
+  }
+
+  function syncChips() {
+    document.querySelectorAll('.lib-chip[data-filter-type="doctype"]').forEach(chip => {
+      const el  = chip as HTMLButtonElement;
+      const val = el.dataset.filterValue || '';
+      el.classList.toggle('lib-chip--active', active.doctype.has(val));
+    });
+    const anyActive = Object.values(active).some(s => s.size > 0);
+    const allChip = document.querySelector('.lib-chip[data-filter-type="all"]');
+    if (allChip) allChip.classList.toggle('lib-chip--active', !anyActive);
+  }
+
+  if (clearBtn) clearBtn.addEventListener('click', clearAll);
+})();
+</script>

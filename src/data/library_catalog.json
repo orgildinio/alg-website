@@ -1,0 +1,2752 @@
+{
+  "generated_from": "wd_url_dashboard.html (seedData) as of 2026-05-22",
+  "slot_labels": {
+    "datasheet": "Datasheet",
+    "install": "Install Guide",
+    "quick": "Quick Sheet",
+    "sell": "Sell Sheet",
+    "ies": "IES Bundle"
+  },
+  "totals": {
+    "collections": 16,
+    "family_groups": 155,
+    "sku_count_sum": 1731,
+    "doc_urls_total": 227
+  },
+  "facets": {
+    "collection": {
+      "ALGservice": 0,
+      "cityⒶRCH": 25,
+      "compⒶNENTS": 0,
+      "constⒶNT": 0,
+      "contrⒶLS": 0,
+      "demⒶCASE": 0,
+      "Décor nostⒶLGIC": 0,
+      "Décor signⒶTURE": 0,
+      "Décor vintⒶGE": 0,
+      "lamparⒶRCH": 36,
+      "luxoⒶRCH": 47,
+      "multi-fⒶMILY": 36,
+      "planoⒶRCH": 44,
+      "signⒶTURE": 0,
+      "tubulⒶRCH": 39,
+      "Utility signⒶTURE": 0
+    },
+    "vertical": {
+      "Supplement": 0,
+      "Outdoor": 72,
+      "Residential": 36,
+      "Indoor": 119
+    },
+    "tier": {
+      "": 40,
+      "PRO": 81,
+      "PRO+": 23,
+      "ECO": 83
+    },
+    "doc_type": {
+      "Datasheet": 81,
+      "Install Guide": 64,
+      "Quick Sheet": 32,
+      "Sell Sheet": 32,
+      "IES Bundle": 18
+    }
+  },
+  "catalog": [
+    {
+      "collection": "ALGservice",
+      "vertical": "Supplement",
+      "application": "",
+      "tier": "",
+      "family": "ⒶLGservice",
+      "full_path": "Supplement | ⒶLGservice",
+      "sku_count": 39,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "cityⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Bollard",
+      "tier": "PRO",
+      "family": "Sentry",
+      "full_path": "Outdoor | cityⒶRCH | Bollard | PRO | Sentry",
+      "sku_count": 22,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/0616046cb0068a8f3c6a19d53ce2fc21b8137f03d9439f7aca2c163a1be0e225"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/36186c1228b2adc67671b68a6fab6aaacbd8009df2a870e84ebf15e3622eb534"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/f42b37fabf7205ed1a4a7cab96a340ec4dd4171b2e379c6ff9a0b45ba0c137ce"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/2e271ab35b7445f3ec6ba66d5eed738fd2570f5e1c75351431c8c0812b845b19"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "cityⒶRCH",
+      "vertical": "Outdoor",
+      "application": "High Mast",
+      "tier": "PRO+",
+      "family": "OmniMax",
+      "full_path": "Outdoor | cityⒶRCH | High Mast | PRO+ | OmniMax",
+      "sku_count": 10,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/ef2c8e3cc2eb0853da4e8e00e4d7f02dfb52d9340352b51a78f86dd0a102f9d2"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/797d1f24473700ce0036307dd7cd9aef3d6800e0c9712082e7cf974f49039b13"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/041e8f6e0a6b108f0497c46d502954992f2a6cd53817e552ab97f80e457cd659"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/5123d9eb323901e9a014d87fc88e44af4f2c02452c0da6b890c28a4d5ff6a98b"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "cityⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Pole",
+      "tier": "",
+      "family": "Hyperion",
+      "full_path": "Outdoor | cityⒶRCH | Pole | Direct Burial | Hyperion",
+      "sku_count": 1,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "cityⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Pole",
+      "tier": "",
+      "family": "Redwood",
+      "full_path": "Outdoor | cityⒶRCH | Pole | Redwood",
+      "sku_count": 4,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "cityⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Pole",
+      "tier": "",
+      "family": "Sequoia",
+      "full_path": "Outdoor | cityⒶRCH | Pole | Sequoia",
+      "sku_count": 7,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "cityⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Pole",
+      "tier": "",
+      "family": "Alpine",
+      "full_path": "Outdoor | cityⒶRCH | Pole | Surface Mount | Alpine",
+      "sku_count": 23,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "cityⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Pole",
+      "tier": "",
+      "family": "Centurion",
+      "full_path": "Outdoor | cityⒶRCH | Pole | Tapered | Centurion",
+      "sku_count": 1,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "cityⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Post Top",
+      "tier": "ECO",
+      "family": "Unity",
+      "full_path": "Outdoor | cityⒶRCH | Post Top | ECO | Unity",
+      "sku_count": 2,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/a72715426df492aeca156a4be77a8525a7f6626677069370b21ff6d098d5ab29"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/38a2a3249ccde40dc7cdc498c8f26283a0b85b84c0375eba371cd202b4d6945c"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/45ca9a0940c6997d56e5478368222af0a38a4f86b8e51db6e6724db67963f0d9"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/c0161f092517e5cd39e5e9232410eb681412ee3664ad8e98a21ec1f3cb9962a1"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "cityⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Post Top",
+      "tier": "PRO",
+      "family": "Symmetry",
+      "full_path": "Outdoor | cityⒶRCH | Post Top | PRO | Symmetry",
+      "sku_count": 29,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/f463b2830699042f4be1f07b61c845a9543de794562954decfa5f70c28965eb0"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/20a934c9285aa04d8009eb03bab80ce9f6897d8a2f61ff96e15db6c41f99eaa3"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/b13c6583c2484c470613e5f1506efdade4d73acab6ead838220b61ae1c8a3838"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/1a55938bcd670ee02b6a9c47a64670125d4d64b803727ba0b1ad8c10328e1b5c"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "cityⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Roadway",
+      "tier": "PRO",
+      "family": "Abbey-I",
+      "full_path": "Outdoor | cityⒶRCH | Roadway | PRO | Abbey-I",
+      "sku_count": 11,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/a6fd7bffe24a19efdac5d677192967d634a652c121b856f5838be5579f044b7f"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/5a79a12325796c3d0cf8bfbb84ca6994c47ea4e6495fedec6996da5a5d8fdb15"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/fed99482f6e9bd7ab42a23132eb9423effcde215355e3183e4aace2b2197fdfe"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/6cc5ccb773658836512506f5eb0011a9912fe9b6deb84498a06426d3e3d48b0a"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "cityⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Roadway",
+      "tier": "PRO",
+      "family": "Abbey-II",
+      "full_path": "Outdoor | cityⒶRCH | Roadway | PRO | Abbey-II",
+      "sku_count": 12,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/a6fd7bffe24a19efdac5d677192967d634a652c121b856f5838be5579f044b7f"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/5a79a12325796c3d0cf8bfbb84ca6994c47ea4e6495fedec6996da5a5d8fdb15"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/fed99482f6e9bd7ab42a23132eb9423effcde215355e3183e4aace2b2197fdfe"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "cityⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Street Sign Lamp",
+      "tier": "ECO",
+      "family": "LY-T10",
+      "full_path": "Outdoor | cityⒶRCH | Street Sign Lamp | ECO | LY-T10",
+      "sku_count": 4,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/7c5770050db07b17fbbe46bd6355d75c68280f5d7b2aca75f5e10f842413d429"
+        }
+      },
+      "doc_count": 1
+    },
+    {
+      "collection": "cityⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Traffic Control Lamp",
+      "tier": "PRO",
+      "family": "LPAR Series",
+      "full_path": "Outdoor | cityⒶRCH | Traffic Control Lamp | PRO | LPAR Series",
+      "sku_count": 3,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/2716170a47ea7592faba911cd7a28b29bb7b9cf3cfa22584b40ccdf4d31b4d95"
+        }
+      },
+      "doc_count": 1
+    },
+    {
+      "collection": "compⒶNENTS",
+      "vertical": "Supplement",
+      "application": "Lamp Sockets",
+      "tier": "",
+      "family": "Lamp Sockets",
+      "full_path": "Supplement | compⒶNENTS | Lamp Sockets",
+      "sku_count": 13,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "compⒶNENTS",
+      "vertical": "Supplement",
+      "application": "Universal Accessories",
+      "tier": "",
+      "family": "Cords & Whips",
+      "full_path": "Supplement | compⒶNENTS | Universal Accessories | Cords & Whips",
+      "sku_count": 47,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "constⒶNT",
+      "vertical": "Supplement",
+      "application": "Emergency Battery Backup",
+      "tier": "",
+      "family": "Emergency Battery Backup",
+      "full_path": "Supplement | constⒶNT | Emergency Battery Backup",
+      "sku_count": 33,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "constⒶNT",
+      "vertical": "Supplement",
+      "application": "Exit Signs",
+      "tier": "",
+      "family": "LEMX",
+      "full_path": "Supplement | constⒶNT | Exit Signs | LEMX",
+      "sku_count": 42,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "constⒶNT",
+      "vertical": "Supplement",
+      "application": "Step Down Transformer",
+      "tier": "",
+      "family": "Step Down Transformer",
+      "full_path": "Supplement | constⒶNT | Step Down Transformer",
+      "sku_count": 4,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "constⒶNT",
+      "vertical": "Supplement",
+      "application": "Surge Protector",
+      "tier": "",
+      "family": "Surge Protector",
+      "full_path": "Supplement | constⒶNT | Surge Protector",
+      "sku_count": 4,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "contrⒶLS",
+      "vertical": "Supplement",
+      "application": "Bi-Level",
+      "tier": "",
+      "family": "Bi-Level",
+      "full_path": "Supplement | contrⒶLS | Bi-Level",
+      "sku_count": 17,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "contrⒶLS",
+      "vertical": "Supplement",
+      "application": "by Silvair",
+      "tier": "",
+      "family": "by Silvair",
+      "full_path": "Supplement | contrⒶLS | by Silvair",
+      "sku_count": 8,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "contrⒶLS",
+      "vertical": "Supplement",
+      "application": "by Synapse",
+      "tier": "",
+      "family": "by Synapse",
+      "full_path": "Supplement | contrⒶLS | by Synapse",
+      "sku_count": 2,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "contrⒶLS",
+      "vertical": "Supplement",
+      "application": "by ⒶCS",
+      "tier": "",
+      "family": "by ⒶCS",
+      "full_path": "Supplement | contrⒶLS | by ⒶCS",
+      "sku_count": 9,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "contrⒶLS",
+      "vertical": "Supplement",
+      "application": "Photocell",
+      "tier": "",
+      "family": "Photocell",
+      "full_path": "Supplement | contrⒶLS | Photocell",
+      "sku_count": 10,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "demⒶCASE",
+      "vertical": "Supplement",
+      "application": "",
+      "tier": "",
+      "family": "demⒶCASE",
+      "full_path": "Supplement | demⒶCASE",
+      "sku_count": 3,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor nostⒶLGIC",
+      "vertical": "Residential",
+      "application": "A-Lamp",
+      "tier": "",
+      "family": "A-Lamp",
+      "full_path": "Residential | Décor nostⒶLGIC | A-Lamp",
+      "sku_count": 37,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor nostⒶLGIC",
+      "vertical": "Residential",
+      "application": "Candle",
+      "tier": "",
+      "family": "Blunt-Tip",
+      "full_path": "Residential | Décor nostⒶLGIC | Candle | Blunt-Tip",
+      "sku_count": 31,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor nostⒶLGIC",
+      "vertical": "Residential",
+      "application": "Candle",
+      "tier": "",
+      "family": "Flame-Tip",
+      "full_path": "Residential | Décor nostⒶLGIC | Candle | Flame-Tip",
+      "sku_count": 22,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor nostⒶLGIC",
+      "vertical": "Residential",
+      "application": "Globe 40",
+      "tier": "",
+      "family": "Globe 40",
+      "full_path": "Residential | Décor nostⒶLGIC | Globe 40",
+      "sku_count": 2,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor nostⒶLGIC",
+      "vertical": "Residential",
+      "application": "Globe G16.5",
+      "tier": "",
+      "family": "Globe G16.5",
+      "full_path": "Residential | Décor nostⒶLGIC | Globe G16.5",
+      "sku_count": 21,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor nostⒶLGIC",
+      "vertical": "Residential",
+      "application": "Globe G25",
+      "tier": "",
+      "family": "Globe G25",
+      "full_path": "Residential | Décor nostⒶLGIC | Globe G25",
+      "sku_count": 12,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor nostⒶLGIC",
+      "vertical": "Residential",
+      "application": "Globe G40",
+      "tier": "",
+      "family": "Globe G40",
+      "full_path": "Residential | Décor nostⒶLGIC | Globe G40",
+      "sku_count": 1,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor nostⒶLGIC",
+      "vertical": "Residential",
+      "application": "S14",
+      "tier": "",
+      "family": "S14",
+      "full_path": "Residential | Décor nostⒶLGIC | S14",
+      "sku_count": 16,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor signⒶTURE",
+      "vertical": "Residential",
+      "application": "Candle",
+      "tier": "",
+      "family": "Candle",
+      "full_path": "Residential | Décor signⒶTURE | Candle",
+      "sku_count": 6,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor signⒶTURE",
+      "vertical": "Residential",
+      "application": "Globe",
+      "tier": "",
+      "family": "Globe",
+      "full_path": "Residential | Décor signⒶTURE | Globe",
+      "sku_count": 4,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor vintⒶGE",
+      "vertical": "Residential",
+      "application": "Candle",
+      "tier": "",
+      "family": "Candle",
+      "full_path": "Residential | Décor vintⒶGE | Candle",
+      "sku_count": 6,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor vintⒶGE",
+      "vertical": "Residential",
+      "application": "Edison",
+      "tier": "",
+      "family": "Edison",
+      "full_path": "Residential | Décor vintⒶGE | Edison",
+      "sku_count": 14,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor vintⒶGE",
+      "vertical": "Residential",
+      "application": "Globe",
+      "tier": "",
+      "family": "Globe",
+      "full_path": "Residential | Décor vintⒶGE | Globe",
+      "sku_count": 11,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor vintⒶGE",
+      "vertical": "Residential",
+      "application": "Radio",
+      "tier": "",
+      "family": "Radio",
+      "full_path": "Residential | Décor vintⒶGE | Radio",
+      "sku_count": 7,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor vintⒶGE",
+      "vertical": "Residential",
+      "application": "Tubular",
+      "tier": "",
+      "family": "Tubular",
+      "full_path": "Residential | Décor vintⒶGE | Tubular",
+      "sku_count": 11,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Décor vintⒶGE",
+      "vertical": "Residential",
+      "application": "Victorian",
+      "tier": "",
+      "family": "Victorian",
+      "full_path": "Residential | Décor vintⒶGE | Victorian",
+      "sku_count": 9,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "High-Bay",
+      "tier": "ECO",
+      "family": "Apollo-II",
+      "full_path": "Indoor | lamparⒶRCH | High-Bay | Linear | ECO | Apollo-II",
+      "sku_count": 7,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "High-Bay",
+      "tier": "ECO",
+      "family": "Tiny-I",
+      "full_path": "Indoor | lamparⒶRCH | High-Bay | Linear | ECO | Tiny-I",
+      "sku_count": 6,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/3eef705e38de1fc2752956abaf75d2e7a7518b7c40e31aacb497a6b8f2471012"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/553f37134eebde838e2686234a5bbc7dcc3802a2231a4b822d64084a5bb85d4e"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/687037c12e9ed10caf70d293e5e48f66c140dbd6b7d5950a598daf09aa1b855f"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/9462c98dcb65471ba7217f521ae432bcea4f97a62d34d88394f16c25504bea11"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/36aba3d4e4f7db459c1d5f93660b9a59247853cd2ddea7508b744e0bf8b02c51"
+        }
+      },
+      "doc_count": 5
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "High-Bay",
+      "tier": "PRO",
+      "family": "Titan-II",
+      "full_path": "Indoor | lamparⒶRCH | High-Bay | Linear | PRO | Titan-II",
+      "sku_count": 40,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/fc42196675de58ec6bde91c17a22be6314e9688621364133441de7f9cc6d5bea"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/f41d54dc5a946dc5190ccfe811bb6403285c3dedf41822154d06a94476b1b73a"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/b2976e29e033a099bff5b196a74af051ed246de137878ea2a2126e0c74778548"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "High-Bay",
+      "tier": "ECO",
+      "family": "Atlas-I",
+      "full_path": "Indoor | lamparⒶRCH | High-Bay | Round | ECO | Atlas-I",
+      "sku_count": 2,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "High-Bay",
+      "tier": "ECO",
+      "family": "Icarus-II",
+      "full_path": "Indoor | lamparⒶRCH | High-Bay | Round | ECO | Icarus-II",
+      "sku_count": 7,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/cd37c40d7d9ff2b8768978c4a0d469a6cbb48b73cf5946502979c14f8e98c547"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/ec4c66e6955931d8c9ddb3c8b721f0147d96f603d822bf3d2775dbdbef159f5a"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/d3fbdd15375195673cba94d1c6ed72f4fd022c258c798f2104fe9f2bdfda3e77"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "High-Bay",
+      "tier": "ECO",
+      "family": "Icarus-III",
+      "full_path": "Indoor | lamparⒶRCH | High-Bay | Round | ECO | Icarus-III",
+      "sku_count": 28,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/cd37c40d7d9ff2b8768978c4a0d469a6cbb48b73cf5946502979c14f8e98c547"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/ec4c66e6955931d8c9ddb3c8b721f0147d96f603d822bf3d2775dbdbef159f5a"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/d3fbdd15375195673cba94d1c6ed72f4fd022c258c798f2104fe9f2bdfda3e77"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "High-Bay",
+      "tier": "PRO",
+      "family": "Atlas-II",
+      "full_path": "Indoor | lamparⒶRCH | High-Bay | Round | PRO | Atlas-II",
+      "sku_count": 2,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "High-Bay",
+      "tier": "PRO",
+      "family": "Jupiter-I",
+      "full_path": "Indoor | lamparⒶRCH | High-Bay | Round | PRO | Jupiter-I",
+      "sku_count": 7,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/6bb479c7d0026c756aafe41ce8301010cee780f62f36e06f43d95e314582d825"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/1ffb29f5f404d0232a9b83ccebcc486f6c808751bfafcf8017db4636c6f903fe"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/2b1897fd58410daa3605ef93b3787f0333da864434b42e2cb5c6f45a45a14d33"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "High-Bay",
+      "tier": "PRO",
+      "family": "Jupiter-II",
+      "full_path": "Indoor | lamparⒶRCH | High-Bay | Round | PRO | Jupiter-II",
+      "sku_count": 27,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/6bb479c7d0026c756aafe41ce8301010cee780f62f36e06f43d95e314582d825"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/1ffb29f5f404d0232a9b83ccebcc486f6c808751bfafcf8017db4636c6f903fe"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/2b1897fd58410daa3605ef93b3787f0333da864434b42e2cb5c6f45a45a14d33"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "High-Bay",
+      "tier": "PRO+",
+      "family": "Millennium",
+      "full_path": "Indoor | lamparⒶRCH | High-Bay | Round | PRO+ | Millennium",
+      "sku_count": 6,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "High-Bay",
+      "tier": "",
+      "family": "Universal",
+      "full_path": "Indoor | lamparⒶRCH | High-Bay | Round | Universal",
+      "sku_count": 4,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "Linear Strip",
+      "tier": "ECO",
+      "family": "Juno-I",
+      "full_path": "Indoor | lamparⒶRCH | Linear Strip | ECO | Juno-I",
+      "sku_count": 3,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/cc8968693812d0917176493d291eb96433b7d8031f18e54448fd237581a8d0df"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/2cff7cff093ec3345deaef2b5f75c895f22da92bb4772148f9b1f67bfecc286e"
+        }
+      },
+      "doc_count": 2
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "Linear Strip",
+      "tier": "ECO",
+      "family": "Juno-II",
+      "full_path": "Indoor | lamparⒶRCH | Linear Strip | ECO | Juno-II",
+      "sku_count": 9,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/cc8968693812d0917176493d291eb96433b7d8031f18e54448fd237581a8d0df"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/2cff7cff093ec3345deaef2b5f75c895f22da92bb4772148f9b1f67bfecc286e"
+        }
+      },
+      "doc_count": 2
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "Linear Strip",
+      "tier": "ECO",
+      "family": "Nexus-I",
+      "full_path": "Indoor | lamparⒶRCH | Linear Strip | ECO | Nexus-I",
+      "sku_count": 1,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "Linear Strip",
+      "tier": "ECO",
+      "family": "Vanguard-I",
+      "full_path": "Indoor | lamparⒶRCH | Linear Strip | ECO | Vanguard-I",
+      "sku_count": 16,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/dc3a361026a63d9b729003ee8899b4624fd43ce02fd9bbf06b1a4f8cab728fca"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/949b8ad7422d9803415a33a18578cc85c4bf8c6b22b324d8736e030c88a09de7"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/e7a87daac5b0cb9ee30bf60ca32930e3ac37d90cced84885953b9744299d65b4"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/813c0d14eede621738fcba94e2dce7e585bf00b6b6c8ca3c86cc2d2c5c9e35a4"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "Linear Strip",
+      "tier": "PRO+",
+      "family": "Hallmark",
+      "full_path": "Indoor | lamparⒶRCH | Linear Strip | PRO+ | Hallmark",
+      "sku_count": 46,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/39d4e5f7747fecd7faf1878141ab102649da1e10a50fe44fe419bed6420472d8"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/78a4f307a29adcc911703a0b06be548032c4a626c68bc4d73b0ff8a32c4afd6f"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/4c06a097400759e8193decaf8b63c437c0e84335f027ce1b8a3f9ae2173924c0"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "Retrofit Linear Strip",
+      "tier": "",
+      "family": "retroⒶRCH-L1",
+      "full_path": "Indoor | lamparⒶRCH | Retrofit Linear Strip | retroⒶRCH-L1",
+      "sku_count": 4,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "Vapor-Tight",
+      "tier": "ECO",
+      "family": "Eureka-II",
+      "full_path": "Indoor | lamparⒶRCH | Vapor-Tight | ECO | Eureka-II",
+      "sku_count": 7,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c52420238748964094ef1e3f351606e0c73cdd6f76865c36cda12e2f641b978b"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/52c9bdf1ce1a4715015cc249751b89bdd934423735cb8956aa4f27c9af67aa22"
+        }
+      },
+      "doc_count": 2
+    },
+    {
+      "collection": "lamparⒶRCH",
+      "vertical": "Indoor",
+      "application": "Vapor-Tight",
+      "tier": "PRO",
+      "family": "Eureka-I",
+      "full_path": "Indoor | lamparⒶRCH | Vapor-Tight | PRO | Eureka-I",
+      "sku_count": 8,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c52420238748964094ef1e3f351606e0c73cdd6f76865c36cda12e2f641b978b"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/5a4e605d2114f1ebd94e45d5286fbd61197c602213c865fb44b81b3c4ccf3e7a"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/8c6f030526cc2b5737997c8a22d515098b68c92490518e8623807af898ed9343"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Area Light",
+      "tier": "ECO",
+      "family": "Heritage",
+      "full_path": "Outdoor | luxoⒶRCH | Area Light | ECO | Heritage",
+      "sku_count": 8,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/3312e3b9f37b130c1bc6021298f73f12284ce7ac471ee7a8319fca90261ee4d8"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/3df731c6ad536ccc2b5760b3e2260bcf36c583ce4878ccb9d6e73d4be6c3f85a"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/9dc58a1018e530cc498d5fc865cfd0b8ce47472172e356d84f250f1db968a703"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/fc29f8b4687ec75f2cf32774e7ea4e9d7c7026da96684be7f186bf04db1d310e"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/1c7a2a146dab853d04dd2db1f8d3e53ca1f85817421a602182bf7de42e7a9765"
+        }
+      },
+      "doc_count": 5
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Area Light",
+      "tier": "ECO",
+      "family": "Plymouth-II",
+      "full_path": "Outdoor | luxoⒶRCH | Area Light | ECO | Plymouth-II",
+      "sku_count": 2,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Area Light",
+      "tier": "PRO",
+      "family": "Liberty",
+      "full_path": "Outdoor | luxoⒶRCH | Area Light | PRO | Liberty",
+      "sku_count": 69,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/a95b11c6f123f5e7792a87ed7b768849d752b4ceda6b886fc51443cbadcc9085"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/af13732337f909702d1d586dcd5700209448803a62609c38c1bb93a6674d8722"
+        }
+      },
+      "doc_count": 2
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Area Light",
+      "tier": "PRO+",
+      "family": "Rosetta-III",
+      "full_path": "Outdoor | luxoⒶRCH | Area Light | PRO+ | Rosetta-III",
+      "sku_count": 8,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Area Light",
+      "tier": "",
+      "family": "Tenon Adaptors",
+      "full_path": "Outdoor | luxoⒶRCH | Area Light | Universal Accessories | Tenon Adaptors",
+      "sku_count": 13,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Canopy",
+      "tier": "ECO",
+      "family": "Navigator",
+      "full_path": "Outdoor | luxoⒶRCH | Canopy | ECO | Navigator",
+      "sku_count": 3,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/eeca5c9aee50907715ebaa72d1c5eaa465fbb48536ce514ea0061d599730ac18"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/3dbe6e24a1d15ee343231ca544323fac8824ac0a3811ffbb49716c9630f62da1"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/4c6fd82ee68dc7f65da71faddc255b83392d250827717337f42c94cc32a0ae21"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/92a3bfdf52d5a65781d54d78cb0a6cd238cf942e83920d01368f5fa0c63098a8"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/712f892f4d631abb028506be0e0300db2a83656159bcb5b6a6d680efd8da019c"
+        }
+      },
+      "doc_count": 5
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Canopy",
+      "tier": "PRO",
+      "family": "Pathfinder",
+      "full_path": "Outdoor | luxoⒶRCH | Canopy | PRO | Pathfinder",
+      "sku_count": 4,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/0844933c1ddd3ce5b02216aa35639e5482b2790619dee463082a2ac43fb70ebe"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/835584cc090320b3d804a1556c2af14179cf5eea10742efc14d176d60aec568a"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/fff5cdeec8d0ae84a36cf09016beb98e67bf7c06d1548c083b01be90b3168ba8"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/cc49709b531a0d0bdf35621b05173be200dc0f923aee1e1c5d2a17575fed7eab"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Cylinder",
+      "tier": "PRO",
+      "family": "Aura",
+      "full_path": "Outdoor | luxoⒶRCH | Cylinder | PRO | Aura",
+      "sku_count": 4,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/9c079b32da663fc4b24587131b6ac3dd3ace4affcf68eb2734916ac344783f7d"
+        }
+      },
+      "doc_count": 1
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Dock Light",
+      "tier": "PRO",
+      "family": "Canadarm",
+      "full_path": "Outdoor | luxoⒶRCH | Dock Light | PRO | Canadarm",
+      "sku_count": 4,
+      "docs": {
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/9ac65cca9f9a17c8e4361b976fce8514715c39d5844a2f1a82406e5e1599abd5"
+        }
+      },
+      "doc_count": 1
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Flood Light",
+      "tier": "ECO",
+      "family": "Everest",
+      "full_path": "Outdoor | luxoⒶRCH | Flood Light | ECO | Everest",
+      "sku_count": 8,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/eb1c9d97da3f2fbb99c40fe7b710f2c4b5893a97b057b17fd3c52a0115b78ede"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/e7d9e527c5fd2ee237b5089991fb1a787fedd242baea32ad4d47634db2df62b9"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/fc58f92b332047232aa27959097a5048a34a573e97b12d850f0540772350f9e6"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/7c6427652985a75423a22c63870b61b29827955c6032018f642ba8ad4e734815"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Flood Light",
+      "tier": "PRO+",
+      "family": "Zion-II",
+      "full_path": "Outdoor | luxoⒶRCH | Flood Light | PRO+ | Zion-II",
+      "sku_count": 16,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Sports Lighting",
+      "tier": "PRO",
+      "family": "Illuminator",
+      "full_path": "Outdoor | luxoⒶRCH | Sports Lighting | PRO | Illuminator",
+      "sku_count": 23,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/f85531794c0da1dc848e3037781aa1c19322c21c93a074d4d85c74792b5f83ba"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/2ef633c80b661df61d45f8cf0f64452497f30327ad423fd1bd21dafa9be23aa7"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/d11b123204f57c03b3ce3bd11e5861f073e1f441d96fedbaad04f356a1e3527b"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/e31e2bef1fcfff99e66be273cb89bbf0f3908a2d38a32c17f0e2afe640b96c84"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Sports Lighting",
+      "tier": "PRO",
+      "family": "Radiator-I",
+      "full_path": "Outdoor | luxoⒶRCH | Sports Lighting | PRO | Radiator-I",
+      "sku_count": 3,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/de3db03277e8f8f0702dc65086ed1fe6815d127fc0e8cab51efc2ccbe416238d"
+        }
+      },
+      "doc_count": 1
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Sports Lighting",
+      "tier": "PRO",
+      "family": "Radiator-II",
+      "full_path": "Outdoor | luxoⒶRCH | Sports Lighting | PRO | Radiator-II",
+      "sku_count": 27,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/de3db03277e8f8f0702dc65086ed1fe6815d127fc0e8cab51efc2ccbe416238d"
+        }
+      },
+      "doc_count": 1
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Sports Lighting",
+      "tier": "PRO",
+      "family": "Radiator-III",
+      "full_path": "Outdoor | luxoⒶRCH | Sports Lighting | PRO | Radiator-III",
+      "sku_count": 1,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Sports Lighting",
+      "tier": "PRO+",
+      "family": "Beacon-I",
+      "full_path": "Outdoor | luxoⒶRCH | Sports Lighting | PRO+ | Beacon-I",
+      "sku_count": 7,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "String Light",
+      "tier": "ECO",
+      "family": "LSL Series",
+      "full_path": "Outdoor | luxoⒶRCH | String Light | ECO | LSL Series",
+      "sku_count": 20,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Wall Pack",
+      "tier": "ECO",
+      "family": "Anaheim",
+      "full_path": "Outdoor | luxoⒶRCH | Wall Pack | Adjustable | ECO | Anaheim",
+      "sku_count": 10,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Wall Pack",
+      "tier": "PRO",
+      "family": "Atlanta",
+      "full_path": "Outdoor | luxoⒶRCH | Wall Pack | Adjustable | PRO | Atlanta",
+      "sku_count": 2,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/a7dbb73699eb86514ce4c346d28ae112ac744fa4d1b15e12e5f73c41b5890ac9"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/bc496fc9a65a57ec06d47cdac8aa7561b89125983e8673cdb61878531377e992"
+        }
+      },
+      "doc_count": 2
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Wall Pack",
+      "tier": "ECO",
+      "family": "Shield",
+      "full_path": "Outdoor | luxoⒶRCH | Wall Pack | Architectural Slim | ECO | Shield",
+      "sku_count": 4,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Wall Pack",
+      "tier": "ECO",
+      "family": "Guardian",
+      "full_path": "Outdoor | luxoⒶRCH | Wall Pack | Classic | ECO | Guardian",
+      "sku_count": 8,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/615502b9107be2eff243fa154ab6f440f83101b6ead61593a9a846d272f5a71c"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/b6b11ef124d6c145a3ff27807392703484d9568c4466323d7ec2a93928abc043"
+        }
+      },
+      "doc_count": 2
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Wall Pack",
+      "tier": "PRO",
+      "family": "Sentinel",
+      "full_path": "Outdoor | luxoⒶRCH | Wall Pack | Classic | PRO | Sentinel",
+      "sku_count": 6,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/1ff5f7c57abf29b0213d53f3733d8cd7c240d5846677f20b78113b0980033d2e"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/ea0df4767237bee6a03cd4d22364eb477e7613ba5f9565c74548de76200c70fd"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/6a62495022cafe0eb898c4f7e0e47ff4dfb5322aa983ef91bec13584e6ff157c"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/df25290a8e24fc0832e37932be6c5478d882b2f8e197ffe9e81980e883cd5f9f"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/adc115e172b450c43d092eba6bcbec985233431de684ce74388d856894f8311e"
+        }
+      },
+      "doc_count": 5
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Wall Pack",
+      "tier": "ECO",
+      "family": "Ramparts",
+      "full_path": "Outdoor | luxoⒶRCH | Wall Pack | Entryway | ECO | Ramparts",
+      "sku_count": 2,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/8e2833f0d1af2eddd5a7a51cd8bd6caf69d532b564423ea1a141cbdc22d751c2"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/2dbc592a893a1bf1a7cfa7b28742c44ba694ab963e267143412cbf63c99c1927"
+        }
+      },
+      "doc_count": 2
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Wall Pack",
+      "tier": "ECO",
+      "family": "Wedge-I",
+      "full_path": "Outdoor | luxoⒶRCH | Wall Pack | Entryway | ECO | Wedge-I",
+      "sku_count": 4,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/55f977853b10710b90353762527529a34e89b2b3e3b84bb68bea053d34e76074"
+        }
+      },
+      "doc_count": 1
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Wall Pack",
+      "tier": "ECO",
+      "family": "Watchtower",
+      "full_path": "Outdoor | luxoⒶRCH | Wall Pack | Full Cutoff | ECO | Watchtower",
+      "sku_count": 6,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/f53ca5a09f233a9afeb4c1e81cd6411830ef2cf5ccf15df7d5224e423987aaf0"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/a4d319cc845387cd393bf54f98d9b4f0e8375ad88d19a18e18bf8ae663e3b14a"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/330d1d04e6f33445a35c976899769fccf4a561e578ac13df6fc22ea8472309c9"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c768cf67413a41605a392397e51a8f6e114d0ab3f45a3161d1f18309b42ba947"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "luxoⒶRCH",
+      "vertical": "Outdoor",
+      "application": "Wall Pack",
+      "tier": "PRO",
+      "family": "Nightwatch",
+      "full_path": "Outdoor | luxoⒶRCH | Wall Pack | Full Cutoff | PRO | Nightwatch",
+      "sku_count": 10,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/9b9317bf23680fd676f4a6da68be596bb793131974accdfdb1eb792a222466fb"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/083c1ef3d5c2f33a1c91f5bace35a45769a2572181d2ada5f1546b955db63a35"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/0e69396c296230d8dc2e7a17ea682723730ffead18e297a89c73f6b22534f58e"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Commercial Recess Can",
+      "tier": "",
+      "family": "Gehry",
+      "full_path": "Residential | Multi-fⒶMILY | Commercial Recess Can | CRC | Gehry",
+      "sku_count": 22,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/cb6a457b75def24fe0b809843d2a53ebc9a15b2984ab8c1a90698989eb9e174c"
+        }
+      },
+      "doc_count": 1
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Downlight",
+      "tier": "PRO",
+      "family": "Radius-I",
+      "full_path": "Residential | Multi-fⒶMILY | Downlight | Recessed | PRO | Radius-I",
+      "sku_count": 10,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/a9989323c34a1c55b7de7873571feafb3794a38a881af67b98c367dde0631a3b"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/c96efeafa38a9773eb8d0055076cd18ad7bf011a600bd0a4b35567fd6e8c8279"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/9b92e935baba67c6475602d4cf451157989ab306af50b67abb13142c33217702"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Downlight",
+      "tier": "PRO",
+      "family": "Radius-II",
+      "full_path": "Residential | Multi-fⒶMILY | Downlight | Recessed | PRO | Radius-II",
+      "sku_count": 6,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/a9989323c34a1c55b7de7873571feafb3794a38a881af67b98c367dde0631a3b"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/64028de042bce65d9b3a7aa1dfed05dfbbac0533a0b63e74379227d3dd25d9fa"
+        }
+      },
+      "doc_count": 2
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Downlight",
+      "tier": "PRO+",
+      "family": "Radius SafeZone",
+      "full_path": "Residential | Multi-fⒶMILY | Downlight | Recessed | PRO+ | Radius SafeZone",
+      "sku_count": 8,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/a47cae75693765a998ba6d97586c92a86a0c5121fcbbb2391b0461a16b63cf4a"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/c96efeafa38a9773eb8d0055076cd18ad7bf011a600bd0a4b35567fd6e8c8279"
+        }
+      },
+      "doc_count": 2
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Downlight",
+      "tier": "PRO+",
+      "family": "Radius-II SafeZone",
+      "full_path": "Residential | Multi-fⒶMILY | Downlight | Recessed | PRO+ | Radius-II SafeZone",
+      "sku_count": 2,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/a47cae75693765a998ba6d97586c92a86a0c5121fcbbb2391b0461a16b63cf4a"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/c96efeafa38a9773eb8d0055076cd18ad7bf011a600bd0a4b35567fd6e8c8279"
+        }
+      },
+      "doc_count": 2
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Downlight",
+      "tier": "ECO",
+      "family": "Orbit",
+      "full_path": "Residential | Multi-fⒶMILY | Downlight | Retrofit Gimbal | ECO | Orbit",
+      "sku_count": 4,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/668f4316a802c0182814c58dbef7f987ba01d2d73117eaba0fa8dda5a0b90d1f"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/daefbf16aee8f46156310622ad7c79e6048a1ed345f0ad8919451276a08f30e5"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/a92382818225531fb4b2f26abd86870385ed9018f718774f3f4581171fb665f5"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Downlight",
+      "tier": "ECO",
+      "family": "Nebula-I",
+      "full_path": "Residential | Multi-fⒶMILY | Downlight | Retrofit | ECO | Nebula-I",
+      "sku_count": 18,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c9180fb23979692057b4c42dc3575088c51b9793d5b4efdc5094ec5e939dc97d"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/6e700c95acc363496b7a517f3dbaa78c784f109cfce540b4ef15bdbcafb45db1"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30278b427f6ecf5407cfec7d5df8672f7748b9eeb56e294d3f1fa2419985501e"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Downlight",
+      "tier": "ECO",
+      "family": "Nebula-II",
+      "full_path": "Residential | Multi-fⒶMILY | Downlight | Retrofit | ECO | Nebula-II",
+      "sku_count": 36,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c9180fb23979692057b4c42dc3575088c51b9793d5b4efdc5094ec5e939dc97d"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/41c2f059d8abf24b067a178d6f5e8ac7cce42ffc45db4dcab792758d0b3007fd"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/6d298bb2d56fc5a39bb1e25265aa9aadc9875525bf78f0a5421131b22d9fe434"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Downlight",
+      "tier": "ECO",
+      "family": "Crescent",
+      "full_path": "Residential | Multi-fⒶMILY | Downlight | Surface Mount | ECO | Crescent",
+      "sku_count": 4,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/23e708fff5ccd76d0178d7c9750e7c2b8b8c3df499ef3f308ba8d11b04163c8f"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/c23cc1046c5224b7ab4e1903fbfe5e0a8c7204de9adad0482e014c16217c7808"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/790010b6b689488b59748ca7a19f98901fd1ea9ca28adcfd15d2b6a592633f53"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Downlight",
+      "tier": "ECO",
+      "family": "eCrescent",
+      "full_path": "Residential | Multi-fⒶMILY | Downlight | Surface Mount | ECO | eCrescent",
+      "sku_count": 5,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/ee943154fd51ff67ee39f3a414ebb82dd82e8ea68040db0eb5921d58c1b5df2c"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/c23cc1046c5224b7ab4e1903fbfe5e0a8c7204de9adad0482e014c16217c7808"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/3d765c144a371bbc3c29236a663d607eb44016a3b7fe31c9784456aa51b94966"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Downlight",
+      "tier": "PRO",
+      "family": "Eclipse-I",
+      "full_path": "Residential | Multi-fⒶMILY | Downlight | Surface Puck | PRO | Eclipse-I",
+      "sku_count": 10,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c52e249a0e6467064229f388c139d7db8a9418c4d38d838a27476c0856b60948"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/015e189c6a9bb921a6732333edb71086530fde6c09463deb4c45703f30051bd2"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/bb82fac38ac148a688c82ebe8de1ffd7627bca8cbd0e577eb3d2403070be0d65"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30cf15fc9da6572295d5791de260dec93799ccfe243f2146978fd7270bf7f9bd"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Downlight",
+      "tier": "PRO",
+      "family": "Eclipse-II",
+      "full_path": "Residential | Multi-fⒶMILY | Downlight | Surface Puck | PRO | Eclipse-II",
+      "sku_count": 15,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/517a75500bc86149e1ba98f238ea9a6296c1a1d3d83455537314d4b22bf26774"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/015e189c6a9bb921a6732333edb71086530fde6c09463deb4c45703f30051bd2"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/bb82fac38ac148a688c82ebe8de1ffd7627bca8cbd0e577eb3d2403070be0d65"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30cf15fc9da6572295d5791de260dec93799ccfe243f2146978fd7270bf7f9bd"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Downlight",
+      "tier": "PRO",
+      "family": "Lunar Eclipse",
+      "full_path": "Residential | Multi-fⒶMILY | Downlight | Surface Puck | PRO | Lunar Eclipse",
+      "sku_count": 3,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c52e249a0e6467064229f388c139d7db8a9418c4d38d838a27476c0856b60948"
+        }
+      },
+      "doc_count": 1
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Flushmount",
+      "tier": "PRO",
+      "family": "RingMaster",
+      "full_path": "Residential | Multi-fⒶMILY | Flushmount | PRO | RingMaster",
+      "sku_count": 8,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/df8be06fe29466146d0eed517316c1532363eba8511afec2970e562fa9426224"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/e3fbde5b6b59c50bd6f3d51aba4e4f357cb13f3c583d4aeca1ad9cf601c87b0b"
+        }
+      },
+      "doc_count": 2
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Security Flood",
+      "tier": "ECO",
+      "family": "Wally",
+      "full_path": "Residential | Multi-fⒶMILY | Security Flood | Motion+Photocell | ECO | Wally",
+      "sku_count": 1,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "multi-fⒶMILY",
+      "vertical": "Residential",
+      "application": "Vanity",
+      "tier": "ECO",
+      "family": "Clarity",
+      "full_path": "Residential | Multi-fⒶMILY | Vanity | ECO | Clarity",
+      "sku_count": 15,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Architectural Linear",
+      "tier": "ECO",
+      "family": "Lara",
+      "full_path": "Indoor | planoⒶRCH | Architectural Linear | ECO | Lara",
+      "sku_count": 16,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/a9698f50f4b2f26ad0decda4ad50ddea0c07cf515869366e6db924b226e394bd"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/13e2b732d058cb061b66bd7c8d25a737bfe7f4ab79ca6212eaa1d551c98debba"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/cc324f0848a53b385979472bdfdb8ce6819e2a31f9a0ffb70b3c9777cbb26e2d"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/52a870c2b796f49cd5c921dd73fd9ea055a65b58d19df7246470c522db9113ea"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Architectural Linear",
+      "tier": "PRO+",
+      "family": "Luna",
+      "full_path": "Indoor | planoⒶRCH | Architectural Linear | PRO+ | Luna",
+      "sku_count": 36,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/a12c81d9690e94376d40051bf40b8fa0628cad02d5ab0897eb4578a0ac0e5e7e"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/b69925328ed34b409dd59ad07593b52acb906ef76b5f43bf7f3bd428d3d8a807"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/323c7487bc6cfe286af8c978b7188d31f1da13ded643b8b13a19df1884dae49b"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Downlight",
+      "tier": "PRO",
+      "family": "Stellar",
+      "full_path": "Indoor | planoⒶRCH | Downlight | Architectural | PRO | Stellar",
+      "sku_count": 1,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Downlight",
+      "tier": "ECO",
+      "family": "Solstice",
+      "full_path": "Indoor | planoⒶRCH | Downlight | Commercial | ECO | Solstice",
+      "sku_count": 37,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/9b1968f18058f9c560f644b1ebdb45135b160cac53095532f4d276f51b5552bc"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/36af69f35342218cb8d686b8d400c77e1463f19b5ba356289ffd183ca2e6760e"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/92c52037381939b7b4c49e02d8b817d809c5f896cc8660fbd0ffd2fcd58c0b52"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/ef9487359b35fe4be33c4823c8d5b92275f395a4331ab49b2892bc9a26f68295"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Downlight",
+      "tier": "PRO",
+      "family": "Solstice SafeZone",
+      "full_path": "Indoor | planoⒶRCH | Downlight | Commercial | PRO | Solstice SafeZone",
+      "sku_count": 4,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/d39f310fe1da374e07df42bdbcd9af7d99394e6590f8ccce7d2eafdbcc7c65ab"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/dc3018177372c8829dd6205f53f9e02bc2c554183013280829032d7aa885650d"
+        }
+      },
+      "doc_count": 2
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Downlight",
+      "tier": "PRO+",
+      "family": "Astra",
+      "full_path": "Indoor | planoⒶRCH | Downlight | Commercial | PRO+ | Astra",
+      "sku_count": 60,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/55581a24f9e4d3bc95c7b3b23464f2882be81af58d0a54f156355c9991946867"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/d49377a0d29ac66d1d85afa7936174ff6efca211cfe105068c4632bf67dad385"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/612be57d89278a3d092e8147bd9a2b3a1ce8792ddd2e8f1463e997e911a6195c"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/ae5665e0d53ac6ce1ee166c1500c9ff780837a8e23dcee2e92594e61ef808249"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Downlight",
+      "tier": "PRO+",
+      "family": "Spectra",
+      "full_path": "Indoor | planoⒶRCH | Downlight | Commercial | PRO+ | Spectra",
+      "sku_count": 5,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/db29f9a7e9166225bdb27935edd5d21c5098fd5272c1e3b35731ab6f88eae3e7"
+        }
+      },
+      "doc_count": 1
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Edge-Lit Panel",
+      "tier": "ECO",
+      "family": "selectⒶRCH",
+      "full_path": "Indoor | planoⒶRCH | Edge-Lit Panel | ECO | selectⒶRCH",
+      "sku_count": 4,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/e79179f675398db79cdf65f0a5eb8d61db6a83620b79471da04500824af2279c"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/19ed230089d4723e623794e83623f99bf0c60d041cea7dceb12c257a3bdeaa32"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/9e891fd8f5a83974e34513f2c40a82dc59b9d00a5c10b252e693a463061a1222"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Panel",
+      "tier": "ECO",
+      "family": "selectⒶRCH",
+      "full_path": "Indoor | planoⒶRCH | Panel | Back-Lit | ECO | selectⒶRCH",
+      "sku_count": 6,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/e79179f675398db79cdf65f0a5eb8d61db6a83620b79471da04500824af2279c"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/19ed230089d4723e623794e83623f99bf0c60d041cea7dceb12c257a3bdeaa32"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/9e891fd8f5a83974e34513f2c40a82dc59b9d00a5c10b252e693a463061a1222"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Panel",
+      "tier": "ECO",
+      "family": "staticⒶRCH",
+      "full_path": "Indoor | planoⒶRCH | Panel | Back-Lit | ECO | staticⒶRCH",
+      "sku_count": 1,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Panel",
+      "tier": "PRO",
+      "family": "proⒶRCH-I",
+      "full_path": "Indoor | planoⒶRCH | Panel | Back-Lit | PRO | proⒶRCH-I",
+      "sku_count": 3,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/3d43454a48977b969196770da68a816264d77aef610ed1fdf97dc58e723d4228"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/9c50ddaa360257ee94a5054fcfb7a9ece26f3e0bc53105e42e467d2663435b8e"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/8123536c3523f6fe8d448fb88db1b3c2abf00076f628c62ca6120c17fcb6f6f8"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Panel",
+      "tier": "PRO",
+      "family": "proⒶRCH-II",
+      "full_path": "Indoor | planoⒶRCH | Panel | Back-Lit | PRO | proⒶRCH-II",
+      "sku_count": 18,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/3d43454a48977b969196770da68a816264d77aef610ed1fdf97dc58e723d4228"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/9c50ddaa360257ee94a5054fcfb7a9ece26f3e0bc53105e42e467d2663435b8e"
+        },
+        "quick": {
+          "label": "Quick Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/8123536c3523f6fe8d448fb88db1b3c2abf00076f628c62ca6120c17fcb6f6f8"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/502818fc833b2636b972b0a29b48e8b67a8d1d28dcb1dc717ec430e7109572da"
+        }
+      },
+      "doc_count": 4
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Panel",
+      "tier": "PRO",
+      "family": "quinceⒶRCH",
+      "full_path": "Indoor | planoⒶRCH | Panel | Back-Lit | PRO | quinceⒶRCH",
+      "sku_count": 5,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Panel",
+      "tier": "PRO+",
+      "family": "proⒶRCH-III",
+      "full_path": "Indoor | planoⒶRCH | Panel | Back-Lit | PRO+ | proⒶRCH-III",
+      "sku_count": 13,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/fbc1f1e87c6a52e886612dd9df7d94167be246c43b186d0a41d1f797066e0e10"
+        },
+        "ies": {
+          "label": "IES Bundle",
+          "url": "https://workdrive.archipelagolighting.com/external/b23130b02ad7f3f8c0b28c71bad5123e7f4d076b41f9c1ec579682d41cf674c9"
+        }
+      },
+      "doc_count": 2
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Panel",
+      "tier": "PRO+",
+      "family": "ventiⒶRCH",
+      "full_path": "Indoor | planoⒶRCH | Panel | Back-Lit | PRO+ | ventiⒶRCH",
+      "sku_count": 6,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Panel",
+      "tier": "",
+      "family": "Universal Accessories",
+      "full_path": "Indoor | planoⒶRCH | Panel | Universal Accessories",
+      "sku_count": 38,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Retrofit Panel",
+      "tier": "PRO",
+      "family": "retroⒶRCH-P1",
+      "full_path": "Indoor | planoⒶRCH | Retrofit Panel | PRO | retroⒶRCH-P1",
+      "sku_count": 12,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/2e4ad4a44469f9086bda6f9e57539495239fd53dd4cd66a9efe59eab41d66bcb"
+        }
+      },
+      "doc_count": 1
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Retrofit Panels",
+      "tier": "PRO",
+      "family": "CCTselect",
+      "full_path": "Indoor | planoⒶRCH | Retrofit Panels | PRO | CCTselect",
+      "sku_count": 3,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Retrofit Troffer",
+      "tier": "PRO",
+      "family": "CCTselect",
+      "full_path": "Indoor | planoⒶRCH | Retrofit Troffer | PRO | CCTselect",
+      "sku_count": 1,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Retrofit Troffer",
+      "tier": "PRO",
+      "family": "retroⒶRCH-T1",
+      "full_path": "Indoor | planoⒶRCH | Retrofit Troffer | PRO | retroⒶRCH-T1",
+      "sku_count": 12,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/6b1d23f01d80d7437dadd722273a744e32a9686118358434997e99838e1064df"
+        }
+      },
+      "doc_count": 1
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Track Light",
+      "tier": "ECO",
+      "family": "Trackstar",
+      "full_path": "Indoor | planoⒶRCH | Track Light | ECO | Trackstar",
+      "sku_count": 3,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/32046128704b99e8a8b07a8f0b4de848904e480bc02ca03bdb57d9f3fd4b2b78"
+        }
+      },
+      "doc_count": 1
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Troffer",
+      "tier": "ECO",
+      "family": "selectⒶRCH",
+      "full_path": "Indoor | planoⒶRCH | Troffer | ECO | selectⒶRCH",
+      "sku_count": 8,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/e79179f675398db79cdf65f0a5eb8d61db6a83620b79471da04500824af2279c"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/19ed230089d4723e623794e83623f99bf0c60d041cea7dceb12c257a3bdeaa32"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/9e891fd8f5a83974e34513f2c40a82dc59b9d00a5c10b252e693a463061a1222"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Troffer",
+      "tier": "PRO",
+      "family": "proⒶRCH-T1",
+      "full_path": "Indoor | planoⒶRCH | Troffer | PRO | proⒶRCH-T1",
+      "sku_count": 13,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Troffer",
+      "tier": "PRO",
+      "family": "proⒶRCH-T2",
+      "full_path": "Indoor | planoⒶRCH | Troffer | PRO | proⒶRCH-T2",
+      "sku_count": 2,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Troffer",
+      "tier": "PRO+",
+      "family": "Luxmark",
+      "full_path": "Indoor | planoⒶRCH | Troffer | PRO+ | Luxmark",
+      "sku_count": 14,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/b60e7f8bb3aa2ca0f0f027b6c3a83b47c1fc9168d44b9fe89179099280828bee"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/413a6f0d545644236dd22e095dadf5f66c8fea0c88c9de7bb42bc9af6e41ef5f"
+        }
+      },
+      "doc_count": 2
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Wraparound",
+      "tier": "ECO",
+      "family": "Brooklyn",
+      "full_path": "Indoor | planoⒶRCH | Wraparound | ECO | Brooklyn",
+      "sku_count": 1,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/1edb47e6a7295b928e63a305561952997981eae44f75701f05d84d8aa2bfe30a"
+        }
+      },
+      "doc_count": 1
+    },
+    {
+      "collection": "planoⒶRCH",
+      "vertical": "Indoor",
+      "application": "Wraparound",
+      "tier": "PRO",
+      "family": "Waymark",
+      "full_path": "Indoor | planoⒶRCH | Wraparound | PRO | Waymark",
+      "sku_count": 4,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/95342653dadc2275c207efc757d8cf25e44b2cccbc0f6c930c36154cf9130c79"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/ef3d004954e8757894627cc8b5ea1dc632c5543cecdea77485fc44cb467face2"
+        }
+      },
+      "doc_count": 2
+    },
+    {
+      "collection": "signⒶTURE",
+      "vertical": "Indoor",
+      "application": "Cooler Fixture",
+      "tier": "",
+      "family": "Cooler Fixture",
+      "full_path": "Indoor | signⒶTURE | Cooler Fixture",
+      "sku_count": 3,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "PL",
+      "tier": "",
+      "family": "UL-A",
+      "full_path": "Indoor | tubulⒶRCH | PL | Horizontal | UL-A",
+      "sku_count": 5,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c9180fb23979692057b4c42dc3575088c51b9793d5b4efdc5094ec5e939dc97d"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/6e700c95acc363496b7a517f3dbaa78c784f109cfce540b4ef15bdbcafb45db1"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30278b427f6ecf5407cfec7d5df8672f7748b9eeb56e294d3f1fa2419985501e"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "PL",
+      "tier": "",
+      "family": "UL-B",
+      "full_path": "Indoor | tubulⒶRCH | PL | Horizontal | UL-B",
+      "sku_count": 1,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c9180fb23979692057b4c42dc3575088c51b9793d5b4efdc5094ec5e939dc97d"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/6e700c95acc363496b7a517f3dbaa78c784f109cfce540b4ef15bdbcafb45db1"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30278b427f6ecf5407cfec7d5df8672f7748b9eeb56e294d3f1fa2419985501e"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "PLL",
+      "tier": "",
+      "family": "UL-A",
+      "full_path": "Indoor | tubulⒶRCH | PLL | Horizontal | UL-A",
+      "sku_count": 3,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c9180fb23979692057b4c42dc3575088c51b9793d5b4efdc5094ec5e939dc97d"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/6e700c95acc363496b7a517f3dbaa78c784f109cfce540b4ef15bdbcafb45db1"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30278b427f6ecf5407cfec7d5df8672f7748b9eeb56e294d3f1fa2419985501e"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T5",
+      "tier": "",
+      "family": "UL A+B",
+      "full_path": "Indoor | tubulⒶRCH | T5 | CSselect | UL A+B",
+      "sku_count": 6,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T5",
+      "tier": "",
+      "family": "UL-B",
+      "full_path": "Indoor | tubulⒶRCH | T5 | CSselect | UL-B",
+      "sku_count": 6,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c9180fb23979692057b4c42dc3575088c51b9793d5b4efdc5094ec5e939dc97d"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/6e700c95acc363496b7a517f3dbaa78c784f109cfce540b4ef15bdbcafb45db1"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30278b427f6ecf5407cfec7d5df8672f7748b9eeb56e294d3f1fa2419985501e"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T5HE",
+      "tier": "",
+      "family": "UL A+B",
+      "full_path": "Indoor | tubulⒶRCH | T5HE | UL A+B",
+      "sku_count": 7,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T5HE",
+      "tier": "",
+      "family": "UL-A",
+      "full_path": "Indoor | tubulⒶRCH | T5HE | UL-A",
+      "sku_count": 8,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c9180fb23979692057b4c42dc3575088c51b9793d5b4efdc5094ec5e939dc97d"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/6e700c95acc363496b7a517f3dbaa78c784f109cfce540b4ef15bdbcafb45db1"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30278b427f6ecf5407cfec7d5df8672f7748b9eeb56e294d3f1fa2419985501e"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T5HO",
+      "tier": "",
+      "family": "UL A+B",
+      "full_path": "Indoor | tubulⒶRCH | T5HO | UL A+B",
+      "sku_count": 3,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T5HO",
+      "tier": "",
+      "family": "UL-A",
+      "full_path": "Indoor | tubulⒶRCH | T5HO | UL-A",
+      "sku_count": 2,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c9180fb23979692057b4c42dc3575088c51b9793d5b4efdc5094ec5e939dc97d"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/6e700c95acc363496b7a517f3dbaa78c784f109cfce540b4ef15bdbcafb45db1"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30278b427f6ecf5407cfec7d5df8672f7748b9eeb56e294d3f1fa2419985501e"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T5HO",
+      "tier": "",
+      "family": "UL-B",
+      "full_path": "Indoor | tubulⒶRCH | T5HO | UL-B",
+      "sku_count": 1,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c9180fb23979692057b4c42dc3575088c51b9793d5b4efdc5094ec5e939dc97d"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/6e700c95acc363496b7a517f3dbaa78c784f109cfce540b4ef15bdbcafb45db1"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30278b427f6ecf5407cfec7d5df8672f7748b9eeb56e294d3f1fa2419985501e"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T8",
+      "tier": "",
+      "family": "Accessories",
+      "full_path": "Indoor | tubulⒶRCH | T8 | Accessories",
+      "sku_count": 2,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T8",
+      "tier": "",
+      "family": "UL-B",
+      "full_path": "Indoor | tubulⒶRCH | T8 | Black Light | UL-B",
+      "sku_count": 2,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c9180fb23979692057b4c42dc3575088c51b9793d5b4efdc5094ec5e939dc97d"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/6e700c95acc363496b7a517f3dbaa78c784f109cfce540b4ef15bdbcafb45db1"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30278b427f6ecf5407cfec7d5df8672f7748b9eeb56e294d3f1fa2419985501e"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T8",
+      "tier": "",
+      "family": "UL A+B",
+      "full_path": "Indoor | tubulⒶRCH | T8 | CWselect | UL A+B",
+      "sku_count": 1,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T8",
+      "tier": "",
+      "family": "UL-B",
+      "full_path": "Indoor | tubulⒶRCH | T8 | CWselect | UL-B",
+      "sku_count": 1,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c9180fb23979692057b4c42dc3575088c51b9793d5b4efdc5094ec5e939dc97d"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/6e700c95acc363496b7a517f3dbaa78c784f109cfce540b4ef15bdbcafb45db1"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30278b427f6ecf5407cfec7d5df8672f7748b9eeb56e294d3f1fa2419985501e"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T8",
+      "tier": "",
+      "family": "UL-B",
+      "full_path": "Indoor | tubulⒶRCH | T8 | EMCselect | UL-B",
+      "sku_count": 2,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c9180fb23979692057b4c42dc3575088c51b9793d5b4efdc5094ec5e939dc97d"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/6e700c95acc363496b7a517f3dbaa78c784f109cfce540b4ef15bdbcafb45db1"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30278b427f6ecf5407cfec7d5df8672f7748b9eeb56e294d3f1fa2419985501e"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T8",
+      "tier": "",
+      "family": "UL-B",
+      "full_path": "Indoor | tubulⒶRCH | T8 | R17d | UL-B",
+      "sku_count": 2,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c9180fb23979692057b4c42dc3575088c51b9793d5b4efdc5094ec5e939dc97d"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/6e700c95acc363496b7a517f3dbaa78c784f109cfce540b4ef15bdbcafb45db1"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30278b427f6ecf5407cfec7d5df8672f7748b9eeb56e294d3f1fa2419985501e"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T8",
+      "tier": "",
+      "family": "UL A+B",
+      "full_path": "Indoor | tubulⒶRCH | T8 | UL A+B",
+      "sku_count": 23,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T8",
+      "tier": "",
+      "family": "UL-A",
+      "full_path": "Indoor | tubulⒶRCH | T8 | UL-A",
+      "sku_count": 24,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c9180fb23979692057b4c42dc3575088c51b9793d5b4efdc5094ec5e939dc97d"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/6e700c95acc363496b7a517f3dbaa78c784f109cfce540b4ef15bdbcafb45db1"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30278b427f6ecf5407cfec7d5df8672f7748b9eeb56e294d3f1fa2419985501e"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "T8",
+      "tier": "",
+      "family": "UL-B",
+      "full_path": "Indoor | tubulⒶRCH | T8 | UL-B",
+      "sku_count": 40,
+      "docs": {
+        "datasheet": {
+          "label": "Datasheet",
+          "url": "https://workdrive.archipelagolighting.com/external/c9180fb23979692057b4c42dc3575088c51b9793d5b4efdc5094ec5e939dc97d"
+        },
+        "install": {
+          "label": "Install Guide",
+          "url": "https://workdrive.archipelagolighting.com/external/6e700c95acc363496b7a517f3dbaa78c784f109cfce540b4ef15bdbcafb45db1"
+        },
+        "sell": {
+          "label": "Sell Sheet",
+          "url": "https://workdrive.archipelagolighting.com/external/30278b427f6ecf5407cfec7d5df8672f7748b9eeb56e294d3f1fa2419985501e"
+        }
+      },
+      "doc_count": 3
+    },
+    {
+      "collection": "tubulⒶRCH",
+      "vertical": "Indoor",
+      "application": "U6",
+      "tier": "",
+      "family": "UL A+B",
+      "full_path": "Indoor | tubulⒶRCH | U6 | UL A+B",
+      "sku_count": 4,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Utility signⒶTURE",
+      "vertical": "Outdoor",
+      "application": "HID",
+      "tier": "",
+      "family": "Husk Series",
+      "full_path": "Outdoor | Utility signⒶTURE | HID | Husk Series",
+      "sku_count": 7,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Utility signⒶTURE",
+      "vertical": "Residential",
+      "application": "A-Lamp",
+      "tier": "",
+      "family": "A-Lamp",
+      "full_path": "Residential | Utility signⒶTURE | A-Lamp",
+      "sku_count": 6,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Utility signⒶTURE",
+      "vertical": "Residential",
+      "application": "BR-Lamp",
+      "tier": "",
+      "family": "BR-Lamp",
+      "full_path": "Residential | Utility signⒶTURE | BR-Lamp",
+      "sku_count": 5,
+      "docs": {},
+      "doc_count": 0
+    },
+    {
+      "collection": "Utility signⒶTURE",
+      "vertical": "Residential",
+      "application": "PAR-Lamp",
+      "tier": "",
+      "family": "PAR-Lamp",
+      "full_path": "Residential | Utility signⒶTURE | PAR-Lamp",
+      "sku_count": 2,
+      "docs": {},
+      "doc_count": 0
+    }
+  ]
+}
