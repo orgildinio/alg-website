@@ -91,7 +91,46 @@
   a { color: inherit; text-decoration: none; }
 
   /* CFG-CHROME-2 · .mockup-banner CSS stripped 2026-05-20 PM */
-  /* CFG-CHROME-3 · dead site-header CSS removed — chrome owned by Astro hydrator */
+  /* Site header */
+  .site-header {
+    background: var(--bg-page);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 80;
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .logo { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+  .logo-mark { width: 50px; height: 50px; background: var(--brand-red); flex-shrink: 0; }
+  .logo-text { font-weight: 700; font-size: 18px; line-height: 1; letter-spacing: 0.02em; }
+  .logo-text small {
+    font-size: 9px; letter-spacing: 0.22em; opacity: 0.55;
+    display: block; margin-top: 5px; font-weight: 400;
+  }
+  nav.primary { display: flex; gap: 28px; font-size: 14px; font-weight: 400; }
+  nav.primary a {
+    padding: 8px 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.18s, color 0.18s;
+  }
+  nav.primary a:hover { border-bottom-color: var(--brand-red); }
+  .header-actions { display: flex; gap: 12px; align-items: center; }
+  .icon-btn {
+    width: 38px; height: 38px;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--text-secondary);
+  }
+  .icon-btn:hover { color: var(--text-primary); }
+  .icon-btn svg { width: 20px; height: 20px; }
 
   /* Breadcrumb — STAGING LOCKED PATTERN (.breadcrumb-band) */
   .breadcrumb-band {
@@ -3493,48 +3532,6 @@ body.cityarch-pdp .acc-card-copy {
       Array.prototype.forEach.call(document.querySelectorAll('.mockup-banner'), function (el) {
         el.parentNode.removeChild(el);
       });
-      // CFG-CHROME-5 · Re-init scroll-hide after hydration (hoisted script ran before fetch resolved)
-      (function initScrollHide() {
-        var h = document.querySelector('.site-nav');
-        var m = document.querySelector('#site-header');
-        if (!h || !m) return;
-        if (h.dataset.scrollHideInit) return; // already attached
-        h.dataset.scrollHideInit = '1';
-        var isMobile = function() { return window.matchMedia('(max-width:768px)').matches; };
-        var getTarget = function() { return isMobile() ? m : h; };
-        var HIDE_THRESHOLD = 80, HIDE_THRESHOLD_MOBILE = 60;
-        var REVEAL_DELTA = 10, REVEAL_DELTA_MOBILE = 8;
-        var lastY = window.scrollY, accumulated = 0, ticking = false, menuOpen = false;
-        function syncBodyClass() {
-          var hidden = !isMobile() && h.classList.contains('is-hidden');
-          document.documentElement.classList.toggle('is-main-nav-hidden', hidden);
-        }
-        function onScroll() {
-          if (ticking) return;
-          ticking = true;
-          requestAnimationFrame(function() {
-            var y = window.scrollY;
-            var delta = y - lastY;
-            var target = getTarget();
-            var hideAt = isMobile() ? HIDE_THRESHOLD_MOBILE : HIDE_THRESHOLD;
-            var revealAt = isMobile() ? REVEAL_DELTA_MOBILE : REVEAL_DELTA;
-            if (menuOpen) { lastY = y; ticking = false; return; }
-            if (y <= 0) { target.classList.remove('is-hidden'); accumulated = 0; lastY = y; syncBodyClass(); ticking = false; return; }
-            if (delta > 0) { accumulated = 0; if (y > hideAt) target.classList.add('is-hidden'); }
-            else if (delta < 0) { accumulated += -delta; if (accumulated >= revealAt) target.classList.remove('is-hidden'); }
-            syncBodyClass();
-            lastY = y;
-            ticking = false;
-          });
-        }
-        window.addEventListener('scroll', onScroll, { passive: true });
-        // Pause hide when mega menu is open
-        var mmItems = document.querySelectorAll('.has-dropdown');
-        Array.prototype.forEach.call(mmItems, function(item) {
-          item.addEventListener('mouseenter', function() { menuOpen = true; });
-          item.addEventListener('mouseleave', function() { menuOpen = false; });
-        });
-      })();
       // 6. Hydrate any chrome-internal scripts (mega menu accordion, search modal, etc.)
       Array.prototype.forEach.call(doc.head.querySelectorAll('script[src]'), function (s) {
         var src = s.getAttribute('src');
@@ -3547,9 +3544,6 @@ body.cityarch-pdp .acc-card-copy {
         if (have) return;
         var copy = document.createElement('script');
         copy.src = src;
-        // CFG-CHROME-4 · preserve type=module so Astro ES-module hoisted scripts execute correctly
-        var scriptType = s.getAttribute('type');
-        if (scriptType) copy.type = scriptType;
         copy.async = false;
         document.head.appendChild(copy);
       });
@@ -3561,7 +3555,7 @@ body.cityarch-pdp .acc-card-copy {
 </script>
 
 </head>
-<body class="cityarch-pdp">
+<body>
 <!-- CFG-CHROME-2 · .mockup-banner stripped 2026-05-20 PM — dev artifact must not ship to staging -->
 <!-- CFG-CHROME-1 · inline <header class="site-header"> removed 2026-05-20 PM — canonical chrome comes from Astro layout (utility-bar + main header + mega menu + REQUEST SAMPLE/LAYOUT CTAs), inline replaces it and breaks the brand. See Heritage as reference: <header id="site-header" data-pagefind-ignore="">. -->
 <!-- Breadcrumb — STAGING-LOCKED .breadcrumb-band pattern -->
@@ -3754,15 +3748,15 @@ body.cityarch-pdp .acc-card-copy {
 <div class="cb-label">DLC Listed</div>
 </div>
 <div class="cb">
-<img alt="cULus Listed" src="/products/illuminator/assets/certs/culus.svg"/>
-<div class="cb-label">cULus Listed</div>
+<img alt="UL Listed" src="assets/certs/ul.svg"/>
+<div class="cb-label">UL Listed</div>
 </div>
 <div class="cb">
 <img alt="RoHS Compliant" src="/products/illuminator/assets/certs/rohs.svg"/>
 <div class="cb-label">RoHS</div>
 </div>
 <div class="cb">
-<img alt="FCC Compliant" src="/products/illuminator/assets/certs/fcc.svg"/>
+<img alt="FCC Compliant" src="assets/certs/fcc.svg"/>
 <div class="cb-label">FCC</div>
 </div>
 <div class="cb">
@@ -3924,7 +3918,7 @@ body.cityarch-pdp .acc-card-copy {
 </svg>
 </div>
 <div class="meta-stat-text">
-<span class="meta-stat-num">7 yr · 75k hr</span>
+<span class="meta-stat-num">5 yr · 50k hr</span>
 <span class="meta-stat-sub">Limited Liability</span>
 </div>
 </div>
@@ -4079,7 +4073,7 @@ body.cityarch-pdp .acc-card-copy {
 <!-- Hero tile, full-bleed — Foldable Design (the visual signature + unique cost angle for ECO tier) -->
 <div class="hf-tile hf-tile-hero hf-tile-grad-1">
 <div class="hf-tile-image">
-<img alt="Two Unity-I post-tops side-by-side — left in shipping fold (cantilever collapsed flat at 120°), right deployed upright on a pole — illustrating the foldable freight-saving geometry" src="assets/unity/hf-tile-1-foldable.svg"/>
+<img alt="Two Unity-I post-tops side-by-side — left in shipping fold (cantilever collapsed flat at 120°), right deployed upright on a pole — illustrating the foldable freight-saving geometry" src="assets/unity/hf-tile-1-foldable.webp"/>
 </div>
 <div class="hf-tile-overlay">
 <div class="hf-tile-tag">— Hero Highlight</div>
@@ -4091,7 +4085,7 @@ body.cityarch-pdp .acc-card-copy {
 <div class="hf-row-2">
 <div class="hf-tile hf-tile-grad-2">
 <div class="hf-tile-image">
-<img alt="Macro of the Unity dip-switch panel — two 3-position switches labeled WATT and CCT, gloved hand setting both with a thumb-flick" src="assets/unity/hf-tile-2-dual-dipswitch.svg"/>
+<img alt="Macro of the Unity dip-switch panel — two 3-position switches labeled WATT and CCT, gloved hand setting both with a thumb-flick" src="assets/unity/hf-tile-2-dual-dipswitch.webp"/>
 </div>
 <div class="hf-tile-overlay">
 <div class="hf-tile-tag">Field-Adjustable</div>
@@ -4101,7 +4095,7 @@ body.cityarch-pdp .acc-card-copy {
 </div>
 <div class="hf-tile hf-tile-grad-3">
 <div class="hf-tile-image">
-<img alt="Top-down rendering of three Unity post-tops on a pathway — concentric circular pools of light extending evenly in all directions, with zero light spilling upward into a starry sky above" src="assets/unity/hf-tile-3-type5-darksky.svg"/>
+<img alt="Top-down rendering of three Unity post-tops on a pathway — concentric circular pools of light extending evenly in all directions, with zero light spilling upward into a starry sky above" src="assets/unity/hf-tile-3-type5-darksky.webp"/>
 </div>
 <div class="hf-tile-overlay">
 <div class="hf-tile-tag">Optics</div>
@@ -4114,7 +4108,7 @@ body.cityarch-pdp .acc-card-copy {
 <div class="hf-row-2">
 <div class="hf-tile hf-tile-grad-4">
 <div class="hf-tile-image">
-<img alt="Macro shot of water beading on the die-cast aluminum housing of a Unity-I luminaire in the rain — IP65 wet-location seal visible at the cap-housing joint" src="assets/unity/hf-tile-4-wetguard.svg"/>
+<img alt="Macro shot of water beading on the die-cast aluminum housing of a Unity-I luminaire in the rain — IP65 wet-location seal visible at the cap-housing joint" src="assets/unity/hf-tile-4-wetguard.webp"/>
 </div>
 <div class="hf-tile-overlay">
 <div class="hf-tile-tag">Durability</div>
@@ -4124,7 +4118,7 @@ body.cityarch-pdp .acc-card-copy {
 </div>
 <div class="hf-tile hf-tile-grad-5">
 <div class="hf-tile-image">
-<img alt="Side-by-side render of a Unity-I and a Symmetry-I post-top sharing the same single-can pole adapter — cross-product mount infrastructure callout" src="assets/unity/hf-tile-5-mount-sharing.svg"/>
+<img alt="Side-by-side render of a Unity-I and a Symmetry-I post-top sharing the same single-can pole adapter — cross-product mount infrastructure callout" src="assets/unity/hf-tile-5-mount-sharing.webp"/>
 </div>
 <div class="hf-tile-overlay">
 <div class="hf-tile-tag">Mounting</div>
@@ -4137,7 +4131,7 @@ body.cityarch-pdp .acc-card-copy {
 <div class="hf-row-2">
 <div class="hf-tile hf-tile-grad-6">
 <div class="hf-tile-image">
-<img alt="Close-up of the Unity-I frosted glass cap from below — soft, even glow across the entire diffuser surface, no visible LED hotspots, no glare to a pedestrian standing under it" src="assets/unity/hf-tile-6-frosted.svg"/>
+<img alt="Close-up of the Unity-I frosted glass cap from below — soft, even glow across the entire diffuser surface, no visible LED hotspots, no glare to a pedestrian standing under it" src="assets/unity/hf-tile-6-frosted.webp"/>
 </div>
 <div class="hf-tile-overlay">
 <div class="hf-tile-tag">Glare Control</div>
@@ -4147,7 +4141,7 @@ body.cityarch-pdp .acc-card-copy {
 </div>
 <div class="hf-tile hf-tile-grad-2">
 <div class="hf-tile-image">
-<img alt="Optional twist-lock photocell installed in the dome receptacle on top of a Unity-I — gloved hand twisting it home in a single motion" src="assets/unity/hf-tile-7-photocell.svg"/>
+<img alt="Optional twist-lock photocell installed in the dome receptacle on top of a Unity-I — gloved hand twisting it home in a single motion" src="assets/unity/hf-tile-7-photocell.webp"/>
 </div>
 <div class="hf-tile-overlay">
 <div class="hf-tile-tag">Energy Optional</div>
@@ -4546,7 +4540,7 @@ body.cityarch-pdp .acc-card-copy {
 <span class="photo-bug-pill">Zero Uplight</span>
 <span class="photo-bug-pill">Dark-Sky aligned</span>
 </div>
-<div class="photo-stat-sub">Type V is independent of wattage step within a class — the 50W and 35W settings of LPTP3W75 (and 100W / 125W settings of LPTP3W150) share this same polar shape, with luminous output scaling linearly. Coverage gap: 4000K and 5000K IES files pending · awaiting ALG release (Type-V optical distribution is CCT-independent, so polar shape is photometrically representative).</div>
+<div class="photo-stat-sub">Type V is independent of wattage step within a class — the 50W and 35W settings of LPTP3W75 (and 100W / 125W settings of LPTP3W150) share this same polar shape, with luminous output scaling linearly. Coverage gap: 4000K and 5000K IES files pending from ALG (Type-V optical distribution is CCT-independent, so polar shape is photometrically representative).</div>
 </div>
 <div class="photo-stat">
 <div class="photo-stat-label">Test Lab Source</div>
@@ -5194,7 +5188,7 @@ body.cityarch-pdp .acc-card-copy {
 </div>
 <div class="cfg-spec-cell">
 <div class="cfg-spec-cell-key">Compliance</div>
-<div class="cfg-spec-cell-val" data-spec="compliance">cULus · DLC Listed · RoHS · FCC · Wet Loc · IP65</div>
+<div class="cfg-spec-cell-val" data-spec="compliance">UL · DLC Listed · RoHS · FCC · Wet Loc · IP65</div>
 </div>
 </div>
 <div class="cfg-incomplete-warning" id="cfgWarning">
@@ -5350,7 +5344,7 @@ body.cityarch-pdp .acc-card-copy {
 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path><line x1="9" x2="15" y1="11" y2="11"></line><line x1="9" x2="13" y1="14" y2="14"></line></svg>
           Rebate Center · DLC Listed
         </a>
-<a target="_blank" rel="noopener" class="docs-secondary-link" href="https://workdrive.archipelagolighting.com/external/db01406307e682a18496bacda8a07254e3e96734484ef20c08fb4fc37f2daac6">
+<a class="docs-secondary-link" href="https://workdrive.archipelagolighting.com/external/db01406307e682a18496bacda8a07254e3e96734484ef20c08fb4fc37f2daac6" target="_blank" rel="noopener">
 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24"><path d="M12 2 L20 6 V12 C20 17 16 21 12 22 C8 21 4 17 4 12 V6 Z"></path></svg>
           Warranty Statement (7-Year Limited)
         </a>
@@ -5402,7 +5396,7 @@ body.cityarch-pdp .acc-card-copy {
 <div class="family-card-desc">
             Pedestrian-scale post-top for pathways, plazas, and parking aisles at 12-20 ft pole heights. The product on this page.
           </div>
-<div class="family-card-stats">4,005-17,250 lm · 35-150W · Type V · 7-yr</div>
+<div class="family-card-stats">4,005-17,250 lm · 35-150W · Type V · 5-yr</div>
 <span class="family-card-cta">Currently viewing</span>
 </div>
 </div>
@@ -5799,15 +5793,21 @@ body.cityarch-pdp .acc-card-copy {
   var tbody = document.getElementById('specTableBody');
   var tabs = document.querySelectorAll('.spec-watt-tab');
   function render(model) {
-    tbody.innerHTML = data[model].map(function(r) {
-      return '<tr class="' + (r.def ? 'is-default' : '') + '">' +
-             '<td>' + r.watt   + '</td>' +
-             '<td>' + r.lumens + '</td>' +
-             '<td>' + r.lpw    + '</td>' +
-             '<td' + ((r.cct.indexOf(' · ') >= 0 || r.cct.indexOf(' / ') >= 0) ? ' class="spec-wrap"' : '') + '>' + r.cct    + '</td>' +
-             '<td' + ((r.volt.indexOf(' · ') >= 0 || r.volt.indexOf(' / ') >= 0) ? ' class="spec-wrap"' : '') + '>' + r.volt   + '</td>' +
-             '</tr>';
-    }).join('');
+    // CFG-SPEC-3 · Collapse all wattage rows into ONE row (James 2026-05-20 PM v12)
+    var rows = data[model];
+    var watts  = rows.map(function(r) { return r.watt;   }).join(' \u00B7 ');
+    var lums   = rows.map(function(r) { return r.lumens.replace(/ lm$/, ''); }).join(' \u00B7 ') + ' lm';
+    var lpws   = rows.map(function(r) { return r.lpw.replace(/ lm\/W$/, ''); }).join(' \u00B7 ') + ' lm/W';
+    var cct    = rows[0].cct;
+    var volt   = rows[0].volt;
+    tbody.innerHTML =
+      '<tr class="is-default">' +
+        '<td class="spec-wrap">' + watts + '</td>' +
+        '<td class="spec-wrap">' + lums + '</td>' +
+        '<td class="spec-wrap">' + lpws + '</td>' +
+        '<td class="spec-wrap">' + cct + '</td>' +
+        '<td>' + volt + '</td>' +
+      '</tr>';
   }
   tabs.forEach(function(t) {
     t.addEventListener('click', function() {
@@ -6576,8 +6576,8 @@ body.cityarch-pdp .acc-card-copy {
       setSpec('peak',    state.model   ? SPEC_TABLE.peak[state.model] || '—'        : null);
       var finishVal = state.finish ? SPEC_TABLE.finish[state.finish] : null;
       setSpec('finish', finishVal);
-      // Compliance: Unity ships cULus + DLC Listed + RoHS + FCC + Wet Loc (no DLC Premium, no TAA)
-      var compliance = 'cULus · DLC Listed · RoHS · FCC · Wet Loc · IP65';
+      // Compliance: Unity ships UL + DLC Listed + RoHS + FCC + Wet Loc (no DLC Premium, no TAA)
+      var compliance = 'UL · DLC Listed · RoHS · FCC · Wet Loc · IP65';
       if (state.photocell) compliance += ' · Photocell-Equipped';
       setSpec('compliance', compliance);
       // Swap the live-preview image src per selected finish.
@@ -6981,25 +6981,5 @@ body.cityarch-pdp .acc-card-copy {
 })();
 </script>
 
-<script id="cfg-type-1-override">
-/* CFG-TYPE-1-OVERRIDE: force Lato on h1/h2 via inline element.style
-   Inline style wins over all stylesheet rules regardless of cascade order.
-   Runs at DOMContentLoaded + t=2s + t=6s belt-and-suspenders. */
-(function() {
-  function applyLatoFont() {
-    if (!document.body) return;  // apply regardless of body class
-    document.querySelectorAll('h1, h2').forEach(function(el) {
-      el.style.setProperty('font-family', 'Lato, sans-serif', 'important');
-    });
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyLatoFont);
-  } else {
-    applyLatoFont();
-  }
-  setTimeout(applyLatoFont, 2000);
-  setTimeout(applyLatoFont, 6000);
-})();
-</script>
 </body>
 </html>

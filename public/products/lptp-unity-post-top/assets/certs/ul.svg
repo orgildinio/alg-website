@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <circle cx="50" cy="50" r="46" stroke="#ecedef" stroke-width="3"/>
+  <text x="50" y="46" text-anchor="middle" fill="#ecedef"
+        font-family="Lato, Arial, sans-serif" font-size="34" font-weight="900"
+        letter-spacing="-1">UL</text>
+  <line x1="22" y1="58" x2="78" y2="58" stroke="#ecedef" stroke-width="1.5"/>
+  <text x="50" y="76" text-anchor="middle" fill="#ecedef"
+        font-family="Lato, Arial, sans-serif" font-size="10" font-weight="700"
+        letter-spacing="3">LISTED</text>
+  <text x="50" y="88" text-anchor="middle" fill="#ecedef"
+        font-family="JetBrains Mono, monospace" font-size="6" letter-spacing="0.5"
+        opacity="0.7">®</text>
+</svg>
