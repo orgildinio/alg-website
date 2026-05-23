@@ -42,14 +42,10 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
 <!-- ============================================================
      HERO
      ============================================================ -->
-<section class="c-hero">
+<section class="c-hero c-hero--has-photo" style="background-image: url('/images/consumer/consumer-hero-coming-home.jpg');">
+  <div class="c-hero-photo-overlay" aria-hidden="true"></div>
   <div class="c-hero-inner">
     <div class="c-hero-eyebrow">Consumer &amp; Retail · Capabilities Overview</div>
-    <!-- §8 lifestyle hero image slot — supply path: set heroImage in consumer_retailers.json or pass as frontmatter -->
-    <div class="c-hero-img-slot" aria-hidden="true">
-      <!-- To supply: add a <img src="/images/consumer/hero-lifestyle.jpg" alt="..." class="c-hero-img" /> here when asset is ready -->
-      <div class="c-hero-img-placeholder"></div>
-    </div>
     <h1 class="c-hero-h1">Shop <span class="c-accent">ALG</span> by aisle.</h1>
     <p class="c-hero-tagline">Six everyday-lighting categories, from the garage to the garden.</p>
     <p class="c-hero-sub">From the garage to the garden, from the campsite to the cocktail party — Archipelago's residential and retail capabilities, organized the way your shoppers actually browse.</p>
@@ -175,11 +171,6 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
     </div>
     <!-- §3 category section header -->
     <h2 class="c-seg-heading">Home</h2>
-    <!-- §8 category image slot — supply: /images/consumer/home-lifestyle.jpg -->
-    <div class="c-seg-img-slot" aria-hidden="true">
-      <!-- <img src="/images/consumer/home-lifestyle.jpg" alt="Home lighting" class="c-seg-img" /> -->
-      <div class="c-seg-img-placeholder" data-aisle="home"></div>
-    </div>
     <p class="c-seg-tagline">The catchall aisle — and the broadest reach.</p>
     <p class="c-seg-lead">Garage lights, security floods, pathway markers, shop fixtures — everyday lighting that lives in every American home and the home-improvement aisle that supplies it.</p>
     <p class="c-seg-body">Built for the homeowner who knows what they need. Built for the retailer who needs SKUs that move. Impulse-friendly shop lights. Photocell-controlled security floods. Pathway lighting that borrows control know-how from commercial.</p>
@@ -197,8 +188,9 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
       <a href="/find-a-distributor" class="c-btn-secondary">Find a Retailer</a>
     </div>
   </div>
-  <div class="c-seg-visual">
-    <svg class="c-seg-illust" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <div class="c-seg-visual c-seg-visual--photo">
+    <img src="/images/consumer/consumer-home-garage-entry.jpg" alt="Warm American home at golden hour with lit porch lantern and glowing garage" class="c-seg-photo" />
+    <svg class="c-seg-illust c-seg-illust--fallback" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M50 200 L50 130 L200 50 L350 130 L350 200 Z" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
       <path d="M50 130 L200 50 L350 130" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
       <rect x="80" y="140" width="100" height="60" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
@@ -218,9 +210,9 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
       <circle cx="160" cy="248" r="3" fill="#f0a932"/>
       <circle cx="200" cy="250" r="3" fill="#f0a932"/>
       <circle cx="240" cy="248" r="3" fill="#f0a932"/>
-      <rect x="0" y="260" width="400" height="40" fill="rgba(0,0,0,0.2)"/>
-      <text x="200" y="290" text-anchor="middle" fill="#9ec57a" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">SECURITY · LANDSCAPE · GARAGE</text>
     </svg>
+    <div class="c-seg-photo-scrim" aria-hidden="true"></div>
+    <div class="c-seg-strip">SECURITY · LANDSCAPE · GARAGE</div>
   </div>
 </section>
 
@@ -236,11 +228,6 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
     </div>
     <!-- §3 category section header -->
     <h2 class="c-seg-heading">Garden</h2>
-    <!-- §8 category image slot — supply: /images/consumer/garden-lifestyle.jpg -->
-    <div class="c-seg-img-slot" aria-hidden="true">
-      <!-- <img src="/images/consumer/garden-lifestyle.jpg" alt="Garden lighting" class="c-seg-img" /> -->
-      <div class="c-seg-img-placeholder" data-aisle="garden"></div>
-    </div>
     <p class="c-seg-tagline">Grow lights for the serious gardener.</p>
     <p class="c-seg-lead">PolyGrow horticultural fixtures. Outdoor garden ambient lighting. Pathway and accent for the landscape that gets curated, not just maintained.</p>
     <p class="c-seg-body">The serious home gardener needs lighting the big-box generic LED aisle doesn't carry. PAR-tuned spectrum options, full-spectrum vegetative, and bloom-stage fixtures — plus outdoor accent / pathway for customers who care how the garden looks at night.</p>
@@ -257,8 +244,9 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
       <a href="/collections/polygrow" class="c-btn-secondary">Explore PolyGrow</a>
     </div>
   </div>
-  <div class="c-seg-visual">
-    <svg class="c-seg-illust" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <div class="c-seg-visual c-seg-visual--photo">
+    <img src="/images/consumer/consumer-garden-evening-landscape.jpg" alt="Lush garden at dusk with warm pathway lighting and glowing landscape accents" class="c-seg-photo" />
+    <svg class="c-seg-illust c-seg-illust--fallback" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <ellipse cx="200" cy="80" rx="120" ry="50" fill="rgba(158,221,181,0.12)" stroke="rgba(158,221,181,0.4)" stroke-width="1.5"/>
       <line x1="200" y1="80" x2="200" y2="260" stroke="rgba(158,221,181,0.5)" stroke-width="2"/>
       <ellipse cx="140" cy="130" rx="60" ry="30" fill="rgba(158,221,181,0.1)" stroke="rgba(158,221,181,0.3)" stroke-width="1.5"/>
@@ -269,8 +257,9 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
       <line x1="200" y1="20" x2="200" y2="10" stroke="#f0a932" stroke-width="1.5"/>
       <line x1="214" y1="26" x2="221" y2="19" stroke="#f0a932" stroke-width="1.5"/>
       <line x1="220" y1="40" x2="230" y2="40" stroke="#f0a932" stroke-width="1.5"/>
-      <text x="200" y="290" text-anchor="middle" fill="#9eddb5" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">POLYGROW · PATHWAY · ACCENT</text>
     </svg>
+    <div class="c-seg-photo-scrim" aria-hidden="true"></div>
+    <div class="c-seg-strip">POLYGROW · PATHWAY · ACCENT</div>
   </div>
 </section>
 
@@ -286,11 +275,6 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
     </div>
     <!-- §3 category section header -->
     <h2 class="c-seg-heading">Work</h2>
-    <!-- §8 category image slot — supply: /images/consumer/work-lifestyle.jpg -->
-    <div class="c-seg-img-slot" aria-hidden="true">
-      <!-- <img src="/images/consumer/work-lifestyle.jpg" alt="Work lighting" class="c-seg-img" /> -->
-      <div class="c-seg-img-placeholder" data-aisle="work"></div>
-    </div>
     <p class="c-seg-tagline">Job-site lighting that takes a hit.</p>
     <p class="c-seg-lead">Portable work lights. Magnetic shop lights. Temporary job-site fixtures. The lighting that goes in the back of the truck and comes home with paint on it.</p>
     <p class="c-seg-body">Built for the contractor who's tired of renting job-site lighting and decided to buy once. Drop-resistant housings. Magnetic mounts. Corded options for the trades that wire as they go.</p>
@@ -307,8 +291,9 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
       <a href="/support/for-contractors" class="c-btn-secondary">For Contractors</a>
     </div>
   </div>
-  <div class="c-seg-visual">
-    <svg class="c-seg-illust" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <div class="c-seg-visual c-seg-visual--photo">
+    <img src="/images/consumer/consumer-work-workshop-task.jpg" alt="Contractor using bright task light in a workshop with tools and workbench" class="c-seg-photo" />
+    <svg class="c-seg-illust c-seg-illust--fallback" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <rect x="120" y="80" width="160" height="100" rx="8" fill="rgba(201,168,118,0.15)" stroke="rgba(201,168,118,0.5)" stroke-width="2"/>
       <rect x="140" y="100" width="120" height="60" rx="4" fill="rgba(201,168,118,0.1)" stroke="rgba(201,168,118,0.3)" stroke-width="1.5"/>
       <circle cx="200" cy="130" r="25" fill="rgba(240,169,50,0.25)" stroke="#f0a932" stroke-width="1.5"/>
@@ -317,8 +302,9 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
       <rect x="170" y="220" width="60" height="20" rx="4" fill="rgba(201,168,118,0.2)" stroke="rgba(201,168,118,0.4)" stroke-width="1.5"/>
       <circle cx="150" cy="250" r="12" fill="none" stroke="rgba(201,168,118,0.4)" stroke-width="1.5"/>
       <circle cx="250" cy="250" r="12" fill="none" stroke="rgba(201,168,118,0.4)" stroke-width="1.5"/>
-      <text x="200" y="290" text-anchor="middle" fill="#c9a876" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">PORTABLE · MAGNETIC · CORDED</text>
     </svg>
+    <div class="c-seg-photo-scrim" aria-hidden="true"></div>
+    <div class="c-seg-strip">PORTABLE · MAGNETIC · CORDED</div>
   </div>
 </section>
 
@@ -334,11 +320,6 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
     </div>
     <!-- §3 category section header -->
     <h2 class="c-seg-heading">Auto</h2>
-    <!-- §8 category image slot — supply: /images/consumer/auto-lifestyle.jpg -->
-    <div class="c-seg-img-slot" aria-hidden="true">
-      <!-- <img src="/images/consumer/auto-lifestyle.jpg" alt="Auto lighting" class="c-seg-img" /> -->
-      <div class="c-seg-img-placeholder" data-aisle="auto"></div>
-    </div>
     <p class="c-seg-tagline">Trouble lights for the trouble-shooter.</p>
     <p class="c-seg-lead">Inspection lighting. Mobile mechanic essentials. Truck-bed work lights — the aisle that lives next to the OBD-II scanner.</p>
     <p class="c-seg-body">Dropped-from-the-hood-prop tested. Magnetic mounts that stick to fenders. Hooks that hang anywhere. Cords long enough to reach the rear differential. New section, real products — starting with our 75-watt trouble light.</p>
@@ -365,8 +346,9 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
       <a href="/find-a-distributor" class="c-btn-secondary">Find a Retailer</a>
     </div>
   </div>
-  <div class="c-seg-visual">
-    <svg class="c-seg-illust" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <div class="c-seg-visual c-seg-visual--photo">
+    <img src="/images/consumer/consumer-auto-garage-inspection.jpg" alt="Mechanic using inspection light under a vehicle hood in a garage" class="c-seg-photo" />
+    <svg class="c-seg-illust c-seg-illust--fallback" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <ellipse cx="200" cy="200" rx="140" ry="50" fill="rgba(122,166,255,0.08)" stroke="rgba(122,166,255,0.2)" stroke-width="1"/>
       <rect x="80" y="120" width="240" height="80" rx="12" fill="rgba(122,166,255,0.08)" stroke="rgba(122,166,255,0.3)" stroke-width="1.5"/>
       <rect x="100" y="140" width="60" height="40" rx="4" fill="rgba(122,166,255,0.12)" stroke="rgba(122,166,255,0.25)" stroke-width="1"/>
@@ -375,10 +357,9 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
       <circle cx="270" cy="200" r="20" fill="none" stroke="rgba(122,166,255,0.4)" stroke-width="2"/>
       <circle cx="200" cy="100" r="18" fill="rgba(240,220,180,0.3)" stroke="#f0dca0" stroke-width="1.5"/>
       <path d="M200,100 L160,200 L240,200 Z" fill="rgba(240,220,180,0.1)"/>
-      <text x="200" y="275" text-anchor="middle" fill="#7aa6ff" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">INSPECTION · MAGNETIC · TROUBLE</text>
     </svg>
-    <!-- Headlight beam effect -->
-    <div class="c-auto-beam" aria-hidden="true"></div>
+    <div class="c-seg-photo-scrim" aria-hidden="true"></div>
+    <div class="c-seg-strip">INSPECTION · MAGNETIC · TROUBLE</div>
   </div>
 </section>
 
@@ -394,11 +375,6 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
     </div>
     <!-- §3 category section header -->
     <h2 class="c-seg-heading">Camping</h2>
-    <!-- §8 category image slot — supply: /images/consumer/camping-lifestyle.jpg -->
-    <div class="c-seg-img-slot" aria-hidden="true">
-      <!-- <img src="/images/consumer/camping-lifestyle.jpg" alt="Camping lighting" class="c-seg-img" /> -->
-      <div class="c-seg-img-placeholder" data-aisle="camping"></div>
-    </div>
     <p class="c-seg-tagline">Solar work lights off the grid.</p>
     <p class="c-seg-lead">USB-solar charged. Real output. Real runtime. Compact form factors that earn a spot in the gear bin.</p>
     <p class="c-seg-body">Built for overlanders who care about specs more than packaging claims: real lumens, USB-C charging, solar topping during daylight, and mounts that work on tents and rigs.</p>
@@ -433,21 +409,17 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
       <a href="/find-a-distributor" class="c-btn-secondary">Find a Retailer</a>
     </div>
   </div>
-  <div class="c-seg-visual">
-    <!-- Stars -->
-    <div class="c-camp-stars" aria-hidden="true">
-      {[...Array(18)].map((_, i) => (
-        <div class="c-star" style={`top:${Math.floor(Math.sin(i*7.3)*40+50)}%;left:${Math.floor(Math.cos(i*5.1)*40+50)}%;opacity:${0.4+Math.abs(Math.sin(i*2.7))*0.6};`}></div>
-      ))}
-    </div>
-    <svg class="c-seg-illust" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <div class="c-seg-visual c-seg-visual--photo">
+    <img src="/images/consumer/consumer-camping-dusk-campsite.jpg" alt="Campsite at dusk with solar lantern glowing warm on a tent and gear" class="c-seg-photo" />
+    <svg class="c-seg-illust c-seg-illust--fallback" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M60 260 L200 80 L340 260 Z" fill="rgba(122,219,181,0.08)" stroke="rgba(122,219,181,0.3)" stroke-width="1.5"/>
       <path d="M100 260 L200 120 L300 260 Z" fill="rgba(122,219,181,0.06)" stroke="rgba(122,219,181,0.2)" stroke-width="1"/>
       <circle cx="200" cy="60" r="18" fill="rgba(240,169,50,0.3)" stroke="#f0a932" stroke-width="1.5"/>
       <path d="M200,60 L160,260 L240,260 Z" fill="rgba(240,169,50,0.06)"/>
       <rect x="160" y="240" width="80" height="20" rx="3" fill="rgba(122,219,181,0.15)" stroke="rgba(122,219,181,0.3)" stroke-width="1"/>
-      <text x="200" y="290" text-anchor="middle" fill="#7adbb5" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">SOLAR · USB-C · IPX5</text>
     </svg>
+    <div class="c-seg-photo-scrim" aria-hidden="true"></div>
+    <div class="c-seg-strip">SOLAR · USB-C · IPX5</div>
   </div>
 </section>
 
@@ -463,11 +435,6 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
     </div>
     <!-- §3 category section header -->
     <h2 class="c-seg-heading">Party</h2>
-    <!-- §8 category image slot — supply: /images/consumer/party-lifestyle.jpg -->
-    <div class="c-seg-img-slot" aria-hidden="true">
-      <!-- <img src="/images/consumer/party-lifestyle.jpg" alt="Party lighting" class="c-seg-img" /> -->
-      <div class="c-seg-img-placeholder" data-aisle="party"></div>
-    </div>
     <p class="c-seg-tagline">String lights for the long evening.</p>
     <p class="c-seg-lead">LED festoon. Bistro string lights. Café-style decorative that survives more than one season.</p>
     <p class="c-seg-body">The category is dominated by single-use seasonal junk. We make the version that survives backyard parties, winter holidays, and the wedding season. Commercial-grade shells in residential SKU sizes. Outdoor cord constructions. Shatter-resistant materials.</p>
@@ -484,14 +451,9 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
       <a href="/collections/string-lights" class="c-btn-secondary">Explore String Lights</a>
     </div>
   </div>
-  <div class="c-seg-visual">
-    <!-- String light dots -->
-    <div class="c-party-string" aria-hidden="true">
-      {[...Array(12)].map((_, i) => (
-        <div class="c-party-light" style={`top:${20+Math.floor(Math.sin(i*0.8)*15)}%;left:${(i*8)+4}%;`}></div>
-      ))}
-    </div>
-    <svg class="c-seg-illust" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <div class="c-seg-visual c-seg-visual--photo">
+    <img src="/images/consumer/consumer-party-string-lights.jpg" alt="Outdoor evening gathering with warm bistro string lights strung above a patio" class="c-seg-photo" />
+    <svg class="c-seg-illust c-seg-illust--fallback" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M40,60 Q100,100 160,60 Q220,20 280,60 Q340,100 380,60" fill="none" stroke="rgba(219,169,212,0.4)" stroke-width="1.5"/>
       <path d="M40,100 Q100,140 160,100 Q220,60 280,100 Q340,140 380,100" fill="none" stroke="rgba(219,169,212,0.3)" stroke-width="1.5"/>
       {[40,100,160,220,280,340].map(x => (
@@ -500,8 +462,9 @@ const catMap = Object.fromEntries(categories.map((c: any) => [c.key, c]));
       {[70,130,190,250,310,370].map(x => (
         <ellipse cx={x} cy={120} rx="8" ry="12" fill="rgba(219,169,212,0.6)" stroke="#dba9d4" stroke-width="1"/>
       ))}
-      <text x="200" y="290" text-anchor="middle" fill="#dba9d4" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">FESTOON · BISTRO · OUTDOOR CORD</text>
     </svg>
+    <div class="c-seg-photo-scrim" aria-hidden="true"></div>
+    <div class="c-seg-strip">FESTOON · BISTRO · OUTDOOR CORD</div>
   </div>
 </section>
 
@@ -1478,8 +1441,9 @@ html {
 @media (max-width: 960px) {
   .c-seg { grid-template-columns: 1fr; min-height: auto; }
   .c-seg--rev { direction: ltr; }
-  .c-seg-content { padding: 48px 28px; }
-  .c-seg-visual { min-height: 260px; padding: 28px; }
+  .c-seg-content { padding: 48px 28px; order: 2; }
+  .c-seg-visual { min-height: 260px; padding: 28px; order: 1; }
+  .c-seg-visual--photo { min-height: 280px; padding: 0; }
   .c-cap-grid { grid-template-columns: 1fr; gap: 20px; }
   .c-subnav { grid-template-columns: repeat(3, 1fr); }
   .c-subnav-item:nth-child(3n) { border-right: 0; }
@@ -1618,68 +1582,71 @@ html {
 }
 .c-retailer-list li a:hover { background: var(--bg2); color: var(--brand); }
 
-/* §8 hero image slot */
-.c-hero-img-slot {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto 28px;
-  border-radius: 8px;
+/* v27x-imagery: hero photo background */
+.c-hero--has-photo {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.c-hero-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(12,13,18,0.82) 0%, rgba(26,29,40,0.78) 55%, rgba(12,13,18,0.82) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+.c-hero--has-photo .c-hero-inner { z-index: 2; }
+/* v27x-imagery: photo panel */
+.c-seg-visual--photo {
+  position: relative;
   overflow: hidden;
 }
-.c-hero-img-placeholder {
-  height: 240px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.08) 100%);
-  border: 1px dashed rgba(255,255,255,0.15);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.c-seg-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
-.c-hero-img-placeholder::after {
-  content: 'Lifestyle image — asset pending';
+/* fallback illustration hidden when photo present */
+.c-seg-visual--photo .c-seg-illust--fallback {
+  display: none;
+}
+/* scrim: transparent top → ~70% panel hue at bottom for label legibility */
+.c-seg-photo-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.c-seg--home .c-seg-photo-scrim    { background: linear-gradient(to bottom, transparent 50%, rgba(61,85,36,0.70) 100%); }
+.c-seg--garden .c-seg-photo-scrim  { background: linear-gradient(to bottom, transparent 50%, rgba(10,31,18,0.70) 100%); }
+.c-seg--work .c-seg-photo-scrim    { background: linear-gradient(to bottom, transparent 50%, rgba(58,50,37,0.70) 100%); }
+.c-seg--auto .c-seg-photo-scrim    { background: linear-gradient(to bottom, transparent 50%, rgba(31,41,64,0.70) 100%); }
+.c-seg--camping .c-seg-photo-scrim { background: linear-gradient(to bottom, transparent 50%, rgba(10,31,18,0.70) 100%); }
+.c-seg--party .c-seg-photo-scrim   { background: linear-gradient(to bottom, transparent 50%, rgba(58,28,64,0.70) 100%); }
+/* label strip */
+.c-seg-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 20px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.2);
+  font-weight: 600;
+  text-align: center;
+  z-index: 2;
 }
-.c-hero-img { width: 100%; height: 240px; object-fit: cover; border-radius: 8px; }
-
-/* §8 category image slots */
-.c-seg-img-slot {
-  width: 100%;
-  margin: 0 0 16px 0;
-  border-radius: 6px;
-  overflow: hidden;
-}
-.c-seg-img-placeholder {
-  height: 140px;
-  border: 1px dashed rgba(255,255,255,0.12);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255,255,255,0.03);
-}
-.c-seg--home .c-seg-img-placeholder {
-  border-color: rgba(0,0,0,0.1);
-  background: rgba(0,0,0,0.03);
-}
-.c-seg-img-placeholder::after {
-  content: attr(data-aisle) ' lifestyle — asset pending';
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.15);
-}
-.c-seg--home .c-seg-img-placeholder::after { color: rgba(0,0,0,0.15); }
-.c-seg-img { width: 100%; height: 140px; object-fit: cover; border-radius: 6px; }
-
-@media (max-width: 480px) {
-  .c-hero-img-placeholder { height: 160px; }
-  .c-seg-img-placeholder { height: 100px; }
-}
+.c-seg--home .c-seg-strip    { color: #9ec57a; }
+.c-seg--garden .c-seg-strip  { color: #9eddb5; }
+.c-seg--work .c-seg-strip    { color: #c9a876; }
+.c-seg--auto .c-seg-strip    { color: #7aa6ff; }
+.c-seg--camping .c-seg-strip { color: #7adbb5; }
+.c-seg--party .c-seg-strip   { color: #dba9d4; }
 </style>
 
 <script>
