@@ -74,6 +74,9 @@ export default defineConfig({
       // so Footer.astro always gets the real value, not the 'dev' fallback.
       'import.meta.env.PUBLIC_BUILD_HASH': JSON.stringify(BUILD_HASH),
       'import.meta.env.PUBLIC_BUILD_TIME': JSON.stringify(BUILD_TIME),
+      // Bake Clarity project ID at build time from CF Pages env var PUBLIC_CLARITY_ID.
+      // Set PUBLIC_CLARITY_ID in CF Pages dashboard → Settings → Environment variables.
+      'import.meta.env.PUBLIC_CLARITY_ID': JSON.stringify(process.env.PUBLIC_CLARITY_ID || ''),
     },
   },
 });
