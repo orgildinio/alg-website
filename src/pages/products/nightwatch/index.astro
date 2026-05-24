@@ -997,6 +997,20 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     color: var(--text-secondary); letter-spacing: 0.04em;
     width: max-content; max-width: 100%;
   }
+
+  /* CFG-CFG-1 v1.4 · Legend disclaimer · James 2026-05-22 · quiet legal cover */
+  .cfg-disclaimer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--text-muted);
+    opacity: 0.65;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px dashed rgba(255,255,255,0.08);
+  }
   .cfg-legend-row { display: contents; }
   .cfg-legend-key {
     display: inline-flex; align-items: center; justify-content: center;
@@ -3583,6 +3597,10 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             <span class="cfg-legend-key mto">MTO</span>
             <span class="cfg-legend-val">Made-to-Order — 4–6 week lead</span>
           </div>
+        </div>
+        <!-- CFG-CFG-1 v1.4 · Legend disclaimer (James 2026-05-22) -->
+        <div class="cfg-disclaimer">
+          Estimates &middot; not guarantees &middot; subject to availability &middot; confirm before committing.
         </div>
 
       </div>
