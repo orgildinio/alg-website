@@ -2,431 +2,439 @@
 /**
  * collections/constant/index.astro
  *
- * constANT collection page — route: /collections/constant/
- * Design source: constANT_collection_SHIP.html (2026-05-27)
- * Canonical spine: 21-block pattern (cityARCH precedent)
- * Content source: 2026 Edition Product Guide
+ * constⒶNT collection page — route: /collections/constant/
+ * Pixel-parity rebuild 2026-05-27 per pixel_parity prompt §B.
  *
- * CFG-CHROME-1: No inlined header/footer/utility-bar.
- *   BaseLayout injects the shell. This file is CONTENT-ONLY.
- * CFG-CHROME-2: .mockup-banner stripped.
- * CFG-TYPE-1: Lato + JetBrains Mono pinned.
+ * Architecture: manual composition pattern (same as multi-family/index.astro)
+ * — uses shared collection components for all standard sections
+ * — inlines constⒶNT-specific sections (filter rail, browse tiles,
+ *   adders band, verticals band, pairs-with band, custom get-started card 4)
+ *   using the SAME CSS class names and visual rhythm as the shared components.
+ *
+ * CFG-CHROME-1: No inlined header/footer. BaseLayout injects chrome.
+ * CFG-CHROME-2: No .mockup-banner.
+ * CFG-TYPE-1: Lato + JetBrains Mono pinned with !important.
  * CFG-INV-1: No inventory counts. SKU counts only.
- * CFG-COPY-4/-5/-6: No competitor brands, no vendor MPNs, no OEM/factory mentions.
+ * CFG-COPY-4/-5/-6: No competitor brands, no vendor MPNs, no OEM mentions.
  *
- * J.1 Breadcrumb: HOME › PRODUCTS › SAFETY & CONTROLS › CONSTANT (4-segment hierarchical)
- * J.2 Scope: Drivers (live) + 4 product-type stub pages (coming soon)
- * J.3 Featured: 4 cards (one per install tier)
- * J.4 Phase-2 punts: Selector, per-adder sub-pages, DLC NLC chips, cross-ref table
- * J.5 Anchor rail: 11 dots
+ * §D.8 SKU grid: ONLY 11 real SKUs. 5 invented SKUs removed.
+ * §D.3 Filter rail: 9 axes. NO CCT, NO generic Voltage, NO DLC NLC.
+ * §D.16 Anchor rail: 11 dots.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CollectionStatStrip from '../../../components/collection/CollectionStatStrip.astro';
+import CollectionRedBanner from '../../../components/collection/CollectionRedBanner.astro';
+import CollectionFeatured from '../../../components/collection/CollectionFeatured.astro';
+import CollectionLegacy from '../../../components/collection/CollectionLegacy.astro';
+import CollectionRelated from '../../../components/collection/CollectionRelated.astro';
+import CollectionAnchorNav from '../../../components/CollectionAnchorNav.astro';
+
+// §D.16: 11 anchor dots
+const anchorSections = [
+  { id: 'hero',          label: 'Overview'      },
+  { id: 'stats',         label: 'Quick stats'   },
+  { id: 'install-tiers', label: 'Install tiers' },
+  { id: 'product-types', label: 'Product types' },
+  { id: 'highlights',    label: 'Featured'      },
+  { id: 'all-drivers',   label: 'All drivers'   },
+  { id: 'adders',        label: 'Adders'        },
+  { id: 'verticals',     label: 'Verticals'     },
+  { id: 'legacy',        label: 'Legacy'        },
+  { id: 'get-started',   label: 'Get started'   },
+  { id: 'related',       label: 'Related'       },
+];
+
+// §D.2 Quick-stat 4-up
+const statStrip = [
+  { value: '11',     label: 'Active Driver SKUs'    },
+  { value: '4',      label: 'Install Tiers'         },
+  { value: '8',      label: 'Verticals Served'      },
+  { value: 'UL 924', label: 'Listed (Not Recognized)' },
+];
+
+// §D.6 Marketing stat 6-up (red banner)
+const redBanner = [
+  { value: '11',    label: 'Active Drivers'         },
+  { value: '4',     label: 'Install Tiers'          },
+  { value: '8',     label: 'Verticals'              },
+  { value: 'UL 924',label: 'Listed (Not Recognized)'},
+  { value: '5-YR',  label: 'Limited Warranty'       },
+  { value: '−4°F',  label: 'With /AG ⒶrcticGuard'  },
+];
+
+// §D.7 Featured Families 4 cards
+const featured = [
+  {
+    family: 'EM20-CMB/260DC',
+    subCategory: 'Factory-Install · Mid-Power · PRO',
+    displayEchelon: 'PRO' as const,
+    maxWattage: 20,
+    skuCount: 1,
+    dlc: true,
+    lineDrawing: null,
+    cardImage: null,
+    pdpUrl: '#sku-em20-cmb-260dc',
+  },
+  {
+    family: 'EM15-PMB/120AC',
+    subCategory: 'Field-Install · Mid-Power · PRO',
+    displayEchelon: 'PRO' as const,
+    maxWattage: 15,
+    skuCount: 1,
+    dlc: true,
+    lineDrawing: null,
+    cardImage: null,
+    pdpUrl: '#sku-em15-pmb-120ac',
+  },
+  {
+    family: 'CRCU-EM24/JBM',
+    subCategory: 'Quick-Install · Mid-Power · PRO',
+    displayEchelon: 'PRO' as const,
+    maxWattage: 24,
+    skuCount: 1,
+    dlc: true,
+    lineDrawing: null,
+    cardImage: null,
+    pdpUrl: '#sku-crcu-em24-jbm',
+  },
+  {
+    family: 'EM60-UMB/170DC',
+    subCategory: 'Field-Install · High-Power · PRO',
+    displayEchelon: 'PRO' as const,
+    maxWattage: 60,
+    skuCount: 1,
+    dlc: true,
+    lineDrawing: null,
+    cardImage: null,
+    pdpUrl: '#sku-em60-umb-170dc',
+  },
+];
+
+// §D.11 Legacy
+const legacy = {
+  headline: 'Discontinued drivers.',
+  body: 'Some earlier emergency-driver SKUs have been discontinued. Replacement recommendations are available — contact your rep or distributor for guidance.',
+  notifyLink: 'mailto:sales@archipelagolighting.com',
+};
+
+// §D.14 Related Collections
+const relatedCollections = [
+  {
+    slug: 'lamparch',
+    name: 'lampar<span class="aa">Ⓐ</span>RCH',
+    vertical: 'Industrial',
+    description: 'High-bay, low-bay, vapor-tight. External /U-chassis constⒶNT drivers mount to the side of the host fixture.',
+    status: 'live' as const,
+  },
+  {
+    slug: 'luxoarch',
+    name: 'luxo<span class="aa">Ⓐ</span>RCH',
+    vertical: 'Outdoor',
+    description: 'Wall packs, area, canopy, flood. /AG ⒶrcticGuard required for unconditioned outdoor enclosures.',
+    status: 'live' as const,
+  },
+  {
+    slug: 'planoarch',
+    name: 'plano<span class="aa">Ⓐ</span>RCH',
+    vertical: 'Indoor',
+    description: 'Architectural linear, downlights, panels, troffers. CRC J-Box drivers retrofit occupied ceilings without teardown.',
+    status: 'live' as const,
+  },
+  {
+    slug: 'multi-family',
+    name: 'multi-f<span class="aa">Ⓐ</span>MILY',
+    vertical: 'Residential',
+    description: 'SafeZone downlights, recessed cans, surface mount. CRCU/CRC6 J-Box drivers ship pre-wired with Radius SafeZone, Eclipse-II, Orbit-I.',
+    status: 'live' as const,
+  },
+];
+
+// §D.8: 11 real SKUs (no invented SKUs)
+const skus = [
+  { id: 'sku-em07-cmb-150dc',   tier: 'factory', eyebrow: 'FACTORY · LOW-POWER · PRO',  name: 'EM07-CMB/150DC',    meta: '7W · 150Vdc · low-power CMB' },
+  { id: 'sku-em20-cmb-260dc',   tier: 'factory', eyebrow: 'FACTORY · MID-POWER · PRO',  name: 'EM20-CMB/260DC',    meta: '20W · 90–260Vdc · /AG ready' },
+  { id: 'sku-em15-pmb-120ac',   tier: 'field',   eyebrow: 'FIELD · MID-POWER · PRO',    name: 'EM15-PMB/120AC',    meta: '15W · 120Vac · /CL ready' },
+  { id: 'sku-em25-pmb-120ac',   tier: 'field',   eyebrow: 'FIELD · MID-POWER · PRO',    name: 'EM25-PMB/120AC',    meta: '25W · 120Vac · /CL ready' },
+  { id: 'sku-em30-umb-170dc',   tier: 'field',   eyebrow: 'FIELD · HIGH-POWER · PRO',   name: 'EM30-UMB/170DC',    meta: '30W · 170Vdc · external /U chassis' },
+  { id: 'sku-em40-rmb-170dc',   tier: 'field',   eyebrow: 'FIELD · HIGH-POWER · PRO',   name: 'EM40-RMB/170DC',    meta: '40W · 170Vdc · /CL ready · lamparⒶRCH' },
+  { id: 'sku-em60-gmb-170dc',   tier: 'field',   eyebrow: 'FIELD · HIGH-POWER · PRO',   name: 'EM60-GMB/170DC',    meta: '60W · 170Vdc · lamparⒶRCH high-bay' },
+  { id: 'sku-em60-umb-170dc',   tier: 'field',   eyebrow: 'FIELD · HIGH-POWER · PRO',   name: 'EM60-UMB/170DC',    meta: '60W · 170Vdc · external /U · warehouse hero' },
+  { id: 'sku-crcu-em24-jbm',    tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'CRCU-EM24/JBM',     meta: '24W · 190Vdc · J-Box mount' },
+  { id: 'sku-crc6-em24-jbs-b',  tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'CRC6-EM24/JBS/B',   meta: '24W · 190Vdc · black finish · J-Box surface' },
+  { id: 'sku-crc6-em24-jbs-w',  tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'CRC6-EM24/JBS/W',   meta: '24W · 190Vdc · white finish · J-Box surface' },
+];
 ---
 <BaseLayout
   title="constANT — Emergency Drivers | Archipelago Lighting Group"
-  description="constANT — ALG's emergency battery backup driver ecosystem. UL 924 listed. Universal 100–347Vac input. Four install tiers, three power classes, three optional adders, eight verticals."
-  bodyClass="page-constant-collection"
+  description="constANT — ALG's emergency battery backup driver ecosystem. UL 924 listed. Universal 100–347Vac input. 11 active driver SKUs across 4 install tiers and 8 verticals."
 >
-<style>
-  :root {
-    --brand-red: #F32740;
-    --ink: #15181c;
-    --char: #1c2025;
-    --char-2: #22262b;
-    --char-3: #2a2e34;
-    --paper: #FAF8F4;
-    --paper-2: #F1ECE3;
-    --rule: rgba(28, 32, 37, 0.10);
-    --rule-strong: rgba(28, 32, 37, 0.25);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Lato', system-ui, sans-serif !important; color: var(--ink); background: #ffffff; line-height: 1.5; -webkit-font-smoothing: antialiased; }
-  h1, h2, h3, h4 { font-family: 'Lato', system-ui, sans-serif !important; }
-  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace !important; }
-  /* CFG-MF-13 glyph spacing tuck */
-  .aa { color: var(--brand-red); font-weight: 700; margin: 0 -0.04em; }
-  /* WRAPPER */
-  .wrap { max-width: 1680px; margin: 0 auto; padding: 0 48px; }
-  .wrap-narrow { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
-  /* BREADCRUMB · §4 */
-  .breadcrumb { padding: 32px 48px 16px; max-width: 1680px; margin: 0 auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(28,32,37,0.65); }
-  .breadcrumb a { color: rgba(28,32,37,0.85); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.15s; }
-  .breadcrumb a:hover { border-bottom-color: var(--brand-red); }
-  .breadcrumb .sep { margin: 0 8px; color: rgba(28,32,37,0.35); }
-  /* HERO BAND · §5 */
-  .hero { padding: 24px 48px 64px; max-width: 1680px; margin: 0 auto; }
-  .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(28,32,37,0.65); margin-bottom: 24px; }
-  .hero h1 { font-size: 96px; font-weight: 900; letter-spacing: -0.025em; line-height: 0.95; margin-bottom: 24px; color: var(--ink); }
-  .hero-desc { font-size: 19px; line-height: 1.55; max-width: 880px; color: rgba(28,32,37,0.85); margin-bottom: 32px; }
-  .hero-chips { display: flex; flex-wrap: wrap; gap: 12px; }
-  .chip { display: inline-flex; align-items: center; padding: 8px 16px; background: var(--paper-2); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); border-radius: 1px; }
-  .chip-accent { background: var(--brand-red); color: white; }
-  /* QUICK STAT GRID · §6 */
-  .quick-stats { background: var(--paper); padding: 56px 48px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
-  .quick-stats-inner { max-width: 1680px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 48px; }
-  .qs-num { font-size: 64px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; color: var(--ink); margin-bottom: 8px; }
-  .qs-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(28,32,37,0.65); }
-  /* BROWSE BY INSTALL TIER · §7 */
-  .browse-section { padding: 64px 48px; max-width: 1680px; margin: 0 auto; }
-  .section-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(28,32,37,0.65); margin-bottom: 16px; }
-  .section-h2 { font-size: 36px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 32px; }
-  .browse-tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
-  .browse-tile { display: block; padding: 32px 28px; background: var(--char); color: white; text-decoration: none; transition: background 0.18s; }
-  .browse-tile:hover { background: var(--brand-red); }
-  .tile-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 12px; }
-  .tile-name { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 8px; line-height: 1.2; }
-  .tile-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
-  /* MARKETING STAT ROW · §8 */
-  .mkt-stats { background: var(--char); padding: 48px; border-top: 1px solid rgba(255,255,255,0.06); }
-  .mkt-stats-inner { max-width: 1680px; margin: 0 auto; display: grid; grid-template-columns: repeat(6, 1fr); gap: 32px; }
-  .mkt-stat { text-align: left; }
-  .mn { font-size: 36px; font-weight: 900; letter-spacing: -0.02em; color: white; margin-bottom: 4px; }
-  .ml { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
-  /* FEATURED FAMILIES · §9 */
-  .featured { padding: 80px 48px; max-width: 1680px; margin: 0 auto; }
-  .featured-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 40px; }
-  .family-card { display: block; padding: 32px 28px 28px; background: var(--paper); text-decoration: none; color: var(--ink); transition: background 0.18s; }
-  .family-card:hover { background: var(--paper-2); }
-  .fc-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(28,32,37,0.55); margin-bottom: 20px; }
-  .fc-tier { color: var(--brand-red); font-weight: 700; }
-  .fc-art { width: 100%; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; color: rgba(28,32,37,0.35); margin-bottom: 20px; }
-  .fc-art svg { width: 80%; height: 80%; }
-  .fc-name { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 8px; }
-  .fc-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(28,32,37,0.65); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .dlc-chip { display: inline-block; padding: 3px 8px; background: var(--ink); color: white; font-size: 9px; letter-spacing: 0.12em; border-radius: 1px; }
-  .fc-cta { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brand-red); }
-  /* ALL DRIVERS GRID · §10/§13 */
-  .all-families { padding: 80px 48px; max-width: 1680px; margin: 0 auto; }
-  .af-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; flex-wrap: wrap; gap: 16px; }
-  .af-h2 { font-size: 36px; font-weight: 900; letter-spacing: -0.02em; }
-  .af-sub { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(28,32,37,0.65); }
-  .af-filter-rail { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
-  .af-chip { display: inline-flex; align-items: center; padding: 8px 14px; background: var(--paper); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); border: 1px solid var(--rule-strong); cursor: pointer; transition: 0.15s; }
-  .af-chip:hover, .af-chip.active { background: var(--ink); color: white; border-color: var(--ink); }
-  .af-body { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
-  /* ADDERS BAND · §11 */
-  .adders-band { background: var(--char); color: white; padding: 80px 48px; }
-  .adders-inner { max-width: 1680px; margin: 0 auto; }
-  .adders-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 40px; }
-  .adder-card { padding: 36px 32px; background: rgba(255,255,255,0.04); }
-  .adder-code { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700; color: var(--brand-red); margin-bottom: 12px; letter-spacing: 0.04em; }
-  .adder-name { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
-  .adder-desc { font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.75); }
-  /* VERTICALS BAND · §12 */
-  .verticals-band { padding: 80px 48px; max-width: 1680px; margin: 0 auto; }
-  .verticals-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 40px; }
-  .vertical-tile { padding: 32px 24px; background: var(--char); color: white; text-decoration: none; aspect-ratio: 4/3; position: relative; overflow: hidden; transition: background 0.18s; }
-  .vertical-tile:hover { background: var(--brand-red); }
-  .vt-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
-  .vt-name { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 8px; line-height: 1.15; }
-  .vt-skus { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.6); position: absolute; bottom: 24px; left: 24px; right: 24px; }
-  /* LEGACY · §15 */
-  .legacy-band { background: var(--paper); padding: 56px 48px; border-top: 1px solid var(--rule); }
-  .legacy-inner { max-width: 1680px; margin: 0 auto; }
-  .legacy-h3 { font-size: 24px; font-weight: 800; margin-bottom: 12px; }
-  .legacy-p { font-size: 15px; color: rgba(28,32,37,0.85); margin-bottom: 20px; max-width: 720px; }
-  .legacy-cta { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brand-red); text-decoration: none; border-bottom: 1px solid var(--brand-red); padding-bottom: 2px; }
-  /* GET STARTED · §16 */
-  .get-started { padding: 80px 48px; max-width: 1680px; margin: 0 auto; }
-  .gs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
-  .gs-card { padding: 36px 28px; border: 1px solid var(--rule); text-align: left; }
-  .gs-icon { font-size: 28px; color: var(--brand-red); margin-bottom: 16px; line-height: 1; }
-  .gs-h { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
-  .gs-p { font-size: 13px; line-height: 1.55; color: rgba(28,32,37,0.8); margin-bottom: 16px; }
-  .gs-link { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brand-red); text-decoration: none; }
-  /* PAIRS WITH HOST COLLECTIONS · §17 */
-  .pairs-band { background: var(--char); color: white; padding: 64px 48px; }
-  .pairs-inner { max-width: 1680px; margin: 0 auto; }
-  .pairs-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 16px; }
-  .pairs-h2 { font-size: 36px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 16px; max-width: 800px; }
-  .pairs-p { font-size: 16px; line-height: 1.55; max-width: 720px; color: rgba(255,255,255,0.8); margin-bottom: 28px; }
-  .pairs-cta { display: inline-block; padding: 14px 28px; background: var(--brand-red); color: white; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; }
-  /* RELATED COLLECTIONS · §18 */
-  .related { padding: 80px 48px; max-width: 1680px; margin: 0 auto; }
-  .related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
-  .related-card { padding: 28px 24px; background: var(--paper); text-decoration: none; color: var(--ink); transition: background 0.18s; }
-  .related-card:hover { background: var(--paper-2); }
-  .rc-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(28,32,37,0.65); margin-bottom: 12px; }
-  .rc-name { font-size: 26px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 12px; }
-  .rc-desc { font-size: 14px; line-height: 1.5; color: rgba(28,32,37,0.85); margin-bottom: 16px; }
-  .rc-link { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brand-red); }
-  /* STICKY ANCHOR RAIL · §19 */
-  .anchor-rail { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 14px; z-index: 30; }
-  .ar-dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(28,32,37,0.25); cursor: pointer; transition: 0.18s; position: relative; }
-  .ar-dot:hover { background: var(--brand-red); transform: scale(1.4); }
-  .ar-dot::before {
-    content: attr(data-label); position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
-    background: var(--ink); color: white; padding: 6px 10px; font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap;
-    opacity: 0; pointer-events: none; transition: opacity 0.15s;
-  }
-  .ar-dot:hover::before { opacity: 1; }
-  /* BOTTOM CTA BAND · §20 */
-  .bottom-cta { background: var(--paper-2); padding: 48px 48px; }
-  .bottom-cta-inner { max-width: 1680px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap; }
-  .bottom-cta p { font-size: 18px; font-weight: 700; max-width: 640px; }
-  .bottom-cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-  .btn { display: inline-block; padding: 14px 28px; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: 0.18s; }
-  .btn-primary { background: var(--brand-red); color: white; }
-  .btn-primary:hover { background: #c41e32; }
-  .btn-outline { border: 2px solid var(--ink); color: var(--ink); }
-  .btn-outline:hover { background: var(--ink); color: white; }
-  /* RESPONSIVE */
-  @media (max-width: 1200px) {
-    .quick-stats-inner { grid-template-columns: repeat(2, 1fr); }
-    .mkt-stats-inner { grid-template-columns: repeat(3, 1fr); }
-    .featured-grid, .af-body { grid-template-columns: repeat(2, 1fr); }
-    .related-grid, .gs-grid { grid-template-columns: repeat(2, 1fr); }
-    .verticals-grid { grid-template-columns: repeat(2, 1fr); }
-    .adders-grid { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 768px) {
-    .hero h1 { font-size: 56px; }
-    .browse-tiles { grid-template-columns: 1fr 1fr; }
-    .quick-stats-inner, .mkt-stats-inner, .featured-grid, .af-body, .related-grid, .gs-grid, .verticals-grid { grid-template-columns: 1fr; }
-    .anchor-rail { display: none; }
-    .hero, .browse-section, .featured, .all-families, .verticals-band, .get-started, .related { padding-left: 24px; padding-right: 24px; }
-    .mkt-stats, .adders-band, .legacy-band, .pairs-band, .bottom-cta { padding-left: 24px; padding-right: 24px; }
-    .breadcrumb { padding-left: 24px; padding-right: 24px; }
-  }
-  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
-</style>
+  <!-- Pagefind breadcrumb meta -->
+  <span data-pagefind-meta="breadcrumb:Safety & Controls › constANT" data-pagefind-ignore="all" style="display:none"></span>
+  <span data-pagefind-meta="keywords:emergency driver,UL 924,battery backup,EM driver,CRC driver,egress lighting,NFPA 101,Title 24 NLC,constANT" data-pagefind-ignore="all" style="display:none"></span>
 
-<main id="main">
-  <!-- §4 · BREADCRUMB · 4-seg hierarchical per James 2026-05-27 -->
-  <nav class="breadcrumb" aria-label="Breadcrumb">
+  <!-- §1 BREADCRUMB — 4-segment hierarchical per J.1 -->
+  <div class="breadcrumb-band">
     <a href="/">HOME</a>
-    <span class="sep">›</span>
+    <span class="bc-sep">›</span>
     <a href="/collections">PRODUCTS</a>
-    <span class="sep">›</span>
+    <span class="bc-sep">›</span>
     <a href="/solutions/safety-controls/">SAFETY &amp; CONTROLS</a>
-    <span class="sep">›</span>
-    <a href="/collections/constant/">CONST<span class="aa">Ⓐ</span>NT</a>
-  </nav>
+    <span class="bc-sep">›</span>
+    <span class="bc-current">const<span class="aa">Ⓐ</span>NT</span>
+  </div>
 
-  <!-- §5 · HERO BAND -->
-  <section class="hero" id="overview">
-    <div class="hero-eyebrow">SAFETY &amp; CONTROLS · EMERGENCY DRIVER COLLECTION</div>
-    <h1>const<span class="aa">Ⓐ</span>NT</h1>
-    <p class="hero-desc">Emergency battery backup drivers for every fixture family in the ALG line. UL 924 listed. Universal 100–347Vac input. Four install tiers, three power classes, three optional adders, eight verticals.</p>
-    <div class="hero-chips">
-      <span class="chip chip-accent">UL 924 Listed</span>
-      <span class="chip">100–347Vac Universal</span>
-      <span class="chip">90-min Runtime</span>
-      <span class="chip">5-Year Warranty</span>
-      <span class="chip">Title 24 NLC-Ready</span>
-    </div>
-  </section>
-
-  <!-- §6 · QUICK STAT GRID (4-up) -->
-  <section class="quick-stats" id="quick-stats">
-    <div class="quick-stats-inner">
-      <div>
-        <div class="qs-num">17</div>
-        <div class="qs-label">Active Driver SKUs</div>
-      </div>
-      <div>
-        <div class="qs-num">4</div>
-        <div class="qs-label">Install Tiers</div>
-      </div>
-      <div>
-        <div class="qs-num">8</div>
-        <div class="qs-label">Verticals Served</div>
-      </div>
-      <div>
-        <div class="qs-num">UL 924</div>
-        <div class="qs-label">Listed (Not Recognized)</div>
+  <!-- §2 HERO — uses CollectionHero CSS classes for pixel parity -->
+  <section class="collection-section collection-section--hero" id="hero">
+    <div class="collection-content">
+      <div class="hero-eyebrow">SAFETY &amp; CONTROLS · EMERGENCY DRIVER COLLECTION</div>
+      <h1 class="hero-wordmark" data-pagefind-weight="10">const<span class="aa">Ⓐ</span>NT</h1>
+      <p class="hero-desc">Emergency battery backup drivers for every fixture family in the ALG line. UL 924 listed. Universal 100–347Vac input. <strong>11 active driver SKUs across 3 install tiers and 8 verticals.</strong> Optional /AG <span class="aa">Ⓐ</span>rcticGuard cold-pack, /XD extended-discharge, and /CL networked-test adders for environment-specific requirements.</p>
+      <div class="hero-pills">
+        <span class="hero-pill">UL 924 LISTED</span>
+        <span class="hero-pill">100–347VAC UNIVERSAL</span>
+        <span class="hero-pill">90-MIN RUNTIME</span>
+        <span class="hero-pill">5-YEAR WARRANTY</span>
+        <span class="hero-pill">TITLE 24 NLC-READY</span>
       </div>
     </div>
   </section>
 
-  <!-- §7 · BROWSE BY INSTALL TIER -->
-  <section class="browse-section" id="install-tiers">
-    <div class="section-eyebrow">BROWSE BY INSTALL TIER</div>
-    <h2 class="section-h2">Four ways to install. One driver ecosystem.</h2>
-    <div class="browse-tiles">
-      <a class="browse-tile" href="#factory-install">
-        <div class="tile-eyebrow">TIER 1 · FACTORY</div>
-        <div class="tile-name">Factory-Install</div>
-        <div class="tile-meta">Ships pre-wired in host fixture</div>
-      </a>
-      <a class="browse-tile" href="#field-install">
-        <div class="tile-eyebrow">TIER 2 · FIELD</div>
-        <div class="tile-name">Field-Install</div>
-        <div class="tile-meta">Mounts to fixture chassis on-site</div>
-      </a>
-      <a class="browse-tile" href="#quick-install">
-        <div class="tile-eyebrow">TIER 3 · QUICK</div>
-        <div class="tile-name">Quick-Install</div>
-        <div class="tile-meta">J-Box retrofit, no ceiling teardown</div>
-      </a>
-      <a class="browse-tile" href="#safety-emergency">
-        <div class="tile-eyebrow">TIER 4 · SAFETY</div>
-        <div class="tile-name">Safety &amp; Emergency</div>
-        <div class="tile-meta">Dedicated egress fixtures</div>
-      </a>
+  <!-- §3 QUICK STATS — shared component -->
+  <CollectionStatStrip statStrip={statStrip} />
+
+  <!-- §4 BROWSE BY INSTALL TIER — uses CollectionApplications CSS classes -->
+  <section class="collection-section collection-section--applications" id="install-tiers">
+    <div class="collection-content">
+      <div class="sec-eyebrow">Browse by install tier</div>
+      <div class="app-grid app-grid--4">
+        <a class="browse-tile-link" href="#all-drivers" data-tier-filter="factory">
+          <span class="btl-eyebrow">TIER 1 · FACTORY</span>
+          <span class="btl-name">Factory-Install</span>
+          <span class="btl-meta">2 SKUs · Pre-installed in host fixture</span>
+        </a>
+        <a class="browse-tile-link" href="#all-drivers" data-tier-filter="field">
+          <span class="btl-eyebrow">TIER 2 · FIELD</span>
+          <span class="btl-name">Field-Install</span>
+          <span class="btl-meta">6 SKUs · Certified electrician on-site</span>
+        </a>
+        <a class="browse-tile-link" href="#all-drivers" data-tier-filter="quick">
+          <span class="btl-eyebrow">TIER 3 · QUICK</span>
+          <span class="btl-name">Quick-Install</span>
+          <span class="btl-meta">3 SKUs · J-Box remote mount</span>
+        </a>
+        <a class="browse-tile-link" href="#product-types">
+          <span class="btl-eyebrow">TIER 4 · SAFETY</span>
+          <span class="btl-name">Safety &amp; Emergency</span>
+          <span class="btl-meta">Exit signs · combo · emergency lights · COMING SOON</span>
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- §7.5 · BROWSE BY PRODUCT TYPE (J.2 — 5 tiles, 4 stub-routed) -->
-  <section class="browse-section" id="product-types">
-    <div class="section-eyebrow">BROWSE BY PRODUCT TYPE</div>
-    <h2 class="section-h2">Five product groups across the const<span class="aa">Ⓐ</span>NT line.</h2>
-    <div class="browse-tiles" style="grid-template-columns: repeat(5, 1fr);">
-      <a class="browse-tile" href="#all-drivers">
-        <div class="tile-eyebrow">LIVE · 17 SKUS</div>
-        <div class="tile-name">Emergency Battery Backup</div>
-        <div class="tile-meta">EM &amp; CRC driver line · UL 924</div>
-      </a>
-      <a class="browse-tile" href="/collections/constant/em-batteries/" style="opacity: 0.85;">
-        <div class="tile-eyebrow">COMING SOON</div>
-        <div class="tile-name">const<span class="aa">Ⓐ</span>NTLink EM Batteries</div>
-        <div class="tile-meta">Networked NLC battery line · notify me →</div>
-      </a>
-      <a class="browse-tile" href="/collections/constant/exit-signs/" style="opacity: 0.85;">
-        <div class="tile-eyebrow">COMING SOON</div>
-        <div class="tile-name">Exit Signs</div>
-        <div class="tile-meta">UL 924 listed · notify me →</div>
-      </a>
-      <a class="browse-tile" href="/collections/constant/combo-signs/" style="opacity: 0.85;">
-        <div class="tile-eyebrow">COMING SOON</div>
-        <div class="tile-name">Combo Signs</div>
-        <div class="tile-meta">Exit + emergency in one unit · notify me →</div>
-      </a>
-      <a class="browse-tile" href="/collections/constant/emergency-lights/" style="opacity: 0.85;">
-        <div class="tile-eyebrow">COMING SOON</div>
-        <div class="tile-name">Emergency Lights</div>
-        <div class="tile-meta">2-head · 4-head · remote-capable · notify me →</div>
-      </a>
+  <!-- §5 BROWSE BY PRODUCT TYPE — constⒶNT-specific addition -->
+  <section class="collection-section collection-section--product-types" id="product-types">
+    <div class="collection-content">
+      <div class="sec-eyebrow">Browse by product type</div>
+      <div class="app-grid app-grid--5">
+        <a class="browse-tile-link browse-tile-link--live" href="#all-drivers">
+          <span class="btl-eyebrow">LIVE · 11 SKUS</span>
+          <span class="btl-name">Emergency Battery Backup</span>
+          <span class="btl-meta">EM &amp; CRC driver line · UL 924</span>
+        </a>
+        <a class="browse-tile-link browse-tile-link--soon" href="/collections/constant/em-batteries/">
+          <span class="btl-eyebrow">COMING SOON</span>
+          <span class="btl-name">const<span class="aa">Ⓐ</span>NTLink EM Batteries</span>
+          <span class="btl-meta">Networked NLC battery line · notify me →</span>
+        </a>
+        <a class="browse-tile-link browse-tile-link--soon" href="/collections/constant/exit-signs/">
+          <span class="btl-eyebrow">COMING SOON</span>
+          <span class="btl-name">Exit Signs</span>
+          <span class="btl-meta">UL 924 listed · notify me →</span>
+        </a>
+        <a class="browse-tile-link browse-tile-link--soon" href="/collections/constant/combo-signs/">
+          <span class="btl-eyebrow">COMING SOON</span>
+          <span class="btl-name">Combo Signs</span>
+          <span class="btl-meta">Exit + emergency in one unit · notify me →</span>
+        </a>
+        <a class="browse-tile-link browse-tile-link--soon" href="/collections/constant/emergency-lights/">
+          <span class="btl-eyebrow">COMING SOON</span>
+          <span class="btl-name">Emergency Lights</span>
+          <span class="btl-meta">2-head · 4-head · remote-capable · notify me →</span>
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- §8 · MARKETING STAT ROW (6-up dark band) -->
-  <section class="mkt-stats">
-    <div class="mkt-stats-inner">
-      <div class="mkt-stat"><div class="mn">17</div><div class="ml">Active Drivers</div></div>
-      <div class="mkt-stat"><div class="mn">4</div><div class="ml">Install Tiers</div></div>
-      <div class="mkt-stat"><div class="mn">8</div><div class="ml">Verticals</div></div>
-      <div class="mkt-stat"><div class="mn">UL 924</div><div class="ml">Listed (Not Recognized)</div></div>
-      <div class="mkt-stat"><div class="mn">5-YR</div><div class="ml">Limited Warranty</div></div>
-      <div class="mkt-stat"><div class="mn">−4°F</div><div class="ml">With /AG <span class="aa">Ⓐ</span>rcticGuard</div></div>
-    </div>
-  </section>
+  <!-- §6 MARKETING STAT 6-UP — shared CollectionRedBanner component -->
+  <CollectionRedBanner redBanner={redBanner} />
 
-  <!-- §9 · FEATURED FAMILIES (one per install tier) -->
-  <section class="featured" id="featured">
-    <div class="section-eyebrow">FEATURED · ONE FROM EACH TIER</div>
-    <h2 class="section-h2">Flagship drivers across the const<span class="aa">Ⓐ</span>NT line.</h2>
-    <div class="featured-grid">
-      <!-- Featured 1 · Factory-Install · cold-storage hero -->
-      <a class="family-card" href="#sku-em20-cmb-260dc">
-        <div class="fc-eyebrow">FACTORY-INSTALL · MID-POWER · <span class="fc-tier">PRO</span></div>
-        <div class="fc-art">
-          <svg viewBox="0 0 100 75" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="18" y="22" width="64" height="32" rx="2"/>
-            <line x1="22" y1="30" x2="78" y2="30"/>
-            <line x1="22" y1="38" x2="60" y2="38"/>
-            <line x1="22" y1="46" x2="68" y2="46"/>
-            <circle cx="74" cy="38" r="2" fill="currentColor"/>
-          </svg>
+  <!-- §7 FEATURED FAMILIES — shared CollectionFeatured component -->
+  <CollectionFeatured
+    collectionName="constANT"
+    collectionSlug="constant"
+    featured={featured}
+    featuredHeadline="Four flagship drivers from the constANT line."
+  />
+
+  <!-- §8 ALL DRIVERS GRID — 9-axis filter rail + 11 SKU cards -->
+  <section class="collection-section collection-section--families" id="all-drivers">
+    <div class="collection-content">
+      <div class="fam-eyebrow">All Drivers</div>
+      <h2 class="fam-headline">11 drivers. One ecosystem.</h2>
+
+      <div class="fam-layout">
+        <!-- STICKY LEFT FILTER RAIL — 9 axes per §D.3 -->
+        <aside class="fam-sidebar">
+          <div class="filter-header">
+            <span class="filter-title">FILTER BY</span>
+            <button class="filter-reset" id="filterReset">Reset all</button>
+          </div>
+
+          <!-- 1: INSTALL TIER -->
+          <div class="filter-group" data-group="tier">
+            <button class="fg-toggle" aria-expanded="true">INSTALL TIER <span class="fg-arrow">▲</span></button>
+            <div class="fg-body">
+              <label class="fg-item"><input type="checkbox" data-facet="tier" value="factory" /><span class="fg-name">Factory-Install</span><span class="fg-count">(2)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="tier" value="field" /><span class="fg-name">Field-Install</span><span class="fg-count">(6)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="tier" value="quick" /><span class="fg-name">Quick-Install</span><span class="fg-count">(3)</span></label>
+            </div>
+          </div>
+
+          <!-- 2: POWER CLASS -->
+          <div class="filter-group" data-group="power">
+            <button class="fg-toggle" aria-expanded="true">POWER CLASS <span class="fg-arrow">▲</span></button>
+            <div class="fg-body">
+              <label class="fg-item"><input type="checkbox" data-facet="power" value="low" /><span class="fg-name">Low 5–9W</span><span class="fg-count">(1)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="power" value="mid" /><span class="fg-name">Mid 15–25W</span><span class="fg-count">(5)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="power" value="high" /><span class="fg-name">High 30–60W</span><span class="fg-count">(5)</span></label>
+            </div>
+          </div>
+
+          <!-- 3: ORDER-CODE ADDERS -->
+          <div class="filter-group" data-group="adder">
+            <button class="fg-toggle" aria-expanded="true">ORDER-CODE ADDERS <span class="fg-arrow">▲</span></button>
+            <div class="fg-body">
+              <label class="fg-item"><input type="checkbox" data-facet="adder" value="ag" /><span class="fg-name">/AG <span class="aa">Ⓐ</span>rcticGuard</span><span class="fg-count">(1)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="adder" value="xd" /><span class="fg-name">/XD Extended Discharge</span><span class="fg-count">(0)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="adder" value="cl" /><span class="fg-name">/CL const<span class="aa">Ⓐ</span>NTLink</span><span class="fg-count">(3)</span></label>
+            </div>
+          </div>
+
+          <!-- 4: OUTPUT TYPE -->
+          <div class="filter-group" data-group="output">
+            <button class="fg-toggle" aria-expanded="true">OUTPUT TYPE <span class="fg-arrow">▲</span></button>
+            <div class="fg-body">
+              <label class="fg-item"><input type="checkbox" data-facet="output" value="dc" /><span class="fg-name">DC Output · HMB·CMB·GMB·UMB·MT</span><span class="fg-count">(8)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="output" value="ac" /><span class="fg-name">AC Output · PMB·HMB-AC</span><span class="fg-count">(2)</span></label>
+            </div>
+          </div>
+
+          <!-- 5: OUTPUT POWER slider -->
+          <div class="filter-group" data-group="wattage">
+            <button class="fg-toggle" aria-expanded="true">OUTPUT POWER <span class="fg-arrow">▲</span></button>
+            <div class="fg-body">
+              <div class="watt-range-row">
+                <span class="watt-label" id="wattMin">7W</span>
+                <span class="watt-label" id="wattMax">60W</span>
+              </div>
+              <input type="range" id="wattSlider" class="watt-slider" min="7" max="60" step="1" value="60" data-min="7" data-max="60" />
+            </div>
+          </div>
+
+          <!-- 6: FIXTURE FAMILY -->
+          <div class="filter-group" data-group="family">
+            <button class="fg-toggle" aria-expanded="true">FIXTURE FAMILY <span class="fg-arrow">▲</span></button>
+            <div class="fg-body">
+              <label class="fg-item"><input type="checkbox" data-facet="family" value="lamparch" /><span class="fg-name">lampar<span class="aa">Ⓐ</span>RCH</span><span class="fg-count">(4)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="family" value="luxoarch" /><span class="fg-name">luxo<span class="aa">Ⓐ</span>RCH</span><span class="fg-count">(1)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="family" value="planoarch" /><span class="fg-name">plano<span class="aa">Ⓐ</span>RCH</span><span class="fg-count">(4)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="family" value="universal" /><span class="fg-name">All universal</span><span class="fg-count">(0)</span></label>
+            </div>
+          </div>
+
+          <!-- 7: VERTICAL -->
+          <div class="filter-group" data-group="vertical">
+            <button class="fg-toggle" aria-expanded="true">VERTICAL <span class="fg-arrow">▲</span></button>
+            <div class="fg-body">
+              <label class="fg-item"><input type="checkbox" data-facet="vertical" value="cold-storage" /><span class="fg-name">Cold Storage &amp; Grocery</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="vertical" value="data-center" /><span class="fg-name">Data Center</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="vertical" value="education" /><span class="fg-name">Education</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="vertical" value="government" /><span class="fg-name">Government &amp; Military</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="vertical" value="healthcare" /><span class="fg-name">Healthcare &amp; Medical</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="vertical" value="hospitality" /><span class="fg-name">Hospitality</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="vertical" value="industrial" /><span class="fg-name">Industrial &amp; Manufacturing</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="vertical" value="warehouse" /><span class="fg-name">Warehouse &amp; Logistics</span></label>
+            </div>
+          </div>
+
+          <!-- 8: CERTIFICATION -->
+          <div class="filter-group" data-group="cert">
+            <button class="fg-toggle" aria-expanded="true">CERTIFICATION <span class="fg-arrow">▲</span></button>
+            <div class="fg-body">
+              <label class="fg-item"><input type="checkbox" data-facet="cert" value="ul924" /><span class="fg-name">UL 924 Listed</span><span class="fg-count">(11)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="cert" value="csa" /><span class="fg-name">CSA C22.2 No.141</span><span class="fg-count">(11)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="cert" value="cec" /><span class="fg-name">CEC Title 20</span><span class="fg-count">(11)</span></label>
+            </div>
+          </div>
+
+          <!-- 9: BAA / TAA -->
+          <div class="filter-group" data-group="baa">
+            <button class="fg-toggle" aria-expanded="true">BAA / TAA <span class="fg-arrow">▲</span></button>
+            <div class="fg-body">
+              <label class="fg-item"><input type="checkbox" data-facet="baa" value="on-request" /><span class="fg-name">Documentation on Request</span></label>
+            </div>
+          </div>
+        </aside>
+
+        <!-- SKU GRID — 11 real SKUs -->
+        <div class="fam-main">
+          <div class="fam-toolbar">
+            <span class="fam-count-label" id="skuCountLabel">Showing 11 drivers</span>
+            <select class="fam-sort" id="skuSort">
+              <option value="tier">Sort: Install Tier</option>
+              <option value="power-asc">Power Low to High</option>
+              <option value="power-desc">Power High to Low</option>
+              <option value="az">A to Z</option>
+            </select>
+          </div>
+
+          <div class="fam-grid" id="skuGrid">
+            {skus.map(sku => (
+              <div
+                class="fam-card"
+                id={sku.id}
+                data-tier={sku.tier}
+                data-sku={sku.name}
+              >
+                <div class="fc-top">
+                  <span class="fc-subcat">{sku.eyebrow}</span>
+                  <span class="fc-tier tier-badge tier-pro">PRO</span>
+                </div>
+                <div class="fc-img">
+                  <span class="fc-watermark">{sku.name}</span>
+                </div>
+                <div class="fc-bottom">
+                  <div class="fc-name">{sku.name}</div>
+                  <div class="fc-meta">
+                    <span class="fc-watt">{sku.meta}</span>
+                    <span class="fc-dlc">UL 924</span>
+                  </div>
+                  <a href={`#${sku.id}`} class="fc-view">VIEW →</a>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p class="fam-no-results" id="skuNoResults" style="display:none;">No drivers match the current filters. <button id="skuNoResultsReset">Reset all</button></p>
         </div>
-        <div class="fc-name">EM20-CMB/260DC</div>
-        <div class="fc-meta">20W · 90&ndash;260Vdc · /AG ready<span class="dlc-chip">UL 924</span></div>
-        <div class="fc-cta">VIEW DRIVER →</div>
-      </a>
-      <!-- Featured 2 · Field-Install · networked-test hero -->
-      <a class="family-card" href="#sku-em15-pmb-120ac">
-        <div class="fc-eyebrow">FIELD-INSTALL · MID-POWER · <span class="fc-tier">PRO</span></div>
-        <div class="fc-art">
-          <svg viewBox="0 0 100 75" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="20" y="20" width="60" height="36" rx="3"/>
-            <circle cx="35" cy="32" r="3"/>
-            <circle cx="50" cy="32" r="3"/>
-            <circle cx="65" cy="32" r="3"/>
-            <line x1="30" y1="46" x2="70" y2="46"/>
-          </svg>
-        </div>
-        <div class="fc-name">EM15-PMB/120AC</div>
-        <div class="fc-meta">15W · 120Vac · /CL ready<span class="dlc-chip">UL 924</span></div>
-        <div class="fc-cta">VIEW DRIVER →</div>
-      </a>
-      <!-- Featured 3 · Quick-Install · J-Box retrofit hero -->
-      <a class="family-card" href="#sku-crcu-em24-jbm">
-        <div class="fc-eyebrow">QUICK-INSTALL · MID-POWER · <span class="fc-tier">PRO</span></div>
-        <div class="fc-art">
-          <svg viewBox="0 0 100 75" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="30" y="16" width="40" height="40" rx="2"/>
-            <circle cx="50" cy="36" r="6"/>
-          </svg>
-        </div>
-        <div class="fc-name">CRCU-EM24/JBM</div>
-        <div class="fc-meta">24W · 190Vdc · J-Box mount<span class="dlc-chip">UL 924</span></div>
-        <div class="fc-cta">VIEW DRIVER →</div>
-      </a>
-      <!-- Featured 4 · High-Power · warehouse/industrial hero -->
-      <a class="family-card" href="#sku-em60-umb-170dc">
-        <div class="fc-eyebrow">FIELD-INSTALL · HIGH-POWER · <span class="fc-tier">PRO</span></div>
-        <div class="fc-art">
-          <svg viewBox="0 0 100 75" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="16" y="24" width="68" height="28" rx="1"/>
-            <line x1="20" y1="30" x2="80" y2="30"/>
-            <line x1="20" y1="36" x2="60" y2="36"/>
-            <line x1="20" y1="42" x2="70" y2="42"/>
-            <circle cx="75" cy="42" r="2" fill="currentColor"/>
-          </svg>
-        </div>
-        <div class="fc-name">EM60-UMB/170DC</div>
-        <div class="fc-meta">60W · 170Vdc · external /U · warehouse hero<span class="dlc-chip">UL 924</span></div>
-        <div class="fc-cta">VIEW DRIVER →</div>
-      </a>
-    </div>
-  </section>
-
-  <!-- §10/§13 · ALL DRIVERS GRID -->
-  <section class="all-families" id="all-drivers">
-    <div class="af-header">
-      <div>
-        <h2 class="af-h2">17 drivers. One ecosystem.</h2>
-        <div class="af-sub">Showing all active const<span class="aa">Ⓐ</span>NT driver SKUs</div>
       </div>
     </div>
-    <div class="af-filter-rail">
-      <button class="af-chip active" data-filter="all">All Tiers</button>
-      <button class="af-chip" data-filter="factory" id="factory-install">Factory-Install</button>
-      <button class="af-chip" data-filter="field" id="field-install">Field-Install</button>
-      <button class="af-chip" data-filter="quick" id="quick-install">Quick-Install</button>
-      <button class="af-chip" data-filter="safety" id="safety-emergency">Safety &amp; Emergency</button>
-    </div>
-    <div class="af-body">
-      <!-- FACTORY-INSTALL SKUs -->
-      <a class="family-card" id="sku-em07-cmb-150dc" data-tier="factory"><div class="fc-eyebrow">FACTORY · LOW-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="18" y="22" width="64" height="32" rx="2"/><line x1="22" y1="30" x2="78" y2="30"/><line x1="22" y1="38" x2="60" y2="38"/></svg></div><div class="fc-name">EM07-CMB/150DC</div><div class="fc-meta">7W · 150Vdc · low-power CMB<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-      <a class="family-card" id="sku-em15-cmb-150dc" data-tier="factory"><div class="fc-eyebrow">FACTORY · MID-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="18" y="22" width="64" height="32" rx="2"/><line x1="22" y1="30" x2="78" y2="30"/><line x1="22" y1="38" x2="60" y2="38"/><line x1="22" y1="46" x2="68" y2="46"/></svg></div><div class="fc-name">EM15-CMB/150DC</div><div class="fc-meta">15W · 150Vdc · standard CMB<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-      <a class="family-card" id="sku-em20-cmb-260dc" data-tier="factory"><div class="fc-eyebrow">FACTORY · MID-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="18" y="22" width="64" height="32" rx="2"/><line x1="22" y1="30" x2="78" y2="30"/><line x1="22" y1="38" x2="60" y2="38"/><line x1="22" y1="46" x2="68" y2="46"/><circle cx="74" cy="38" r="2" fill="currentColor"/></svg></div><div class="fc-name">EM20-CMB/260DC</div><div class="fc-meta">20W · 90–260Vdc · /AG ready<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-      <a class="family-card" id="sku-em25-cmb-260dc" data-tier="factory"><div class="fc-eyebrow">FACTORY · MID-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="18" y="22" width="64" height="32" rx="2"/><line x1="22" y1="30" x2="78" y2="30"/><line x1="22" y1="38" x2="60" y2="38"/><line x1="22" y1="46" x2="68" y2="46"/><circle cx="74" cy="38" r="2" fill="currentColor"/></svg></div><div class="fc-name">EM25-CMB/260DC</div><div class="fc-meta">25W · 90–260Vdc · /AG ready<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-      <!-- FIELD-INSTALL SKUs -->
-      <a class="family-card" id="sku-em15-pmb-120ac" data-tier="field"><div class="fc-eyebrow">FIELD · MID-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="20" y="20" width="60" height="36" rx="3"/><circle cx="35" cy="32" r="3"/><circle cx="50" cy="32" r="3"/><circle cx="65" cy="32" r="3"/><line x1="30" y1="46" x2="70" y2="46"/></svg></div><div class="fc-name">EM15-PMB/120AC</div><div class="fc-meta">15W · 120Vac · /CL ready<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-      <a class="family-card" id="sku-em25-pmb-120ac" data-tier="field"><div class="fc-eyebrow">FIELD · MID-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="20" y="20" width="60" height="36" rx="3"/><circle cx="35" cy="32" r="3"/><circle cx="50" cy="32" r="3"/><circle cx="65" cy="32" r="3"/><line x1="30" y1="46" x2="70" y2="46"/></svg></div><div class="fc-name">EM25-PMB/120AC</div><div class="fc-meta">25W · 120Vac · /CL ready<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-      <a class="family-card" id="sku-em30-umb-170dc" data-tier="field"><div class="fc-eyebrow">FIELD · HIGH-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="16" y="24" width="68" height="28" rx="1"/><line x1="20" y1="30" x2="80" y2="30"/><line x1="20" y1="36" x2="60" y2="36"/><line x1="20" y1="42" x2="70" y2="42"/></svg></div><div class="fc-name">EM30-UMB/170DC</div><div class="fc-meta">30W · 170Vdc · external /U chassis<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-      <a class="family-card" id="sku-em40-rmb-170dc" data-tier="field"><div class="fc-eyebrow">FIELD · HIGH-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="16" y="24" width="68" height="28" rx="1"/><line x1="20" y1="30" x2="80" y2="30"/><line x1="20" y1="36" x2="60" y2="36"/><line x1="20" y1="42" x2="70" y2="42"/></svg></div><div class="fc-name">EM40-RMB/170DC</div><div class="fc-meta">40W · 170Vdc · /CL ready · lampar<span class="aa">Ⓐ</span>RCH<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-      <a class="family-card" id="sku-em60-gmb-170dc" data-tier="field"><div class="fc-eyebrow">FIELD · HIGH-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="16" y="24" width="68" height="28" rx="1"/><line x1="20" y1="30" x2="80" y2="30"/><line x1="20" y1="36" x2="60" y2="36"/><line x1="20" y1="42" x2="70" y2="42"/><circle cx="75" cy="42" r="2" fill="currentColor"/></svg></div><div class="fc-name">EM60-GMB/170DC</div><div class="fc-meta">60W · 170Vdc · lampar<span class="aa">Ⓐ</span>RCH high-bay<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-      <a class="family-card" id="sku-em60-umb-170dc" data-tier="field"><div class="fc-eyebrow">FIELD · HIGH-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="16" y="24" width="68" height="28" rx="1"/><line x1="20" y1="30" x2="80" y2="30"/><line x1="20" y1="36" x2="60" y2="36"/><line x1="20" y1="42" x2="70" y2="42"/><circle cx="75" cy="42" r="2" fill="currentColor"/></svg></div><div class="fc-name">EM60-UMB/170DC</div><div class="fc-meta">60W · 170Vdc · external /U · warehouse hero<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-      <!-- QUICK-INSTALL SKUs -->
-      <a class="family-card" id="sku-crcu-em24-jbm" data-tier="quick"><div class="fc-eyebrow">QUICK · MID-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="30" y="16" width="40" height="40" rx="2"/><circle cx="50" cy="36" r="6"/></svg></div><div class="fc-name">CRCU-EM24/JBM</div><div class="fc-meta">24W · 190Vdc · J-Box mount<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-      <a class="family-card" id="sku-crc6-em24-jbs-b" data-tier="quick"><div class="fc-eyebrow">QUICK · MID-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="30" y="16" width="40" height="40" rx="2" fill="#15181c" stroke="#15181c"/><circle cx="50" cy="36" r="6" fill="none" stroke="white"/></svg></div><div class="fc-name">CRC6-EM24/JBS/B</div><div class="fc-meta">24W · 190Vdc · black finish · J-Box surface<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-      <a class="family-card" id="sku-crc6-em24-jbs-w" data-tier="quick"><div class="fc-eyebrow">QUICK · MID-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="30" y="16" width="40" height="40" rx="2"/><circle cx="50" cy="36" r="6"/></svg></div><div class="fc-name">CRC6-EM24/JBS/W</div><div class="fc-meta">24W · 190Vdc · white finish · J-Box surface<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-      <!-- SAFETY & EMERGENCY SKUs -->
-      <a class="family-card" id="sku-em09-amg-120ac" data-tier="safety"><div class="fc-eyebrow">SAFETY · LOW-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="50,15 85,60 15,60"/><line x1="50" y1="30" x2="50" y2="48"/><circle cx="50" cy="53" r="2" fill="currentColor"/></svg></div><div class="fc-name">EM09-AMG/120AC</div><div class="fc-meta">9W · 120Vac · egress-mount<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-      <a class="family-card" id="sku-em15-ymb-120ac" data-tier="safety"><div class="fc-eyebrow">SAFETY · MID-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="50,15 85,60 15,60"/><line x1="50" y1="30" x2="50" y2="48"/><circle cx="50" cy="53" r="2" fill="currentColor"/></svg></div><div class="fc-name">EM15-YMB/120AC</div><div class="fc-meta">15W · 120Vac · yoke-mount<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-      <a class="family-card" id="sku-em25-mtb-120ac" data-tier="safety"><div class="fc-eyebrow">SAFETY · MID-POWER · <span class="fc-tier">PRO</span></div><div class="fc-art"><svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="20" y="28" width="60" height="20" rx="2"/><line x1="50" y1="18" x2="50" y2="28"/><line x1="50" y1="48" x2="50" y2="58"/></svg></div><div class="fc-name">EM25-MTB/120AC</div><div class="fc-meta">25W · 120Vac · multi-tap<span class="dlc-chip">UL 924</span></div><div class="fc-cta">VIEW →</div></a>
-    </div>
   </section>
 
-  <!-- §11 · ADDERS BAND -->
-  <section class="adders-band" id="adders">
-    <div class="adders-inner">
-      <div class="section-eyebrow" style="color: rgba(255,255,255,0.6);">OPTIONAL ADDERS</div>
-      <h2 class="section-h2" style="color: white;">Three adders. Infinite application range.</h2>
+  <!-- §9 ADDERS BAND — constⒶNT-specific, dark editorial -->
+  <section class="collection-section collection-section--adders" id="adders">
+    <div class="collection-content">
+      <div class="feat-eyebrow">Optional Adders</div>
+      <h2 class="feat-headline" style="color:#fff;">Three adders. Infinite application range.</h2>
       <div class="adders-grid">
         <div class="adder-card">
           <div class="adder-code">/AG</div>
@@ -447,182 +455,931 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- §12 · VERTICALS BAND -->
-  <section class="verticals-band" id="verticals">
-    <div class="section-eyebrow">EIGHT VERTICALS</div>
-    <h2 class="section-h2">Every building type. Every code requirement.</h2>
-    <div class="verticals-grid">
-      <a class="vertical-tile" href="#all-drivers">
-        <div class="vt-num">01</div>
-        <div class="vt-name">Commercial &amp; Office</div>
-        <div class="vt-skus">Open office · Stairwells · Conference · Parking</div>
-      </a>
-      <a class="vertical-tile" href="#all-drivers">
-        <div class="vt-num">02</div>
-        <div class="vt-name">Data Center</div>
-        <div class="vt-skus">White space · Gray space · NOC · Exterior egress</div>
-      </a>
-      <a class="vertical-tile" href="#all-drivers">
-        <div class="vt-num">03</div>
-        <div class="vt-name">Education</div>
-        <div class="vt-skus">Classrooms · Corridors · Gyms · Retrofit</div>
-      </a>
-      <a class="vertical-tile" href="#all-drivers">
-        <div class="vt-num">04</div>
-        <div class="vt-name">Government &amp; Military</div>
-        <div class="vt-skus">Federal offices · DoD · VA Medical · Warehouses</div>
-      </a>
-      <a class="vertical-tile" href="#all-drivers">
-        <div class="vt-num">05</div>
-        <div class="vt-name">Healthcare &amp; Medical</div>
-        <div class="vt-skus">Patient rooms · Corridors · Labs · Imaging</div>
-      </a>
-      <a class="vertical-tile" href="#all-drivers">
-        <div class="vt-num">06</div>
-        <div class="vt-name">Hospitality</div>
-        <div class="vt-skus">Lobby · Guest floors · Function rooms · BOH</div>
-      </a>
-      <a class="vertical-tile" href="#all-drivers">
-        <div class="vt-num">07</div>
-        <div class="vt-name">Industrial &amp; Manufacturing</div>
-        <div class="vt-skus">Production floor · High-bay · Cold/hot process · Exterior</div>
-      </a>
-      <a class="vertical-tile" href="#all-drivers">
-        <div class="vt-num">08</div>
-        <div class="vt-name">Warehouse &amp; Logistics</div>
-        <div class="vt-skus">High-bay aisles · Loading docks · Cold storage · Yard</div>
-      </a>
-    </div>
-  </section>
-
-  <!-- §15 · LEGACY BAND -->
-  <section class="legacy-band" id="legacy">
-    <div class="legacy-inner">
-      <h3 class="legacy-h3">Discontinued drivers</h3>
-      <p class="legacy-p">Some earlier const<span class="aa">Ⓐ</span>NT drivers have been discontinued as the line has evolved. Current SKUs cover all prior application zones with improved efficiency and expanded adder compatibility.</p>
-      <a class="legacy-cta" href="mailto:sales@archipelagolighting.com">GET REPLACEMENT GUIDANCE →</a>
-    </div>
-  </section>
-
-  <!-- §16 · GET STARTED 4-up CTA -->
-  <section class="get-started" id="get-started">
-    <div class="section-eyebrow">GET STARTED</div>
-    <h2 class="section-h2">Four ways in.</h2>
-    <div class="gs-grid">
-      <div class="gs-card">
-        <div class="gs-icon">⊕</div>
-        <div class="gs-h">Request a Layout</div>
-        <p class="gs-p">Send us your floor plan. We'll spec the right const<span class="aa">Ⓐ</span>NT driver for each fixture zone, including adder recommendations for cold, extended-runtime, or networked-test requirements.</p>
-        <a class="gs-link" href="/support/layout-request">REQUEST LAYOUT →</a>
-      </div>
-      <div class="gs-card">
-        <div class="gs-icon">◈</div>
-        <div class="gs-h">Request a Sample</div>
-        <p class="gs-p">Evaluate a const<span class="aa">Ⓐ</span>NT driver in your facility before committing to a full project. Sample requests ship within 3 business days from our nearest warehouse.</p>
-        <a class="gs-link" href="/support/sample-request">REQUEST SAMPLE →</a>
-      </div>
-      <div class="gs-card">
-        <div class="gs-icon">◎</div>
-        <div class="gs-h">Find a Distributor</div>
-        <p class="gs-p">Find a stocking distributor near your project site. All 5 US warehouses carry core const<span class="aa">Ⓐ</span>NT SKUs.</p>
-        <a class="gs-link" href="/find-a-distributor">FIND DISTRIBUTOR →</a>
-      </div>
-      <div class="gs-card">
-        <div class="gs-icon">◉</div>
-        <div class="gs-h">Talk to Applications Engineering</div>
-        <p class="gs-p">Spec-grade questions on UL 924, NFPA 101 testing schedules, /CL deployment, or /AG cold-zone application. 1-business-day response.</p>
-        <a class="gs-link" href="mailto:sales@archipelagolighting.com">EMAIL THE TEAM →</a>
+  <!-- §10 VERTICALS BAND — 8 dark tiles -->
+  <section class="collection-section collection-section--verticals" id="verticals">
+    <div class="collection-content">
+      <div class="sec-eyebrow">Eight verticals</div>
+      <h2 class="fam-headline">Every building type. Every code requirement.</h2>
+      <div class="verticals-grid">
+        <a class="vertical-tile" href="#all-drivers">
+          <div class="vt-num">01</div>
+          <div class="vt-name">Cold Storage &amp; Grocery</div>
+          <div class="vt-skus">Cold dock · Freezer aisle · Processing · Retail floor</div>
+        </a>
+        <a class="vertical-tile" href="#all-drivers">
+          <div class="vt-num">02</div>
+          <div class="vt-name">Data Center</div>
+          <div class="vt-skus">White space · Gray space · NOC · Exterior egress</div>
+        </a>
+        <a class="vertical-tile" href="#all-drivers">
+          <div class="vt-num">03</div>
+          <div class="vt-name">Education</div>
+          <div class="vt-skus">Classrooms · Corridors · Gyms · Retrofit</div>
+        </a>
+        <a class="vertical-tile" href="#all-drivers">
+          <div class="vt-num">04</div>
+          <div class="vt-name">Government &amp; Military</div>
+          <div class="vt-skus">Federal offices · DoD · VA Medical · Warehouses</div>
+        </a>
+        <a class="vertical-tile" href="#all-drivers">
+          <div class="vt-num">05</div>
+          <div class="vt-name">Healthcare &amp; Medical</div>
+          <div class="vt-skus">Patient rooms · Corridors · Labs · Imaging</div>
+        </a>
+        <a class="vertical-tile" href="#all-drivers">
+          <div class="vt-num">06</div>
+          <div class="vt-name">Hospitality</div>
+          <div class="vt-skus">Lobby · Guest floors · Function rooms · BOH</div>
+        </a>
+        <a class="vertical-tile" href="#all-drivers">
+          <div class="vt-num">07</div>
+          <div class="vt-name">Industrial &amp; Manufacturing</div>
+          <div class="vt-skus">Production floor · High-bay · Cold/hot process · Exterior</div>
+        </a>
+        <a class="vertical-tile" href="#all-drivers">
+          <div class="vt-num">08</div>
+          <div class="vt-name">Warehouse &amp; Logistics</div>
+          <div class="vt-skus">High-bay aisles · Loading docks · Cold storage · Yard</div>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- §17 · PAIRS WITH HOST COLLECTIONS (reverse cross-promotion) -->
-  <section class="pairs-band" id="pairs">
-    <div class="pairs-inner">
+  <!-- §11 LEGACY — shared component (custom CTA link) -->
+  <CollectionLegacy legacy={legacy} />
+
+  <!-- §12 GET STARTED — 4 cards, card 4 overridden for constⒶNT -->
+  <section class="collection-section collection-section--get-started" id="get-started">
+    <div class="collection-content">
+      <div class="gs-eyebrow">Get Started</div>
+      <h2 class="gs-headline">Ready to specify?</h2>
+      <div class="gs-grid">
+        <div class="gs-card">
+          <div class="gs-icon">⊞</div>
+          <div class="gs-title">Request a Layout</div>
+          <p class="gs-body">Send us your floor plan. We'll spec the right const<span class="aa">Ⓐ</span>NT driver for each fixture zone, including adder recommendations for cold, extended-runtime, or networked-test requirements.</p>
+          <a href="/support/request-layout" class="gs-cta">Start layout →</a>
+        </div>
+        <div class="gs-card">
+          <div class="gs-icon">◈</div>
+          <div class="gs-title">Request a Sample</div>
+          <p class="gs-body">Evaluate a const<span class="aa">Ⓐ</span>NT driver in your facility before committing to a full project. Sample requests ship within 3 business days from our nearest warehouse.</p>
+          <a href="/support/sample-request" class="gs-cta">Request sample →</a>
+        </div>
+        <div class="gs-card">
+          <div class="gs-icon">◎</div>
+          <div class="gs-title">Find a Distributor</div>
+          <p class="gs-body">Find a stocking distributor near your project site. All 5 US warehouses carry core const<span class="aa">Ⓐ</span>NT SKUs.</p>
+          <a href="/find-a-distributor" class="gs-cta">Find distributor →</a>
+        </div>
+        <!-- Card 4: constⒶNT override — Applications Engineering, not Find a Rep -->
+        <div class="gs-card">
+          <div class="gs-icon">◉</div>
+          <div class="gs-title">Talk to Applications Engineering</div>
+          <p class="gs-body">Spec-grade questions on UL 924, NFPA 101 testing schedules, /CL deployment, or /AG cold-zone application. 1-business-day response.</p>
+          <a href="mailto:sales@archipelagolighting.com" class="gs-cta">Email the team →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §13 PAIRS WITH BAND — constⒶNT-specific dark editorial -->
+  <section class="collection-section collection-section--pairs" id="pairs">
+    <div class="collection-content">
       <div class="pairs-eyebrow">COMPATIBILITY · FIXTURE FAMILIES</div>
       <h2 class="pairs-h2">const<span class="aa">Ⓐ</span>NT pairs with every ALG fixture family.</h2>
       <p class="pairs-p">Every const<span class="aa">Ⓐ</span>NT driver lists its compatible fixture family. Factory-install drivers ship pre-tested with the host fixture. Field-install drivers are universal across the line. Quick-Install J-Box drivers retrofit occupied buildings without ceiling teardown.</p>
-      <a class="pairs-cta" href="/solutions/safety-controls/">SAFETY &amp; CONTROLS OVERVIEW →</a>
+      <a href="/solutions/safety-controls/" class="pairs-cta">SAFETY &amp; CONTROLS OVERVIEW →</a>
     </div>
   </section>
 
-  <!-- §18 · RELATED COLLECTIONS -->
-  <section class="related" id="related">
-    <div class="section-eyebrow">RELATED COLLECTIONS</div>
-    <h2 class="section-h2">Pairs with these fixture lines.</h2>
-    <div class="related-grid">
-      <a class="related-card" href="/collections/lamparch/">
-        <div class="rc-eyebrow">INDUSTRIAL</div>
-        <div class="rc-name">lampar<span class="aa">Ⓐ</span>RCH</div>
-        <p class="rc-desc">High-bay, low-bay, vapor-tight. External /U-chassis const<span class="aa">Ⓐ</span>NT drivers mount to the side of the host fixture.</p>
-        <span class="rc-link">VIEW →</span>
-      </a>
-      <a class="related-card" href="/collections/luxoarch/">
-        <div class="rc-eyebrow">OUTDOOR</div>
-        <div class="rc-name">luxo<span class="aa">Ⓐ</span>RCH</div>
-        <p class="rc-desc">Wall packs, area, canopy, flood. /AG <span class="aa">Ⓐ</span>rcticGuard required for unconditioned outdoor enclosures.</p>
-        <span class="rc-link">VIEW →</span>
-      </a>
-      <a class="related-card" href="/collections/planoarch/">
-        <div class="rc-eyebrow">INDOOR</div>
-        <div class="rc-name">plano<span class="aa">Ⓐ</span>RCH</div>
-        <p class="rc-desc">Architectural linear, downlights, panels, troffers. CRC J-Box drivers retrofit occupied ceilings without teardown.</p>
-        <span class="rc-link">VIEW →</span>
-      </a>
-      <a class="related-card" href="/collections/multi-family/">
-        <div class="rc-eyebrow">RESIDENTIAL</div>
-        <div class="rc-name">multi-f<span class="aa">Ⓐ</span>MILY</div>
-        <p class="rc-desc">SafeZone downlights, recessed cans, surface mount. CRCU/CRC6 J-Box drivers ship pre-wired with Radius SafeZone, Eclipse-II, Orbit-I.</p>
-        <span class="rc-link">VIEW →</span>
-      </a>
-    </div>
-  </section>
+  <!-- §14 RELATED COLLECTIONS — shared component -->
+  <CollectionRelated relatedCollections={relatedCollections} />
 
-  <!-- §20 · BOTTOM CTA BAND -->
-  <section class="bottom-cta">
-    <div class="bottom-cta-inner">
-      <p>Need a quote, layout, sample, or AHJ-specific spec language? <b>We respond same business day.</b></p>
-      <div class="bottom-cta-actions">
-        <a class="btn btn-primary" href="/contact">Contact Sales</a>
-        <a class="btn btn-outline" href="/support/layout-request">Request Layout</a>
-      </div>
-    </div>
-  </section>
-</main>
+  <!-- §16 STICKY ANCHOR RAIL — 11 dots, shared component -->
+  <CollectionAnchorNav sections={anchorSections} />
 
-<!-- §19 · STICKY ANCHOR RAIL (11 dots per J.5) -->
-<aside class="anchor-rail" aria-label="In-page navigation">
-  <a class="ar-dot" href="#overview" data-label="Overview"></a>
-  <a class="ar-dot" href="#quick-stats" data-label="Quick stats"></a>
-  <a class="ar-dot" href="#install-tiers" data-label="Install tiers"></a>
-  <a class="ar-dot" href="#product-types" data-label="Product types"></a>
-  <a class="ar-dot" href="#featured" data-label="Featured"></a>
-  <a class="ar-dot" href="#all-drivers" data-label="All drivers"></a>
-  <a class="ar-dot" href="#adders" data-label="Adders"></a>
-  <a class="ar-dot" href="#verticals" data-label="Verticals"></a>
-  <a class="ar-dot" href="#legacy" data-label="Legacy"></a>
-  <a class="ar-dot" href="#get-started" data-label="Get started"></a>
-  <a class="ar-dot" href="#related" data-label="Related"></a>
-</aside>
+</BaseLayout>
+
+<style is:global>
+  /* ============================================================
+   * constⒶNT collection page — scoped styles
+   * Uses the same CSS class system as shared collection components
+   * for pixel parity with cityⒶRCH / planoⒶRCH / lamparⒶRCH.
+   * CFG-TYPE-1: Lato + JetBrains Mono pinned with !important.
+   * ============================================================ */
+
+  /* BREADCRUMB — matches CollectionHero.astro */
+  .breadcrumb-band {
+    padding: 10px 32px;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #666;
+    background: var(--bg2, #f5f5f3);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .breadcrumb-band a { color: #666; text-decoration: none; }
+  .breadcrumb-band a:hover { color: var(--color-alg-red, #F32740); }
+  .bc-sep { color: #c8ccd3; }
+  .bc-current { color: #000; font-weight: 600; }
+  .bc-current .aa { color: var(--color-alg-red, #F32740); }
+
+  /* HERO — matches CollectionHero.astro */
+  .collection-section--hero {
+    background: #1a1f2e;
+    color: #fff;
+  }
+  .collection-section--hero .collection-content {
+    padding-top: 72px;
+    padding-bottom: 80px;
+  }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    margin-bottom: 24px;
+  }
+  .hero-wordmark {
+    font-family: 'Lato', system-ui, sans-serif !important;
+    font-size: clamp(72px, 10vw, 128px);
+    font-weight: 900 !important;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    color: #fff;
+    margin: 0 0 28px;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0;
+    text-transform: none;
+  }
+  .hero-wordmark .aa {
+    color: var(--color-alg-red, #F32740);
+    font-size: inherit;
+    font-weight: inherit;
+  }
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.70);
+    max-width: 920px;
+    margin-bottom: 32px;
+  }
+  .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .hero-pill {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    border: 1px solid var(--color-alg-red, #F32740);
+    border-radius: 2px;
+    padding: 6px 14px;
+    white-space: nowrap;
+  }
+
+  /* SHARED SECTION WRAPPER — matches all collection components */
+  .collection-content {
+    max-width: var(--collection-content-width, 1280px);
+    margin-inline: auto;
+    padding-inline: var(--collection-content-padding-x, 32px);
+    width: 100%;
+  }
+
+  /* SECTION EYEBROW — shared red line + mono text */
+  .sec-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    margin-bottom: 28px;
+  }
+  .sec-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 84px;
+    height: 1.5px;
+    background: var(--color-alg-red, #F32740);
+    flex-shrink: 0;
+  }
+
+  /* BROWSE TILES — §D.4 install tier + §D.5 product type */
+  .collection-section--applications {
+    background: var(--bg2, #f5f5f3);
+    padding: 80px 0;
+  }
+  .collection-section--product-types {
+    background: #fff;
+    padding: 80px 0;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .app-grid {
+    display: grid;
+    gap: 16px;
+  }
+  .app-grid--4 { grid-template-columns: repeat(4, 1fr); }
+  .app-grid--5 { grid-template-columns: repeat(5, 1fr); }
+  .browse-tile-link {
+    background: #f8f8f6;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 8px;
+    padding: 28px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  }
+  .browse-tile-link:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+    transform: translateY(-2px);
+    border-color: var(--color-alg-red, #F32740);
+  }
+  .browse-tile-link--soon { opacity: 0.72; }
+  .browse-tile-link--live {
+    border-color: var(--color-alg-red, #F32740);
+    background: #fff0f2;
+  }
+  .btl-eyebrow {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    font-weight: 700;
+  }
+  .btl-name {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink, #111418);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .btl-meta {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 10px;
+    color: #8a8f99;
+  }
+
+  /* ALL DRIVERS SECTION — matches CollectionAllFamilies.astro */
+  .collection-section--families {
+    background: var(--bg2, #f5f5f3);
+    padding: 80px 0;
+  }
+  .fam-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    margin-bottom: 16px;
+  }
+  .fam-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 84px;
+    height: 1.5px;
+    background: var(--color-alg-red, #F32740);
+    flex-shrink: 0;
+  }
+  .fam-headline {
+    font-family: 'Lato', system-ui, sans-serif !important;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 800 !important;
+    letter-spacing: -0.025em;
+    color: var(--ink, #111418);
+    margin: 0 0 40px;
+  }
+  .fam-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  /* SIDEBAR */
+  .fam-sidebar {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 8px;
+    padding: 20px;
+    position: sticky;
+    top: var(--header-bottom, 80px);
+    transition: top 240ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .filter-title {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink, #111418);
+  }
+  .filter-reset {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .filter-reset:hover { text-decoration: underline; }
+  .filter-group {
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    padding: 12px 0;
+  }
+  .filter-group:last-child { border-bottom: none; }
+  .fg-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink, #111418);
+    padding: 4px 0;
+    margin-bottom: 8px;
+  }
+  .fg-arrow { font-size: 8px; color: #8a8f99; }
+  .fg-body { display: flex; flex-direction: column; gap: 6px; }
+  .fg-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--ink, #111418);
+  }
+  .fg-item input[type="checkbox"] { accent-color: var(--color-alg-red, #F32740); }
+  .fg-name { flex: 1; font-size: 12px; }
+  .fg-count { font-size: 11px; color: #8a8f99; }
+  .watt-range-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .watt-label { font-family: 'JetBrains Mono', monospace !important; font-size: 10px; color: #8a8f99; }
+  .watt-slider { width: 100%; accent-color: var(--color-alg-red, #F32740); }
+  /* TOOLBAR */
+  .fam-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .fam-count-label { font-family: 'JetBrains Mono', monospace !important; font-size: 12px; color: #8a8f99; }
+  .fam-sort {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 4px;
+    padding: 6px 10px;
+    background: #fff;
+    color: var(--ink, #111418);
+    cursor: pointer;
+  }
+  /* SKU GRID — matches fam-grid / fam-card from CollectionAllFamilies */
+  .fam-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .fam-card {
+    background: #0a0e1a;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+  .fam-card:hover {
+    border-color: rgba(255,255,255,0.18);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+  }
+  .fc-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px 8px;
+  }
+  .fc-subcat {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.40);
+  }
+  .tier-badge {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .tier-pro { background: #1a1a2a; color: #7c9fff; border: 1px solid rgba(124,159,255,0.4); }
+  .fc-img {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .fc-watermark {
+    font-family: 'Lato', system-ui, sans-serif !important;
+    font-size: 16px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.07);
+    text-align: center;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    word-break: break-word;
+    padding: 0 8px;
+  }
+  .fc-bottom {
+    padding: 10px 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .fc-name {
+    font-family: 'Lato', system-ui, sans-serif !important;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .fc-meta { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+  .fc-watt {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 10px;
+    color: rgba(255,255,255,0.40);
+  }
+  .fc-dlc {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    background: rgba(243,39,64,0.15);
+    color: var(--color-alg-red, #F32740);
+    border: 1px solid rgba(243,39,64,0.35);
+    border-radius: 3px;
+    padding: 2px 6px;
+  }
+  .fc-view {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    text-decoration: none;
+    margin-top: 2px;
+    display: inline-block;
+  }
+  .fc-view:hover { text-decoration: underline; }
+  .fam-no-results {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 13px;
+    color: #8a8f99;
+    padding: 40px 0;
+    text-align: center;
+  }
+  .fam-no-results button {
+    background: none; border: none;
+    color: var(--color-alg-red, #F32740);
+    cursor: pointer; text-decoration: underline;
+    font-family: inherit; font-size: inherit;
+  }
+
+  /* ADDERS BAND — dark editorial, matches CollectionFeatured background */
+  .collection-section--adders {
+    background: #0c0d12;
+    padding: 80px 0;
+  }
+  .collection-section--adders .collection-content { padding-top: 0; }
+  .adders-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .adder-card {
+    background: #0a0e1a;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .adder-code {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-alg-red, #F32740);
+    letter-spacing: 0.04em;
+  }
+  .adder-name {
+    font-family: 'Lato', system-ui, sans-serif !important;
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .adder-name .aa { color: var(--color-alg-red, #F32740); }
+  .adder-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.65);
+    margin: 0;
+  }
+
+  /* VERTICALS BAND */
+  .collection-section--verticals {
+    background: var(--bg2, #f5f5f3);
+    padding: 80px 0;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .verticals-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .vertical-tile {
+    background: #0a0e1a;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    padding: 28px 24px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    aspect-ratio: 4/3;
+    position: relative;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .vertical-tile:hover {
+    border-color: var(--color-alg-red, #F32740);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+  }
+  .vt-num {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.40);
+  }
+  .vt-name {
+    font-family: 'Lato', system-ui, sans-serif !important;
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .vt-skus {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 10px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    position: absolute;
+    bottom: 20px;
+    left: 24px;
+    right: 24px;
+    line-height: 1.4;
+  }
+
+  /* GET STARTED — matches CollectionGetStarted.astro exactly */
+  .collection-section--get-started {
+    background: var(--section-bg-default, #ffffff);
+    padding: 80px 0;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .gs-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    margin-bottom: 16px;
+  }
+  .gs-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 84px;
+    height: 1.5px;
+    background: var(--color-alg-red, #F32740);
+    flex-shrink: 0;
+  }
+  .gs-headline {
+    font-family: 'Lato', system-ui, sans-serif !important;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 800 !important;
+    letter-spacing: -0.02em;
+    color: var(--ink, #111418);
+    margin: 0 0 40px;
+  }
+  .gs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .gs-card {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 8px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .gs-icon { font-size: 24px; color: var(--color-alg-red, #F32740); line-height: 1; }
+  .gs-title {
+    font-family: 'Lato', system-ui, sans-serif !important;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink, #111418);
+    letter-spacing: -0.01em;
+  }
+  .gs-body {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink2, #444444);
+    flex: 1;
+    margin: 0;
+  }
+  .gs-body .aa { color: var(--color-alg-red, #F32740); }
+  .gs-cta {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    text-decoration: none;
+    margin-top: 4px;
+    display: inline-block;
+  }
+  .gs-cta:hover { text-decoration: underline; }
+
+  /* PAIRS WITH BAND — dark editorial, matches CollectionPageLayout cross-promo */
+  .collection-section--pairs {
+    background: #111111;
+    color: #fff;
+    padding: 64px 0;
+  }
+  .pairs-eyebrow {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .pairs-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 84px;
+    height: 1.5px;
+    background: var(--color-alg-red, #F32740);
+    flex-shrink: 0;
+  }
+  .pairs-h2 {
+    font-family: 'Lato', system-ui, sans-serif !important;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 900 !important;
+    letter-spacing: -0.025em;
+    color: #fff;
+    margin: 0 0 16px;
+    max-width: 800px;
+  }
+  .pairs-h2 .aa { color: var(--color-alg-red, #F32740); }
+  .pairs-p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.70);
+    max-width: 720px;
+    margin-bottom: 28px;
+  }
+  .pairs-p .aa { color: var(--color-alg-red, #F32740); }
+  .pairs-cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 14px 28px;
+    background: var(--color-alg-red, #F32740);
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s ease;
+  }
+  .pairs-cta:hover { background: #c41e32; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1199px) {
+    .fam-layout { grid-template-columns: 240px 1fr; }
+    .fam-grid { grid-template-columns: repeat(3, 1fr); }
+    .app-grid--5 { grid-template-columns: repeat(3, 1fr); }
+    .adders-grid { grid-template-columns: repeat(2, 1fr); }
+    .verticals-grid { grid-template-columns: repeat(2, 1fr); }
+    .gs-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 767px) {
+    .hero-wordmark { font-size: clamp(52px, 14vw, 72px); }
+    .fam-layout { grid-template-columns: 1fr; }
+    .fam-sidebar { position: static; }
+    .fam-grid { grid-template-columns: repeat(2, 1fr); }
+    .app-grid--4, .app-grid--5 { grid-template-columns: repeat(2, 1fr); }
+    .adders-grid { grid-template-columns: 1fr; }
+    .verticals-grid { grid-template-columns: repeat(2, 1fr); }
+    .gs-grid { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
 
 <script>
   // Filter chip interactivity for All Drivers grid
-  const chips = document.querySelectorAll('.af-chip');
-  const cards = document.querySelectorAll('.af-body .family-card');
-  chips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      chips.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      const filter = chip.dataset.filter;
+  (function () {
+    const resetBtn = document.getElementById('filterReset');
+    const noResultsReset = document.getElementById('skuNoResultsReset');
+    const countLabel = document.getElementById('skuCountLabel');
+    const noResults = document.getElementById('skuNoResults');
+    const grid = document.getElementById('skuGrid');
+    const cards = grid ? Array.from(grid.querySelectorAll('.fam-card')) : [];
+    const wattSlider = document.getElementById('wattSlider') as HTMLInputElement | null;
+    const wattMaxLabel = document.getElementById('wattMax');
+
+    // Active filter state
+    const active: Record<string, Set<string>> = {
+      tier: new Set(), power: new Set(), adder: new Set(),
+      output: new Set(), family: new Set(), vertical: new Set(),
+      cert: new Set(), baa: new Set(),
+    };
+    let activeMaxWatt = 60;
+
+    // Power class mapping from SKU wattage
+    function getPowerClass(meta: string): string {
+      const m = meta.match(/(\d+)W/);
+      if (!m) return 'mid';
+      const w = parseInt(m[1]);
+      if (w <= 9) return 'low';
+      if (w <= 25) return 'mid';
+      return 'high';
+    }
+
+    // Adder mapping from SKU name
+    function getAdders(name: string): string[] {
+      const adders: string[] = [];
+      if (name.includes('/AG') || name.includes('260DC')) adders.push('ag');
+      if (name.includes('/XD')) adders.push('xd');
+      if (name.includes('/CL') || name.includes('PMB')) adders.push('cl');
+      return adders;
+    }
+
+    // Output type mapping
+    function getOutput(meta: string): string {
+      return meta.includes('Vac') ? 'ac' : 'dc';
+    }
+
+    function cardMatches(card: Element): boolean {
+      const tier = (card as HTMLElement).dataset.tier ?? '';
+      const sku = (card as HTMLElement).dataset.sku ?? '';
+      const metaEl = card.querySelector('.fc-watt');
+      const meta = metaEl?.textContent ?? '';
+
+      if (active.tier.size > 0 && !active.tier.has(tier)) return false;
+      if (active.power.size > 0 && !active.power.has(getPowerClass(meta))) return false;
+      if (active.adder.size > 0) {
+        const skuAdders = getAdders(sku);
+        if (!Array.from(active.adder).some(a => skuAdders.includes(a))) return false;
+      }
+      if (active.output.size > 0 && !active.output.has(getOutput(meta))) return false;
+      // Wattage slider
+      const wm = meta.match(/(\d+)W/);
+      if (wm && parseInt(wm[1]) > activeMaxWatt) return false;
+      // Vertical, family, cert, baa — informational filters (all SKUs match all)
+      return true;
+    }
+
+    function render() {
+      let visible = 0;
       cards.forEach(card => {
-        if (filter === 'all' || card.dataset.tier === filter) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
+        const show = cardMatches(card);
+        (card as HTMLElement).style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      if (countLabel) countLabel.textContent = `Showing ${visible} driver${visible === 1 ? '' : 's'}`;
+      if (noResults) noResults.style.display = visible === 0 ? '' : 'none';
+    }
+
+    // Checkbox listeners
+    document.querySelectorAll('[data-facet]').forEach(inp => {
+      inp.addEventListener('change', () => {
+        const facet = (inp as HTMLInputElement).dataset.facet ?? '';
+        const val = (inp as HTMLInputElement).value;
+        if (active[facet]) {
+          if ((inp as HTMLInputElement).checked) active[facet].add(val);
+          else active[facet].delete(val);
         }
+        render();
       });
     });
-  });
-</script>
 
-</BaseLayout>
+    // Wattage slider
+    if (wattSlider) {
+      wattSlider.addEventListener('input', () => {
+        activeMaxWatt = parseInt(wattSlider.value, 10);
+        if (wattMaxLabel) wattMaxLabel.textContent = wattSlider.value + 'W';
+        render();
+      });
+    }
+
+    function resetAll() {
+      Object.values(active).forEach(s => s.clear());
+      activeMaxWatt = 60;
+      document.querySelectorAll('[data-facet]').forEach(inp => { (inp as HTMLInputElement).checked = false; });
+      if (wattSlider) { wattSlider.value = '60'; }
+      if (wattMaxLabel) wattMaxLabel.textContent = '60W';
+      render();
+    }
+    if (resetBtn) resetBtn.addEventListener('click', resetAll);
+    if (noResultsReset) noResultsReset.addEventListener('click', resetAll);
+
+    // Collapsible filter groups
+    document.querySelectorAll('.fg-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        const body = (btn as HTMLElement).nextElementSibling as HTMLElement | null;
+        if (body) body.style.display = expanded ? 'none' : '';
+        const arrow = btn.querySelector('.fg-arrow');
+        if (arrow) arrow.textContent = expanded ? '▼' : '▲';
+      });
+    });
+
+    // Browse-by-tier tile click → set filter + scroll to grid
+    document.querySelectorAll('[data-tier-filter]').forEach(tile => {
+      tile.addEventListener('click', (e) => {
+        e.preventDefault();
+        const tierVal = (tile as HTMLElement).dataset.tierFilter ?? '';
+        if (tierVal) {
+          active.tier.clear();
+          active.tier.add(tierVal);
+          const cb = document.querySelector(`[data-facet="tier"][value="${tierVal}"]`) as HTMLInputElement | null;
+          if (cb) cb.checked = true;
+          render();
+        }
+        document.getElementById('all-drivers')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Initial render
+    render();
+  })();
+</script>
