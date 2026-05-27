@@ -7641,7 +7641,7 @@
       "skus": [
         {
           "sku": "LRHB3W150-S4-I3U/B",
-          "family": "Icarus-III",
+          "family": "Icarus",
           "sub_category": "Round High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -7664,7 +7664,7 @@
         },
         {
           "sku": "LRHB3W150-S4-I3U/B/TAA",
-          "family": "Icarus-III",
+          "family": "Icarus",
           "sub_category": "Round High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -7687,7 +7687,7 @@
         },
         {
           "sku": "LRHB3W150-S4-I3U/W",
-          "family": "Icarus-III",
+          "family": "Icarus",
           "sub_category": "Round High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -7710,7 +7710,7 @@
         },
         {
           "sku": "LRHB3W150-S4-I3U/W/TAA",
-          "family": "Icarus-III",
+          "family": "Icarus",
           "sub_category": "Round High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -7733,7 +7733,7 @@
         },
         {
           "sku": "LRHB3W240-S4-I3U/B",
-          "family": "Icarus-III",
+          "family": "Icarus",
           "sub_category": "Round High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -7754,7 +7754,7 @@
         },
         {
           "sku": "LRHB3W240-S4-I3U/B/TAA",
-          "family": "Icarus-III",
+          "family": "Icarus",
           "sub_category": "Round High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -7775,7 +7775,7 @@
         },
         {
           "sku": "LRHB3W240-S4-I3U/W",
-          "family": "Icarus-III",
+          "family": "Icarus",
           "sub_category": "Round High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -7796,7 +7796,7 @@
         },
         {
           "sku": "LRHB3W240-S4-I3U/W/TAA",
-          "family": "Icarus-III",
+          "family": "Icarus",
           "sub_category": "Round High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -7817,7 +7817,7 @@
         },
         {
           "sku": "LRHB3W300-S4-I3U/B",
-          "family": "Icarus-III",
+          "family": "Icarus",
           "sub_category": "Round High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -7840,7 +7840,7 @@
         },
         {
           "sku": "LRHB3W300-S4-I3U/B/TAA",
-          "family": "Icarus-III",
+          "family": "Icarus",
           "sub_category": "Round High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -7863,7 +7863,7 @@
         },
         {
           "sku": "LRHB3W300-S4-I3U/W",
-          "family": "Icarus-III",
+          "family": "Icarus",
           "sub_category": "Round High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -7886,7 +7886,7 @@
         },
         {
           "sku": "LRHB3W300-S4-I3U/W/TAA",
-          "family": "Icarus-III",
+          "family": "Icarus",
           "sub_category": "Round High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -7909,7 +7909,7 @@
         },
         {
           "sku": "LRHB150-3CS-UJ2",
-          "family": "Jupiter-II",
+          "family": "Jupiter",
           "sub_category": "Round High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -7931,7 +7931,7 @@
         },
         {
           "sku": "LRHB150-3CS-UJ2/TAA",
-          "family": "Jupiter-II",
+          "family": "Jupiter",
           "sub_category": "Round High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -7953,7 +7953,7 @@
         },
         {
           "sku": "LRHB240-3CS-UJ2",
-          "family": "Jupiter-II",
+          "family": "Jupiter",
           "sub_category": "Round High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -7975,7 +7975,7 @@
         },
         {
           "sku": "LRHB240-3CS-UJ2/TAA",
-          "family": "Jupiter-II",
+          "family": "Jupiter",
           "sub_category": "Round High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -7997,7 +7997,7 @@
         },
         {
           "sku": "LRHB300-3CS-UJ2",
-          "family": "Jupiter-II",
+          "family": "Jupiter",
           "sub_category": "Round High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8019,7 +8019,7 @@
         },
         {
           "sku": "LRHB300-3CS-UJ2/TAA",
-          "family": "Jupiter-II",
+          "family": "Jupiter",
           "sub_category": "Round High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8041,7 +8041,7 @@
         },
         {
           "sku": "LRHB400-40C-UJ2",
-          "family": "Jupiter-II",
+          "family": "Jupiter",
           "sub_category": "Round High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8061,7 +8061,7 @@
         },
         {
           "sku": "LRHB400-40C-UJ2/TAA",
-          "family": "Jupiter-II",
+          "family": "Jupiter",
           "sub_category": "Round High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8081,7 +8081,7 @@
         },
         {
           "sku": "LRHB400-50C-HJ2",
-          "family": "Jupiter-II",
+          "family": "Jupiter",
           "sub_category": "Round High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8101,7 +8101,7 @@
         },
         {
           "sku": "LRHB400-50C-HJ2/TAA",
-          "family": "Jupiter-II",
+          "family": "Jupiter",
           "sub_category": "Round High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8121,7 +8121,7 @@
         },
         {
           "sku": "LRHB400-50C-UJ2",
-          "family": "Jupiter-II",
+          "family": "Jupiter",
           "sub_category": "Round High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8141,7 +8141,7 @@
         },
         {
           "sku": "LRHB400-50C-UJ2/TAA",
-          "family": "Jupiter-II",
+          "family": "Jupiter",
           "sub_category": "Round High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8161,7 +8161,7 @@
         },
         {
           "sku": "LLHB085-UT50",
-          "family": "Tiny-I",
+          "family": "Tiny",
           "sub_category": "Linear High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -8177,7 +8177,7 @@
         },
         {
           "sku": "LLHB150-HT50",
-          "family": "Tiny-I",
+          "family": "Tiny",
           "sub_category": "Linear High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -8193,7 +8193,7 @@
         },
         {
           "sku": "LLHB150-UT50",
-          "family": "Tiny-I",
+          "family": "Tiny",
           "sub_category": "Linear High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -8209,7 +8209,7 @@
         },
         {
           "sku": "LLHB220-HT50",
-          "family": "Tiny-I",
+          "family": "Tiny",
           "sub_category": "Linear High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -8225,7 +8225,7 @@
         },
         {
           "sku": "LLHB220-UT50",
-          "family": "Tiny-I",
+          "family": "Tiny",
           "sub_category": "Linear High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -8241,7 +8241,7 @@
         },
         {
           "sku": "LLHB220-UT50/TAA",
-          "family": "Tiny-I",
+          "family": "Tiny",
           "sub_category": "Linear High Bay",
           "display_echelon": "ECO",
           "wattages": [
@@ -8257,7 +8257,7 @@
         },
         {
           "sku": "LLHB155-2CS-HT/O9090",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8276,7 +8276,7 @@
         },
         {
           "sku": "LLHB155-2CS-HT/O9090/TAA",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8295,7 +8295,7 @@
         },
         {
           "sku": "LLHB155-2CS-UT/O9090",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8314,7 +8314,7 @@
         },
         {
           "sku": "LLHB155-2CS-UT/O9090/TAA",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8333,7 +8333,7 @@
         },
         {
           "sku": "LLHB320-2CS-HT/O9090",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8352,7 +8352,7 @@
         },
         {
           "sku": "LLHB320-2CS-HT/O9090/TAA",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8371,7 +8371,7 @@
         },
         {
           "sku": "LLHB320-2CS-UT/O4090",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8390,7 +8390,7 @@
         },
         {
           "sku": "LLHB320-2CS-UT/O6565",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8409,7 +8409,7 @@
         },
         {
           "sku": "LLHB320-2CS-UT/O9090",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8428,7 +8428,7 @@
         },
         {
           "sku": "LLHB320-2CS-UT/O9090/TAA",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8447,7 +8447,7 @@
         },
         {
           "sku": "LLHB400-2CS-HT/O9090",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8466,7 +8466,7 @@
         },
         {
           "sku": "LLHB400-2CS-HT/O9090/TAA",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8485,7 +8485,7 @@
         },
         {
           "sku": "LLHB400-2CS-UT/O9090",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8504,7 +8504,7 @@
         },
         {
           "sku": "LLHB400-2CS-UT/O9090/TAA",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8523,7 +8523,7 @@
         },
         {
           "sku": "LLHB500-2CS-HT/O9090",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8542,7 +8542,7 @@
         },
         {
           "sku": "LLHB500-2CS-HT/O9090/TAA",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8561,7 +8561,7 @@
         },
         {
           "sku": "LLHB500-2CS-UT/O9090",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8580,7 +8580,7 @@
         },
         {
           "sku": "LLHB500-2CS-UT/O9090/TAA",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8599,7 +8599,7 @@
         },
         {
           "sku": "LLHB600-2CS-UT/O9090",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -8618,7 +8618,7 @@
         },
         {
           "sku": "LLHB600-2CS-UT/O9090/TAA",
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "wattages": [
@@ -9788,7 +9788,7 @@
       ],
       "families": [
         {
-          "family": "Icarus-III",
+          "family": "Icarus",
           "sub_category": "Round High Bay",
           "display_echelon": "ECO",
           "max_wattage": 300,
@@ -9809,7 +9809,7 @@
           "taa": true
         },
         {
-          "family": "Tiny-I",
+          "family": "Tiny",
           "sub_category": "Linear High Bay",
           "display_echelon": "ECO",
           "max_wattage": 220,
@@ -9826,7 +9826,7 @@
           "taa": true
         },
         {
-          "family": "Jupiter-II",
+          "family": "Jupiter",
           "sub_category": "Round High Bay",
           "display_echelon": "PRO",
           "max_wattage": 400,
@@ -9847,7 +9847,7 @@
           "taa": true
         },
         {
-          "family": "Titan-II",
+          "family": "Titan",
           "sub_category": "Linear High Bay",
           "display_echelon": "PRO",
           "max_wattage": 600,

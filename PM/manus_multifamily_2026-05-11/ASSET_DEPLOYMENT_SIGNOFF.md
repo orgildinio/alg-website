@@ -21,7 +21,7 @@ All 15 missing assets were addressed via substitutions or fallback handling:
 
 * **Family Band Heroes:** Copied `Eclipse-II-9in-White-1.png` to `crescent-hero.webp` and `radius-ii-6in-hero-1.png` to `radius-hero.webp`.
 * **Finishes:** Copied `Nebula-II-4in-W.png` to `nebula-ii-finish-white.webp` and `LDGR410-1.png` to `orbit-finish-white.webp`. Added `eclipse-ii-finish-black.png` as a placeholder (copied from the white version) since the black photo was missing.
-* **Tiny-I Placeholder:** Copied `fam-pathfinder.webp` to `fam-tiny-i.webp` to prevent broken images in the "Round out the project" section.
+* **Tiny Placeholder:** Copied `fam-pathfinder.webp` to `fam-tiny.webp` to prevent broken images in the "Round out the project" section.
 * **Nebula-II Highlights:** Added `onerror="this.style.display='none'"` to all 7 `hf-tile` image tags. The CSS gradient backgrounds and text overlays render perfectly as fallbacks.
 * **Orbit-I Dimensions:** Verified that the inline SVG fallback is active and correctly rendering the dimension drawings.
 * **Missing Accessory Plates:** `lcdl-ncp-plate.png` and `lcdl-ncp-plate-jbox.png` were verified to have `onerror` fallbacks to inline SVGs.

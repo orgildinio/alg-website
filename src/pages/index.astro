@@ -13,7 +13,7 @@
  *   8. Installed At (8 vertical tiles — 3 CSS-only placeholders for missing assets)
  *   9. Split teasers (Rebate + Specifier)
  *
- * SKU counts (locked from reference v3.14.x): Illuminator 11 · Titan-II 20 · Astra 18 · Connected Systems 9
+ * SKU counts (locked from reference v3.14.x): Illuminator 11 · Titan 20 · Astra 18 · Connected Systems 9
  * Brand-mark rule: every Ⓐ in body content MUST be inside .aa span (via BrandMark or manual span).
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -44,11 +44,11 @@ const heroSlides = [
     brandMark: null,
   },
   {
-    // SKU basis: LLHB-xxx series (Titan-II linear high-bay, 155W peak config)
+    // SKU basis: LLHB-xxx series (Titan linear high-bay, 155W peak config)
     id: 1,
     bgClass: 'img-titan',
     eyebrow: 'Featured · High-Bay · LLHB',
-    name: 'Titan-II',
+    name: 'Titan',
     gradClass: 'grad-slide1',
     seriesNameColor: '#f0c070', // C1: warm amber — matches warehouse/industrial warm tone (kept for fallback)
     // D (v2.5.5): multi-color gradient sampled from hero-warehouse-highbay.jpg
@@ -473,11 +473,11 @@ const verticals = [
         <a href="/collections/indoor-industrial" class="fam-card">
           <div class="fam-img dk">
             <span class="fam-tag">DLC Premium</span>
-            <img class="fam-product" src="/images/families/family-titan.jpg" alt="Titan-II linear high-bay LED luminaire" width="320" height="240" loading="lazy" />
+            <img class="fam-product" src="/images/families/family-titan.jpg" alt="Titan linear high-bay LED luminaire" width="320" height="240" loading="lazy" />
           </div>
           <div class="fam-body">
             <div class="fam-eyebrow"><BrandMark prefix="lampar" suffix="RCH" /> · PRO</div>
-            <div class="fam-name">Titan-II</div>
+            <div class="fam-name">Titan</div>
             <div class="fam-desc">Linear high-bay · warehouse + industrial</div>
             <div class="fam-meta"><span class="fam-skucount">20 SKUs</span><span class="fam-arrow">View →</span></div>
           </div>

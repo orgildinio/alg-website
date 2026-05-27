@@ -67,7 +67,7 @@ const lampararchData = {
   ],
   featured: [
     {
-      family: 'Titan-II',
+      family: 'Titan',
       subCategory: 'Linear High-Bay',
       displayEchelon: 'PRO+' as const,
       maxWattage: 600,
@@ -76,7 +76,7 @@ const lampararchData = {
       lineDrawing: null,
     },
     {
-      family: 'Jupiter-II',
+      family: 'Jupiter',
       subCategory: 'Linear Low-Bay',
       displayEchelon: 'PRO' as const,
       maxWattage: 200,
@@ -85,7 +85,7 @@ const lampararchData = {
       lineDrawing: null,
     },
     {
-      family: 'Icarus-III',
+      family: 'Icarus',
       subCategory: 'Vapor Tight',
       displayEchelon: 'PRO' as const,
       maxWattage: 150,

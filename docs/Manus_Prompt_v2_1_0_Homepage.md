@@ -201,7 +201,7 @@ The href and the data-cat MUST come from the same `cat.slug`. This is non-negoti
 
 2. **Featured Families section** — 4 cards in a grid:
    - Illuminator (image: `family-illuminator.png`) — tagline "Sports & Stadium" — link `/products/illuminator`
-   - Titan-II (image: `family-titan.png`) — tagline "Warehouse High-Bay" — link `/products/titan-ii`
+   - Titan (image: `family-titan.png`) — tagline "Warehouse High-Bay" — link `/products/titan`
    - Astra (image: `family-astra.png`) — tagline "Wall Pack & Area" — link `/products/astra`
    - contrⒶLS (image: `family-contrals.png`) — tagline "Controls & EM" — link `/products/contrals` (use `<BrandMark>` for the Ⓐ in "contrⒶLS")
 

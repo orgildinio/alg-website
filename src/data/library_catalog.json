@@ -639,8 +639,8 @@
       "vertical": "Indoor",
       "application": "High-Bay",
       "tier": "ECO",
-      "family": "Tiny-I",
-      "full_path": "Indoor | lamparⒶRCH | High-Bay | Linear | ECO | Tiny-I",
+      "family": "Tiny",
+      "full_path": "Indoor | lamparⒶRCH | High-Bay | Linear | ECO | Tiny",
       "sku_count": 6,
       "docs": {
         "datasheet": {
@@ -671,8 +671,8 @@
       "vertical": "Indoor",
       "application": "High-Bay",
       "tier": "PRO",
-      "family": "Titan-II",
-      "full_path": "Indoor | lamparⒶRCH | High-Bay | Linear | PRO | Titan-II",
+      "family": "Titan",
+      "full_path": "Indoor | lamparⒶRCH | High-Bay | Linear | PRO | Titan",
       "sku_count": 40,
       "docs": {
         "datasheet": {
@@ -730,8 +730,8 @@
       "vertical": "Indoor",
       "application": "High-Bay",
       "tier": "ECO",
-      "family": "Icarus-III",
-      "full_path": "Indoor | lamparⒶRCH | High-Bay | Round | ECO | Icarus-III",
+      "family": "Icarus",
+      "full_path": "Indoor | lamparⒶRCH | High-Bay | Round | ECO | Icarus",
       "sku_count": 28,
       "docs": {
         "datasheet": {
@@ -789,8 +789,8 @@
       "vertical": "Indoor",
       "application": "High-Bay",
       "tier": "PRO",
-      "family": "Jupiter-II",
-      "full_path": "Indoor | lamparⒶRCH | High-Bay | Round | PRO | Jupiter-II",
+      "family": "Jupiter",
+      "full_path": "Indoor | lamparⒶRCH | High-Bay | Round | PRO | Jupiter",
       "sku_count": 27,
       "docs": {
         "datasheet": {

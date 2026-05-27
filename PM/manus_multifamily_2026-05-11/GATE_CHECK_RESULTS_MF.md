@@ -79,7 +79,7 @@ Pattern: `HOME › PRODUCTS › INDOOR › RESIDENTIAL · MULTI-FAMILY › MULTI
 - Eclipse-II: 10 family-card elements (5 multi-family + 5 cross-line Round-Out) ✓
 - Family band links all point to `/products/multi-family/{slug}/` ✓
 - `.family-card.is-current` badge applied to the current series on each page ✓
-- Cross-line Round-Out CTAs: Pathfinder, Symmetry, Tiny-I, proARCH-III wired to canonical site URLs ✓
+- Cross-line Round-Out CTAs: Pathfinder, Symmetry, Tiny, proARCH-III wired to canonical site URLs ✓
 
 **Result: PASS**
 

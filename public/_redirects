@@ -83,3 +83,12 @@
 # 2026-05-10 §B3 — legacy solutions/safety-controls → canonical collections/safety-controls
 /solutions/safety-controls           /collections/safety-controls         301
 /solutions/safety-controls/          /collections/safety-controls         301
+# 2026-05-27 CFG-NAMING-1 — drop generation suffix from product URL slugs
+/products/llhb-titan-ii              /products/llhb-titan                 301
+/products/llhb-titan-ii/             /products/llhb-titan/                301
+/products/llhb-tiny-i                /products/llhb-tiny                  301
+/products/llhb-tiny-i/               /products/llhb-tiny/                 301
+/products/lrhb-icarus-iii            /products/lrhb-icarus                301
+/products/lrhb-icarus-iii/           /products/lrhb-icarus/               301
+/products/lrhb-jupiter-ii            /products/lrhb-jupiter               301
+/products/lrhb-jupiter-ii/           /products/lrhb-jupiter/              301

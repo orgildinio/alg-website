@@ -2,8 +2,8 @@
 """
 fix_lampar_subcats.py — Update lamparARCH sub_category values in sku-index.json
 to match the correct application taxonomy:
-  Linear High Bay:      Tiny-I, Titan-II
-  Round High Bay:       Icarus-III, Jupiter-II
+  Linear High Bay:      Tiny, Titan
+  Round High Bay:       Icarus, Jupiter
   Linear Strip:         Hallmark
   Retrofit Linear Strip: retroⒶRCH-L1
   Vapor-Tight:          Eureka-I, Eureka-II
@@ -16,10 +16,10 @@ with open(path) as f:
 
 # Mapping: family name -> correct sub_category
 FAMILY_SUBCATS = {
-    'Tiny-I':           'Linear High Bay',
-    'Titan-II':         'Linear High Bay',
-    'Icarus-III':       'Round High Bay',
-    'Jupiter-II':       'Round High Bay',
+    'Tiny':           'Linear High Bay',
+    'Titan':         'Linear High Bay',
+    'Icarus':       'Round High Bay',
+    'Jupiter':       'Round High Bay',
     'Hallmark':         'Linear Strip',
     'retroⒶRCH-L1':    'Retrofit Linear Strip',
     'Eureka-I':         'Vapor-Tight',

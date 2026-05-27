@@ -43,7 +43,7 @@ Supplemental images present but not directly mapped:
 | File | Family | Notes |
 |---|---|---|
 | `family-illuminator.png` | Illuminator (Sports/Stadium) | High-res FF reference |
-| `family-titan.png` | Titan-II (Warehouse High-bay) | Pulled from hero screenshot |
+| `family-titan.png` | Titan (Warehouse High-bay) | Pulled from hero screenshot |
 | `family-astra.png` | Astra (Wall Pack / Area) | High-res FF reference |
 | `family-contrals.png` | contrⒶLS (Controls & EM) | High-res FF reference |
 
