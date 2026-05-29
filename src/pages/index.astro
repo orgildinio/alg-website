@@ -490,6 +490,12 @@ const verticals = [
           </div>
           <div class="loc-results in-view-panel">
             <h4 id="loc-results-header" class="loc-results-header in-view-header">IN THIS VIEW</h4>
+            <div class="iv-sort-row" id="iv-sort-row">
+              <span class="iv-sort-label">Sort:</span>
+              <button class="iv-sort-btn iv-sort-btn--active" data-sort="nearest">Nearest</button>
+              <button class="iv-sort-btn" data-sort="az">A–Z</button>
+              <button class="iv-sort-btn" data-sort="type">Type</button>
+            </div>
             <ul id="loc-results-list" class="loc-results-list in-view-list"></ul>
           </div>
         </div>
@@ -1516,37 +1522,25 @@ const verticals = [
     color: var(--ink3);
     letter-spacing: 0.05em;
   }
-  /* iv-* row styles — IN THIS VIEW list */
+  /* iv-* row styles — IN THIS VIEW list (v2 polish) */
   .iv-row {
-    display: grid;
-    grid-template-columns: 16px 1fr;
-    column-gap: 12px;
-    align-items: start;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.07);
+    list-style: none;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+    cursor: pointer;
     transition: background 0.15s ease;
-    cursor: default;
   }
   .iv-row:last-child { border-bottom: none; }
-  .iv-row:hover { background: rgba(255,255,255,0.025); }
-  .iv-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-top: 6px;
-    flex-shrink: 0;
-  }
-  .iv-row--warehouse .iv-dot { background: #F32740; }
-  .iv-row--rep       .iv-dot { background: #FFB300; }
-  .iv-row--distributor .iv-dot { background: #22C55E; }
-  .iv-text { min-width: 0; }
-  .iv-line1 {
-    display: flex;
-    justify-content: space-between;
+  .iv-row:hover { background: rgba(255,255,255,0.035); }
+
+  .iv-row-main {
+    display: grid;
+    grid-template-columns: 1fr 64px;
     align-items: baseline;
     gap: 12px;
-    min-width: 0;
   }
+
+  /* Name — line 1 */
   .iv-name {
     font-family: 'Lato', sans-serif;
     font-size: 14px;
@@ -1557,23 +1551,112 @@ const verticals = [
     overflow: hidden;
     text-overflow: ellipsis;
     min-width: 0;
-    flex: 1 1 auto;
   }
+
+  /* Distance badge — line 1 right, fixed-width column */
   .iv-distance {
+    display: inline-block;
+    min-width: 56px;
+    text-align: right;
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     font-weight: 500;
     color: #F32740;
+    font-variant-numeric: tabular-nums;
     white-space: nowrap;
-    flex-shrink: 0;
   }
-  .iv-line2 {
+
+  /* Sub-line — line 2 */
+  .iv-row-sub {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
     font-family: 'Lato', sans-serif;
     font-size: 12px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.55);
     line-height: 1.35;
-    margin-top: 2px;
+    color: rgba(255,255,255,0.62);
+  }
+  .iv-citystate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .iv-sep {
+    color: rgba(255,255,255,0.30);
+    flex-shrink: 0;
+  }
+
+  /* Type chip */
+  .iv-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.82);
+  }
+  .iv-chip-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .iv-row--warehouse   .iv-chip-dot { background: #F32740; }
+  .iv-row--rep         .iv-chip-dot { background: #FFB300; }
+  .iv-row--distributor .iv-chip-dot { background: #22C55E; }
+
+  /* Sort toggle row */
+  .iv-sort-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 0 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+    margin-bottom: 8px;
+  }
+  .iv-sort-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+  .iv-sort-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.82);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .iv-sort-btn:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.30);
+  }
+  .iv-sort-btn--active {
+    background: rgba(255,255,255,0.10);
+    border-color: rgba(255,255,255,0.30);
+    color: #ffffff;
+  }
+
+  /* Hover-halo on Leaflet marker */
+  .iv-marker-hovered {
+    filter: drop-shadow(0 0 6px currentColor);
+    animation: iv-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes iv-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.85; transform: scale(1.15); }
   }
   .locator-ctas {
     display: flex;
@@ -2200,17 +2283,47 @@ const verticals = [
       const iconRep  = makeIcon('#f0a932', 'rgba(240,169,50,0.5)');
       const iconDist = makeIcon('#0FAE7C', 'rgba(15,174,124,0.5)');
 
-      // Popup builder
+      // ── Title-case utilities (Patch 3) ──────────────────────────────────────
+      function toTitleCase(s) {
+        if (!s) return s;
+        const upperRatio = (s.match(/[A-Z]/g) || []).length / Math.max(1, (s.match(/[A-Za-z]/g) || []).length);
+        if (upperRatio < 0.7) return s;  // already mixed-case — leave alone
+        return s.toLowerCase().replace(/\b([a-z])(\w*)/g, (m, first, rest) => first.toUpperCase() + rest);
+      }
+      function titleCaseCityState(s) {
+        if (!s) return s;
+        const idx = s.lastIndexOf(',');
+        if (idx === -1) return toTitleCase(s);
+        const city  = s.slice(0, idx);
+        const state = s.slice(idx + 1).trim().toUpperCase();
+        return `${toTitleCase(city)}, ${state}`;
+      }
+
+      // ── Distance rounding (Patch 4) ───────────────────────────────────────────
+      function formatDistance(mi) {
+        if (mi == null || isNaN(mi)) return '— mi';
+        if (mi < 0.5) return 'On-site';
+        if (mi < 10)  return mi.toFixed(1) + ' mi';
+        return Math.round(mi) + ' mi';
+      }
+
+      // ── Popup builder (Patch 8) ───────────────────────────────────────────────
+      function labelFor(type) {
+        return { warehouse: 'ALG Warehouse', rep: 'Sales Rep', dist: 'Stocking Distributor', distributor: 'Stocking Distributor' }[type] || '';
+      }
       function popup(rec, kind) {
-        let html = '<strong>' + rec.name + '</strong>';
+        const displayName = toTitleCase(rec.name);
         const loc = [rec.city, rec.state].filter(Boolean).join(', ');
-        if (loc) html += '<br><span style="color:#aaa;font-size:0.85em">' + loc + '</span>';
-        if (kind === 'warehouse') html += '<br><span style="color:#aaa;font-size:0.8em">ALG Warehouse</span>';
-        if (rec.phone) html += '<br><a href="tel:' + rec.phone.replace(/[^+\d]/g,'') + '" style="color:#f0a932">' + rec.phone + '</a>';
+        const displayLoc = titleCaseCityState(loc);
+        let html = '<div class="iv-popup">';
+        html += '<div class="iv-popup-name">' + displayName + '</div>';
+        if (displayLoc) html += '<div class="iv-popup-sub">' + displayLoc + (labelFor(kind) ? ' · ' + labelFor(kind) : '') + '</div>';
+        if (rec.phone) html += '<div class="iv-popup-row"><a href="tel:' + rec.phone.replace(/[^+\d]/g,'') + '">' + rec.phone + '</a></div>';
         if (rec.website) {
           const url = rec.website.startsWith('http') ? rec.website : 'https://' + rec.website;
-          html += '<br><a href="' + url + '" target="_blank" rel="noopener" style="color:#0FAE7C">Website ↗</a>';
+          html += '<div class="iv-popup-row"><a href="' + url + '" target="_blank" rel="noopener">Website ↗</a></div>';
         }
+        html += '</div>';
         return html;
       }
 
@@ -2219,6 +2332,8 @@ const verticals = [
 
       // All pins flat array for IN THIS VIEW list
       const allPins = [];
+      // markerByPinId: id → Leaflet marker reference (Patch 7)
+      const markerByPinId = new Map();
 
       // Layer color map for result dots
       const typeColor = { warehouse: '#F32740', rep: '#f0a932', dist: '#0FAE7C' };
@@ -2230,19 +2345,22 @@ const verticals = [
         const data = await res.json();
         data.warehouses.forEach(r => {
           if (r.lat && r.lon) {
-            L.marker([r.lat, r.lon], { icon: iconWh }).bindPopup(popup(r,'warehouse')).addTo(layers.warehouse);
+            const m = L.marker([r.lat, r.lon], { icon: iconWh }).bindPopup(popup(r,'warehouse')).addTo(layers.warehouse);
+            if (r.id) markerByPinId.set(String(r.id), m);
             allPins.push({ ...r, type: 'warehouse', lat: r.lat, lng: r.lon });
           }
         });
         data.sales_reps.forEach(r => {
           if (r.lat && r.lon) {
-            L.marker([r.lat, r.lon], { icon: iconRep }).bindPopup(popup(r,'rep')).addTo(layers.rep);
+            const m = L.marker([r.lat, r.lon], { icon: iconRep }).bindPopup(popup(r,'rep')).addTo(layers.rep);
+            if (r.id) markerByPinId.set(String(r.id), m);
             allPins.push({ ...r, type: 'rep', lat: r.lat, lng: r.lon });
           }
         });
         data.distributors.forEach(r => {
           if (r.lat && r.lon) {
-            L.marker([r.lat, r.lon], { icon: iconDist }).bindPopup(popup(r,'dist')).addTo(layers.dist);
+            const m = L.marker([r.lat, r.lon], { icon: iconDist }).bindPopup(popup(r,'dist')).addTo(layers.dist);
+            if (r.id) markerByPinId.set(String(r.id), m);
             allPins.push({ ...r, type: 'dist', lat: r.lat, lng: r.lon });
           }
         });
@@ -2256,6 +2374,18 @@ const verticals = [
       const headerEl  = document.getElementById('loc-results-header');
       let zipMode = false;
 
+      // Sort state (Patch 6)
+      const sorters = {
+        nearest: (a, b) => a.distanceMi - b.distanceMi,
+        az:      (a, b) => (a.name || '').localeCompare(b.name || '', 'en'),
+        type:    (a, b) => {
+          const order = { warehouse: 0, rep: 1, dist: 2, distributor: 2 };
+          return (order[a.type] - order[b.type]) || (a.distanceMi - b.distanceMi);
+        }
+      };
+      let currentSort = 'nearest';
+      let currentInViewRows = [];
+
       function renderList(entries, header) {
         if (headerEl) headerEl.textContent = header || 'IN THIS VIEW';
         if (!listEl) return;
@@ -2264,33 +2394,57 @@ const verticals = [
           return;
         }
         const typeClass = { warehouse: 'warehouse', rep: 'rep', dist: 'distributor' };
+        const chipLabel = { warehouse: 'Warehouse', rep: 'Sales Rep', dist: 'Stocking Distributor', distributor: 'Stocking Distributor' };
         listEl.innerHTML = entries.map(p => {
-          const distStr = p.distanceMi < 0.5 ? 'On-site' : (p.distanceMi < 10 ? p.distanceMi.toFixed(1) + ' mi' : Math.round(p.distanceMi) + ' mi');
-          const loc = [p.city, p.state].filter(Boolean).join(', ');
-          const rowClass = 'iv-row iv-row--' + (typeClass[p.type] || p.type);
-          return '<li class="' + rowClass + '">' +
-            '<span class="iv-dot" aria-hidden="true"></span>' +
-            '<div class="iv-text">' +
-              '<div class="iv-line1">' +
-                '<span class="iv-name">' + (p.name || loc) + '</span>' +
-                '<span class="iv-distance">' + distStr + '</span>' +
-              '</div>' +
-              '<div class="iv-line2">' + loc + '</div>' +
+          const distStr = formatDistance(p.distanceMi);
+          const rawCity = p.city || '';
+          const rawState = p.state || '';
+          const cityState = titleCaseCityState([rawCity, rawState].filter(Boolean).join(', '));
+          const displayName = toTitleCase(p.name || cityState);
+          const tc = typeClass[p.type] || p.type;
+          const chip = chipLabel[p.type] || '';
+          const pinId = p.id ? String(p.id) : '';
+          return '<li class="iv-row iv-row--' + tc + '" data-pin-id="' + pinId + '">' +
+            '<div class="iv-row-main">' +
+              '<span class="iv-name">' + displayName + '</span>' +
+              '<span class="iv-distance">' + distStr + '</span>' +
+            '</div>' +
+            '<div class="iv-row-sub">' +
+              '<span class="iv-chip iv-chip--' + tc + '">' +
+                '<span class="iv-chip-dot" aria-hidden="true"></span>' +
+                '<span class="iv-chip-label">' + chip + '</span>' +
+              '</span>' +
+              '<span class="iv-sep">·</span>' +
+              '<span class="iv-citystate">' + cityState + '</span>' +
             '</div>' +
           '</li>';
         }).join('');
+      }
+
+      // Sort toggle handler (Patch 6)
+      const sortRowEl = document.getElementById('iv-sort-row');
+      if (sortRowEl) {
+        sortRowEl.addEventListener('click', (e) => {
+          const btn = e.target.closest('.iv-sort-btn');
+          if (!btn) return;
+          currentSort = btn.dataset.sort;
+          sortRowEl.querySelectorAll('.iv-sort-btn').forEach(b => b.classList.toggle('iv-sort-btn--active', b === btn));
+          const sorted = [...currentInViewRows].sort(sorters[currentSort]);
+          renderList(sorted, headerEl ? headerEl.textContent : 'IN THIS VIEW');
+        });
       }
 
       function updateInViewList() {
         if (zipMode) return;  // ZIP mode: don't override until user pans/zooms
         const bounds = map.getBounds();
         const center = map.getCenter();
-        const inView = allPins
+        currentInViewRows = allPins
           .filter(p => bounds.contains(L.latLng(p.lat, p.lng)))
           .map(p => ({ ...p, distanceMi: center.distanceTo(L.latLng(p.lat, p.lng)) / 1609.344 }))
           .sort((a, b) => a.distanceMi - b.distanceMi)
           .slice(0, 8);
-        renderList(inView, 'IN THIS VIEW');
+        const sorted = [...currentInViewRows].sort(sorters[currentSort]);
+        renderList(sorted, 'IN THIS VIEW');
       }
 
       // moveend fires after pan or zoom completes; also resets ZIP mode
@@ -2319,11 +2473,12 @@ const verticals = [
           // ZIP mode: show 8 nearest to searched point regardless of viewport
           zipMode = true;
           const center = L.latLng(+lat, +lon);
-          const nearest = allPins
+          currentInViewRows = allPins
             .map(p => ({ ...p, distanceMi: center.distanceTo(L.latLng(p.lat, p.lng)) / 1609.344 }))
             .sort((a, b) => a.distanceMi - b.distanceMi)
             .slice(0, 8);
-          renderList(nearest, 'NEAREST TO ' + q.toUpperCase());
+          const sorted = [...currentInViewRows].sort(sorters[currentSort]);
+          renderList(sorted, 'NEAREST TO ' + q.toUpperCase());
         } catch(e) { console.error('ALG locator search error', e); }
       }
       if (searchBtn) searchBtn.addEventListener('click', doSearch);
@@ -2339,6 +2494,30 @@ const verticals = [
           else { Object.entries(layers).forEach(([k,lg]) => { if (k === f) { if (!map.hasLayer(lg)) lg.addTo(map); } else { if (map.hasLayer(lg)) map.removeLayer(lg); } }); }
         });
       });
+
+      // ── Click row → fly to pin + open popup; hover row → pulse pin (Patch 7) ─────
+      if (listEl) {
+        listEl.addEventListener('mouseover', (e) => {
+          const row = e.target.closest('.iv-row');
+          if (!row) return;
+          const marker = markerByPinId.get(row.dataset.pinId);
+          if (marker) marker.getElement()?.classList.add('iv-marker-hovered');
+        });
+        listEl.addEventListener('mouseout', (e) => {
+          const row = e.target.closest('.iv-row');
+          if (!row) return;
+          const marker = markerByPinId.get(row.dataset.pinId);
+          if (marker) marker.getElement()?.classList.remove('iv-marker-hovered');
+        });
+        listEl.addEventListener('click', (e) => {
+          const row = e.target.closest('.iv-row');
+          if (!row) return;
+          const marker = markerByPinId.get(row.dataset.pinId);
+          if (!marker) return;
+          map.flyTo(marker.getLatLng(), Math.max(map.getZoom(), 9), { duration: 0.6 });
+          marker.openPopup();
+        });
+      }
     };
     document.head.appendChild(script);
   }
