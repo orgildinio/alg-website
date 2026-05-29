@@ -315,9 +315,74 @@ const verticals = [
   </div>
 
   <!-- ==============================================================
+       3b. C.O.R.E. — Four pillars strip
+       ============================================================== -->
+  <section class="core-section" id="core">
+    <div class="core-eyebrow mono">Our four pillars</div>
+    <h2 class="core-title">C.O.R.E.</h2>
+    <p class="core-deck">
+      One company, four disciplines. Lighting solutions engineered for commercial &amp; industrial scale,
+      OEM partnerships, residential &amp; retail markets — all powered by California-based engineering and production.
+    </p>
+
+    <div class="core-grid">
+
+      <!-- C · Commercial & Industrial · anchors to #what-we-make -->
+      <a class="core-panel core-panel--c" href="#what-we-make">
+        <img class="core-media" src="/assets/homepage/core/core_c_commercial.webp"
+             alt="Commercial &amp; Industrial — high-bay warehouse interior at night" loading="lazy">
+        <span class="core-letter">C</span>
+        <div class="core-content">
+          <span class="core-eyebrow-small mono">Pillar 01</span>
+          <h3 class="core-title-small">Commercial &amp; Industrial</h3>
+          <span class="core-cta">Learn more</span>
+        </div>
+      </a>
+
+      <!-- O · OEM · anchors to #oem (same-page, OEM strip inserted below "Trusted by Retail America") -->
+      <a class="core-panel core-panel--o" href="#oem">
+        <img class="core-media" src="/assets/homepage/core/core_o_oem.webp"
+             alt="OEM — assembly line of finished aluminum LED housings" loading="lazy">
+        <span class="core-letter">O</span>
+        <div class="core-content">
+          <span class="core-eyebrow-small mono">Pillar 02</span>
+          <h3 class="core-title-small">OEM</h3>
+          <span class="core-cta">Learn more</span>
+        </div>
+      </a>
+
+      <!-- R · Residential & Retail · external link to consumer collection -->
+      <a class="core-panel core-panel--r" href="/collections/consumer/">
+        <img class="core-media" src="/assets/homepage/core/core_r_residential.webp"
+             alt="Residential &amp; Retail — warm-lit luxury boutique interior at evening" loading="lazy">
+        <span class="core-letter">R</span>
+        <div class="core-content">
+          <span class="core-eyebrow-small mono">Pillar 03</span>
+          <h3 class="core-title-small">Residential &amp; Retail</h3>
+          <span class="core-cta">Learn more</span>
+        </div>
+      </a>
+
+      <!-- E · Engineering & Production · anchors to #free-professional-service -->
+      <a class="core-panel core-panel--e" href="#free-professional-service">
+        <video class="core-media" autoplay muted loop playsinline preload="metadata"
+               aria-label="Factory production: driver insertion">
+          <source src="/assets/homepage/core/02_driver-insertion.mp4" type="video/mp4">
+        </video>
+        <span class="core-letter">E</span>
+        <div class="core-content">
+          <span class="core-eyebrow-small mono">Pillar 04</span>
+          <h3 class="core-title-small">Engineering &amp; Production</h3>
+          <span class="core-cta">Learn more</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+  <!-- ==============================================================
        4. WHAT WE MAKE — Category tease (4 cards)
        ============================================================== -->
-  <section class="content-section" aria-labelledby="wm-heading">
+  <section class="content-section" id="what-we-make" aria-labelledby="wm-heading">
     <div class="section-inner">
       <div class="sec-eyebrow">What we make</div>
       <h2 id="wm-heading" class="sec-title">Built for the bid sheet, the floor, and the <span class="accent">truck.</span></h2>
@@ -513,7 +578,7 @@ const verticals = [
   <!-- ==============================================================
        7. LAYOUT CTA
        ============================================================== -->
-  <section class="layout-cta" aria-labelledby="lc-heading">
+  <section class="layout-cta" id="free-professional-service" aria-labelledby="lc-heading">
     <div class="layout-cta-inner">
       <div>
         <div class="sec-eyebrow">Free professional service</div>
@@ -570,6 +635,60 @@ const verticals = [
        8b. TRUSTED BY RETAIL AMERICA — v2.7.14
        ============================================================== -->
   <HomeRetailProof />
+  <!-- ==============================================================
+       8c. OEM STRIP — Original Design · Original Equipment Manufacturing
+       ============================================================== -->
+  <section class="oem-strip" id="oem">
+
+    <div class="oem-head">
+      <div class="oem-eyebrow mono">Original Design · Original Equipment Manufacturing</div>
+      <h2 class="oem-h1">Beyond the catalog. <span class="oem-h1-accent">See what we can build for you.</span></h2>
+      <p class="oem-deck">
+        Designed in California, assembled in America. Project-specific lighting for civic,
+        hospitality, museum, retail, and historic restoration work — the fixtures the standard
+        product line doesn't cover.
+      </p>
+    </div>
+
+    <div class="oem-grid">
+
+      <div class="oem-panel">
+        <img class="oem-media" src="/assets/homepage/oem/oem_01_workshop.webp"
+             alt="Custom LED sconce in mid-assembly on a workbench with technical drawings" loading="lazy">
+        <div class="oem-panel-content">
+          <div class="oem-panel-num mono">01 / Custom Design</div>
+          <h3 class="oem-panel-title">Architectural one-offs.<br>Sketch to spec.</h3>
+        </div>
+      </div>
+
+      <div class="oem-panel">
+        <img class="oem-media" src="/assets/homepage/oem/oem_02_restoration.webp"
+             alt="Heritage brass theater steplite glowing warmly on dark wood paneling" loading="lazy">
+        <div class="oem-panel-content">
+          <div class="oem-panel-num mono">02 / Restoration</div>
+          <h3 class="oem-panel-title">Period-correct outside.<br>Current-code inside.</h3>
+        </div>
+      </div>
+
+      <div class="oem-panel">
+        <img class="oem-media" src="/assets/homepage/oem/oem_03_install.webp"
+             alt="Restored brass steplite installed in a marble museum gallery" loading="lazy">
+        <div class="oem-panel-content">
+          <div class="oem-panel-num mono">03 / Installed</div>
+          <h3 class="oem-panel-title">Civic. Cultural.<br>Hospitality. Retail.</h3>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="oem-cta">
+      <p class="oem-cta-line">
+        Send drawings, photos, or a description of what the space needs. We respond same business day.
+      </p>
+      <a class="oem-btn-primary" href="/contact?topic=oem">Talk to engineering</a>
+    </div>
+
+  </section>
 
   <!-- ==============================================================
        9. SPLIT TEASERS — Rebate + Specifier
@@ -1731,6 +1850,199 @@ const verticals = [
     .locator-section { padding: 60px 20px; }
     .layout-cta { padding: 60px 20px; }
   }
+
+  /* ============================================================
+     C.O.R.E. SECTION — §A
+     ============================================================ */
+  .core-section {
+    padding: 96px 24px 112px;
+    position: relative;
+    background: #ffffff;
+  }
+  .core-section .core-eyebrow {
+    max-width: 1280px; margin: 0 auto 16px;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--brand-red, #F32740);
+  }
+  .core-section .core-title {
+    max-width: 1280px; margin: 0 auto 12px;
+    font-size: clamp(34px, 4vw, 52px);
+    font-weight: 700; letter-spacing: -0.02em; line-height: 1.05;
+    color: #111111;
+  }
+  .core-section .core-deck {
+    max-width: 760px; margin: 0 auto 56px;
+    font-size: 16px; line-height: 1.6;
+    color: rgba(17,17,17,0.62);
+  }
+  .core-section .core-grid {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
+  }
+  .core-section .core-panel {
+    position: relative; aspect-ratio: 3 / 5; overflow: hidden;
+    background: #0f0f14; isolation: isolate;
+    text-decoration: none; color: inherit;
+    transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .core-section .core-panel:hover { transform: translateY(-4px); }
+  .core-section .core-media {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center; z-index: 0;
+  }
+  .core-section img.core-media {
+    transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .core-section .core-panel:hover img.core-media { transform: scale(1.03); }
+  .core-section .core-panel:hover video.core-media { filter: brightness(1.05); }
+  .core-section .core-panel::before {
+    content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(180deg, rgba(10,10,13,0.40) 0%, rgba(10,10,13,0.72) 60%, rgba(10,10,13,0.96) 100%);
+  }
+  .core-section .core-panel--e::before {
+    background: linear-gradient(180deg, rgba(10,10,13,0.55) 0%, rgba(10,10,13,0.80) 60%, rgba(10,10,13,0.97) 100%);
+  }
+  .core-section .core-letter {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -55%);
+    z-index: 2;
+    font-weight: 900; font-size: clamp(180px, 22vw, 360px); line-height: 1;
+    letter-spacing: -0.04em;
+    mix-blend-mode: screen; user-select: none; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .core-section .core-panel--c .core-letter { color: #ffffff; opacity: 0.42; }
+  .core-section .core-panel--o .core-letter { color: #ffffff; opacity: 0.58; }
+  .core-section .core-panel--r .core-letter { color: #FFB155; opacity: 0.52; }
+  .core-section .core-panel--e .core-letter { color: #7AA8DE; opacity: 0.52; }
+  .core-section .core-panel--c:hover .core-letter { opacity: 0.58; }
+  .core-section .core-panel--o:hover .core-letter { opacity: 0.75; }
+  .core-section .core-panel--r:hover .core-letter { opacity: 0.68; }
+  .core-section .core-panel--e:hover .core-letter { opacity: 0.68; }
+  .core-section .core-content {
+    position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
+    padding: 28px 28px 32px; text-align: left;
+  }
+  .core-section .core-eyebrow-small {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(255,255,255,0.62); margin-bottom: 8px; display: block;
+  }
+  .core-section .core-title-small {
+    font-size: 20px; font-weight: 700; letter-spacing: -0.01em;
+    color: #ffffff; line-height: 1.2; margin-bottom: 18px;
+  }
+  .core-section .core-cta {
+    display: inline-block; padding: 11px 22px;
+    background: var(--brand-red, #F32740); color: white;
+    font-weight: 700; font-size: 12px; letter-spacing: 0.10em; text-transform: uppercase;
+    border-radius: 2px; transition: background 0.15s, transform 0.15s;
+  }
+  .core-section .core-cta:hover { background: var(--brand-red-hover, #d61f35); transform: translateY(-1px); }
+  @media (max-width: 1024px) {
+    .core-section .core-letter { font-size: clamp(160px, 24vw, 280px); }
+  }
+  @media (max-width: 768px) {
+    .core-section { padding: 72px 16px 80px; }
+    .core-section .core-grid { grid-template-columns: repeat(2, 1fr); }
+    .core-section .core-panel { aspect-ratio: 4 / 5; }
+    .core-section .core-letter { font-size: clamp(140px, 32vw, 200px); }
+    .core-section .core-content { padding: 20px 20px 24px; }
+    .core-section .core-title-small { font-size: 17px; margin-bottom: 14px; }
+  }
+  @media (max-width: 480px) {
+    .core-section { padding: 56px 12px 64px; }
+    .core-section .core-grid { grid-template-columns: 1fr; gap: 2px; }
+    .core-section .core-panel { aspect-ratio: 16 / 11; }
+    .core-section .core-letter { font-size: clamp(140px, 38vw, 200px); }
+    .core-section .core-cta { padding: 12px 20px; font-size: 12px; min-height: 44px; }
+    .core-section .core-title { font-size: 28px; }
+  }
+
+  /* ============================================================
+     OEM STRIP — §B
+     ============================================================ */
+  .oem-strip {
+    background: #0a0a0d;
+    color: #ffffff;
+    padding: 96px 24px 112px;
+  }
+  .oem-strip .oem-head { max-width: 1280px; margin: 0 auto 56px; }
+  .oem-strip .oem-eyebrow {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--brand-red, #F32740); margin-bottom: 16px;
+  }
+  .oem-strip .oem-h1 {
+    font-size: clamp(36px, 4.6vw, 64px);
+    font-weight: 900; letter-spacing: -0.025em; line-height: 1.02;
+    margin-bottom: 18px; max-width: 20ch;
+    color: #ffffff;
+  }
+  .oem-strip .oem-h1-accent { color: var(--brand-red, #F32740); }
+  .oem-strip .oem-deck {
+    font-size: clamp(16px, 1.4vw, 19px); line-height: 1.55;
+    color: rgba(255,255,255,0.62); max-width: 64ch;
+  }
+  .oem-strip .oem-grid {
+    max-width: 1440px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+  }
+  .oem-strip .oem-panel {
+    position: relative; aspect-ratio: 3 / 4; overflow: hidden;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.07);
+    isolation: isolate;
+  }
+  .oem-strip .oem-panel::after {
+    content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(180deg, transparent 35%, rgba(10,10,13,0.92) 100%);
+  }
+  .oem-strip .oem-media {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center; z-index: 0;
+    filter: saturate(0.92);
+    transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .oem-strip .oem-panel:hover .oem-media { transform: scale(1.03); }
+  .oem-strip .oem-panel-content {
+    position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+    padding: 26px 24px 28px;
+  }
+  .oem-strip .oem-panel-num {
+    font-size: 10px; color: var(--brand-red, #F32740);
+    letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .oem-strip .oem-panel-title {
+    font-size: 22px; font-weight: 700; letter-spacing: -0.01em;
+    color: #ffffff; line-height: 1.2;
+  }
+  .oem-strip .oem-cta {
+    max-width: 1280px; margin: 56px auto 0;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap;
+  }
+  .oem-strip .oem-cta-line {
+    font-size: 18px; color: rgba(255,255,255,0.82); max-width: 48ch;
+  }
+  .oem-strip .oem-btn-primary {
+    display: inline-block; padding: 14px 28px;
+    background: var(--brand-red, #F32740); color: white;
+    font-weight: 700; font-size: 13px; letter-spacing: 0.10em; text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.15s, transform 0.15s;
+  }
+  .oem-strip .oem-btn-primary:hover {
+    background: var(--brand-red-hover, #d61f35); transform: translateY(-1px);
+  }
+  @media (max-width: 768px) {
+    .oem-strip { padding: 72px 16px 80px; }
+    .oem-strip .oem-grid { grid-template-columns: 1fr; gap: 2px; }
+    .oem-strip .oem-panel { aspect-ratio: 16 / 10; }
+  }
+  @media (max-width: 480px) {
+    .oem-strip { padding: 56px 12px 64px; }
+    .oem-strip .oem-h1 { font-size: 32px; }
+    .oem-strip .oem-btn-primary { min-height: 44px; padding: 12px 20px; }
+  }
+
 </style>
 
 <script>
