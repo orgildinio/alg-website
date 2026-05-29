@@ -472,8 +472,8 @@ const verticals = [
       </div>
       <div class="locator-map-wrap">
         <div id="algLocatorMap" class="locator-map" aria-label="ALG warehouse, sales rep, and distributor locations across the United States" role="application"></div>
-        <div class="loc-sidebar">
-          <div class="loc-legend">
+        <div class="loc-sidebar right-rail">
+          <div class="loc-legend map-key">
             <h4>Map key</h4>
             <div class="legend-row">
               <span class="legend-dot"><span class="dot-vis" style="background:#F32740;"></span>ALG Warehouse</span>
@@ -488,9 +488,9 @@ const verticals = [
               <span class="legend-count">29 locations</span>
             </div>
           </div>
-          <div class="loc-results">
-            <h4 id="loc-results-header" class="loc-results-header">IN THIS VIEW</h4>
-            <div id="loc-results-list" class="loc-results-list"></div>
+          <div class="loc-results in-view-panel">
+            <h4 id="loc-results-header" class="loc-results-header in-view-header">IN THIS VIEW</h4>
+            <ul id="loc-results-list" class="loc-results-list in-view-list"></ul>
           </div>
         </div>
       </div>
@@ -1399,22 +1399,60 @@ const verticals = [
   .locator-map-wrap {
     display: grid;
     grid-template-columns: 1.6fr 1fr;
+    grid-template-rows: 600px;
     gap: 24px;
-    min-height: 440px;
     margin-bottom: 28px;
+    align-items: stretch;
   }
   .locator-map {
-    min-height: 420px;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.10);
     background: rgba(255,255,255,0.02);
   }
-  .locator-map .leaflet-container { border-radius: 12px; }
+  .locator-map .leaflet-container {
+    border-radius: 12px;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+  }
   .loc-sidebar {
     display: flex;
     flex-direction: column;
     gap: 16px;
+  }
+  /* right-rail: fill the fixed 600px row, let in-view-panel scroll */
+  .right-rail {
+    height: 100%;
+    min-height: 0;
+  }
+  .right-rail .map-key {
+    flex-shrink: 0;
+  }
+  .right-rail .in-view-panel {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .in-view-list {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.20) transparent;
+    flex: 1 1 auto;
+    min-height: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .in-view-list::-webkit-scrollbar { width: 4px; }
+  .in-view-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.20);
+    border-radius: 2px;
   }
   .loc-legend, .loc-results {
     background: rgba(255,255,255,0.02);
@@ -1435,12 +1473,21 @@ const verticals = [
   .loc-results-header {
     color: #F32740 !important;
   }
-  .loc-results-empty {
+  .in-view-header {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
-    color: var(--ink3);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #F32740;
+    margin-bottom: 12px;
+  }
+  .loc-results-empty, .iv-empty {
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
     line-height: 1.5;
-    padding: 8px 0;
+    color: rgba(255,255,255,0.55);
+    padding: 16px 0;
+    text-align: left;
   }
   .legend-row {
     display: flex;
@@ -1469,41 +1516,64 @@ const verticals = [
     color: var(--ink3);
     letter-spacing: 0.05em;
   }
-  .result-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+  /* iv-* row styles — IN THIS VIEW list */
+  .iv-row {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    column-gap: 12px;
+    align-items: start;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    transition: background 0.15s ease;
+    cursor: default;
   }
-  .result-row:last-child { border-bottom: none; }
-  .result-kind {
+  .iv-row:last-child { border-bottom: none; }
+  .iv-row:hover { background: rgba(255,255,255,0.025); }
+  .iv-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
+    margin-top: 6px;
     flex-shrink: 0;
   }
-  .result-info {
-    flex: 1;
+  .iv-row--warehouse .iv-dot { background: #F32740; }
+  .iv-row--rep       .iv-dot { background: #FFB300; }
+  .iv-row--distributor .iv-dot { background: #22C55E; }
+  .iv-text { min-width: 0; }
+  .iv-line1 {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    min-width: 0;
   }
-  .result-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: #fff;
-  }
-  .result-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--ink3);
-    letter-spacing: 0.05em;
-  }
-  .result-dist {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+  .iv-name {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
     font-weight: 700;
-    color: var(--brand);
+    color: #ffffff;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .iv-distance {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: #F32740;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .iv-line2 {
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.35;
+    margin-top: 2px;
   }
   .locator-ctas {
     display: flex;
@@ -1842,6 +1912,18 @@ const verticals = [
     .split-teasers { grid-template-columns: 1fr; gap: 40px; }
     .installed-grid { grid-template-columns: repeat(2, 1fr); }
   }
+  @media (max-width: 768px) {
+    .locator-map-wrap {
+      grid-template-columns: 1fr;
+      grid-template-rows: 400px auto;
+    }
+    .right-rail {
+      height: auto;
+    }
+    .in-view-list {
+      overflow-y: visible;
+    }
+  }
   @media (max-width: 600px) {
     .what-we-make { grid-template-columns: 1fr; }
     .diff-inner { grid-template-columns: repeat(2, 1fr); }
@@ -2178,20 +2260,24 @@ const verticals = [
         if (headerEl) headerEl.textContent = header || 'IN THIS VIEW';
         if (!listEl) return;
         if (entries.length === 0) {
-          listEl.innerHTML = '<div class="loc-results-empty">No reps, distributors, or warehouses in this view.<br>Zoom out to see coverage.</div>';
+          listEl.innerHTML = '<li class="iv-empty">No reps, distributors, or warehouses in this view. Zoom out to see coverage.</li>';
           return;
         }
+        const typeClass = { warehouse: 'warehouse', rep: 'rep', dist: 'distributor' };
         listEl.innerHTML = entries.map(p => {
           const distStr = p.distanceMi < 0.5 ? 'On-site' : (p.distanceMi < 10 ? p.distanceMi.toFixed(1) + ' mi' : Math.round(p.distanceMi) + ' mi');
           const loc = [p.city, p.state].filter(Boolean).join(', ');
-          return '<div class="result-row">' +
-            '<span class="result-kind" style="background:' + typeColor[p.type] + ';"></span>' +
-            '<div class="result-info">' +
-              '<span class="result-name">' + (p.name || loc) + '</span>' +
-              '<span class="result-meta">' + loc + (loc ? ' &middot; ' : '') + typeLabel[p.type] + '</span>' +
+          const rowClass = 'iv-row iv-row--' + (typeClass[p.type] || p.type);
+          return '<li class="' + rowClass + '">' +
+            '<span class="iv-dot" aria-hidden="true"></span>' +
+            '<div class="iv-text">' +
+              '<div class="iv-line1">' +
+                '<span class="iv-name">' + (p.name || loc) + '</span>' +
+                '<span class="iv-distance">' + distStr + '</span>' +
+              '</div>' +
+              '<div class="iv-line2">' + loc + '</div>' +
             '</div>' +
-            '<span class="result-dist">' + distStr + '</span>' +
-          '</div>';
+          '</li>';
         }).join('');
       }
 
@@ -2215,6 +2301,8 @@ const verticals = [
 
       // Initial render after data loaded
       updateInViewList();
+      // Ensure Leaflet recalculates after layout is pinned
+      setTimeout(() => map.invalidateSize(), 0);
 
       // ZIP / city / state search — Nominatim geocode then fly to location
       const searchInput = document.querySelector('.loc-search-input');
