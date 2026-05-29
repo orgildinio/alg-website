@@ -10,7 +10,7 @@ const planoarchData = {
   parentVertical: 'Indoor',
   parentSubVertical: 'Commercial',
   name: 'planoⒶRCH',
-  titleAscii: 'PLANOARCH',
+  titleAscii: 'planoARCH',
   headlineLine: 'plano<span class="aa">Ⓐ</span>RCH',
   description: 'Commercial indoor lighting for offices, retail, and healthcare. 15 active families, 125 active SKUs.',
   pillRow: ['DLC PREMIUM', 'TAA AVAILABLE', '5 US WAREHOUSES', '3-DAY DELIVERY', '8 APPLICATIONS'],
@@ -146,7 +146,7 @@ const planoarchData = {
       lineDrawing: null,
     },
   ],
-  featuredHeadline: 'Five flagship families from the planoARCH collection.',
+  featuredHeadline: 'Five flagship families from the planoⒶRCH collection.',
   familiesHeadline: '15 families. One indoor portfolio.',
   familiesSubhead: 'Filter by application, echelon, wattage, CCT, and more.',
   legacy: {
@@ -181,13 +181,6 @@ const planoarchData = {
       vertical: 'Municipal',
       description: 'Street and area lighting for municipal and utility applications.',
       status: 'live' as const,
-    },
-    {
-      slug: 'tubularch',
-      name: 'tubul<span class="aa">Ⓐ</span>RCH',
-      vertical: 'Industrial',
-      description: 'High-bay and low-bay lighting for industrial and warehouse spaces.',
-      status: 'coming-soon' as const,
     },
   ],
 };

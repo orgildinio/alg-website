@@ -6094,46 +6094,6 @@
           "pdpUrl": "/products/spectra/"
         },
         {
-          "family": "proⒶRCH-II",
-          "sub_category": "Panel",
-          "display_echelon": "ECO",
-          "max_wattage": 50,
-          "sku_count": 7,
-          "dlc": true,
-          "ccts": [
-            "3500K",
-            "4000K",
-            "5000K"
-          ],
-          "voltages": [
-            "120 - 277V"
-          ],
-          "mount_types": [],
-          "taa": true
-        },
-        {
-          "family": "proⒶRCH-III",
-          "sub_category": "Panel",
-          "display_echelon": "PRO+",
-          "max_wattage": 72,
-          "sku_count": 13,
-          "dlc": true,
-          "ccts": [
-            "2700K",
-            "3000K",
-            "3500K",
-            "4000K",
-            "5000K",
-            "5700K",
-            "6500K"
-          ],
-          "voltages": [
-            "120 - 277V"
-          ],
-          "mount_types": [],
-          "taa": true
-        },
-        {
           "family": "retroⒶRCH-P1",
           "sub_category": "Retrofit Panel",
           "display_echelon": "PRO",
