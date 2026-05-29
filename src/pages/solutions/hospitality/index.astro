@@ -56,6 +56,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 22px; border-radius: var(--radius); font-family: var(--font-body); font-size: 14px; font-weight: 700; text-decoration: none; transition: background .15s, border-color .15s; }
   .btn--primary { background: var(--brand-red); color: #fff; border: 2px solid var(--brand-red); }
   .btn--primary:hover { background: var(--brand-red-dark); border-color: var(--brand-red-dark); }
+  .btn--ghost {
+    background: transparent;
+    color: var(--text-primary);
+    border: 2px solid var(--line-strong);
+  }
+  .btn--ghost:hover { border-color: var(--text-secondary); }
   .stub-section { padding: 72px 0; border-bottom: 1px solid var(--line); }
   .stub-placeholder { background: var(--bg-card); border: 1px dashed hsl(var(--vert-accent) / 40%); border-radius: var(--radius-lg); padding: 48px; text-align: center; }
   .stub-placeholder__label { font-family: var(--font-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: hsl(var(--vert-accent)); margin-bottom: 12px; }
@@ -78,7 +84,10 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <span class="hero__eyebrow">Vertical Solutions · Hospitality</span>
         <h1 class="hero__title">Hospitality Lighting Solutions</h1>
         <p class="hero__deck">Warm, atmosphere-defining LED systems for lobbies, guestrooms, corridors, and F&amp;B spaces. 2200K–3000K, phase-dim, décor-grade. Full content coming in Phase B.</p>
-        <a href="/contact" class="btn btn--primary">Contact Sales →</a>
+        <div class="hero__cta-row" style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="mailto:sales@archipelagolighting.com?subject=Photometric%20request" class="btn btn--primary">Request a Photometric <span class="arrow">→</span></a>
+          <a href="/spec-packs/ALG_Hospitality_Lighting.pdf" class="btn btn--ghost" target="_blank" rel="noopener" download>Download Spec Pack <span class="arrow">→</span></a>
+        </div>
       </div>
     </section>
     <section class="stub-section"><div class="container"><div class="stub-placeholder"><div class="stub-placeholder__label">Section: Hero Stats</div><div class="stub-placeholder__title">2200K-3000K · Phase-Dim · Décor-Grade</div><div class="stub-placeholder__note">TBD — needs content from ALG_Hospitality_Solutions.html</div></div></div></section>
