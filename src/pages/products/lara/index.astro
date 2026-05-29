@@ -1,0 +1,27 @@
+---
+/**
+ * lara PDP — planoⒶRCH · Astro wrapper
+ * Route: /products/lara/
+ * Bug #1 fix: wraps canonical BaseLayout (Header + MegaMenu + Footer)
+ * Uses readFileSync + set:html to inject raw PDP body without Astro template processing.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+
+// Read the public HTML at build time using process.cwd() (project root)
+const publicHtml = readFileSync(
+  path.join(process.cwd(), 'public/products/lara/index.html'),
+  'utf-8'
+);
+// Extract body content — everything between <body...> and </body>
+const bodyMatch = publicHtml.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+const bodyContent = bodyMatch ? bodyMatch[1] : publicHtml;
+---
+<BaseLayout
+  title="LUXA · LARA — Archipelago Lighting Group"
+  description="LUXA Lara · planoⒶRCH ECO · Architectural Linear · DLC Premium · up to 156 LM/W."
+  bodyClass="lara-pdp"
+>
+  <Fragment set:html={bodyContent} />
+</BaseLayout>

@@ -108,6 +108,8 @@ const planoarchData = {
       skuCount: 27,
       dlc: true,
       lineDrawing: null,
+      pdpUrl: '/products/astra/',
+      cardImage: '/products/astra/assets/hero/fam-astra-1.webp',
     },
     {
       family: 'Luna',
@@ -117,6 +119,8 @@ const planoarchData = {
       skuCount: 5,
       dlc: true,
       lineDrawing: null,
+      pdpUrl: '/products/luna/',
+      cardImage: '/products/luna/assets/hero/luna-hero-1.webp',
     },
     {
       family: 'Luxmark',
@@ -126,6 +130,8 @@ const planoarchData = {
       skuCount: 6,
       dlc: true,
       lineDrawing: null,
+      pdpUrl: '/products/luxmark/',
+      cardImage: '/products/luxmark/assets/hero/fam-luxmark.webp',
     },
     {
       family: 'proARCH-III',
@@ -144,6 +150,8 @@ const planoarchData = {
       skuCount: 4,
       dlc: false,
       lineDrawing: null,
+      pdpUrl: '/products/trackstar/',
+      cardImage: '/products/trackstar/assets/hero/fam-trackstar.webp',
     },
   ],
   featuredHeadline: 'Five flagship families from the planoⒶRCH collection.',

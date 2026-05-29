@@ -1,0 +1,27 @@
+---
+/**
+ * retroarch-t1 PDP — planoⒶRCH · Astro wrapper
+ * Route: /products/retroarch-t1/
+ * Bug #1 fix: wraps canonical BaseLayout (Header + MegaMenu + Footer)
+ * Uses readFileSync + set:html to inject raw PDP body without Astro template processing.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+
+// Read the public HTML at build time using process.cwd() (project root)
+const publicHtml = readFileSync(
+  path.join(process.cwd(), 'public/products/retroarch-t1/index.html'),
+  'utf-8'
+);
+// Extract body content — everything between <body...> and </body>
+const bodyMatch = publicHtml.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+const bodyContent = bodyMatch ? bodyMatch[1] : publicHtml;
+---
+<BaseLayout
+  title="LPVR · retroⒶRCH-T1 — Retrofit Troffer Door Kit · Archipelago Lighting Group"
+  description="LPVR retroⒶRCH-T1 · planoⒶRCH PRO · Retrofit Troffer Door Kit · DLC Premium."
+  bodyClass="retroarch-t1-pdp"
+>
+  <Fragment set:html={bodyContent} />
+</BaseLayout>

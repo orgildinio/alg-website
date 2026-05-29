@@ -8547,6 +8547,15 @@ body { overflow-x: hidden; }
  // Update href to current configurator state immediately before navigation
  ctaPdf.setAttribute('href', buildSubmittalUrl());
  });
+ // Bug #4B — wire §10 docs-card submittal link to configurator state
+ var docsCardSubmittal = document.querySelector('a.docs-card[data-doc="submittal"]');
+ if (docsCardSubmittal) {
+   docsCardSubmittal.addEventListener('click', function(e) {
+     if (typeof buildSubmittalUrl === 'function') {
+       docsCardSubmittal.setAttribute('href', buildSubmittalUrl());
+     }
+   });
+ }
 
  // Initial render
  applyState();

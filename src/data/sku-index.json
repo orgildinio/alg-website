@@ -5988,7 +5988,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/lara/"
+          "pdpUrl": "/products/lara/",
+          "card_image": "/products/lara/assets/hero/lara-4ft-white.webp"
         },
         {
           "family": "Luna",
@@ -6009,7 +6010,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/luna/"
+          "pdpUrl": "/products/luna/",
+          "card_image": "/products/luna/assets/hero/luna-hero-1.webp"
         },
         {
           "family": "Solstice",
@@ -6030,7 +6032,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/solstice/"
+          "pdpUrl": "/products/solstice/",
+          "card_image": "/products/solstice/assets/hero/fam-solstice.webp"
         },
         {
           "family": "Solstice SafeZone",
@@ -6051,7 +6054,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/solstice-safezone/"
+          "pdpUrl": "/products/solstice-safezone/",
+          "card_image": "/products/solstice-safezone/assets/hero/fam-safezone.webp"
         },
         {
           "family": "Astra",
@@ -6072,7 +6076,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/astra/"
+          "pdpUrl": "/products/astra/",
+          "card_image": "/products/astra/assets/hero/fam-astra-1.webp"
         },
         {
           "family": "Spectra",
@@ -6091,7 +6096,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/spectra/"
+          "pdpUrl": "/products/spectra/",
+          "card_image": "/products/spectra/assets/hero/spectra-default.webp"
         },
         {
           "family": "retroⒶRCH-P1",
@@ -6110,7 +6116,8 @@
           ],
           "mount_types": [],
           "taa": true,
-          "pdpUrl": "/products/retroarch-p1/"
+          "pdpUrl": "/products/retroarch-p1/",
+          "card_image": "/products/retroarch-p1/assets/hero/fam-retroarch-p1.webp"
         },
         {
           "family": "retroⒶRCH-T1",
@@ -6129,7 +6136,8 @@
           ],
           "mount_types": [],
           "taa": true,
-          "pdpUrl": "/products/retroarch-t1/"
+          "pdpUrl": "/products/retroarch-t1/",
+          "card_image": "/products/retroarch-p1/assets/hero/fam-retroarch-t1.webp"
         },
         {
           "family": "Trackstar",
@@ -6150,7 +6158,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/trackstar/"
+          "pdpUrl": "/products/trackstar/",
+          "card_image": "/products/trackstar/assets/hero/fam-trackstar.webp"
         },
         {
           "family": "proⒶRCH-T1",
@@ -6169,7 +6178,8 @@
           ],
           "mount_types": [],
           "taa": true,
-          "pdpUrl": "/products/proarch-t/"
+          "pdpUrl": "/products/proarch-t/",
+          "card_image": "/products/proarch-t/assets/hero/fam-proarch-t.webp"
         },
         {
           "family": "proⒶRCH-T2",
@@ -6188,7 +6198,8 @@
           ],
           "mount_types": [],
           "taa": true,
-          "pdpUrl": "/products/proarch-t/"
+          "pdpUrl": "/products/proarch-t/",
+          "card_image": "/products/proarch-t/assets/hero/fam-proarch-t.webp"
         },
         {
           "family": "Luxmark",
@@ -6208,7 +6219,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/luxmark/"
+          "pdpUrl": "/products/luxmark/",
+          "card_image": "/products/luxmark/assets/hero/fam-luxmark.webp"
         },
         {
           "family": "Waymark",
@@ -6228,7 +6240,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "/products/waymark/"
+          "pdpUrl": "/products/waymark/",
+          "card_image": "/products/waymark/assets/hero/fam-waymark.webp"
         }
       ]
     },
