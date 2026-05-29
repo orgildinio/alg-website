@@ -5298,9 +5298,9 @@ body { overflow-x: hidden; }
               Pricing &amp; Availability
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <a href="#" onclick="return false;" title="Submittal coming soon" class="cfg-cta outline disabled" id="cfgCtaPdf" style="cursor:not-allowed;opacity:0.45;">
+            <a href="submittal_template.html" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
-              Submittal Coming Soon
+              Generate Submittal PDF
             </a>
             <a href="/contact/?type=layout" class="cfg-cta outline" id="cfgCtaLayout">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
@@ -5783,18 +5783,6 @@ body { overflow-x: hidden; }
   </div>
 
   <!-- 10C — Final red CTA strip ================================================ -->
-  <div class="closing-cta-strip">
-    <div class="closing-cta-strip-inner">
-      <div class="closing-cta-msg">
-        Need a quote, layout, sample, or rebate match?
-        <strong>We respond same business day.</strong>
-      </div>
-      <div class="closing-cta-buttons">
-        <a href="/contact/" class="closing-cta-btn solid">Contact Sales</a>
-        <a href="/contact/?type=layout" class="closing-cta-btn">Request Layout</a>
-      </div>
-    </div>
-  </div>
 
 </section>
 
@@ -6254,7 +6242,7 @@ body { overflow-x: hidden; }
 // James 2026-05-21 PM: 7 splices · auto-advance every 14s · progress bar across top
 // · dot-row chapter nav below. Click any dot to jump + restart the auto-advance
 // timer. Same DOM contract as Illuminator §3.
-// Splices: //products/proarch-t/assets/motion/0X_*.mp4 (7 files, 960×474, no audio).
+// Splices: /assets/motion/0X_*.mp4 (7 files, 960×474, no audio).
 // =============================================================================
 (function() {
   // 6 splices · in/out chosen against the source's burned-in text boundaries.
@@ -6263,12 +6251,12 @@ body { overflow-x: hidden; }
   // Note: the file still keeps the "07_" filename prefix even though it now renders
   // as the 6th tile — easier than renaming the asset.
   var clips = [
-    { url: '/products/proarch-t/assets/motion/01_smt-workshop.mp4',      tag: 'SMT WORKSHOP',           title: 'Inside the SMT workshop.',             blurb: 'Wide-establish · pick-and-place line · the spine of the workshop.',                          dur: 14000 },
-    { url: '/products/proarch-t/assets/motion/02_driver-insertion.mp4',  tag: 'DRIVER INSERTION',       title: 'Driver insertion · automated.',        blurb: 'Automated through-hole insertion · LED driver components placed at speed.',                  dur: 12000 },
-    { url: '/products/proarch-t/assets/motion/03_conveyor-handoff.mp4',  tag: 'CONVEYOR HANDOFF',       title: 'Conveyor handoff.',                    blurb: 'Driver line feeds the SMT module station · zero-touch transition.',                          dur: 14000 },
-    { url: '/products/proarch-t/assets/motion/04_component-feeders.mp4', tag: 'COMPONENT FEEDERS',      title: 'Component feeders · reels in motion.', blurb: 'Spiral component reels feed the pick-and-place head · zero-downtime swap.',                  dur: 14000 },
-    { url: '/products/proarch-t/assets/motion/05_panel-assembly-1.mp4',  tag: 'PANEL ASSEMBLY',         title: 'Panel assembly line.',                 blurb: 'Wide view of the panel framing station · automated jigs in operation.',                     dur: 14000 },
-    { url: '/products/proarch-t/assets/motion/07_robot-framing.mp4',     tag: 'ROBOT-ASSISTED FRAMING', title: 'Robot-assisted framing.',              blurb: 'Yellow robotic arms join the diffuser to the back-pan · precision the human eye can\'t repeat.', dur: 14000 }
+    { url: 'assets/motion/01_smt-workshop.mp4',      tag: 'SMT WORKSHOP',           title: 'Inside the SMT workshop.',             blurb: 'Wide-establish · pick-and-place line · the spine of the workshop.',                          dur: 14000 },
+    { url: 'assets/motion/02_driver-insertion.mp4',  tag: 'DRIVER INSERTION',       title: 'Driver insertion · automated.',        blurb: 'Automated through-hole insertion · LED driver components placed at speed.',                  dur: 12000 },
+    { url: 'assets/motion/03_conveyor-handoff.mp4',  tag: 'CONVEYOR HANDOFF',       title: 'Conveyor handoff.',                    blurb: 'Driver line feeds the SMT module station · zero-touch transition.',                          dur: 14000 },
+    { url: 'assets/motion/04_component-feeders.mp4', tag: 'COMPONENT FEEDERS',      title: 'Component feeders · reels in motion.', blurb: 'Spiral component reels feed the pick-and-place head · zero-downtime swap.',                  dur: 14000 },
+    { url: 'assets/motion/05_panel-assembly-1.mp4',  tag: 'PANEL ASSEMBLY',         title: 'Panel assembly line.',                 blurb: 'Wide view of the panel framing station · automated jigs in operation.',                     dur: 14000 },
+    { url: 'assets/motion/07_robot-framing.mp4',     tag: 'ROBOT-ASSISTED FRAMING', title: 'Robot-assisted framing.',              blurb: 'Yellow robotic arms join the diffuser to the back-pan · precision the human eye can\'t repeat.', dur: 14000 }
   ];
   var TOTAL = clips.length;
   var TOTAL_PAD = (TOTAL < 10 ? '0' : '') + TOTAL;
@@ -6371,7 +6359,7 @@ body { overflow-x: hidden; }
       title: 'EM08-AMB/48DC · 8W Backup',
       sku: 'EM08-AMB/48DC',
       desc: '8W constant-power emergency LED driver with separate auxiliary-mount battery enclosure. Drives 25–48 VDC LED arrays at constant power for 90 minutes during outage. Optimized for the planoⒶRCH downlight family. Factory or field-installable in damp locations. Universal 100–277 VAC input. LiFePO4 battery chemistry.',
-      datasheet: 'assets/datasheets/em/constant-low-power-em08-amb48dc.pdf',
+      datasheet: 'assets/datasheets/em/constⒶNT | Low-Power | EM08-AMB48DC.pdf',
       specs: [
         ['Output Power',        '8 W · constant power'],
         ['Runtime',             '90 min'],
@@ -6390,7 +6378,7 @@ body { overflow-x: hidden; }
       title: 'EM08-YTB/60DC · 8W · T-Bracket',
       sku: 'EM08-YTB/60DC',
       desc: 'Y-Series T-Bracket 8W emergency LED driver for planoⒶRCH applications. Drives 25–48 VDC LED arrays. Universal 100–347 VAC input — one driver, every building voltage. Specify /XD adder for 120-minute extended runtime (for AHJs requiring extended egress). Factory-install only.',
-      datasheet: 'assets/datasheets/em/constant-low-power-em08-ytb60dc.pdf',
+      datasheet: 'assets/datasheets/em/constⒶNT | Low-Power | EM08-YTB60DC.pdf',
       specs: [
         ['Output Power',        '8 W · constant power'],
         ['Runtime',             '90 min · 120 min (/XD)'],
@@ -6409,7 +6397,7 @@ body { overflow-x: hidden; }
       title: 'EM07-CMB/150DC · ⒶrcticGuard Cold-Pack',
       sku: 'EM07-CMB/150DC/AG',
       desc: '7W constant-power emergency LED driver with cold-rated lithium-ion battery. Universal 100–347 VAC input drives 60–150 VDC LED arrays at full brightness for 90 minutes during outage. IP65 sealed. UL 924 listed for factory AND field installation. Specify the /AG cold-pack variant for −4°F to 140°F operating range — required for freezer, outdoor, and unconditioned-space applications.',
-      datasheet: 'assets/datasheets/em/constant-low-power-em07-cmb150dc-ag.pdf',
+      datasheet: 'assets/datasheets/em/constⒶNT | Low-Power | EM07-CMB150DCAG.pdf',
       specs: [
         ['Output Power',        '7 W · constant power'],
         ['Runtime',             '90 min'],
@@ -7241,7 +7229,7 @@ body { overflow-x: hidden; }
       // Warning + CTAs
       warning.classList.toggle('show', !complete);
       ctaPrice.classList.toggle('disabled', !complete);
-      ctaPdf.classList.add('disabled'); // submittal pending
+      ctaPdf.classList.toggle('disabled', !complete);
       copyBtn.disabled = !complete;
       // Reset copy-button state when SKU changes
       copyBtn.classList.remove('copied');

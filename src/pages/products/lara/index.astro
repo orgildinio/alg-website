@@ -17,7 +17,12 @@ const publicHtml = readFileSync(
 
 // Extract body content
 const bodyMatch = publicHtml.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-const bodyContent = bodyMatch ? bodyMatch[1] : publicHtml;
+const rawBodyContent = bodyMatch ? bodyMatch[1] : publicHtml;
+// Defensive sanitizer: strip any .closing-cta-strip div that leaked in from the mockup
+const bodyContent = rawBodyContent.replace(
+  /(?:[ \t]*<!--[^>]*Final red CTA strip[^>]*-->\s*\n)?[ \t]*<div\s+class="closing-cta-strip"[^>]*>[\s\S]*?<\/div>\s*<\/div>\s*\n/g,
+  ''
+);
 
 // Extract all <style> blocks from <head>
 const headMatch = publicHtml.match(/<head[^>]*>([\s\S]*?)<\/head>/i);

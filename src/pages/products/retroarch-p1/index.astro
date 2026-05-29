@@ -16,7 +16,12 @@ const publicHtml = readFileSync(
 );
 // Extract body content — everything between <body...> and </body>
 const bodyMatch = publicHtml.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-const bodyContent = bodyMatch ? bodyMatch[1] : publicHtml;
+const rawBodyContent = bodyMatch ? bodyMatch[1] : publicHtml;
+// Defensive sanitizer: strip any .closing-cta-strip div that leaked in from the mockup
+const bodyContent = rawBodyContent.replace(
+  /(?:[ \t]*<!--[^>]*Final red CTA strip[^>]*-->\s*\n)?[ \t]*<div\s+class="closing-cta-strip"[^>]*>[\s\S]*?<\/div>\s*<\/div>\s*\n/g,
+  ''
+);
 ---
 <BaseLayout
   title="LBLR · retroⒶRCH-P1 — Retrofit Back-Lit Panel · Archipelago Lighting Group"
