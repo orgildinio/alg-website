@@ -72,7 +72,7 @@ const featured = [
     skuCount: 1,
     dlc: true,
     lineDrawing: null,
-    cardImage: '/products/em20-cmb260dc/assets/em20-cmb-260dc-001_white.png',
+    cardImage: '/products/em20-cmb260dc/assets/em20-cmb260dc_001_white.png',
     cardImageAlt: 'EM20-CMB/260DC emergency driver',
     pdpUrl: '/products/em20-cmb260dc/',
   },
@@ -156,29 +156,50 @@ const relatedCollections = [
 // §D.8: 20 real SKUs (v8 full set)
 const skus = [
   // FACTORY-INSTALL (4)
-  { id: 'sku-em07-cmb-150dc',   tier: 'factory', eyebrow: 'FACTORY · LOW-POWER · PRO',  name: 'EM07-CMB/150DC',    meta: '7W · 150Vdc · low-power CMB',            pdp: '/products/em07-cmb150dc/' },
-  { id: 'sku-em07-cmb-260dc',   tier: 'factory', eyebrow: 'FACTORY · LOW-POWER · PRO',  name: 'EM07-CMB/260DC',    meta: '7W · 90–260Vdc · low-power CMB',         pdp: '/products/em07-cmb260dc/' },
-  { id: 'sku-em08-amb-48dc',    tier: 'factory', eyebrow: 'FACTORY · LOW-POWER · PRO',  name: 'EM08-AMB/48DC',     meta: '8W · 48Vdc · low-power AMB',             pdp: '/products/em08-amb48dc/' },
-  { id: 'sku-em20-cmb-260dc',   tier: 'factory', eyebrow: 'FACTORY · MID-POWER · PRO',  name: 'EM20-CMB/260DC',    meta: '20W · 90–260Vdc · /AG ready',            pdp: '/products/em20-cmb260dc/' },
+  { id: 'sku-em07-cmb-150dc',   tier: 'factory', eyebrow: 'FACTORY · LOW-POWER · PRO',  name: 'EM07-CMB/150DC',    meta: '7W · 150Vdc · low-power CMB',            pdp: '/products/em07-cmb150dc/' ,
+    photo: '/products/em07-cmb150dc/assets/em07-cmb150dc_001_white.png', output: 'dc', family: 'multifamily', adder: '' },
+  { id: 'sku-em07-cmb-260dc',   tier: 'factory', eyebrow: 'FACTORY · LOW-POWER · PRO',  name: 'EM07-CMB/260DC',    meta: '7W · 90–260Vdc · low-power CMB',         pdp: '/products/em07-cmb260dc/' ,
+    photo: '/products/em07-cmb260dc/assets/em07-cmb260dc_001_white.png', output: 'dc', family: 'multifamily', adder: 'ag' },
+  { id: 'sku-em08-amb-48dc',    tier: 'factory', eyebrow: 'FACTORY · LOW-POWER · PRO',  name: 'EM08-AMB/48DC',     meta: '8W · 48Vdc · low-power AMB',             pdp: '/products/em08-amb48dc/' ,
+    photo: '/products/em08-amb48dc/assets/em08-amb48dc_001_white.png', output: 'dc', family: 'cityarch', adder: '' },
+  { id: 'sku-em20-cmb-260dc',   tier: 'factory', eyebrow: 'FACTORY · MID-POWER · PRO',  name: 'EM20-CMB/260DC',    meta: '20W · 90–260Vdc · /AG ready',            pdp: '/products/em20-cmb260dc/' ,
+    photo: '/products/em20-cmb260dc/assets/em20-cmb260dc_001_white.png', output: 'dc', family: 'universal', adder: '' },
   // FIELD-INSTALL (10)
-  { id: 'sku-em08-hmb-170dc',   tier: 'field',   eyebrow: 'FIELD · LOW-POWER · PRO',    name: 'EM08-HMB/170DC',    meta: '8W · 170Vdc · low-power HMB',            pdp: '/products/em08-hmb170dc/' },
-  { id: 'sku-em08-mt-150dc',    tier: 'field',   eyebrow: 'FIELD · LOW-POWER · PRO',    name: 'EM08-MT/150DC',     meta: '8W · 150Vdc · low-power MT',             pdp: '/products/em08-mt150dc/' },
-  { id: 'sku-em08-ytb-60dc',    tier: 'field',   eyebrow: 'FIELD · LOW-POWER · PRO',    name: 'EM08-YTB/60DC',     meta: '8W · 60Vdc · low-power YTB',             pdp: '/products/em08-ytb60dc/' },
-  { id: 'sku-em15-hmb-170dc',   tier: 'field',   eyebrow: 'FIELD · MID-POWER · PRO',    name: 'EM15-HMB/170DC',    meta: '15W · 170Vdc · mid-power HMB',           pdp: '/products/em15-hmb170dc/' },
-  { id: 'sku-em15-pmb-120ac',   tier: 'field',   eyebrow: 'FIELD · MID-POWER · PRO',    name: 'EM15-PMB/120AC',    meta: '15W · 120Vac · /CL ready',               pdp: '/products/em15-pmb120ac/' },
-  { id: 'sku-em20-hmb-135ac',   tier: 'field',   eyebrow: 'FIELD · MID-POWER · PRO',    name: 'EM20-HMB/135AC',    meta: '20W · 135Vac · tubular AC-output',        pdp: '/products/em20-hmb135ac/' },
-  { id: 'sku-em25-hmb-170dc',   tier: 'field',   eyebrow: 'FIELD · MID-POWER · PRO',    name: 'EM25-HMB/170DC',    meta: '25W · 170Vdc · mid-power HMB',           pdp: '/products/em25-hmb170dc/' },
-  { id: 'sku-em25-pmb-120ac',   tier: 'field',   eyebrow: 'FIELD · MID-POWER · PRO',    name: 'EM25-PMB/120AC',    meta: '25W · 120Vac · /CL ready',               pdp: '/products/em25-pmb120ac/' },
-  { id: 'sku-em30-umb-170dc',   tier: 'field',   eyebrow: 'FIELD · HIGH-POWER · PRO',   name: 'EM30-UMB/170DC',    meta: '30W · 170Vdc · external /U chassis',     pdp: '/products/em30-umb170dc/' },
-  { id: 'sku-em40-rmb-170dc',   tier: 'field',   eyebrow: 'FIELD · HIGH-POWER · PRO',   name: 'EM40-RMB/170DC',    meta: '40W · 170Vdc · /CL ready · lamparⒶRCH', pdp: '/products/em40-rmb170dc/' },
-  { id: 'sku-em60-gmb-170dc',   tier: 'field',   eyebrow: 'FIELD · HIGH-POWER · PRO',   name: 'EM60-GMB/170DC',    meta: '60W · 170Vdc · lamparⒶRCH high-bay',    pdp: '/products/em60-gmb170dc/' },
-  { id: 'sku-em60-umb-170dc',   tier: 'field',   eyebrow: 'FIELD · HIGH-POWER · PRO',   name: 'EM60-UMB/170DC',    meta: '60W · 170Vdc · external /U · warehouse', pdp: '/products/em60-umb170dc/' },
+  { id: 'sku-em08-hmb-170dc',   tier: 'field',   eyebrow: 'FIELD · LOW-POWER · PRO',    name: 'EM08-HMB/170DC',    meta: '8W · 170Vdc · low-power HMB',            pdp: '/products/em08-hmb170dc/' ,
+    photo: '/products/em08-hmb170dc/assets/em08-hmb170dc_001_white.png', output: 'dc', family: 'planoarch', adder: '' },
+  { id: 'sku-em08-mt-150dc',    tier: 'field',   eyebrow: 'FIELD · LOW-POWER · PRO',    name: 'EM08-MT/150DC',     meta: '8W · 150Vdc · low-power MT',             pdp: '/products/em08-mt150dc/' ,
+    photo: '/products/em08-mt150dc/assets/em08-mt150dc_001_white.png', output: 'dc', family: 'multifamily', adder: '' },
+  { id: 'sku-em08-ytb-60dc',    tier: 'field',   eyebrow: 'FIELD · LOW-POWER · PRO',    name: 'EM08-YTB/60DC',     meta: '8W · 60Vdc · low-power YTB',             pdp: '/products/em08-ytb60dc/' ,
+    photo: '/products/em08-ytb60dc/assets/em08-ytb60dc_001_white.png', output: 'dc', family: 'multifamily', adder: '' },
+  { id: 'sku-em15-hmb-170dc',   tier: 'field',   eyebrow: 'FIELD · MID-POWER · PRO',    name: 'EM15-HMB/170DC',    meta: '15W · 170Vdc · mid-power HMB',           pdp: '/products/em15-hmb170dc/' ,
+    photo: '/products/em15-hmb170dc/assets/em15-hmb170dc_001_white.png', output: 'dc', family: 'planoarch', adder: '' },
+  { id: 'sku-em15-pmb-120ac',   tier: 'field',   eyebrow: 'FIELD · MID-POWER · PRO',    name: 'EM15-PMB/120AC',    meta: '15W · 120Vac · /CL ready',               pdp: '/products/em15-pmb120ac/' ,
+    photo: '/products/em15-pmb120ac/assets/em15-pmb-120ac-001_white.png', output: 'ac', family: 'lamparch', adder: 'cl' },
+  { id: 'sku-em20-hmb-135ac',   tier: 'field',   eyebrow: 'FIELD · MID-POWER · PRO',    name: 'EM20-HMB/135AC',    meta: '20W · 135Vac · tubular AC-output',        pdp: '/products/em20-hmb135ac/' ,
+    photo: '/products/em20-hmb135ac/assets/em20-hmb-135ac-001_white.png', output: 'ac', family: 'luxoarch', adder: 'cl' },
+  { id: 'sku-em25-hmb-170dc',   tier: 'field',   eyebrow: 'FIELD · MID-POWER · PRO',    name: 'EM25-HMB/170DC',    meta: '25W · 170Vdc · mid-power HMB',           pdp: '/products/em25-hmb170dc/' ,
+    photo: '/products/em25-hmb170dc/assets/em25-hmb170dc_001_white.png', output: 'dc', family: 'lamparch', adder: '' },
+  { id: 'sku-em25-pmb-120ac',   tier: 'field',   eyebrow: 'FIELD · MID-POWER · PRO',    name: 'EM25-PMB/120AC',    meta: '25W · 120Vac · /CL ready',               pdp: '/products/em25-pmb120ac/' ,
+    photo: '/products/em25-pmb120ac/assets/em25-pmb-120ac-001_white.png', output: 'ac', family: 'lamparch', adder: 'cl' },
+  { id: 'sku-em30-umb-170dc',   tier: 'field',   eyebrow: 'FIELD · HIGH-POWER · PRO',   name: 'EM30-UMB/170DC',    meta: '30W · 170Vdc · external /U chassis',     pdp: '/products/em30-umb170dc/' ,
+    photo: '/products/em30-umb170dc/assets/em30-umb170dc_001_white.png', output: 'dc', family: 'universal', adder: '' },
+  { id: 'sku-em40-rmb-170dc',   tier: 'field',   eyebrow: 'FIELD · HIGH-POWER · PRO',   name: 'EM40-RMB/170DC',    meta: '40W · 170Vdc · /CL ready · lamparⒶRCH', pdp: '/products/em40-rmb170dc/' ,
+    photo: '/products/em40-rmb170dc/assets/em40-rmb170dc_001_white.png', output: 'dc', family: 'lamparch', adder: 'cl' },
+  { id: 'sku-em60-gmb-170dc',   tier: 'field',   eyebrow: 'FIELD · HIGH-POWER · PRO',   name: 'EM60-GMB/170DC',    meta: '60W · 170Vdc · lamparⒶRCH high-bay',    pdp: '/products/em60-gmb170dc/' ,
+    photo: '/products/em60-gmb170dc/assets/em60-gmb170dc_001_white.png', output: 'dc', family: 'lamparch', adder: '' },
+  { id: 'sku-em60-umb-170dc',   tier: 'field',   eyebrow: 'FIELD · HIGH-POWER · PRO',   name: 'EM60-UMB/170DC',    meta: '60W · 170Vdc · external /U · warehouse', pdp: '/products/em60-umb170dc/' ,
+    photo: '/products/em60-umb170dc/assets/em60-umb170dc_001_white.png', output: 'dc', family: 'universal', adder: '' },
   // QUICK-INSTALL (6)
-  { id: 'sku-em20-cmb-150dc',   tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'EM20-CMB/150DC',    meta: '20W · 150Vdc · J-Box CMB',               pdp: '/products/em20-cmb150dc/' },
-  { id: 'sku-em20-cmb-260dc-q', tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'EM20-CMB/260DC',    meta: '20W · 90–260Vdc · J-Box CMB /AG',        pdp: '/products/em20-cmb260dc/' },
-  { id: 'sku-crcu-em24-jbm',    tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'CRCU-EM24/JBM',     meta: '24W · 190Vdc · J-Box mount',             pdp: '/products/crcu-em24-jbm/' },
-  { id: 'sku-crc6-em24-jbs-b',  tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'CRC6-EM24/JBS/B',   meta: '24W · 190Vdc · black · J-Box surface',   pdp: '/products/crc6-em24-jbs-b/' },
-  { id: 'sku-crc6-em24-jbs-w',  tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'CRC6-EM24/JBS/W',   meta: '24W · 190Vdc · white · J-Box surface',   pdp: '/products/crc6-em24-jbs-w/' },
+  { id: 'sku-em20-cmb-150dc',   tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'EM20-CMB/150DC',    meta: '20W · 150Vdc · J-Box CMB',               pdp: '/products/em20-cmb150dc/' ,
+    photo: '/products/em20-cmb150dc/assets/em20-cmb150dc_001_white.png', output: 'dc', family: 'universal', adder: '' },
+  { id: 'sku-em20-cmb-260dc-q', tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'EM20-CMB/260DC',    meta: '20W · 90–260Vdc · J-Box CMB /AG',        pdp: '/products/em20-cmb260dc/' ,
+    photo: '/products/em20-cmb260dc/assets/em20-cmb260dc_001_white.png', output: 'dc', family: 'universal', adder: 'ag' },
+  { id: 'sku-crcu-em24-jbm',    tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'CRCU-EM24/JBM',     meta: '24W · 190Vdc · J-Box mount',             pdp: '/products/crcu-em24-jbm/' ,
+    photo: '/products/crcu-em24-jbm/assets/crcu-em24-jbm_001_white.png', output: 'dc', family: 'universal', adder: '' },
+  { id: 'sku-crc6-em24-jbs-b',  tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'CRC6-EM24/JBS/B',   meta: '24W · 190Vdc · black · J-Box surface',   pdp: '/products/crc6-em24-jbs-b/' ,
+    photo: '/products/crc6-em24-jbs-b/assets/crc6-em24-jbs-b_001_white.png', output: 'dc', family: 'luxoarch', adder: '' },
+  { id: 'sku-crc6-em24-jbs-w',  tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'CRC6-EM24/JBS/W',   meta: '24W · 190Vdc · white · J-Box surface',   pdp: '/products/crc6-em24-jbs-w/' ,
+    photo: '/products/crc6-em24-jbs-w/assets/crc6-em24-jbs-w_001_white.png', output: 'dc', family: 'luxoarch', adder: '' },
 ];
 ---
 <BaseLayout
@@ -425,6 +446,9 @@ const skus = [
                 id={sku.id}
                 data-tier={sku.tier}
                 data-sku={sku.name}
+                data-output={sku.output}
+                data-family={sku.family}
+                data-adder={sku.adder}
               >
                 <div class="fc-top">
                   <span class="fc-subcat">{sku.eyebrow}</span>
@@ -432,7 +456,7 @@ const skus = [
                 </div>
                 <div class="fc-img">
                   <img
-                    src={`/products/${sku.id.replace('sku-','').replace(/-q$/,'').replace(/-/g,'').replace(/\//g,'')}/assets/${sku.id.replace('sku-','').replace(/-q$/,'')}-001_white.png`}
+                    src={sku.photo}
                     alt={sku.name}
                     loading="lazy"
                     style="max-width:100%;max-height:100%;object-fit:contain;opacity:0.85;"
@@ -1319,22 +1343,27 @@ const skus = [
     }
 
     function cardMatches(card: Element): boolean {
-      const tier = (card as HTMLElement).dataset.tier ?? '';
-      const sku = (card as HTMLElement).dataset.sku ?? '';
+      const el = card as HTMLElement;
+      const tier = el.dataset.tier ?? '';
+      const sku = el.dataset.sku ?? '';
+      const output = el.dataset.output ?? '';
+      const family = el.dataset.family ?? '';
+      const adder = el.dataset.adder ?? '';
       const metaEl = card.querySelector('.fc-watt');
       const meta = metaEl?.textContent ?? '';
 
       if (active.tier.size > 0 && !active.tier.has(tier)) return false;
       if (active.power.size > 0 && !active.power.has(getPowerClass(meta))) return false;
       if (active.adder.size > 0) {
-        const skuAdders = getAdders(sku);
+        const skuAdders = adder ? adder.split(',').filter(Boolean) : getAdders(sku);
         if (!Array.from(active.adder).some(a => skuAdders.includes(a))) return false;
       }
-      if (active.output.size > 0 && !active.output.has(getOutput(meta))) return false;
+      if (active.output.size > 0 && !active.output.has(output || getOutput(meta))) return false;
+      if (active.family.size > 0 && !active.family.has(family)) return false;
       // Wattage slider
       const wm = meta.match(/(\d+)W/);
       if (wm && parseInt(wm[1]) > activeMaxWatt) return false;
-      // Vertical, family, cert, baa — informational filters (all SKUs match all)
+      // Vertical, cert, baa — informational filters (all SKUs match all)
       return true;
     }
 

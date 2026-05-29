@@ -1,0 +1,81 @@
+---
+/**
+ * em15-hmb170dc PDP — constⒶNT · Astro wrapper
+ * Route: /products/em15-hmb170dc/
+ *
+ * CFG-CHROME-1: BaseLayout injects site header + footer.
+ * CFG-TYPE-1: Lato + JetBrains Mono pinned via head slot style blocks.
+ * §D.1: 5-segment canonical breadcrumb injected before React app body.
+ * §D.4: SiteLayout chrome restored (was missing on all EM/CRC routes).
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+const publicHtml = readFileSync(
+  path.join(process.cwd(), 'public/products/em15-hmb170dc/index.html'),
+  'utf-8'
+);
+// Extract body content
+const bodyMatch = publicHtml.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+const bodyContent = bodyMatch ? bodyMatch[1] : publicHtml;
+// Extract all <style> blocks from <head>
+const headMatch = publicHtml.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
+const headContent = headMatch ? headMatch[1] : '';
+const styleBlocks = [...headContent.matchAll(/<style[^>]*>[\s\S]*?<\/style>/gi)]
+  .map(m => m[0]).join('\n');
+// Extract Google Fonts link tags
+const fontLinks = [...headContent.matchAll(/<link[^>]*fonts\.googleapis\.com[^>]*>/gi)]
+  .map(m => m[0]).join('\n');
+const fontPreconnects = [...headContent.matchAll(/<link[^>]*rel="preconnect"[^>]*>/gi)]
+  .map(m => m[0]).join('\n');
+---
+<BaseLayout
+  title="constⒶNT EM15-HMB/170DC · Mid-Power Field-Install Emergency Driver · Archipelago Lighting Group"
+  description="Mid-power 15W HMB emergency driver. Field-install. 170Vdc output. planoⒶRCH compatible. UL 924 listed."
+  bodyClass="em15-hmb170dc-pdp"
+>
+  <Fragment slot="head">
+    <Fragment set:html={fontPreconnects} />
+    <Fragment set:html={fontLinks} />
+    <Fragment set:html={styleBlocks} />
+  <style>
+    /* §D.1 breadcrumb-band — constⒶNT EM-driver PDPs */
+    .breadcrumb-band {
+      padding: 10px 32px;
+      font-family: 'JetBrains Mono', monospace !important;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: #666;
+      background: var(--bg2, #f5f5f3);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .breadcrumb-band a { color: #666; text-decoration: none; }
+    .breadcrumb-band a:hover { color: var(--color-alg-red, #F32740); }
+    .bc-sep { color: #c8ccd3; }
+    .bc-current { color: #000; font-weight: 600; }
+    .bc-current .aa { color: var(--color-alg-red, #F32740); }
+    .aa { color: var(--color-alg-red, #F32740); }
+  </style>
+  </Fragment>
+  <!-- §D.1 · 5-segment canonical breadcrumb -->
+  <div class="breadcrumb-band">
+    <a href="/">HOME</a>
+    <span class="bc-sep">›</span>
+    <a href="/collections">PRODUCTS</a>
+    <span class="bc-sep">›</span>
+    <a href="/solutions/safety-controls/">SAFETY &amp; CONTROLS</a>
+    <span class="bc-sep">›</span>
+    <a href="/collections/constant/">CONST<span class="aa">Ⓐ</span>NT</a>
+    <span class="bc-sep">›</span>
+    <span class="bc-current">EM15-HMB/170DC</span>
+  </div>
+  <div class="em15-hmb170dc-pdp">
+    <Fragment set:html={bodyContent} />
+  </div>
+</BaseLayout>
