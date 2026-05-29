@@ -28,7 +28,7 @@ const { collectionName, collectionSlug, featured, featuredHeadline } = Astro.pro
   <div class="collection-content">
     <div class="feat-eyebrow">Featured Families</div>
     <div class="feat-header">
-      <h2 class="feat-headline">{featuredHeadline ?? `Four flagship families from the ${collectionName} collection.`}</h2>
+      <h2 class="feat-headline" set:html={featuredHeadline ?? `Four flagship families from the ${collectionName} collection.`}></h2>
     </div>
     <div class="feat-grid">
       {featured.map(f => (
