@@ -318,8 +318,7 @@ const verticals = [
        3b. C.O.R.E. — Four pillars strip
        ============================================================== -->
   <section class="core-section" id="core">
-    <div class="core-eyebrow mono">Our four pillars</div>
-    <h2 class="core-title">C.O.R.E.</h2>
+    <div class="sec-eyebrow">Our four pillars</div>
     <p class="core-deck">
       One company, four disciplines. Lighting solutions engineered for commercial &amp; industrial scale,
       OEM partnerships, residential &amp; retail markets — all powered by California-based engineering and production.
@@ -641,8 +640,8 @@ const verticals = [
   <section class="oem-strip" id="oem">
 
     <div class="oem-head">
-      <div class="oem-eyebrow mono">Original Design · Original Equipment Manufacturing</div>
-      <h2 class="oem-h1">Beyond the catalog. <span class="oem-h1-accent">See what we can build for you.</span></h2>
+      <div class="sec-eyebrow">Original Design · Original Equipment Manufacturing</div>
+      <h2 class="sec-title">Beyond the catalog. <span class="oem-h1-accent">See what we can build for you.</span></h2>
       <p class="oem-deck">
         Designed in California, assembled in America. Project-specific lighting for civic,
         hospitality, museum, retail, and historic restoration work — the fixtures the standard
@@ -1855,28 +1854,19 @@ const verticals = [
      C.O.R.E. SECTION — §A
      ============================================================ */
   .core-section {
-    padding: 96px 24px 112px;
+    padding: 96px 0 32px;
     position: relative;
     background: #ffffff;
   }
-  .core-section .core-eyebrow {
-    max-width: 1280px; margin: 0 auto 16px;
-    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--brand-red, #F32740);
-  }
-  .core-section .core-title {
-    max-width: 1280px; margin: 0 auto 12px;
-    font-size: clamp(34px, 4vw, 52px);
-    font-weight: 700; letter-spacing: -0.02em; line-height: 1.05;
-    color: #111111;
-  }
+  .core-section .sec-eyebrow { padding-left: 24px; padding-right: 24px; }
   .core-section .core-deck {
     max-width: 760px; margin: 0 auto 56px;
     font-size: 16px; line-height: 1.6;
     color: rgba(17,17,17,0.62);
+  padding: 0 24px;
   }
   .core-section .core-grid {
-    max-width: 1440px; margin: 0 auto;
+    max-width: none; margin: 0;
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
   }
   .core-section .core-panel {
@@ -1905,7 +1895,7 @@ const verticals = [
   .core-section .core-letter {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -55%);
     z-index: 2;
-    font-weight: 900; font-size: clamp(180px, 22vw, 360px); line-height: 1;
+    font-weight: 900; font-size: clamp(180px, 22vw, 520px); line-height: 1;
     letter-spacing: -0.04em;
     mix-blend-mode: screen; user-select: none; pointer-events: none;
     transition: opacity 0.3s ease;
@@ -1938,10 +1928,10 @@ const verticals = [
   }
   .core-section .core-cta:hover { background: var(--brand-red-hover, #d61f35); transform: translateY(-1px); }
   @media (max-width: 1024px) {
-    .core-section .core-letter { font-size: clamp(160px, 24vw, 280px); }
+    .core-section .core-letter { font-size: clamp(160px, 24vw, 380px); }
   }
   @media (max-width: 768px) {
-    .core-section { padding: 72px 16px 80px; }
+    .core-section { padding: 72px 0 24px; }
     .core-section .core-grid { grid-template-columns: repeat(2, 1fr); }
     .core-section .core-panel { aspect-ratio: 4 / 5; }
     .core-section .core-letter { font-size: clamp(140px, 32vw, 200px); }
@@ -1949,12 +1939,11 @@ const verticals = [
     .core-section .core-title-small { font-size: 17px; margin-bottom: 14px; }
   }
   @media (max-width: 480px) {
-    .core-section { padding: 56px 12px 64px; }
+    .core-section { padding: 56px 0 16px; }
     .core-section .core-grid { grid-template-columns: 1fr; gap: 2px; }
     .core-section .core-panel { aspect-ratio: 16 / 11; }
     .core-section .core-letter { font-size: clamp(140px, 38vw, 200px); }
     .core-section .core-cta { padding: 12px 20px; font-size: 12px; min-height: 44px; }
-    .core-section .core-title { font-size: 28px; }
   }
 
   /* ============================================================
@@ -1966,17 +1955,8 @@ const verticals = [
     padding: 96px 24px 112px;
   }
   .oem-strip .oem-head { max-width: 1280px; margin: 0 auto 56px; }
-  .oem-strip .oem-eyebrow {
-    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--brand-red, #F32740); margin-bottom: 16px;
-  }
-  .oem-strip .oem-h1 {
-    font-size: clamp(36px, 4.6vw, 64px);
-    font-weight: 900; letter-spacing: -0.025em; line-height: 1.02;
-    margin-bottom: 18px; max-width: 20ch;
-    color: #ffffff;
-  }
-  .oem-strip .oem-h1-accent { color: var(--brand-red, #F32740); }
+  .oem-strip .sec-title { color: #ffffff; max-width: 20ch; }
+  .oem-strip .sec-title .oem-h1-accent { color: var(--brand-red, #F32740); }
   .oem-strip .oem-deck {
     font-size: clamp(16px, 1.4vw, 19px); line-height: 1.55;
     color: rgba(255,255,255,0.62); max-width: 64ch;
