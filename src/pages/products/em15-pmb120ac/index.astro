@@ -15,13 +15,15 @@ const publicHtml = readFileSync(
   path.join(process.cwd(), 'public/products/em15-pmb120ac/index.html'),
   'utf-8'
 );
-// Extract body content
+// Extract body content (data + JSX render scripts)
 const bodyMatch = publicHtml.match(/<body[^>]*>([\s\S]*)<\/body>/i);
 const bodyContent = bodyMatch ? bodyMatch[1] : publicHtml;
-// Extract all <style> blocks from <head>
+// Extract all <style> and <script> blocks from <head>
 const headMatch = publicHtml.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
 const headContent = headMatch ? headMatch[1] : '';
 const styleBlocks = [...headContent.matchAll(/<style[^>]*>[\s\S]*?<\/style>/gi)]
+  .map(m => m[0]).join('\n');
+const scriptBlocks = [...headContent.matchAll(/<script[^>]*>[\s\S]*?<\/script>/gi)]
   .map(m => m[0]).join('\n');
 // Extract Google Fonts link tags
 const fontLinks = [...headContent.matchAll(/<link[^>]*fonts\.googleapis\.com[^>]*>/gi)]
@@ -31,13 +33,14 @@ const fontPreconnects = [...headContent.matchAll(/<link[^>]*rel="preconnect"[^>]
 ---
 <BaseLayout
   title="constⒶNT EM15-PMB/120AC · Mid-Power Field-Install Emergency Driver · Archipelago Lighting Group"
-  description="Mid-power 15W PMB emergency driver. Field-install. 120Vac output. /CL networked-test ready. lamparⒶRCH compatible. UL 924 listed."
+  description="Mid-power 15W PMB emergency driver. Field-install. 120Vac output. /CL constANTLink ready. UL 924 listed."
   bodyClass="em15-pmb120ac-pdp"
 >
   <Fragment slot="head">
     <Fragment set:html={fontPreconnects} />
     <Fragment set:html={fontLinks} />
     <Fragment set:html={styleBlocks} />
+    <Fragment set:html={scriptBlocks} />
   <style>
     /* §D.1 breadcrumb-band — constⒶNT EM-driver PDPs */
     .breadcrumb-band {
@@ -61,7 +64,6 @@ const fontPreconnects = [...headContent.matchAll(/<link[^>]*rel="preconnect"[^>]
     .bc-current { color: #000; font-weight: 600; }
     .bc-current .aa { color: var(--color-alg-red, #F32740); }
     .aa { color: var(--color-alg-red, #F32740); }
-
     /* §D.6 CFG-TYPE-1 · Lato + JetBrains Mono pin — defeat Shopify/Cormorant cascade */
     .em15-pmb120ac-pdp h1,
     .em15-pmb120ac-pdp h2,
