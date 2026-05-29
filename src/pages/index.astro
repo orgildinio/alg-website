@@ -489,27 +489,8 @@ const verticals = [
             </div>
           </div>
           <div class="loc-results">
-            <h4>Nearest to 91761</h4>
-            <div class="result-row">
-              <span class="result-kind" style="background:#F32740;"></span>
-              <div class="result-info"><span class="result-name">Montclair, CA</span><span class="result-meta">West Coast HQ &middot; Warehouse</span></div>
-              <span class="result-dist">On-site</span>
-            </div>
-            <div class="result-row">
-              <span class="result-kind" style="background:#f0a932;"></span>
-              <div class="result-info"><span class="result-name">Pacific Lighting Rep</span><span class="result-meta">Southern California territory</span></div>
-              <span class="result-dist">8 mi</span>
-            </div>
-            <div class="result-row">
-              <span class="result-kind" style="background:#0FAE7C;"></span>
-              <div class="result-info"><span class="result-name">Ontario Electric Supply</span><span class="result-meta">Stocking distributor</span></div>
-              <span class="result-dist">3 mi</span>
-            </div>
-            <div class="result-row">
-              <span class="result-kind" style="background:#0FAE7C;"></span>
-              <div class="result-info"><span class="result-name">Inland Lighting Dist.</span><span class="result-meta">Stocking distributor</span></div>
-              <span class="result-dist">12 mi</span>
-            </div>
+            <h4 id="loc-results-header" class="loc-results-header">IN THIS VIEW</h4>
+            <div id="loc-results-list" class="loc-results-list"></div>
           </div>
         </div>
       </div>
@@ -1451,6 +1432,16 @@ const verticals = [
     font-weight: 700;
     margin-bottom: 14px;
   }
+  .loc-results-header {
+    color: #F32740 !important;
+  }
+  .loc-results-empty {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink3);
+    line-height: 1.5;
+    padding: 8px 0;
+  }
   .legend-row {
     display: flex;
     justify-content: space-between;
@@ -2144,17 +2135,111 @@ const verticals = [
       // Layer groups for filter pills
       const layers = { warehouse: L.layerGroup(), rep: L.layerGroup(), dist: L.layerGroup() };
 
+      // All pins flat array for IN THIS VIEW list
+      const allPins = [];
+
+      // Layer color map for result dots
+      const typeColor = { warehouse: '#F32740', rep: '#f0a932', dist: '#0FAE7C' };
+      const typeLabel = { warehouse: 'ALG Warehouse', rep: 'Sales Rep', dist: 'Stocking Distributor' };
+
       // Load data
       try {
         const res = await fetch('/data/local_support.json');
         const data = await res.json();
-        data.warehouses.forEach(r => { if (r.lat && r.lon) L.marker([r.lat, r.lon], { icon: iconWh }).bindPopup(popup(r,'warehouse')).addTo(layers.warehouse); });
-        data.sales_reps.forEach(r => { if (r.lat && r.lon) L.marker([r.lat, r.lon], { icon: iconRep }).bindPopup(popup(r,'rep')).addTo(layers.rep); });
-        data.distributors.forEach(r => { if (r.lat && r.lon) L.marker([r.lat, r.lon], { icon: iconDist }).bindPopup(popup(r,'dist')).addTo(layers.dist); });
+        data.warehouses.forEach(r => {
+          if (r.lat && r.lon) {
+            L.marker([r.lat, r.lon], { icon: iconWh }).bindPopup(popup(r,'warehouse')).addTo(layers.warehouse);
+            allPins.push({ ...r, type: 'warehouse', lat: r.lat, lng: r.lon });
+          }
+        });
+        data.sales_reps.forEach(r => {
+          if (r.lat && r.lon) {
+            L.marker([r.lat, r.lon], { icon: iconRep }).bindPopup(popup(r,'rep')).addTo(layers.rep);
+            allPins.push({ ...r, type: 'rep', lat: r.lat, lng: r.lon });
+          }
+        });
+        data.distributors.forEach(r => {
+          if (r.lat && r.lon) {
+            L.marker([r.lat, r.lon], { icon: iconDist }).bindPopup(popup(r,'dist')).addTo(layers.dist);
+            allPins.push({ ...r, type: 'dist', lat: r.lat, lng: r.lon });
+          }
+        });
       } catch(e) { console.error('ALG locator: failed to load data', e); }
 
       // Add all layers by default
       Object.values(layers).forEach(lg => lg.addTo(map));
+
+      // Dynamic IN THIS VIEW list
+      const listEl    = document.getElementById('loc-results-list');
+      const headerEl  = document.getElementById('loc-results-header');
+      let zipMode = false;
+
+      function renderList(entries, header) {
+        if (headerEl) headerEl.textContent = header || 'IN THIS VIEW';
+        if (!listEl) return;
+        if (entries.length === 0) {
+          listEl.innerHTML = '<div class="loc-results-empty">No reps, distributors, or warehouses in this view.<br>Zoom out to see coverage.</div>';
+          return;
+        }
+        listEl.innerHTML = entries.map(p => {
+          const distStr = p.distanceMi < 0.5 ? 'On-site' : (p.distanceMi < 10 ? p.distanceMi.toFixed(1) + ' mi' : Math.round(p.distanceMi) + ' mi');
+          const loc = [p.city, p.state].filter(Boolean).join(', ');
+          return '<div class="result-row">' +
+            '<span class="result-kind" style="background:' + typeColor[p.type] + ';"></span>' +
+            '<div class="result-info">' +
+              '<span class="result-name">' + (p.name || loc) + '</span>' +
+              '<span class="result-meta">' + loc + (loc ? ' &middot; ' : '') + typeLabel[p.type] + '</span>' +
+            '</div>' +
+            '<span class="result-dist">' + distStr + '</span>' +
+          '</div>';
+        }).join('');
+      }
+
+      function updateInViewList() {
+        if (zipMode) return;  // ZIP mode: don't override until user pans/zooms
+        const bounds = map.getBounds();
+        const center = map.getCenter();
+        const inView = allPins
+          .filter(p => bounds.contains(L.latLng(p.lat, p.lng)))
+          .map(p => ({ ...p, distanceMi: center.distanceTo(L.latLng(p.lat, p.lng)) / 1609.344 }))
+          .sort((a, b) => a.distanceMi - b.distanceMi)
+          .slice(0, 8);
+        renderList(inView, 'IN THIS VIEW');
+      }
+
+      // moveend fires after pan or zoom completes; also resets ZIP mode
+      map.on('moveend', () => {
+        zipMode = false;
+        updateInViewList();
+      });
+
+      // Initial render after data loaded
+      updateInViewList();
+
+      // ZIP / city / state search — Nominatim geocode then fly to location
+      const searchInput = document.querySelector('.loc-search-input');
+      const searchBtn   = document.querySelector('.loc-search-btn');
+      async function doSearch() {
+        const q = (searchInput ? searchInput.value.trim() : '');
+        if (!q) return;
+        try {
+          const r = await fetch('https://nominatim.openstreetmap.org/search?format=json&countrycodes=us&limit=1&q=' + encodeURIComponent(q), { headers: { 'Accept-Language': 'en' } });
+          const results = await r.json();
+          if (!results.length) { if (headerEl) headerEl.textContent = 'NOT FOUND'; return; }
+          const { lat, lon } = results[0];
+          map.setView([+lat, +lon], 8);
+          // ZIP mode: show 8 nearest to searched point regardless of viewport
+          zipMode = true;
+          const center = L.latLng(+lat, +lon);
+          const nearest = allPins
+            .map(p => ({ ...p, distanceMi: center.distanceTo(L.latLng(p.lat, p.lng)) / 1609.344 }))
+            .sort((a, b) => a.distanceMi - b.distanceMi)
+            .slice(0, 8);
+          renderList(nearest, 'NEAREST TO ' + q.toUpperCase());
+        } catch(e) { console.error('ALG locator search error', e); }
+      }
+      if (searchBtn) searchBtn.addEventListener('click', doSearch);
+      if (searchInput) searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
 
       // Filter pills
       document.querySelectorAll('.loc-pill[data-filter]').forEach(pill => {
