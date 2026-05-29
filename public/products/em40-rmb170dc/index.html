@@ -153,18 +153,53 @@ document.addEventListener('DOMContentLoaded', async function() {
       template = template.slice(0, i) + resourceScript + template.slice(i);
     }
 
-    // Parse the template and swap the root element. Scripts inserted via
-    // DOMParser/replaceWith are inert per spec — re-create each with
-    // createElement so they execute, awaiting onload for src scripts to
-    // preserve ordering (React before ReactDOM before Babel before text/babel).
+    // Parse the template. HOST MODE if .{slug}-pdp host div exists (Astro wrapper);
+    // STANDALONE MODE (replaceWith) for file:// preview fallback.
     const doc = new DOMParser().parseFromString(template, 'text/html');
+    const _hostEl = document.querySelector('[class*="-pdp"]');
+    const _hostClass = _hostEl ? Array.from(_hostEl.classList).find(c => c.endsWith('-pdp')) : null;
+    const host = _hostClass ? document.querySelector('.' + _hostClass) : null;
+    if (host) {
+      // ===== HOST MODE — preserve Astro BaseLayout chrome =====
+      for (const styleEl of doc.head.querySelectorAll('style')) {
+        const scoped = document.createElement('style');
+        scoped.textContent = styleEl.textContent;
+        scoped.setAttribute('data-bundler-scoped', '1');
+        document.head.appendChild(scoped);
+      }
+      for (const linkEl of doc.head.querySelectorAll('link[rel="stylesheet"]')) {
+        document.head.appendChild(linkEl.cloneNode(true));
+      }
+      const existingRoot = host.querySelector('#root');
+      if (existingRoot) existingRoot.remove();
+      async function appendScriptOrChild(child, dest) {
+        if (child.tagName === 'SCRIPT') {
+          const s = document.createElement('script');
+          for (const a of child.attributes) s.setAttribute(a.name, a.value);
+          s.textContent = child.textContent;
+          if ((s.type === 'text/babel' || s.type === 'text/jsx') && s.src) {
+            if (blobToText[s.src]) { s.textContent = blobToText[s.src]; }
+            else { try { const r = await fetch(s.src); s.textContent = await r.text(); } catch(e) {} }
+            s.removeAttribute('src');
+          }
+          const p = s.src ? new Promise(function(r) { s.onload = s.onerror = r; }) : null;
+          dest.appendChild(s);
+          if (p) await p;
+        } else { dest.appendChild(child); }
+      }
+      const _headScripts = Array.from(doc.head.querySelectorAll('script'));
+      for (const s of _headScripts) await appendScriptOrChild(s, host);
+      const _bodyChildren = Array.from(doc.body.children);
+      for (const child of _bodyChildren) await appendScriptOrChild(child, host);
+      const _thumb = document.getElementById('__bundler_thumbnail');
+      if (_thumb) _thumb.remove();
+      const _load = document.getElementById('__bundler_loading');
+      if (_load) _load.remove();
+      return;
+    }
+    // ===== STANDALONE MODE (file:// preview) =====
     document.documentElement.replaceWith(doc.documentElement);
-
-    // Process head scripts FIRST (React, ReactDOM, Babel) before body scripts.
-    // v6 fix: head-positioned scripts were previously skipped, causing Babel to
-    // be undefined when text/babel body scripts ran.
     const allScripts = Array.from(document.scripts);
-    // Separate head scripts from body scripts by position
     const headScripts = allScripts.filter(s => s.closest('head'));
     const bodyScripts = allScripts.filter(s => !s.closest('head'));
 

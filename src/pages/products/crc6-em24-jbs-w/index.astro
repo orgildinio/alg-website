@@ -61,6 +61,34 @@ const fontPreconnects = [...headContent.matchAll(/<link[^>]*rel="preconnect"[^>]
     .bc-current { color: #000; font-weight: 600; }
     .bc-current .aa { color: var(--color-alg-red, #F32740); }
     .aa { color: var(--color-alg-red, #F32740); }
+
+    /* §D.6 CFG-TYPE-1 · Lato + JetBrains Mono pin — defeat Shopify/Cormorant cascade */
+    .crc6-em24-jbs-w-pdp h1,
+    .crc6-em24-jbs-w-pdp h2,
+    .crc6-em24-jbs-w-pdp h3,
+    .crc6-em24-jbs-w-pdp h4,
+    .crc6-em24-jbs-w-pdp h5,
+    .crc6-em24-jbs-w-pdp h6,
+    .crc6-em24-jbs-w-pdp p,
+    .crc6-em24-jbs-w-pdp a,
+    .crc6-em24-jbs-w-pdp li,
+    .crc6-em24-jbs-w-pdp button,
+    .crc6-em24-jbs-w-pdp span,
+    .crc6-em24-jbs-w-pdp div {
+      font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+    }
+    .crc6-em24-jbs-w-pdp .eyebrow,
+    .crc6-em24-jbs-w-pdp .alg-eyebrow,
+    .crc6-em24-jbs-w-pdp .mono,
+    .crc6-em24-jbs-w-pdp .spec-row,
+    .crc6-em24-jbs-w-pdp .spec-row .k,
+    .crc6-em24-jbs-w-pdp .spec-row .v,
+    .crc6-em24-jbs-w-pdp [class*="font-mono"],
+    .crc6-em24-jbs-w-pdp .alg-spec-table,
+    .crc6-em24-jbs-w-pdp .alg-spec-table th,
+    .crc6-em24-jbs-w-pdp .alg-spec-table td {
+      font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace !important;
+    }
   </style>
   </Fragment>
   <!-- §D.1 · 5-segment canonical breadcrumb -->

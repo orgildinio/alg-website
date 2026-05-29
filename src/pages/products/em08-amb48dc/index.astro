@@ -61,6 +61,34 @@ const fontPreconnects = [...headContent.matchAll(/<link[^>]*rel="preconnect"[^>]
     .bc-current { color: #000; font-weight: 600; }
     .bc-current .aa { color: var(--color-alg-red, #F32740); }
     .aa { color: var(--color-alg-red, #F32740); }
+
+    /* §D.6 CFG-TYPE-1 · Lato + JetBrains Mono pin — defeat Shopify/Cormorant cascade */
+    .em08-amb48dc-pdp h1,
+    .em08-amb48dc-pdp h2,
+    .em08-amb48dc-pdp h3,
+    .em08-amb48dc-pdp h4,
+    .em08-amb48dc-pdp h5,
+    .em08-amb48dc-pdp h6,
+    .em08-amb48dc-pdp p,
+    .em08-amb48dc-pdp a,
+    .em08-amb48dc-pdp li,
+    .em08-amb48dc-pdp button,
+    .em08-amb48dc-pdp span,
+    .em08-amb48dc-pdp div {
+      font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+    }
+    .em08-amb48dc-pdp .eyebrow,
+    .em08-amb48dc-pdp .alg-eyebrow,
+    .em08-amb48dc-pdp .mono,
+    .em08-amb48dc-pdp .spec-row,
+    .em08-amb48dc-pdp .spec-row .k,
+    .em08-amb48dc-pdp .spec-row .v,
+    .em08-amb48dc-pdp [class*="font-mono"],
+    .em08-amb48dc-pdp .alg-spec-table,
+    .em08-amb48dc-pdp .alg-spec-table th,
+    .em08-amb48dc-pdp .alg-spec-table td {
+      font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace !important;
+    }
   </style>
   </Fragment>
   <!-- §D.1 · 5-segment canonical breadcrumb -->
