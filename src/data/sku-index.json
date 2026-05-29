@@ -6244,7 +6244,7 @@
           "card_image": "/products/waymark/assets/hero/fam-waymark.webp"
         },
         {
-          "family": "proARCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO+",
           "max_wattage": 50,
@@ -6266,7 +6266,8 @@
           ],
           "taa": true,
           "pdpUrl": "/products/proarch/",
-          "card_image": "/products/proarch/assets/hero/proarch-hero-1.webp"
+          "card_image": "/products/proarch/assets/hero/proarch-hero-1.webp",
+          "tagline": "Back-lit LED flat panel · 2×2 / 2×4 / 1×4 · Drop-ceiling grid and surface mount"
         }
       ]
     },
