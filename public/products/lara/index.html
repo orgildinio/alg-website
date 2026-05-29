@@ -3494,6 +3494,8 @@ body { overflow-x: hidden; }
   <a href="https://staging.archipelagolighting.com/collections/indoor">INDOOR</a>
   <span class="bc-sep">›</span>
   <span class="bc-current">PLANO<span class="aa">Ⓐ</span>RCH</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-current">LSPL &middot; LARA</span>
 </nav>
 
 <section class="hero">
@@ -4959,7 +4961,7 @@ body { overflow-x: hidden; }
               Pricing &amp; Availability
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <a href="submittal_template.html" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
+            <a href="submittal_lara.html" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
               Generate Submittal PDF
             </a>
@@ -5077,7 +5079,7 @@ body { overflow-x: hidden; }
         </div>
       </a>
 
-      <a href="submittal_template.html?sku=LSPL600-50-UB/TR" target="_blank" rel="noopener" class="docs-card">
+      <a href="submittal_lara.html?sku=LSPL600-50-UB/TR" target="_blank" rel="noopener" class="docs-card">
         <div class="docs-card-head">
           <div class="docs-card-icon">
             <!-- Document with stamp icon -->
@@ -5405,6 +5407,18 @@ body { overflow-x: hidden; }
   </div>
 
   <!-- 10C — Final red CTA strip ================================================ -->
+  <div class="closing-cta-strip">
+    <div class="closing-cta-strip-inner">
+      <div class="closing-cta-msg">
+        Need a quote, layout, sample, or rebate match?
+        <strong>We respond same business day.</strong>
+      </div>
+      <div class="closing-cta-buttons">
+        <a href="/contact/" class="closing-cta-btn solid">Contact Sales</a>
+        <a href="/contact/?type=layout" class="closing-cta-btn">Request Layout</a>
+      </div>
+    </div>
+  </div>
 
 </section>
 
@@ -6544,7 +6558,7 @@ body { overflow-x: hidden; }
       }
     });
 
-    // ---- Submittal PDF — opens submittal_template.html with config in query string ----
+    // ---- Submittal PDF — opens submittal_lara.html with config in query string ----
     function buildSubmittalUrl() {
       var core = skuEl.querySelector('.cfg-sku-core');
       var sku  = core ? core.textContent.trim() : '';
@@ -6557,7 +6571,7 @@ body { overflow-x: hidden; }
         joiner: (state.joiner || []).join(','),
         canopy: (state.canopy || []).join(',')
       });
-      return 'submittal_template.html?' + params.toString();
+      return 'submittal_lara.html?' + params.toString();
     }
     if (ctaPdf) {
       ctaPdf.addEventListener('click', function(e) {
