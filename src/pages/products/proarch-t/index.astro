@@ -2,26 +2,46 @@
 /**
  * proarch-t PDP — planoⒶRCH · Astro wrapper
  * Route: /products/proarch-t/
- * Bug #1 fix: wraps canonical BaseLayout (Header + MegaMenu + Footer)
- * Uses readFileSync + set:html to inject raw PDP body without Astro template processing.
+ * SEV-0 CSS restoration: extracts <style> blocks + font links from source <head>
+ * and re-emits them via BaseLayout head slot. Body content wrapped in
+ * <div class="proarch-t-pdp"> so CSS selectors like body.proarch-t-pdp .hero-h1 resolve.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 
-// Read the public HTML at build time using process.cwd() (project root)
 const publicHtml = readFileSync(
   path.join(process.cwd(), 'public/products/proarch-t/index.html'),
   'utf-8'
 );
-// Extract body content — everything between <body...> and </body>
+
+// Extract body content
 const bodyMatch = publicHtml.match(/<body[^>]*>([\s\S]*)<\/body>/i);
 const bodyContent = bodyMatch ? bodyMatch[1] : publicHtml;
+
+// Extract all <style> blocks from <head>
+const headMatch = publicHtml.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
+const headContent = headMatch ? headMatch[1] : '';
+const styleBlocks = [...headContent.matchAll(/<style[^>]*>[\s\S]*?<\/style>/gi)]
+  .map(m => m[0]).join('\n');
+
+// Extract Google Fonts link tags
+const fontLinks = [...headContent.matchAll(/<link[^>]*fonts\.googleapis\.com[^>]*>/gi)]
+  .map(m => m[0]).join('\n');
+const fontPreconnects = [...headContent.matchAll(/<link[^>]*rel="preconnect"[^>]*>/gi)]
+  .map(m => m[0]).join('\n');
 ---
 <BaseLayout
-  title="LPVT · proⒶRCH-T — Archipelago Lighting Group"
-  description="LPVT proⒶRCH-T · planoⒶRCH ECO/PRO+ · LED Troffer · DLC Premium · 2×2 and 2×4."
-  bodyClass="proarch-t1t2-pdp"
+  title="LPVT · proⒶRCH-T — Troffer | planoⒶRCH"
+  description="LPVT proⒶRCH-T · planoⒶRCH PRO · Center-Basket Troffer · 1×4 / 2×2 / 2×4 · DLC Premium · CRI 90+."
+  bodyClass="proarch-t-pdp"
 >
-  <Fragment set:html={bodyContent} />
+  <Fragment slot="head">
+    <Fragment set:html={fontPreconnects} />
+    <Fragment set:html={fontLinks} />
+    <Fragment set:html={styleBlocks} />
+  </Fragment>
+  <div class="proarch-t-pdp">
+    <Fragment set:html={bodyContent} />
+  </div>
 </BaseLayout>

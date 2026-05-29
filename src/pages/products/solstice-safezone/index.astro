@@ -2,26 +2,46 @@
 /**
  * solstice-safezone PDP — planoⒶRCH · Astro wrapper
  * Route: /products/solstice-safezone/
- * Bug #1 fix: wraps canonical BaseLayout (Header + MegaMenu + Footer)
- * Uses readFileSync + set:html to inject raw PDP body without Astro template processing.
+ * SEV-0 CSS restoration: extracts <style> blocks + font links from source <head>
+ * and re-emits them via BaseLayout head slot. Body content wrapped in
+ * <div class="solstice-safezone-pdp"> so CSS selectors like body.solstice-safezone-pdp .hero-h1 resolve.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 
-// Read the public HTML at build time using process.cwd() (project root)
 const publicHtml = readFileSync(
   path.join(process.cwd(), 'public/products/solstice-safezone/index.html'),
   'utf-8'
 );
-// Extract body content — everything between <body...> and </body>
+
+// Extract body content
 const bodyMatch = publicHtml.match(/<body[^>]*>([\s\S]*)<\/body>/i);
 const bodyContent = bodyMatch ? bodyMatch[1] : publicHtml;
+
+// Extract all <style> blocks from <head>
+const headMatch = publicHtml.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
+const headContent = headMatch ? headMatch[1] : '';
+const styleBlocks = [...headContent.matchAll(/<style[^>]*>[\s\S]*?<\/style>/gi)]
+  .map(m => m[0]).join('\n');
+
+// Extract Google Fonts link tags
+const fontLinks = [...headContent.matchAll(/<link[^>]*fonts\.googleapis\.com[^>]*>/gi)]
+  .map(m => m[0]).join('\n');
+const fontPreconnects = [...headContent.matchAll(/<link[^>]*rel="preconnect"[^>]*>/gi)]
+  .map(m => m[0]).join('\n');
 ---
 <BaseLayout
-  title="LCDL · Solstice SafeZone — Archipelago Lighting Group"
-  description="LCDL Solstice SafeZone · planoⒶRCH PRO · UL 924 Emergency-Rated Downlight · DLC Premium."
-  bodyClass="safezone-pdp"
+  title="LCSL/SZ · Solstice-I SafeZone — Archipelago Lighting Group"
+  description="LCSL/SZ Solstice-I SafeZone · planoⒶRCH PRO · Wet-Location Surface-Mount Downlight · IP65 · DLC Premium."
+  bodyClass="solstice-safezone-pdp"
 >
-  <Fragment set:html={bodyContent} />
+  <Fragment slot="head">
+    <Fragment set:html={fontPreconnects} />
+    <Fragment set:html={fontLinks} />
+    <Fragment set:html={styleBlocks} />
+  </Fragment>
+  <div class="solstice-safezone-pdp">
+    <Fragment set:html={bodyContent} />
+  </div>
 </BaseLayout>
