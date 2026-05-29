@@ -72,6 +72,11 @@ document.addEventListener('DOMContentLoaded', async function() {
     setStatus('Unpacking ' + uuids.length + ' assets...');
 
     const blobUrls = {};
+    // blobToText: blob URL → decoded UTF-8 text. Built once during decode for
+    // text/JS assets so the babel-with-src handler below can read the script
+    // body directly instead of fetch()-ing the blob: URL — which strict CSPs
+    // (e.g. Cloudflare Pages default connect-src) block.
+    const blobToText = {};
     await Promise.all(uuids.map(async (uuid) => {
       const entry = manifest[uuid];
       try {
@@ -104,6 +109,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         blobUrls[uuid] = URL.createObjectURL(new Blob([finalBytes], { type: entry.mime }));
+        // Cache decoded text for text/JS assets so we never need fetch() to read it back.
+        const mime = entry.mime || '';
+        if (mime.indexOf('text/') === 0 || mime.indexOf('javascript') >= 0 || mime === '') {
+          try { blobToText[blobUrls[uuid]] = new TextDecoder('utf-8').decode(finalBytes); } catch (e) {}
+        }
       } catch (err) {
         console.error('Failed to decode asset ' + uuid + ':', err);
         blobUrls[uuid] = URL.createObjectURL(new Blob([], { type: entry.mime }));
@@ -150,13 +160,24 @@ document.addEventListener('DOMContentLoaded', async function() {
       const s = document.createElement('script');
       for (const a of old.attributes) s.setAttribute(a.name, a.value);
       s.textContent = old.textContent;
-      // text/babel scripts with a src: fetch and inline. transformScriptTags
-      // does XHR against the src, but blob:null/ from a file:// origin is
-      // silently dropped. Inlining makes it a plain inline babel script,
-      // which transformScriptTags handles unconditionally.
+      // text/babel scripts with a src: inline the source. transformScriptTags
+      // does XHR against the src, but (a) blob:null/ from a file:// origin is
+      // silently dropped, and (b) strict CSPs (Cloudflare Pages) block fetch
+      // against blob:. We cached decoded text by blob URL during the decode
+      // pass above — use it. Only fall back to fetch if it's missing (e.g.
+      // non-cached MIME). Inlining makes it a plain inline babel script which
+      // transformScriptTags handles unconditionally.
       if ((s.type === 'text/babel' || s.type === 'text/jsx') && s.src) {
-        const r = await fetch(s.src);
-        s.textContent = await r.text();
+        if (blobToText[s.src]) {
+          s.textContent = blobToText[s.src];
+        } else {
+          try {
+            const r = await fetch(s.src);
+            s.textContent = await r.text();
+          } catch (e) {
+            console.error('[bundler] babel src fetch fallback failed:', e, s.src);
+          }
+        }
         s.removeAttribute('src');
       }
       const p = s.src ? new Promise(function(r) { s.onload = s.onerror = r; }) : null;
