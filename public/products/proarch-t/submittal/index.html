@@ -481,61 +481,9 @@ body { overflow-x: hidden; }
   <!-- HERO + QUICK SPECS -->
   <div class="at-a-glance">
     <div class="hero-img">
-      <!-- Inline product hero · 3/4 perspective of recessed center-basket troffer -->
-      <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" aria-label="LPVT proⒶRCH-T perspective view · recessed center-basket troffer with prismatic diffuser">
-        <defs>
-          <linearGradient id="diffGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.98"/>
-            <stop offset="50%" stop-color="#F5F8FC" stop-opacity="0.95"/>
-            <stop offset="100%" stop-color="#E2E7EE" stop-opacity="0.92"/>
-          </linearGradient>
-          <linearGradient id="bezelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#F0EFEC"/>
-            <stop offset="100%" stop-color="#C8C6C0"/>
-          </linearGradient>
-          <linearGradient id="ceilGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#E8E6E2"/>
-            <stop offset="100%" stop-color="#D5D2CC"/>
-          </linearGradient>
-          <pattern id="prismatic" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
-            <rect width="6" height="6" fill="url(#diffGrad)"/>
-            <line x1="0" y1="0" x2="6" y2="6" stroke="rgba(180,200,225,0.25)" stroke-width="0.4"/>
-            <line x1="6" y1="0" x2="0" y2="6" stroke="rgba(180,200,225,0.25)" stroke-width="0.4"/>
-          </pattern>
-        </defs>
-
-        <!-- Ceiling backdrop -->
-        <rect x="0" y="0" width="480" height="360" fill="url(#ceilGrad)"/>
-        <!-- T-bar grid lines -->
-        <line x1="0" y1="90"  x2="480" y2="90"  stroke="#B8B5AE" stroke-width="1.5"/>
-        <line x1="0" y1="270" x2="480" y2="270" stroke="#B8B5AE" stroke-width="1.5"/>
-        <line x1="120" y1="0"  x2="120" y2="360" stroke="#B8B5AE" stroke-width="1.5"/>
-        <line x1="360" y1="0"  x2="360" y2="360" stroke="#B8B5AE" stroke-width="1.5"/>
-
-        <!-- Fixture · 3/4 perspective · top edge angled -->
-        <!-- Outer bezel (white aluminum frame) -->
-        <polygon points="62,118 418,108 442,262 38,262" fill="url(#bezelGrad)" stroke="#7A7873" stroke-width="1.2"/>
-        <!-- Inner basket diffuser face -->
-        <polygon points="78,128 402,120 422,250 58,250" fill="url(#prismatic)" stroke="#A6A4A0" stroke-width="0.8"/>
-        <!-- Subtle inner glow at top of diffuser to suggest LED throw -->
-        <polygon points="78,128 402,120 402,148 78,156" fill="#FFFCE8" opacity="0.55"/>
-
-        <!-- Center-basket cross ribbing (light pinstripes to suggest emission uniformity) -->
-        <line x1="100" y1="130" x2="100" y2="248" stroke="rgba(180,200,225,0.40)" stroke-width="0.6"/>
-        <line x1="180" y1="127" x2="180" y2="248" stroke="rgba(180,200,225,0.40)" stroke-width="0.6"/>
-        <line x1="240" y1="125" x2="240" y2="248" stroke="rgba(180,200,225,0.40)" stroke-width="0.6"/>
-        <line x1="300" y1="123" x2="300" y2="249" stroke="rgba(180,200,225,0.40)" stroke-width="0.6"/>
-        <line x1="380" y1="121" x2="380" y2="250" stroke="rgba(180,200,225,0.40)" stroke-width="0.6"/>
-
-        <!-- Soft cast-light pool below to imply downward Lambertian throw -->
-        <ellipse cx="240" cy="320" rx="220" ry="22" fill="rgba(255,250,225,0.55)"/>
-        <ellipse cx="240" cy="328" rx="170" ry="14" fill="rgba(255,245,205,0.45)"/>
-
-        <!-- Brand strip in the diffuser (faint, NOT a logo · just suggests product) -->
-        <text x="240" y="200" text-anchor="middle" fill="rgba(120,120,125,0.30)"
-              font-family="JetBrains Mono, monospace" font-size="9" font-weight="700"
-              letter-spacing="2.5">LPVT pro<tspan font-weight="800">Ⓐ</tspan>RCH-T</text>
-      </svg>
+     <img id="heroImg" src="assets/hero/lpvt24-hero-1.webp"
+      alt="LPVT proⒶRCH-T center-basket troffer · selected form factor"
+      style="width:100%; height:100%; object-fit:contain;" />
     </div>
     <div class="qs-grid">
       <div class="qs-cell">
@@ -914,80 +862,13 @@ body { overflow-x: hidden; }
 
   <div class="photo-grid">
     <div class="photo-polar">
-      <!-- Inline polar plot · 120° wide Lambertian (cosine) distribution · C0 + C90 symmetric -->
-      <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" aria-label="LPVT proⒶRCH-T polar candela distribution · 120 degree wide Lambertian troffer">
-        <defs>
-          <radialGradient id="polarGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="rgba(243,39,64,0.18)"/>
-            <stop offset="100%" stop-color="rgba(243,39,64,0)"/>
-          </radialGradient>
-        </defs>
-
-        <!-- Background grid · 4 concentric rings -->
-        <g fill="none" stroke="#D8D6D2" stroke-width="0.6">
-          <circle cx="180" cy="180" r="40"/>
-          <circle cx="180" cy="180" r="80"/>
-          <circle cx="180" cy="180" r="120"/>
-          <circle cx="180" cy="180" r="160"/>
-        </g>
-        <!-- Ring labels -->
-        <g fill="#888" font-family="JetBrains Mono, monospace" font-size="7">
-          <text x="184" y="142">500</text>
-          <text x="184" y="102">1000</text>
-          <text x="184" y="62">1500</text>
-          <text x="184" y="22">2000 cd</text>
-        </g>
-        <!-- Cross-hairs · 0/90/180/270 axes -->
-        <g stroke="#A6A4A0" stroke-width="0.8">
-          <line x1="180" y1="20" x2="180" y2="340"/>
-          <line x1="20" y1="180" x2="340" y2="180"/>
-        </g>
-        <!-- Angle labels -->
-        <g fill="#444" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">
-          <text x="180" y="15" text-anchor="middle">0°</text>
-          <text x="345" y="184" text-anchor="start">90°</text>
-          <text x="180" y="355" text-anchor="middle">180°</text>
-          <text x="15"  y="184" text-anchor="end">270°</text>
-        </g>
-
-        <!-- Lambertian C0 curve · peak at 180° (downward) at ~1900 cd
-             r(θ) = peak * cos(θ - 180°) for θ in [60°, 300°] · 120° beam half-angle at 60° / 300° edges
-             Plotted as polar polygon. Mapping: 1900 cd → 152 px (1 cd ≈ 0.08 px) -->
-        <path d="M 180 332
-                 L 197 331 L 213 329 L 229 326 L 244 322 L 258 316 L 271 309 L 282 300 L 292 290
-                 L 300 278 L 306 265 L 310 251 L 312 236 L 311 221 L 308 207 L 302 194 L 294 184
-                 L 285 179
-                 L 285 179
-                 L 275 184 L 267 194 L 260 207 L 256 221 L 255 236 L 257 251 L 261 265 L 268 278
-                 L 277 290 L 287 300 L 297 309 L 311 316 L 325 322
-                 Z"
-              fill="rgba(243,39,64,0.18)" stroke="#F32740" stroke-width="1.6"
-              transform="rotate(-90 180 180)"/>
-
-        <!-- Mirrored C90 curve (slightly offset for visual contrast — Lambertian is rotationally symmetric, both plotted to confirm) -->
-        <path d="M 180 332
-                 L 197 331 L 213 329 L 229 326 L 244 322 L 258 316 L 271 309 L 282 300 L 292 290
-                 L 300 278 L 306 265 L 310 251 L 312 236 L 311 221 L 308 207 L 302 194 L 294 184
-                 L 285 179
-                 L 275 184 L 267 194 L 260 207 L 256 221 L 255 236 L 257 251 L 261 265 L 268 278
-                 L 277 290 L 287 300 L 297 309 L 311 316 L 325 322
-                 Z"
-              fill="none" stroke="#1A4FA8" stroke-width="1.0" stroke-dasharray="3 2"
-              transform="rotate(0 180 180)" opacity="0.7"/>
-
-        <!-- Center mark + peak callout -->
-        <circle cx="180" cy="180" r="2" fill="#0E0E10"/>
-        <text x="180" y="335" text-anchor="middle" fill="#F32740"
-              font-family="JetBrains Mono, monospace" font-size="9" font-weight="700">PEAK · NADIR</text>
-
-        <!-- Legend -->
-        <g font-family="JetBrains Mono, monospace" font-size="7">
-          <line x1="25" y1="345" x2="40" y2="345" stroke="#F32740" stroke-width="1.6"/>
-          <text x="44" y="348" fill="#444">C0  (length)</text>
-          <line x1="100" y1="345" x2="115" y2="345" stroke="#1A4FA8" stroke-width="1.0" stroke-dasharray="3 2"/>
-          <text x="119" y="348" fill="#444">C90 (width)</text>
-        </g>
-      </svg>
+     <img id="photoPolarImg" src="assets/photometrics/lpvt24_44W_3500K.svg"
+      alt="LPVT proⒶRCH-T polar candela distribution · selected configuration"
+      style="width:100%; height:100%; object-fit:contain;" />
+     <div id="submittalPhotoPolarFallback" style="display:none; color:#888; font-size:8pt; text-align:center; padding:24px;">
+      Polar plot SVG unavailable for the selected configuration.<br/>
+      Reference IES file listed in the photo summary table.
+     </div>
     </div>
 
     <div class="photo-summary">
@@ -1163,7 +1044,32 @@ body { overflow-x: hidden; }
   var isQS  = !isMTO;
 
   // ---- Stamp every visible catalog-number slot with the resolved SKU ----
-  document.querySelectorAll('#catNum, #catNum2, #catNum3, #catNum4, #liveSku, #piCatNum').forEach(function(el) {
+ 
+ // --- SWAP HERO IMG per form factor · 2026-05-29 ---
+ var heroImg = document.getElementById('heroImg');
+ if (heroImg) {
+  var heroMap = {
+      'LPVT14': 'assets/hero/lpvt14-hero-1.webp',
+      'LPVT22': 'assets/hero/lpvt22-hero-1.webp',
+      'LPVT24': 'assets/hero/lpvt24-hero-1.webp',
+  };
+  heroImg.src = heroMap[skuClass] || 'assets/hero/lpvt24-hero-1.webp';
+  heroImg.onerror = function() { this.src = 'assets/hero/lpvt24-hero-1.webp'; };
+ }
+
+ // --- SWAP POLAR SVG per form/watt/cct · 2026-05-29 ---
+ var photoPolarImg = document.getElementById('photoPolarImg');
+ if (photoPolarImg) {
+  var polarSrc = 'assets/photometrics/' + skuClass.toLowerCase() + '_' + effWatt + 'W_' + effCct + 'K.svg';
+  photoPolarImg.src = polarSrc;
+  photoPolarImg.onerror = function() {
+   this.style.display = 'none';
+   var fb = document.getElementById('submittalPhotoPolarFallback');
+   if (fb) fb.style.display = 'block';
+  };
+ }
+
+ document.querySelectorAll('#catNum, #catNum2, #catNum3, #catNum4, #liveSku, #piCatNum').forEach(function(el) {
     el.textContent = sku;
   });
 
