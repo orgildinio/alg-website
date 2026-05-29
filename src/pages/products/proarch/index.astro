@@ -16,11 +16,26 @@ const publicHtml = readFileSync(
 );
 
 // Extract body content
-const bodyMatch = publicHtml.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-const bodyContent = bodyMatch ? bodyMatch[1] : publicHtml;
+// Post-process: disable submittal CTA permanently (submittal pending for proARCH)
+const processedHtml = publicHtml
+  .replace(
+    /(<a[^>]*id="cfgCtaPdf"[^>]*)href="[^"]*"([^>]*)>/,
+    '$1href="#" onclick="return false;" title="Submittal coming soon" style="cursor:not-allowed;opacity:0.45;"$2>'
+  )
+  .replace(
+    /Generate Submittal PDF/,
+    'Submittal Coming Soon'
+  )
+  .replace(
+    /ctaPdf\.classList\.toggle\('disabled', !complete\);/,
+    "ctaPdf.classList.add('disabled'); // submittal pending"
+  );
+
+const bodyMatch = processedHtml.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+const bodyContent = bodyMatch ? bodyMatch[1] : processedHtml;
 
 // Extract all <style> blocks from <head>
-const headMatch = publicHtml.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
+const headMatch = processedHtml.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
 const headContent = headMatch ? headMatch[1] : '';
 const styleBlocks = [...headContent.matchAll(/<style[^>]*>[\s\S]*?<\/style>/gi)]
   .map(m => m[0]).join('\n');
