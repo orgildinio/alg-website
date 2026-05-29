@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LPVT · proⒶRCH-T — Submittal Sheet</title>
+
+<!--
+  ALG SUBMITTAL · LPVT proⒶRCH-T (T1 STANDARD + T2 HIGH-OUTPUT) · v2 canonical
+  ===================================================================================
+  4-page letter-portrait submittal · spec-grade PDF via File → Print → Save as PDF.
+
+  ENTRY: opened from PDP §9 Configurator's "Generate Submittal PDF" CTA with query
+  params describing the user's current configuration. Auto-fills the catalog number,
+  quick specs, ordering-code matrix, dimensions table, polar plot, and accessory
+  call-outs to match the live PDP state.
+
+  Example query: ?sku=LPVT24-MXP2/W50/C50/SR&form=24&series=MXP2&wattage=50&cct=5000
+
+  CANONICAL RULES SATISFIED:
+   · CFG-SUB-1 v2 — editable Catalog Number with snapshot-then-rederive sweep
+     (idempotent · stamps every visible instance of the original SKU including
+      document.title, but never touches <a href>, data-*, scripts, or styles)
+   · CFG-WARR-1 — ECO tier: 5 yr · 50,000 hr · "Limited Liability" subtext
+   · CFG-CERT-1 — cert badges as inline SVG marks, not library refs (this file
+     is a self-contained PDF source so badges are inline by necessity)
+   · CFG-COPY-4 / -5 / -6 — no competitor names, no vendor MPNs, no factory ID
+   · CFG-INV-1 — no inventory counts shown
+   · CFG-TITLE-1 — title uses LPVT · proⒶRCH-T pattern with middot
+   · CFG-CHROME-3 — no site shell · standalone print document
+
+  WORKDRIVE URLs (reference):
+    Datasheet:  https://workdrive.archipelagolighting.com/external/f7d4d4c557779418c33ebe0081020559995232f6eb148d6b894544a32a2cbd81
+    IES Bundle: https://workdrive.archipelagolighting.com/external/52f0886063b5c19e827bb78b7bf780593754a9eb2b3a41e1bbb65f30b9877af7
+-->
+
+<style>
+  /* ============= PRINT-OPTIMIZED CSS ============= */
+  @page {
+    size: letter portrait;
+    margin: 0.5in 0.6in;
+  }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white !important; padding: 0 !important; }
+    .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+    .page:last-of-type { page-break-after: auto; }
+  }
+
+  /* ============= TYPE + COLOR TOKENS ============= */
+  :root {
+    --brand-red: #F32740;
+    --ink: #0E0E10;
+    --ink-2: #2A2A2D;
+    --muted: #6B6B70;
+    --rule: #D8D6D2;
+    --rule-strong: #A6A4A0;
+    --tint: #F6F4F0;
+    --hi: #FFF6E5;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Lato', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.5pt;
+    line-height: 1.4;
+    background: #E8E6E2;
+  }
+  body { padding: 24px 12px; }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 24px;
+    padding: 0.55in 0.65in;
+    background: white;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  h1, h2, h3, h4 { font-family: 'Lato', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+  .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+
+  /* ============= PAGE HEADER (every page) ============= */
+  .submittal-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+  .submittal-head .brand-mark {
+    width: 28px; height: 28px; background: var(--brand-red);
+    display: inline-block;
+  }
+  .submittal-head .brand-name {
+    font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1;
+  }
+  .submittal-head .brand-sub {
+    font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .submittal-head .catalog-block { text-align: right; }
+  .submittal-head .catalog-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .submittal-head .catalog-number {
+    font-size: 12pt; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+    border: 1.5px solid var(--ink);
+    padding: 4px 10px; display: inline-block;
+    letter-spacing: 0.5pt;
+    outline: none;
+    min-width: 240px; max-width: 360px;
+    text-align: left;
+    cursor: text;
+  }
+  .submittal-head .catalog-number:hover { background: var(--hi); }
+  .submittal-head .catalog-number:focus { background: var(--hi); border-color: var(--brand-red); }
+  .catalog-number-hint {
+    display: block;
+    font-size: 6.5pt; color: var(--muted); letter-spacing: 0.4pt;
+    margin-top: 3px; text-transform: uppercase;
+  }
+  @media print { .catalog-number-hint { display: none; } }
+
+  /* ============= PROJECT INFO FORM ============= */
+  .project-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule-strong);
+    margin-bottom: 14px;
+  }
+  .pi-cell {
+    padding: 6px 9px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    min-height: 38px;
+  }
+  .pi-cell:nth-child(3n) { border-right: none; }
+  .pi-cell:nth-child(n+4) { border-bottom: none; }
+  .pi-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .pi-value {
+    border-bottom: 1px dotted var(--rule-strong); min-height: 14px; padding-top: 2px;
+    font-family: 'JetBrains Mono', monospace; font-size: 9pt;
+  }
+
+  /* ============= PRODUCT TITLE BAND ============= */
+  .product-title { margin: 14px 0 14px; }
+  .product-title h1 { font-size: 22pt; line-height: 1; margin: 0; }
+  .product-title .tagline {
+    font-size: 9.5pt; color: var(--ink-2); margin-top: 6px; line-height: 1.35;
+  }
+
+  /* ============= HERO + QUICK SPECS GRID ============= */
+  .at-a-glance {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .hero-img {
+    background: var(--tint);
+    border: 1px solid var(--rule);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; padding: 14px;
+  }
+  .hero-img svg { width: 100%; height: 100%; }
+
+  .qs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .qs-cell {
+    border: 1px solid var(--rule-strong);
+    padding: 8px 10px;
+    min-height: 56px;
+  }
+  .qs-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 3px;
+  }
+  .qs-value {
+    font-size: 14pt; font-weight: 700; line-height: 1.05;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .qs-unit {
+    font-size: 8pt; font-weight: 400; color: var(--muted); margin-left: 2px;
+    font-family: 'Lato', sans-serif;
+  }
+
+  /* ============= STOCK PILL ============= */
+  .qs-pill, .mto-pill, .wb-pill {
+    display: inline-block;
+    font-size: 7.5pt; font-weight: 700;
+    padding: 3px 8px; letter-spacing: 0.5pt;
+    text-transform: uppercase;
+    margin-left: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .qs-pill { background: #E5F4EC; color: #1F7A4B; border: 1px solid #58C998; }
+  .mto-pill { background: #FFF1E0; color: #B85C00; border: 1px solid #FFB562; }
+  .wb-pill { background: #EAF1FF; color: #1A4FA8; border: 1px solid #7FB6FF; }
+
+  /* ============= FEATURE BAND ============= */
+  .feature-band {
+    background: var(--ink); color: white;
+    padding: 8px 14px;
+    display: flex; gap: 18px; align-items: center;
+    margin-bottom: 12px;
+  }
+  .feature-band .fb-pill {
+    background: var(--brand-red); color: white;
+    font-size: 7pt; font-weight: 700; letter-spacing: 1.2pt;
+    padding: 3px 7px; text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .feature-band .fb-features { font-size: 9pt; line-height: 1.3; }
+  .feature-band .fb-features strong { font-weight: 700; }
+
+  /* ============= APPROVAL SIGNATURE BLOCK ============= */
+  .approval-block {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--rule-strong);
+  }
+  .approval-cell {
+    display: grid; grid-template-columns: max-content 1fr;
+    gap: 8px; align-items: end;
+    font-size: 8pt;
+  }
+  .approval-line { border-bottom: 1px solid var(--ink); height: 16px; }
+
+  /* ============= SECTION HEAD (page 2+) ============= */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 4px; margin-bottom: 10px; margin-top: 4px;
+  }
+  .section-head h2 { font-size: 14pt; line-height: 1; }
+  .section-head .section-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= SPEC TABLE ============= */
+  .spec-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  .spec-table th, .spec-table td {
+    text-align: left; padding: 5px 8px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .spec-table .spec-section-head td {
+    background: var(--tint);
+    font-weight: 700; font-size: 9pt; letter-spacing: 0.3pt;
+    border-bottom: 1px solid var(--rule-strong);
+    padding: 6px 8px;
+  }
+  .spec-table .spec-attr { width: 30%; font-weight: 600; color: var(--ink-2); }
+  .spec-table .spec-val { width: 70%; }
+
+  /* ============= ORDERING CODE MATRIX ============= */
+  .order-code {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .order-segment {
+    background: var(--tint);
+    border: 1px solid var(--rule-strong);
+    padding: 8px 6px;
+    text-align: center;
+    min-height: 52px;
+  }
+  .order-segment.active {
+    background: var(--brand-red); color: white;
+    border-color: var(--brand-red);
+  }
+  .order-seg-label {
+    font-size: 6.5pt; letter-spacing: 1pt;
+    text-transform: uppercase; margin-bottom: 4px;
+    opacity: 0.85;
+  }
+  .order-seg-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11pt; font-weight: 700;
+  }
+  .order-matrix { width: 100%; border-collapse: collapse; font-size: 7.5pt; }
+  .order-matrix th, .order-matrix td {
+    border: 1px solid var(--rule);
+    padding: 4px 6px; text-align: left; vertical-align: top;
+  }
+  .order-matrix th {
+    background: var(--ink); color: white;
+    font-size: 7pt; letter-spacing: 1pt;
+    text-transform: uppercase;
+  }
+  .order-matrix .code {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; width: 110px;
+  }
+  .order-matrix tr.active-row td { background: var(--hi); }
+
+  /* ============= DIMENSIONS LAYOUT ============= */
+  .dim-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .dim-view {
+    border: 1px solid var(--rule-strong);
+    background: white;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    padding: 6px;
+  }
+  .dim-view svg { width: 100%; height: 100%; }
+  .dim-view-label {
+    position: absolute; top: 4px; left: 6px;
+    font-size: 7pt; letter-spacing: 1pt; color: var(--brand-red);
+    text-transform: uppercase; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .dim-view-label.is-active { color: white; background: var(--brand-red); padding: 1px 5px; }
+
+  /* ============= PHOTOMETRIC DATA ============= */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .photo-polar {
+    border: 1px solid var(--rule-strong);
+    padding: 10px;
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    background: white;
+    overflow: hidden;
+  }
+  .photo-polar svg { width: 100%; height: 100%; }
+  .photo-summary {
+    border: 1px solid var(--rule);
+    display: flex; flex-direction: column;
+  }
+  .photo-summary table { width: 100%; border-collapse: collapse; font-size: 8pt; }
+  .photo-summary table td {
+    padding: 5px 9px; border-bottom: 1px solid var(--rule);
+  }
+  .photo-summary table tr:last-child td { border-bottom: none; }
+  .photo-summary td:first-child { color: var(--muted); }
+  .photo-summary td:last-child {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; text-align: right;
+  }
+
+  /* ============= CERTIFICATIONS ============= */
+  .certs {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 10px 12px;
+    border: 1px solid var(--rule);
+    margin-top: 10px;
+    align-items: center;
+  }
+  .cert-badge-svg { height: 28px; width: auto; flex-shrink: 0; }
+
+  /* ============= PAGE FOOTER ============= */
+  .page-foot {
+    position: absolute;
+    bottom: 0.4in; left: 0.65in; right: 0.65in;
+    display: flex; justify-content: space-between;
+    font-size: 7pt; color: var(--muted);
+    padding-top: 6px;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ============= NO-PRINT CONTROLS ============= */
+  .controls {
+    max-width: 8.5in; margin: 0 auto 18px;
+    background: white; padding: 14px 18px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  }
+  .controls .ctrl-label {
+    font-size: 8pt; font-weight: 600; color: var(--muted);
+    letter-spacing: 0.5pt; text-transform: uppercase;
+  }
+  .controls .ctrl-value {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11pt;
+  }
+  .controls button {
+    background: var(--brand-red); color: white;
+    border: none; padding: 9px 18px;
+    font-family: inherit; font-weight: 700; font-size: 9pt;
+    letter-spacing: 0.5pt; text-transform: uppercase;
+    cursor: pointer;
+    margin-left: auto;
+  }
+  .controls button:hover { background: #d61f37; }
+
+/* CFG-TYPE-1 · Lato lock — Shopify global cascades Cormorant onto inline Lato.
+   This !important rule pins Lato on h1/h2 for this collection's PDP body class. */
+body.planoarch-pdp h1,
+body.planoarch-pdp h2 {
+  font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+}
+
+/* CFG-MOBILE-1 · image responsive reset (injected by cfg_mobile_1_readiness_sweep.py) */
+img { max-width: 100%; height: auto; }
+
+/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+body { overflow-x: hidden; }
+</style>
+</head>
+<body>
+
+<!-- ============= NO-PRINT CONTROLS BAR ============= -->
+<div class="controls no-print">
+  <div>
+    <div class="ctrl-label">Configured SKU</div>
+    <div class="ctrl-value" id="liveSku">LPVT24-MXP1/W44/C50</div>
+  </div>
+  <div>
+    <div class="ctrl-label">Ship Tier</div>
+    <div class="ctrl-value"><span id="stockPill" class="qs-pill">QuickShip · 3-5 day</span></div>
+  </div>
+  <div>
+    <div class="ctrl-label">Generated</div>
+    <div class="ctrl-value" id="liveDate" style="font-size:9pt; font-weight:400;">—</div>
+  </div>
+  <button onclick="window.print()">Save as PDF →</button>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — AT-A-GLANCE                                          -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+  <!-- HEADER -->
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum" contenteditable="true" spellcheck="false" title="Click to edit · session-only · sweeps every visible instance">LPVT24-MXP1/W44/C50</div>
+      <span class="catalog-number-hint">Click to relabel for project</span>
+    </div>
+  </div>
+
+  <!-- PROJECT INFO FORM -->
+  <div class="project-info">
+    <div class="pi-cell"><div class="pi-label">Project</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Type</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Catalog #</div><div class="pi-value" id="piCatNum">LPVT24-MXP1/W44/C50</div></div>
+    <div class="pi-cell"><div class="pi-label">Prepared By</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Notes</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Date</div><div class="pi-value"></div></div>
+  </div>
+
+  <!-- PRODUCT TITLE -->
+  <div class="product-title">
+    <h1>LPVT &middot; pro<span style="font-weight:700;">Ⓐ</span>RCH-T</h1>
+    <div class="tagline" id="productTagline">The Dual-Listed Center-Basket Troffer &middot; <strong>DLC Premium · Dual-Listed Ambient + Low-Bay</strong> &middot; 3-WATTselect &times; 3-CCTselect dip-switch (45 field configs across 5 SKU classes) &middot; T1 STANDARD 18-44W + T2 HIGH-OUTPUT 20-50W &middot; up to 125 LM/W &middot; 1 kV surge<span style="font-weight:700;">Ⓐ</span>RMOR + thermal<span style="font-weight:700;">Ⓐ</span>RMOR -20&deg;C standard &middot; TAA Made in Mexico &middot; 5-yr · 50,000-hr limited liability warranty.</div>
+  </div>
+
+  <!-- HERO + QUICK SPECS -->
+  <div class="at-a-glance">
+    <div class="hero-img">
+      <!-- Inline product hero · 3/4 perspective of recessed center-basket troffer -->
+      <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" aria-label="LPVT proⒶRCH-T perspective view · recessed center-basket troffer with prismatic diffuser">
+        <defs>
+          <linearGradient id="diffGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.98"/>
+            <stop offset="50%" stop-color="#F5F8FC" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="#E2E7EE" stop-opacity="0.92"/>
+          </linearGradient>
+          <linearGradient id="bezelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#F0EFEC"/>
+            <stop offset="100%" stop-color="#C8C6C0"/>
+          </linearGradient>
+          <linearGradient id="ceilGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#E8E6E2"/>
+            <stop offset="100%" stop-color="#D5D2CC"/>
+          </linearGradient>
+          <pattern id="prismatic" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+            <rect width="6" height="6" fill="url(#diffGrad)"/>
+            <line x1="0" y1="0" x2="6" y2="6" stroke="rgba(180,200,225,0.25)" stroke-width="0.4"/>
+            <line x1="6" y1="0" x2="0" y2="6" stroke="rgba(180,200,225,0.25)" stroke-width="0.4"/>
+          </pattern>
+        </defs>
+
+        <!-- Ceiling backdrop -->
+        <rect x="0" y="0" width="480" height="360" fill="url(#ceilGrad)"/>
+        <!-- T-bar grid lines -->
+        <line x1="0" y1="90"  x2="480" y2="90"  stroke="#B8B5AE" stroke-width="1.5"/>
+        <line x1="0" y1="270" x2="480" y2="270" stroke="#B8B5AE" stroke-width="1.5"/>
+        <line x1="120" y1="0"  x2="120" y2="360" stroke="#B8B5AE" stroke-width="1.5"/>
+        <line x1="360" y1="0"  x2="360" y2="360" stroke="#B8B5AE" stroke-width="1.5"/>
+
+        <!-- Fixture · 3/4 perspective · top edge angled -->
+        <!-- Outer bezel (white aluminum frame) -->
+        <polygon points="62,118 418,108 442,262 38,262" fill="url(#bezelGrad)" stroke="#7A7873" stroke-width="1.2"/>
+        <!-- Inner basket diffuser face -->
+        <polygon points="78,128 402,120 422,250 58,250" fill="url(#prismatic)" stroke="#A6A4A0" stroke-width="0.8"/>
+        <!-- Subtle inner glow at top of diffuser to suggest LED throw -->
+        <polygon points="78,128 402,120 402,148 78,156" fill="#FFFCE8" opacity="0.55"/>
+
+        <!-- Center-basket cross ribbing (light pinstripes to suggest emission uniformity) -->
+        <line x1="100" y1="130" x2="100" y2="248" stroke="rgba(180,200,225,0.40)" stroke-width="0.6"/>
+        <line x1="180" y1="127" x2="180" y2="248" stroke="rgba(180,200,225,0.40)" stroke-width="0.6"/>
+        <line x1="240" y1="125" x2="240" y2="248" stroke="rgba(180,200,225,0.40)" stroke-width="0.6"/>
+        <line x1="300" y1="123" x2="300" y2="249" stroke="rgba(180,200,225,0.40)" stroke-width="0.6"/>
+        <line x1="380" y1="121" x2="380" y2="250" stroke="rgba(180,200,225,0.40)" stroke-width="0.6"/>
+
+        <!-- Soft cast-light pool below to imply downward Lambertian throw -->
+        <ellipse cx="240" cy="320" rx="220" ry="22" fill="rgba(255,250,225,0.55)"/>
+        <ellipse cx="240" cy="328" rx="170" ry="14" fill="rgba(255,245,205,0.45)"/>
+
+        <!-- Brand strip in the diffuser (faint, NOT a logo · just suggests product) -->
+        <text x="240" y="200" text-anchor="middle" fill="rgba(120,120,125,0.30)"
+              font-family="JetBrains Mono, monospace" font-size="9" font-weight="700"
+              letter-spacing="2.5">LPVT pro<tspan font-weight="800">Ⓐ</tspan>RCH-T</text>
+      </svg>
+    </div>
+    <div class="qs-grid">
+      <div class="qs-cell">
+        <div class="qs-label">Lumens</div>
+        <div class="qs-value" id="qsLumens">5,500<span class="qs-unit">lm @ 44W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Wattage</div>
+        <div class="qs-value" id="qsWatts">44<span class="qs-unit">W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Voltage</div>
+        <div class="qs-value">120-277<span class="qs-unit">V</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CCT</div>
+        <div class="qs-value" id="qsCct">5000<span class="qs-unit">K</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CRI</div>
+        <div class="qs-value">&gt; 80</div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Efficacy</div>
+        <div class="qs-value" id="qsEfficacy">125<span class="qs-unit">LM/W</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE BAND -->
+  <div class="feature-band">
+    <div class="fb-pill">Dual-Listed Rebate-Stacker</div>
+    <div class="fb-features">
+      <strong>DLC Premium · Dual-Listed</strong> (Ambient + Low-Bay) &middot;
+      <strong>3-WATTselect</strong> &times; <strong>3-CCTselect</strong> dip-switch &middot;
+      <strong>1 kV surge<span style="font-weight:700;">Ⓐ</span>RMOR</strong> standard &middot;
+      <strong>thermal<span style="font-weight:700;">Ⓐ</span>RMOR</strong> -20&deg;C &middot;
+      <strong>TAA Made in Mexico</strong>
+    </div>
+  </div>
+
+  <!-- APPROVAL BLOCK -->
+  <div class="approval-block">
+    <div class="approval-cell">
+      <span><strong>Approved by</strong></span>
+      <div class="approval-line"></div>
+    </div>
+    <div class="approval-cell">
+      <span><strong>Date</strong></span>
+      <div class="approval-line"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LPVT pro<span style="font-weight:700;">Ⓐ</span>RCH-T submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. <span id="revDate">2026-05</span> &middot; Page 1 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — SPECIFICATIONS                                       -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum2">LPVT24-MXP1/W44/C50</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Specifications</h2>
+    <div class="section-eyebrow" id="specsEyebrow">LPVT pro<span style="font-weight:700;">Ⓐ</span>RCH-T &middot; 1&times;4 / 2&times;2 / 2&times;4 center-basket troffer</div>
+  </div>
+
+  <table class="spec-table">
+    <tbody>
+      <tr class="spec-section-head"><td colspan="2">Construction</td></tr>
+      <tr><td class="spec-attr">Form Factor</td><td class="spec-val">Center-basket lay-in troffer &middot; SPCC white steel housing &middot; PMMA white prismatic diffuser &middot; aluminum white bezel &middot; T1 + T2 share the identical platform across all three sizes</td></tr>
+      <tr><td class="spec-attr">Diffuser</td><td class="spec-val">PMMA white prismatic &middot; uniform 120&deg; Lambertian distribution &middot; shadow-free output across the full center-basket face</td></tr>
+      <tr><td class="spec-attr">Surge Protection</td><td class="spec-val"><strong>1 kV built-in surge<span style="font-weight:700;">Ⓐ</span>RMOR</strong> &middot; standard, not a price-up adder &middot; IEC/EN 61000-4-5 compliant</td></tr>
+      <tr><td class="spec-attr">Ingress</td><td class="spec-val">IP20 indoor &middot; UL Damp Location (Damp<span style="font-weight:700;">Ⓐ</span>UARD)</td></tr>
+      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val"><strong>-20&deg;C to 40&deg;C (-4&deg;F to 104&deg;F)</strong> ambient &middot; thermal<span style="font-weight:700;">Ⓐ</span>RMOR cold-start &middot; cold-warehouse / parking-garage / mezzanine retrofit capable</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">LED &amp; Optics</td></tr>
+      <tr><td class="spec-attr">LED Source</td><td class="spec-val">High-density SMD LEDs &middot; LM-80 verified &middot; T1 STANDARD + T2 HIGH-OUTPUT light engines share the same form factor</td></tr>
+      <tr><td class="spec-attr">CCT Options</td><td class="spec-val">3-CCTselect dip &middot; <strong>3500K / 4000K / 5000K</strong></td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val">&gt; 80 standard at every CCT &middot; spec-grade CRI 90+ routes to Astra-I</td></tr>
+      <tr><td class="spec-attr">Distribution</td><td class="spec-val">120&deg; uniform Lambertian troffer &middot; zero upward emission &middot; 100% downward per zonal LM-79 data</td></tr>
+      <tr><td class="spec-attr">Lumen Maintenance</td><td class="spec-val">L70 &#64; 50,000 hrs (LM-80 verified) &middot; LED color shift warrantied &lt;180K over the warranty period</td></tr>
+      <tr><td class="spec-attr">Lumen Output</td><td class="spec-val"><strong>T1 STANDARD:</strong> LPVT14 2,300-4,400 lm &middot; LPVT22 2,300-4,400 lm &middot; LPVT24 3,300-5,500 lm &middot; <strong>T2 HIGH-OUTPUT:</strong> LPVT22 2,600-5,200 lm &middot; LPVT24 3,900-6,500 lm</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Driver &amp; Electrical</td></tr>
+      <tr><td class="spec-attr">Voltage</td><td class="spec-val">120-277V Universal &middot; 347/480V via SDT-HTI/325 step-down transformer accessory</td></tr>
+      <tr><td class="spec-attr">3-WATTselect</td><td class="spec-val">3-position DIP &middot; <strong>T1 STD:</strong> LPVT14 + LPVT22 = 18 / 26 / 35W &middot; LPVT24 = 26 / 35 / 44W &middot; <strong>T2 HIGH-OUT:</strong> LPVT22 = 20 / 30 / 40W &middot; LPVT24 = 30 / 40 / 50W</td></tr>
+      <tr><td class="spec-attr">3-CCTselect</td><td class="spec-val">3-position DIP &middot; 3500K / 4000K / 5000K &middot; <strong>9 configs per base SKU &middot; 45 field configs across the 5-SKU catalog</strong></td></tr>
+      <tr><td class="spec-attr">Power Factor</td><td class="spec-val">&gt; 0.9 non-flicker</td></tr>
+      <tr><td class="spec-attr">Starting Time</td><td class="spec-val">&lt; 0.5 seconds</td></tr>
+      <tr><td class="spec-attr">Dimming</td><td class="spec-val">0-10V continuous <strong>with Dim-to-Off</strong> (not a 10% floor) &middot; flicker-free operation</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Controls &amp; Connectivity</td></tr>
+      <tr><td class="spec-attr">Sensor Port</td><td class="spec-val"><strong>/SR (Sensor Ready)</strong> &middot; spec at order &middot; snap-in compatible with the full contr<span style="font-weight:700;">Ⓐ</span>LS + const<span style="font-weight:700;">Ⓐ</span>NT ecosystem</td></tr>
+      <tr><td class="spec-attr">Bi-Level</td><td class="spec-val">MSP-BLS (PIR) &middot; MSM-BLS (Microwave) &middot; 13&prime; max mount &middot; IR Remote commissioning &middot; ASHRAE 90.1 § 9.4 drop-in</td></tr>
+      <tr><td class="spec-attr">contr<span style="font-weight:700;">Ⓐ</span>LS by <span style="font-weight:700;">Ⓐ</span>CS</td><td class="spec-val">3 PIR sensors (8&prime; / 20&prime; / 40&prime; ceiling) + 2 controllers + Kinetic wall switch &middot; Bluetooth Mesh &middot; DLC NLC qualified</td></tr>
+      <tr><td class="spec-attr">contr<span style="font-weight:700;">Ⓐ</span>LS by SILVAIR</td><td class="spec-val">MSP-NLC / MSM-NLC / MSX-LV5-NLC &middot; enterprise Bluetooth Mesh &middot; SaaS commissioning</td></tr>
+      <tr><td class="spec-attr">Emergency</td><td class="spec-val">const<span style="font-weight:700;">Ⓐ</span>NT EM08 / EM15 / EM15-CL (const<span style="font-weight:700;">Ⓐ</span>NTLink) &middot; UL 924 &middot; NFPA 101 90-min egress</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
+      <tr><td class="spec-attr">DLC</td><td class="spec-val"><strong>DLC Premium · Dual-Listed (Ambient + Low-Bay)</strong> &middot; one SKU class qualifies for both utility rebate programs</td></tr>
+      <tr><td class="spec-attr">Standards</td><td class="spec-val">ETL Listed (Intertek US/CA) &middot; FCC Title 47 Part 15B &middot; RoHS &middot; UL Damp &middot; LM-79 / LM-80</td></tr>
+      <tr><td class="spec-attr">Country of Origin</td><td class="spec-val"><strong>Made in Mexico</strong> &middot; <strong>TAA Compliant</strong> &middot; federal-procurement-ready (GSA leases, USPS retrofits, DoD installs) &middot; one bid sheet covers commercial + federal lanes</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val"><strong>5-Year limited &middot; 50,000-hour rated life</strong> &middot; Limited Liability</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LPVT pro<span style="font-weight:700;">Ⓐ</span>RCH-T submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 2 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 3 — DIMENSIONS & MOUNTING                                -->
+<!-- ============================================================ -->
+<div class="page" id="page-3">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum3">LPVT24-MXP1/W44/C50</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Dimensions &amp; Mounting</h2>
+    <div class="section-eyebrow">5 SKU classes &middot; T-bar grid lay-in drop-in &middot; 1.42&Prime; flat-depth across the line</div>
+  </div>
+
+  <!-- THREE-VIEW DIMENSION DRAWINGS · all inline SVG for self-contained PDF -->
+  <div class="dim-grid">
+    <!-- 1×4 LPVT14 -->
+    <div class="dim-view" id="dimView14">
+      <div class="dim-view-label">LPVT14 · 1×4</div>
+      <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg" aria-label="LPVT14 plan view · 1×4 troffer · 11.93 by 47.87 inch outline">
+        <!-- Dimension call-outs frame -->
+        <line x1="30" y1="22" x2="220" y2="22" stroke="#888" stroke-width="0.6"/>
+        <line x1="30" y1="18" x2="30" y2="26" stroke="#888" stroke-width="0.6"/>
+        <line x1="220" y1="18" x2="220" y2="26" stroke="#888" stroke-width="0.6"/>
+        <text x="125" y="17" text-anchor="middle" fill="#444"
+              font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">47.87&Prime;</text>
+        <!-- Fixture outline (long-aspect troffer) -->
+        <rect x="30" y="30" width="190" height="60" fill="#F9F8F5" stroke="#222" stroke-width="1.2"/>
+        <!-- Diffuser face inset -->
+        <rect x="36" y="36" width="178" height="48" fill="url(#diffGrad2)" stroke="#888" stroke-width="0.4"/>
+        <defs>
+          <linearGradient id="diffGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#EEF1F5"/>
+            <stop offset="100%" stop-color="#D8DCE0"/>
+          </linearGradient>
+        </defs>
+        <!-- Pinstripes for ribbing -->
+        <g stroke="rgba(120,140,165,0.35)" stroke-width="0.4">
+          <line x1="80"  y1="36" x2="80"  y2="84"/>
+          <line x1="125" y1="36" x2="125" y2="84"/>
+          <line x1="170" y1="36" x2="170" y2="84"/>
+        </g>
+        <!-- Width call-out (right) -->
+        <line x1="232" y1="30" x2="232" y2="90" stroke="#888" stroke-width="0.6"/>
+        <line x1="228" y1="30" x2="236" y2="30" stroke="#888" stroke-width="0.6"/>
+        <line x1="228" y1="90" x2="236" y2="90" stroke="#888" stroke-width="0.6"/>
+        <text x="237" y="63" fill="#444"
+              font-family="JetBrains Mono, monospace" font-size="8" font-weight="700"
+              transform="rotate(90 237 63)">11.93&Prime;</text>
+        <!-- Section view (side) below -->
+        <text x="30" y="115" fill="#888" font-family="JetBrains Mono, monospace" font-size="7" letter-spacing="0.8">SECTION A-A · DEPTH</text>
+        <rect x="30" y="120" width="190" height="14" fill="#F9F8F5" stroke="#222" stroke-width="1.0"/>
+        <rect x="34" y="124" width="182" height="6" fill="url(#diffGrad2)" stroke="#888" stroke-width="0.3"/>
+        <line x1="225" y1="120" x2="225" y2="134" stroke="#888" stroke-width="0.6"/>
+        <line x1="221" y1="120" x2="229" y2="120" stroke="#888" stroke-width="0.6"/>
+        <line x1="221" y1="134" x2="229" y2="134" stroke="#888" stroke-width="0.6"/>
+        <text x="230" y="130" fill="#444"
+              font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">1.42&Prime;</text>
+        <!-- Class indicator -->
+        <text x="30" y="155" fill="#F32740" font-family="JetBrains Mono, monospace"
+              font-size="8" font-weight="700" letter-spacing="0.5">T1 · 18 / 26 / 35W · 2,300-4,400 lm</text>
+        <text x="30" y="166" fill="#888" font-family="JetBrains Mono, monospace"
+              font-size="7">1 SKU CLASS · 9 FIELD CONFIGS</text>
+      </svg>
+    </div>
+
+    <!-- 2×2 LPVT22 -->
+    <div class="dim-view" id="dimView22">
+      <div class="dim-view-label">LPVT22 · 2×2</div>
+      <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg" aria-label="LPVT22 plan view · 2×2 troffer · 23.82 by 23.82 inch outline">
+        <line x1="60" y1="22" x2="180" y2="22" stroke="#888" stroke-width="0.6"/>
+        <line x1="60" y1="18" x2="60" y2="26" stroke="#888" stroke-width="0.6"/>
+        <line x1="180" y1="18" x2="180" y2="26" stroke="#888" stroke-width="0.6"/>
+        <text x="120" y="17" text-anchor="middle" fill="#444"
+              font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">23.82&Prime;</text>
+        <!-- Square fixture outline -->
+        <rect x="60" y="30" width="120" height="90" fill="#F9F8F5" stroke="#222" stroke-width="1.2"/>
+        <rect x="66" y="36" width="108" height="78" fill="url(#diffGrad3)" stroke="#888" stroke-width="0.4"/>
+        <defs>
+          <linearGradient id="diffGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#EEF1F5"/>
+            <stop offset="100%" stop-color="#D8DCE0"/>
+          </linearGradient>
+        </defs>
+        <g stroke="rgba(120,140,165,0.35)" stroke-width="0.4">
+          <line x1="120" y1="36" x2="120" y2="114"/>
+          <line x1="66"  y1="75" x2="174" y2="75"/>
+        </g>
+        <line x1="192" y1="30" x2="192" y2="120" stroke="#888" stroke-width="0.6"/>
+        <line x1="188" y1="30" x2="196" y2="30" stroke="#888" stroke-width="0.6"/>
+        <line x1="188" y1="120" x2="196" y2="120" stroke="#888" stroke-width="0.6"/>
+        <text x="197" y="80" fill="#444"
+              font-family="JetBrains Mono, monospace" font-size="8" font-weight="700"
+              transform="rotate(90 197 80)">23.82&Prime;</text>
+        <text x="60" y="138" fill="#888" font-family="JetBrains Mono, monospace" font-size="7" letter-spacing="0.8">DEPTH 1.42&Prime; (FLAT LAY-IN)</text>
+        <text x="60" y="155" fill="#F32740" font-family="JetBrains Mono, monospace"
+              font-size="8" font-weight="700" letter-spacing="0.5">T1: 18/26/35W · T2: 20/30/40W</text>
+        <text x="60" y="166" fill="#888" font-family="JetBrains Mono, monospace"
+              font-size="7">2 SKU CLASSES · 18 FIELD CONFIGS</text>
+      </svg>
+    </div>
+
+    <!-- 2×4 LPVT24 ★ -->
+    <div class="dim-view" id="dimView24">
+      <div class="dim-view-label is-active">LPVT24 · 2×4 ★</div>
+      <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg" aria-label="LPVT24 plan view · 2×4 troffer · 23.74 by 47.87 inch outline">
+        <line x1="30" y1="22" x2="220" y2="22" stroke="#888" stroke-width="0.6"/>
+        <line x1="30" y1="18" x2="30" y2="26" stroke="#888" stroke-width="0.6"/>
+        <line x1="220" y1="18" x2="220" y2="26" stroke="#888" stroke-width="0.6"/>
+        <text x="125" y="17" text-anchor="middle" fill="#444"
+              font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">47.87&Prime;</text>
+        <rect x="30" y="30" width="190" height="95" fill="#FFF6E5" stroke="#F32740" stroke-width="1.4"/>
+        <rect x="36" y="36" width="178" height="83" fill="url(#diffGrad4)" stroke="#888" stroke-width="0.4"/>
+        <defs>
+          <linearGradient id="diffGrad4" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FFFDF5"/>
+            <stop offset="50%" stop-color="#F2F4F8"/>
+            <stop offset="100%" stop-color="#D8DCE0"/>
+          </linearGradient>
+        </defs>
+        <g stroke="rgba(120,140,165,0.30)" stroke-width="0.4">
+          <line x1="80"  y1="36" x2="80"  y2="119"/>
+          <line x1="125" y1="36" x2="125" y2="119"/>
+          <line x1="170" y1="36" x2="170" y2="119"/>
+          <line x1="36" y1="78" x2="214" y2="78"/>
+        </g>
+        <line x1="232" y1="30" x2="232" y2="125" stroke="#888" stroke-width="0.6"/>
+        <line x1="228" y1="30" x2="236" y2="30" stroke="#888" stroke-width="0.6"/>
+        <line x1="228" y1="125" x2="236" y2="125" stroke="#888" stroke-width="0.6"/>
+        <text x="237" y="82" fill="#444"
+              font-family="JetBrains Mono, monospace" font-size="8" font-weight="700"
+              transform="rotate(90 237 82)">23.74&Prime;</text>
+        <text x="30" y="145" fill="#888" font-family="JetBrains Mono, monospace" font-size="7" letter-spacing="0.8">DEPTH 1.42&Prime; (FLAT LAY-IN)</text>
+        <text x="30" y="158" fill="#F32740" font-family="JetBrains Mono, monospace"
+              font-size="8" font-weight="700" letter-spacing="0.5">T1: 26/35/44W · T2: 30/40/50W</text>
+        <text x="30" y="169" fill="#888" font-family="JetBrains Mono, monospace"
+              font-size="7">2 SKU CLASSES · 18 FIELD CONFIGS · DEFAULT</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- DIMENSION TABLE -->
+  <table class="spec-table">
+    <thead>
+      <tr class="spec-section-head">
+        <td>SKU Class</td>
+        <td>A (L)</td>
+        <td>B (W)</td>
+        <td>C (D)</td>
+        <td>Weight</td>
+        <td>WATTselect</td>
+        <td>Lumen Range</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="dimRow14"><td class="spec-attr">LPVT14-MXP1 &middot; T1 STANDARD &middot; 1&times;4</td><td>47.87&Prime;</td><td>11.93&Prime;</td><td>1.42&Prime;</td><td>4.0 lb</td><td>18 / 26 / 35W</td><td>2,300-4,400 lm</td></tr>
+      <tr id="dimRow22T1"><td class="spec-attr">LPVT22-MXP1 &middot; T1 STANDARD &middot; 2&times;2</td><td>23.82&Prime;</td><td>23.82&Prime;</td><td>1.42&Prime;</td><td>3.9 lb</td><td>18 / 26 / 35W</td><td>2,300-4,400 lm</td></tr>
+      <tr id="dimRow22T2"><td class="spec-attr">LPVT22-MXP2 &middot; T2 HIGH-OUTPUT &middot; 2&times;2</td><td>23.82&Prime;</td><td>23.82&Prime;</td><td>1.42&Prime;</td><td>3.9 lb</td><td>20 / 30 / 40W</td><td>2,600-5,200 lm</td></tr>
+      <tr id="dimRow24T1"><td class="spec-attr">LPVT24-MXP1 &middot; T1 STANDARD &middot; 2&times;4 &#9733;</td><td>47.87&Prime;</td><td>23.74&Prime;</td><td>1.42&Prime;</td><td>7.4 lb</td><td>26 / 35 / 44W</td><td>3,300-5,500 lm</td></tr>
+      <tr id="dimRow24T2"><td class="spec-attr">LPVT24-MXP2 &middot; T2 HIGH-OUTPUT &middot; 2&times;4</td><td>47.87&Prime;</td><td>23.74&Prime;</td><td>1.42&Prime;</td><td>7.4 lb</td><td>30 / 40 / 50W</td><td>3,900-6,500 lm</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 14px;">
+    <table class="spec-table">
+      <tbody>
+        <tr class="spec-section-head"><td colspan="2">Install Pattern · T-Bar Grid Drop-In</td></tr>
+        <tr><td class="spec-attr">Ceiling System</td><td class="spec-val"><strong>Standard 15/16&Prime; T-bar drop-ceiling grid</strong> &middot; lay-in install &middot; no rough-in box needed for grid install</td></tr>
+        <tr><td class="spec-attr">Wiring</td><td class="spec-val">Hardwire to line voltage at the J-Box &middot; 120-277V universal &middot; Class I wiring for dimming run (separate from line-voltage run per code)</td></tr>
+        <tr><td class="spec-attr">Sensor Mount</td><td class="spec-val">Bi-Level / <span style="font-weight:700;">Ⓐ</span>CS / SILVAIR sensor accessory mount via <strong>/SR option</strong> &middot; snap-in &middot; field-installable or factory-installed at order</td></tr>
+        <tr><td class="spec-attr">Class Toggle</td><td class="spec-val">MXP1 suffix = T1 STD (18-44W &middot; ambient warehouse / gym / retail) &middot; MXP2 suffix = T2 HIGH-OUTPUT (20-50W up to 6,500 lm &middot; low-bay industrial / tall-ceiling) &middot; <strong>identical housing form factor</strong></td></tr>
+        <tr><td class="spec-attr">Retrofit Path</td><td class="spec-val">For existing fluorescent troffer housings staying in place, spec <strong>retro<span style="font-weight:700;">Ⓐ</span>RCH-T1 (LPVR)</strong> door-kit retrofit (10-15 min) &middot; pro<span style="font-weight:700;">Ⓐ</span>RCH-T is the new-construction and whole-fixture-replace answer</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LPVT pro<span style="font-weight:700;">Ⓐ</span>RCH-T submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 3 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 4 — ORDERING CODE & PHOTOMETRICS                         -->
+<!-- ============================================================ -->
+<div class="page" id="page-4">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum4">LPVT24-MXP1/W44/C50</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Ordering Information</h2>
+    <div class="section-eyebrow">Configure your catalog number</div>
+  </div>
+
+  <!-- ORDERING CODE VISUAL BREAKDOWN · 6 segments -->
+  <div class="order-code">
+    <div class="order-segment active"><div class="order-seg-label">Family</div><div class="order-seg-value">LPVT</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Size</div><div class="order-seg-value" id="ocSize">24</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Series</div><div class="order-seg-value" id="ocSeries">MXP1</div></div>
+    <div class="order-segment" id="ocSensorSeg"><div class="order-seg-label">Sensor</div><div class="order-seg-value" id="ocSensor">&mdash;</div></div>
+    <div class="order-segment" id="ocWLockSeg"><div class="order-seg-label">/W## Lock</div><div class="order-seg-value" id="ocWLock">&mdash;</div></div>
+    <div class="order-segment" id="ocCLockSeg"><div class="order-seg-label">/C## Lock</div><div class="order-seg-value" id="ocCLock">&mdash;</div></div>
+  </div>
+
+  <!-- ORDERING MATRIX -->
+  <table class="order-matrix">
+    <thead>
+      <tr><th style="width:16%">Segment</th><th>Available Codes</th></tr>
+    </thead>
+    <tbody>
+      <tr id="rowFamily" class="active-row"><td class="code">LPVT</td><td>pro<span style="font-weight:700;">Ⓐ</span>RCH-T family &middot; plano<span style="font-weight:700;">Ⓐ</span>RCH ECO Center-Basket Troffer &middot; <strong>DLC Premium · Dual-Listed</strong> (Ambient + Low-Bay)</td></tr>
+      <tr id="rowSize"><td class="code">14 / 22 / 24</td><td>Size class &mdash; <strong>14</strong> = 1&times;4 (LPVT14 · T1 only) &middot; <strong>22</strong> = 2&times;2 (LPVT22 · T1 + T2) &middot; <strong>24</strong> = 2&times;4 (LPVT24 · T1 + T2) &#9733;</td></tr>
+      <tr id="rowSeries"><td class="code">MXP1 / MXP2</td><td><strong>MXP1 = pro<span style="font-weight:700;">Ⓐ</span>RCH-T1 STANDARD</strong> (18-44W, TAA Made in Mexico) &middot; <strong>MXP2 = pro<span style="font-weight:700;">Ⓐ</span>RCH-T2 HIGH-OUTPUT</strong> (20-50W, up to 6,500 lm, TAA Made in Mexico) &middot; identical housing form factor</td></tr>
+      <tr id="rowSr"><td class="code">/SR</td><td>Optional <strong>Sensor Ready</strong> port &mdash; snap-in for the contr<span style="font-weight:700;">Ⓐ</span>LS + const<span style="font-weight:700;">Ⓐ</span>NT ecosystem &middot; specify at order if installing fixture-mount sensors</td></tr>
+      <tr id="rowWlock"><td class="code">/W18 to /W50</td><td>Optional factory-lock watt &mdash; collapses 3-WATTselect to a single fixed value (e.g. /W44 = 44W locked) &middot; Workbench assembly · 1-3 wk &middot; valid range bounded by class</td></tr>
+      <tr id="rowClock"><td class="code">/C35 to /C50</td><td>Optional factory-lock CCT &mdash; collapses 3-CCTselect to a single fixed value (e.g. /C50 = 5000K locked) &middot; Workbench assembly · 1-3 wk &middot; 3500K / 4000K / 5000K only</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ACCESSORIES MATRIX -->
+  <div style="margin-top: 14px;">
+    <table class="order-matrix">
+      <thead>
+        <tr><th style="width:16%">Accessory</th><th>Order Code</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="code">EM Battery</td><td>EM08 (8W) &middot; EM15 (15W) &middot; EM15-CL (15W + const<span style="font-weight:700;">Ⓐ</span>NTLink) &mdash; order as separate line item &middot; UL 924 &middot; NFPA 101 90-min egress</td></tr>
+        <tr><td class="code">Bi-Level Sensor</td><td>MSP-BLS (PIR) &middot; MSM-BLS (Microwave) &middot; 13&prime; max mount &middot; RM-HT/06S IR Remote commissioning</td></tr>
+        <tr><td class="code"><span style="font-weight:700;">Ⓐ</span>CS Sensor</td><td>MSP-ACS (8&prime; fixture-mount) &middot; MSP-20CM-ACS (20&prime; ceiling) &middot; MSP-40CM-ACS (40&prime; ceiling) &middot; MSX-ACS / MSX-LV20-ACS controllers &middot; 50WM-ACS Kinetic switch</td></tr>
+        <tr><td class="code">SILVAIR NLC</td><td>MSP-NLC (8&prime;) &middot; MSM-NLC (60&prime;) &middot; MSX-LV5-NLC J-box controller &mdash; enterprise Bluetooth Mesh &middot; SaaS commissioning</td></tr>
+        <tr><td class="code">Wiring Whip</td><td>/E6W3 &mdash; 6&prime; 3-wire pre-stub &middot; contractor labor saver</td></tr>
+        <tr><td class="code">Step-Down</td><td>SDT-HTI/325 &mdash; 347/480V step-down transformer for high-voltage installs</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PHOTOMETRIC POLAR PLOT + SUMMARY -->
+  <div class="section-head" style="margin-top: 18px;">
+    <h2 style="font-size: 12pt;">Photometric Data</h2>
+    <div class="section-eyebrow">LM-79 measured · 120° Lambertian troffer · zero upward emission</div>
+  </div>
+
+  <div class="photo-grid">
+    <div class="photo-polar">
+      <!-- Inline polar plot · 120° wide Lambertian (cosine) distribution · C0 + C90 symmetric -->
+      <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" aria-label="LPVT proⒶRCH-T polar candela distribution · 120 degree wide Lambertian troffer">
+        <defs>
+          <radialGradient id="polarGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(243,39,64,0.18)"/>
+            <stop offset="100%" stop-color="rgba(243,39,64,0)"/>
+          </radialGradient>
+        </defs>
+
+        <!-- Background grid · 4 concentric rings -->
+        <g fill="none" stroke="#D8D6D2" stroke-width="0.6">
+          <circle cx="180" cy="180" r="40"/>
+          <circle cx="180" cy="180" r="80"/>
+          <circle cx="180" cy="180" r="120"/>
+          <circle cx="180" cy="180" r="160"/>
+        </g>
+        <!-- Ring labels -->
+        <g fill="#888" font-family="JetBrains Mono, monospace" font-size="7">
+          <text x="184" y="142">500</text>
+          <text x="184" y="102">1000</text>
+          <text x="184" y="62">1500</text>
+          <text x="184" y="22">2000 cd</text>
+        </g>
+        <!-- Cross-hairs · 0/90/180/270 axes -->
+        <g stroke="#A6A4A0" stroke-width="0.8">
+          <line x1="180" y1="20" x2="180" y2="340"/>
+          <line x1="20" y1="180" x2="340" y2="180"/>
+        </g>
+        <!-- Angle labels -->
+        <g fill="#444" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">
+          <text x="180" y="15" text-anchor="middle">0°</text>
+          <text x="345" y="184" text-anchor="start">90°</text>
+          <text x="180" y="355" text-anchor="middle">180°</text>
+          <text x="15"  y="184" text-anchor="end">270°</text>
+        </g>
+
+        <!-- Lambertian C0 curve · peak at 180° (downward) at ~1900 cd
+             r(θ) = peak * cos(θ - 180°) for θ in [60°, 300°] · 120° beam half-angle at 60° / 300° edges
+             Plotted as polar polygon. Mapping: 1900 cd → 152 px (1 cd ≈ 0.08 px) -->
+        <path d="M 180 332
+                 L 197 331 L 213 329 L 229 326 L 244 322 L 258 316 L 271 309 L 282 300 L 292 290
+                 L 300 278 L 306 265 L 310 251 L 312 236 L 311 221 L 308 207 L 302 194 L 294 184
+                 L 285 179
+                 L 285 179
+                 L 275 184 L 267 194 L 260 207 L 256 221 L 255 236 L 257 251 L 261 265 L 268 278
+                 L 277 290 L 287 300 L 297 309 L 311 316 L 325 322
+                 Z"
+              fill="rgba(243,39,64,0.18)" stroke="#F32740" stroke-width="1.6"
+              transform="rotate(-90 180 180)"/>
+
+        <!-- Mirrored C90 curve (slightly offset for visual contrast — Lambertian is rotationally symmetric, both plotted to confirm) -->
+        <path d="M 180 332
+                 L 197 331 L 213 329 L 229 326 L 244 322 L 258 316 L 271 309 L 282 300 L 292 290
+                 L 300 278 L 306 265 L 310 251 L 312 236 L 311 221 L 308 207 L 302 194 L 294 184
+                 L 285 179
+                 L 275 184 L 267 194 L 260 207 L 256 221 L 255 236 L 257 251 L 261 265 L 268 278
+                 L 277 290 L 287 300 L 297 309 L 311 316 L 325 322
+                 Z"
+              fill="none" stroke="#1A4FA8" stroke-width="1.0" stroke-dasharray="3 2"
+              transform="rotate(0 180 180)" opacity="0.7"/>
+
+        <!-- Center mark + peak callout -->
+        <circle cx="180" cy="180" r="2" fill="#0E0E10"/>
+        <text x="180" y="335" text-anchor="middle" fill="#F32740"
+              font-family="JetBrains Mono, monospace" font-size="9" font-weight="700">PEAK · NADIR</text>
+
+        <!-- Legend -->
+        <g font-family="JetBrains Mono, monospace" font-size="7">
+          <line x1="25" y1="345" x2="40" y2="345" stroke="#F32740" stroke-width="1.6"/>
+          <text x="44" y="348" fill="#444">C0  (length)</text>
+          <line x1="100" y1="345" x2="115" y2="345" stroke="#1A4FA8" stroke-width="1.0" stroke-dasharray="3 2"/>
+          <text x="119" y="348" fill="#444">C90 (width)</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="photo-summary">
+      <table>
+        <tr><td>Distribution</td><td>120° Lambertian · IES Type V</td></tr>
+        <tr><td>Peak Candela</td><td id="photoPeak">1,920 cd @ 0° nadir</td></tr>
+        <tr><td>Total Lumens</td><td id="photoLumens">5,500 lm</td></tr>
+        <tr><td>Efficacy</td><td id="photoEff">125 lm/W</td></tr>
+        <tr><td>BUG Rating</td><td>B0-U0-G0</td></tr>
+        <tr><td>Spill Control</td><td>0% upward · 100% downward</td></tr>
+        <tr><td>Test Lab</td><td>EVERFINE GO-R5000</td></tr>
+        <tr><td>Test Standard</td><td>IESNA LM-79 / LM-80</td></tr>
+        <tr><td>IES File</td><td id="photoIesFile">Troffer 2x4 120V 44W 5000K.IES</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- CERTIFICATIONS · inline SVG badges so the PDF is self-contained -->
+  <div class="certs">
+    <!-- DLC Premium Dual-Listed -->
+    <svg class="cert-badge-svg" viewBox="0 0 96 36" xmlns="http://www.w3.org/2000/svg" aria-label="DLC Premium Dual-Listed">
+      <rect x="1" y="1" width="94" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="48" y="14" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="9" font-weight="700" letter-spacing="0.6">DLC PREMIUM</text>
+      <text x="48" y="26" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="8" font-weight="700" letter-spacing="0.4">DUAL-LISTED</text>
+      <text x="48" y="33" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="5.5" letter-spacing="0.4">AMBIENT + LOW-BAY</text>
+    </svg>
+    <!-- UL Damp Location -->
+    <svg class="cert-badge-svg" viewBox="0 0 72 36" xmlns="http://www.w3.org/2000/svg" aria-label="UL Damp Location">
+      <circle cx="18" cy="18" r="15" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="18" y="22" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="11" font-weight="700">UL</text>
+      <text x="42" y="16" fill="#0E0E10" font-family="Lato, sans-serif" font-size="7" font-weight="700" letter-spacing="0.4">DAMP</text>
+      <text x="42" y="26" fill="#6B6B70" font-family="Lato, sans-serif" font-size="6" letter-spacing="0.3">LOCATION</text>
+    </svg>
+    <!-- ETL US/CA -->
+    <svg class="cert-badge-svg" viewBox="0 0 72 36" xmlns="http://www.w3.org/2000/svg" aria-label="ETL Intertek US CA">
+      <circle cx="18" cy="18" r="15" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="18" y="22" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="10" font-weight="700">ETL</text>
+      <text x="42" y="16" fill="#0E0E10" font-family="Lato, sans-serif" font-size="7" font-weight="700">US</text>
+      <text x="56" y="16" fill="#0E0E10" font-family="Lato, sans-serif" font-size="7" font-weight="700">CA</text>
+      <text x="42" y="26" fill="#6B6B70" font-family="Lato, sans-serif" font-size="6">INTERTEK</text>
+    </svg>
+    <!-- FCC -->
+    <svg class="cert-badge-svg" viewBox="0 0 62 36" xmlns="http://www.w3.org/2000/svg" aria-label="FCC Part 15B">
+      <rect x="1" y="1" width="60" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="31" y="16" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="11" font-weight="700">FCC</text>
+      <text x="31" y="27" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="6.5" letter-spacing="0.3">PART 15B</text>
+    </svg>
+    <!-- RoHS -->
+    <svg class="cert-badge-svg" viewBox="0 0 62 36" xmlns="http://www.w3.org/2000/svg" aria-label="RoHS Compliant">
+      <rect x="1" y="1" width="60" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="31" y="16" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="10" font-weight="700">RoHS</text>
+      <text x="31" y="27" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="6.5" letter-spacing="0.3">COMPLIANT</text>
+    </svg>
+    <!-- TAA -->
+    <svg class="cert-badge-svg" viewBox="0 0 84 36" xmlns="http://www.w3.org/2000/svg" aria-label="TAA Compliant · Made in Mexico">
+      <rect x="1" y="1" width="82" height="34" fill="white" stroke="#F32740" stroke-width="1.4"/>
+      <text x="42" y="15" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="11" font-weight="700" letter-spacing="0.8">TAA</text>
+      <text x="42" y="27" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="6.5" letter-spacing="0.3">MADE IN MEXICO</text>
+    </svg>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LPVT pro<span style="font-weight:700;">Ⓐ</span>RCH-T submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 4 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SUBMITTAL AUTO-FILL · LPVT proⒶRCH-T                          -->
+<!-- ============================================================ -->
+<script>
+/* =============================================================================
+   SUBMITTAL AUTO-FILL · LPVT proⒶRCH-T
+   ----------------------------------------------------------------------------
+   Reads URL query params from the §9 Configurator and stamps the live catalog
+   number, ordering breakdown, quick specs, photometric peak, and dimension-row
+   highlight across all 4 pages.
+
+   Parameters (all optional · sensible defaults):
+     sku      — full canonical SKU (preferred · auto-built upstream)
+     form     — 14 | 22 | 24
+     series   — MXP1 (T1 STANDARD) | MXP2 (T2 HIGH-OUTPUT)
+     wattage  — chip value (per knowledge pack §3 watt encoder)
+     cct      — 3500 | 4000 | 5000
+     variant  — comma-list (e.g. "SR")
+     emergency, sensor, mount, whip — optional accessory codes
+   ============================================================================= */
+(function() {
+
+  // ---- Class-aware watt + lumen tables · matches datasheet pg 2 ----
+  // Keyed by form (14/22/24) → series (MXP1/MXP2) → watt → lumen
+  var LUMEN_TABLE = {
+    '14': {
+      'MXP1': { '18': 2300, '26': 3300, '35': 4400 }
+    },
+    '22': {
+      'MXP1': { '18': 2300, '26': 3300, '35': 4400 },
+      'MXP2': { '20': 2600, '30': 3900, '40': 5200 }
+    },
+    '24': {
+      'MXP1': { '26': 3300, '35': 4400, '44': 5500 },
+      'MXP2': { '30': 3900, '40': 5200, '50': 6500 }
+    }
+  };
+
+  var FORM_LABEL = { '14': '1×4', '22': '2×2', '24': '2×4' };
+  var SERIES_LABEL = {
+    'MXP1': { name: 'T1 STANDARD',    lpw: 125, peakBase: 1690 },
+    'MXP2': { name: 'T2 HIGH-OUTPUT', lpw: 130, peakBase: 1990 }
+  };
+
+  // Peak candela scales roughly linearly with lumens for a Lambertian troffer.
+  // peakCd ≈ lm * (peakBase / 5500) — gives realistic per-watt readings.
+  function peakCandelaFor(lm, series) {
+    var base = (SERIES_LABEL[series] || SERIES_LABEL['MXP1']).peakBase;
+    return Math.round(lm * (base / 5500));
+  }
+
+  // ---- Parse URL params ----
+  var params  = new URLSearchParams(window.location.search);
+  var skuQ    = params.get('sku')      || '';
+  var form    = params.get('form')     || '24';
+  var series  = params.get('series')   || 'MXP1';
+  var wattage = params.get('wattage')  || '';
+  var cct     = params.get('cct')      || '5000';
+  var variant = (params.get('variant') || '').split(',').filter(Boolean);
+  var sensor  = params.get('sensor')   || '';
+  var emerg   = params.get('emergency')|| '';
+  var whip    = params.get('whip')     || '';
+
+  // Default watt is the highest in the series×form (★ default per knowledge pack)
+  function defaultWattFor(f, s) {
+    var t = LUMEN_TABLE[f] && LUMEN_TABLE[f][s];
+    if (!t) return '';
+    var keys = Object.keys(t);
+    return keys[keys.length - 1];
+  }
+  if (!wattage) wattage = defaultWattFor(form, series);
+
+  // If the requested form doesn't carry the requested series (e.g. LPVT14 has no T2),
+  // fall back to MXP1.
+  if (!LUMEN_TABLE[form] || !LUMEN_TABLE[form][series]) {
+    series = 'MXP1';
+    wattage = defaultWattFor(form, series);
+  }
+
+  // ---- Resolve specs ----
+  var lumens = (LUMEN_TABLE[form][series] && LUMEN_TABLE[form][series][wattage]) || 0;
+  var lpw    = SERIES_LABEL[series].lpw;
+  var peakCd = peakCandelaFor(lumens, series);
+
+  // ---- Build SKU if not passed in ----
+  // Pattern · LPVT{form}-{series}[/W##][/C##][/SR][/{accessory}…]
+  function buildSku() {
+    if (skuQ) return skuQ;
+    var s = 'LPVT' + form + '-' + series;
+    if (wattage) s += '/W' + wattage;
+    if (cct)     s += '/C' + String(cct).slice(0, 2);
+    if (variant.indexOf('SR') >= 0) s += '/SR';
+    if (emerg)   s += '/' + emerg;
+    if (sensor)  s += '/' + sensor;
+    if (whip)    s += '/' + whip;
+    return s;
+  }
+  var sku = buildSku();
+
+  // ---- Ship-tier resolution · matches PDP CFG-CFG-1 v1.2 ----
+  // Core SKU + any /W## /C## /SR are QS. EM08/EM15/EM15-CL QS. Bi-Level QS.
+  // ⒶCS fixture/wall QS. SILVAIR + 20CM/40CM ceiling = MTO. Workbench locks
+  // shown in legend; the CTA enables both classes.
+  var isMTO = /20CM|40CM|NLC|SILVAIR/i.test(sku);
+  var isQS  = !isMTO;
+
+  // ---- Stamp every visible catalog-number slot with the resolved SKU ----
+  document.querySelectorAll('#catNum, #catNum2, #catNum3, #catNum4, #liveSku, #piCatNum').forEach(function(el) {
+    el.textContent = sku;
+  });
+
+  // ---- Stock pill (no-print bar) ----
+  var pill = document.getElementById('stockPill');
+  if (isQS) {
+    pill.className = 'qs-pill';
+    pill.textContent = 'QuickShip · 3-5 day';
+  } else {
+    pill.className = 'mto-pill';
+    pill.textContent = 'Made-to-Order · 4-6 wk';
+  }
+
+  // ---- Page 1 · Quick Specs ----
+  document.getElementById('qsLumens').innerHTML   = lumens.toLocaleString() + '<span class="qs-unit">lm @ ' + wattage + 'W</span>';
+  document.getElementById('qsWatts').innerHTML    = wattage + '<span class="qs-unit">W</span>';
+  document.getElementById('qsCct').innerHTML      = cct + '<span class="qs-unit">K</span>';
+  document.getElementById('qsEfficacy').innerHTML = lpw + '<span class="qs-unit">LM/W</span>';
+
+  // ---- Page 2 · Specs eyebrow ----
+  var es = document.getElementById('specsEyebrow');
+  if (es) {
+    es.innerHTML = sku + ' &middot; ' + FORM_LABEL[form] + ' center-basket troffer &middot; ' + SERIES_LABEL[series].name;
+  }
+
+  // ---- Page 3 · Highlight the matching dimension row ----
+  document.querySelectorAll('#dimRow14, #dimRow22T1, #dimRow22T2, #dimRow24T1, #dimRow24T2').forEach(function(tr) {
+    tr.classList.remove('active-row');
+  });
+  var rowId = 'dimRow' + form + (form === '14' ? '' : (series === 'MXP2' ? 'T2' : 'T1'));
+  var row = document.getElementById(rowId);
+  if (row) row.classList.add('active-row');
+
+  // ---- Page 3 · Active dimension view ----
+  // Toggle the brand-red is-active label onto the matching SVG card.
+  document.querySelectorAll('.dim-view-label').forEach(function(l) { l.classList.remove('is-active'); });
+  var activeLabelMap = { '14': '#dimView14', '22': '#dimView22', '24': '#dimView24' };
+  var dv = document.querySelector(activeLabelMap[form] + ' .dim-view-label');
+  if (dv) dv.classList.add('is-active');
+
+  // ---- Page 4 · Ordering Code segments ----
+  document.getElementById('ocSize').textContent   = form;
+  document.getElementById('ocSeries').textContent = series;
+  document.getElementById('ocSensor').textContent = (variant.indexOf('SR') >= 0 ? '/SR' : '—');
+  document.getElementById('ocWLock').textContent  = wattage ? '/W' + wattage : '—';
+  document.getElementById('ocCLock').textContent  = cct     ? '/C' + String(cct).slice(0, 2) : '—';
+  // Activate the segment chips for any non-empty optional segment
+  if (variant.indexOf('SR') >= 0) document.getElementById('ocSensorSeg').classList.add('active');
+  if (wattage)                    document.getElementById('ocWLockSeg').classList.add('active');
+  if (cct)                        document.getElementById('ocCLockSeg').classList.add('active');
+
+  // ---- Page 4 · Highlight active rows in the ordering matrix ----
+  document.getElementById('rowSize').classList.add('active-row');
+  document.getElementById('rowSeries').classList.add('active-row');
+  if (variant.indexOf('SR') >= 0) document.getElementById('rowSr').classList.add('active-row');
+  if (wattage)                    document.getElementById('rowWlock').classList.add('active-row');
+  if (cct)                        document.getElementById('rowClock').classList.add('active-row');
+
+  // ---- Page 4 · Photometric summary ----
+  document.getElementById('photoPeak').textContent   = peakCd.toLocaleString() + ' cd @ 0° nadir';
+  document.getElementById('photoLumens').textContent = lumens.toLocaleString() + ' lm';
+  document.getElementById('photoEff').textContent    = lpw + ' lm/W';
+  document.getElementById('photoIesFile').textContent =
+    'Troffer ' + FORM_LABEL[form] + ' 120V ' + wattage + 'W ' + cct + 'K.IES';
+
+  // ---- Date stamps ----
+  var d = new Date();
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('liveDate').textContent =
+    months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  document.getElementById('revDate').textContent =
+    d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+
+  // ============================================================================
+  // CFG-SUB-1 v2 · Editable Catalog Number · snapshot-then-rederive · session-only
+  // ----------------------------------------------------------------------------
+  // James 2026-05-18 playbook rule. User types a project-specific label into
+  // the top-right Catalog Number box (e.g. "ABC-001") and every visible
+  // instance of the ORIGINAL SKU on the page swaps to match in real time.
+  //
+  // V2 fix (snapshot-then-rederive): snapshot the original text of every node
+  // that contains `originalSku` at load time, then on each input event
+  // re-derive each node's text from the cached original via
+  // originalText.split(originalSku).join(override). The sweep is idempotent
+  // and only ever matches the full original SKU string — partial intermediate
+  // states (single chars, prefixes) can never propagate.
+  //
+  // Edits don't touch <a href>, data-*, scripts, styles, or the `sku` JS variable.
+  // ============================================================================
+  (function setupEditableCatalogNumber() {
+    var originalSku = sku;
+    var editor = document.getElementById('catNum');
+    if (!editor) return;
+
+    // Seed document.title so Save-as-PDF picks up a useful filename AND so
+    // the title sweep below has originalSku to find on user override.
+    if (document.title.indexOf(originalSku) === -1) {
+      document.title = originalSku + ' · ' + document.title;
+    }
+    var originalTitle = document.title;
+
+    // ── SNAPSHOT — record original text of every node that contains originalSku ──
+    // Skips <script>, <style>, and the editor itself. Captured once at load.
+    var matchedNodes = []; // [{node, originalText}, ...]
+    (function snapshot() {
+      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(n) {
+          var p = n.parentNode;
+          while (p) {
+            if (p === editor) return NodeFilter.FILTER_REJECT;
+            if (p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT;
+            p = p.parentNode;
+          }
+          return n.nodeValue.indexOf(originalSku) !== -1
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        }
+      });
+      while (walker.nextNode()) {
+        matchedNodes.push({ node: walker.currentNode, originalText: walker.currentNode.nodeValue });
+      }
+    })();
+
+    // ── APPLY — re-derive every matched node from its cached original ──
+    // Idempotent. Calling applyOverride('X') then applyOverride('YZ') is
+    // identical to starting fresh and calling applyOverride('YZ') directly.
+    function applyOverride(newDisplay) {
+      var override = newDisplay || originalSku;
+      matchedNodes.forEach(function(item) {
+        item.node.nodeValue = item.originalText.split(originalSku).join(override);
+      });
+      document.title = originalTitle.split(originalSku).join(override);
+    }
+
+    editor.addEventListener('input', function() {
+      // Strip newlines, cap at 40 chars. Don't rewrite editor.textContent — caret would jump.
+      var raw = (editor.textContent || '').replace(/[\r\n]+/g, ' ').slice(0, 40);
+      var nextDisplay = raw.trim() ? raw : originalSku;
+      applyOverride(nextDisplay);
+    });
+
+    editor.addEventListener('blur', function() {
+      // Empty field on blur → restore original everywhere
+      var v = editor.textContent.trim();
+      if (!v) {
+        editor.textContent = originalSku;
+        applyOverride(originalSku);
+      }
+    });
+
+    // Keep field single-line — Enter commits + blurs
+    editor.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        editor.blur();
+      }
+    });
+  })();
+})();
+</script>
+
+</body>
+</html>

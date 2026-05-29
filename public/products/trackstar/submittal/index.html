@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LTRK · Trackstar — Submittal Sheet</title>
+
+<!--
+  ALG SUBMITTAL TEMPLATE · LTRK Trackstar v1 (canonical)
+  ======================================================
+  Reads URL query params from §9 Configurator and auto-fills the catalog number,
+  hero photo, quick specs, ordering breakdown, dimensions, and photometric data
+  per the resolved SKU.
+
+  Canonical rules applied (per /PM/playbooks/PDP_BUILD_PLAYBOOK.md):
+    · CFG-SUB-1 v2  → editable Catalog Number with TreeWalker snapshot-then-
+                      rederive across all 4 pages, title, and project info
+    · CFG-SUB-2     → single product hero image (no dual-image hero)
+    · CFG-PHOTO-1   → polar SVG box uses width-cap + object-fit:contain
+    · CFG-WARR-1 v1.1 → ECO 5-year / 50,000-hour Limited Liability
+    · CFG-CERT-1    → inline SVG cert badges (self-contained PDF)
+    · CFG-INV-1     → no inventory counts anywhere
+
+  SKU pattern · LTRK3W{20|30}-5CS/90/2050/{B|W}
+    LTRK         · family (LED Track Light)
+    3W{20|30}    · SKU class (3-WATTselect: 20W max or 30W max)
+    -5CS         · 5-CCTselect (always present)
+    /90          · CRI 90+ truⒶCOLOR (always present)
+    /2050        · 20°-50° beamⒶDJUST optical-collar (always present)
+    /{B|W}       · finish (Black · White)
+
+  Example URL from §9 cfgCtaPdf:
+    submittal_trackstar.html?sku=LTRK3W30-5CS/90/2050/B
+                            &class=3W30&finish=B&watt=30&cct=50
+
+  Print: File → Print → Save as PDF (letter portrait) — or click "Save as PDF".
+-->
+
+<style>
+  /* ============= PRINT-OPTIMIZED CSS ============= */
+  @page { size: letter portrait; margin: 0.5in 0.6in; }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+    .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+    .page:last-of-type { page-break-after: auto; }
+    .catalog-number-hint { display: none !important; }
+  }
+
+  /* ============= TYPE + COLOR TOKENS ============= */
+  :root {
+    --brand-red: #F32740;
+    --ink: #0E0E10;
+    --ink-2: #2A2A2D;
+    --muted: #6B6B70;
+    --rule: #D8D6D2;
+    --rule-strong: #A6A4A0;
+    --tint: #F6F4F0;
+    --hi: #FFF6E5;
+    --eco: #4f7d4a; /* green band for ECO tier */
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Lato', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.5pt;
+    line-height: 1.4;
+    background: #E8E6E2;
+  }
+  body { padding: 24px 12px; }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 24px;
+    padding: 0.55in 0.65in;
+    background: white;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  h1, h2, h3, h4 { font-family: 'Lato', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+  .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+  .aa { font-family: 'JetBrains Mono', monospace; font-size: 0.94em; vertical-align: -0.04em; font-weight: 700; }
+
+  /* ============= PAGE HEADER (every page) ============= */
+  .submittal-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+  .submittal-head .brand-mark { width: 28px; height: 28px; background: var(--brand-red); display: inline-block; }
+  .submittal-head .brand-name { font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1; }
+  .submittal-head .brand-sub { font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted); text-transform: uppercase; }
+  .submittal-head .catalog-block { text-align: right; }
+  .submittal-head .catalog-eyebrow { font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted); text-transform: uppercase; margin-bottom: 2px; }
+  .submittal-head .catalog-number {
+    font-size: 11pt; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+    border: 1.5px solid var(--ink);
+    padding: 4px 10px; display: inline-block;
+    letter-spacing: 0.5pt;
+    max-width: 5.4in; word-break: break-all;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .submittal-head .catalog-number:hover { background: var(--hi); }
+  .submittal-head .catalog-number:focus { background: var(--hi); border-color: var(--brand-red); outline: none; }
+  .catalog-number-hint { display: block; font-size: 6.5pt; letter-spacing: 1pt; color: var(--muted); text-transform: uppercase; margin-top: 3px; }
+
+  /* ============= PROJECT INFO FORM ============= */
+  .project-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule-strong);
+    margin-bottom: 14px;
+  }
+  .pi-cell { padding: 6px 9px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); min-height: 38px; }
+  .pi-cell:nth-child(3n) { border-right: none; }
+  .pi-cell:nth-child(n+4) { border-bottom: none; }
+  .pi-label { font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+  .pi-value { border-bottom: 1px dotted var(--rule-strong); min-height: 14px; padding-top: 2px; word-break: break-all; }
+
+  /* ============= PRODUCT TITLE BAND ============= */
+  .product-title {
+    margin: 14px 0 14px;
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  }
+  .product-title h1 { font-size: 22pt; line-height: 1; margin: 0; }
+  .product-title .tier-badge {
+    display: inline-block;
+    background: var(--eco);
+    color: white;
+    font-size: 9pt; font-weight: 700; letter-spacing: 1pt;
+    padding: 4px 10px;
+    text-transform: uppercase;
+  }
+  .product-title .tagline { font-size: 9.5pt; color: var(--ink-2); margin-top: 4px; line-height: 1.35; }
+
+  /* ============= HERO + QUICK SPECS GRID · CFG-SUB-2 single image ============= */
+  .at-a-glance {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .hero-img {
+    background: var(--tint);
+    border: 1px solid var(--rule);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; padding: 14px;
+    position: relative;
+  }
+  .hero-img img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+  .hero-img .fallback { color: var(--muted); font-size: 9pt; padding: 10px; text-align: center; }
+
+  .qs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .qs-cell { border: 1px solid var(--rule-strong); padding: 8px 10px; min-height: 56px; }
+  .qs-label { font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted); text-transform: uppercase; margin-bottom: 3px; }
+  .qs-value { font-size: 13pt; font-weight: 700; line-height: 1.05; font-family: 'JetBrains Mono', monospace; }
+  .qs-unit { font-size: 8pt; font-weight: 400; color: var(--muted); margin-left: 2px; font-family: 'Lato', sans-serif; }
+
+  /* ============= STOCK PILL ============= */
+  .qs-pill, .mto-pill {
+    display: inline-block;
+    font-size: 7.5pt; font-weight: 700;
+    padding: 3px 8px; letter-spacing: 0.5pt;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .qs-pill  { background: #E5F4EC; color: #1F7A4B; border: 1px solid #58C998; }
+  .mto-pill { background: #FFF1E0; color: #B85C00; border: 1px solid #FFB562; }
+
+  /* ============= FEATURE BAND ============= */
+  .feature-band {
+    background: var(--ink); color: white;
+    padding: 8px 14px;
+    display: flex; gap: 14px; align-items: center;
+    margin-bottom: 12px;
+  }
+  .feature-band .fb-pill { background: var(--brand-red); color: white; font-size: 7pt; font-weight: 700; letter-spacing: 1.2pt; padding: 3px 7px; text-transform: uppercase; flex-shrink: 0; }
+  .feature-band .fb-features { font-size: 8.5pt; line-height: 1.35; }
+  .feature-band .fb-features strong { font-weight: 700; }
+
+  /* ============= APPROVAL SIGNATURE BLOCK ============= */
+  .approval-block {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--rule-strong);
+  }
+  .approval-cell { display: grid; grid-template-columns: max-content 1fr; gap: 8px; align-items: end; font-size: 8pt; }
+  .approval-line { border-bottom: 1px solid var(--ink); height: 16px; }
+
+  /* ============= SECTION HEAD (page 2+) ============= */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 4px; margin-bottom: 10px; margin-top: 4px;
+  }
+  .section-head h2 { font-size: 14pt; line-height: 1; }
+  .section-head .section-eyebrow { font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted); text-transform: uppercase; }
+
+  /* ============= SPEC TABLE ============= */
+  .spec-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  .spec-table th, .spec-table td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .spec-table .spec-section-head td {
+    background: var(--tint); font-weight: 700; font-size: 9pt; letter-spacing: 0.3pt;
+    border-bottom: 1px solid var(--rule-strong); padding: 6px 8px;
+  }
+  .spec-table .spec-attr { width: 30%; font-weight: 600; color: var(--ink-2); }
+  .spec-table .spec-val { width: 70%; }
+  .spec-table .config-row td { background: rgba(243, 39, 64, 0.04); font-weight: 600; }
+
+  /* ============= ORDERING CODE MATRIX ============= */
+  .order-code {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .order-segment { background: var(--tint); border: 1px solid var(--rule-strong); padding: 8px 6px; text-align: center; }
+  .order-segment.active { background: var(--brand-red); color: white; border-color: var(--brand-red); }
+  .order-seg-label { font-size: 6.5pt; letter-spacing: 0.8pt; text-transform: uppercase; margin-bottom: 4px; opacity: 0.85; }
+  .order-seg-value { font-family: 'JetBrains Mono', monospace; font-size: 10pt; font-weight: 700; }
+  .order-matrix { width: 100%; border-collapse: collapse; font-size: 7.5pt; }
+  .order-matrix th, .order-matrix td { border: 1px solid var(--rule); padding: 4px 6px; text-align: left; vertical-align: top; }
+  .order-matrix th { background: var(--ink); color: white; font-size: 7pt; letter-spacing: 1pt; text-transform: uppercase; }
+  .order-matrix .code { font-family: 'JetBrains Mono', monospace; font-weight: 700; width: 110px; }
+
+  /* ============= DIMENSIONS LAYOUT ============= */
+  .dim-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 14px; }
+  .dim-views { display: grid; grid-template-rows: auto auto; gap: 8px; }
+  .dim-view {
+    border: 1px solid var(--rule-strong);
+    aspect-ratio: 5/2;
+    display: flex; align-items: center; justify-content: center;
+    background: white;
+    position: relative;
+    overflow: hidden;
+    padding: 14px;
+  }
+  .dim-view svg { width: 100%; height: 100%; }
+  .dim-view-label { position: absolute; top: 4px; left: 6px; font-size: 7pt; letter-spacing: 1pt; color: var(--muted); text-transform: uppercase; }
+
+  /* ============= PHOTOMETRIC DATA · CFG-PHOTO-1 canonical ============= */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: start; /* CFG-PHOTO-1 · never stretch the plate */
+  }
+  .photo-polar {
+    border: 1px solid var(--rule-strong);
+    padding: 10px;
+    aspect-ratio: 1;
+    background: white;
+    overflow: visible;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .photo-polar img, .photo-polar svg {
+    width: 100%;
+    max-width: 380px; /* CFG-PHOTO-1 width-cap */
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+  .photo-polar .fallback { color: var(--muted); font-size: 8pt; text-align: center; padding: 12px; }
+  .photo-summary { border: 1px solid var(--rule); }
+  .photo-summary table { width: 100%; border-collapse: collapse; font-size: 8pt; }
+  .photo-summary table td { padding: 4px 8px; border-bottom: 1px solid var(--rule); }
+  .photo-summary table tr:last-child td { border-bottom: none; }
+  .photo-summary td:first-child { color: var(--muted); }
+  .photo-summary td:last-child { font-family: 'JetBrains Mono', monospace; font-weight: 700; text-align: right; }
+
+  /* ============= CERTIFICATIONS · CFG-CERT-1 inline SVG ============= */
+  .certs {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 10px 12px;
+    border: 1px solid var(--rule);
+    margin-top: 10px;
+    align-items: center;
+  }
+  .cert-badge-svg { height: 28px; width: auto; flex-shrink: 0; }
+
+  /* ============= PAGE FOOTER ============= */
+  .page-foot {
+    position: absolute;
+    bottom: 0.4in; left: 0.65in; right: 0.65in;
+    display: flex; justify-content: space-between;
+    font-size: 7pt; color: var(--muted);
+    padding-top: 6px;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ============= NO-PRINT CONTROLS ============= */
+  .controls {
+    max-width: 8.5in; margin: 0 auto 18px;
+    background: white; padding: 14px 18px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  }
+  .controls .ctrl-label { font-size: 8.5pt; font-weight: 600; color: var(--muted); letter-spacing: 0.5pt; text-transform: uppercase; }
+  .controls .ctrl-value { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 10pt; word-break: break-all; }
+  .controls .ctrl-block { min-width: 0; flex: 1; }
+  .controls button {
+    background: var(--brand-red); color: white;
+    border: none; padding: 10px 18px;
+    font-family: inherit; font-weight: 700; font-size: 9pt;
+    letter-spacing: 0.5pt; text-transform: uppercase;
+    cursor: pointer; flex-shrink: 0;
+  }
+  .controls button:hover { background: #d61f37; }
+  .controls .controls-hint {
+    width: 100%;
+    font-size: 8pt; color: var(--muted); padding-top: 6px;
+    border-top: 1px dashed var(--rule); margin-top: 4px;
+  }
+
+/* CFG-TYPE-1 · Lato lock — Shopify global cascades Cormorant onto inline Lato.
+   This !important rule pins Lato on h1/h2 for this collection's PDP body class. */
+body.planoarch-pdp h1,
+body.planoarch-pdp h2 {
+  font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+}
+
+/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+body { overflow-x: hidden; }
+</style>
+</head>
+<body>
+
+<!-- ============= NO-PRINT CONTROLS BAR ============= -->
+<div class="controls no-print">
+  <div class="ctrl-block">
+    <div class="ctrl-label">Configured SKU</div>
+    <div class="ctrl-value" id="liveSku">LTRK3W30-5CS/90/2050/B</div>
+  </div>
+  <div class="ctrl-block" style="flex: 0 0 auto;">
+    <div class="ctrl-label">Ship Tier</div>
+    <div class="ctrl-value"><span id="stockPill" class="qs-pill">QuickShip · 3-5 day</span></div>
+  </div>
+  <div class="ctrl-block" style="flex: 0 0 auto;">
+    <div class="ctrl-label">Generated</div>
+    <div class="ctrl-value" id="liveDate" style="font-size:9pt; font-weight:400;">&mdash;</div>
+  </div>
+  <button onclick="window.print()">Save as PDF &rarr;</button>
+  <div class="controls-hint">
+    Browser will open the print dialog &middot; choose <strong>Save as PDF</strong> as the destination &middot; Letter portrait &middot; Margins: Default &middot; Background graphics: <strong>ON</strong>. Click the Catalog Number box top-right of any page to relabel for project &mdash; the override sweeps every visible instance live.
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — AT A GLANCE                                          -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+  <!-- HEADER -->
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group &middot; LTRK</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum" contenteditable="true" spellcheck="false" title="Click to edit &middot; session-only &middot; sweeps every visible instance">LTRK3W30-5CS/90/2050/B</div>
+      <span class="catalog-number-hint">Click to relabel for project</span>
+    </div>
+  </div>
+
+  <!-- PROJECT INFO FORM -->
+  <div class="project-info">
+    <div class="pi-cell"><div class="pi-label">Project</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Type</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Catalog #</div><div class="pi-value" id="piCatNum">LTRK3W30-5CS/90/2050/B</div></div>
+    <div class="pi-cell"><div class="pi-label">Prepared By</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Notes</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Date</div><div class="pi-value"></div></div>
+  </div>
+
+  <!-- PRODUCT TITLE -->
+  <div class="product-title">
+    <div>
+      <h1>LTRK · Trackstar</h1>
+      <div class="tagline">Spec-Grade Adjustable Architectural Track Light &middot; <strong>plano<span class="aa">Ⓐ</span>RCH ECO</strong> &middot; <strong>track<span class="aa">Ⓐ</span>DAPT</strong> H + J multi-track from one head SKU &middot; 5-CCTselect 2700K-5000K dip-switch &middot; <strong>beam<span class="aa">Ⓐ</span>DJUST</strong> 20°-50° continuous optical-collar zoom (no reflector swap) &middot; <strong>CRI 90+ tru<span class="aa">Ⓐ</span>COLOR</strong> R9&gt;0 at every CCT &middot; 350° H × 90° V gimbal &middot; DampGuard&trade; damp-location &middot; 5-year / 50,000-hour limited liability.</div>
+    </div>
+    <div class="tier-badge">ECO</div>
+  </div>
+
+  <!-- HERO + QUICK SPECS · CFG-SUB-2 single image -->
+  <div class="at-a-glance">
+    <div class="hero-img">
+      <img id="submittalHeroPhoto"
+           src="assets/hero/1.png"
+           alt="LTRK Trackstar &middot; spec-grade adjustable architectural track light · 3/4 angle hero" />
+    </div>
+    <div class="qs-grid">
+      <div class="qs-cell">
+        <div class="qs-label">SKU Class</div>
+        <div class="qs-value" id="qsClass">3W30<span class="qs-unit">20/25/30W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Wattage (selected)</div>
+        <div class="qs-value" id="qsWatt">30<span class="qs-unit">W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Lumens (selected)</div>
+        <div class="qs-value" id="qsLumens">2,800<span class="qs-unit">lm</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Efficacy</div>
+        <div class="qs-value" id="qsLpw">93<span class="qs-unit">LM/W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CCT</div>
+        <div class="qs-value" id="qsCct">5000<span class="qs-unit">K</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Finish</div>
+        <div class="qs-value" id="qsFinish" style="font-size:11pt;">Black</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE BAND -->
+  <div class="feature-band">
+    <div class="fb-pill">Field-Tunable</div>
+    <div class="fb-features">
+      <strong>3-WATTselect</strong> DIP &middot; <strong>5-CCTselect</strong> 2700/3000/3500/4000/5000K DIP &middot;
+      <strong>beam<span class="aa">Ⓐ</span>DJUST</strong> 20°-50° continuous optical-collar zoom &middot;
+      <strong>track<span class="aa">Ⓐ</span>DAPT</strong> H + J multi-track interchangeable base &middot;
+      <strong>350° H × 90° V</strong> gimbal &middot; <strong>120V</strong> &middot; <strong>TRIAC + Phase Dim</strong>
+    </div>
+  </div>
+
+  <!-- AT-A-GLANCE SUMMARY -->
+  <div style="font-size: 9pt; line-height: 1.5; color: var(--ink-2); margin-top: 8px;">
+    <strong>LTRK Trackstar</strong> is the plano<span class="aa">Ⓐ</span>RCH ECO adjustable architectural track head that bundles the bid-sheet hammers competitors fork across separate part numbers &mdash; <strong>5-CCTselect dip</strong>, <strong>20°-50° beam<span class="aa">Ⓐ</span>DJUST</strong> continuous optical-collar zoom, and <strong>CRI 90+ tru<span class="aa">Ⓐ</span>COLOR</strong> R9&gt;0 standard at every CCT &mdash; into one $$ spec-grade SKU. <strong>track<span class="aa">Rr</span>DAPT H + J multi-track</strong> means one head SKU fits both Halo H-track and Juno J-track infrastructure, eliminating the spec writer's per-rail-type bid-line fork. 350° horizontal × 90° vertical gimbal with locking detent for fine-aim. DampGuard&trade; damp-location rating opens cooler-case and wash-down-adjacent retail applications that dry-only competitors can't claim at the same price tier.
+  </div>
+
+  <!-- APPROVAL BLOCK -->
+  <div class="approval-block">
+    <div class="approval-cell">
+      <span><strong>Approved by</strong></span>
+      <div class="approval-line"></div>
+    </div>
+    <div class="approval-cell">
+      <span><strong>Date</strong></span>
+      <div class="approval-line"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LTRK Trackstar submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. <span id="revDate">2026-05</span> &middot; Page 1 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — SPECIFICATIONS                                       -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group &middot; LTRK</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum2">LTRK3W30-5CS/90/2050/B</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Specifications</h2>
+    <div class="section-eyebrow" id="specsEyebrow">LTRK Trackstar &middot; plano<span class="aa">Ⓐ</span>RCH ECO &middot; adjustable architectural track light</div>
+  </div>
+
+  <table class="spec-table">
+    <tbody>
+      <tr class="spec-section-head"><td colspan="2">Configured Selections (this submittal)</td></tr>
+      <tr class="config-row"><td class="spec-attr">SKU Class</td><td class="spec-val" id="cfgClass">LTRK3W30 &middot; 20/25/30W (3-WATTselect)</td></tr>
+      <tr class="config-row"><td class="spec-attr">Finish</td><td class="spec-val" id="cfgFinish">Black</td></tr>
+      <tr class="config-row"><td class="spec-attr">3-WATTselect (dip)</td><td class="spec-val" id="cfgWatt">30W &middot; max-output rung</td></tr>
+      <tr class="config-row"><td class="spec-attr">5-CCTselect (dip)</td><td class="spec-val" id="cfgCct">5000K &middot; cool/daylight (factory default ★)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Construction</td></tr>
+      <tr><td class="spec-attr">Housing</td><td class="spec-val">Cast aluminum heatsink &middot; 5.83" L × 2.56" W × 2.56" H cylindrical body &middot; spec-grade architectural profile</td></tr>
+      <tr><td class="spec-attr">Mounting Base</td><td class="spec-val"><strong>track<span class="aa">Ⓐ</span>DAPT</strong> H + J multi-track interchangeable base &mdash; one head SKU fits both Halo H-track 1-circuit and Juno Trac-Master J-track 1-circuit infrastructure</td></tr>
+      <tr><td class="spec-attr">Aiming</td><td class="spec-val"><strong>350° H × 90° V gimbal</strong> &middot; locking detent for fine-aim retention after install adjustment</td></tr>
+      <tr><td class="spec-attr">Optical Collar</td><td class="spec-val"><strong>beam<span class="aa">Ⓐ</span>DJUST</strong> 20°-50° continuous rotatable lens &middot; no reflector swap &middot; field-zoomable per-fixture</td></tr>
+      <tr><td class="spec-attr">Finish Options</td><td class="spec-val"><strong>Black</strong> (QuickShip ★) &middot; <strong>White</strong> (QuickShip)</td></tr>
+      <tr><td class="spec-attr">Ingress / Location</td><td class="spec-val"><strong>Damp Location Listed</strong> &middot; DampGuard&trade; rating opens cooler-case and wash-down-adjacent retail applications</td></tr>
+      <tr><td class="spec-attr">Weight</td><td class="spec-val">2.42 lb (luminaire only)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">LED &amp; Optics</td></tr>
+      <tr><td class="spec-attr">LED Source</td><td class="spec-val">High-CRI binned LEDs &middot; L70 lumen maintenance &commat; 50,000 hrs</td></tr>
+      <tr><td class="spec-attr">CCT (5-CCTselect)</td><td class="spec-val">2700K &middot; 3000K &middot; 3500K &middot; 4000K &middot; 5000K ★ &middot; 5-position DIP-switch field-tunable</td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val"><strong>CRI 90+ tru<span class="aa">Ⓐ</span>COLOR</strong> standard &middot; R9&gt;0 at every CCT &middot; 3-step MacAdam binning</td></tr>
+      <tr><td class="spec-attr">Lumen Output</td><td class="spec-val">LTRK3W20 (10W★/15W/20W): 900 / 1,350 / 2,000 lm &middot; LTRK3W30 (20W★/25W/30W): 2,000 / 2,300 / 2,800 lm &middot; both @ 5000K</td></tr>
+      <tr><td class="spec-attr">Efficacy</td><td class="spec-val">Up to <strong>100 LM/W</strong> at the 20W shared position (peaks on both classes)</td></tr>
+      <tr><td class="spec-attr">Beam Range</td><td class="spec-val"><strong>20°-50° beam<span class="aa">Ⓐ</span>DJUST</strong> &middot; continuous rotatable optical collar &middot; no reflector swap</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Driver &amp; Electrical</td></tr>
+      <tr><td class="spec-attr">Voltage</td><td class="spec-val"><strong>120V</strong> &middot; constant-current driver &middot; per datasheet pg 2 spec list</td></tr>
+      <tr><td class="spec-attr">3-WATTselect</td><td class="spec-val">3-position DIP switch on head &middot; max watt determined by SKU class &middot; ★ on max-output rung per datasheet</td></tr>
+      <tr><td class="spec-attr">Power Factor</td><td class="spec-val">&gt; 0.9 at full load</td></tr>
+      <tr><td class="spec-attr">Dimming</td><td class="spec-val"><strong>TRIAC + Phase Dim</strong> &middot; 0-10% range</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">track<span class="aa">Ⓐ</span>DAPT System (per-project · §8 grid)</td></tr>
+      <tr><td class="spec-attr">Track Segments</td><td class="spec-val">TSM Surface (drop-on, profile visible) &middot; TEM Embedded (architectural flush) &middot; cut to 4' or 8' lengths &middot; Black or White</td></tr>
+      <tr><td class="spec-attr">Connectors</td><td class="spec-val">7-layout family: Inline · L · T · X · Plus · Flex · Drop &middot; matches install geometry</td></tr>
+      <tr><td class="spec-attr">End Cap</td><td class="spec-val">PT Tail Plug · electrical isolation + safety closure at run termination</td></tr>
+      <tr><td class="spec-attr">Circuit / Load</td><td class="spec-val">1-circuit &middot; 120V &middot; 16A continuous load &middot; UL Listed</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
+      <tr><td class="spec-attr">Standards</td><td class="spec-val">UL Listed &middot; DLC Listed (per Rebate Center · CFG-RBT-2) &middot; FCC Title 47 Part 15B &middot; UL Damp Location &middot; RoHS</td></tr>
+      <tr><td class="spec-attr">Buy-American</td><td class="spec-val">Made in China &middot; <strong>NOT TAA-listed</strong> &middot; heads up for GSA-restricted projects</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val"><strong>5-Year / 50,000-hour limited</strong> &middot; Limited Liability &middot; plano<span class="aa">Ⓐ</span>RCH ECO tier</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 10px; font-size: 7.5pt; color: var(--muted); line-height: 1.4;">
+    <strong>Spec Footnotes</strong> &middot; Lumens published per IESNA LM-79 at 5000K factory default. ±5% lumen shift across the 5-CCT range (2700K - 5000K). 3-WATTselect + 5-CCTselect DIP-switches live on the head and are field-set at install &mdash; they are NOT segments in the catalog SKU (60 install configurations from 4 catalog SKUs: 2 classes × 2 finishes × 3 watts × 5 CCTs). DLC tier (Listed vs Premium) requires verification via Rebate Center per CFG-RBT-2 before any rebate claim is submitted. 5-year / 50,000-hour limited liability warranty per plano<span class="aa">Ⓐ</span>RCH ECO tier &middot; standard product replacement only &middot; full warranty statement at archipelagolighting.com/warranty.
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LTRK Trackstar submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 2 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 3 — DIMENSIONS & MOUNTING                                -->
+<!-- ============================================================ -->
+<div class="page" id="page-3">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group &middot; LTRK</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum3">LTRK3W30-5CS/90/2050/B</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Dimensions &amp; Mounting</h2>
+    <div class="section-eyebrow">Single fixture body across both SKU classes &middot; track<span class="aa">Ⓐ</span>DAPT H + J interchangeable base</div>
+  </div>
+
+  <div class="dim-grid">
+    <div class="dim-views">
+      <div class="dim-view">
+        <div class="dim-view-label">Top view (in)</div>
+        <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Track segment running L-R above the fixture -->
+          <rect x="60" y="32" width="380" height="14" stroke="#1a1a1a" stroke-width="1.2" fill="#f5f5f5"/>
+          <line x1="66" y1="36" x2="434" y2="36" stroke="#888" stroke-width="0.5"/>
+          <line x1="66" y1="42" x2="434" y2="42" stroke="#888" stroke-width="0.5"/>
+          <!-- Track adapter base (centered) -->
+          <rect x="225" y="46" width="50" height="14" fill="rgba(243,39,64,0.18)" stroke="#F32740" stroke-width="1.2"/>
+          <text x="250" y="56" text-anchor="middle" fill="#F32740" font-size="7" font-family="JetBrains Mono, monospace" font-weight="700">trackⒶDAPT</text>
+          <!-- Fixture body — top-down cylindrical projection · 5.83" L × 2.56" W -->
+          <rect x="130" y="68" width="240" height="100" rx="6" stroke="#1a1a1a" stroke-width="1.5" fill="#e8e8e8"/>
+          <!-- Optical aperture · front circle -->
+          <circle cx="250" cy="118" r="30" stroke="#1a1a1a" stroke-width="1.4" fill="white"/>
+          <circle cx="250" cy="118" r="18" stroke="#F32740" stroke-width="1" stroke-dasharray="2 2" fill="none"/>
+          <!-- Length dim arrow · L = 5.83" -->
+          <line x1="130" y1="184" x2="370" y2="184" stroke="#F32740" stroke-width="0.8"/>
+          <line x1="130" y1="180" x2="130" y2="188" stroke="#F32740" stroke-width="0.8"/>
+          <line x1="370" y1="180" x2="370" y2="188" stroke="#F32740" stroke-width="0.8"/>
+          <text x="250" y="197" text-anchor="middle" fill="#F32740" font-size="10" font-family="JetBrains Mono, monospace" font-weight="700">L: 5.83"</text>
+        </svg>
+      </div>
+      <div class="dim-view">
+        <div class="dim-view-label">Side view · 90° V gimbal (in)</div>
+        <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Ceiling line + track -->
+          <line x1="20" y1="20" x2="480" y2="20" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
+          <rect x="180" y="20" width="140" height="10" stroke="#1a1a1a" stroke-width="1.2" fill="#f5f5f5"/>
+          <!-- Stem -->
+          <line x1="250" y1="30" x2="250" y2="50" stroke="#1a1a1a" stroke-width="1.5"/>
+          <!-- Cylindrical body side-elevation -->
+          <rect x="190" y="50" width="120" height="76" rx="6" stroke="#1a1a1a" stroke-width="1.6" fill="#e8e8e8"/>
+          <!-- Aperture detail on right end -->
+          <line x1="290" y1="58" x2="290" y2="118" stroke="#1a1a1a" stroke-width="1.2"/>
+          <!-- Vertical gimbal arc (90° pivot) · centered on body -->
+          <path d="M 320 88 a 60 60 0 0 1 60 60" stroke="#F32740" stroke-width="1.2" stroke-dasharray="2 2" fill="none"/>
+          <text x="350" y="170" text-anchor="middle" fill="#F32740" font-size="9.5" font-family="JetBrains Mono, monospace" font-weight="700">90° V AIM</text>
+          <!-- Height dim arrow · H = 2.56" -->
+          <line x1="160" y1="50" x2="160" y2="126" stroke="#F32740" stroke-width="0.8"/>
+          <line x1="156" y1="50" x2="164" y2="50" stroke="#F32740" stroke-width="0.8"/>
+          <line x1="156" y1="126" x2="164" y2="126" stroke="#F32740" stroke-width="0.8"/>
+          <text x="135" y="92" text-anchor="middle" fill="#F32740" font-size="10" font-family="JetBrains Mono, monospace" font-weight="700">H: 2.56"</text>
+        </svg>
+      </div>
+    </div>
+
+    <div>
+      <table class="spec-table">
+        <tbody>
+          <tr class="spec-section-head"><td colspan="2">Dimensions (single body across both SKU classes)</td></tr>
+          <tr><td class="spec-attr">Length</td><td class="spec-val">5.83 in</td></tr>
+          <tr><td class="spec-attr">Width</td><td class="spec-val">2.56 in (cylindrical body)</td></tr>
+          <tr><td class="spec-attr">Height</td><td class="spec-val">2.56 in</td></tr>
+          <tr><td class="spec-attr">Weight</td><td class="spec-val">2.42 lb</td></tr>
+          <tr class="spec-section-head"><td colspan="2">Aiming</td></tr>
+          <tr><td class="spec-attr">Horizontal Aim</td><td class="spec-val">350° H &middot; locking detent</td></tr>
+          <tr><td class="spec-attr">Vertical Pivot</td><td class="spec-val">90° V &middot; gimbal · locking detent</td></tr>
+          <tr class="spec-section-head"><td colspan="2">track<span class="aa">Ⓐ</span>DAPT Compatibility</td></tr>
+          <tr><td class="spec-attr">Halo H-Track</td><td class="spec-val">1-circuit &middot; H-base swap</td></tr>
+          <tr><td class="spec-attr">Juno Trac-Master</td><td class="spec-val">1-circuit &middot; J-base swap</td></tr>
+          <tr><td class="spec-attr">Base SKU</td><td class="spec-val">One head SKU covers both rail types (interchangeable mount)</td></tr>
+          <tr class="spec-section-head"><td colspan="2">Track System (per-project)</td></tr>
+          <tr><td class="spec-attr">Track Segments</td><td class="spec-val">TSM Surface &middot; TEM Embedded &middot; 4' or 8' lengths</td></tr>
+          <tr><td class="spec-attr">Connectors</td><td class="spec-val">Inline · L · T · X · Plus · Flex · Drop (7 layouts)</td></tr>
+          <tr><td class="spec-attr">Voltage / Load</td><td class="spec-val">120V &middot; 16A continuous &middot; 1-circuit</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LTRK Trackstar submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 3 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 4 — ORDERING CODE & PHOTOMETRICS                         -->
+<!-- ============================================================ -->
+<div class="page" id="page-4">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group &middot; LTRK</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum4">LTRK3W30-5CS/90/2050/B</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Ordering Information</h2>
+    <div class="section-eyebrow">4 catalog SKUs &middot; 60 install configs (2 class × 2 finish × 3 watt × 5 CCT)</div>
+  </div>
+
+  <!-- ORDERING CODE VISUAL BREAKDOWN -->
+  <div class="order-code">
+    <div class="order-segment active"><div class="order-seg-label">Family</div><div class="order-seg-value">LTRK</div></div>
+    <div class="order-segment active"><div class="order-seg-label">SKU Class</div><div class="order-seg-value" id="ocClass">3W30</div></div>
+    <div class="order-segment active"><div class="order-seg-label">CCT</div><div class="order-seg-value">5CS</div></div>
+    <div class="order-segment active"><div class="order-seg-label">CRI</div><div class="order-seg-value">90</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Beam</div><div class="order-seg-value">2050</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Finish</div><div class="order-seg-value" id="ocFinish">B</div></div>
+  </div>
+
+  <!-- ORDERING MATRIX -->
+  <table class="order-matrix">
+    <thead>
+      <tr><th style="width:18%">Segment</th><th>Available Codes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="code">LTRK</td><td>Family identifier &middot; LED Track Light &middot; always present</td></tr>
+      <tr><td class="code">3W{20|30}</td><td>SKU class · <strong>3W20</strong> covers 10W/15W/20W dip positions &middot; <strong>3W30</strong> covers 20W/25W/30W dip positions ★</td></tr>
+      <tr><td class="code">-5CS</td><td>5-CCTselect &middot; always present &middot; 5-DIP CCT selection on head (2700K/3000K/3500K/4000K/5000K ★)</td></tr>
+      <tr><td class="code">/90</td><td>CRI 90+ tru<span class="aa">Ⓐ</span>COLOR &middot; always present &middot; R9&gt;0 at every CCT &middot; 3-step MacAdam binning</td></tr>
+      <tr><td class="code">/2050</td><td>20°-50° beam<span class="aa">Ⓐ</span>DJUST &middot; always present &middot; continuous rotatable optical collar (no reflector swap)</td></tr>
+      <tr><td class="code">/{B|W}</td><td>Finish &middot; <strong>B</strong> Black ★ &middot; <strong>W</strong> White</td></tr>
+      <tr><td class="code">3-WATT (dip)</td><td><strong>Field dip-switch</strong> at install &mdash; 3 positions per SKU class &middot; NOT a catalog-SKU segment</td></tr>
+      <tr><td class="code">5-CCT (dip)</td><td><strong>Field dip-switch</strong> at install &mdash; 5 positions &middot; NOT a catalog-SKU segment</td></tr>
+    </tbody>
+  </table>
+
+  <!-- PHOTOMETRIC DATA · CFG-PHOTO-1 canonical sizing -->
+  <div class="section-head" style="margin-top: 14px;">
+    <h2>Photometric Data</h2>
+    <div class="section-eyebrow" id="photoEyebrow">LTRK3W30 &middot; 30W &middot; 5000K &middot; 20° beam (narrow accent)</div>
+  </div>
+
+  <div class="photo-grid">
+    <div class="photo-polar">
+      <!-- Reference polar SVG · ltrk_ref_20deg | ltrk_ref_50deg
+           Selected by URL `watt` param (lower watt → wider beam reference). -->
+      <img id="submittalPhotoPolar"
+           src="assets/photometrics/ltrk_ref_20deg.svg"
+           alt="LTRK Trackstar polar candela distribution &middot; reference plot at 20-degree narrow accent setting" />
+      <div id="submittalPhotoPolarFallback"
+           style="display:none; color:#888; font-size:8pt; text-align:center; padding:24px;">
+        Polar plot SVG unavailable for the selected configuration.<br/>
+        IES bundle delivered for both 20° and 50° beam endpoints × 3 watts × 5 CCTs (30 IES per SKU class).
+      </div>
+    </div>
+
+    <div class="photo-summary">
+      <table>
+        <tbody>
+          <tr><td>Total Lumens</td><td id="photoLumens">2,800 lm</td></tr>
+          <tr><td>Wattage</td><td id="photoWatts">30 W</td></tr>
+          <tr><td>Efficacy</td><td id="photoLpw">93 LM/W</td></tr>
+          <tr><td>Peak Candela</td><td id="photoPeak">7,126 cd &commat; nadir</td></tr>
+          <tr><td>CRI</td><td>90+ tru<span class="aa">Ⓐ</span>COLOR &middot; R9&gt;0</td></tr>
+          <tr><td>Beam Range</td><td id="photoBeam">20° narrow (rotatable to 50°)</td></tr>
+          <tr><td>Distribution</td><td>Asymmetric &middot; centered downlight</td></tr>
+          <tr><td>Test Standard</td><td>IESNA LM-79 / LM-80</td></tr>
+          <tr><td>IES File</td><td id="photoIesFile" style="font-size:7pt;">LTRK3W30-30W-50K-20deg.ies</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CERTIFICATIONS · CFG-CERT-1 inline SVG so the PDF is self-contained -->
+  <div class="certs">
+    <!-- UL Listed -->
+    <svg class="cert-badge-svg" viewBox="0 0 80 36" xmlns="http://www.w3.org/2000/svg" aria-label="UL Listed UL 1598">
+      <circle cx="18" cy="18" r="15" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="18" y="22" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="11" font-weight="700">UL</text>
+      <text x="42" y="16" fill="#0E0E10" font-family="Lato, sans-serif" font-size="7.5" font-weight="700" letter-spacing="0.4">LISTED</text>
+      <text x="42" y="26" fill="#6B6B70" font-family="Lato, sans-serif" font-size="6" letter-spacing="0.3">UL 1598</text>
+    </svg>
+    <!-- DLC Listed (NOT Premium · per datasheet) -->
+    <svg class="cert-badge-svg" viewBox="0 0 88 36" xmlns="http://www.w3.org/2000/svg" aria-label="DLC Listed Standard">
+      <rect x="1" y="1" width="86" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="44" y="14" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="10" font-weight="700" letter-spacing="0.4">DLC</text>
+      <text x="44" y="25" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="7.5" font-weight="700" letter-spacing="0.3">LISTED</text>
+      <text x="44" y="32" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="5.5">Per Rebate Ctr</text>
+    </svg>
+    <!-- CRI > 90 truⒶCOLOR -->
+    <svg class="cert-badge-svg" viewBox="0 0 84 36" xmlns="http://www.w3.org/2000/svg" aria-label="CRI 90+ truⒶCOLOR">
+      <rect x="1" y="1" width="82" height="34" fill="white" stroke="#F32740" stroke-width="1.4"/>
+      <text x="42" y="14" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="10" font-weight="700" letter-spacing="0.4">CRI 90+</text>
+      <text x="42" y="25" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="6.5" font-weight="700" letter-spacing="0.3">tru<tspan font-weight="800">Ⓐ</tspan>COLOR</text>
+      <text x="42" y="32" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="5.5">R9 &gt; 0 · 5 CCTs</text>
+    </svg>
+    <!-- Damp Location (DampGuard) -->
+    <svg class="cert-badge-svg" viewBox="0 0 88 36" xmlns="http://www.w3.org/2000/svg" aria-label="Damp Location DampGuard">
+      <rect x="1" y="1" width="86" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="44" y="14" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="8" font-weight="700" letter-spacing="0.4">DAMP LOCATION</text>
+      <text x="44" y="26" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="8" font-weight="700" letter-spacing="0.3">DAMPGUARD&trade;</text>
+    </svg>
+    <!-- FCC Part 15B -->
+    <svg class="cert-badge-svg" viewBox="0 0 76 36" xmlns="http://www.w3.org/2000/svg" aria-label="FCC Part 15 B compliant">
+      <rect x="1" y="1" width="74" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="38" y="14" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="10" font-weight="700" letter-spacing="0.4">FCC</text>
+      <text x="38" y="26" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="7" font-weight="700" letter-spacing="0.3">PART 15 B</text>
+    </svg>
+    <!-- RoHS -->
+    <svg class="cert-badge-svg" viewBox="0 0 62 36" xmlns="http://www.w3.org/2000/svg" aria-label="RoHS Compliant">
+      <rect x="1" y="1" width="60" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="31" y="16" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="10" font-weight="700">RoHS</text>
+      <text x="31" y="27" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="6.5" letter-spacing="0.3">COMPLIANT</text>
+    </svg>
+    <!-- 5-yr · 50K hr · Limited Liability -->
+    <svg class="cert-badge-svg" viewBox="0 0 96 36" xmlns="http://www.w3.org/2000/svg" aria-label="5 year 50000 hour limited liability warranty">
+      <rect x="1" y="1" width="94" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="48" y="14" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="9" font-weight="700" letter-spacing="0.4">5 yr &middot; 50K hr</text>
+      <text x="48" y="26" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="6.5" font-weight="700" letter-spacing="0.3">LIMITED LIABILITY</text>
+    </svg>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LTRK Trackstar submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 4 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SUBMITTAL AUTO-FILL · LTRK Trackstar v1                       -->
+<!-- ============================================================ -->
+<script>
+(function() {
+  // ============================================================================
+  // PARSE URL PARAMS (defaults match Trackstar's marquee config — LTRK3W30 + B + 30W + 5000K)
+  // ============================================================================
+  var params = new URLSearchParams(window.location.search);
+  var skuParam = params.get('sku')    || '';
+  var klass    = params.get('class')  || '3W30';
+  var finish   = params.get('finish') || 'B';
+  var watt     = params.get('watt')   || '30';
+  var cct      = params.get('cct')    || '50';
+
+  // ============================================================================
+  // LOOKUP TABLES (Trackstar datasheet pg 2 + §9 configurator data)
+  // ============================================================================
+  var CLASS_DATA = {
+    '3W20': { label: 'LTRK3W20 · 10/15/20W (3-WATTselect)', short: '3W20', wattsLabel: '10/15/20W',
+              watts: [10, 15, 20], lumens: { '10': '900', '15': '1,350', '20': '2,000' },
+              lpw:    { '10': '90 LM/W', '15': '90 LM/W', '20': '100 LM/W ★' },
+              peak:   { '10': '~2,300', '15': '~3,500', '20': '~5,100' } },
+    '3W30': { label: 'LTRK3W30 · 20/25/30W (3-WATTselect)', short: '3W30', wattsLabel: '20/25/30W',
+              watts: [20, 25, 30], lumens: { '20': '2,000', '25': '2,300', '30': '2,800' },
+              lpw:    { '20': '100 LM/W ★', '25': '92 LM/W', '30': '93 LM/W' },
+              peak:   { '20': '~5,100', '25': '~5,860', '30': '~7,126' } }
+  };
+  var FINISH_DATA = {
+    'B': { label: 'Black ★', short: 'Black' },
+    'W': { label: 'White',   short: 'White' }
+  };
+  var CCT_DATA = {
+    '27': { label: '2700K · Warm', kelvin: '2700K' },
+    '30': { label: '3000K',         kelvin: '3000K' },
+    '35': { label: '3500K',         kelvin: '3500K' },
+    '40': { label: '4000K',         kelvin: '4000K' },
+    '50': { label: '5000K · Cool (factory default ★)', kelvin: '5000K' }
+  };
+
+  // ============================================================================
+  // RESOLVE: lookups + SKU rebuild (used if no `sku` URL param passed)
+  // ============================================================================
+  var cd = CLASS_DATA[klass]  || CLASS_DATA['3W30'];
+  var fd = FINISH_DATA[finish] || FINISH_DATA['B'];
+  var ct = CCT_DATA[cct]       || CCT_DATA['50'];
+  var wKey = String(watt);
+  // Snap watt to class's available rungs if mismatch
+  if (cd.lumens[wKey] === undefined) {
+    wKey = String(cd.watts[cd.watts.length - 1]); // default to highest rung
+  }
+
+  function buildSku() {
+    if (skuParam) return skuParam;
+    return 'LTRK' + klass + '-5CS/90/2050/' + finish;
+  }
+  var sku = buildSku();
+
+  // All Trackstar SKUs are QuickShip (Black + White both stocked across both classes)
+  var shipTier = 'QS';
+
+  // ============================================================================
+  // STAMP: catalog number on every page + project info + live SKU pill
+  // ============================================================================
+  document.querySelectorAll('#catNum, #catNum2, #catNum3, #catNum4, #liveSku, #piCatNum').forEach(function(el) {
+    el.textContent = sku;
+  });
+
+  // Stock pill (no-print bar)
+  var pill = document.getElementById('stockPill');
+  if (shipTier === 'QS') {
+    pill.className = 'qs-pill';
+    pill.textContent = 'QuickShip · 3-5 day';
+  } else {
+    pill.className = 'mto-pill';
+    pill.textContent = 'Made-to-Order · 4-6 wk';
+  }
+
+  // ============================================================================
+  // PAGE 1 · Quick Specs + Hero
+  // ============================================================================
+  document.getElementById('qsClass').innerHTML  = cd.short + '<span class="qs-unit">' + cd.wattsLabel + '</span>';
+  document.getElementById('qsWatt').innerHTML   = wKey + '<span class="qs-unit">W</span>';
+  document.getElementById('qsLumens').innerHTML = cd.lumens[wKey] + '<span class="qs-unit">lm</span>';
+  document.getElementById('qsLpw').innerHTML    = cd.lpw[wKey].replace(' LM/W', '<span class="qs-unit">LM/W</span>').replace(' ★', '');
+  document.getElementById('qsCct').innerHTML    = ct.kelvin.replace('K', '<span class="qs-unit">K</span>');
+  document.getElementById('qsFinish').textContent = fd.short;
+
+  // Hero photo · single product photo · uses 1.png by default · finish-aware
+  // (Trackstar only ships 2 finishes B/W and they share the same product photo here)
+  (function wireHero() {
+    var img = document.getElementById('submittalHeroPhoto');
+    if (!img) return;
+    img.src = 'assets/hero/1.png';
+    img.alt = 'LTRK Trackstar · ' + cd.short + ' · ' + fd.short + ' finish · cylindrical track head with adjustable optical collar';
+    img.onerror = function() {
+      this.style.display = 'none';
+      this.parentElement.innerHTML = '<div class="fallback">LTRK Trackstar · hero photo</div>';
+    };
+  })();
+
+  // ============================================================================
+  // PAGE 2 · Configured Selections rows
+  // ============================================================================
+  document.getElementById('cfgClass').textContent = cd.label;
+  document.getElementById('cfgFinish').textContent = fd.label;
+  document.getElementById('cfgWatt').textContent  = wKey + 'W · ' + (wKey === String(cd.watts[cd.watts.length - 1]) ? 'max-output rung' : (wKey === String(cd.watts[0]) ? 'peak-efficacy rung' : 'mid rung'));
+  document.getElementById('cfgCct').textContent   = ct.label;
+
+  // ============================================================================
+  // PAGE 4 · Ordering breakdown + Photometric Polar SVG resolver
+  // ============================================================================
+  document.getElementById('ocClass').textContent  = klass;
+  document.getElementById('ocFinish').textContent = finish;
+
+  // ----------------------------------------------------------------------------
+  // Photometric polar SVG resolver · two reference plots exist (20° and 50°).
+  // Lower wattage settings → wider beam tendency. Default to 20° narrow for max rung.
+  // ----------------------------------------------------------------------------
+  (function wireSubmittalPhotoPolar() {
+    var polarImg      = document.getElementById('submittalPhotoPolar');
+    var polarFallback = document.getElementById('submittalPhotoPolarFallback');
+    if (!polarImg) return;
+
+    // Pick beam endpoint: low watt rungs use the 50° wide reference, high-watt rungs use 20° narrow.
+    var beam = (parseInt(wKey, 10) <= 15) ? '50deg' : '20deg';
+    var svgPath = 'assets/photometrics/ltrk_ref_' + beam + '.svg';
+    polarImg.src = svgPath;
+    polarImg.alt = 'LTRK Trackstar polar candela distribution · ' + cd.short + ' · ' + wKey + 'W · ' + ct.kelvin + ' · ' + beam.replace('deg', '°') + ' beam';
+    polarImg.onerror = function() {
+      this.style.display = 'none';
+      if (polarFallback) polarFallback.style.display = 'block';
+    };
+
+    // Photometric summary table
+    document.getElementById('photoLumens').textContent = cd.lumens[wKey] + ' lm';
+    document.getElementById('photoWatts').textContent  = wKey + ' W';
+    document.getElementById('photoLpw').textContent    = cd.lpw[wKey].replace(' ★', '');
+    document.getElementById('photoPeak').textContent   = cd.peak[wKey] + ' cd @ nadir';
+    document.getElementById('photoBeam').textContent   = beam.replace('deg', '°') + ' beam (continuously rotatable 20°-50°)';
+    document.getElementById('photoIesFile').textContent = 'LTRK' + klass + '-' + wKey + 'W-' + ct.kelvin.slice(0, 2) + 'K-' + beam.replace('deg', 'deg') + '.ies';
+
+    // Photo eyebrow · live config
+    document.getElementById('photoEyebrow').textContent =
+      'LTRK' + klass + ' · ' + wKey + 'W · ' + ct.kelvin + ' · ' + beam.replace('deg', '°') + ' ' + (beam === '20deg' ? 'beam (narrow accent)' : 'beam (wide wash)');
+  })();
+
+  // ============================================================================
+  // LIVE DATE stamp on no-print bar + rev date in page foot
+  // ============================================================================
+  (function dateStamps() {
+    var d = new Date();
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var liveEl = document.getElementById('liveDate');
+    if (liveEl) liveEl.textContent = months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    var revEl = document.getElementById('revDate');
+    if (revEl) revEl.textContent = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+  })();
+
+  // ============================================================================
+  // CFG-SUB-1 v2 · Editable Catalog Number · snapshot-then-rederive · session-only
+  // ============================================================================
+  (function setupEditableCatalogNumber() {
+    var originalSku = sku;
+    var editor = document.getElementById('catNum');
+    if (!editor) return;
+
+    if (document.title.indexOf(originalSku) === -1) {
+      document.title = originalSku + ' · ' + document.title;
+    }
+    var originalTitle = document.title;
+
+    var matchedNodes = [];
+    (function snapshot() {
+      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(n) {
+          var p = n.parentNode;
+          while (p) {
+            if (p === editor) return NodeFilter.FILTER_REJECT;
+            if (p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT;
+            p = p.parentNode;
+          }
+          return n.nodeValue.indexOf(originalSku) !== -1
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        }
+      });
+      while (walker.nextNode()) {
+        matchedNodes.push({ node: walker.currentNode, originalText: walker.currentNode.nodeValue });
+      }
+    })();
+
+    function applyOverride(newDisplay) {
+      var override = newDisplay || originalSku;
+      matchedNodes.forEach(function(item) {
+        item.node.nodeValue = item.originalText.split(originalSku).join(override);
+      });
+      document.title = originalTitle.split(originalSku).join(override);
+    }
+
+    editor.addEventListener('input', function() {
+      var raw = (editor.textContent || '').replace(/[\r\n]+/g, ' ').slice(0, 60);
+      var nextDisplay = raw.trim() ? raw : originalSku;
+      applyOverride(nextDisplay);
+    });
+
+    editor.addEventListener('blur', function() {
+      var v = editor.textContent.trim();
+      if (!v) {
+        editor.textContent = originalSku;
+        applyOverride(originalSku);
+      }
+    });
+
+    editor.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        editor.blur();
+      }
+    });
+  })();
+})();
+</script>
+</body>
+</html>

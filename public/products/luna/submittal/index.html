@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LUXA · Luna — Submittal Sheet</title>
+
+<!--
+  ALG SUBMITTAL TEMPLATE · LUXA Luna v2 (canonical)
+  =================================================
+  Reads URL query params from §9 Configurator and auto-fills the catalog number,
+  quick specs, ordering breakdown, hero image (optic-aware), photometric polar
+  plot (length × optic × ratio), and accessory BOM per the resolved SKU.
+
+  Canonical rules applied (per /PM/playbooks/PDP_BUILD_PLAYBOOK.md):
+    · CFG-SUB-1 v2  → editable Catalog Number with TreeWalker snapshot-then-
+                      rederive across all 5 pages, title bar, and project info
+    · CFG-SUB-2     → single-image hero (no duplicate / cut-off second image)
+    · CFG-PHOTO-1   → polar SVG box uses width-cap + object-fit:contain
+                      (NEVER height-fit, NEVER stretch)
+    · CFG-WARR-1 v1.1 → PRO+ 5-year / 50,000-hour limited liability
+    · CFG-CERT-1    → inline SVG cert badges (self-contained PDF)
+    · CFG-INV-1     → no inventory counts anywhere
+
+  Optic-aware hero · pendant mount × selected optic:
+    DFS → luna-pendant-diffuser.webp
+    LVR → luna-pendant-louver.webp
+    MRF → luna-pendant-micro-reflector.webp
+    DRS → luna-pendant-deep-regressed.webp
+
+  Photometric SVG resolver · luna_{N}ft_{optic_normalized}_{ratio}.svg
+    Length: 2 | 4 | 8 (3-ft falls back to 4-ft for IES; custom-length too)
+    Optic:  diffuser | louver | microreflector | deepregressed
+    Ratio:  down100 | up10down90 | up30down70 | up50down50 | up70down30 |
+            up90down10 | up100 (Diffuser only)
+
+  Example URL from §9 cfgCtaPdf:
+    submittal_luna.html?sku=LUXA3-3W30-3CS/27V/LUNA/80/WH/DFS
+                       &length=3&cri=80&finish=WH&optic=DFS
+                       &ratio=up50down50
+                       &em=EM15&sensor=MSP20,MSP40
+                       &joiner=SLJ,LJ,YJ&canopy=PCW
+                       &customLength=24&ral=9010
+
+  Print: File → Print → Save as PDF (letter portrait) — or click "Save as PDF".
+  4 pages standard · page 5 conditionally renders when ANY accessory is picked.
+-->
+
+<style>
+  /* ============= PRINT-OPTIMIZED CSS ============= */
+  @page {
+    size: letter portrait;
+    margin: 0.5in 0.6in;
+  }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+    .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+    .page:last-of-type { page-break-after: auto; }
+    .page.bom-page.empty { display: none; }
+    .catalog-number-hint { display: none !important; }
+  }
+
+  /* ============= TYPE + COLOR TOKENS ============= */
+  :root {
+    --brand-red: #F32740;
+    --ink: #0E0E10;
+    --ink-2: #2A2A2D;
+    --muted: #6B6B70;
+    --rule: #D8D6D2;
+    --rule-strong: #A6A4A0;
+    --tint: #F6F4F0;
+    --hi: #FFF6E5;
+    --pro-plus: #c8a14a; /* gold band for PRO+ tier */
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Lato', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.5pt;
+    line-height: 1.4;
+    background: #E8E6E2;
+  }
+  body { padding: 24px 12px; }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 24px;
+    padding: 0.55in 0.65in;
+    background: white;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  h1, h2, h3, h4 { font-family: 'Lato', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+  .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+  .aa { font-family: 'JetBrains Mono', monospace; font-size: 0.94em; vertical-align: -0.04em; font-weight: 700; }
+
+  /* ============= PAGE HEADER (every page) ============= */
+  .submittal-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+  .submittal-head .brand-mark {
+    width: 28px; height: 28px; background: var(--brand-red);
+    display: inline-block;
+  }
+  .submittal-head .brand-name {
+    font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1;
+  }
+  .submittal-head .brand-sub {
+    font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .submittal-head .catalog-block { text-align: right; }
+  .submittal-head .catalog-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .submittal-head .catalog-number {
+    font-size: 11pt; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+    border: 1.5px solid var(--ink);
+    padding: 4px 10px; display: inline-block;
+    letter-spacing: 0.5pt;
+    max-width: 5.4in; word-break: break-all;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .submittal-head .catalog-number:hover { background: var(--hi); }
+  .submittal-head .catalog-number:focus { background: var(--hi); border-color: var(--brand-red); outline: none; }
+  .catalog-number-hint {
+    display: block;
+    font-size: 6.5pt; letter-spacing: 1pt; color: var(--muted);
+    text-transform: uppercase; margin-top: 3px;
+  }
+
+  /* ============= PROJECT INFO FORM ============= */
+  .project-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule-strong);
+    margin-bottom: 14px;
+  }
+  .pi-cell {
+    padding: 6px 9px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    min-height: 38px;
+  }
+  .pi-cell:nth-child(3n) { border-right: none; }
+  .pi-cell:nth-child(n+4) { border-bottom: none; }
+  .pi-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .pi-value {
+    border-bottom: 1px dotted var(--rule-strong); min-height: 14px; padding-top: 2px;
+    word-break: break-all;
+  }
+
+  /* ============= PRODUCT TITLE BAND ============= */
+  .product-title {
+    margin: 14px 0 14px;
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  }
+  .product-title h1 { font-size: 22pt; line-height: 1; margin: 0; }
+  .product-title .tier-badge {
+    display: inline-block;
+    background: var(--pro-plus);
+    color: white;
+    font-size: 9pt; font-weight: 700; letter-spacing: 1pt;
+    padding: 4px 10px;
+    text-transform: uppercase;
+  }
+  .product-title .tagline {
+    font-size: 9.5pt; color: var(--ink-2); margin-top: 4px; line-height: 1.35;
+  }
+
+  /* ============= HERO + QUICK SPECS GRID · CFG-SUB-2 single image ============= */
+  .at-a-glance {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .hero-img {
+    background: var(--tint);
+    border: 1px solid var(--rule);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; padding: 14px;
+    position: relative;
+  }
+  .hero-img img {
+    max-width: 100%; max-height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .hero-img .fallback {
+    color: var(--muted); font-size: 9pt; padding: 10px; text-align: center;
+  }
+
+  .qs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .qs-cell {
+    border: 1px solid var(--rule-strong);
+    padding: 8px 10px;
+    min-height: 56px;
+  }
+  .qs-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 3px;
+  }
+  .qs-value {
+    font-size: 13pt; font-weight: 700; line-height: 1.05;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .qs-unit {
+    font-size: 8pt; font-weight: 400; color: var(--muted); margin-left: 2px;
+    font-family: 'Lato', sans-serif;
+  }
+
+  /* ============= STOCK PILL ============= */
+  .qs-pill, .mto-pill {
+    display: inline-block;
+    font-size: 7.5pt; font-weight: 700;
+    padding: 3px 8px; letter-spacing: 0.5pt;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .qs-pill  { background: #E5F4EC; color: #1F7A4B; border: 1px solid #58C998; }
+  .mto-pill { background: #FFF1E0; color: #B85C00; border: 1px solid #FFB562; }
+
+  /* ============= FEATURE BAND ============= */
+  .feature-band {
+    background: var(--ink); color: white;
+    padding: 8px 14px;
+    display: flex; gap: 14px; align-items: center;
+    margin-bottom: 12px;
+  }
+  .feature-band .fb-pill {
+    background: var(--brand-red); color: white;
+    font-size: 7pt; font-weight: 700; letter-spacing: 1.2pt;
+    padding: 3px 7px; text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .feature-band .fb-features { font-size: 8.5pt; line-height: 1.35; }
+  .feature-band .fb-features strong { font-weight: 700; }
+
+  /* ============= APPROVAL SIGNATURE BLOCK ============= */
+  .approval-block {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--rule-strong);
+  }
+  .approval-cell {
+    display: grid; grid-template-columns: max-content 1fr;
+    gap: 8px; align-items: end;
+    font-size: 8pt;
+  }
+  .approval-line { border-bottom: 1px solid var(--ink); height: 16px; }
+
+  /* ============= SECTION HEAD (page 2+) ============= */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 4px; margin-bottom: 10px; margin-top: 4px;
+  }
+  .section-head h2 { font-size: 14pt; line-height: 1; }
+  .section-head .section-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= SPEC TABLE ============= */
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+  }
+  .spec-table th, .spec-table td {
+    text-align: left;
+    padding: 5px 8px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .spec-table .spec-section-head td {
+    background: var(--tint);
+    font-weight: 700;
+    font-size: 9pt;
+    letter-spacing: 0.3pt;
+    border-bottom: 1px solid var(--rule-strong);
+    padding: 6px 8px;
+  }
+  .spec-table .spec-attr {
+    width: 30%;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+  .spec-table .spec-val { width: 70%; }
+  .spec-table .config-row td {
+    background: rgba(243, 39, 64, 0.04);
+    font-weight: 600;
+  }
+
+  /* ============= ORDERING CODE MATRIX ============= */
+  .order-code {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .order-segment {
+    background: var(--tint);
+    border: 1px solid var(--rule-strong);
+    padding: 8px 6px;
+    text-align: center;
+  }
+  .order-segment.active {
+    background: var(--brand-red); color: white;
+    border-color: var(--brand-red);
+  }
+  .order-seg-label {
+    font-size: 6.5pt; letter-spacing: 0.8pt;
+    text-transform: uppercase; margin-bottom: 4px;
+    opacity: 0.85;
+  }
+  .order-seg-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10pt; font-weight: 700;
+  }
+  .order-matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 7.5pt;
+  }
+  .order-matrix th, .order-matrix td {
+    border: 1px solid var(--rule);
+    padding: 4px 6px; text-align: left;
+    vertical-align: top;
+  }
+  .order-matrix th {
+    background: var(--ink); color: white;
+    font-size: 7pt; letter-spacing: 1pt;
+    text-transform: uppercase;
+  }
+  .order-matrix .code {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    width: 110px;
+  }
+  .order-matrix .code.active-code {
+    background: rgba(243, 39, 64, 0.10);
+    color: var(--brand-red);
+  }
+
+  /* ============= DIMENSIONS LAYOUT ============= */
+  .dim-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 14px;
+  }
+  .dim-views {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 8px;
+  }
+  .dim-view {
+    border: 1px solid var(--rule-strong);
+    aspect-ratio: 5/2;
+    display: flex; align-items: center; justify-content: center;
+    background: white;
+    position: relative;
+    overflow: hidden;
+    padding: 14px;
+  }
+  .dim-view svg { width: 100%; height: 100%; }
+  .dim-view-label {
+    position: absolute; top: 4px; left: 6px;
+    font-size: 7pt; letter-spacing: 1pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= PHOTOMETRIC DATA · CFG-PHOTO-1 canonical ============= */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: start; /* CFG-PHOTO-1 · never stretch the plate */
+  }
+  .photo-polar {
+    border: 1px solid var(--rule-strong);
+    padding: 10px;
+    aspect-ratio: 1;
+    background: white;
+    overflow: visible; /* CFG-PHOTO-1 · was hidden in pre-canonical */
+    display: flex; align-items: center; justify-content: center;
+  }
+  .photo-polar img,
+  .photo-polar svg {
+    width: 100%;
+    max-width: 380px; /* CFG-PHOTO-1 width-cap, NOT height-cap */
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+  .photo-polar .fallback {
+    color: var(--muted); font-size: 8pt; text-align: center; padding: 12px;
+  }
+  .photo-summary {
+    border: 1px solid var(--rule);
+  }
+  .photo-summary table { width: 100%; border-collapse: collapse; font-size: 8pt; }
+  .photo-summary table td {
+    padding: 4px 8px; border-bottom: 1px solid var(--rule);
+  }
+  .photo-summary table tr:last-child td { border-bottom: none; }
+  .photo-summary td:first-child { color: var(--muted); }
+  .photo-summary td:last-child {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; text-align: right;
+  }
+
+  /* ============= ACCESSORY BOM (page 5 conditional) ============= */
+  .bom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+  }
+  .bom-table th, .bom-table td {
+    border: 1px solid var(--rule);
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .bom-table th {
+    background: var(--ink); color: white;
+    font-size: 7pt; letter-spacing: 1pt; text-transform: uppercase;
+  }
+  .bom-table .bom-code {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    width: 200px; color: var(--brand-red);
+  }
+  .bom-table .bom-cat {
+    font-size: 7.5pt; letter-spacing: 0.6pt; text-transform: uppercase;
+    color: var(--muted); width: 110px;
+  }
+
+  /* ============= CERTIFICATIONS · CFG-CERT-1 inline SVG ============= */
+  .certs {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 10px 12px;
+    border: 1px solid var(--rule);
+    margin-top: 10px;
+    align-items: center;
+  }
+  .cert-badge-svg { height: 28px; width: auto; flex-shrink: 0; }
+
+  /* ============= PAGE FOOTER ============= */
+  .page-foot {
+    position: absolute;
+    bottom: 0.4in; left: 0.65in; right: 0.65in;
+    display: flex; justify-content: space-between;
+    font-size: 7pt; color: var(--muted);
+    padding-top: 6px;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ============= NO-PRINT CONTROLS ============= */
+  .controls {
+    max-width: 8.5in; margin: 0 auto 18px;
+    background: white; padding: 14px 18px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  }
+  .controls .ctrl-label {
+    font-size: 8.5pt; font-weight: 600; color: var(--muted);
+    letter-spacing: 0.5pt; text-transform: uppercase;
+  }
+  .controls .ctrl-value {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 10pt;
+    word-break: break-all;
+  }
+  .controls .ctrl-block { min-width: 0; flex: 1; }
+  .controls button {
+    background: var(--brand-red); color: white;
+    border: none; padding: 10px 18px;
+    font-family: inherit; font-weight: 700; font-size: 9pt;
+    letter-spacing: 0.5pt; text-transform: uppercase;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .controls button:hover { background: #d61f37; }
+  .controls .controls-hint {
+    width: 100%;
+    font-size: 8pt; color: var(--muted); padding-top: 6px;
+    border-top: 1px dashed var(--rule); margin-top: 4px;
+  }
+
+/* CFG-TYPE-1 · Lato lock — Shopify global cascades Cormorant onto inline Lato.
+   This !important rule pins Lato on h1/h2 for this collection's PDP body class. */
+body.planoarch-pdp h1,
+body.planoarch-pdp h2 {
+  font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+}
+
+/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+body { overflow-x: hidden; }
+</style>
+</head>
+<body>
+
+<!-- ============= NO-PRINT CONTROLS BAR ============= -->
+<div class="controls no-print">
+  <div class="ctrl-block">
+    <div class="ctrl-label">Configured SKU</div>
+    <div class="ctrl-value" id="liveSku">LUXA3-3W30-3CS/27V/LUNA/80/WH/DFS</div>
+  </div>
+  <div class="ctrl-block" style="flex: 0 0 auto;">
+    <div class="ctrl-label">Ship Tier</div>
+    <div class="ctrl-value"><span id="stockPill" class="qs-pill">QuickShip · 3-5 day</span></div>
+  </div>
+  <div class="ctrl-block" style="flex: 0 0 auto;">
+    <div class="ctrl-label">Generated</div>
+    <div class="ctrl-value" id="liveDate" style="font-size:9pt; font-weight:400;">&mdash;</div>
+  </div>
+  <button onclick="window.print()">Save as PDF &rarr;</button>
+  <div class="controls-hint">
+    Browser will open the print dialog &middot; choose <strong>Save as PDF</strong> as the destination &middot; Letter portrait &middot; Margins: Default &middot; Background graphics: <strong>ON</strong>. Click the Catalog Number box top-right of any page to relabel for project &mdash; the override sweeps every visible instance live.
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — AT A GLANCE                                          -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+  <!-- HEADER -->
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group &middot; LUXA</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum" contenteditable="true" spellcheck="false" title="Click to edit &middot; session-only &middot; sweeps every visible instance">LUXA3-3W30-3CS/27V/LUNA/80/WH/DFS</div>
+      <span class="catalog-number-hint">Click to relabel for project</span>
+    </div>
+  </div>
+
+  <!-- PROJECT INFO FORM -->
+  <div class="project-info">
+    <div class="pi-cell"><div class="pi-label">Project</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Type</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Catalog #</div><div class="pi-value" id="piCatNum">LUXA3-3W30-3CS/27V/LUNA/80/WH/DFS</div></div>
+    <div class="pi-cell"><div class="pi-label">Prepared By</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Notes</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Date</div><div class="pi-value"></div></div>
+  </div>
+
+  <!-- PRODUCT TITLE -->
+  <div class="product-title">
+    <div>
+      <h1>LUXA · Luna</h1>
+      <div class="tagline">Specification-Grade Architectural Linear Pendant &middot; <strong>plano<span class="aa">Ⓐ</span>RCH PRO+</strong> &middot; up to 190 LM/W max efficacy &middot; CRI &gt; 90 &middot; UGR &lt; 22 &middot; <strong>Versa<span class="aa">Ⓐ</span>RCH</strong> 4-way mount (pendant / surface / wall / recessed) &middot; <strong>optic<span class="aa">Ⓐ</span>DAPT</strong> 4 interchangeable optics &middot; <strong>direct<span class="aa">Ⓐ</span>IM</strong> 7-way distribution &middot; <strong>continu<span class="aa">Ⓐ</span>RUN</strong> 1,000W &commat; 277V with 7-shape joiner family &middot; DLC Premium &middot; IP55 DampGuard &middot; 5-year / 50,000-hour limited liability &middot; Made in USA.</div>
+    </div>
+    <div class="tier-badge">PRO+</div>
+  </div>
+
+  <!-- HERO + QUICK SPECS · CFG-SUB-2 single image · optic-aware photo -->
+  <div class="at-a-glance">
+    <div class="hero-img">
+      <!-- Single optic-specific Luna pendant photo · loaded from
+           assets/hero/luna-pendant-{diffuser|louver|micro-reflector|deep-regressed}.webp
+           per the resolved `optic` URL param.  Falls back to luna-pendant-diffuser.webp
+           then luna-hero-1.webp on 404. -->
+      <img id="submittalHeroPhoto"
+           src="assets/hero/luna-pendant-diffuser.webp"
+           alt="LUXA Luna · pendant suspension · Diffuser optic" />
+    </div>
+    <div class="qs-grid">
+      <div class="qs-cell">
+        <div class="qs-label">Length</div>
+        <div class="qs-value" id="qsLength">3<span class="qs-unit">FT</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Wattage (max)</div>
+        <div class="qs-value" id="qsWatts">30<span class="qs-unit">W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Lumens (max)</div>
+        <div class="qs-value" id="qsLumens">5,700<span class="qs-unit">lm</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Efficacy (peak)</div>
+        <div class="qs-value" id="qsLpw">190<span class="qs-unit">LM/W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CRI</div>
+        <div class="qs-value" id="qsCri">80<span class="qs-unit">CRI+</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Optic</div>
+        <div class="qs-value" id="qsOptic" style="font-size:11pt;">Diffuser</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE BAND -->
+  <div class="feature-band">
+    <div class="fb-pill">Field-Tunable</div>
+    <div class="fb-features">
+      <strong>3-WATTselect</strong> DIP &middot; <strong>3-CCTselect</strong> 3000K/3500K/4000K &middot;
+      <strong>direct<span class="aa">Ⓐ</span>IM</strong> 7-way distribution ratio &middot;
+      <strong>110-277V Universal</strong> &middot; <strong>0-10V dimming to 1%</strong> &middot;
+      <strong>Lutron Diva-DVTV</strong> + <strong>Leviton IP-710-DL</strong> compatible &middot;
+      <strong>Integrated surge protection</strong>
+    </div>
+  </div>
+
+  <!-- AT-A-GLANCE SUMMARY (4-5 sentence product summary per playbook) -->
+  <div style="font-size: 9pt; line-height: 1.5; color: var(--ink-2); margin-top: 8px;">
+    <strong>LUXA Luna</strong> is the plano<span class="aa">Ⓐ</span>RCH PRO+ specification-grade architectural linear pendant &mdash; one platform spec'd across four mounting types and four interchangeable optics, so the architect picks the look on the floor and the SKU stays the same. The <strong>Versa<span class="aa">Ⓐ</span>RCH 4-way mount</strong> (pendant / surface / wall / recessed) lands the same fixture into open ceilings, hard ceilings, walls, and trimless flush recesses. <strong>optic<span class="aa">Ⓐ</span>DAPT</strong> swaps Diffuser / Louver / Micro Reflector / Regressed in the field without re-spec'ing, and the <strong>direct<span class="aa">Ⓐ</span>IM 7-way</strong> DIP picks the up/down split anywhere from 100% down through 50/50 to 100% up. Up to <strong>190 LM/W</strong> at the Diffuser optic with CRI &gt; 90 and UGR &lt; 22 &mdash; and <strong>continu<span class="aa">Ⓐ</span>RUN</strong> seamless joiner spans 1,000W per 277V circuit through a seven-shape joiner family (Straight / L / T / X / Y / V / Z).
+  </div>
+
+  <!-- APPROVAL BLOCK -->
+  <div class="approval-block">
+    <div class="approval-cell">
+      <span><strong>Approved by</strong></span>
+      <div class="approval-line"></div>
+    </div>
+    <div class="approval-cell">
+      <span><strong>Date</strong></span>
+      <div class="approval-line"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LUXA Luna submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. <span id="revDate">2026-05</span> &middot; Page 1 of <span class="page-count">4</span></div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — SPECIFICATIONS                                       -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group &middot; LUXA</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum2">LUXA3-3W30-3CS/27V/LUNA/80/WH/DFS</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Specifications</h2>
+    <div class="section-eyebrow" id="specsEyebrow">LUXA Luna &middot; plano<span class="aa">Ⓐ</span>RCH PRO+ &middot; architectural linear pendant</div>
+  </div>
+
+  <table class="spec-table">
+    <tbody>
+      <tr class="spec-section-head"><td colspan="2">Configured Selections (this submittal)</td></tr>
+      <tr class="config-row"><td class="spec-attr">Length</td><td class="spec-val" id="cfgLength">LUXA3 &middot; 3 FT (35.8 in nominal)</td></tr>
+      <tr class="config-row"><td class="spec-attr">CRI Tier</td><td class="spec-val" id="cfgCri">80 CRI+ &middot; Standard (QuickShip)</td></tr>
+      <tr class="config-row"><td class="spec-attr">Finish</td><td class="spec-val" id="cfgFinish">White</td></tr>
+      <tr class="config-row"><td class="spec-attr">optic<span class="aa">Ⓐ</span>DAPT Optic</td><td class="spec-val" id="cfgOptic">Diffuser &middot; 190 LM/W headline &middot; UGR &lt; 25</td></tr>
+      <tr class="config-row"><td class="spec-attr">direct<span class="aa">Ⓐ</span>IM Distribution</td><td class="spec-val" id="cfgRatio">50% UP / 50% DOWN &middot; balanced ambient (DIP-tunable to any of 7 ratios)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Construction</td></tr>
+      <tr><td class="spec-attr">Housing</td><td class="spec-val">Extruded aluminum &middot; 6063 alloy &middot; 2.3" W &times; 2.9" H &middot; spec-grade architectural profile</td></tr>
+      <tr><td class="spec-attr">Lens / Optic</td><td class="spec-val">optic<span class="aa">Ⓐ</span>DAPT field-interchangeable optical system: Diffuser (DFS &middot; 190 LM/W), Louver (LVR &middot; UGR &lt; 22), Micro Reflector (MRF &middot; accent / directional), Regressed (DRS &middot; trimless flush)</td></tr>
+      <tr><td class="spec-attr">Finish Options</td><td class="spec-val">Black (BK &middot; QuickShip) &middot; White (WH &middot; QuickShip) &middot; Custom RAL Classic (CM &middot; MTO &middot; specify 4-digit code)</td></tr>
+      <tr><td class="spec-attr">Ingress</td><td class="spec-val">IP55 DampGuard &mdash; moisture-prone interiors (kitchens, bathrooms, exterior soffits, indoor pool decks)</td></tr>
+      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">&minus;4&deg;F to +104&deg;F (&minus;20&deg;C to +40&deg;C) ambient</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">LED &amp; Optics</td></tr>
+      <tr><td class="spec-attr">LED Source</td><td class="spec-val">Mid-power packaged LEDs &middot; L90 lumen maintenance &commat; 50,000 hrs</td></tr>
+      <tr><td class="spec-attr">CCT (3-CCTselect)</td><td class="spec-val">3000K &middot; 3500K (default ★) &middot; 4000K &middot; DIP-switch field-tunable</td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val">80 CRI+ standard &middot; 90 CRI+ spec-grade option (MTO &middot; color-binned LED)</td></tr>
+      <tr><td class="spec-attr">SDCM</td><td class="spec-val">&le; 3 step MacAdam color stability across CCT range</td></tr>
+      <tr><td class="spec-attr">Distribution (direct<span class="aa">Ⓐ</span>IM)</td><td class="spec-val">7-way DIP-switch ratio: 100% down &middot; 90/10 &middot; 70/30 &middot; 50/50 ★ &middot; 30/70 &middot; 10/90 &middot; 100% up</td></tr>
+      <tr><td class="spec-attr">Lumen Output</td><td class="spec-val">LUXA2 (10W★/15W/20W): 1,900 / 2,850 / 3,800 lm &middot; LUXA3 (15W★/23W/30W): 2,850 / 4,370 / 5,700 lm &middot; LUXA4 (22W★/30W/40W): 4,180 / 5,700 / 7,600 lm &middot; LUXA8 (60W★/70W/80W): 11,400 / 13,300 / 15,200 lm &middot; all values &commat; Diffuser optic, 4000K</td></tr>
+      <tr><td class="spec-attr">Efficacy</td><td class="spec-val">Up to <strong>190 LM/W</strong> (Diffuser optic at lowest WATTselect setting &middot; category-leading)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Driver &amp; Electrical</td></tr>
+      <tr><td class="spec-attr">Voltage</td><td class="spec-val"><strong>110-277V Universal</strong> &middot; constant-current driver &middot; auto-ranging input (no separate voltage SKU)</td></tr>
+      <tr><td class="spec-attr">3-WATTselect</td><td class="spec-val">3-position DIP switch &middot; max watt determined by length &middot; ★ on lowest watt = peak efficacy</td></tr>
+      <tr><td class="spec-attr">Power Factor</td><td class="spec-val">&ge; 0.95 at full load</td></tr>
+      <tr><td class="spec-attr">THD</td><td class="spec-val">&le; 20% at full load</td></tr>
+      <tr><td class="spec-attr">Surge Protection</td><td class="spec-val">Integrated &middot; always &middot; no add-on module needed</td></tr>
+      <tr><td class="spec-attr">Dimming</td><td class="spec-val"><strong>0-10V to 1%</strong> deep-dim standard &middot; Lutron Diva-DVTV named-dimmer compatible &middot; Leviton IP-710-DL named-dimmer compatible &middot; datasheet-verified</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Controls &amp; Connectivity (optional contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS)</td></tr>
+      <tr><td class="spec-attr">PIR Sensors</td><td class="spec-val">MSP-20CM-ACS (8-20 ft mount) &middot; MSP-40CM-ACS (40 ft mount) &middot; MSX-LV20-ACS (low-voltage 20 ft J-Box controller)</td></tr>
+      <tr><td class="spec-attr">Wall Switch</td><td class="spec-val">50WM-ACS &middot; Kinetic &middot; battery-free &middot; Bluetooth Mesh &middot; 100 ft range</td></tr>
+      <tr><td class="spec-attr">Mesh Protocol</td><td class="spec-val"><span class="aa">Ⓐ</span>CS Bluetooth Mesh &middot; field-commissionable via AURA app</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Mounting &amp; continu<span class="aa">Ⓐ</span>RUN</td></tr>
+      <tr><td class="spec-attr">Mount Options (Versa<span class="aa">Ⓐ</span>RCH)</td><td class="spec-val">Pendant suspension &middot; Surface &middot; Wall &middot; Recessed (trimless + flanged trim) &mdash; single SKU platform covers all four</td></tr>
+      <tr><td class="spec-attr">continu<span class="aa">Ⓐ</span>RUN Capacity</td><td class="spec-val">1,000 W max &commat; 277 VAC &middot; 400 W max &commat; 120 VAC &middot; per circuit</td></tr>
+      <tr><td class="spec-attr">Joiner Family</td><td class="spec-val">Straight &middot; L &middot; T &middot; X &middot; Y &middot; V &middot; Z (seven joiner geometries &middot; richest joiner matrix in the spec-grade category)</td></tr>
+      <tr><td class="spec-attr">Weight</td><td class="spec-val">LUXA2: 3.6 lb &middot; LUXA3: 4.7 lb &middot; LUXA4: 6.1 lb &middot; LUXA8: 11.8 lb (luminaire only &middot; qty per carton: 12 / 12 / 6 / 6)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
+      <tr><td class="spec-attr">Standards</td><td class="spec-val">UL Listed &middot; cUL &middot; DLC Premium QPL Listed &middot; FCC Title 47 Part 15B &middot; RoHS &middot; IP55 DampGuard</td></tr>
+      <tr><td class="spec-attr">Buy-American</td><td class="spec-val">Made in USA &middot; Riverside, CA assembly. Note: NOT TAA-listed (per LUXA family documentation)</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val"><strong>7-Year / 75,000-hour limited</strong> &middot; Limited Liability &middot; plano<span class="aa">Ⓐ</span>RCH PRO tier</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 10px; font-size: 7.5pt; color: var(--muted); line-height: 1.4;">
+    <strong>Spec Footnotes</strong> &middot; Lumens published per IESNA LM-79 at 4000K. ~5% lumen shift between 3000K / 3500K / 4000K. Field DIP switches set 3-WATTselect rung + 3-CCTselect color + 7-way distribution at install. DLC Premium tier verifiable via Rebate Center (CFG-RBT-2) at <code>archipelagolighting.com/pages/rebate-center</code>. 5-year / 50,000-hour limited liability warranty per plano<span class="aa">Ⓐ</span>RCH PRO+ tier &middot; standard product replacement only &middot; full warranty statement at archipelagolighting.com/warranty.
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LUXA Luna submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 2 of <span class="page-count">4</span></div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 3 — DIMENSIONS & MOUNTING                                -->
+<!-- ============================================================ -->
+<div class="page" id="page-3">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group &middot; LUXA</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum3">LUXA3-3W30-3CS/27V/LUNA/80/WH/DFS</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Dimensions &amp; Mounting</h2>
+    <div class="section-eyebrow" id="dimEyebrow">LUXA3 &middot; 3 FT &middot; pendant suspension</div>
+  </div>
+
+  <div class="dim-grid">
+    <div class="dim-views">
+      <div class="dim-view">
+        <div class="dim-view-label">Profile &middot; Side view (in)</div>
+        <svg id="profileSvg" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Side profile drawn dynamically based on length · JS at end of file -->
+        </svg>
+      </div>
+      <div class="dim-view">
+        <div class="dim-view-label">Section &middot; End view (in)</div>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- 2.3" W × 2.9" H aluminum extrusion section -->
+          <g transform="translate(100, 100)">
+            <rect x="-46" y="-58" width="92" height="116" rx="3" fill="#e8e8e8" stroke="#1a1a1a" stroke-width="2"/>
+            <rect x="-40" y="-52" width="80" height="14" fill="rgba(0,0,0,0.08)" stroke="#888" stroke-width="0.5"/>
+            <text x="0" y="-44" text-anchor="middle" font-size="6" fill="#666" font-family="JetBrains Mono, monospace">DRIVER BAY</text>
+            <rect x="-38" y="36" width="76" height="14" fill="#fffaaa" stroke="#daa620" stroke-width="0.5"/>
+            <text x="0" y="46" text-anchor="middle" font-size="6" fill="#856200" font-family="JetBrains Mono, monospace">LED + OPTIC</text>
+            <line x1="-46" y1="68" x2="46" y2="68" stroke="#F32740" stroke-width="0.8" marker-end="url(#arrowR)" marker-start="url(#arrowL)"/>
+            <text x="0" y="80" text-anchor="middle" font-size="9" fill="#F32740" font-family="JetBrains Mono, monospace" font-weight="700">2.3"</text>
+            <line x1="58" y1="-58" x2="58" y2="58" stroke="#F32740" stroke-width="0.8" marker-end="url(#arrowD)" marker-start="url(#arrowU)"/>
+            <text x="74" y="4" text-anchor="middle" font-size="9" fill="#F32740" font-family="JetBrains Mono, monospace" font-weight="700">2.9"</text>
+          </g>
+          <defs>
+            <marker id="arrowR" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#F32740"/></marker>
+            <marker id="arrowL" viewBox="0 0 8 8" refX="2" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8" fill="#F32740"/></marker>
+            <marker id="arrowD" viewBox="0 0 8 8" refX="4" refY="6" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L4,8 L8,0" fill="#F32740"/></marker>
+            <marker id="arrowU" viewBox="0 0 8 8" refX="4" refY="2" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L4,8 L8,0" fill="#F32740"/></marker>
+          </defs>
+        </svg>
+      </div>
+    </div>
+
+    <div>
+      <table class="spec-table">
+        <tbody>
+          <tr class="spec-section-head"><td colspan="2">Dimensions (selected length)</td></tr>
+          <tr><td class="spec-attr">Length</td><td class="spec-val" id="dimLength">35.8 in (LUXA3 &middot; 3 FT nominal)</td></tr>
+          <tr><td class="spec-attr">Width</td><td class="spec-val">2.3 in (extruded profile)</td></tr>
+          <tr><td class="spec-attr">Depth (housing)</td><td class="spec-val">2.9 in</td></tr>
+          <tr><td class="spec-attr">Suspension drop</td><td class="spec-val">Per canopy spec &middot; 4-72" cable adjustable</td></tr>
+          <tr class="spec-section-head"><td colspan="2">Weight + Carton</td></tr>
+          <tr><td class="spec-attr">Weight (luminaire)</td><td class="spec-val" id="dimWeight">4.7 lb (LUXA3)</td></tr>
+          <tr><td class="spec-attr">Qty per carton</td><td class="spec-val" id="dimQty">12 / carton</td></tr>
+          <tr class="spec-section-head"><td colspan="2">Versa<span class="aa">Ⓐ</span>RCH Mount Options</td></tr>
+          <tr><td class="spec-attr">Pendant</td><td class="spec-val">Suspension cable + canopy (separate accessory line)</td></tr>
+          <tr><td class="spec-attr">Surface</td><td class="spec-val">Direct ceiling mount via Surface Mount Canopy (SMC)</td></tr>
+          <tr><td class="spec-attr">Wall</td><td class="spec-val">Wall-mount via SMC oriented horizontal</td></tr>
+          <tr><td class="spec-attr">Recessed</td><td class="spec-val">Trimless flush (Regressed optic) or flanged trim &middot; ceiling cut spec on installation guide</td></tr>
+          <tr class="spec-section-head"><td colspan="2">continu<span class="aa">Ⓐ</span>RUN Capacity</td></tr>
+          <tr><td class="spec-attr">Per Circuit &commat; 277V</td><td class="spec-val">1,000 W max</td></tr>
+          <tr><td class="spec-attr">Per Circuit &commat; 120V</td><td class="spec-val">400 W max</td></tr>
+          <tr><td class="spec-attr">Joiner Shapes</td><td class="spec-val">Straight &middot; L &middot; T &middot; X &middot; Y &middot; V &middot; Z (7-shape family)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LUXA Luna submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 3 of <span class="page-count">4</span></div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 4 — ORDERING CODE & PHOTOMETRICS                         -->
+<!-- ============================================================ -->
+<div class="page" id="page-4">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group &middot; LUXA</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum4">LUXA3-3W30-3CS/27V/LUNA/80/WH/DFS</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Ordering Information</h2>
+    <div class="section-eyebrow">96-SKU configuration &middot; 4 lengths &times; 2 CRI &times; 3 finishes &times; 4 optics</div>
+  </div>
+
+  <!-- ORDERING CODE VISUAL BREAKDOWN -->
+  <div class="order-code">
+    <div class="order-segment active"><div class="order-seg-label">Family &middot; Length</div><div class="order-seg-value" id="ocLen">LUXA3</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Watt Tier</div><div class="order-seg-value" id="ocW">3W30</div></div>
+    <div class="order-segment active"><div class="order-seg-label">CCT</div><div class="order-seg-value">3CS</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Voltage</div><div class="order-seg-value">27V</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Series</div><div class="order-seg-value">LUNA</div></div>
+    <div class="order-segment active"><div class="order-seg-label">CRI &middot; Finish &middot; Optic</div><div class="order-seg-value" id="ocCFO">80/WH/DFS</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Status</div><div class="order-seg-value" id="ocStatus" style="font-size:8.5pt;">QS</div></div>
+  </div>
+
+  <!-- ORDERING MATRIX -->
+  <table class="order-matrix">
+    <thead>
+      <tr>
+        <th style="width:18%">Segment</th>
+        <th>Available Codes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="code">LUXA{N}</td><td>Family + Length: <strong>LUXA2</strong> (2 FT &middot; 23.6") &middot; <strong>LUXA3</strong> (3 FT &middot; 35.8") ★ &middot; <strong>LUXA4</strong> (4 FT &middot; 47.9") &middot; <strong>LUXA8</strong> (8 FT &middot; 95.9") &middot; <strong>LUXA2T / LUXA3T</strong> + <strong>/CUST/L##IN</strong> for telescoping custom length 13-48"</td></tr>
+      <tr><td class="code">3W{maxW}</td><td>3-WATTselect tier &middot; max wattage by length: <strong>3W20</strong> (LUXA2) &middot; <strong>3W30</strong> (LUXA3) &middot; <strong>3W40</strong> (LUXA4) &middot; <strong>3W80</strong> (LUXA8). DIP-switch picks watt within tier &mdash; ★ on lowest = peak efficacy</td></tr>
+      <tr><td class="code">3CS</td><td>3-CCTselect &middot; 3000K &middot; 3500K ★ &middot; 4000K &middot; field-tunable</td></tr>
+      <tr><td class="code">27V</td><td>110-277V Universal &middot; constant-current driver &middot; always</td></tr>
+      <tr><td class="code">LUNA</td><td>Series identifier (PRO tier &middot; plano<span class="aa">Ⓐ</span>RCH category)</td></tr>
+      <tr><td class="code">80 / 90</td><td>CRI tier &middot; <strong>80</strong> (Standard &middot; QuickShip) &middot; <strong>90</strong> (Spec-Grade &middot; MTO &middot; color-binned LED)</td></tr>
+      <tr><td class="code">BK / WH / CM</td><td>Finish &middot; <strong>BK</strong> (Black &middot; QS) &middot; <strong>WH</strong> (White &middot; QS &middot; ★) &middot; <strong>CM/RAL####</strong> (Custom RAL Classic &middot; MTO &middot; 4-digit code embedded in SKU)</td></tr>
+      <tr><td class="code">DFS / LVR / MRF / DRS</td><td>optic<span class="aa">Ⓐ</span>DAPT &middot; <strong>DFS</strong> Diffuser ★ &middot; <strong>LVR</strong> Louver (UGR &lt; 22) &middot; <strong>MRF</strong> Micro Reflector &middot; <strong>DRS</strong> Regressed (trimless flush) &middot; field-interchangeable</td></tr>
+    </tbody>
+  </table>
+
+  <!-- PHOTOMETRIC DATA · CFG-PHOTO-1 canonical sizing -->
+  <div class="section-head" style="margin-top: 14px;">
+    <h2>Photometric Data</h2>
+    <div class="section-eyebrow" id="photoEyebrow">LUXA3 &middot; 15W ★ &middot; 4000K &middot; Diffuser optic &middot; 50/50 split</div>
+  </div>
+
+  <div class="photo-grid">
+    <div class="photo-polar">
+      <!-- Real polar plot · loaded from assets/photometrics/luna_{N}ft_{optic}_{ratio}.svg
+           wired to URL params (length × optic × ratio).
+           57 SVGs pre-rendered (3 lengths × 4 optics × up to 7 ratios).
+           ON 404 the IMG.onerror swaps to a fallback message div. -->
+      <img id="submittalPhotoPolar"
+           src="assets/photometrics/luna_4ft_diffuser_up50down50.svg"
+           alt="LUXA Luna polar candela distribution &middot; selected length / optic / ratio" />
+      <div id="submittalPhotoPolarFallback"
+           style="display:none; color:#888; font-size:8pt; text-align:center; padding:24px;">
+        Polar plot SVG unavailable for the selected length &times; optic &times; ratio combination.<br/>
+        Reference IES filename listed in the photo summary table. The full bundle
+        ships from WorkDrive (link on the PDP §6 Photometrics card).
+      </div>
+    </div>
+
+    <div class="photo-summary">
+      <table>
+        <tbody>
+          <tr><td>Total Lumens</td><td id="photoLumens">5,045 lm</td></tr>
+          <tr><td>Wattage</td><td id="photoWatts">40 W</td></tr>
+          <tr><td>Efficacy</td><td id="photoLpw">126.1 LM/W</td></tr>
+          <tr><td>Peak Candela</td><td id="photoPeak">994 cd &commat; nadir</td></tr>
+          <tr><td>CRI</td><td id="photoCri">80 CRI+</td></tr>
+          <tr><td>UGR</td><td id="photoUgr">&lt; 25 (Diffuser)</td></tr>
+          <tr><td>Distribution</td><td id="photoDist">direct<span class="aa">Ⓐ</span>IM &middot; 50% UP / 50% DOWN</td></tr>
+          <tr><td>Test Standard</td><td>IESNA LM-79 / LM-80</td></tr>
+          <tr><td>IES File</td><td id="photoIesFile" style="font-size:7pt;">LUNA 4FT 4000K Diffuser 50%up.IES</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- DLC NLC qualifier note · rebate adder when ⒶCS accessories selected -->
+  <div id="nlcNote" style="display:none; margin-top: 10px; padding: 10px 12px; background: var(--hi); border-left: 3px solid var(--brand-red); font-size: 8pt; line-height: 1.4;">
+    <strong>DLC NLC Rebate Adder</strong> &middot; Selected contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS sensor / controller accessories qualify this configuration for DLC Networked Lighting Controls rebate adder (typically +$15-30 per fixture beyond base luminaire rebate). Confirm utility rebate amount via Rebate Center per CFG-RBT-2 before commit.
+  </div>
+
+  <!-- CERTIFICATIONS · CFG-CERT-1 inline SVG so the PDF is self-contained -->
+  <div class="certs">
+    <!-- DLC Premium · brand red -->
+    <svg class="cert-badge-svg" viewBox="0 0 96 36" xmlns="http://www.w3.org/2000/svg" aria-label="DLC Premium QPL Listed">
+      <rect x="1" y="1" width="94" height="34" fill="white" stroke="#F32740" stroke-width="1.4"/>
+      <text x="48" y="14" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="10" font-weight="700" letter-spacing="0.4">DLC</text>
+      <text x="48" y="25" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="7.5" font-weight="700" letter-spacing="0.3">PREMIUM</text>
+      <text x="48" y="32" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="5.5">QPL LISTED</text>
+    </svg>
+    <!-- UL Listed -->
+    <svg class="cert-badge-svg" viewBox="0 0 80 36" xmlns="http://www.w3.org/2000/svg" aria-label="UL Listed UL 1598">
+      <circle cx="18" cy="18" r="15" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="18" y="22" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="11" font-weight="700">UL</text>
+      <text x="42" y="16" fill="#0E0E10" font-family="Lato, sans-serif" font-size="7.5" font-weight="700" letter-spacing="0.4">LISTED</text>
+      <text x="42" y="26" fill="#6B6B70" font-family="Lato, sans-serif" font-size="6" letter-spacing="0.3">UL 1598</text>
+    </svg>
+    <!-- cUL · US + CA -->
+    <svg class="cert-badge-svg" viewBox="0 0 72 36" xmlns="http://www.w3.org/2000/svg" aria-label="cUL Listed US and Canada">
+      <circle cx="18" cy="18" r="15" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="18" y="22" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="10" font-weight="700">cUL</text>
+      <text x="42" y="16" fill="#0E0E10" font-family="Lato, sans-serif" font-size="7" font-weight="700">US</text>
+      <text x="56" y="16" fill="#0E0E10" font-family="Lato, sans-serif" font-size="7" font-weight="700">CA</text>
+      <text x="42" y="26" fill="#6B6B70" font-family="Lato, sans-serif" font-size="6">LISTED</text>
+    </svg>
+    <!-- IP55 DampGuard -->
+    <svg class="cert-badge-svg" viewBox="0 0 86 36" xmlns="http://www.w3.org/2000/svg" aria-label="IP55 DampGuard ingress protection">
+      <rect x="1" y="1" width="84" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="43" y="14" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="10" font-weight="700" letter-spacing="0.4">IP55</text>
+      <text x="43" y="26" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="7.5" font-weight="700" letter-spacing="0.3">DAMPGUARD</text>
+    </svg>
+    <!-- CRI > 90 -->
+    <svg class="cert-badge-svg" viewBox="0 0 76 36" xmlns="http://www.w3.org/2000/svg" aria-label="CRI greater than 90 spec-grade">
+      <rect x="1" y="1" width="74" height="34" fill="white" stroke="#F32740" stroke-width="1.4"/>
+      <text x="38" y="14" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="10" font-weight="700" letter-spacing="0.4">CRI &gt; 90</text>
+      <text x="38" y="26" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="7" font-weight="700" letter-spacing="0.3">SPEC-GRADE</text>
+    </svg>
+    <!-- UGR < 22 -->
+    <svg class="cert-badge-svg" viewBox="0 0 76 36" xmlns="http://www.w3.org/2000/svg" aria-label="UGR less than 22 glare control">
+      <rect x="1" y="1" width="74" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="38" y="14" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="10" font-weight="700" letter-spacing="0.4">UGR &lt; 22</text>
+      <text x="38" y="26" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="7" font-weight="700" letter-spacing="0.3">GLARE CONTROL</text>
+    </svg>
+    <!-- FCC Part 15B -->
+    <svg class="cert-badge-svg" viewBox="0 0 76 36" xmlns="http://www.w3.org/2000/svg" aria-label="FCC Part 15 B compliant">
+      <rect x="1" y="1" width="74" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="38" y="14" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="10" font-weight="700" letter-spacing="0.4">FCC</text>
+      <text x="38" y="26" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="7" font-weight="700" letter-spacing="0.3">PART 15 B</text>
+    </svg>
+    <!-- RoHS -->
+    <svg class="cert-badge-svg" viewBox="0 0 62 36" xmlns="http://www.w3.org/2000/svg" aria-label="RoHS Compliant">
+      <rect x="1" y="1" width="60" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="31" y="16" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="10" font-weight="700">RoHS</text>
+      <text x="31" y="27" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="6.5" letter-spacing="0.3">COMPLIANT</text>
+    </svg>
+    <!-- Made in USA -->
+    <svg class="cert-badge-svg" viewBox="0 0 86 36" xmlns="http://www.w3.org/2000/svg" aria-label="Made in USA Riverside California">
+      <rect x="1" y="1" width="84" height="34" fill="white" stroke="#F32740" stroke-width="1.4"/>
+      <text x="43" y="14" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="9" font-weight="700" letter-spacing="0.4">MADE IN USA</text>
+      <text x="43" y="26" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="6.5" font-weight="700" letter-spacing="0.3">RIVERSIDE, CA</text>
+    </svg>
+    <!-- 7-yr · 75K hr · Limited Liability -->
+    <svg class="cert-badge-svg" viewBox="0 0 96 36" xmlns="http://www.w3.org/2000/svg" aria-label="7 year 75000 hour limited liability warranty">
+      <rect x="1" y="1" width="94" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="48" y="14" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="9" font-weight="700" letter-spacing="0.4">7 yr &middot; 75K hr</text>
+      <text x="48" y="26" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="6.5" font-weight="700" letter-spacing="0.3">LIMITED LIABILITY</text>
+    </svg>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LUXA Luna submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 4 of <span class="page-count">4</span></div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 5 — ACCESSORY BILL OF MATERIALS (CONDITIONAL)            -->
+<!-- ============================================================ -->
+<div class="page bom-page empty" id="page-bom">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group &middot; LUXA</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum5">LUXA3-3W30-3CS/27V/LUNA/80/WH/DFS</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Accessory Bill of Materials</h2>
+    <div class="section-eyebrow" id="bomEyebrow">0 line items</div>
+  </div>
+
+  <p style="font-size: 9pt; color: var(--ink-2); margin-bottom: 14px;">
+    These are separate line items shipped alongside the LUNA luminaire &mdash; they are not part of the core SKU.
+    Order each line independently. The driver, surge protection, and dimming compatibility ship integrated
+    in the LUNA SKU above; this BOM lists only the optional add-ons configured in &sect;9 of the product page.
+  </p>
+
+  <table class="bom-table" id="bomTable">
+    <thead>
+      <tr>
+        <th>Order Code</th>
+        <th class="bom-cat" style="color:white;">Category</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody id="bomBody">
+      <!-- Filled in via JS based on em / sensor / joiner / canopy params -->
+    </tbody>
+  </table>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LUXA Luna submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 5 of <span class="page-count-bom">5</span></div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SUBMITTAL AUTO-FILL · LUXA Luna v2                            -->
+<!-- ============================================================ -->
+<script>
+(function() {
+  // ============================================================================
+  // PARSE URL PARAMS (defaults match LUNA's marquee config — LUXA3 + WH + DFS)
+  // ============================================================================
+  var params = new URLSearchParams(window.location.search);
+  var skuParam     = params.get('sku')          || '';
+  var length       = params.get('length')       || '3';
+  var cri          = params.get('cri')          || '80';
+  var finish       = params.get('finish')       || 'WH';
+  var optic        = params.get('optic')        || 'DFS';
+  var ratio        = params.get('ratio')        || 'up50down50';
+  var customLength = params.get('customLength') || '';
+  var ralCode      = params.get('ral')          || '';
+  var em     = (params.get('em')     || '').split(',').filter(Boolean);
+  var sensor = (params.get('sensor') || '').split(',').filter(Boolean);
+  var joiner = (params.get('joiner') || '').split(',').filter(Boolean);
+  var canopy = (params.get('canopy') || '').split(',').filter(Boolean);
+
+  // ============================================================================
+  // LOOKUP TABLES (LUNA datasheet + §9 configurator data)
+  // ============================================================================
+  var LENGTH_DATA = {
+    '2':  { label: 'LUXA2 · 2 FT',  dim: '23.6 in', wattTier: '3W20 (10W★/15W/20W)', wattsMax: '20', wattsBest: '10', lumensBest: '1,900', lumensMax: '3,800',  weight: '3.6 lb',  qty: '12 / carton', svgLength: '2' },
+    '3':  { label: 'LUXA3 · 3 FT',  dim: '35.8 in', wattTier: '3W30 (15W★/23W/30W)', wattsMax: '30', wattsBest: '15', lumensBest: '2,850', lumensMax: '5,700',  weight: '4.7 lb',  qty: '12 / carton', svgLength: '4' /* IES bundle starts at 4 */ },
+    '4':  { label: 'LUXA4 · 4 FT',  dim: '47.9 in', wattTier: '3W40 (22W★/30W/40W)', wattsMax: '40', wattsBest: '22', lumensBest: '4,180', lumensMax: '7,600',  weight: '6.1 lb',  qty: '6 / carton',  svgLength: '4' },
+    '8':  { label: 'LUXA8 · 8 FT',  dim: '95.9 in', wattTier: '3W80 (60W★/70W/80W)', wattsMax: '80', wattsBest: '60', lumensBest: '11,400',lumensMax: '15,200', weight: '11.8 lb', qty: '6 / carton',  svgLength: '8' },
+    'CL': { label: 'LUXA Custom Length', dim: '', wattTier: '3W## scaled by telescoping base', wattsMax: '', wattsBest: '', lumensBest: '', lumensMax: '', weight: 'per spec', qty: 'per spec', svgLength: '4' /* fall back to 4FT IES */ }
+  };
+  var CRI_DATA = {
+    '80': { label: '80 CRI+ · Standard (QuickShip)', short: '80 CRI+', tier: 'QS' },
+    '90': { label: '90 CRI+ · Spec-Grade (MTO · color-binned LED · ~5-7% efficacy derate vs 80)', short: '90 CRI+', tier: 'MTO' }
+  };
+  var FINISH_DATA = {
+    'BK': { label: 'Black',  short: 'Black',      tier: 'QS' },
+    'WH': { label: 'White ★', short: 'White',      tier: 'QS' },
+    'CM': { label: 'Custom RAL · MTO (specify 4-digit RAL Classic code in project notes)', short: 'Custom RAL', tier: 'MTO' }
+  };
+  var OPTIC_DATA = {
+    'DFS': { label: 'Diffuser · 190 LM/W headline · UGR <25',                          short: 'Diffuser',        tier: 'QS',  ugr: '< 25 (Diffuser)',    lpw: '190', svgName: 'diffuser',       hero: 'diffuser' },
+    'LVR': { label: 'Louver · UGR <22 spec-grade glare control · ~12% efficacy derate', short: 'Louver',          tier: 'MTO', ugr: '< 22 (Louver)',      lpw: '167', svgName: 'louver',         hero: 'louver' },
+    'MRF': { label: 'Micro Reflector · accent / directional throw · ~21% efficacy derate', short: 'Micro Reflector', tier: 'MTO', ugr: '< 24 (Micro Ref.)',  lpw: '150', svgName: 'microreflector', hero: 'micro-reflector' },
+    'DRS': { label: 'Regressed · trimless flush · ceiling-blend · ~18% efficacy derate', short: 'Regressed',       tier: 'MTO', ugr: '< 22 (Regressed)',   lpw: '155', svgName: 'deepregressed',  hero: 'deep-regressed' }
+  };
+  // direct<span class="aa">Ⓐ</span>IM ratio labels — used in eyebrow + summary table
+  var RATIO_DATA = {
+    'down100':    { label: '100% DOWN',         iesLabel: '100%down',   pct: '0% UP / 100% DOWN' },
+    'up10down90': { label: '10% UP / 90% DOWN', iesLabel: '10%up',      pct: '10% UP / 90% DOWN' },
+    'up30down70': { label: '30% UP / 70% DOWN', iesLabel: '30%up',      pct: '30% UP / 70% DOWN' },
+    'up50down50': { label: '50% UP / 50% DOWN', iesLabel: '50%up',      pct: '50% UP / 50% DOWN' },
+    'up70down30': { label: '70% UP / 30% DOWN', iesLabel: '70%up',      pct: '70% UP / 30% DOWN' },
+    'up90down10': { label: '90% UP / 10% DOWN', iesLabel: '90%up',      pct: '90% UP / 10% DOWN' },
+    'up100':      { label: '100% UP',           iesLabel: '100%up',     pct: '100% UP / 0% DOWN' }
+  };
+
+  // Photometric stats lifted from PDP §6 LUNA_PHOTOMETRIC_STATS (4FT + 2FT + 8FT × 4 optics × ratios).
+  // Keys: luna_{N}ft_{optic_normalized}_{ratio}
+  var LUNA_PHOTOMETRIC_STATS = {
+    luna_2ft_microreflector_down100:    { lumens: 1891, peak_cd: 3092, watts: 20, efficacy: 94.6 },
+    luna_2ft_microreflector_up10down90: { lumens: 1978, peak_cd: 2896, watts: 20, efficacy: 98.9 },
+    luna_2ft_microreflector_up30down70: { lumens: 2172, peak_cd: 2451, watts: 20, efficacy: 108.6 },
+    luna_2ft_microreflector_up50down50: { lumens: 2369, peak_cd: 1999, watts: 20, efficacy: 118.5 },
+    luna_2ft_microreflector_up70down30: { lumens: 2420, peak_cd: 1191, watts: 20, efficacy: 121.0 },
+    luna_2ft_microreflector_up90down10: { lumens: 2472, peak_cd:  821, watts: 20, efficacy: 123.6 },
+    luna_4ft_microreflector_down100:    { lumens: 3844, peak_cd: 6699, watts: 39, efficacy: 98.6 },
+    luna_4ft_microreflector_up10down90: { lumens: 4039, peak_cd: 6002, watts: 40, efficacy: 101.0 },
+    luna_4ft_microreflector_up30down70: { lumens: 4479, peak_cd: 4814, watts: 40, efficacy: 112.0 },
+    luna_4ft_microreflector_up50down50: { lumens: 4561, peak_cd: 4190, watts: 40, efficacy: 114.0 },
+    luna_4ft_microreflector_up70down30: { lumens: 4938, peak_cd: 2009, watts: 40, efficacy: 123.5 },
+    luna_4ft_microreflector_up90down10: { lumens: 4926, peak_cd: 2048, watts: 40, efficacy: 123.2 },
+    luna_8ft_microreflector_down100:    { lumens: 7688, peak_cd: 13398, watts: 78, efficacy: 98.6 },
+    luna_8ft_microreflector_up10down90: { lumens: 8078, peak_cd: 12004, watts: 80, efficacy: 101.0 },
+    luna_8ft_microreflector_up30down70: { lumens: 8958, peak_cd:  9628, watts: 80, efficacy: 112.0 },
+    luna_8ft_microreflector_up50down50: { lumens: 9122, peak_cd:  8380, watts: 80, efficacy: 114.0 },
+    luna_8ft_microreflector_up70down30: { lumens: 9876, peak_cd:  4018, watts: 80, efficacy: 123.5 },
+    luna_8ft_microreflector_up90down10: { lumens: 9852, peak_cd:  4096, watts: 80, efficacy: 123.2 },
+    luna_2ft_diffuser_down100:    { lumens: 2133, peak_cd:  753, watts: 20, efficacy: 106.7 },
+    luna_2ft_diffuser_up100:      { lumens: 2533, peak_cd:  962, watts: 20, efficacy: 126.7 },
+    luna_2ft_diffuser_up10down90: { lumens: 2187, peak_cd:  707, watts: 20, efficacy: 109.4 },
+    luna_2ft_diffuser_up30down70: { lumens: 2342, peak_cd:  589, watts: 20, efficacy: 117.1 },
+    luna_2ft_diffuser_up50down50: { lumens: 2525, peak_cd:  459, watts: 20, efficacy: 126.3 },
+    luna_2ft_diffuser_up70down30: { lumens: 2526, peak_cd:  678, watts: 20, efficacy: 126.3 },
+    luna_2ft_diffuser_up90down10: { lumens: 2566, peak_cd:  858, watts: 20, efficacy: 128.3 },
+    luna_4ft_diffuser_down100:    { lumens: 4621, peak_cd: 1676, watts: 42, efficacy: 110.0 },
+    luna_4ft_diffuser_up100:      { lumens: 5000, peak_cd: 1916, watts: 41, efficacy: 122.0 },
+    luna_4ft_diffuser_up10down90: { lumens: 4683, peak_cd: 1564, watts: 41, efficacy: 114.2 },
+    luna_4ft_diffuser_up30down70: { lumens: 4938, peak_cd: 1294, watts: 41, efficacy: 120.4 },
+    luna_4ft_diffuser_up50down50: { lumens: 5045, peak_cd:  994, watts: 40, efficacy: 126.1 },
+    luna_4ft_diffuser_up70down30: { lumens: 5121, peak_cd: 1333, watts: 40, efficacy: 128.0 },
+    luna_4ft_diffuser_up90down10: { lumens: 5094, peak_cd: 1700, watts: 41, efficacy: 124.2 },
+    luna_2ft_louver_down100:    { lumens: 1485, peak_cd: 1003, watts: 21, efficacy: 70.7 },
+    luna_2ft_louver_up100:      { lumens: 2504, peak_cd:  986, watts: 20, efficacy: 125.2 },
+    luna_2ft_louver_up10down90: { lumens: 1567, peak_cd:  933, watts: 20, efficacy: 78.4 },
+    luna_2ft_louver_up30down70: { lumens: 1815, peak_cd:  776, watts: 20, efficacy: 90.8 },
+    luna_2ft_louver_up50down50: { lumens: 2041, peak_cd:  591, watts: 20, efficacy: 102.1 },
+    luna_2ft_louver_up70down30: { lumens: 2273, peak_cd:  688, watts: 20, efficacy: 113.7 },
+    luna_2ft_louver_up90down10: { lumens: 2436, peak_cd:  886, watts: 20, efficacy: 121.8 },
+    luna_4ft_louver_down100:    { lumens: 2930, peak_cd: 1996, watts: 41, efficacy: 71.5 },
+    luna_4ft_louver_up10down90: { lumens: 3125, peak_cd: 1866, watts: 42, efficacy: 74.4 },
+    luna_4ft_louver_up30down70: { lumens: 3611, peak_cd: 1538, watts: 42, efficacy: 86.0 },
+    luna_4ft_louver_up50down50: { lumens: 3984, peak_cd: 1179, watts: 41, efficacy: 97.2 },
+    luna_4ft_louver_up70down30: { lumens: 4416, peak_cd: 1256, watts: 42, efficacy: 105.1 },
+    luna_4ft_louver_up90down10: { lumens: 4697, peak_cd: 1588, watts: 41, efficacy: 114.6 },
+    luna_2ft_deepregressed_down100:    { lumens: 1984, peak_cd:  905, watts: 21, efficacy: 94.5 },
+    luna_2ft_deepregressed_up10down90: { lumens: 2024, peak_cd:  835, watts: 20, efficacy: 101.2 },
+    luna_2ft_deepregressed_up30down70: { lumens: 2198, peak_cd:  693, watts: 20, efficacy: 109.9 },
+    luna_2ft_deepregressed_up50down50: { lumens: 2327, peak_cd:  529, watts: 20, efficacy: 116.4 },
+    luna_2ft_deepregressed_up70down30: { lumens: 2454, peak_cd:  702, watts: 20, efficacy: 122.7 },
+    luna_2ft_deepregressed_up90down10: { lumens: 2508, peak_cd:  902, watts: 20, efficacy: 125.4 },
+    luna_4ft_deepregressed_down100:    { lumens: 3931, peak_cd: 1769, watts: 42, efficacy: 93.6 },
+    luna_4ft_deepregressed_up10down90: { lumens: 3999, peak_cd: 1641, watts: 41, efficacy: 97.5 },
+    luna_4ft_deepregressed_up30down70: { lumens: 4334, peak_cd: 1356, watts: 41, efficacy: 105.7 },
+    luna_4ft_deepregressed_up50down50: { lumens: 4546, peak_cd: 1037, watts: 41, efficacy: 110.9 },
+    luna_4ft_deepregressed_up70down30: { lumens: 4729, peak_cd: 1306, watts: 40, efficacy: 118.2 },
+    luna_4ft_deepregressed_up90down10: { lumens: 4793, peak_cd: 1679, watts: 41, efficacy: 116.9 }
+  };
+
+  // ============================================================================
+  // ACCESSORY BOM CATALOG (mirrors §9 configurator's ACC_CODES)
+  // ============================================================================
+  var BOM = {
+    em: {
+      'EM15':     { code: 'EM15-HMB/170DC',       cat: 'EM Backup',  desc: 'EM Battery Backup &middot; 15W &middot; field-install remote module &middot; 170 dynamic dim curve' },
+      'EM24':     { code: 'EM24-JBM',             cat: 'EM Backup',  desc: 'EM Battery Backup &middot; 24W &middot; J-Box Quick-Install module' }
+    },
+    sensor: {
+      'MSP20':    { code: 'MSP-20CM-ACS',         cat: 'PIR Sensor', desc: 'PIR Sensor &middot; 8-20 ft mount &middot; Bluetooth Mesh &middot; <span class="aa">Ⓐ</span>CS-commissionable' },
+      'MSP40':    { code: 'MSP-40CM-ACS',         cat: 'PIR Sensor', desc: 'PIR Sensor &middot; 40 ft mount &middot; Bluetooth Mesh &middot; <span class="aa">Ⓐ</span>CS-commissionable' },
+      'MSXLV':    { code: 'MSX-LV20-ACS',         cat: 'PIR Sensor', desc: 'Low-Voltage PIR Sensor &middot; 20 ft &middot; External aim &middot; <span class="aa">Ⓐ</span>CS-commissionable' },
+      'KINETICSW':{ code: '50WM-ACS',             cat: 'Wall Switch',desc: 'Kinetic Wall Switch &middot; battery-free &middot; Bluetooth Mesh &middot; 100 ft mesh range &middot; <span class="aa">Ⓐ</span>CS-commissionable' }
+    },
+    joiner: {
+      'SLJ':      { code: 'LUXA-LUNA1/NL-SLJ',    cat: 'Joiner',     desc: 'Non-Lit Straight Joiner &middot; end-to-end module continuation' },
+      'LJ':       { code: 'LUXA-LUNA1/NL-LJ/W',   cat: 'Joiner',     desc: 'Non-Lit L-Joiner &middot; 90&deg; corner geometry' },
+      'TJ':       { code: 'LUXA-LUNA1/NL-TJ/W',   cat: 'Joiner',     desc: 'Non-Lit T-Joiner &middot; 3-way branch off main spine' },
+      'XJ':       { code: 'LUXA-LUNA1/NL-XJ/W',   cat: 'Joiner',     desc: 'Non-Lit X-Joiner &middot; 4-way grid intersection' },
+      'YJ':       { code: 'LUXA-LUNA1/NL-YJ/W',   cat: 'Joiner',     desc: 'Non-Lit Y-Joiner &middot; 3-way 120&deg; atrium intersection (continu<span class="aa">Ⓐ</span>RUN exclusive)' },
+      'VJ':       { code: 'LUXA-LUNA1/NL-VJ/W',   cat: 'Joiner',     desc: 'Non-Lit V-Joiner &middot; variable-angle (continu<span class="aa">Ⓐ</span>RUN exclusive)' },
+      'ZJ':       { code: 'LUXA-LUNA1/NL-ZJ/W',   cat: 'Joiner',     desc: 'Non-Lit Z-Joiner &middot; stepped-offset (continu<span class="aa">Ⓐ</span>RUN exclusive)' }
+    },
+    canopy: {
+      'NPCB':     { code: 'LUXA-LUNA1/NPC/B',     cat: 'Canopy',     desc: 'Non-Power Suspension Canopy &middot; Black &middot; downstream daisy-chained pendant runs' },
+      'NPCW':     { code: 'LUXA-LUNA1/NPC/W',     cat: 'Canopy',     desc: 'Non-Power Suspension Canopy &middot; White &middot; downstream daisy-chained pendant runs' },
+      'PCB':      { code: 'LUXA-LUNA1/PC/B',      cat: 'Canopy',     desc: 'Power Suspension Canopy &middot; 1,000 W &commat; 277 VAC &middot; Black &middot; lead canopy of continu<span class="aa">Ⓐ</span>RUN' },
+      'PCW':      { code: 'LUXA-LUNA1/PC/W',      cat: 'Canopy',     desc: 'Power Suspension Canopy &middot; 1,000 W &commat; 277 VAC &middot; White &middot; lead canopy of continu<span class="aa">Ⓐ</span>RUN' },
+      'SMCB':     { code: 'LUXA-LUNA1/SMC/B',     cat: 'Canopy',     desc: 'Surface Mount Canopy &middot; Black &middot; direct ceiling/wall mount' },
+      'SMCW':     { code: 'LUXA-LUNA1/SMC/W',     cat: 'Canopy',     desc: 'Surface Mount Canopy &middot; White &middot; direct ceiling/wall mount' }
+    }
+  };
+
+  // ============================================================================
+  // RESOLVE: lookups + SKU rebuild (used if no `sku` URL param passed)
+  // ============================================================================
+  var ld = LENGTH_DATA[length] || LENGTH_DATA['3'];
+  var cd = CRI_DATA[cri]       || CRI_DATA['80'];
+  var fd = FINISH_DATA[finish] || FINISH_DATA['WH'];
+  var od = OPTIC_DATA[optic]   || OPTIC_DATA['DFS'];
+  var rd = RATIO_DATA[ratio]   || RATIO_DATA['up50down50'];
+
+  // Ship-tier derivation (CRI 90 | CM finish | non-Diffuser optic = MTO; any ⒶCS accessory = MTO)
+  var hasAcsAccessory = (sensor.indexOf('MSP20') !== -1 || sensor.indexOf('MSP40') !== -1 ||
+                         sensor.indexOf('MSXLV') !== -1 || sensor.indexOf('KINETICSW') !== -1);
+  var shipTier = 'QS';
+  if (cd.tier === 'MTO' || fd.tier === 'MTO' || od.tier === 'MTO' || hasAcsAccessory) shipTier = 'MTO';
+
+  // Build SKU if not passed in URL · respects custom length (telescoping 2T/3T) and custom RAL.
+  function buildSku() {
+    if (skuParam) return skuParam;
+    var lengthSegment;
+    if (length === 'CL' && customLength) {
+      var clInches = parseFloat(customLength) || 24;
+      var base = clInches <= 25 ? 'LUXA2T' : 'LUXA3T';
+      var watt = clInches <= 25 ? '20' : '30';
+      lengthSegment = base + '-3W' + watt + '/CUST/L' + clInches + 'IN';
+    } else {
+      lengthSegment = 'LUXA' + length + '-3W' + ld.wattsMax;
+    }
+    var finishSegment = finish;
+    if (finish === 'CM' && ralCode) finishSegment = 'CM/RAL' + ralCode;
+    return lengthSegment + '-3CS/27V/LUNA/' + cri + '/' + finishSegment + '/' + optic;
+  }
+  var sku = buildSku();
+
+  // ============================================================================
+  // STAMP: catalog number on every page + project info + title + live SKU pill
+  // ============================================================================
+  document.querySelectorAll('#catNum, #catNum2, #catNum3, #catNum4, #catNum5, #liveSku, #piCatNum').forEach(function(el) {
+    el.textContent = sku;
+  });
+
+  // Stock pill (no-print bar)
+  var pill = document.getElementById('stockPill');
+  if (shipTier === 'QS') {
+    pill.className = 'qs-pill';
+    pill.textContent = 'QuickShip · 3-5 day';
+  } else {
+    pill.className = 'mto-pill';
+    pill.textContent = 'Made-to-Order · 4-6 wk';
+  }
+
+  // ============================================================================
+  // PAGE 1 · Quick Specs + Optic-Aware Hero Photo (CFG-SUB-2)
+  // ============================================================================
+  document.getElementById('qsLength').innerHTML = (length === 'CL' ? (customLength + '<span class="qs-unit">IN</span>') : (length + '<span class="qs-unit">FT</span>'));
+  document.getElementById('qsWatts').innerHTML  = ld.wattsMax + '<span class="qs-unit">W max</span>';
+  document.getElementById('qsLumens').innerHTML = ld.lumensMax + '<span class="qs-unit">lm</span>';
+  document.getElementById('qsLpw').innerHTML    = od.lpw + '<span class="qs-unit">LM/W</span>';
+  document.getElementById('qsCri').innerHTML    = cd.short.replace(' CRI+', '<span class="qs-unit">CRI+</span>');
+  document.getElementById('qsOptic').textContent = od.short;
+
+  // ----------------------------------------------------------------------------
+  // Hero photo · pendant mount × selected optic.
+  //   DFS → luna-pendant-diffuser.webp
+  //   LVR → luna-pendant-louver.webp
+  //   MRF → luna-pendant-micro-reflector.webp
+  //   DRS → luna-pendant-deep-regressed.webp
+  // Fallback chain: pendant-{optic} → pendant-diffuser → luna-hero-1.
+  // ----------------------------------------------------------------------------
+  (function wireSubmittalHeroPhoto() {
+    var heroImg = document.getElementById('submittalHeroPhoto');
+    if (!heroImg) return;
+    var heroOptic = od.hero;
+    heroImg.src = 'assets/hero/luna-pendant-' + heroOptic + '.webp';
+    heroImg.alt = 'LUXA Luna · pendant suspension · ' + od.short + ' optic';
+    heroImg.onerror = function() {
+      // First fallback · default optic photo
+      this.onerror = function() {
+        // Second fallback · generic Luna hero
+        this.onerror = null;
+        this.src = 'assets/hero/luna-hero-1.webp';
+      };
+      this.src = 'assets/hero/luna-pendant-diffuser.webp';
+    };
+  })();
+
+  // ============================================================================
+  // PAGE 2 · Configured Selections rows
+  // ============================================================================
+  var cfgLengthLabel = (length === 'CL' && customLength)
+    ? ('LUXA Custom Length · ' + customLength + ' in (telescoping ' + (parseFloat(customLength) <= 25 ? '2T 13-25"' : '3T 25-48"') + ')')
+    : (ld.label + ' (' + ld.dim + ' nominal · ' + ld.wattTier + ')');
+  document.getElementById('cfgLength').textContent = cfgLengthLabel;
+  document.getElementById('cfgCri').textContent    = cd.label;
+  var cfgFinishLabel = (finish === 'CM' && ralCode) ? ('Custom RAL Classic ' + ralCode + ' · MTO factory paint') : fd.label;
+  document.getElementById('cfgFinish').textContent = cfgFinishLabel;
+  document.getElementById('cfgOptic').textContent  = od.label;
+  document.getElementById('cfgRatio').textContent  = rd.label + ' · balanced ambient (DIP-tunable to any of 7 ratios)';
+
+  // ============================================================================
+  // PAGE 3 · Dimensions
+  // ============================================================================
+  document.getElementById('dimEyebrow').textContent = ld.label + ' · pendant suspension default';
+  document.getElementById('dimLength').textContent  = ld.dim + ' (' + ld.label + ' nominal)';
+  document.getElementById('dimWeight').textContent  = ld.weight + ' (' + (ld.label.split(' · ')[0]) + ')';
+  document.getElementById('dimQty').textContent     = ld.qty;
+
+  // Profile SVG — draw scaled side-elevation per length (LUXA8 fills width).
+  (function drawProfile() {
+    var svg = document.getElementById('profileSvg');
+    if (!svg) return;
+    var lengthIn = { '2': 23.6, '3': 35.8, '4': 47.9, '8': 95.9, 'CL': parseFloat(customLength) || 35.8 }[length] || 35.8;
+    var maxIn = 95.9;
+    var w = (lengthIn / maxIn) * 440;
+    var startX = 30;
+    var topY = 90;
+    var height = 20; // 2.9" ≈ 20px at this scale
+    svg.innerHTML = (
+      '<line x1="' + (startX + w * 0.25) + '" y1="20" x2="' + (startX + w * 0.25) + '" y2="' + topY + '" stroke="#888" stroke-width="0.6"/>' +
+      '<line x1="' + (startX + w * 0.75) + '" y1="20" x2="' + (startX + w * 0.75) + '" y2="' + topY + '" stroke="#888" stroke-width="0.6"/>' +
+      '<line x1="20" y1="20" x2="480" y2="20" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>' +
+      '<rect x="' + (startX + w * 0.25 - 8) + '" y="14" width="16" height="6" fill="#1a1a1a"/>' +
+      '<rect x="' + (startX + w * 0.75 - 8) + '" y="14" width="16" height="6" fill="#1a1a1a"/>' +
+      '<rect x="' + startX + '" y="' + topY + '" width="' + w + '" height="' + height + '" rx="2" fill="#e8e8e8" stroke="#1a1a1a" stroke-width="1.5"/>' +
+      '<rect x="' + (startX + 4) + '" y="' + (topY + height - 5) + '" width="' + (w - 8) + '" height="3" fill="#fff5b3" stroke="#daa620" stroke-width="0.4"/>' +
+      '<line x1="' + startX + '" y1="' + (topY + height + 18) + '" x2="' + (startX + w) + '" y2="' + (topY + height + 18) + '" stroke="#F32740" stroke-width="0.8" marker-end="url(#arrowR2)" marker-start="url(#arrowL2)"/>' +
+      '<text x="' + (startX + w / 2) + '" y="' + (topY + height + 32) + '" text-anchor="middle" font-size="11" fill="#F32740" font-family="JetBrains Mono, monospace" font-weight="700">' + lengthIn + '"</text>' +
+      '<defs>' +
+      '<marker id="arrowR2" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#F32740"/></marker>' +
+      '<marker id="arrowL2" viewBox="0 0 8 8" refX="2" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8" fill="#F32740"/></marker>' +
+      '</defs>'
+    );
+  })();
+
+  // ============================================================================
+  // PAGE 4 · Ordering breakdown + Photometric Polar SVG resolver
+  // ============================================================================
+  document.getElementById('ocLen').textContent = (length === 'CL' ? (parseFloat(customLength) <= 25 ? 'LUXA2T' : 'LUXA3T') : ('LUXA' + length));
+  document.getElementById('ocW').textContent   = '3W' + ld.wattsMax;
+  document.getElementById('ocCFO').textContent = cri + '/' + (finish === 'CM' && ralCode ? ('CM/RAL' + ralCode) : finish) + '/' + optic;
+  document.getElementById('ocStatus').textContent = shipTier;
+
+  // ----------------------------------------------------------------------------
+  // Photometric polar SVG resolver · CFG-PHOTO-1 canonical sizing.
+  //   File pattern: assets/photometrics/luna_{N}ft_{optic_normalized}_{ratio}.svg
+  //     N · 2 | 4 | 8 (3FT and CL fall through to 4FT — IES bundle starts at 4 FT)
+  //     optic · diffuser | louver | microreflector | deepregressed
+  //     ratio · down100 | up10down90 | up30down70 | up50down50 | up70down30 |
+  //             up90down10 | up100 (Diffuser only)
+  //   Gate · 8 FT only published for Micro Reflector (continuⒶRUN of 2× 4FT
+  //   MR modules) — snap to MRF if 8FT is selected with any other optic.
+  //   ON 404 the IMG.onerror swaps to a fallback message div.
+  // ----------------------------------------------------------------------------
+  (function wireSubmittalPhotoPolar() {
+    var polarImg      = document.getElementById('submittalPhotoPolar');
+    var polarFallback = document.getElementById('submittalPhotoPolarFallback');
+    if (!polarImg) return;
+
+    var svgN     = ld.svgLength;             // '2' | '4' | '8' (CL/3 → '4')
+    var svgOptic = od.svgName;               // 'diffuser' | 'louver' | 'microreflector' | 'deepregressed'
+    var svgRatio = ratio;
+    var key      = 'luna_' + svgN + 'ft_' + svgOptic + '_' + svgRatio;
+
+    // 8FT × non-MR · snap to MR (only Micro Reflector IES exists for 8FT)
+    if (svgN === '8' && svgOptic !== 'microreflector') {
+      svgOptic = 'microreflector';
+      key = 'luna_8ft_microreflector_' + svgRatio;
+    }
+    // up100 only available for Diffuser · fall back to up50down50 otherwise
+    if (svgRatio === 'up100' && svgOptic !== 'diffuser') {
+      svgRatio = 'up50down50';
+      key = 'luna_' + svgN + 'ft_' + svgOptic + '_' + svgRatio;
+    }
+    // Final fallback · if the key isn't in stats, try up50down50
+    if (!LUNA_PHOTOMETRIC_STATS[key]) {
+      svgRatio = 'up50down50';
+      key = 'luna_' + svgN + 'ft_' + svgOptic + '_' + svgRatio;
+    }
+
+    var svgPath = 'assets/photometrics/' + key + '.svg';
+    polarImg.src = svgPath;
+    polarImg.alt = 'LUXA Luna polar candela distribution · ' + svgN + ' FT · ' + od.short + ' · ' + (RATIO_DATA[svgRatio] || rd).label;
+    polarImg.onerror = function() {
+      this.style.display = 'none';
+      if (polarFallback) polarFallback.style.display = 'block';
+    };
+
+    // Photometric summary table — pull live numbers from LUNA_PHOTOMETRIC_STATS
+    var stats = LUNA_PHOTOMETRIC_STATS[key];
+    if (stats) {
+      document.getElementById('photoLumens').textContent = stats.lumens.toLocaleString() + ' lm';
+      document.getElementById('photoWatts').textContent  = stats.watts + ' W';
+      document.getElementById('photoLpw').textContent    = stats.efficacy.toFixed(1) + ' LM/W';
+      document.getElementById('photoPeak').textContent   = stats.peak_cd.toLocaleString() + ' cd @ nadir';
+    }
+    document.getElementById('photoCri').textContent    = cd.short;
+    document.getElementById('photoUgr').innerHTML      = od.ugr;
+    document.getElementById('photoDist').innerHTML     = 'direct<span class="aa">Ⓐ</span>IM · ' + (RATIO_DATA[svgRatio] || rd).pct;
+
+    // IES filename · matches the renamed bundle pattern "LUNA {N}FT 4000K {Optic} {ratio}.IES"
+    var iesOptic = ({ 'diffuser': 'Diffuser', 'louver': 'Louver', 'microreflector': 'Micro Reflector', 'deepregressed': 'Deep Regressed Lens' })[svgOptic];
+    var iesRatio = (RATIO_DATA[svgRatio] || rd).iesLabel;
+    document.getElementById('photoIesFile').textContent = 'LUNA ' + svgN + 'FT 4000K ' + iesOptic + ' ' + iesRatio + '.IES';
+
+    // Photo eyebrow · live config
+    document.getElementById('photoEyebrow').textContent =
+      'LUXA' + (length === 'CL' ? svgN : length) + ' · ' + ld.wattsBest + 'W ★ · 4000K · ' +
+      od.short + ' optic · ' + (RATIO_DATA[svgRatio] || rd).label;
+  })();
+
+  // DLC NLC rebate adder note · only show when at least one ⒶCS accessory selected
+  if (hasAcsAccessory) {
+    var note = document.getElementById('nlcNote');
+    if (note) note.style.display = 'block';
+  }
+
+  // ============================================================================
+  // PAGE 5 · Accessory BOM (conditional · only renders when accessories picked)
+  // ============================================================================
+  var bomLines = [];
+  em.forEach(function(v)     { var e = BOM.em[v];     if (e) bomLines.push(e); });
+  sensor.forEach(function(v) { var e = BOM.sensor[v]; if (e) bomLines.push(e); });
+  joiner.forEach(function(v) { var e = BOM.joiner[v]; if (e) bomLines.push(e); });
+  canopy.forEach(function(v) { var e = BOM.canopy[v]; if (e) bomLines.push(e); });
+
+  var bomPage = document.getElementById('page-bom');
+  if (bomLines.length === 0) {
+    bomPage.classList.add('empty');
+    bomPage.style.display = 'none';
+    document.querySelectorAll('.page-count').forEach(function(el) { el.textContent = '4'; });
+  } else {
+    bomPage.classList.remove('empty');
+    bomPage.style.display = '';
+    document.getElementById('bomEyebrow').textContent = bomLines.length + ' line item' + (bomLines.length === 1 ? '' : 's');
+    var html = '';
+    bomLines.forEach(function(l) {
+      html += '<tr><td class="bom-code">' + l.code + '</td><td class="bom-cat">' + l.cat + '</td><td>' + l.desc + '</td></tr>';
+    });
+    document.getElementById('bomBody').innerHTML = html;
+    document.querySelectorAll('.page-count').forEach(function(el) { el.textContent = '5'; });
+  }
+
+  // ============================================================================
+  // LIVE DATE stamp on no-print bar + rev date in page foot
+  // ============================================================================
+  (function dateStamps() {
+    var d = new Date();
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var liveEl = document.getElementById('liveDate');
+    if (liveEl) liveEl.textContent = months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    var revEl = document.getElementById('revDate');
+    if (revEl) revEl.textContent = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+  })();
+
+  // ============================================================================
+  // CFG-SUB-1 v2 · Editable Catalog Number · snapshot-then-rederive · session-only
+  // ----------------------------------------------------------------------------
+  // James 2026-05-18 playbook rule. User types a project-specific label into
+  // the top-right Catalog Number box (e.g. "ABC-001") and every visible
+  // instance of the ORIGINAL SKU on the page swaps to match in real time.
+  //
+  // V2 fix (snapshot-then-rederive): snapshot the original text of every node
+  // that contains `originalSku` at load time, then on each input event
+  // re-derive each node's text from the cached original via
+  // originalText.split(originalSku).join(override). Idempotent · only matches
+  // the full original SKU string, partial intermediate states can never
+  // propagate.
+  //
+  // Edits don't touch <a href>, data-*, scripts, styles, or the `sku` JS var.
+  // ============================================================================
+  (function setupEditableCatalogNumber() {
+    var originalSku = sku;
+    var editor = document.getElementById('catNum');
+    if (!editor) return;
+
+    if (document.title.indexOf(originalSku) === -1) {
+      document.title = originalSku + ' · ' + document.title;
+    }
+    var originalTitle = document.title;
+
+    var matchedNodes = [];
+    (function snapshot() {
+      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(n) {
+          var p = n.parentNode;
+          while (p) {
+            if (p === editor) return NodeFilter.FILTER_REJECT;
+            if (p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT;
+            p = p.parentNode;
+          }
+          return n.nodeValue.indexOf(originalSku) !== -1
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        }
+      });
+      while (walker.nextNode()) {
+        matchedNodes.push({ node: walker.currentNode, originalText: walker.currentNode.nodeValue });
+      }
+    })();
+
+    function applyOverride(newDisplay) {
+      var override = newDisplay || originalSku;
+      matchedNodes.forEach(function(item) {
+        item.node.nodeValue = item.originalText.split(originalSku).join(override);
+      });
+      document.title = originalTitle.split(originalSku).join(override);
+    }
+
+    editor.addEventListener('input', function() {
+      var raw = (editor.textContent || '').replace(/[\r\n]+/g, ' ').slice(0, 60);
+      var nextDisplay = raw.trim() ? raw : originalSku;
+      applyOverride(nextDisplay);
+    });
+
+    editor.addEventListener('blur', function() {
+      var v = editor.textContent.trim();
+      if (!v) {
+        editor.textContent = originalSku;
+        applyOverride(originalSku);
+      }
+    });
+
+    editor.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        editor.blur();
+      }
+    });
+  })();
+})();
+</script>
+</body>
+</html>

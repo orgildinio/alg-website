@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LBLR · retroⒶRCH-P1 — Submittal Sheet</title>
+
+<!--
+ ALG SUBMITTAL · LBLR retroⒶRCH-P1 · v1
+ =======================================
+ Reads URL query params and auto-fills the catalog number + quick specs.
+ Example: submittal_retroarch_p1.html?sku=LBLR24-33MXP1/SRR/W44/C50&class=LBLR24&watt=44&cct=5000
+
+ Print: File → Print → Save as PDF (letter portrait) gives the spec-grade PDF.
+ Cloned from submittal_luxmark.html (3-class JS pattern reused · LBLR has 3 sizes too)
+ on 2026-05-12 and re-templated for the LBLR retroⒶRCH-P1 Retrofit Back-Lit Panel.
+-->
+
+<style>
+ /* ============= PRINT-OPTIMIZED CSS ============= */
+ @page {
+ size: letter portrait;
+ margin: 0.5in 0.6in;
+ }
+ @media print {
+ .no-print { display: none !important; }
+ body { background: white !important; }
+ .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+ .page:last-of-type { page-break-after: auto; }
+ }
+
+ /* ============= TYPE + COLOR TOKENS ============= */
+ :root {
+ --brand-red: #F32740;
+ --ink: #0E0E10;
+ --ink-2: #2A2A2D;
+ --muted: #6B6B70;
+ --rule: #D8D6D2;
+ --rule-strong: #A6A4A0;
+ --tint: #F6F4F0;
+ --hi: #FFF6E5;
+ }
+ * { box-sizing: border-box; }
+ html, body {
+ margin: 0; padding: 0;
+ font-family: 'Lato', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+ color: var(--ink);
+ font-size: 9.5pt;
+ line-height: 1.4;
+ background: #E8E6E2;
+ }
+ body { padding: 24px 12px; }
+ .page {
+ width: 8.5in;
+ min-height: 11in;
+ margin: 0 auto 24px;
+ padding: 0.55in 0.65in;
+ background: white;
+ box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+ position: relative;
+ }
+ h1, h2, h3, h4 { font-family: 'Lato', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+ .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+
+ /* ============= PAGE HEADER (every page) ============= */
+ .submittal-head {
+ display: flex; align-items: flex-end; justify-content: space-between;
+ border-bottom: 2px solid var(--ink);
+ padding-bottom: 8px; margin-bottom: 14px;
+ }
+ .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+ .submittal-head .brand-mark {
+ width: 28px; height: 28px; background: var(--brand-red);
+ display: inline-block;
+ }
+ .submittal-head .brand-name {
+ font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1;
+ }
+ .submittal-head .brand-sub {
+ font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted);
+ text-transform: uppercase;
+ }
+ .submittal-head .catalog-block {
+ text-align: right;
+ }
+ .submittal-head .catalog-eyebrow {
+ font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+ text-transform: uppercase; margin-bottom: 2px;
+ }
+ .submittal-head .catalog-number {
+ font-size: 12pt; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+ border: 1.5px solid var(--ink);
+ padding: 4px 10px; display: inline-block;
+ letter-spacing: 0.5pt;
+ }
+
+ /* ============= PROJECT INFO FORM ============= */
+ .project-info {
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 0;
+ border: 1px solid var(--rule-strong);
+ margin-bottom: 14px;
+ }
+ .pi-cell {
+ padding: 6px 9px;
+ border-right: 1px solid var(--rule);
+ border-bottom: 1px solid var(--rule);
+ min-height: 38px;
+ }
+ .pi-cell:nth-child(3n) { border-right: none; }
+ .pi-cell:nth-child(n+4) { border-bottom: none; }
+ .pi-label {
+ font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+ text-transform: uppercase; margin-bottom: 4px;
+ }
+ .pi-value {
+ border-bottom: 1px dotted var(--rule-strong); min-height: 14px; padding-top: 2px;
+ }
+
+ /* ============= PRODUCT TITLE BAND ============= */
+ .product-title {
+ margin: 14px 0 14px;
+ }
+ .product-title h1 {
+ font-size: 22pt; line-height: 1; margin: 0;
+ }
+ .product-title .tagline {
+ font-size: 10pt; color: var(--ink-2); margin-top: 4px; line-height: 1.3;
+ }
+
+ /* ============= HERO + QUICK SPECS GRID ============= */
+ .at-a-glance {
+ display: grid;
+ grid-template-columns: 1.1fr 1fr;
+ gap: 16px;
+ margin-bottom: 12px;
+ }
+ .hero-img {
+ background: var(--tint);
+ border: 1px solid var(--rule);
+ aspect-ratio: 4/3;
+ display: flex; align-items: center; justify-content: center;
+ overflow: hidden;
+ }
+ .hero-img img { width: 100%; height: 100%; object-fit: contain; }
+
+ .qs-grid {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 6px;
+ }
+ .qs-cell {
+ border: 1px solid var(--rule-strong);
+ padding: 8px 10px;
+ min-height: 56px;
+ }
+ .qs-label {
+ font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+ text-transform: uppercase; margin-bottom: 3px;
+ }
+ .qs-value {
+ font-size: 14pt; font-weight: 700; line-height: 1.05;
+ }
+ .qs-unit {
+ font-size: 8pt; font-weight: 400; color: var(--muted); margin-left: 2px;
+ }
+
+ /* ============= FEATURE BAND ============= */
+ .feature-band {
+ background: var(--ink); color: white;
+ padding: 8px 14px;
+ display: flex; gap: 18px; align-items: center;
+ margin-bottom: 12px;
+ }
+ .feature-band .fb-pill {
+ background: var(--brand-red); color: white;
+ font-size: 7pt; font-weight: 700; letter-spacing: 1.2pt;
+ padding: 3px 7px; text-transform: uppercase;
+ }
+ .feature-band .fb-features {
+ font-size: 9pt; line-height: 1.3;
+ }
+ .feature-band .fb-features strong { font-weight: 700; }
+
+ /* ============= APPROVAL SIGNATURE BLOCK ============= */
+ .approval-block {
+ display: grid;
+ grid-template-columns: 2fr 1fr;
+ gap: 18px;
+ margin-top: 14px;
+ padding-top: 8px;
+ border-top: 1px dashed var(--rule-strong);
+ }
+ .approval-cell {
+ display: grid; grid-template-columns: max-content 1fr;
+ gap: 8px; align-items: end;
+ font-size: 8pt;
+ }
+ .approval-line {
+ border-bottom: 1px solid var(--ink); height: 16px;
+ }
+
+ /* ============= SECTION HEAD (page 2+) ============= */
+ .section-head {
+ display: flex; align-items: baseline; justify-content: space-between;
+ border-bottom: 1.5px solid var(--ink);
+ padding-bottom: 4px; margin-bottom: 10px; margin-top: 4px;
+ }
+ .section-head h2 {
+ font-size: 14pt; line-height: 1;
+ }
+ .section-head .section-eyebrow {
+ font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+ text-transform: uppercase;
+ }
+
+ /* ============= SPEC TABLE ============= */
+ .spec-table {
+ width: 100%;
+ border-collapse: collapse;
+ font-size: 8.5pt;
+ }
+ .spec-table th, .spec-table td {
+ text-align: left;
+ padding: 5px 8px;
+ border-bottom: 1px solid var(--rule);
+ vertical-align: top;
+ }
+ .spec-table .spec-section-head td {
+ background: var(--tint);
+ font-weight: 700;
+ font-size: 9pt;
+ letter-spacing: 0.3pt;
+ border-bottom: 1px solid var(--rule-strong);
+ padding: 6px 8px;
+ }
+ .spec-table .spec-attr {
+ width: 30%;
+ font-weight: 600;
+ color: var(--ink-2);
+ }
+ .spec-table .spec-val {
+ width: 70%;
+ }
+
+ /* ============= ORDERING CODE MATRIX ============= */
+ .order-code {
+ display: grid;
+ grid-template-columns: repeat(7, 1fr);
+ gap: 4px;
+ margin-bottom: 10px;
+ }
+ .order-segment {
+ background: var(--tint);
+ border: 1px solid var(--rule-strong);
+ padding: 8px 6px;
+ text-align: center;
+ }
+ .order-segment.active {
+ background: var(--brand-red); color: white;
+ border-color: var(--brand-red);
+ }
+ .order-seg-label {
+ font-size: 7pt; letter-spacing: 1pt;
+ text-transform: uppercase; margin-bottom: 4px;
+ opacity: 0.8;
+ }
+ .order-seg-value {
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 11pt; font-weight: 700;
+ }
+ .order-matrix {
+ width: 100%;
+ border-collapse: collapse;
+ font-size: 7.5pt;
+ }
+ .order-matrix th, .order-matrix td {
+ border: 1px solid var(--rule);
+ padding: 4px 6px; text-align: left;
+ vertical-align: top;
+ }
+ .order-matrix th {
+ background: var(--ink); color: white;
+ font-size: 7pt; letter-spacing: 1pt;
+ text-transform: uppercase;
+ }
+ .order-matrix .code {
+ font-family: 'JetBrains Mono', monospace; font-weight: 700;
+ width: 60px;
+ }
+
+ /* ============= DIMENSIONS LAYOUT ============= */
+ .dim-grid {
+ display: grid;
+ grid-template-columns: 1.3fr 1fr;
+ gap: 14px;
+ }
+ .dim-views {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ grid-template-rows: 1fr 1fr;
+ gap: 8px;
+ }
+ .dim-view {
+ border: 1px solid var(--rule-strong);
+ aspect-ratio: 4/3;
+ display: flex; align-items: center; justify-content: center;
+ background: white;
+ position: relative;
+ overflow: hidden;
+ }
+ .dim-view img { width: 100%; height: 100%; object-fit: contain; }
+ .dim-view-label {
+ position: absolute; top: 4px; left: 6px;
+ font-size: 7pt; letter-spacing: 1pt; color: var(--muted);
+ text-transform: uppercase;
+ }
+
+ /* ============= PHOTOMETRIC DATA ============= */
+ .photo-grid {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 14px;
+ }
+ .photo-polar {
+ border: 1px solid var(--rule-strong);
+ padding: 10px;
+ aspect-ratio: 1;
+ display: flex; align-items: center; justify-content: center;
+ background: white;
+ overflow: hidden;
+ }
+ .photo-polar img, .photo-polar svg { width: 100%; height: 100%; }
+ .photo-summary {
+ border: 1px solid var(--rule);
+ }
+ .photo-summary table { width: 100%; border-collapse: collapse; font-size: 8pt; }
+ .photo-summary table td {
+ padding: 4px 8px; border-bottom: 1px solid var(--rule);
+ }
+ .photo-summary table tr:last-child td { border-bottom: none; }
+ .photo-summary td:first-child { color: var(--muted); }
+ .photo-summary td:last-child {
+ font-family: 'JetBrains Mono', monospace; font-weight: 700; text-align: right;
+ }
+
+ /* ============= CERTIFICATIONS ============= */
+ .certs {
+ display: flex; flex-wrap: wrap; gap: 6px;
+ padding: 8px 10px;
+ border: 1px solid var(--rule);
+ margin-top: 10px;
+ }
+ .cert-badge {
+ font-size: 7.5pt; font-weight: 700;
+ border: 1.5px solid var(--ink); padding: 3px 8px;
+ letter-spacing: 0.6pt;
+ text-transform: uppercase;
+ }
+ .cert-badge.brand { border-color: var(--brand-red); color: var(--brand-red); }
+
+ /* ============= PAGE FOOTER ============= */
+ .page-foot {
+ position: absolute;
+ bottom: 0.4in; left: 0.65in; right: 0.65in;
+ display: flex; justify-content: space-between;
+ font-size: 7pt; color: var(--muted);
+ padding-top: 6px;
+ border-top: 1px solid var(--rule);
+ }
+
+ /* ============= NO-PRINT CONTROLS ============= */
+ .controls {
+ max-width: 8.5in; margin: 0 auto 18px;
+ background: white; padding: 14px 18px;
+ border: 1px solid var(--rule);
+ box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+ display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+ }
+ .controls .ctrl-label {
+ font-size: 9pt; font-weight: 600; color: var(--muted);
+ letter-spacing: 0.5pt; text-transform: uppercase;
+ }
+ .controls .ctrl-value {
+ font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11pt;
+ }
+ .controls button {
+ background: var(--brand-red); color: white;
+ border: none; padding: 8px 16px;
+ font-family: inherit; font-weight: 700; font-size: 9pt;
+ letter-spacing: 0.5pt; text-transform: uppercase;
+ cursor: pointer;
+ margin-left: auto;
+ }
+ .controls button:hover { background: #d61f37; }
+
+/* CFG-TYPE-1 · Lato lock — Shopify global cascades Cormorant onto inline Lato.
+ This !important rule pins Lato on h1/h2 for this collection's PDP body class. */
+body.planoarch-pdp h1,
+body.planoarch-pdp h2 {
+ font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+}
+
+/* CFG-MOBILE-1 · image responsive reset (injected by cfg_mobile_1_readiness_sweep.py) */
+img { max-width: 100%; height: auto; }
+
+/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+body { overflow-x: hidden; }
+</style>
+</head>
+<body>
+
+<!-- ============= NO-PRINT CONTROLS BAR ============= -->
+<div class="controls no-print">
+ <div>
+ <div class="ctrl-label">Configured SKU</div>
+ <div class="ctrl-value" id="liveSku">LBLR24-33MXP1</div>
+ </div>
+ <div>
+ <div class="ctrl-label">Generated</div>
+ <div class="ctrl-value" id="liveDate" style="font-size:9pt; font-weight:400;">—</div>
+ </div>
+ <button onclick="window.print()">Save as PDF →</button>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — AT A GLANCE -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+ <!-- HEADER -->
+ <div class="submittal-head">
+ <div class="brand">
+ <span class="brand-mark"></span>
+ <div>
+ <div class="brand-name">ARCHIPELAGO</div>
+ <div class="brand-sub">Lighting Group</div>
+ </div>
+ </div>
+ <div class="catalog-block">
+ <div class="catalog-eyebrow">Catalog Number</div>
+ <div class="catalog-number" id="catNum" contenteditable="true" spellcheck="false" title="Click to edit · session-only">LBLR24-33MXP1</div>
+ </div>
+ </div>
+
+ <!-- PROJECT INFO FORM -->
+ <div class="project-info">
+ <div class="pi-cell"><div class="pi-label">Project</div><div class="pi-value"></div></div>
+ <div class="pi-cell"><div class="pi-label">Type</div><div class="pi-value"></div></div>
+ <div class="pi-cell"><div class="pi-label">Catalog #</div><div class="pi-value" id="piCatNum"></div></div>
+ <div class="pi-cell"><div class="pi-label">Prepared By</div><div class="pi-value"></div></div>
+ <div class="pi-cell"><div class="pi-label">Notes</div><div class="pi-value"></div></div>
+ <div class="pi-cell"><div class="pi-label">Date</div><div class="pi-value"></div></div>
+ </div>
+
+ <!-- PRODUCT TITLE -->
+ <div class="product-title">
+ <h1>LBLR retro<span style="font-weight:700;">Ⓐ</span>RCH-P1</h1>
+ <div class="tagline">Retrofit back-lit LED panel &middot; drop-in replacement for standard GT8/2GT8 lensed fluorescent troffers &middot; 3-WATTselect &times; 3-CCTselect dip-switch &middot; 27 field configurations from 3 catalog SKUs &middot; 125 LM/W constant &middot; TAA Compliant (Made in Mexico) &middot; DLC Listed &middot; 5-year warranty</div>
+ </div>
+
+ <!-- HERO + QUICK SPECS -->
+ <div class="at-a-glance">
+ <div class="hero-img">
+ <img src="assets/hero/LBLR24/LBLR24-FRONT.png"
+ alt="LBLR retroⒶRCH-P1 LBLR24 retrofit back-lit panel · 2x4 drop-in replacement for fluorescent troffers" />
+ </div>
+ <div class="qs-grid">
+ <div class="qs-cell">
+ <div class="qs-label">Lumens</div>
+ <div class="qs-value" id="qsLumens">5,500<span class="qs-unit">lm max</span></div>
+ </div>
+ <div class="qs-cell">
+ <div class="qs-label">Wattage</div>
+ <div class="qs-value" id="qsWatts">44<span class="qs-unit">W max</span></div>
+ </div>
+ <div class="qs-cell">
+ <div class="qs-label">Voltage</div>
+ <div class="qs-value" id="qsVoltage">120-277<span class="qs-unit">V</span></div>
+ </div>
+ <div class="qs-cell">
+ <div class="qs-label">CCT</div>
+ <div class="qs-value" id="qsCct">5000<span class="qs-unit">K</span></div>
+ </div>
+ <div class="qs-cell">
+ <div class="qs-label">CRI</div>
+ <div class="qs-value">&gt; 80</div>
+ </div>
+ <div class="qs-cell">
+ <div class="qs-label">Efficacy</div>
+ <div class="qs-value">125<span class="qs-unit">LM/W</span></div>
+ </div>
+ </div>
+ </div>
+
+ <!-- FEATURE BAND -->
+ <div class="feature-band">
+ <div class="fb-pill">Field-Adjustable</div>
+ <div class="fb-features">
+ <strong>3-WATTselect</strong> dip-switch (LBLR14 + LBLR22: 18/26/35W &middot; LBLR24: 26/35/44W) &middot;
+ <strong>3-CCTselect</strong> dip-switch (3500/4000/5000K) &middot;
+ <strong>back<span style="font-weight:700;">Ⓐ</span>LIT</strong> uniform back-lit panel technology &middot;
+ <strong>TAA Compliant</strong> (Made in Mexico &middot; federal procurement) &middot;
+ <strong>contr<span style="font-weight:700;">Ⓐ</span>LS-Ready</strong> sensor mount (/SRR or /SRT)
+ </div>
+ </div>
+
+ <!-- APPROVAL BLOCK -->
+ <div class="approval-block">
+ <div class="approval-cell">
+ <span><strong>Approved by</strong></span>
+ <div class="approval-line"></div>
+ </div>
+ <div class="approval-cell">
+ <span><strong>Date</strong></span>
+ <div class="approval-line"></div>
+ </div>
+ </div>
+
+ <!-- FOOTER -->
+ <div class="page-foot">
+ <div>archipelagolighting.com &middot; LBLR retro<span style="font-weight:700;">Ⓐ</span>RCH-P1 submittal &middot; Specifications subject to change</div>
+ <div>Rev. <span id="revDate">2026-05</span> &middot; Page 1 of 4</div>
+ </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — SPECIFICATIONS -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+ <div class="submittal-head">
+ <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+ <div class="catalog-block">
+ <div class="catalog-eyebrow">Catalog Number</div>
+ <div class="catalog-number" id="catNum2" contenteditable="true" spellcheck="false" title="Click to edit · session-only">LBLR24-33MXP1</div>
+ </div>
+ </div>
+
+ <div class="section-head">
+ <h2>Specifications</h2>
+ <div class="section-eyebrow">LBLR retro<span style="font-weight:700;">Ⓐ</span>RCH-P1 &middot; 1&times;4 / 2&times;2 / 2&times;4 retrofit panel &middot; 18-44W</div>
+ </div>
+
+ <table class="spec-table">
+ <tbody>
+ <tr class="spec-section-head"><td colspan="2">Construction</td></tr>
+ <tr><td class="spec-attr">Housing</td><td class="spec-val">SPCC steel housing + aluminum trim &middot; lightweight retrofit-grade construction</td></tr>
+ <tr><td class="spec-attr">Diffuser</td><td class="spec-val">PMMA white diffuser &middot; precision-engineered back-lit (NOT edge-lit) for uniform 120&deg; light output across the full panel face</td></tr>
+ <tr><td class="spec-attr">Drop-In Pattern</td><td class="spec-val">Direct same-aperture replacement for standard GT8 (1&times;4) / 2GT8 (2&times;2 + 2&times;4) lensed fluorescent troffers &middot; LUMCAT verified in IES bundle</td></tr>
+ <tr><td class="spec-attr">Ingress</td><td class="spec-val">IP40 indoor &middot; UL Damp Location rated</td></tr>
+ <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">-4&deg;F to +104&deg;F (-20&deg;C to +40&deg;C) ambient &middot; commercial + cold-corridor capable</td></tr>
+
+ <tr class="spec-section-head"><td colspan="2">LED &amp; Optics</td></tr>
+ <tr><td class="spec-attr">LED Source</td><td class="spec-val">High-efficiency SMD LEDs &middot; LM80 compliant &middot; IP-Protected light engine</td></tr>
+ <tr><td class="spec-attr">CCT Options</td><td class="spec-val">3-CCTselect dip-switch &middot; 3500K / 4000K / 5000K &#9733; (default 5000K)</td></tr>
+ <tr><td class="spec-attr">CRI</td><td class="spec-val">&gt; 80 (R9 &gt; 0 per datasheet body &middot; commercial-ambient tier &middot; heads up: not 90+ spec-grade)</td></tr>
+ <tr><td class="spec-attr">Distribution</td><td class="spec-val">120&deg; uniform back-lit panel distribution &middot; zero upward emission &middot; same throw pattern as the fluorescent troffer being replaced</td></tr>
+ <tr><td class="spec-attr">Lumen Maintenance</td><td class="spec-val">95.8% &#64; 6,000 hrs (LM-80 verified) &middot; L70 &#64; 50,000 hrs &middot; LED color shift warrantied &lt;180K over the warranty period</td></tr>
+ <tr><td class="spec-attr">Lumen Output</td><td class="spec-val">LBLR14: 2,200-4,400 lm &middot; LBLR22: 2,200-4,400 lm &middot; LBLR24: 3,300-5,500 lm &middot; <strong>125 LM/W constant across the dial</strong></td></tr>
+
+ <tr class="spec-section-head"><td colspan="2">Driver &amp; Electrical</td></tr>
+ <tr><td class="spec-attr">Voltage</td><td class="spec-val">120-277V Universal &middot; intelligent non-isolated driver &middot; &gt;0.9 PF &middot; non-flicker &middot; &lt;20% THD</td></tr>
+ <tr><td class="spec-attr">3-WATTselect</td><td class="spec-val">3-position DIP switch &middot; LBLR14 + LBLR22: 18/26/35W &middot; LBLR24: 26/35/44W &middot; <strong>9 configs per class</strong></td></tr>
+ <tr><td class="spec-attr">3-CCTselect</td><td class="spec-val">3-position DIP switch &middot; 3500K / 4000K / 5000K &middot; <strong>9 configs per class</strong> &middot; 27 field configs across 3-SKU catalog</td></tr>
+ <tr><td class="spec-attr">Dimming</td><td class="spec-val">0-10V continuous <strong>with Dim-to-Off</strong> (NOT a 10% floor &middot; rare in retrofit category)</td></tr>
+ <tr><td class="spec-attr">Power Factor</td><td class="spec-val">&gt; 0.9 Non-Flicker</td></tr>
+ <tr><td class="spec-attr">THD</td><td class="spec-val">Low Harmonic Distortion</td></tr>
+ <tr><td class="spec-attr">Starting Time</td><td class="spec-val">&lt; 0.5 seconds</td></tr>
+ <tr><td class="spec-attr">Dimming</td><td class="spec-val">0-10V continuous &middot; contr<span style="font-weight:700;">Ⓐ</span>LS-DMX optional via accessory &middot; flicker-free operation</td></tr>
+
+ <tr class="spec-section-head"><td colspan="2">Controls &amp; Connectivity</td></tr>
+ <tr><td class="spec-attr">Sensor Mount</td><td class="spec-val">/SRR (Sensor Ready Recessed) or /SRT (Sensor Ready Trim) &middot; spec at order &middot; snap-in compatible</td></tr>
+ <tr><td class="spec-attr">Bi-Level</td><td class="spec-val">MSM-HTI/08P1/BLS (Microwave) + MSP-HTI/08P1/BLS (PIR) &middot; 13FT max mount &middot; IR Remote commissioning</td></tr>
+ <tr><td class="spec-attr">contr<span style="font-weight:700;">Ⓐ</span>LS by <span style="font-weight:700;">Ⓐ</span>CS</td><td class="spec-val">Bluetooth Mesh networking via MSP-ACS / MSP-20CM-ACS / MSP-40CM-ACS &middot; DLC NLC qualified for Title 24 &sect; 130.1 rebate adder</td></tr>
+ <tr><td class="spec-attr">contr<span style="font-weight:700;">Ⓐ</span>LS by SILVAIR</td><td class="spec-val">Enterprise Bluetooth Mesh NLC variants &middot; SaaS commissioning for multi-tenant + campus deployments</td></tr>
+ <tr><td class="spec-attr">Emergency</td><td class="spec-val">const<span style="font-weight:700;">Ⓐ</span>NT EM08-MT/150DC factory-install option &middot; UL 924 &middot; NFPA 101 90-min egress</td></tr>
+
+ <tr class="spec-section-head"><td colspan="2">Install Pattern</td></tr>
+ <tr><td class="spec-attr">Drop-In Retrofit</td><td class="spec-val">Direct replacement install for standard GT8 / 2GT8 lensed fluorescent troffers &middot; uses existing ceiling cutout + existing junction box &middot; no ceiling rework required</td></tr>
+ <tr><td class="spec-attr">Wiring</td><td class="spec-val">Hardwire to existing line-voltage feed &middot; ballast bypass &middot; can wire directly to existing fluorescent T8/T12 line input</td></tr>
+ <tr><td class="spec-attr">Install Time</td><td class="spec-val">Typical 15-20 minutes per fixture for trained electrician (vs full ceiling-tile pull + new can on a new-construction equivalent)</td></tr>
+ <tr><td class="spec-attr">Ceiling Compatibility</td><td class="spec-val">Standard 15/16&Prime; and 9/16&Prime; T-bar drop-ceiling grids &middot; works in any space currently lit by standard GT8/2GT8 troffers</td></tr>
+ <tr><td class="spec-attr">Replacement Inventory</td><td class="spec-val">LBLR14 replaces 1&times;4 GT8 troffers &middot; LBLR22 replaces 2&times;2 2GT8 &middot; LBLR24 replaces 2&times;4 2GT8 &middot; full LUMCAT verification in the IES bundle</td></tr>
+
+ <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
+ <tr><td class="spec-attr">Standards</td><td class="spec-val">ETL Listed (Intertek US/CA) &middot; <strong>DLC Listed</strong> (supplier rates Premium-equivalent &middot; ALG markets at Listed) &middot; FCC Title 47 Part 15B &middot; RoHS &middot; UL Damp Location &middot; LM-79 &middot; LM-80</td></tr>
+ <tr><td class="spec-attr">Country of Origin</td><td class="spec-val"><strong>Made in Mexico</strong> &middot; <strong>TAA Compliant</strong> (designated TAA country for federal procurement)</td></tr>
+ <tr><td class="spec-attr">Warranty</td><td class="spec-val"><strong>5-Year limited</strong> &middot; full warranty (same as new construction equivalents) &middot; LM-80 color-shift coverage</td></tr>
+ </tbody>
+ </table>
+
+ <div class="page-foot">
+ <div>archipelagolighting.com &middot; LBLR retro<span style="font-weight:700;">Ⓐ</span>RCH-P1 submittal &middot; Specifications subject to change</div>
+ <div>Rev. 2026-05 &middot; Page 2 of 4</div>
+ </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 3 — DIMENSIONS & MOUNTING -->
+<!-- ============================================================ -->
+<div class="page" id="page-3">
+ <div class="submittal-head">
+ <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+ <div class="catalog-block">
+ <div class="catalog-eyebrow">Catalog Number</div>
+ <div class="catalog-number" id="catNum3" contenteditable="true" spellcheck="false" title="Click to edit · session-only">LBLR24-33MXP1</div>
+ </div>
+ </div>
+
+ <div class="section-head">
+ <h2>Dimensions &amp; Drop-In Install</h2>
+ <div class="section-eyebrow">3 SKU classes &middot; LBLR14 / LBLR22 / LBLR24 &middot; same-aperture replacement for standard GT8/2GT8</div>
+ </div>
+
+ <table class="spec-table">
+ <thead>
+ <tr class="spec-section-head">
+ <td>SKU Class</td>
+ <td>Replaces</td>
+ <td>Watt Range</td>
+ <td>Lumen Range</td>
+ <td>Configs</td>
+ </tr>
+ </thead>
+ <tbody>
+ <tr><td class="spec-attr">LBLR14-33MXP1 &middot; 1&times;4</td><td>standard GT8 lensed 1&times;4 fluorescent</td><td>18 / 26 / 35W &#9733;</td><td>2,200 - 4,400 lm</td><td>9 (3W &times; 3CCT)</td></tr>
+ <tr><td class="spec-attr">LBLR22-33MXP1 &middot; 2&times;2</td><td>standard 2GT8 lensed 2&times;2 fluorescent</td><td>18 / 26 / 35W &#9733;</td><td>2,200 - 4,400 lm</td><td>9 (3W &times; 3CCT)</td></tr>
+ <tr><td class="spec-attr">LBLR24-33MXP1 &middot; 2&times;4 &#9733;</td><td>standard 2GT8 lensed 2&times;4 fluorescent</td><td>26 / 35 / 44W &#9733;</td><td>3,300 - 5,500 lm</td><td>9 (3W &times; 3CCT)</td></tr>
+ </tbody>
+ </table>
+
+ <div style="margin-top: 14px;">
+ <table class="spec-table">
+ <tbody>
+ <tr class="spec-section-head"><td colspan="2">Drop-In Retrofit Process</td></tr>
+ <tr><td class="spec-attr">1 &middot; Power-Down</td><td class="spec-val">De-energize the existing fluorescent troffer at the breaker</td></tr>
+ <tr><td class="spec-attr">2 &middot; Remove Fluorescent</td><td class="spec-val">Remove existing T8/T12 lamps, ballast, and lens (existing ceiling cutout + junction box stay)</td></tr>
+ <tr><td class="spec-attr">3 &middot; Wire LBLR</td><td class="spec-val">Hardwire LBLR retro<span style="font-weight:700;">Ⓐ</span>RCH-P1 directly to the existing line-voltage feed (120-277V universal) &middot; no separate driver/ballast install needed</td></tr>
+ <tr><td class="spec-attr">4 &middot; Set Dip-Switches</td><td class="spec-val">3-WATTselect + 3-CCTselect dip-switches on the LED driver &middot; field-set at install per spec sheet</td></tr>
+ <tr><td class="spec-attr">5 &middot; Mount + Restore Power</td><td class="spec-val">Snap LBLR into the existing T-bar grid &middot; restore breaker &middot; verify 0-10V dimming + sensor function if /SRR or /SRT spec'd</td></tr>
+ <tr><td class="spec-attr">Typical Time</td><td class="spec-val">15-20 minutes per fixture for a trained electrician &middot; significantly faster than full ceiling-tile pull + new construction install</td></tr>
+ </tbody>
+ </table>
+ </div>
+
+ <div style="margin-top: 14px;">
+ <table class="spec-table">
+ <tbody>
+ <tr class="spec-section-head"><td colspan="2">Form Factor &amp; Construction</td></tr>
+ <tr><td class="spec-attr">Housing</td><td class="spec-val">SPCC steel housing + aluminum trim &middot; lightweight retrofit construction</td></tr>
+ <tr><td class="spec-attr">Diffuser</td><td class="spec-val">PMMA white back-lit diffuser &middot; uniform light output across the full panel face</td></tr>
+ <tr><td class="spec-attr">LED Array</td><td class="spec-val">Back-lit configuration (NOT edge-lit) &middot; even brightness across the panel face &middot; back-lit panels reduce hot-spotting vs edge-lit alternatives</td></tr>
+ </tbody>
+ </table>
+ </div>
+
+ <div class="page-foot">
+ <div>archipelagolighting.com &middot; LBLR retro<span style="font-weight:700;">Ⓐ</span>RCH-P1 submittal &middot; Specifications subject to change</div>
+ <div>Rev. 2026-05 &middot; Page 3 of 4</div>
+ </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 4 — ORDERING CODE & PHOTOMETRICS -->
+<!-- ============================================================ -->
+<div class="page" id="page-4">
+ <div class="submittal-head">
+ <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+ <div class="catalog-block">
+ <div class="catalog-eyebrow">Catalog Number</div>
+ <div class="catalog-number" id="catNum4" contenteditable="true" spellcheck="false" title="Click to edit · session-only">LBLR24-33MXP1</div>
+ </div>
+ </div>
+
+ <div class="section-head">
+ <h2>Ordering Information</h2>
+ <div class="section-eyebrow">Configure your catalog number</div>
+ </div>
+
+ <!-- ORDERING CODE VISUAL BREAKDOWN -->
+ <div class="order-code">
+ <div class="order-segment active"><div class="order-seg-label">Family</div><div class="order-seg-value">LBLR</div></div>
+ <div class="order-segment active"><div class="order-seg-label">Size</div><div class="order-seg-value" id="ocSize">24</div></div>
+ <div class="order-segment active"><div class="order-seg-label">WATT/CCT Dip</div><div class="order-seg-value" id="ocWattBundle">33</div></div>
+ <div class="order-segment active"><div class="order-seg-label">Series</div><div class="order-seg-value">MXP1</div></div>
+ <div class="order-segment"><div class="order-seg-label">Sensor</div><div class="order-seg-value" id="ocSensor">&mdash;</div></div>
+ <div class="order-segment"><div class="order-seg-label">/W##</div><div class="order-seg-value" id="ocWLock">&mdash;</div></div>
+ <div class="order-segment"><div class="order-seg-label">/C##</div><div class="order-seg-value" id="ocCLock">&mdash;</div></div>
+ </div>
+
+ <!-- ORDERING MATRIX -->
+ <table class="order-matrix">
+ <thead>
+ <tr>
+ <th style="width:18%">Segment</th>
+ <th>Available Codes</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr><td class="code">LBLR</td><td>retro<span style="font-weight:700;">Ⓐ</span>RCH-P1 family &middot; planoⒶRCH PRO Retrofit Back-Lit Panel</td></tr>
+ <tr><td class="code">14 / 22 / 24</td><td>Size class &mdash; 1&times;4 (LBLR14) &middot; 2&times;2 (LBLR22) &middot; 2&times;4 (LBLR24) &#9733;</td></tr>
+ <tr><td class="code">33</td><td>3-WATTselect &times; 3-CCTselect dip-switch positions (3W: 18/26/35 on 1&times;4+2&times;2 &middot; 26/35/44 on 2&times;4 &middot; 3CCT: 3500/4000/5000K)</td></tr>
+ <tr><td class="code">MXP1</td><td>Series suffix &mdash; Made in Mexico retro<span style="font-weight:700;">Ⓐ</span>RCH-P1 (constant for the entire family &middot; TAA Compliant signifier)</td></tr>
+ <tr><td class="code">/SRR or /SRT</td><td>Optional sensor mount &mdash; Sensor Ready Recessed (/SRR) or Sensor Ready Trim (/SRT) &middot; specify at order if installing contr<span style="font-weight:700;">Ⓐ</span>LS sensors</td></tr>
+ <tr><td class="code">/W20 to /W50</td><td>Optional factory-lock watt &mdash; collapses 4-WATTselect to a single fixed value (e.g. /W35 = 35W locked) &middot; Workbench assembly</td></tr>
+ <tr><td class="code">/C30 to /C50</td><td>Optional factory-lock CCT &mdash; collapses 4-CCTselect to a single fixed value (e.g. /C40 = 4000K locked) &middot; Workbench assembly</td></tr>
+ </tbody>
+ </table>
+
+ <div style="margin-top: 14px;">
+ <table class="order-matrix">
+ <thead>
+ <tr>
+ <th style="width:18%">Accessory</th>
+ <th>Order Code</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr><td class="code">EM Battery</td><td>EM08 (8W Factory-Install) &middot; EM15 (15W) &middot; EM15-CL (15W + constⒶNTLink) &mdash; order separately as line items</td></tr>
+ <tr><td class="code">Bi-Level Sensor</td><td>MSM-HTI/08P1/BLS (Microwave) &middot; MSP-HTI/08P1/BLS (PIR) &mdash; 13FT max mount &middot; IR Remote commissioning</td></tr>
+ <tr><td class="code">ⒶCS Sensor</td><td>MSP-HTI/08P1/ACS (8FT) &middot; MSP-20CM-ACS (20FT) &middot; MSP-40CM-ACS (40FT) &middot; MSX-CTI/08P1/ACS (Fixture Hub) &middot; MSX-CTI/LV20/ACS (J-Box Hub) &middot; 50WM-ACS (Kinetic Switch)</td></tr>
+ <tr><td class="code">SILVAIR NLC</td><td>MSM/MSP-HTI/08P1/NLC &middot; MSM/MSP-SRI/903P1/NLC &middot; MSX-CTI/LV5/NLC &mdash; enterprise Bluetooth Mesh</td></tr>
+ <tr><td class="code">Sensor Mount</td><td>/SRR (Sensor Ready Recessed) or /SRT (Sensor Ready Trim) &middot; spec at order &middot; no separate accessory SKU</td></tr>
+ <tr><td class="code">Step-Down Transformer</td><td>SDT-HTI/325 &middot; for 347/480V applications &middot; same accessory as Luxmark / Astra-I families</td></tr>
+ </tbody>
+ </table>
+ </div>
+
+ <!-- ORDERING EXAMPLE -->
+ <div style="margin-top: 14px; padding: 10px 14px; background: var(--tint); border-left: 3px solid var(--brand-red); font-size: 9pt; line-height: 1.5;">
+ <strong>Ordering example:</strong> <span class="mono">LBLR24-33MXP1/SRR/W44/C50</span>
+ = 2&times;4 retrofit panel &middot; 3W &times; 3CCT dip &middot; Made in Mexico retro<span style="font-weight:700;">Ⓐ</span>RCH-P1 &middot; Sensor Ready Recessed &middot; factory-locked 44W &middot; factory-locked 5000K
+ <br/><br/>
+ <strong>Base catalog example (field-selectable):</strong> <span class="mono">LBLR24-33MXP1</span>
+ = 2&times;4 retrofit panel &middot; 3-WATTselect &middot; 3-CCTselect &middot; Made in Mexico retro<span style="font-weight:700;">Ⓐ</span>RCH-P1 &middot; contractor sets W + CCT at install via dip-switch &middot; sensor accessory ordered separately
+ </div>
+
+ <!-- PHOTOMETRIC DATA -->
+ <div class="section-head" style="margin-top: 16px;">
+ <h2>Photometric Data</h2>
+ <div class="section-eyebrow" id="photoEyebrow">LBLR24 &middot; 44W &middot; 3500K &middot; LM-79 measured (3500K IES only · 4000/5000K factory data on request)</div>
+ </div>
+
+ <div class="photo-grid">
+ <div class="photo-polar">
+ <img src="assets/photometrics/lblr24_44W_3500K.svg"
+ alt="LBLR retroⒶRCH-P1 LBLR24 measured polar photometric distribution &middot; 120-degree uniform back-lit panel" id="photoPolarImg" />
+ </div>
+
+ <div class="photo-summary">
+ <table>
+ <tbody>
+ <tr><td>Peak Candela</td><td id="photoPeak">1,881 cd</td></tr>
+ <tr><td>Total Lumen Output</td><td id="photoLumens">5,442 lm</td></tr>
+ <tr><td>Beam Angle</td><td>120&deg; uniform back-lit panel</td></tr>
+ <tr><td>Distribution</td><td>Uniform back-lit panel &middot; zero upward emission &middot; same throw pattern as fluorescent fixture being replaced</td></tr>
+ <tr><td>Measured Efficacy</td><td>131.3 LM/W @ 41.4W actual</td></tr>
+ <tr><td>Datasheet Headline</td><td>125 LM/W @ 44W nominal (LBLR24 max)</td></tr>
+ <tr><td>Test Standard</td><td>IESNA LM-79 &middot; EVERFINE GO-2000B</td></tr>
+ <tr><td>Test Date</td><td>2023-09-26</td></tr>
+ <tr><td>IES File</td><td id="photoIesFile">LBLR24-44W-3500K_IESNA95.IES</td></tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+
+ <div style="margin-top: 8px; font-size: 8pt; color: var(--muted); line-height: 1.4;">
+ IES bundle covers 3 SKU classes at default WATT/3500K only &middot; 4000K + 5000K + intermediate WATT settings available as factory data on request. LM-79 testing by LEADING TESTING LABORATORIES 2025-02. LUMCAT field identifies the fluorescent troffer being replaced (standard GT8/2GT8 lensed).
+ </div>
+
+ <!-- CERTIFICATIONS -->
+ <div class="certs">
+ <span class="cert-badge">ETL Listed</span>
+ <span class="cert-badge brand">DLC Listed</span>
+ <span class="cert-badge">FCC 47 / 15B</span>
+ <span class="cert-badge">RoHS</span>
+ <span class="cert-badge">UL Damp Location</span>
+ <span class="cert-badge">IP40 Indoor</span>
+ <span class="cert-badge brand">TAA Compliant</span>
+ <span class="cert-badge">5-yr Limited</span>
+ <span class="cert-badge">LM-79 / LM-80</span>
+ </div>
+
+ <div class="page-foot">
+ <div>archipelagolighting.com &middot; LBLR retro<span style="font-weight:700;">Ⓐ</span>RCH-P1 submittal &middot; Specifications subject to change</div>
+ <div>Rev. 2026-05 &middot; Page 4 of 4</div>
+ </div>
+</div>
+
+
+<!-- ============= URL PARAM POPULATION ============= -->
+<script>
+(function() {
+ // --- PARSE retroⒶRCH-P1 URL PARAMS ---
+ // Expected from §9 Configurator:
+ // ?class=LBLR24&wlock=W44&clock=C50&sensor=SRR (Sensor Ready Recessed)
+ var params = new URLSearchParams(window.location.search);
+ var skuClass = params.get('class') || 'LBLR24'; // LBLR14 / LBLR22 / LBLR24
+ var wlock = params.get('wlock') || ''; // W## (factory-lock watt) or ''
+ var clock = params.get('clock') || ''; // C## (factory-lock CCT) or ''
+ var watt = params.get('watt') || '50'; // shown wattage (display only)
+ var cct = params.get('cct') || '5000'; // shown CCT (display only)
+
+ // --- DERIVE BUNDLE + BASE SKU ---
+ var bundle = '33MXP1'; // 3-WATTselect × 3-CCTselect dip positions × Made in Mexico retroⒶRCH-P1 series (constant across all 3 sizes)
+ var baseSku = skuClass + '-' + bundle;
+ var sku = baseSku;
+ if (wlock) sku += '/' + wlock.replace(/^L1$|^L4$|L1$|L4$/, '');
+ if (clock) sku += '/' + clock;
+
+ // --- AUTOFILL CATALOG NUMBER (all page headers + live SKU bar + project info form) ---
+ document.querySelectorAll('#catNum, #catNum2, #catNum3, #catNum4, #liveSku').forEach(function(el) {
+ el.textContent = sku;
+ });
+ var piCat = document.getElementById('piCatNum');
+ if (piCat) piCat.textContent = sku;
+
+ // --- LUMENS LOOKUP (datasheet pg 2 · 125 LM/W flat across the dial) ---
+ // Key = "{class}_{watt}" · lumen output at that WATTselect position · LM-79 measured peak candela.
+ var photoData = {
+ // LBLR retroⒶRCH-P1 measured photometric data (LM-79 LEADING TESTING LABORATORIES 2025-02)
+ // Bundle covers default WATT @ 3500K only · 4000K + 5000K + intermediate WATT settings = factory data on request
+ 'LBLR14_18': { lumens: '2,200', peak: '~1,235', nominal: '2,200', file: 'LBLR14-18W-{cct}K_IESNA95.IES' },
+ 'LBLR14_26': { lumens: '3,300', peak: '~1,852', nominal: '3,300', file: 'LBLR14-26W-{cct}K_IESNA95.IES' },
+ 'LBLR14_35': { lumens: '4,178', peak: '~2,468', nominal: '4,400', file: 'LBLR14-35W-{cct}K_IESNA95.IES' },
+ 'LBLR22_18': { lumens: '2,200', peak: '~745', nominal: '2,200', file: 'LBLR22-18W-{cct}K_IESNA95.IES' },
+ 'LBLR22_26': { lumens: '3,300', peak: '~1,118', nominal: '3,300', file: 'LBLR22-26W-{cct}K_IESNA95.IES' },
+ 'LBLR22_35': { lumens: '4,266', peak: '~1,490', nominal: '4,400', file: 'LBLR22-35W-{cct}K_IESNA95.IES' },
+ 'LBLR24_26': { lumens: '3,300', peak: '~1,116', nominal: '3,300', file: 'LBLR24-26W-{cct}K_IESNA95.IES' },
+ 'LBLR24_35': { lumens: '4,400', peak: '~1,498', nominal: '4,400', file: 'LBLR24-35W-{cct}K_IESNA95.IES' },
+ 'LBLR24_44': { lumens: '5,442', peak: '~1,881', nominal: '5,500', file: 'LBLR24-44W-{cct}K_IESNA95.IES' }
+ };
+ // Resolve effective wattage: if wlock is set, use that watt · otherwise use display param
+ var effWatt = wlock ? wlock.replace(/^W/, '').replace(/L1$|L4$/, '') : watt;
+ var key = skuClass + '_' + effWatt;
+ var pd = photoData[key] || photoData['LBLR24_44'];
+ var effCct = clock ? clock.replace(/^C/, '') + '00' : cct;
+
+ // --- AUTOFILL PAGE 1 QUICK SPECS ---
+ var qsLumens = document.getElementById('qsLumens');
+ if (qsLumens) qsLumens.innerHTML = pd.lumens + '<span class="qs-unit">lm</span>';
+ var qsWatts = document.getElementById('qsWatts');
+ if (qsWatts) qsWatts.innerHTML = effWatt + '<span class="qs-unit">W</span>';
+ var qsCct = document.getElementById('qsCct');
+ if (qsCct) qsCct.innerHTML = effCct + '<span class="qs-unit">K</span>';
+
+ // --- AUTOFILL PAGE 4 ORDERING CODE BREAKDOWN ---
+ var ocSize = document.getElementById('ocSize');
+ if (ocSize) ocSize.textContent = skuClass.replace(/^LBLR/, '');
+ var ocBundle = document.getElementById('ocWattBundle');
+ if (ocBundle) ocBundle.textContent = bundle;
+ var ocWLock = document.getElementById('ocWLock');
+ if (ocWLock) {
+ ocWLock.textContent = wlock || '\u2014';
+ ocWLock.parentElement.classList.toggle('active', !!wlock);
+ }
+ var ocCLock = document.getElementById('ocCLock');
+ if (ocCLock) {
+ ocCLock.textContent = clock || '\u2014';
+ ocCLock.parentElement.classList.toggle('active', !!clock);
+ }
+
+ // --- AUTOFILL PAGE 4 PHOTOMETRIC ---
+ var photoEyebrow = document.getElementById('photoEyebrow');
+ if (photoEyebrow) photoEyebrow.textContent = skuClass + ' \u00b7 ' + effWatt + 'W \u00b7 ' + effCct + 'K \u00b7 LM-79 measured';
+ var photoPolarImg = document.getElementById('photoPolarImg');
+ if (photoPolarImg) {
+ photoPolarImg.src = 'assets/photometrics/' + skuClass.toLowerCase() + '_' + effWatt + 'W_' + effCct + 'K.svg';
+ photoPolarImg.onerror = function() {
+ this.style.display = 'none';
+ this.parentElement.innerHTML += '<div style="color:#999;font-size:8pt;text-align:center;">Polar plot unavailable<br/>for ' + skuClass + ' / ' + effWatt + 'W / ' + effCct + 'K</div>';
+ };
+ }
+ var photoPeak = document.getElementById('photoPeak');
+ if (photoPeak) photoPeak.textContent = pd.peak + ' cd';
+ var photoLumens = document.getElementById('photoLumens');
+ if (photoLumens) photoLumens.textContent = pd.lumens + ' lm';
+ var photoIesFile = document.getElementById('photoIesFile');
+ if (photoIesFile) photoIesFile.textContent = pd.file.replace('{cct}', effCct);
+
+ // --- LIVE DATE ---
+ var d = new Date();
+ var liveDate = document.getElementById('liveDate');
+ if (liveDate) liveDate.textContent = d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+ var revDate = document.getElementById('revDate');
+ if (revDate) revDate.textContent = d.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit' }).replace('/', '-');
+})();
+</script>
+
+</body>
+</html>

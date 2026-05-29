@@ -1,0 +1,515 @@
+{
+  "luna_2ft_microreflector_down100": {
+    "lumens": 1891,
+    "peak_cd": 3092,
+    "watts": 20,
+    "efficacy": 92.7,
+    "optic": "Micro Reflector",
+    "ratio": "100% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_microreflector_up10down90": {
+    "lumens": 1978,
+    "peak_cd": 2896,
+    "watts": 20,
+    "efficacy": 98.9,
+    "optic": "Micro Reflector",
+    "ratio": "10% UP / 90% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_microreflector_up30down70": {
+    "lumens": 2172,
+    "peak_cd": 2451,
+    "watts": 20,
+    "efficacy": 108.6,
+    "optic": "Micro Reflector",
+    "ratio": "30% UP / 70% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_microreflector_up50down50": {
+    "lumens": 2369,
+    "peak_cd": 1999,
+    "watts": 20,
+    "efficacy": 118.4,
+    "optic": "Micro Reflector",
+    "ratio": "50% UP / 50% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_microreflector_up70down30": {
+    "lumens": 2420,
+    "peak_cd": 1191,
+    "watts": 20,
+    "efficacy": 121.0,
+    "optic": "Micro Reflector",
+    "ratio": "70% UP / 30% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_microreflector_up90down10": {
+    "lumens": 2472,
+    "peak_cd": 821,
+    "watts": 20,
+    "efficacy": 123.6,
+    "optic": "Micro Reflector",
+    "ratio": "90% UP / 10% DOWN",
+    "length": "2FT"
+  },
+  "luna_4ft_microreflector_down100": {
+    "lumens": 3844,
+    "peak_cd": 6699,
+    "watts": 39,
+    "efficacy": 97.8,
+    "optic": "Micro Reflector",
+    "ratio": "100% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_microreflector_up10down90": {
+    "lumens": 4039,
+    "peak_cd": 6002,
+    "watts": 40,
+    "efficacy": 101.0,
+    "optic": "Micro Reflector",
+    "ratio": "10% UP / 90% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_microreflector_up30down70": {
+    "lumens": 4479,
+    "peak_cd": 4814,
+    "watts": 40,
+    "efficacy": 112.0,
+    "optic": "Micro Reflector",
+    "ratio": "30% UP / 70% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_microreflector_up50down50": {
+    "lumens": 4561,
+    "peak_cd": 4190,
+    "watts": 40,
+    "efficacy": 114.0,
+    "optic": "Micro Reflector",
+    "ratio": "50% UP / 50% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_microreflector_up70down30": {
+    "lumens": 4938,
+    "peak_cd": 2009,
+    "watts": 40,
+    "efficacy": 123.5,
+    "optic": "Micro Reflector",
+    "ratio": "70% UP / 30% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_microreflector_up90down10": {
+    "lumens": 4926,
+    "peak_cd": 2048,
+    "watts": 40,
+    "efficacy": 123.1,
+    "optic": "Micro Reflector",
+    "ratio": "90% UP / 10% DOWN",
+    "length": "4FT"
+  },
+  "luna_8ft_microreflector_down100": {
+    "lumens": 3844,
+    "peak_cd": 6699,
+    "watts": 39,
+    "efficacy": 97.8,
+    "optic": "Micro Reflector",
+    "ratio": "100% DOWN",
+    "length": "8FT"
+  },
+  "luna_8ft_microreflector_up10down90": {
+    "lumens": 4039,
+    "peak_cd": 6002,
+    "watts": 40,
+    "efficacy": 101.0,
+    "optic": "Micro Reflector",
+    "ratio": "10% UP / 90% DOWN",
+    "length": "8FT"
+  },
+  "luna_8ft_microreflector_up30down70": {
+    "lumens": 4479,
+    "peak_cd": 4814,
+    "watts": 40,
+    "efficacy": 112.0,
+    "optic": "Micro Reflector",
+    "ratio": "30% UP / 70% DOWN",
+    "length": "8FT"
+  },
+  "luna_8ft_microreflector_up50down50": {
+    "lumens": 4561,
+    "peak_cd": 4190,
+    "watts": 40,
+    "efficacy": 114.0,
+    "optic": "Micro Reflector",
+    "ratio": "50% UP / 50% DOWN",
+    "length": "8FT"
+  },
+  "luna_8ft_microreflector_up70down30": {
+    "lumens": 4938,
+    "peak_cd": 2009,
+    "watts": 40,
+    "efficacy": 123.5,
+    "optic": "Micro Reflector",
+    "ratio": "70% UP / 30% DOWN",
+    "length": "8FT"
+  },
+  "luna_8ft_microreflector_up90down10": {
+    "lumens": 4926,
+    "peak_cd": 2048,
+    "watts": 40,
+    "efficacy": 123.1,
+    "optic": "Micro Reflector",
+    "ratio": "90% UP / 10% DOWN",
+    "length": "8FT"
+  },
+  "luna_2ft_diffuser_down100": {
+    "lumens": 2133,
+    "peak_cd": 753,
+    "watts": 20,
+    "efficacy": 104.0,
+    "optic": "Diffuser",
+    "ratio": "100% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_diffuser_up100": {
+    "lumens": 2533,
+    "peak_cd": 962,
+    "watts": 20,
+    "efficacy": 126.7,
+    "optic": "Diffuser",
+    "ratio": "100% UP",
+    "length": "2FT"
+  },
+  "luna_2ft_diffuser_up10down90": {
+    "lumens": 2187,
+    "peak_cd": 707,
+    "watts": 20,
+    "efficacy": 109.4,
+    "optic": "Diffuser",
+    "ratio": "10% UP / 90% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_diffuser_up30down70": {
+    "lumens": 2342,
+    "peak_cd": 589,
+    "watts": 20,
+    "efficacy": 117.1,
+    "optic": "Diffuser",
+    "ratio": "30% UP / 70% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_diffuser_up50down50": {
+    "lumens": 2525,
+    "peak_cd": 459,
+    "watts": 20,
+    "efficacy": 126.2,
+    "optic": "Diffuser",
+    "ratio": "50% UP / 50% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_diffuser_up70down30": {
+    "lumens": 2526,
+    "peak_cd": 678,
+    "watts": 20,
+    "efficacy": 126.3,
+    "optic": "Diffuser",
+    "ratio": "70% UP / 30% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_diffuser_up90down10": {
+    "lumens": 2566,
+    "peak_cd": 858,
+    "watts": 20,
+    "efficacy": 128.3,
+    "optic": "Diffuser",
+    "ratio": "90% UP / 10% DOWN",
+    "length": "2FT"
+  },
+  "luna_4ft_diffuser_down100": {
+    "lumens": 4621,
+    "peak_cd": 1676,
+    "watts": 42,
+    "efficacy": 110.8,
+    "optic": "Diffuser",
+    "ratio": "100% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_diffuser_up100": {
+    "lumens": 5000,
+    "peak_cd": 1916,
+    "watts": 41,
+    "efficacy": 122.6,
+    "optic": "Diffuser",
+    "ratio": "100% UP",
+    "length": "4FT"
+  },
+  "luna_4ft_diffuser_up10down90": {
+    "lumens": 4683,
+    "peak_cd": 1564,
+    "watts": 41,
+    "efficacy": 113.7,
+    "optic": "Diffuser",
+    "ratio": "10% UP / 90% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_diffuser_up30down70": {
+    "lumens": 4938,
+    "peak_cd": 1294,
+    "watts": 41,
+    "efficacy": 120.1,
+    "optic": "Diffuser",
+    "ratio": "30% UP / 70% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_diffuser_up50down50": {
+    "lumens": 5045,
+    "peak_cd": 994,
+    "watts": 40,
+    "efficacy": 124.9,
+    "optic": "Diffuser",
+    "ratio": "50% UP / 50% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_diffuser_up70down30": {
+    "lumens": 5121,
+    "peak_cd": 1333,
+    "watts": 40,
+    "efficacy": 126.8,
+    "optic": "Diffuser",
+    "ratio": "70% UP / 30% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_diffuser_up90down10": {
+    "lumens": 5094,
+    "peak_cd": 1700,
+    "watts": 41,
+    "efficacy": 124.9,
+    "optic": "Diffuser",
+    "ratio": "90% UP / 10% DOWN",
+    "length": "4FT"
+  },
+  "luna_2ft_louver_down100": {
+    "lumens": 1485,
+    "peak_cd": 1003,
+    "watts": 21,
+    "efficacy": 71.8,
+    "optic": "Louver",
+    "ratio": "100% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_louver_up100": {
+    "lumens": 2504,
+    "peak_cd": 986,
+    "watts": 20,
+    "efficacy": 125.2,
+    "optic": "Louver",
+    "ratio": "100% UP",
+    "length": "2FT"
+  },
+  "luna_2ft_louver_up10down90": {
+    "lumens": 1567,
+    "peak_cd": 933,
+    "watts": 20,
+    "efficacy": 77.2,
+    "optic": "Louver",
+    "ratio": "10% UP / 90% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_louver_up30down70": {
+    "lumens": 1815,
+    "peak_cd": 776,
+    "watts": 20,
+    "efficacy": 89.4,
+    "optic": "Louver",
+    "ratio": "30% UP / 70% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_louver_up50down50": {
+    "lumens": 2041,
+    "peak_cd": 591,
+    "watts": 20,
+    "efficacy": 102.1,
+    "optic": "Louver",
+    "ratio": "50% UP / 50% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_louver_up70down30": {
+    "lumens": 2273,
+    "peak_cd": 688,
+    "watts": 20,
+    "efficacy": 114.8,
+    "optic": "Louver",
+    "ratio": "70% UP / 30% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_louver_up90down10": {
+    "lumens": 2436,
+    "peak_cd": 886,
+    "watts": 20,
+    "efficacy": 123.0,
+    "optic": "Louver",
+    "ratio": "90% UP / 10% DOWN",
+    "length": "2FT"
+  },
+  "luna_4ft_louver_down100": {
+    "lumens": 2930,
+    "peak_cd": 1996,
+    "watts": 41,
+    "efficacy": 71.1,
+    "optic": "Louver",
+    "ratio": "100% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_louver_up10down90": {
+    "lumens": 3125,
+    "peak_cd": 1866,
+    "watts": 42,
+    "efficacy": 74.8,
+    "optic": "Louver",
+    "ratio": "10% UP / 90% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_louver_up30down70": {
+    "lumens": 3611,
+    "peak_cd": 1538,
+    "watts": 42,
+    "efficacy": 87.0,
+    "optic": "Louver",
+    "ratio": "30% UP / 70% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_louver_up50down50": {
+    "lumens": 3984,
+    "peak_cd": 1179,
+    "watts": 41,
+    "efficacy": 97.6,
+    "optic": "Louver",
+    "ratio": "50% UP / 50% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_louver_up70down30": {
+    "lumens": 4416,
+    "peak_cd": 1256,
+    "watts": 42,
+    "efficacy": 106.4,
+    "optic": "Louver",
+    "ratio": "70% UP / 30% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_louver_up90down10": {
+    "lumens": 4697,
+    "peak_cd": 1588,
+    "watts": 41,
+    "efficacy": 114.0,
+    "optic": "Louver",
+    "ratio": "90% UP / 10% DOWN",
+    "length": "4FT"
+  },
+  "luna_2ft_deepregressed_down100": {
+    "lumens": 1984,
+    "peak_cd": 905,
+    "watts": 21,
+    "efficacy": 95.8,
+    "optic": "Deep Regressed Lens",
+    "ratio": "100% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_deepregressed_up10down90": {
+    "lumens": 2024,
+    "peak_cd": 835,
+    "watts": 20,
+    "efficacy": 99.2,
+    "optic": "Deep Regressed Lens",
+    "ratio": "10% UP / 90% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_deepregressed_up30down70": {
+    "lumens": 2198,
+    "peak_cd": 693,
+    "watts": 20,
+    "efficacy": 108.3,
+    "optic": "Deep Regressed Lens",
+    "ratio": "30% UP / 70% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_deepregressed_up50down50": {
+    "lumens": 2327,
+    "peak_cd": 529,
+    "watts": 20,
+    "efficacy": 116.9,
+    "optic": "Deep Regressed Lens",
+    "ratio": "50% UP / 50% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_deepregressed_up70down30": {
+    "lumens": 2454,
+    "peak_cd": 702,
+    "watts": 20,
+    "efficacy": 123.9,
+    "optic": "Deep Regressed Lens",
+    "ratio": "70% UP / 30% DOWN",
+    "length": "2FT"
+  },
+  "luna_2ft_deepregressed_up90down10": {
+    "lumens": 2508,
+    "peak_cd": 902,
+    "watts": 20,
+    "efficacy": 126.6,
+    "optic": "Deep Regressed Lens",
+    "ratio": "90% UP / 10% DOWN",
+    "length": "2FT"
+  },
+  "luna_4ft_deepregressed_down100": {
+    "lumens": 3931,
+    "peak_cd": 1769,
+    "watts": 42,
+    "efficacy": 93.1,
+    "optic": "Deep Regressed Lens",
+    "ratio": "100% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_deepregressed_up10down90": {
+    "lumens": 3999,
+    "peak_cd": 1641,
+    "watts": 41,
+    "efficacy": 97.1,
+    "optic": "Deep Regressed Lens",
+    "ratio": "10% UP / 90% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_deepregressed_up30down70": {
+    "lumens": 4334,
+    "peak_cd": 1356,
+    "watts": 41,
+    "efficacy": 105.5,
+    "optic": "Deep Regressed Lens",
+    "ratio": "30% UP / 70% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_deepregressed_up50down50": {
+    "lumens": 4546,
+    "peak_cd": 1037,
+    "watts": 41,
+    "efficacy": 109.8,
+    "optic": "Deep Regressed Lens",
+    "ratio": "50% UP / 50% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_deepregressed_up70down30": {
+    "lumens": 4729,
+    "peak_cd": 1306,
+    "watts": 40,
+    "efficacy": 117.1,
+    "optic": "Deep Regressed Lens",
+    "ratio": "70% UP / 30% DOWN",
+    "length": "4FT"
+  },
+  "luna_4ft_deepregressed_up90down10": {
+    "lumens": 4793,
+    "peak_cd": 1679,
+    "watts": 41,
+    "efficacy": 117.5,
+    "optic": "Deep Regressed Lens",
+    "ratio": "90% UP / 10% DOWN",
+    "length": "4FT"
+  }
+}

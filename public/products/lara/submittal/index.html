@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LUXA · LARA — Submittal Sheet</title>
+<meta name="description" content="LUXA · LARA Architectural Linear Pendant submittal sheet — 2/4/8 ft lengths, 3-WATTselect × 5-CCTselect, directⒶIM up/down ratio, 0-10V dim to 1%, DampGuard IP40, 5-yr / 50K-hr · planoⒶRCH ECO." />
+<meta property="og:title" content="LUXA · LARA — Submittal Sheet" />
+<meta property="og:description" content="planoⒶRCH ECO architectural linear pendant · DLC Premium · continuⒶRUN joiner system · directⒶIM up/down ratio · 0-10V dim to 1%." />
+<meta property="og:type" content="website" />
+
+<!--
+  ALG SUBMITTAL · LUXA · LARA · v2 canonical (clean build 2026-05-23)
+  ===================================================================================
+  4-page letter-portrait submittal · spec-grade PDF via File → Print → Save as PDF.
+  Mirrors submittal_solstice.html canonical pattern (single-image hero · CFG-SUB-2).
+
+  ENTRY: opened from PDP §9 Configurator "Generate Submittal PDF" CTA. Query params
+  describe the user's resolved configuration; JS at the bottom auto-fills the
+  catalog number, ordering breakdown, quick specs, photometric polar, hero photo,
+  and dimension-row highlight across all 4 pages.
+
+  Example query: ?length=4&finish=W&wattage=40&cct=5000&em=EM24&joiner=LJ
+
+  CANONICAL RULES SATISFIED:
+   · CFG-SUB-1 v2 — editable Catalog Number with snapshot-then-rederive sweep
+   · CFG-SUB-2 — Page 1 hero is ONE image (single submittalHeroAperture · no dual grid)
+   · CFG-WARR-1 v1.1 — Lara is planoⒶRCH ECO tier · 5-yr · 50K-hr · "Limited Liability" SINGULAR
+   · CFG-CERT-1 — Lara badges: DLC Premium · UL/cUL · RoHS · IP40 DampGuard (4-badge default)
+   · CFG-COPY-3 — Illuminator-density · no wordy callouts
+   · CFG-COPY-4/-5/-6 — no competitor names, no vendor MPNs, no factory ID
+   · CFG-INV-1 — no inventory counts shown
+   · CFG-TITLE-1 — title uses "LUXA · LARA — Submittal Sheet" middot pattern
+   · CFG-CHROME-2 — no .mockup-banner, no "v# MOCKUP" titles, no dev artifacts
+
+  LARA SCOPE (per knowledge pack · Zoho-verified · ground truth):
+   · 3 lengths: 2 ft / 4 ft / 8 ft
+   · 3-WATTselect per length (★ = peak default per datasheet):
+       LUXA2  10 / 15 / 20W ★
+       LUXA4  23 / 30 / 40W ★
+       LUXA8  60 / 70 / 80W ★
+   · 5-CCTselect 5-DIP · 2700 / 3000 / 3500 / 4000 / 5000K ★
+   · CRI > 80 · 0-10V dim to 1% · 120-277V Universal
+   · directⒶIM up/down ratio · field-tunable
+   · DampGuard IP40 · L90 @ 50,000 hrs
+   · 5-Year · 50,000 Hrs · Limited Liability · planoⒶRCH ECO tier
+   · SKU pattern: LUXA{N}-{watt}{ratio}{cct_short}-5CSU/LARA/{finish}
+       N = 2 | 4 | 8 · ratio = "3W" (3-WATTselect) · cct_short = "20" (5000K default)
+       finish = B (Black) | W (White)
+   · Default: LUXA4-3W40-5CSU/LARA/W
+-->
+
+<style>
+  /* ============= PRINT-OPTIMIZED CSS ============= */
+  @page {
+    size: letter portrait;
+    margin: 0.5in 0.6in;
+  }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white !important; padding: 0 !important; }
+    .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+    .page:last-of-type { page-break-after: auto; }
+  }
+
+  /* ============= TYPE + COLOR TOKENS ============= */
+  :root {
+    --brand-red: #F32740;
+    --ink: #0E0E10;
+    --ink-2: #2A2A2D;
+    --muted: #6B6B70;
+    --rule: #D8D6D2;
+    --rule-strong: #A6A4A0;
+    --tint: #F6F4F0;
+    --hi: #FFF6E5;
+    --tier-eco: #1F7A4B;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Lato', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.5pt;
+    line-height: 1.4;
+    background: #E8E6E2;
+  }
+  body { padding: 24px 12px; }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 24px;
+    padding: 0.55in 0.65in;
+    background: white;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  h1, h2, h3, h4 { font-family: 'Lato', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+  .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+
+  /* ============= PAGE HEADER (every page) ============= */
+  .submittal-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+  .submittal-head .brand-mark {
+    width: 28px; height: 28px; background: var(--brand-red);
+    display: inline-block;
+  }
+  .submittal-head .brand-name {
+    font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1;
+  }
+  .submittal-head .brand-sub {
+    font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .submittal-head .catalog-block { text-align: right; }
+  .submittal-head .catalog-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .submittal-head .catalog-number {
+    font-size: 11pt; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+    border: 1.5px solid var(--ink);
+    padding: 4px 10px; display: inline-block;
+    letter-spacing: 0.4pt;
+    outline: none;
+    min-width: 280px; max-width: 380px;
+    text-align: left;
+    cursor: text;
+    word-break: break-all;
+  }
+  .submittal-head .catalog-number:hover { background: var(--hi); }
+  .submittal-head .catalog-number:focus { background: var(--hi); border-color: var(--brand-red); }
+  .catalog-number-hint {
+    display: block;
+    font-size: 6.5pt; color: var(--muted); letter-spacing: 0.4pt;
+    margin-top: 3px; text-transform: uppercase;
+  }
+  @media print { .catalog-number-hint { display: none; } }
+
+  /* ============= PROJECT INFO FORM ============= */
+  .project-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule-strong);
+    margin-bottom: 14px;
+  }
+  .pi-cell {
+    padding: 6px 9px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    min-height: 38px;
+  }
+  .pi-cell:nth-child(3n) { border-right: none; }
+  .pi-cell:nth-child(n+4) { border-bottom: none; }
+  .pi-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .pi-value {
+    border-bottom: 1px dotted var(--rule-strong); min-height: 14px; padding-top: 2px;
+    font-family: 'JetBrains Mono', monospace; font-size: 8pt;
+    word-break: break-all;
+  }
+
+  /* ============= PRODUCT TITLE BAND ============= */
+  .product-title { margin: 14px 0 14px; }
+  .product-title h1 { font-size: 22pt; line-height: 1; margin: 0; display: inline-block; }
+  .product-title .tier-badge {
+    display: inline-block;
+    margin-left: 12px;
+    padding: 4px 10px;
+    background: var(--tier-eco); color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt; font-weight: 700;
+    letter-spacing: 1.2pt;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+  .product-title .tagline {
+    font-size: 9.5pt; color: var(--ink-2); margin-top: 6px; line-height: 1.35;
+  }
+
+  /* ============= HERO + QUICK SPECS GRID ============= */
+  .at-a-glance {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .hero-img {
+    background: var(--tint);
+    border: 1px solid var(--rule);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; padding: 14px;
+  }
+  .hero-img img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; margin: 0 auto; }
+  .hero-img.finish-black img { filter: brightness(0.18) contrast(1.3) saturate(0.4) drop-shadow(0 2px 4px rgba(0,0,0,0.25)); }
+
+  .qs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .qs-cell {
+    border: 1px solid var(--rule-strong);
+    padding: 8px 10px;
+    min-height: 56px;
+  }
+  .qs-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 3px;
+  }
+  .qs-value {
+    font-size: 14pt; font-weight: 700; line-height: 1.05;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .qs-unit {
+    font-size: 8pt; font-weight: 400; color: var(--muted); margin-left: 2px;
+    font-family: 'Lato', sans-serif;
+  }
+
+  /* ============= STOCK PILL ============= */
+  .qs-pill, .mto-pill, .wb-pill {
+    display: inline-block;
+    font-size: 7.5pt; font-weight: 700;
+    padding: 3px 8px; letter-spacing: 0.5pt;
+    text-transform: uppercase;
+    margin-left: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .qs-pill { background: #E5F4EC; color: #1F7A4B; border: 1px solid #58C998; }
+  .mto-pill { background: #FFF1E0; color: #B85C00; border: 1px solid #FFB562; }
+  .wb-pill { background: #EAF1FF; color: #1A4FA8; border: 1px solid #7FB6FF; }
+
+  /* ============= FEATURE BAND ============= */
+  .feature-band {
+    background: var(--ink); color: white;
+    padding: 8px 14px;
+    display: flex; gap: 18px; align-items: center;
+    margin-bottom: 12px;
+  }
+  .feature-band .fb-pill {
+    background: var(--brand-red); color: white;
+    font-size: 7pt; font-weight: 700; letter-spacing: 1.2pt;
+    padding: 3px 7px; text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .feature-band .fb-features { font-size: 9pt; line-height: 1.3; }
+  .feature-band .fb-features strong { font-weight: 700; }
+
+  /* ============= APPROVAL SIGNATURE BLOCK ============= */
+  .approval-block {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--rule-strong);
+  }
+  .approval-cell {
+    display: grid; grid-template-columns: max-content 1fr;
+    gap: 8px; align-items: end;
+    font-size: 8pt;
+  }
+  .approval-line { border-bottom: 1px solid var(--ink); height: 16px; }
+
+  /* ============= SECTION HEAD (page 2+) ============= */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 4px; margin-bottom: 10px; margin-top: 4px;
+  }
+  .section-head h2 { font-size: 14pt; line-height: 1; }
+  .section-head .section-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= SPEC TABLE ============= */
+  .spec-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  .spec-table th, .spec-table td {
+    text-align: left; padding: 5px 8px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .spec-table .spec-section-head td {
+    background: var(--tint);
+    font-weight: 700; font-size: 9pt; letter-spacing: 0.3pt;
+    border-bottom: 1px solid var(--rule-strong);
+    padding: 6px 8px;
+  }
+  .spec-table .spec-attr { width: 30%; font-weight: 600; color: var(--ink-2); }
+  .spec-table .spec-val { width: 70%; }
+
+  /* ============= ORDERING CODE MATRIX ============= */
+  .order-code {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .order-segment {
+    background: var(--tint);
+    border: 1px solid var(--rule-strong);
+    padding: 8px 6px;
+    text-align: center;
+    min-height: 52px;
+  }
+  .order-segment.active {
+    background: var(--brand-red); color: white;
+    border-color: var(--brand-red);
+  }
+  .order-seg-label {
+    font-size: 6.5pt; letter-spacing: 1pt;
+    text-transform: uppercase; margin-bottom: 4px;
+    opacity: 0.85;
+  }
+  .order-seg-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10pt; font-weight: 700;
+  }
+  .order-matrix { width: 100%; border-collapse: collapse; font-size: 7.5pt; }
+  .order-matrix th, .order-matrix td {
+    border: 1px solid var(--rule);
+    padding: 4px 6px; text-align: left; vertical-align: top;
+  }
+  .order-matrix th {
+    background: var(--ink); color: white;
+    font-size: 7pt; letter-spacing: 1pt;
+    text-transform: uppercase;
+  }
+  .order-matrix .code {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; width: 150px;
+  }
+  .order-matrix tr.active-row td { background: var(--hi); }
+  .order-matrix tr.acc-selected td {
+    background: var(--hi);
+    box-shadow: inset 3px 0 0 var(--brand-red);
+  }
+
+  /* ============= DIMENSIONS LAYOUT ============= */
+  .dim-diagram {
+    border: 1px solid var(--rule-strong);
+    padding: 16px;
+    margin-bottom: 12px;
+    background: white;
+  }
+  .dim-diagram svg { width: 100%; height: auto; display: block; }
+  .dim-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .dim-view {
+    border: 1px solid var(--rule-strong);
+    background: white;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    padding: 6px;
+  }
+  .dim-view svg { width: 100%; height: 100%; }
+  .dim-view-label {
+    position: absolute; top: 4px; left: 6px;
+    font-size: 7pt; letter-spacing: 1pt; color: var(--brand-red);
+    text-transform: uppercase; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .dim-view-label.is-active { color: white; background: var(--brand-red); padding: 1px 5px; }
+  .dim-view.is-active { border-color: var(--brand-red); border-width: 2px; }
+
+  /* ============= PHOTOMETRIC DATA ============= */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .photo-polar {
+    border: 1px solid var(--rule-strong);
+    padding: 10px;
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    background: white;
+    overflow: hidden;
+  }
+  .photo-polar img, .photo-polar svg { width: 100%; height: 100%; object-fit: contain; }
+  .photo-summary {
+    border: 1px solid var(--rule);
+    display: flex; flex-direction: column;
+  }
+  .photo-summary table { width: 100%; border-collapse: collapse; font-size: 8pt; }
+  .photo-summary table td {
+    padding: 5px 9px; border-bottom: 1px solid var(--rule);
+  }
+  .photo-summary table tr:last-child td { border-bottom: none; }
+  .photo-summary td:first-child { color: var(--muted); }
+  .photo-summary td:last-child {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; text-align: right;
+  }
+
+  /* ============= CERTIFICATIONS ============= */
+  .certs {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 10px 12px;
+    border: 1px solid var(--rule);
+    margin-top: 10px;
+    align-items: center;
+  }
+  .cert-badge-svg { height: 30px; width: auto; flex-shrink: 0; }
+
+  /* ============= QUICK LINKS ============= */
+  .quick-links {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-top: 12px;
+  }
+  .quick-link {
+    border: 1px solid var(--rule-strong);
+    padding: 8px 10px;
+    text-decoration: none;
+    color: var(--ink);
+    display: block;
+    background: white;
+  }
+  .quick-link:hover { background: var(--hi); border-color: var(--brand-red); }
+  .ql-label {
+    font-size: 6.5pt; letter-spacing: 1pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 3px;
+  }
+  .ql-name {
+    font-family: 'JetBrains Mono', monospace; font-size: 8pt; font-weight: 700;
+    color: var(--brand-red);
+  }
+
+  /* ============= PAGE FOOTER ============= */
+  .page-foot {
+    position: absolute;
+    bottom: 0.4in; left: 0.65in; right: 0.65in;
+    display: flex; justify-content: space-between;
+    font-size: 7pt; color: var(--muted);
+    padding-top: 6px;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ============= NO-PRINT CONTROLS ============= */
+  .controls {
+    max-width: 8.5in; margin: 0 auto 18px;
+    background: white; padding: 14px 18px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  }
+  .controls .ctrl-label {
+    font-size: 8pt; font-weight: 600; color: var(--muted);
+    letter-spacing: 0.5pt; text-transform: uppercase;
+  }
+  .controls .ctrl-value {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 10pt;
+    word-break: break-all;
+  }
+  .controls button {
+    background: var(--brand-red); color: white;
+    border: none; padding: 9px 18px;
+    font-family: inherit; font-weight: 700; font-size: 9pt;
+    letter-spacing: 0.5pt; text-transform: uppercase;
+    cursor: pointer;
+    margin-left: auto;
+  }
+  .controls button:hover { background: #d61f37; }
+
+/* CFG-TYPE-1 · Lato lock — Shopify global cascades Cormorant onto inline Lato.
+   This !important rule pins Lato on h1/h2 for this collection's PDP body class. */
+body.planoarch-pdp h1,
+body.planoarch-pdp h2 {
+  font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+}
+
+/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+body { overflow-x: hidden; }
+</style>
+</head>
+<body>
+
+<!-- ============= NO-PRINT CONTROLS BAR ============= -->
+<div class="controls no-print">
+  <div>
+    <div class="ctrl-label">Configured SKU</div>
+    <div class="ctrl-value" id="liveSku">LUXA4-3W40-5CSU/LARA/W</div>
+  </div>
+  <div>
+    <div class="ctrl-label">Ship Tier</div>
+    <div class="ctrl-value"><span id="stockPill" class="qs-pill">QuickShip · 3-5 day</span></div>
+  </div>
+  <div>
+    <div class="ctrl-label">Generated</div>
+    <div class="ctrl-value" id="liveDate" style="font-size:9pt; font-weight:400;">&mdash;</div>
+  </div>
+  <button onclick="window.print()">Save as PDF &rarr;</button>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — AT-A-GLANCE                                          -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+  <!-- HEADER -->
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum" contenteditable="true" spellcheck="false" title="Click to edit · session-only · sweeps every visible instance">LUXA4-3W40-5CSU/LARA/W</div>
+      <span class="catalog-number-hint">Click to relabel for project</span>
+    </div>
+  </div>
+
+  <!-- PROJECT INFO FORM -->
+  <div class="project-info">
+    <div class="pi-cell"><div class="pi-label">Project</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Type</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Catalog #</div><div class="pi-value" id="piCatNum">LUXA4-3W40-5CSU/LARA/W</div></div>
+    <div class="pi-cell"><div class="pi-label">Prepared By</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Notes</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Date</div><div class="pi-value"></div></div>
+  </div>
+
+  <!-- PRODUCT TITLE -->
+  <div class="product-title">
+    <h1>LUXA · LARA</h1>
+    <span class="tier-badge">plano<span style="font-weight:700;">Ⓐ</span>RCH ECO</span>
+    <div class="tagline" id="productTagline"><strong>Architectural Linear Pendant</strong> &middot; <strong>DLC Premium</strong> &middot; <strong>continu<span style="font-weight:700;">Ⓐ</span>RUN</strong> joiner system &middot; Three lengths (2 / 4 / 8 ft) &middot; 3-WATTselect &times; 5-CCTselect dip (2700K&ndash;5000K) &middot; <strong>direct<span style="font-weight:700;">Ⓐ</span>IM</strong> field-tunable up/down ratio &middot; 0-10V dim to 1% &middot; DampGuard IP40 &middot; 5-yr &middot; L90 &commat; 50,000 hrs &middot; Made in USA.</div>
+  </div>
+
+  <!-- HERO + QUICK SPECS -->
+  <div class="at-a-glance">
+    <div class="hero-img" id="heroFrame">
+      <!-- Single hero photo per CFG-SUB-2 (NEVER dual grid).
+           JS at end of file picks the correct photo per URL params:
+             length=2 → assets/hero/lara-2ft.webp
+             length=4 + finish=W → assets/hero/lara-4ft-white.webp
+             length=4 + finish=B → assets/hero/lara-4ft-black.webp
+             length=8 → assets/hero/lara-8ft.webp
+           ON 404: img.onerror falls through to lara-4ft-white.webp.
+           For 2FT/8FT when finish=B, CSS filter renders as black. -->
+      <img id="submittalHeroAperture"
+           src="assets/hero/lara-4ft-white.webp"
+           alt="LARA at selected length and finish" />
+    </div>
+    <div class="qs-grid">
+      <div class="qs-cell">
+        <div class="qs-label">Lumens</div>
+        <div class="qs-value" id="qsLumens">4,800<span class="qs-unit">lm @ 40W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Wattage</div>
+        <div class="qs-value" id="qsWatts">40<span class="qs-unit">W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CCT</div>
+        <div class="qs-value" id="qsCct">5000<span class="qs-unit">K</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Efficacy</div>
+        <div class="qs-value" id="qsEfficacy">120<span class="qs-unit">LM/W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CRI</div>
+        <div class="qs-value">&gt;80<span class="qs-unit">SPEC-GRADE</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Distribution</div>
+        <div class="qs-value" id="qsBeam">direct<span style="font-weight:700;">Ⓐ</span>IM<span class="qs-unit">UP/DOWN RATIO</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Voltage</div>
+        <div class="qs-value">120-277<span class="qs-unit">V</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Dimming</div>
+        <div class="qs-value" id="qsDim" style="font-size:11pt;">0-10V<span class="qs-unit">DIM TO 1%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE BAND -->
+  <div class="feature-band">
+    <div class="fb-pill">continu<span style="font-weight:700;">Ⓐ</span>RUN</div>
+    <div class="fb-features">
+      <strong>2 / 4 / 8 ft modular joiner system</strong> &middot;
+      <strong>direct<span style="font-weight:700;">Ⓐ</span>IM up/down ratio</strong> &middot;
+      <strong>3-WATTselect &times; 5-CCTselect</strong> &middot;
+      <strong>0-10V dim to 1%</strong> &middot;
+      <strong>DampGuard IP40</strong> &middot;
+      <strong>Made in USA</strong>
+    </div>
+  </div>
+
+  <!-- AT-A-GLANCE SUMMARY (4-5 sentence product summary per playbook) -->
+  <div style="font-size: 9pt; line-height: 1.5; color: var(--ink-2); margin-top: 8px;">
+    <strong>LARA</strong> is the plano<span style="font-weight:700;">Ⓐ</span>RCH ECO architectural linear pendant for office, healthcare, retail, foodservice, hospitality, and education ceilings &mdash; specified as a single SKU and field-tuned at install for both <strong>watt ladder</strong> (3-WATTselect DIP) and <strong>color temperature</strong> (5-CCTselect DIP 2700K-5000K). The <strong>direct<span style="font-weight:700;">Ⓐ</span>IM</strong> mechanical control lets the installer dial the up/down ratio in the field, so a single fixture spec covers indirect, semi-direct, and direct ceiling washes without forking the catalog. The <strong>continu<span style="font-weight:700;">Ⓐ</span>RUN</strong> joiner system threads 2 ft / 4 ft / 8 ft modules into straight runs, L-corners (90&deg;), T-branches (3-way), and X-crosses (4-way) for layout-driven continuous rows. <strong>0-10V dimming to 1%</strong>, <strong>L90 &commat; 50,000 hrs</strong>, <strong>DampGuard IP40</strong>, <strong>Made in USA</strong>, and a 5-year limited liability warranty round out the package.
+  </div>
+
+  <!-- APPROVAL BLOCK -->
+  <div class="approval-block">
+    <div class="approval-cell">
+      <span><strong>Approved by</strong></span>
+      <div class="approval-line"></div>
+    </div>
+    <div class="approval-cell">
+      <span><strong>Date</strong></span>
+      <div class="approval-line"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LUXA LARA submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. <span id="revDate">2026-05</span> &middot; Page 1 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — SPECIFICATIONS                                       -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum2">LUXA4-3W40-5CSU/LARA/W</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Specifications</h2>
+    <div class="section-eyebrow" id="specsEyebrow">LUXA &middot; LARA &middot; architectural linear pendant &middot; continu<span style="font-weight:700;">Ⓐ</span>RUN</div>
+  </div>
+
+  <table class="spec-table">
+    <tbody>
+      <tr class="spec-section-head"><td colspan="2">Construction</td></tr>
+      <tr><td class="spec-attr">Housing</td><td class="spec-val"><strong>Iron housing</strong> &middot; powder-coat finish &middot; Black or White &middot; linear extrusion sized to length module (2 / 4 / 8 ft)</td></tr>
+      <tr><td class="spec-attr">Joiner System</td><td class="spec-val"><strong>continu<span style="font-weight:700;">Ⓐ</span>RUN</strong> mechanical joiner &middot; SLJ Straight / LJ L-Corner 90&deg; / TJ T-Branch 3-Way / XJ X-Cross 4-Way &middot; field-assembled rows with shared driver wiring</td></tr>
+      <tr><td class="spec-attr">End Cap</td><td class="spec-val">Integrated end cap matched to housing finish &middot; ships installed on first &amp; last module</td></tr>
+      <tr><td class="spec-attr">Length Modules</td><td class="spec-val" id="msLength"><strong>4 ft</strong> &middot; default of 3-length family (2 / 4 / 8 ft) &middot; modules combine via continu<span style="font-weight:700;">Ⓐ</span>RUN for any run length</td></tr>
+      <tr><td class="spec-attr">Finish</td><td class="spec-val" id="msFinish"><strong>White (W)</strong> &middot; Black (B) optional &middot; matte powder-coat &middot; matched joiners + accessories</td></tr>
+      <tr><td class="spec-attr">Net Weight</td><td class="spec-val" id="msWeight">~6.8 lb (LUXA4)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Optics</td></tr>
+      <tr><td class="spec-attr">Diffuser</td><td class="spec-val"><strong>Frosted PC diffuser</strong> &middot; uniform luminance &middot; glare-controlled &middot; full length of module</td></tr>
+      <tr><td class="spec-attr">Distribution</td><td class="spec-val"><strong>direct<span style="font-weight:700;">Ⓐ</span>IM</strong> field-tunable up/down ratio &middot; mechanical control sets indirect, semi-direct, or direct cast at install &middot; single SKU covers all three modes</td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val"><strong>CRI &gt; 80</strong> spec-grade &middot; consistent across all 5 CCTs (2700 / 3000 / 3500 / 4000 / 5000K)</td></tr>
+      <tr><td class="spec-attr">CCT Options</td><td class="spec-val"><strong>5-CCTselect</strong> field-tunable: 2700K / 3000K / 3500K / 4000K / 5000K &middot; default 5000K &middot; 5-DIP set in-fixture</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Electrical</td></tr>
+      <tr><td class="spec-attr">Lumen Output</td><td class="spec-val" id="esLumens"><strong>2,760 / 3,600 / 4,800 lm</strong> @ 23 / 30 / 40W (LUXA4) &middot; per IESNA LM-79 at 5000K factory default</td></tr>
+      <tr><td class="spec-attr">Wattage</td><td class="spec-val" id="esWatts"><strong>3-WATTselect</strong> &middot; 23 / 30 / 40W (LUXA4) &middot; 3-position DIP &middot; default 40W ★</td></tr>
+      <tr><td class="spec-attr">Efficacy</td><td class="spec-val" id="esLpw">Up to <strong>120 LM/W</strong> (LUXA4 @ 40W) &middot; family-best on LUXA4 watt ladder</td></tr>
+      <tr><td class="spec-attr">Voltage</td><td class="spec-val"><strong>120-277V Universal</strong> &middot; auto-ranging input</td></tr>
+      <tr><td class="spec-attr">Dimming</td><td class="spec-val" id="esDim"><strong>0-10V dim to 1%</strong> &middot; non-flicker constant-current driver &middot; compatible with standard 0-10V wall stations and BMS control circuits</td></tr>
+      <tr><td class="spec-attr">Power Factor</td><td class="spec-val">&gt; 0.9</td></tr>
+      <tr><td class="spec-attr">THD</td><td class="spec-val">&lt; 20%</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Photometric &amp; Performance</td></tr>
+      <tr><td class="spec-attr">Test Standards</td><td class="spec-val">LM-79 photometric &middot; LM-80 LED lifetime</td></tr>
+      <tr><td class="spec-attr">Lumen Maintenance</td><td class="spec-val"><strong>L90 &commat; 50,000 hrs</strong> &middot; LED color shift warrantied &lt; 180K over warranty period</td></tr>
+      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">-20&deg;C to 40&deg;C (-4&deg;F to 104&deg;F) ambient</td></tr>
+      <tr><td class="spec-attr">Ingress / Location</td><td class="spec-val"><strong>DampGuard IP40</strong> &middot; UL Damp Location &middot; suitable for indoor pendant + surface applications</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val"><strong>5-Year limited &middot; 50,000-hour rated life</strong> &middot; Limited Liability &middot; plano<span style="font-weight:700;">Ⓐ</span>RCH ECO tier</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Certifications &amp; Compliance</td></tr>
+      <tr><td class="spec-attr">DLC</td><td class="spec-val"><strong>DLC Premium</strong> qualified &middot; verify utility-specific rebate tier via Rebate Center per <strong>CFG-RBT-2</strong> at <code>archipelagolighting.com/pages/rebate-center</code></td></tr>
+      <tr><td class="spec-attr">UL</td><td class="spec-val"><strong>UL / cUL Listed</strong> &middot; Damp Location &middot; US + CA</td></tr>
+      <tr><td class="spec-attr">RoHS</td><td class="spec-val"><strong>RoHS Compliant</strong></td></tr>
+      <tr><td class="spec-attr">IP Rating</td><td class="spec-val"><strong>IP40 DampGuard</strong></td></tr>
+      <tr><td class="spec-attr">Origin</td><td class="spec-val"><strong>Made in USA</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 10px; font-size: 7.5pt; color: var(--muted); line-height: 1.4;">
+    <strong>Spec Footnotes</strong> &middot; Lumens published per IESNA LM-79 measured testing at 5000K factory default. &plusmn;5% lumen shift across the 5-CCT range. direct<span style="font-weight:700;">Ⓐ</span>IM up/down ratio is mechanically tuned at install and does not require a separate SKU for indirect/semi-direct/direct modes. DLC Premium tier verification per CFG-RBT-2 via Rebate Center is required before any rebate claim is submitted. 5-year / 50,000-hour limited liability warranty per plano<span style="font-weight:700;">Ⓐ</span>RCH ECO tier &middot; standard product replacement only &middot; full warranty statement at archipelagolighting.com/warranty.
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LUXA LARA submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 2 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 3 — DIMENSIONS & MOUNTING                                -->
+<!-- ============================================================ -->
+<div class="page" id="page-3">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum3">LUXA4-3W40-5CSU/LARA/W</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Dimensions &amp; Mounting</h2>
+    <div class="section-eyebrow">3-length module family &middot; continu<span style="font-weight:700;">Ⓐ</span>RUN joiner system &middot; pendant + surface mount</div>
+  </div>
+
+  <!-- DIMENSION DIAGRAM · 2/4/8 ft drawn to scale with callouts -->
+  <div class="dim-diagram">
+    <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" aria-label="LARA 2/4/8 ft length comparison drawn to scale">
+      <defs>
+        <linearGradient id="larBody" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#FAFAFC"/>
+          <stop offset="100%" stop-color="#D8D8DC"/>
+        </linearGradient>
+      </defs>
+
+      <!-- 2 FT module · 80px wide · positioned upper-left -->
+      <g id="dimDiag2">
+        <rect x="60" y="36" width="80" height="14" fill="url(#larBody)" stroke="#222" stroke-width="0.9"/>
+        <rect x="60" y="36" width="80" height="3" fill="#1A1A1C"/>
+        <text x="100" y="28" text-anchor="middle" fill="#444" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">LUXA2 · 2 ft</text>
+        <line x1="60" y1="60" x2="140" y2="60" stroke="#888" stroke-width="0.5"/>
+        <line x1="60" y1="56" x2="60" y2="64" stroke="#888" stroke-width="0.5"/>
+        <line x1="140" y1="56" x2="140" y2="64" stroke="#888" stroke-width="0.5"/>
+        <text x="100" y="74" text-anchor="middle" fill="#F32740" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">24.00&Prime;</text>
+        <text x="100" y="84" text-anchor="middle" fill="#888" font-family="JetBrains Mono, monospace" font-size="6">3.4 lb · 10-20W</text>
+      </g>
+
+      <!-- 4 FT module · 160px wide -->
+      <g id="dimDiag4">
+        <rect x="60" y="116" width="160" height="14" fill="url(#larBody)" stroke="#F32740" stroke-width="1.2"/>
+        <rect x="60" y="116" width="160" height="3" fill="#1A1A1C"/>
+        <text x="140" y="108" text-anchor="middle" fill="#F32740" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">LUXA4 · 4 ft ★ DEFAULT</text>
+        <line x1="60" y1="140" x2="220" y2="140" stroke="#888" stroke-width="0.5"/>
+        <line x1="60" y1="136" x2="60" y2="144" stroke="#888" stroke-width="0.5"/>
+        <line x1="220" y1="136" x2="220" y2="144" stroke="#888" stroke-width="0.5"/>
+        <text x="140" y="154" text-anchor="middle" fill="#F32740" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">48.00&Prime;</text>
+        <text x="140" y="164" text-anchor="middle" fill="#888" font-family="JetBrains Mono, monospace" font-size="6">6.8 lb · 23-40W</text>
+      </g>
+
+      <!-- 8 FT module · 320px wide -->
+      <g id="dimDiag8">
+        <rect x="60" y="196" width="320" height="14" fill="url(#larBody)" stroke="#222" stroke-width="0.9"/>
+        <rect x="60" y="196" width="320" height="3" fill="#1A1A1C"/>
+        <text x="220" y="188" text-anchor="middle" fill="#444" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">LUXA8 · 8 ft</text>
+        <line x1="60" y1="220" x2="380" y2="220" stroke="#888" stroke-width="0.5"/>
+        <line x1="60" y1="216" x2="60" y2="224" stroke="#888" stroke-width="0.5"/>
+        <line x1="380" y1="216" x2="380" y2="224" stroke="#888" stroke-width="0.5"/>
+        <text x="220" y="234" text-anchor="middle" fill="#444" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">96.00&Prime;</text>
+        <text x="220" y="244" text-anchor="middle" fill="#888" font-family="JetBrains Mono, monospace" font-size="6">13.4 lb · 60-80W</text>
+      </g>
+
+      <!-- Cross-section profile callout · upper-right -->
+      <g>
+        <text x="500" y="40" fill="#444" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">CROSS-SECTION</text>
+        <rect x="500" y="50" width="120" height="40" fill="url(#larBody)" stroke="#222" stroke-width="0.9"/>
+        <rect x="500" y="50" width="120" height="8" fill="#1A1A1C"/>
+        <line x1="500" y1="100" x2="620" y2="100" stroke="#888" stroke-width="0.5"/>
+        <text x="560" y="112" text-anchor="middle" fill="#F32740" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">W 3.00&Prime;</text>
+        <line x1="638" y1="50" x2="638" y2="90" stroke="#888" stroke-width="0.5"/>
+        <text x="650" y="74" fill="#F32740" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">H 1.00&Prime;</text>
+        <text x="560" y="134" text-anchor="middle" fill="#888" font-family="JetBrains Mono, monospace" font-size="6">Iron · Frosted PC</text>
+        <text x="560" y="144" text-anchor="middle" fill="#888" font-family="JetBrains Mono, monospace" font-size="6">direct<tspan font-weight="800">Ⓐ</tspan>IM up/down</text>
+      </g>
+
+      <!-- continuⒶRUN illustration · lower-right -->
+      <g>
+        <text x="500" y="170" fill="#444" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">continu<tspan font-weight="800">Ⓐ</tspan>RUN</text>
+        <rect x="500" y="180" width="50" height="8" fill="url(#larBody)" stroke="#222" stroke-width="0.8"/>
+        <rect x="555" y="180" width="50" height="8" fill="url(#larBody)" stroke="#222" stroke-width="0.8"/>
+        <rect x="610" y="180" width="40" height="8" fill="url(#larBody)" stroke="#222" stroke-width="0.8"/>
+        <circle cx="552.5" cy="184" r="2" fill="#F32740"/>
+        <circle cx="607.5" cy="184" r="2" fill="#F32740"/>
+        <text x="575" y="208" text-anchor="middle" fill="#888" font-family="JetBrains Mono, monospace" font-size="6">SLJ · LJ · TJ · XJ joiners</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- LENGTH DIMENSION TABLE -->
+  <table class="spec-table">
+    <thead>
+      <tr class="spec-section-head">
+        <td>Length</td>
+        <td>Module L</td>
+        <td>Width &times; Height</td>
+        <td>Net Weight</td>
+        <td>Watt / Lumen Ladder</td>
+        <td>Efficacy (peak)</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="dimRow2"><td class="spec-attr">2 ft</td><td>24.00&Prime;</td><td>3.00&Prime; &times; 1.00&Prime;</td><td>~3.4 lb</td><td>10 / 15 / 20W · 1,200 / 1,800 / 2,400 lm</td><td>120 LM/W</td></tr>
+      <tr id="dimRow4"><td class="spec-attr">4 ft ★</td><td>48.00&Prime;</td><td>3.00&Prime; &times; 1.00&Prime;</td><td>~6.8 lb</td><td>23 / 30 / 40W · 2,760 / 3,600 / 4,800 lm</td><td>120 LM/W</td></tr>
+      <tr id="dimRow8"><td class="spec-attr">8 ft</td><td>96.00&Prime;</td><td>3.00&Prime; &times; 1.00&Prime;</td><td>~13.4 lb</td><td>60 / 70 / 80W · 7,200 / 8,400 / 9,600 lm</td><td>120 LM/W</td></tr>
+    </tbody>
+  </table>
+
+  <!-- MOUNTING OPTIONS -->
+  <div style="margin-top: 14px;">
+    <table class="spec-table">
+      <tbody>
+        <tr class="spec-section-head"><td colspan="2">Mounting Options &middot; Pendant + Surface</td></tr>
+        <tr><td class="spec-attr">Non-Power Canopy</td><td class="spec-val"><strong>LUXA-LARA1/NPC/{B|W}</strong> &middot; Non-Power Suspension Canopy &middot; suspension only &middot; power threaded through joiner system from end-feed module &middot; finish matches housing</td></tr>
+        <tr><td class="spec-attr">Power Canopy</td><td class="spec-val"><strong>LUXA-LARA1/PC/{B|W}</strong> &middot; Power Suspension Canopy &middot; feeds power + suspension at any module &middot; eliminates separate J-Box drop</td></tr>
+        <tr><td class="spec-attr">Surface Mount</td><td class="spec-val"><strong>LUXA-LARA1/SMC/{B|W}</strong> &middot; Surface Mount Canopy &middot; ceiling-tight install &middot; no suspension drop &middot; finish matches housing</td></tr>
+        <tr><td class="spec-attr">Suspension Hardware</td><td class="spec-val">Aircraft cable &middot; field-cut to length &middot; ships paired with canopy</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- JOINER SYSTEM -->
+  <div style="margin-top: 14px;">
+    <table class="spec-table">
+      <tbody>
+        <tr class="spec-section-head"><td colspan="2">continu<span style="font-weight:700;">Ⓐ</span>RUN Joiner System</td></tr>
+        <tr><td class="spec-attr">SLJ &middot; Straight</td><td class="spec-val"><strong>LUXA-LARA1/NL-SLJ</strong> &middot; Straight in-line joiner &middot; mates two modules end-to-end for continuous straight run &middot; shared power</td></tr>
+        <tr><td class="spec-attr">LJ &middot; L-Corner 90&deg;</td><td class="spec-val"><strong>LUXA-LARA1/NL-LJ/W</strong> (or /B) &middot; L-Corner 90&deg; joiner &middot; turns run at right angle &middot; finish matches housing</td></tr>
+        <tr><td class="spec-attr">TJ &middot; T-Branch 3-Way</td><td class="spec-val"><strong>LUXA-LARA1/NL-TJ/W</strong> (or /B) &middot; T-Branch 3-way joiner &middot; branches run into perpendicular module</td></tr>
+        <tr><td class="spec-attr">XJ &middot; X-Cross 4-Way</td><td class="spec-val"><strong>LUXA-LARA1/NL-XJ/W</strong> (or /B) &middot; X-Cross 4-way joiner &middot; intersects four module legs &middot; layout-driven grids</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LUXA LARA submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 3 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 4 — ORDERING CODE, PHOTOMETRICS & QUICK LINKS            -->
+<!-- ============================================================ -->
+<div class="page" id="page-4">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum4">LUXA4-3W40-5CSU/LARA/W</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Ordering Information</h2>
+    <div class="section-eyebrow">Configure your catalog number</div>
+  </div>
+
+  <!-- ORDERING CODE VISUAL BREAKDOWN · 5 segments -->
+  <div class="order-code">
+    <div class="order-segment active"><div class="order-seg-label">Length</div><div class="order-seg-value" id="ocLength">LUXA4</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Watt Code</div><div class="order-seg-value" id="ocWatt">3W40</div></div>
+    <div class="order-segment active"><div class="order-seg-label">CCT Series</div><div class="order-seg-value">5CSU</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Family</div><div class="order-seg-value">LARA</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Finish</div><div class="order-seg-value" id="ocFinish">W</div></div>
+  </div>
+
+  <!-- ORDERING MATRIX -->
+  <table class="order-matrix">
+    <thead>
+      <tr><th style="width:22%">Segment</th><th>Available Codes</th></tr>
+    </thead>
+    <tbody>
+      <tr id="rowLength" class="active-row"><td class="code">LUXA2 / LUXA4 / LUXA8</td><td><strong>Length Module</strong> &middot; 2 ft / 4 ft / 8 ft &middot; default LUXA4 ★</td></tr>
+      <tr id="rowWatt"><td class="code">3W{10..80}</td><td><strong>3-WATTselect Code</strong> &middot; LUXA2 &rarr; 3W10 / 3W15 / 3W20 ★ &middot; LUXA4 &rarr; 3W23 / 3W30 / 3W40 ★ &middot; LUXA8 &rarr; 3W60 / 3W70 / 3W80 ★ &middot; 3-position DIP at install picks the rung</td></tr>
+      <tr id="rowCct" class="active-row"><td class="code">5CSU</td><td><strong>LARA 5-CCTselect</strong> series identifier &middot; always present on every LARA catalog SKU &middot; 5-DIP at install (2700 / 3000 / 3500 / 4000 / 5000K ★)</td></tr>
+      <tr id="rowFamily" class="active-row"><td class="code">/LARA</td><td><strong>Family identifier</strong> &middot; LARA sub-family within LUXA collection &middot; always present</td></tr>
+      <tr id="rowFinish"><td class="code">/W or /B</td><td><strong>Finish</strong> &middot; W = White (default) &middot; B = Black &middot; matte powder-coat &middot; joiners and canopies ordered to match</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ACCESSORIES MATRIX -->
+  <div style="margin-top: 14px;">
+    <table class="order-matrix">
+      <thead>
+        <tr><th style="width:22%">Accessory</th><th>Order Code</th></tr>
+      </thead>
+      <tbody>
+        <tr id="accRowSLJ"><td class="code">Joiner · Straight</td><td><strong>LUXA-LARA1/NL-SLJ</strong> &mdash; continu<span style="font-weight:700;">Ⓐ</span>RUN straight in-line joiner &middot; mates two modules end-to-end &middot; QuickShip</td></tr>
+        <tr id="accRowLJ"><td class="code">Joiner · L 90&deg;</td><td><strong>LUXA-LARA1/NL-LJ/W</strong> (or /B) &mdash; L-Corner 90&deg; joiner &middot; finish matches housing &middot; QuickShip</td></tr>
+        <tr id="accRowTJ"><td class="code">Joiner · T 3-Way</td><td><strong>LUXA-LARA1/NL-TJ/W</strong> (or /B) &mdash; T-Branch 3-way joiner &middot; finish matches housing &middot; QuickShip</td></tr>
+        <tr id="accRowXJ"><td class="code">Joiner · X 4-Way</td><td><strong>LUXA-LARA1/NL-XJ/W</strong> (or /B) &mdash; X-Cross 4-way joiner &middot; finish matches housing &middot; QuickShip</td></tr>
+        <tr id="accRowNPC"><td class="code">Canopy · Non-Power</td><td><strong>LUXA-LARA1/NPC/{B|W}</strong> &mdash; Non-Power Suspension Canopy &middot; suspension only &middot; QuickShip</td></tr>
+        <tr id="accRowPC"><td class="code">Canopy · Power</td><td><strong>LUXA-LARA1/PC/{B|W}</strong> &mdash; Power Suspension Canopy &middot; feeds power + suspension &middot; QuickShip</td></tr>
+        <tr id="accRowSMC"><td class="code">Canopy · Surface</td><td><strong>LUXA-LARA1/SMC/{B|W}</strong> &mdash; Surface Mount Canopy &middot; ceiling-tight install &middot; QuickShip</td></tr>
+        <tr id="accRowEM15"><td class="code">EM Battery 15W</td><td><strong>EM15-HMB/170DC</strong> &mdash; const<span style="font-weight:700;">Ⓐ</span>NT 15W Emergency Battery &middot; remote field-mount &middot; UL 924 &middot; 90-min egress per NFPA 101 &middot; QuickShip</td></tr>
+        <tr id="accRowEM24"><td class="code">EM Battery 24W</td><td><strong>EM24-JBM</strong> (canonical <strong>CRCU-EM24/JBM</strong>) &mdash; const<span style="font-weight:700;">Ⓐ</span>NT 24W Emergency Battery with J-Box &middot; recessed mount &middot; UL 924 &middot; QuickShip</td></tr>
+        <tr id="accRowMSP20"><td class="code">PIR · 8 ft mount</td><td><strong>MSP-20CM-ACS</strong> &mdash; contr<span style="font-weight:700;">Ⓐ</span>LS by <span style="font-weight:700;">Ⓐ</span>CS PIR Wide-Angle Sensor &middot; 8 ft mount &middot; Bluetooth Mesh &middot; DLC NLC qualified &middot; Made-to-Order</td></tr>
+        <tr id="accRowMSP40"><td class="code">PIR · 40 ft mount</td><td><strong>MSP-40CM-ACS</strong> &mdash; contr<span style="font-weight:700;">Ⓐ</span>LS by <span style="font-weight:700;">Ⓐ</span>CS PIR Wide-Angle Sensor &middot; 40 ft high-mount &middot; Bluetooth Mesh &middot; DLC NLC qualified &middot; Made-to-Order</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PHOTOMETRIC POLAR PLOT + SUMMARY -->
+  <div class="section-head" style="margin-top: 18px;">
+    <h2 style="font-size: 12pt;">Photometric Data</h2>
+    <div class="section-eyebrow" id="photoEyebrow">LM-79 measured · direct<span style="font-weight:700;">Ⓐ</span>IM up/down ratio · frosted PC diffuser</div>
+  </div>
+
+  <div class="photo-grid">
+    <div class="photo-polar">
+      <!-- Per-config polar plot · loaded from assets/photometrics/lara_luxa{N}_{w}w_{k}k.svg.
+           Pattern map (verified against on-disk assets):
+             LUXA2 watts: 10 / 15 / 20
+             LUXA4 watts: 23 / 30 / 40
+             LUXA8 watts: 60 / 70 / 80
+             CCTs: 2700 / 3000 / 3500 / 4000 / 5000
+           ON 404 the IMG.onerror swaps to a fallback message div. -->
+      <img id="submittalPhotoPolar"
+           src="assets/photometrics/lara_luxa4_40w_5000k.svg"
+           alt="LARA polar candela distribution · selected length/wattage/CCT" />
+      <div id="submittalPhotoPolarFallback"
+           style="display:none; color:#888; font-size:8pt; text-align:center; padding:24px;">
+        Polar plot SVG unavailable for the selected configuration.<br/>
+        Reference IES file listed in the photo summary table.
+      </div>
+    </div>
+
+    <div class="photo-summary">
+      <table>
+        <tr><td>Distribution</td><td id="photoDist">direct<span style="font-weight:700;">Ⓐ</span>IM up/down</td></tr>
+        <tr><td>Peak Candela</td><td id="photoPeak">1,536 cd @ 0&deg; nadir</td></tr>
+        <tr><td>Total Lumens</td><td id="photoLumens">4,800 lm</td></tr>
+        <tr><td>Efficacy</td><td id="photoEff">120 lm/W</td></tr>
+        <tr><td>Up/Down Ratio</td><td id="photoBeam">Field-tunable</td></tr>
+        <tr><td>Diffuser</td><td>Frosted PC</td></tr>
+        <tr><td>Test Lab</td><td>LM-79 / LM-80 accredited</td></tr>
+        <tr><td>Test Standard</td><td>IESNA LM-79 / LM-80</td></tr>
+        <tr><td>IES File</td><td id="photoIesFile" style="font-size: 7pt;">lara_luxa4_40w_5000k.ies</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- DLC NLC qualifier note · rebate adder when ⒶCS accessories selected -->
+  <div id="nlcNote" style="display:none; margin-top: 10px; padding: 10px 12px; background: var(--hi); border-left: 3px solid var(--brand-red); font-size: 8pt; line-height: 1.4;">
+    <strong>DLC NLC Rebate Adder</strong> &middot; Selected contr<span style="font-weight:700;">Ⓐ</span>LS by <span style="font-weight:700;">Ⓐ</span>CS sensor accessories qualify this configuration for DLC Networked Lighting Controls rebate adder. Confirm utility rebate amount via Rebate Center per CFG-RBT-2 before commit.
+  </div>
+
+  <!-- CERTIFICATIONS · CFG-CERT-1 4-badge default · DLC Premium · UL/cUL · RoHS · IP40 DampGuard -->
+  <div class="certs">
+    <!-- DLC Premium -->
+    <svg class="cert-badge-svg" viewBox="0 0 84 36" xmlns="http://www.w3.org/2000/svg" aria-label="DLC Premium Listed">
+      <rect x="1" y="1" width="82" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="42" y="14" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="9" font-weight="700" letter-spacing="0.4">DLC</text>
+      <text x="42" y="26" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="8" font-weight="700" letter-spacing="0.3">PREMIUM</text>
+      <text x="42" y="33" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="5.5">QUALIFIED</text>
+    </svg>
+    <!-- UL / cUL Listed -->
+    <svg class="cert-badge-svg" viewBox="0 0 84 36" xmlns="http://www.w3.org/2000/svg" aria-label="UL cUL Listed Damp Location">
+      <rect x="1" y="1" width="82" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="42" y="15" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="10" font-weight="700" letter-spacing="0.4">UL / cUL</text>
+      <text x="42" y="26" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="7" font-weight="700" letter-spacing="0.3">LISTED</text>
+      <text x="42" y="33" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="5.5">DAMP LOCATION</text>
+    </svg>
+    <!-- RoHS -->
+    <svg class="cert-badge-svg" viewBox="0 0 62 36" xmlns="http://www.w3.org/2000/svg" aria-label="RoHS Compliant">
+      <rect x="1" y="1" width="60" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="31" y="16" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="10" font-weight="700">RoHS</text>
+      <text x="31" y="27" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="6.5" letter-spacing="0.3">COMPLIANT</text>
+    </svg>
+    <!-- IP40 DampGuard -->
+    <svg class="cert-badge-svg" viewBox="0 0 84 36" xmlns="http://www.w3.org/2000/svg" aria-label="IP40 DampGuard">
+      <rect x="1" y="1" width="82" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="42" y="15" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="10" font-weight="700" letter-spacing="0.4">IP40</text>
+      <text x="42" y="26" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="7" font-weight="700" letter-spacing="0.3">DAMPGUARD</text>
+      <text x="42" y="33" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="5.5">INDOOR DAMP</text>
+    </svg>
+  </div>
+
+  <!-- QUICK LINKS · WorkDrive docs + IES bundle + warranty statement -->
+  <div class="section-head" style="margin-top: 14px;">
+    <h2 style="font-size: 11pt;">Quick Links</h2>
+    <div class="section-eyebrow">Spec docs &middot; IES bundle &middot; warranty</div>
+  </div>
+  <div class="quick-links">
+    <a class="quick-link" href="https://workdrive.archipelagolighting.com/external/lara-datasheet-placeholder" target="_blank" rel="noopener">
+      <div class="ql-label">Spec</div>
+      <div class="ql-name">Data Sheet</div>
+    </a>
+    <a class="quick-link" href="https://workdrive.archipelagolighting.com/external/lara-quicksheet-placeholder" target="_blank" rel="noopener">
+      <div class="ql-label">Quick Ref</div>
+      <div class="ql-name">Quick Sheet</div>
+    </a>
+    <a class="quick-link" href="https://workdrive.archipelagolighting.com/external/lara-install-placeholder" target="_blank" rel="noopener">
+      <div class="ql-label">Install</div>
+      <div class="ql-name">Install Guide</div>
+    </a>
+    <a class="quick-link" href="https://workdrive.archipelagolighting.com/external/lara-ies-bundle-placeholder" target="_blank" rel="noopener">
+      <div class="ql-label">Photometric</div>
+      <div class="ql-name">IES Bundle</div>
+    </a>
+    <a class="quick-link" href="https://workdrive.archipelagolighting.com/external/db01406307e682a18496bacda8a07254e3e96734484ef20c08fb4fc37f2daac6" target="_blank" rel="noopener">
+      <div class="ql-label">Warranty</div>
+      <div class="ql-name">Statement</div>
+    </a>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LUXA LARA submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 4 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SUBMITTAL AUTO-FILL · LUXA LARA                               -->
+<!-- ============================================================ -->
+<script>
+/* =============================================================================
+   SUBMITTAL AUTO-FILL · LUXA LARA
+   ----------------------------------------------------------------------------
+   Reads URL query params from the §9 Configurator and stamps the live catalog
+   number, ordering breakdown, quick specs, photometric polar, hero photo, and
+   dimension-row highlight across all 4 pages.
+
+   Parameters (all optional · sensible defaults from PDP configurator state):
+     length    — 2 | 4 | 8 (ft module · default 4)
+     finish    — B | W (default W)
+     wattage   — explicit 3-WATTselect rung (else defaults to length's highest ★)
+     cct       — 2700 | 3000 | 3500 | 4000 | 5000 (default 5000)
+     em        — EM15 | EM24
+     joiner    — SLJ | LJ | TJ | XJ (CSV ok)
+     canopy    — NPC | PC | SMC (CSV ok)
+     sensor    — MSP20 | MSP40
+     sku       — full canonical SKU override (preferred · built upstream)
+
+   Built SKU pattern: LUXA{N}-{watt}{ratio}{cct_short}-5CSU/LARA/{finish}
+     N = 2 | 4 | 8 · ratio = "3W" · cct_short maps to 2-digit CCT code
+   ============================================================================= */
+(function() {
+
+  // ---- Per-length watt ladder + lumens · datasheet ground truth ----
+  // Each length has its own 3-WATTselect ladder. ★ default = highest rung.
+  var LENGTH_TABLE = {
+    '2': { watts: [10, 15, 20], lumens: [1200, 1800, 2400], lpw: 120, weight: '~3.4 lb', dim: '24.00"' },
+    '4': { watts: [23, 30, 40], lumens: [2760, 3600, 4800], lpw: 120, weight: '~6.8 lb', dim: '48.00"' },
+    '8': { watts: [60, 70, 80], lumens: [7200, 8400, 9600], lpw: 120, weight: '~13.4 lb', dim: '96.00"' }
+  };
+
+  // CCT short code map (2-digit segment of SKU)
+  var CCT_SHORT = {
+    '2700': '27', '3000': '30', '3500': '35', '4000': '40', '5000': '20'
+  };
+  // CCT IES filename suffix
+  var CCT_FILE = {
+    '2700': '2700k', '3000': '3000k', '3500': '3500k', '4000': '4000k', '5000': '5000k'
+  };
+
+  // Photometric SVG availability map · only renders for combos with on-disk SVGs.
+  // Pattern: lara_luxa{N}_{w}w_{k}k.svg
+  var PHOTO_WATTS = {
+    '2': [10, 15, 20],
+    '4': [23, 30, 40],
+    '8': [60, 70, 80]
+  };
+
+  // Accessory map · CSV code from PDP configurator → submittal matrix row id + label
+  var ACC_MAP = {
+    'SLJ':    { row: 'accRowSLJ',  label: 'LUXA-LARA1/NL-SLJ' },
+    'LJ':     { row: 'accRowLJ',   label: 'LUXA-LARA1/NL-LJ/{F}' },
+    'TJ':     { row: 'accRowTJ',   label: 'LUXA-LARA1/NL-TJ/{F}' },
+    'XJ':     { row: 'accRowXJ',   label: 'LUXA-LARA1/NL-XJ/{F}' },
+    'NPC':    { row: 'accRowNPC',  label: 'LUXA-LARA1/NPC/{F}' },
+    'PC':     { row: 'accRowPC',   label: 'LUXA-LARA1/PC/{F}' },
+    'SMC':    { row: 'accRowSMC',  label: 'LUXA-LARA1/SMC/{F}' },
+    'EM15':   { row: 'accRowEM15', label: 'EM15-HMB/170DC' },
+    'EM24':   { row: 'accRowEM24', label: 'EM24-JBM' },
+    'MSP20':  { row: 'accRowMSP20', label: 'MSP-20CM-ACS' },
+    'MSP40':  { row: 'accRowMSP40', label: 'MSP-40CM-ACS' }
+  };
+
+  // ---- Parse URL params ----
+  var params  = new URLSearchParams(window.location.search);
+  var skuQ    = params.get('sku')     || '';
+  var length  = params.get('length')  || '4';
+  var finish  = (params.get('finish') || 'W').toUpperCase();
+  var wattQ   = params.get('wattage') || '';
+  var cct     = params.get('cct')     || '5000';
+  var emQ     = params.get('em')      || '';
+  var joinerQ = params.get('joiner')  || '';
+  var canopyQ = params.get('canopy')  || '';
+  var sensorQ = params.get('sensor')  || '';
+
+  // Normalize finish
+  if (finish !== 'B' && finish !== 'W') finish = 'W';
+  if (!CCT_SHORT[cct]) cct = '5000';
+
+  // Merge accessory params: individual params build the accessory list
+  var accessories = [];
+  if (joinerQ) joinerQ.split(',').filter(Boolean).forEach(function(j){ accessories.push(j.toUpperCase()); });
+  if (canopyQ) canopyQ.split(',').filter(Boolean).forEach(function(c){ accessories.push(c.toUpperCase()); });
+  if (emQ)     emQ.split(',').filter(Boolean).forEach(function(e){ accessories.push(e.toUpperCase()); });
+  if (sensorQ) sensorQ.split(',').filter(Boolean).forEach(function(s){ accessories.push(s.toUpperCase()); });
+
+  // ---- Resolve length-driven defaults ----
+  var lenSpec = LENGTH_TABLE[length] || LENGTH_TABLE['4'];
+  var defaultWatt = lenSpec.watts[lenSpec.watts.length - 1];
+  var wattage = wattQ ? parseInt(wattQ, 10) : defaultWatt;
+  if (lenSpec.watts.indexOf(wattage) === -1) wattage = defaultWatt;
+  var wattIdx = lenSpec.watts.indexOf(wattage);
+  var lumens  = lenSpec.lumens[wattIdx];
+  var lpw     = wattage ? Math.round((lumens / wattage) * 10) / 10 : 0;
+  // Peak candela estimate · direct-down primary lobe ~0.32 cd-per-lm at nadir for diffused linear
+  var peakCd  = Math.round(lumens * 0.32);
+
+  // ---- Build SKU if not passed in ----
+  // Canonical pattern · LUXA{N}-{watt}{ratio}{cct_short}-5CSU/LARA/{finish}
+  // Per spec: ratio = "3W" (3-WATTselect identifier), cct_short = 2-digit CCT code
+  function buildSku() {
+    if (skuQ) return skuQ;
+    return 'LUXA' + length + '-3W' + wattage + '-5CSU/LARA/' + finish;
+  }
+  var sku = buildSku();
+
+  // ---- Ship-tier resolution (per CFG-CFG-1 v1.2 + Lara QS/MTO map) ----
+  // QS = base SKU + joiners + canopies + EM batteries
+  // MTO = any ⒶCS sensor accessory
+  var isMTO = false;
+  accessories.forEach(function(a) {
+    if (a === 'MSP20' || a === 'MSP40') isMTO = true;
+  });
+  var isQS = !isMTO;
+
+  // ---- Stamp every visible catalog-number slot ----
+  document.querySelectorAll('#catNum, #catNum2, #catNum3, #catNum4, #liveSku, #piCatNum').forEach(function(el) {
+    el.textContent = sku;
+  });
+
+  // ---- Stock pill (no-print bar) ----
+  var pill = document.getElementById('stockPill');
+  if (isQS) {
+    pill.className = 'qs-pill';
+    pill.textContent = 'QuickShip · 3-5 day';
+  } else {
+    pill.className = 'mto-pill';
+    pill.textContent = 'Made-to-Order · 4-6 wk';
+  }
+
+  // ---- Page 1 · Quick Specs ----
+  document.getElementById('qsLumens').innerHTML   = lumens.toLocaleString() + '<span class="qs-unit">lm @ ' + wattage + 'W</span>';
+  document.getElementById('qsWatts').innerHTML    = wattage + '<span class="qs-unit">W</span>';
+  document.getElementById('qsCct').innerHTML      = cct + '<span class="qs-unit">K</span>';
+  document.getElementById('qsEfficacy').innerHTML = lpw + '<span class="qs-unit">LM/W</span>';
+
+  // ---- Page 2 · Specs eyebrow + electrical/mechanical rows ----
+  var finishLabel = (finish === 'B') ? 'Black (B)' : 'White (W)';
+  var es = document.getElementById('specsEyebrow');
+  if (es) es.innerHTML = sku + ' &middot; LUXA' + length + ' length &middot; 5CSU 5-CCT &middot; ' + finishLabel + ' finish';
+  var lumenLine = lenSpec.watts.map(function(w, i) { return lenSpec.lumens[i].toLocaleString() + ' lm @ ' + w + 'W'; }).join(' · ');
+  document.getElementById('esLumens').innerHTML  = '<strong>' + lumenLine + '</strong> &middot; LUXA' + length + ' @ ' + cct + 'K &middot; per IESNA LM-79';
+  document.getElementById('esWatts').innerHTML   = '<strong>3-WATTselect</strong> &middot; ' + lenSpec.watts.join(' / ') + 'W (LUXA' + length + ') &middot; 3-position DIP &middot; default ' + defaultWatt + 'W ★';
+  document.getElementById('esLpw').innerHTML     = 'Up to <strong>' + lenSpec.lpw + ' LM/W</strong> (LUXA' + length + ' @ ' + defaultWatt + 'W)';
+  document.getElementById('esDim').innerHTML     = '<strong>0-10V dim to 1%</strong> &middot; non-flicker constant-current driver &middot; compatible with standard 0-10V wall stations and BMS control circuits';
+
+  // ---- Page 2 · Mechanical resolved values ----
+  document.getElementById('msLength').innerHTML = '<strong>' + length + ' ft</strong> &middot; length of selected module family (2 / 4 / 8 ft) &middot; modules combine via continu<span style="font-weight:700;">Ⓐ</span>RUN for any run length';
+  document.getElementById('msFinish').innerHTML = '<strong>' + finishLabel + '</strong> &middot; matte powder-coat &middot; matched joiners + accessories';
+  document.getElementById('msWeight').textContent = lenSpec.weight + ' (LUXA' + length + ')';
+
+  // ---- Page 3 · Highlight the matching dimension row ----
+  ['dimRow2','dimRow4','dimRow8'].forEach(function(id) {
+    var tr = document.getElementById(id);
+    if (tr) tr.classList.remove('active-row');
+  });
+  var row = document.getElementById('dimRow' + length);
+  if (row) row.classList.add('active-row');
+
+  // ---- Page 4 · Ordering Code segments ----
+  document.getElementById('ocLength').textContent = 'LUXA' + length;
+  document.getElementById('ocWatt').textContent   = '3W' + wattage;
+  document.getElementById('ocFinish').textContent = finish;
+
+  // Resolve {F} placeholder in finish-dependent accessory labels
+  function resolveLabel(label) {
+    return label.replace('{F}', finish);
+  }
+
+  // ---- Page 4 · Highlight active rows in the ordering matrix ----
+  document.getElementById('rowWatt').classList.add('active-row');
+  document.getElementById('rowFinish').classList.add('active-row');
+
+  // ---- Page 4 · Highlight selected accessories in the matrix ----
+  var hasAcsAcc = false;
+  accessories.forEach(function(a) {
+    var meta = ACC_MAP[a];
+    if (meta && meta.row) {
+      var r = document.getElementById(meta.row);
+      if (r) r.classList.add('acc-selected');
+    }
+    if (a === 'MSP20' || a === 'MSP40') hasAcsAcc = true;
+  });
+
+  // ---- DLC NLC qualifier note: only show if at least one ⒶCS accessory was picked ----
+  if (hasAcsAcc) {
+    var note = document.getElementById('nlcNote');
+    if (note) note.style.display = 'block';
+  }
+
+  // ---- Page 4 · Photometric summary ----
+  document.getElementById('photoPeak').textContent   = peakCd.toLocaleString() + ' cd @ 0° nadir';
+  document.getElementById('photoLumens').textContent = lumens.toLocaleString() + ' lm';
+  document.getElementById('photoEff').textContent    = lpw + ' lm/W';
+  document.getElementById('photoIesFile').textContent = 'lara_luxa' + length + '_' + wattage + 'w_' + CCT_FILE[cct] + '.ies';
+
+  // ==========================================================================
+  // Page 1 hero · single hero photo wire-up (CFG-SUB-2 · NEVER dual-image grid).
+  //   length=2 → lara-2ft.webp
+  //   length=4 + finish=W → lara-4ft-white.webp
+  //   length=4 + finish=B → lara-4ft-black.webp
+  //   length=8 → lara-8ft.webp
+  //   For 2ft/8ft when finish=B → apply CSS filter to render as black
+  //   ON 404: img.onerror falls through to lara-4ft-white.webp
+  // ==========================================================================
+  (function wireSubmittalHeroPhoto() {
+    var apImg = document.getElementById('submittalHeroAperture');
+    var frame = document.getElementById('heroFrame');
+    if (!apImg) return;
+
+    var src;
+    var applyBlackFilter = false;
+    if (length === '4') {
+      src = (finish === 'B')
+        ? 'assets/hero/lara-4ft-black.webp'
+        : 'assets/hero/lara-4ft-white.webp';
+    } else if (length === '2') {
+      src = 'assets/hero/lara-2ft.webp';
+      if (finish === 'B') applyBlackFilter = true;
+    } else if (length === '8') {
+      src = 'assets/hero/lara-8ft.webp';
+      if (finish === 'B') applyBlackFilter = true;
+    } else {
+      src = 'assets/hero/lara-4ft-white.webp';
+    }
+
+    apImg.src = src;
+    apImg.alt = 'LARA at LUXA' + length + ' (' + length + ' ft) · ' + finishLabel + ' finish';
+    apImg.onerror = function() {
+      this.src = 'assets/hero/lara-4ft-white.webp';
+      if (frame) frame.classList.remove('finish-black');
+      this.onerror = null;
+    };
+
+    if (frame) {
+      if (applyBlackFilter) frame.classList.add('finish-black');
+      else frame.classList.remove('finish-black');
+    }
+  })();
+
+  // ==========================================================================
+  // Page 4 photometric polar SVG · per-config picker.
+  // File pattern: assets/photometrics/lara_luxa{N}_{w}w_{k}k.svg
+  //   N · 2 | 4 | 8 (length module)
+  //   w · numeric wattage per length
+  //   k · 2700 / 3000 / 3500 / 4000 / 5000 (CCT in K)
+  // If selected wattage doesn't match available SVG, fall back to nearest watt for that length.
+  // ON 404 the IMG.onerror swaps to a fallback message div.
+  // ==========================================================================
+  (function wireSubmittalPhotoPolar() {
+    var polarImg      = document.getElementById('submittalPhotoPolar');
+    var polarFallback = document.getElementById('submittalPhotoPolarFallback');
+    if (!polarImg) return;
+
+    var cctPick = parseInt(cct, 10) || 5000;
+    var availWatts = PHOTO_WATTS[length] || PHOTO_WATTS['4'];
+    var polarWatt = wattage;
+    if (availWatts.indexOf(polarWatt) === -1) {
+      polarWatt = availWatts.reduce(function(prev, curr) {
+        return Math.abs(curr - wattage) < Math.abs(prev - wattage) ? curr : prev;
+      });
+    }
+    var svgPath = 'assets/photometrics/lara_luxa' + length + '_' + polarWatt + 'w_' + cctPick + 'k.svg';
+    polarImg.src = svgPath;
+    polarImg.alt = 'LARA polar candela distribution · LUXA' + length + ' ' + polarWatt + 'W ' + cctPick + 'K';
+    polarImg.onerror = function() {
+      this.style.display = 'none';
+      if (polarFallback) polarFallback.style.display = 'block';
+    };
+  })();
+
+  // Photo eyebrow · now lists the actual length/watt/cct combo loaded
+  var pe = document.getElementById('photoEyebrow');
+  if (pe) pe.innerHTML = 'LM-79 measured · direct<span style="font-weight:700;">Ⓐ</span>IM up/down ratio · frosted PC diffuser &middot; <em>polar plot · LUXA' + length + ' @ ' + wattage + 'W · ' + cct + 'K</em>';
+
+  // ---- Date stamps ----
+  var d = new Date();
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('liveDate').textContent =
+    months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  document.getElementById('revDate').textContent =
+    d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+
+  // ============================================================================
+  // CFG-SUB-1 v2 · Editable Catalog Number · snapshot-then-rederive · session-only
+  // ----------------------------------------------------------------------------
+  // James 2026-05-18 playbook rule. User types a project-specific label into
+  // the top-right Catalog Number box (e.g. "ABC-001") and every visible
+  // instance of the ORIGINAL SKU on the page swaps to match in real time.
+  //
+  // V2 fix (snapshot-then-rederive): snapshot the original text of every node
+  // that contains `originalSku` at load time, then on each input event
+  // re-derive each node's text from the cached original via
+  // originalText.split(originalSku).join(override). Idempotent · only matches
+  // the full original SKU string, partial intermediate states can never propagate.
+  //
+  // Edits don't touch <a href>, data-*, scripts, styles, or the `sku` JS variable.
+  // ============================================================================
+  (function setupEditableCatalogNumber() {
+    var originalSku = sku;
+    var editor = document.getElementById('catNum');
+    if (!editor) return;
+
+    if (document.title.indexOf(originalSku) === -1) {
+      document.title = originalSku + ' · ' + document.title;
+    }
+    var originalTitle = document.title;
+
+    var matchedNodes = [];
+    (function snapshot() {
+      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(n) {
+          var p = n.parentNode;
+          while (p) {
+            if (p === editor) return NodeFilter.FILTER_REJECT;
+            if (p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT;
+            if (p.tagName === 'A') return NodeFilter.FILTER_REJECT;
+            p = p.parentNode;
+          }
+          return n.nodeValue.indexOf(originalSku) !== -1
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        }
+      });
+      while (walker.nextNode()) {
+        matchedNodes.push({ node: walker.currentNode, originalText: walker.currentNode.nodeValue });
+      }
+    })();
+
+    function applyOverride(newDisplay) {
+      var override = newDisplay || originalSku;
+      matchedNodes.forEach(function(item) {
+        item.node.nodeValue = item.originalText.split(originalSku).join(override);
+      });
+      document.title = originalTitle.split(originalSku).join(override);
+    }
+
+    editor.addEventListener('input', function() {
+      var raw = (editor.textContent || '').replace(/[\r\n]+/g, ' ').slice(0, 80);
+      var nextDisplay = raw.trim() ? raw : originalSku;
+      applyOverride(nextDisplay);
+    });
+
+    editor.addEventListener('blur', function() {
+      var v = editor.textContent.trim();
+      if (!v) {
+        editor.textContent = originalSku;
+        applyOverride(originalSku);
+      }
+    });
+
+    editor.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        editor.blur();
+      }
+    });
+  })();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<svg viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="transparent"/>
+  <g id="grid">
+    <line x1="300.0" y1="90.0" x2="300.0" y2="330.0" stroke="rgba(255,255,255,0.18)" stroke-width="0.8" stroke-dasharray="3 4"/>
+    <line x1="300.0" y1="90.0" x2="420.0" y2="297.8" stroke="rgba(255,255,255,0.10)" stroke-width="0.8" stroke-dasharray="2 4"/>
+    <line x1="300.0" y1="90.0" x2="180.0" y2="297.8" stroke="rgba(255,255,255,0.10)" stroke-width="0.8" stroke-dasharray="2 4"/>
+    <line x1="300.0" y1="90.0" x2="507.8" y2="210.0" stroke="rgba(255,255,255,0.10)" stroke-width="0.8" stroke-dasharray="2 4"/>
+    <line x1="300.0" y1="90.0" x2="92.2" y2="210.0" stroke="rgba(255,255,255,0.10)" stroke-width="0.8" stroke-dasharray="2 4"/>
+    <line x1="300.0" y1="90.0" x2="540.0" y2="90.0" stroke="rgba(255,255,255,0.10)" stroke-width="0.8" stroke-dasharray="2 4"/>
+    <line x1="300.0" y1="90.0" x2="60.0" y2="90.0" stroke="rgba(255,255,255,0.10)" stroke-width="0.8" stroke-dasharray="2 4"/>
+    <circle cx="300.0" cy="90.0" r="60.0" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="0.8" stroke-dasharray="2 4"/>
+    <circle cx="300.0" cy="90.0" r="120.0" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="0.8" stroke-dasharray="2 4"/>
+    <circle cx="300.0" cy="90.0" r="180.0" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="0.8" stroke-dasharray="2 4"/>
+    <circle cx="300.0" cy="90.0" r="240.0" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="0.8" stroke-dasharray="2 4"/>
+  </g>
+  <g id="curve">
+    <polygon points="300.0,326.6 304.1,323.9 308.1,321.2 312.0,318.3 315.8,315.5 319.5,312.5 323.0,308.5 326.3,304.4 329.6,300.3 332.6,296.1 335.6,291.9 338.6,288.4 341.4,284.8 344.1,281.2 346.8,277.6 349.3,274.0 351.6,269.8 353.7,265.6 355.7,261.4 357.6,257.2 359.3,252.9 360.6,247.9 361.8,242.9 362.8,238.0 363.7,233.0 364.4,228.0 364.4,222.0 364.2,216.0 363.8,210.1 363.3,204.2 362.5,198.3 361.7,192.6 360.6,187.0 359.4,181.5 358.0,176.0 356.5,170.7 354.7,165.3 352.7,159.9 350.6,154.7 348.2,149.6 345.8,144.6 343.2,139.7 340.5,135.0 337.7,130.4 334.7,125.9 331.5,121.5 329.3,118.3 327.0,115.2 324.6,112.1 322.1,109.2 319.5,106.3 316.8,103.6 314.1,101.0 311.2,98.5 308.3,96.1 305.3,93.7 305.2,93.5 305.1,93.3 305.0,93.1 304.9,92.9 304.8,92.7 304.6,92.6 304.5,92.4 304.4,92.2 304.2,92.1 304.1,91.9 303.9,91.7 303.8,91.6 303.6,91.5 303.4,91.3 303.3,91.2 303.1,91.1 302.9,90.9 302.7,90.8 302.6,90.7 302.4,90.6 302.2,90.6 302.1,90.5 301.9,90.4 301.8,90.4 301.7,90.3 301.6,90.2 301.5,90.2 301.4,90.2 301.3,90.1 301.1,90.1 301.0,90.1 300.9,90.0 300.8,90.0 300.7,90.0 300.6,90.0 299.4,90.0 299.3,90.0 299.2,90.0 299.1,90.0 299.0,90.1 298.9,90.1 298.7,90.1 298.6,90.2 298.5,90.2 298.4,90.2 298.3,90.3 298.2,90.4 298.1,90.4 297.9,90.5 297.8,90.6 297.6,90.6 297.4,90.7 297.3,90.8 297.1,90.9 296.9,91.1 296.7,91.2 296.6,91.3 296.4,91.5 296.2,91.6 296.1,91.7 295.9,91.9 295.8,92.1 295.6,92.2 295.5,92.4 295.4,92.6 295.2,92.7 295.1,92.9 295.0,93.1 294.9,93.3 294.8,93.5 294.7,93.7 291.7,96.1 288.8,98.5 285.9,101.0 283.2,103.6 280.5,106.3 277.9,109.2 275.4,112.1 273.0,115.2 270.7,118.3 268.5,121.5 265.3,125.9 262.3,130.4 259.5,135.0 256.8,139.7 254.2,144.6 251.8,149.6 249.4,154.7 247.3,159.9 245.3,165.3 243.5,170.7 242.0,176.0 240.6,181.5 239.4,187.0 238.3,192.6 237.5,198.3 236.7,204.2 236.2,210.1 235.8,216.0 235.6,222.0 235.6,228.0 236.3,233.0 237.2,238.0 238.2,242.9 239.4,247.9 240.7,252.9 242.4,257.2 244.3,261.4 246.3,265.6 248.4,269.8 250.7,274.0 253.2,277.6 255.9,281.2 258.6,284.8 261.4,288.4 264.4,291.9 267.4,296.1 270.4,300.3 273.7,304.4 277.0,308.5 280.5,312.5 284.2,315.5 288.0,318.3 291.9,321.2 295.9,323.9 300.0,326.6" fill="rgba(243,39,64,0.18)" stroke="#F32740" stroke-width="1.8" stroke-linejoin="round"/>
+  </g>
+  <rect x="278" y="76" width="44" height="14" rx="2" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+  <g id="labels">
+    <text x="426.5" y="309.1" font-size="9" font-family="JetBrains Mono, monospace" fill="rgba(255,255,255,0.4)" text-anchor="middle" dominant-baseline="middle">30°</text>
+    <text x="173.5" y="309.1" font-size="9" font-family="JetBrains Mono, monospace" fill="rgba(255,255,255,0.4)" text-anchor="middle" dominant-baseline="middle">30°</text>
+    <text x="519.1" y="216.5" font-size="9" font-family="JetBrains Mono, monospace" fill="rgba(255,255,255,0.4)" text-anchor="middle" dominant-baseline="middle">60°</text>
+    <text x="80.9" y="216.5" font-size="9" font-family="JetBrains Mono, monospace" fill="rgba(255,255,255,0.4)" text-anchor="middle" dominant-baseline="middle">60°</text>
+    <text x="553.0" y="90.0" font-size="9" font-family="JetBrains Mono, monospace" fill="rgba(255,255,255,0.4)" text-anchor="middle" dominant-baseline="middle">90°</text>
+    <text x="47.0" y="90.0" font-size="9" font-family="JetBrains Mono, monospace" fill="rgba(255,255,255,0.4)" text-anchor="middle" dominant-baseline="middle">90°</text>
+    <text x="304" y="150.0" font-size="8" font-family="JetBrains Mono, monospace" fill="rgba(255,255,255,0.35)">840cd</text>
+    <text x="304" y="210.0" font-size="8" font-family="JetBrains Mono, monospace" fill="rgba(255,255,255,0.35)">1679cd</text>
+    <text x="304" y="270.0" font-size="8" font-family="JetBrains Mono, monospace" fill="rgba(255,255,255,0.35)">2519cd</text>
+    <text x="304" y="330.0" font-size="8" font-family="JetBrains Mono, monospace" fill="rgba(255,255,255,0.35)">3359cd</text>
+  </g>
+  <g font-family="JetBrains Mono, monospace">
+    <text x="300" y="380" text-anchor="middle" fill="#F32740" font-size="13" font-weight="700" letter-spacing="1.2">DMS3050 · 40W · 2700K · 60° BEAM</text>
+    <text x="300" y="402" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="10">PEAK 3359 cd · TOTAL 3307 lm · 42.2W input · 78 lm/W</text>
+  </g>
+</svg>

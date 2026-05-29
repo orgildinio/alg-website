@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LCDL · Solstice — Submittal Sheet</title>
+
+<!--
+  ALG SUBMITTAL · LCDL · Solstice · v2 canonical (clean rewrite 2026-05-23)
+  ===================================================================================
+  4-page letter-portrait submittal · spec-grade PDF via File → Print → Save as PDF.
+  Mirrors submittal_astra.html / submittal_safezone.html canonical pattern.
+
+  ENTRY: opened from PDP §9 Configurator "Generate Submittal PDF" CTA. Query params
+  describe the user's resolved configuration; JS at the bottom auto-fills the
+  catalog number, ordering breakdown, quick specs, photometric peak, and dimension
+  row highlight across all 4 pages.
+
+  Example query: ?size=6&trim=DT&trimcolor=BK&mount=NCP&em=EM24
+
+  CANONICAL RULES SATISFIED:
+   · CFG-SUB-1 v2 — editable Catalog Number with snapshot-then-rederive sweep
+     (idempotent · stamps every visible instance of the original SKU including
+      document.title; never touches <a href>, data-*, scripts, or styles)
+   · CFG-WARR-1 — Solstice is planoⒶRCH ECO tier · 5-yr · 50,000-hr · "Limited Liability"
+   · CFG-CERT-1 — cert badges as inline SVG marks (self-contained PDF source)
+   · CFG-COPY-4 / -5 / -6 — no competitor names, no vendor MPNs, no factory ID
+   · CFG-INV-1 — no inventory counts shown
+   · CFG-TITLE-1 — title uses "LCDL · Solstice — Submittal Sheet" pattern with middot
+   · CFG-CHROME-3 — no site shell · standalone print document
+
+  SOLSTICE SCOPE (per datasheet · Zoho-verified Tasks #131-#132 · ground truth):
+   · 4 apertures: 4" / 6" / 8" / 10"
+   · Per-size WATTselect (★ = default · per-datasheet bolded peak):
+       LCDL4   6/9/12W ★
+       LCDL6   12/17/22W ★
+       LCDL8   17/24/30W ★
+       LCDL10  22/30/38W ★
+   · Lumens at default ★ watt: 1,200 / 2,200 / 3,300 / 3,876
+   · LM/W: 100 / 100 / 110 / 102 — family-best 110 LM/W on LCDL8
+   · CCTselect 5-DIP · 2700 / 3000 / 3500 / 4000 / 5000K ★
+   · CRI > 90 truⒶCOLOR across all 5 CCTs
+   · Beam 100° · frosted PC diffuser · glare-free
+   · Tri-Mode dimming (TRIAC + ELV + 0-10V from ONE SKU) — Solstice's headline differentiator
+   · 120-277V Universal · >0.9 PF · <20% THD
+   · Wet Location · IC-Rated · WetGuard™ frosted PC diffuser
+   · -4°F to 113°F (-20°C to 45°C) operating temp
+   · 5-Year · 50,000 Hrs · Limited Liability
+   · SKU pattern: LCDL{size}-{wattcode}CS[/SQ]
+       wattcode per size: 4→0612 · 6→1222 · 8→1730 · 10→2238
+       /SQ = optional Square trim suffix (verified · NOT /SR)
+-->
+
+<style>
+  /* ============= PRINT-OPTIMIZED CSS ============= */
+  @page {
+    size: letter portrait;
+    margin: 0.5in 0.6in;
+  }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white !important; padding: 0 !important; }
+    .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+    .page:last-of-type { page-break-after: auto; }
+  }
+
+  /* ============= TYPE + COLOR TOKENS ============= */
+  :root {
+    --brand-red: #F32740;
+    --ink: #0E0E10;
+    --ink-2: #2A2A2D;
+    --muted: #6B6B70;
+    --rule: #D8D6D2;
+    --rule-strong: #A6A4A0;
+    --tint: #F6F4F0;
+    --hi: #FFF6E5;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Lato', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.5pt;
+    line-height: 1.4;
+    background: #E8E6E2;
+  }
+  body { padding: 24px 12px; }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 24px;
+    padding: 0.55in 0.65in;
+    background: white;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  h1, h2, h3, h4 { font-family: 'Lato', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+  .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+
+  /* ============= PAGE HEADER (every page) ============= */
+  .submittal-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+  .submittal-head .brand-mark {
+    width: 28px; height: 28px; background: var(--brand-red);
+    display: inline-block;
+  }
+  .submittal-head .brand-name {
+    font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1;
+  }
+  .submittal-head .brand-sub {
+    font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .submittal-head .catalog-block { text-align: right; }
+  .submittal-head .catalog-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .submittal-head .catalog-number {
+    font-size: 12pt; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+    border: 1.5px solid var(--ink);
+    padding: 4px 10px; display: inline-block;
+    letter-spacing: 0.5pt;
+    outline: none;
+    min-width: 240px; max-width: 340px;
+    text-align: left;
+    cursor: text;
+  }
+  .submittal-head .catalog-number:hover { background: var(--hi); }
+  .submittal-head .catalog-number:focus { background: var(--hi); border-color: var(--brand-red); }
+  .catalog-number-hint {
+    display: block;
+    font-size: 6.5pt; color: var(--muted); letter-spacing: 0.4pt;
+    margin-top: 3px; text-transform: uppercase;
+  }
+  @media print { .catalog-number-hint { display: none; } }
+
+  /* ============= PROJECT INFO FORM ============= */
+  .project-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule-strong);
+    margin-bottom: 14px;
+  }
+  .pi-cell {
+    padding: 6px 9px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    min-height: 38px;
+  }
+  .pi-cell:nth-child(3n) { border-right: none; }
+  .pi-cell:nth-child(n+4) { border-bottom: none; }
+  .pi-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .pi-value {
+    border-bottom: 1px dotted var(--rule-strong); min-height: 14px; padding-top: 2px;
+    font-family: 'JetBrains Mono', monospace; font-size: 9pt;
+  }
+
+  /* ============= PRODUCT TITLE BAND ============= */
+  .product-title { margin: 14px 0 14px; }
+  .product-title h1 { font-size: 22pt; line-height: 1; margin: 0; }
+  .product-title .tagline {
+    font-size: 9.5pt; color: var(--ink-2); margin-top: 6px; line-height: 1.35;
+  }
+
+  /* ============= HERO + QUICK SPECS GRID ============= */
+  .at-a-glance {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .hero-img {
+    background: var(--tint);
+    border: 1px solid var(--rule);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; padding: 14px;
+  }
+  .hero-img svg { width: 100%; height: 100%; }
+
+  .qs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .qs-cell {
+    border: 1px solid var(--rule-strong);
+    padding: 8px 10px;
+    min-height: 56px;
+  }
+  .qs-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 3px;
+  }
+  .qs-value {
+    font-size: 14pt; font-weight: 700; line-height: 1.05;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .qs-unit {
+    font-size: 8pt; font-weight: 400; color: var(--muted); margin-left: 2px;
+    font-family: 'Lato', sans-serif;
+  }
+
+  /* ============= STOCK PILL ============= */
+  .qs-pill, .mto-pill, .wb-pill {
+    display: inline-block;
+    font-size: 7.5pt; font-weight: 700;
+    padding: 3px 8px; letter-spacing: 0.5pt;
+    text-transform: uppercase;
+    margin-left: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .qs-pill { background: #E5F4EC; color: #1F7A4B; border: 1px solid #58C998; }
+  .mto-pill { background: #FFF1E0; color: #B85C00; border: 1px solid #FFB562; }
+  .wb-pill { background: #EAF1FF; color: #1A4FA8; border: 1px solid #7FB6FF; }
+
+  /* ============= FEATURE BAND ============= */
+  .feature-band {
+    background: var(--ink); color: white;
+    padding: 8px 14px;
+    display: flex; gap: 18px; align-items: center;
+    margin-bottom: 12px;
+  }
+  .feature-band .fb-pill {
+    background: var(--brand-red); color: white;
+    font-size: 7pt; font-weight: 700; letter-spacing: 1.2pt;
+    padding: 3px 7px; text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .feature-band .fb-features { font-size: 9pt; line-height: 1.3; }
+  .feature-band .fb-features strong { font-weight: 700; }
+
+  /* ============= APPROVAL SIGNATURE BLOCK ============= */
+  .approval-block {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--rule-strong);
+  }
+  .approval-cell {
+    display: grid; grid-template-columns: max-content 1fr;
+    gap: 8px; align-items: end;
+    font-size: 8pt;
+  }
+  .approval-line { border-bottom: 1px solid var(--ink); height: 16px; }
+
+  /* ============= SECTION HEAD (page 2+) ============= */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 4px; margin-bottom: 10px; margin-top: 4px;
+  }
+  .section-head h2 { font-size: 14pt; line-height: 1; }
+  .section-head .section-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= SPEC TABLE ============= */
+  .spec-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  .spec-table th, .spec-table td {
+    text-align: left; padding: 5px 8px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .spec-table .spec-section-head td {
+    background: var(--tint);
+    font-weight: 700; font-size: 9pt; letter-spacing: 0.3pt;
+    border-bottom: 1px solid var(--rule-strong);
+    padding: 6px 8px;
+  }
+  .spec-table .spec-attr { width: 30%; font-weight: 600; color: var(--ink-2); }
+  .spec-table .spec-val { width: 70%; }
+
+  /* ============= ORDERING CODE MATRIX ============= */
+  .order-code {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .order-segment {
+    background: var(--tint);
+    border: 1px solid var(--rule-strong);
+    padding: 8px 6px;
+    text-align: center;
+    min-height: 52px;
+  }
+  .order-segment.active {
+    background: var(--brand-red); color: white;
+    border-color: var(--brand-red);
+  }
+  .order-seg-label {
+    font-size: 6.5pt; letter-spacing: 1pt;
+    text-transform: uppercase; margin-bottom: 4px;
+    opacity: 0.85;
+  }
+  .order-seg-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11pt; font-weight: 700;
+  }
+  .order-matrix { width: 100%; border-collapse: collapse; font-size: 7.5pt; }
+  .order-matrix th, .order-matrix td {
+    border: 1px solid var(--rule);
+    padding: 4px 6px; text-align: left; vertical-align: top;
+  }
+  .order-matrix th {
+    background: var(--ink); color: white;
+    font-size: 7pt; letter-spacing: 1pt;
+    text-transform: uppercase;
+  }
+  .order-matrix .code {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; width: 130px;
+  }
+  .order-matrix tr.active-row td { background: var(--hi); }
+  /* Accessory highlight per ?accessories=CSV URL param */
+  .order-matrix tr.acc-selected td {
+    background: var(--hi);
+    box-shadow: inset 3px 0 0 var(--brand-red);
+  }
+
+  /* ============= DIMENSIONS LAYOUT ============= */
+  .dim-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .dim-view {
+    border: 1px solid var(--rule-strong);
+    background: white;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    padding: 6px;
+  }
+  .dim-view svg { width: 100%; height: 100%; }
+  .dim-view-label {
+    position: absolute; top: 4px; left: 6px;
+    font-size: 7pt; letter-spacing: 1pt; color: var(--brand-red);
+    text-transform: uppercase; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .dim-view-label.is-active { color: white; background: var(--brand-red); padding: 1px 5px; }
+  .dim-view.is-active { border-color: var(--brand-red); border-width: 2px; }
+
+  /* ============= PHOTOMETRIC DATA ============= */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .photo-polar {
+    border: 1px solid var(--rule-strong);
+    padding: 10px;
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    background: white;
+    overflow: hidden;
+  }
+  .photo-polar svg { width: 100%; height: 100%; }
+  .photo-summary {
+    border: 1px solid var(--rule);
+    display: flex; flex-direction: column;
+  }
+  .photo-summary table { width: 100%; border-collapse: collapse; font-size: 8pt; }
+  .photo-summary table td {
+    padding: 5px 9px; border-bottom: 1px solid var(--rule);
+  }
+  .photo-summary table tr:last-child td { border-bottom: none; }
+  .photo-summary td:first-child { color: var(--muted); }
+  .photo-summary td:last-child {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; text-align: right;
+  }
+
+  /* ============= CERTIFICATIONS ============= */
+  .certs {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 10px 12px;
+    border: 1px solid var(--rule);
+    margin-top: 10px;
+    align-items: center;
+  }
+  .cert-badge-svg { height: 28px; width: auto; flex-shrink: 0; }
+
+  /* ============= PAGE FOOTER ============= */
+  .page-foot {
+    position: absolute;
+    bottom: 0.4in; left: 0.65in; right: 0.65in;
+    display: flex; justify-content: space-between;
+    font-size: 7pt; color: var(--muted);
+    padding-top: 6px;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ============= NO-PRINT CONTROLS ============= */
+  .controls {
+    max-width: 8.5in; margin: 0 auto 18px;
+    background: white; padding: 14px 18px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  }
+  .controls .ctrl-label {
+    font-size: 8pt; font-weight: 600; color: var(--muted);
+    letter-spacing: 0.5pt; text-transform: uppercase;
+  }
+  .controls .ctrl-value {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11pt;
+  }
+  .controls button {
+    background: var(--brand-red); color: white;
+    border: none; padding: 9px 18px;
+    font-family: inherit; font-weight: 700; font-size: 9pt;
+    letter-spacing: 0.5pt; text-transform: uppercase;
+    cursor: pointer;
+    margin-left: auto;
+  }
+  .controls button:hover { background: #d61f37; }
+
+/* CFG-TYPE-1 · Lato lock — Shopify global cascades Cormorant onto inline Lato.
+   This !important rule pins Lato on h1/h2 for this collection's PDP body class. */
+body.planoarch-pdp h1,
+body.planoarch-pdp h2 {
+  font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+}
+
+/* CFG-MOBILE-1 · image responsive reset (injected by cfg_mobile_1_readiness_sweep.py) */
+img { max-width: 100%; height: auto; }
+
+/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+body { overflow-x: hidden; }
+</style>
+</head>
+<body>
+
+<!-- ============= NO-PRINT CONTROLS BAR ============= -->
+<div class="controls no-print">
+  <div>
+    <div class="ctrl-label">Configured SKU</div>
+    <div class="ctrl-value" id="liveSku">LCDL6-1222CS</div>
+  </div>
+  <div>
+    <div class="ctrl-label">Ship Tier</div>
+    <div class="ctrl-value"><span id="stockPill" class="qs-pill">QuickShip · 3-5 day</span></div>
+  </div>
+  <div>
+    <div class="ctrl-label">Generated</div>
+    <div class="ctrl-value" id="liveDate" style="font-size:9pt; font-weight:400;">&mdash;</div>
+  </div>
+  <button onclick="window.print()">Save as PDF &rarr;</button>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — AT-A-GLANCE                                          -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+  <!-- HEADER -->
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum" contenteditable="true" spellcheck="false" title="Click to edit · session-only · sweeps every visible instance">LCDL6-1222CS</div>
+      <span class="catalog-number-hint">Click to relabel for project</span>
+    </div>
+  </div>
+
+  <!-- PROJECT INFO FORM -->
+  <div class="project-info">
+    <div class="pi-cell"><div class="pi-label">Project</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Type</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Catalog #</div><div class="pi-value" id="piCatNum">LCDL6-1222CS</div></div>
+    <div class="pi-cell"><div class="pi-label">Prepared By</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Notes</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Date</div><div class="pi-value"></div></div>
+  </div>
+
+  <!-- PRODUCT TITLE -->
+  <div class="product-title">
+    <h1>LCDL · Solstice</h1>
+    <div class="tagline" id="productTagline"><strong>Can-Less Commercial Downlight</strong> &middot; <strong>plano<span style="font-weight:700;">Ⓐ</span>RCH ECO</strong> &middot; 4 apertures (4&Prime; / 6&Prime; / 8&Prime; / 10&Prime;) &times; per-size 3-WATTselect &times; 5-CCTselect (2700K-5000K) &middot; <strong>CRI &gt; 90 tru<span style="font-weight:700;">Ⓐ</span>COLOR</strong> across all 5 CCTs &middot; <strong>Tri-Mode dimming (TRIAC + ELV + 0-10V) from ONE SKU</strong> &middot; up to 110 LM/W (LCDL8 family-best) &middot; 100&deg; wide beam &middot; frosted PC diffuser &middot; Wet Location &middot; IC-Rated &middot; 5-yr &middot; 50,000-hr limited liability warranty.</div>
+  </div>
+
+  <!-- HERO + QUICK SPECS -->
+  <div class="at-a-glance">
+    <div class="hero-img">
+      <!-- Single aperture-specific product photo.
+           JS at end of file picks the correct photo per URL params:
+             size → assets/hero/solstice-aperture-{4|6|8|10}.webp
+             (square 6" → solstice-square-6.webp)
+           ON 404: img.onerror falls through to solstice-hero-1.webp. -->
+      <img id="submittalHeroAperture"
+           src="assets/hero/solstice-aperture-6.webp"
+           alt="Solstice at selected aperture size"
+           style="max-width:100%; max-height:100%; object-fit:contain; display:block; margin:0 auto;" />
+    </div>
+    <div class="qs-grid">
+      <div class="qs-cell">
+        <div class="qs-label">Lumens</div>
+        <div class="qs-value" id="qsLumens">2,200<span class="qs-unit">lm @ 22W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Wattage</div>
+        <div class="qs-value" id="qsWatts">22<span class="qs-unit">W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CCT</div>
+        <div class="qs-value" id="qsCct">5000<span class="qs-unit">K</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Efficacy</div>
+        <div class="qs-value" id="qsEfficacy">100<span class="qs-unit">LM/W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CRI</div>
+        <div class="qs-value">&gt;90<span class="qs-unit">tru<span style="font-weight:700;">Ⓐ</span>COLOR</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Beam</div>
+        <div class="qs-value" id="qsBeam">100&deg;<span class="qs-unit">WIDE · FROSTED PC</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Voltage</div>
+        <div class="qs-value">120-277<span class="qs-unit">V</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Dimming</div>
+        <div class="qs-value" id="qsDim" style="font-size:10pt;">Tri-Mode<span class="qs-unit">TRIAC+ELV+0-10V</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE BAND -->
+  <div class="feature-band">
+    <div class="fb-pill">Tri-Mode</div>
+    <div class="fb-features">
+      <strong>TRIAC + ELV + 0-10V dimming from ONE SKU</strong> &middot;
+      <strong>CRI &gt; 90 tru<span style="font-weight:700;">Ⓐ</span>COLOR</strong> &middot;
+      <strong>5-CCTselect</strong> &middot;
+      <strong>100&deg; wide beam · WetGuard&trade; frosted PC diffuser</strong> &middot;
+      <strong>Wet Location &middot; IC-Rated</strong>
+    </div>
+  </div>
+
+  <!-- AT-A-GLANCE SUMMARY (4-5 sentence product summary per playbook) -->
+  <div style="font-size: 9pt; line-height: 1.5; color: var(--ink-2); margin-top: 8px;">
+    <strong>Solstice</strong> is the plano<span style="font-weight:700;">Ⓐ</span>RCH ECO can-less commercial downlight that compresses three dimming protocols into a single SKU &mdash; <strong>TRIAC + ELV + 0-10V</strong> all drive the same fixture, so the spec writer doesn't fork the SKU when the project mixes architectural phase-cut zones with 0-10V control-circuit zones. <strong>CRI &gt; 90 tru<span style="font-weight:700;">Ⓐ</span>COLOR</strong> at every CCT (2700K through 5000K, 5-DIP selectable) keeps color rendition consistent as the designer tunes warm hospitality areas against cool task-area zones on the same job. Four aperture sizes (4&Prime; / 6&Prime; / 8&Prime; / 10&Prime;) with per-size 3-WATTselect cover 600&ndash;3,876 lm at up to <strong>110 LM/W</strong> family-best on the 8&Prime; &mdash; the same color science, same dimming envelope, same Wet Location / IC-Rated listing across every size on a building. The frosted PC <strong>WetGuard&trade; diffuser</strong> delivers a glare-free 100&deg; wide-beam wash that works in office, school, hallway, retail, hospitality, and healthcare ceilings without spec gymnastics.
+  </div>
+
+  <!-- APPROVAL BLOCK -->
+  <div class="approval-block">
+    <div class="approval-cell">
+      <span><strong>Approved by</strong></span>
+      <div class="approval-line"></div>
+    </div>
+    <div class="approval-cell">
+      <span><strong>Date</strong></span>
+      <div class="approval-line"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LCDL Solstice submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. <span id="revDate">2026-05</span> &middot; Page 1 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — SPECIFICATIONS                                       -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum2">LCDL6-1222CS</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Specifications</h2>
+    <div class="section-eyebrow" id="specsEyebrow">LCDL &middot; Solstice &middot; can-less commercial downlight</div>
+  </div>
+
+  <table class="spec-table">
+    <tbody>
+      <tr class="spec-section-head"><td colspan="2">Electrical</td></tr>
+      <tr><td class="spec-attr">Lumen Output</td><td class="spec-val" id="esLumens"><strong>1,200 / 1,836 / 2,200 lm</strong> @ 12 / 17 / 22W (LCDL6) &middot; per IESNA LM-79 at 5000K factory default</td></tr>
+      <tr><td class="spec-attr">Wattage</td><td class="spec-val" id="esWatts"><strong>3-WATTselect</strong> &middot; 12 / 17 / 22W (LCDL6) &middot; 3-position DIP &middot; default 22W ★</td></tr>
+      <tr><td class="spec-attr">Efficacy</td><td class="spec-val" id="esLpw">Up to <strong>100 LM/W</strong> (LCDL6 @ 22W) &middot; family-best <strong>110 LM/W</strong> on LCDL8 at 30W</td></tr>
+      <tr><td class="spec-attr">CCT Options</td><td class="spec-val"><strong>5-CCTselect</strong> field-tunable: 2700K / 3000K / 3500K / 4000K / 5000K &middot; default 5000K ★ (5-DIP)</td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val"><strong>&gt; 90 tru<span style="font-weight:700;">Ⓐ</span>COLOR</strong> at every CCT &middot; spec-grade color rendition for retail, hospitality, and healthcare</td></tr>
+      <tr><td class="spec-attr">Voltage</td><td class="spec-val"><strong>120-277V Universal</strong> &middot; auto-ranging input</td></tr>
+      <tr><td class="spec-attr">Dimming</td><td class="spec-val" id="esDim"><strong>Tri-Mode dimming</strong> &middot; TRIAC + ELV + 0-10V from ONE SKU &middot; non-flicker constant-current driver &middot; Solstice's headline differentiator &middot; no SKU fork when project mixes phase-cut and 0-10V control zones</td></tr>
+      <tr><td class="spec-attr">Power Factor</td><td class="spec-val">&gt; 0.9</td></tr>
+      <tr><td class="spec-attr">THD</td><td class="spec-val">&lt; 20%</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Mechanical</td></tr>
+      <tr><td class="spec-attr">Housing</td><td class="spec-val"><strong>Can-less integrated</strong> &middot; spring action housing clips for drop-in cutout install &middot; no separate junction box can required &middot; integrated air-tight seal prevents conditioned-air loss into ceiling void</td></tr>
+      <tr><td class="spec-attr">Aperture Size</td><td class="spec-val" id="msSize">6&Prime; &middot; default of 4-size family (4&Prime; / 6&Prime; / 8&Prime; / 10&Prime;)</td></tr>
+      <tr><td class="spec-attr">Trim</td><td class="spec-val" id="msTrim">Round Default &middot; Square <strong>/SQ</strong> suffix optional &middot; trim color kits ship separately (Black / Brushed Nickel / Bronze / White Wall-Wash)</td></tr>
+      <tr><td class="spec-attr">Aperture OD</td><td class="spec-val" id="msAperture">6.30&Prime; (LCDL6)</td></tr>
+      <tr><td class="spec-attr">Ceiling Cutout</td><td class="spec-val" id="msCutout">6 1/2&Prime; (LCDL6)</td></tr>
+      <tr><td class="spec-attr">Net Weight</td><td class="spec-val" id="msWeight">~22 oz (LCDL6)</td></tr>
+      <tr><td class="spec-attr">Mounting</td><td class="spec-val">Spring action housing clips for can-less retrofit &middot; New Construction Plate (LCDL-SE/NCP) for joist install &middot; New Construction Plate with J-Box (LCDL-SE/JCB/NCP) for T-grid drop-in</td></tr>
+      <tr><td class="spec-attr">Ingress / Location</td><td class="spec-val"><strong>Wet Location Listed &middot; IC-Rated</strong> &middot; <strong>WetGuard&trade; frosted PC diffuser</strong> &middot; suitable for showers, eaves, soffits, exterior covered patios &middot; direct contact with insulation permitted</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Performance</td></tr>
+      <tr><td class="spec-attr">Test Standards</td><td class="spec-val">LM-79 photometric &middot; LM-80 LED lifetime</td></tr>
+      <tr><td class="spec-attr">Lumen Maintenance</td><td class="spec-val"><strong>L70 &#64; 50,000 hrs</strong> &middot; LED color shift warrantied &lt; 180K over warranty period</td></tr>
+      <tr><td class="spec-attr">Beam Angle</td><td class="spec-val" id="esBeam"><strong>100&deg; wide</strong> &middot; frosted PC diffuser &middot; glare-free wash &middot; even ceiling coverage in office / hallway / retail grids</td></tr>
+      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">-20&deg;C to 45&deg;C (-4&deg;F to 113&deg;F) ambient</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val"><strong>5-Year limited &middot; 50,000-hour rated life</strong> &middot; Limited Liability &middot; plano<span style="font-weight:700;">Ⓐ</span>RCH ECO tier</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Certifications &amp; Compliance</td></tr>
+      <tr><td class="spec-attr">ETL Listed</td><td class="spec-val"><strong>ETL Listed</strong> &middot; US + CA</td></tr>
+      <tr><td class="spec-attr">UL</td><td class="spec-val"><strong>UL Wet Location</strong> &middot; <strong>IC-Rated</strong></td></tr>
+      <tr><td class="spec-attr">ENERGY STAR</td><td class="spec-val"><strong>ENERGY STAR</strong> qualified</td></tr>
+      <tr><td class="spec-attr">FCC</td><td class="spec-val"><strong>FCC Part 15</strong> Class B compliant</td></tr>
+      <tr><td class="spec-attr">Title 24</td><td class="spec-val"><strong>JA8-2022-E Listed</strong> &middot; CA Title 24 high-efficacy compliant</td></tr>
+      <tr><td class="spec-attr">DLC</td><td class="spec-val">DLC tier verification per <strong>CFG-RBT-2</strong> via Rebate Center at <code>archipelagolighting.com/pages/rebate-center</code></td></tr>
+      <tr><td class="spec-attr">Other Standards</td><td class="spec-val">RoHS Compliant</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 10px; font-size: 7.5pt; color: var(--muted); line-height: 1.4;">
+    <strong>Spec Footnotes</strong> &middot; Lumens published per IESNA LM-79 measured testing at 5000K factory default. &plusmn;5% lumen shift across the 5-CCT range. Tri-Mode dimming covers TRIAC + ELV (forward / reverse phase-cut) + 0-10V control-circuit from the same SKU &middot; no SKU fork required when project mixes dimming protocols. DLC tier (Listed Standard vs Premium) requires verification via Rebate Center per CFG-RBT-2 before any rebate claim is submitted. 5-year / 50,000-hour limited liability warranty per plano<span style="font-weight:700;">Ⓐ</span>RCH ECO tier &middot; standard product replacement only &middot; full warranty statement at archipelagolighting.com/warranty.
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LCDL Solstice submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 2 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 3 — DIMENSIONS                                           -->
+<!-- ============================================================ -->
+<div class="page" id="page-3">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum3">LCDL6-1222CS</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Dimensions &amp; Mounting</h2>
+    <div class="section-eyebrow">4-size aperture family &middot; Round Default + Square /SQ trim &middot; consistent can-less geometry across all sizes</div>
+  </div>
+
+  <!-- FOUR-VIEW DIMENSION DRAWINGS · inline SVG · datasheet pg 2 measurements -->
+  <div class="dim-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px;">
+    <!-- 4" aperture -->
+    <div class="dim-view" id="dimView4">
+      <div class="dim-view-label">4&Prime; · LCDL4</div>
+      <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" aria-label="4 inch Solstice · 4.33 aperture · 4 21/64 cutout · 14 oz">
+        <defs>
+          <linearGradient id="rg4" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FAFAFC"/><stop offset="100%" stop-color="#D8D8DC"/>
+          </linearGradient>
+        </defs>
+        <!-- Top-down trim view -->
+        <circle cx="60" cy="60" r="38" fill="url(#rg4)" stroke="#222" stroke-width="1.2"/>
+        <circle cx="60" cy="60" r="26" fill="#F9F8F5" stroke="#888" stroke-width="0.6"/>
+        <circle cx="60" cy="60" r="3" fill="#F32740"/>
+        <line x1="22" y1="60" x2="98" y2="60" stroke="#888" stroke-width="0.6"/>
+        <text x="60" y="118" text-anchor="middle" fill="#444"
+              font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">AP 4.33&Prime;</text>
+        <text x="60" y="128" text-anchor="middle" fill="#888"
+              font-family="JetBrains Mono, monospace" font-size="6">~14 oz</text>
+        <!-- Side profile -->
+        <rect x="125" y="44" width="50" height="30" fill="#1A1A1C" stroke="#0E0E10" stroke-width="0.8"/>
+        <polygon points="125,74 175,74 168,96 132,96" fill="url(#rg4)" stroke="#888" stroke-width="0.6"/>
+        <text x="150" y="118" text-anchor="middle" fill="#444"
+              font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">CAN-LESS</text>
+        <text x="100" y="148" text-anchor="middle" fill="#F32740"
+              font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">CUTOUT 4 21/64&Prime;</text>
+        <text x="100" y="160" text-anchor="middle" fill="#888"
+              font-family="JetBrains Mono, monospace" font-size="6">6/9/12W · 600-1200 lm</text>
+      </svg>
+    </div>
+
+    <!-- 6" aperture · DEFAULT -->
+    <div class="dim-view" id="dimView6">
+      <div class="dim-view-label">6&Prime; · LCDL6 ★</div>
+      <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" aria-label="6 inch Solstice · 6.30 aperture · 6 1/2 cutout · ~22 oz · DEFAULT">
+        <defs>
+          <linearGradient id="rg6" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FFFDF5"/><stop offset="100%" stop-color="#D8D8DC"/>
+          </linearGradient>
+        </defs>
+        <circle cx="60" cy="60" r="46" fill="url(#rg6)" stroke="#F32740" stroke-width="1.4"/>
+        <circle cx="60" cy="60" r="32" fill="#F9F8F5" stroke="#888" stroke-width="0.6"/>
+        <circle cx="60" cy="60" r="3.5" fill="#F32740"/>
+        <line x1="14" y1="60" x2="106" y2="60" stroke="#888" stroke-width="0.6"/>
+        <text x="60" y="118" text-anchor="middle" fill="#444"
+              font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">AP 6.30&Prime;</text>
+        <text x="60" y="128" text-anchor="middle" fill="#888"
+              font-family="JetBrains Mono, monospace" font-size="6">~22 oz</text>
+        <rect x="125" y="38" width="50" height="35" fill="#1A1A1C" stroke="#0E0E10" stroke-width="0.8"/>
+        <polygon points="125,73 175,73 170,100 130,100" fill="url(#rg6)" stroke="#888" stroke-width="0.6"/>
+        <text x="150" y="118" text-anchor="middle" fill="#444"
+              font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">CAN-LESS</text>
+        <text x="100" y="148" text-anchor="middle" fill="#F32740"
+              font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">CUTOUT 6 1/2&Prime;</text>
+        <text x="100" y="160" text-anchor="middle" fill="#888"
+              font-family="JetBrains Mono, monospace" font-size="6">DEFAULT · 12/17/22W · 1200-2200 lm</text>
+      </svg>
+    </div>
+
+    <!-- 8" aperture · family-best efficacy -->
+    <div class="dim-view" id="dimView8">
+      <div class="dim-view-label">8&Prime; · LCDL8</div>
+      <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" aria-label="8 inch Solstice · 8.07 aperture · 8 7/64 cutout · ~26 oz · 110 LM/W family-best">
+        <defs>
+          <linearGradient id="rg8" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FAFAFC"/><stop offset="100%" stop-color="#D8D8DC"/>
+          </linearGradient>
+        </defs>
+        <circle cx="60" cy="60" r="52" fill="url(#rg8)" stroke="#222" stroke-width="1.2"/>
+        <circle cx="60" cy="60" r="36" fill="#F9F8F5" stroke="#888" stroke-width="0.6"/>
+        <circle cx="60" cy="60" r="3.5" fill="#F32740"/>
+        <line x1="8" y1="60" x2="112" y2="60" stroke="#888" stroke-width="0.6"/>
+        <text x="60" y="124" text-anchor="middle" fill="#444"
+              font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">AP 8.07&Prime;</text>
+        <text x="60" y="134" text-anchor="middle" fill="#888"
+              font-family="JetBrains Mono, monospace" font-size="6">~26 oz</text>
+        <rect x="125" y="34" width="50" height="38" fill="#1A1A1C" stroke="#0E0E10" stroke-width="0.8"/>
+        <polygon points="125,72 175,72 170,106 130,106" fill="url(#rg8)" stroke="#888" stroke-width="0.6"/>
+        <text x="150" y="124" text-anchor="middle" fill="#444"
+              font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">CAN-LESS</text>
+        <text x="100" y="148" text-anchor="middle" fill="#F32740"
+              font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">CUTOUT 8 7/64&Prime;</text>
+        <text x="100" y="160" text-anchor="middle" fill="#888"
+              font-family="JetBrains Mono, monospace" font-size="6">17/24/30W · 1870-3300 lm · 110 LM/W</text>
+      </svg>
+    </div>
+
+    <!-- 10" aperture -->
+    <div class="dim-view" id="dimView10">
+      <div class="dim-view-label">10&Prime; · LCDL10</div>
+      <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" aria-label="10 inch Solstice · 8.98 aperture · 10 1/16 cutout · ~32 oz">
+        <defs>
+          <linearGradient id="rg10" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FAFAFC"/><stop offset="100%" stop-color="#D8D8DC"/>
+          </linearGradient>
+        </defs>
+        <circle cx="60" cy="60" r="56" fill="url(#rg10)" stroke="#222" stroke-width="1.2"/>
+        <circle cx="60" cy="60" r="40" fill="#F9F8F5" stroke="#888" stroke-width="0.6"/>
+        <circle cx="60" cy="60" r="3.5" fill="#F32740"/>
+        <line x1="4" y1="60" x2="116" y2="60" stroke="#888" stroke-width="0.6"/>
+        <text x="60" y="128" text-anchor="middle" fill="#444"
+              font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">AP 8.98&Prime;</text>
+        <text x="60" y="138" text-anchor="middle" fill="#888"
+              font-family="JetBrains Mono, monospace" font-size="6">~32 oz</text>
+        <rect x="125" y="30" width="50" height="42" fill="#1A1A1C" stroke="#0E0E10" stroke-width="0.8"/>
+        <polygon points="125,72 175,72 170,110 130,110" fill="url(#rg10)" stroke="#888" stroke-width="0.6"/>
+        <text x="150" y="128" text-anchor="middle" fill="#444"
+              font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">CAN-LESS</text>
+        <text x="100" y="148" text-anchor="middle" fill="#F32740"
+              font-family="JetBrains Mono, monospace" font-size="7" font-weight="700">CUTOUT 10 1/16&Prime;</text>
+        <text x="100" y="160" text-anchor="middle" fill="#888"
+              font-family="JetBrains Mono, monospace" font-size="6">22/30/38W · 2200-3876 lm</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- DIMENSION TABLE -->
+  <table class="spec-table">
+    <thead>
+      <tr class="spec-section-head">
+        <td>Aperture</td>
+        <td>Aperture OD</td>
+        <td>Ceiling Cutout</td>
+        <td>Net Weight</td>
+        <td>Watt / Lumen Ladder</td>
+        <td>Efficacy (peak)</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="dimRow4"><td class="spec-attr">4&Prime;</td><td>4.33&Prime;</td><td>4 21/64&Prime;</td><td>~14 oz</td><td>6 / 9 / 12W · 600 / 900 / 1,200 lm</td><td>100 LM/W</td></tr>
+      <tr id="dimRow6"><td class="spec-attr">6&Prime; ★</td><td>6.30&Prime;</td><td>6 1/2&Prime;</td><td>~22 oz</td><td>12 / 17 / 22W · 1,200 / 1,836 / 2,200 lm</td><td>108 LM/W (@ 17W) · 100 (peak)</td></tr>
+      <tr id="dimRow8"><td class="spec-attr">8&Prime;</td><td>8.07&Prime;</td><td>8 7/64&Prime;</td><td>~26 oz</td><td>17 / 24 / 30W · 1,870 / 2,640 / 3,300 lm</td><td><strong>110 LM/W (family-best)</strong></td></tr>
+      <tr id="dimRow10"><td class="spec-attr">10&Prime;</td><td>8.98&Prime;</td><td>10 1/16&Prime;</td><td>~32 oz</td><td>22 / 30 / 38W · 2,200 / 3,000 / 3,876 lm</td><td>102 LM/W</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 14px;">
+    <table class="spec-table">
+      <tbody>
+        <tr class="spec-section-head"><td colspan="2">Install Pattern · Can-Less + New Construction + T-Grid Drop-In</td></tr>
+        <tr><td class="spec-attr">Can-Less Retrofit</td><td class="spec-val">Spring action housing clips secure the integrated fixture directly into the cutout &middot; no separate junction box can required &middot; air-tight seal prevents conditioned-air loss into ceiling void</td></tr>
+        <tr><td class="spec-attr">Joist Install</td><td class="spec-val">New Construction Plate <strong>LCDL-SE/NCP</strong> &middot; mounts the fixture to a ceiling joist before drywall &middot; spring action housing clips secure the fixture into the cutout afterward &middot; QuickShip</td></tr>
+        <tr><td class="spec-attr">T-Grid Install</td><td class="spec-val">New Construction Plate with J-Box <strong>LCDL-SE/JCB/NCP</strong> &middot; T-bar grid drop-in mount with integral J-Box &middot; eliminates separate J-Box install &middot; QuickShip</td></tr>
+        <tr><td class="spec-attr">Trim Form</td><td class="spec-val">Round Default ships as <code>LCDL{size}-{wattcode}CS</code> &middot; Square trim option appends <code>/SQ</code> suffix &middot; <code>LCDL6-1222CS/SQ</code> example &middot; only Round and Square are offered</td></tr>
+        <tr><td class="spec-attr">Cutout Tolerance</td><td class="spec-val">Spring action housing clips accommodate &plusmn;0.10&Prime; cutout tolerance &middot; suitable for hole-saw or T-grid cut openings &middot; cutout published per size per datasheet pg 2</td></tr>
+        <tr><td class="spec-attr">Wiring</td><td class="spec-val">120-277V universal input &middot; Class 2 driver isolation &middot; pre-wired pigtail for J-Box termination &middot; Tri-Mode dimming leads (TRIAC + ELV + 0-10V)</td></tr>
+        <tr><td class="spec-attr">Pack Sizes</td><td class="spec-val">Unit Pack: 1 pc &middot; Contractor Pack: 4 pcs &middot; per datasheet pg 2</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LCDL Solstice submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 3 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 4 — ORDERING CODE & PHOTOMETRICS                         -->
+<!-- ============================================================ -->
+<div class="page" id="page-4">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum4">LCDL6-1222CS</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Ordering Information</h2>
+    <div class="section-eyebrow">Configure your catalog number</div>
+  </div>
+
+  <!-- ORDERING CODE VISUAL BREAKDOWN · 4 segments + optional accessory 5th -->
+  <div class="order-code">
+    <div class="order-segment active"><div class="order-seg-label">Size</div><div class="order-seg-value" id="ocSize">LCDL6</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Watt Ladder</div><div class="order-seg-value" id="ocWatt">1222</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Series</div><div class="order-seg-value">CS</div></div>
+    <div class="order-segment" id="ocTrimSeg"><div class="order-seg-label">Trim</div><div class="order-seg-value" id="ocTrim">Round</div></div>
+    <div class="order-segment" id="ocAccSeg"><div class="order-seg-label">Accessories</div><div class="order-seg-value" id="ocAcc" style="font-size: 8pt; line-height: 1.2;">&mdash;</div></div>
+  </div>
+
+  <!-- ORDERING MATRIX -->
+  <table class="order-matrix">
+    <thead>
+      <tr><th style="width:18%">Segment</th><th>Available Codes</th></tr>
+    </thead>
+    <tbody>
+      <tr id="rowSize" class="active-row"><td class="code">LCDL4 / LCDL6 / LCDL8 / LCDL10</td><td><strong>Aperture Size</strong> &middot; 4&Prime; / 6&Prime; / 8&Prime; / 10&Prime; &middot; default LCDL6 ★</td></tr>
+      <tr id="rowWatt"><td class="code">0612 / 1222 / 1730 / 2238</td><td><strong>Watt Ladder Code</strong> &middot; LCDL4 &rarr; 0612 (6/9/12W ★) &middot; LCDL6 &rarr; 1222 (12/17/22W ★) &middot; LCDL8 &rarr; 1730 (17/24/30W ★) &middot; LCDL10 &rarr; 2238 (22/30/38W ★) &middot; 3-position DIP at install picks the rung</td></tr>
+      <tr id="rowSeries" class="active-row"><td class="code">CS</td><td><strong>Solstice 5-CCTselect</strong> series identifier &middot; always present on every Solstice catalog SKU &middot; 5-DIP CCT selection at install (2700K / 3000K / 3500K / 4000K / 5000K ★)</td></tr>
+      <tr id="rowTrimRound"><td class="code">(no suffix)</td><td><strong>Round Default trim</strong> &middot; no suffix on catalog SKU &middot; example <code>LCDL6-1222CS</code></td></tr>
+      <tr id="rowTrimSq"><td class="code">/SQ</td><td><strong>Square trim suffix</strong> &middot; appended to base SKU &middot; example <code>LCDL6-1222CS/SQ</code></td></tr>
+      <tr id="rowCct"><td class="code">5-CCTselect</td><td><strong>Field dip-switch</strong> at install &mdash; 2700K / 3000K / 3500K / 4000K / 5000K ★ &middot; NOT a catalog-SKU segment (5-DIP set in-fixture, not at-order)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ACCESSORIES MATRIX -->
+  <div style="margin-top: 14px;">
+    <table class="order-matrix">
+      <thead>
+        <tr><th style="width:18%">Accessory</th><th>Order Code</th></tr>
+      </thead>
+      <tbody>
+        <tr id="accRowBK"><td class="code">Trim · Black</td><td><strong>LCDL{size}-SE/BK</strong> &mdash; Black trim color kit &middot; sized 4&Prime;/6&Prime;/8&Prime;/10&Prime; to match aperture &middot; QuickShip at 4/6/8, Made-to-Order at 10</td></tr>
+        <tr id="accRowBN"><td class="code">Trim · Br. Nickel</td><td><strong>LCDL{size}-SE/BN</strong> &mdash; Brushed Nickel trim color kit &middot; sized 4&Prime;/6&Prime;/8&Prime;/10&Prime; &middot; QuickShip at 4/6/8, MTO at 10</td></tr>
+        <tr id="accRowBR"><td class="code">Trim · Bronze</td><td><strong>LCDL{size}-SE/BR</strong> &mdash; Bronze trim color kit &middot; sized 4&Prime;/6&Prime;/8&Prime;/10&Prime; &middot; QuickShip at 4/6/8, MTO at 10</td></tr>
+        <tr id="accRowWHWW"><td class="code">Wall-Wash · White</td><td><strong>LCDL{size}-SE/WH/WW</strong> &mdash; White Wall-Wash trim &middot; WW-only (plain <code>/WH</code> does not exist) &middot; all sizes Made-to-Order &middot; companion BK/WW · BN/WW · BR/WW wall-wash variants also Made-to-Order</td></tr>
+        <tr id="accRowNCP"><td class="code">NCP Mount</td><td><strong>LCDL-SE/NCP</strong> &mdash; New Construction Plate &middot; ceiling-joist installation before drywall &middot; QuickShip</td></tr>
+        <tr id="accRowNCPJCB"><td class="code">NCP / J-Box Mount</td><td><strong>LCDL-SE/JCB/NCP</strong> &mdash; New Construction Plate with integrated J-Box &middot; T-bar grid drop-in &middot; eliminates separate J-Box install &middot; QuickShip</td></tr>
+        <tr id="accRowEM15"><td class="code">EM Battery 15W</td><td><strong>EM15-HMB/170DC</strong> &mdash; const<span style="font-weight:700;">Ⓐ</span>NT 15W Emergency Battery &middot; remote field-mount &middot; UL 924 &middot; 90-min egress per NFPA 101 &middot; QuickShip</td></tr>
+        <tr id="accRowEM24"><td class="code">EM Battery 24W</td><td><strong>EM24-JBM</strong> (canonical <strong>CRCU-EM24/JBM</strong>) &mdash; const<span style="font-weight:700;">Ⓐ</span>NT 24W Emergency Battery with J-Box &middot; recessed mount &middot; UL 924 &middot; QuickShip</td></tr>
+        <tr id="accRowMSP20"><td class="code">PIR · 8 ft mount</td><td><strong>MSP-20CM-ACS</strong> (canonical <strong>MSP-SRI/20CM/HD/ACS</strong>) &mdash; contr<span style="font-weight:700;">Ⓐ</span>LS by <span style="font-weight:700;">Ⓐ</span>CS PIR Wide-Angle Sensor &middot; 8 ft ceiling mount &middot; Bluetooth Mesh &middot; DLC NLC qualified &middot; Made-to-Order &middot; drop-shipped from <span style="font-weight:700;">Ⓐ</span>CS</td></tr>
+        <tr id="accRowMSP40"><td class="code">PIR · 40 ft mount</td><td><strong>MSP-40CM-ACS</strong> (canonical <strong>MSP-SRI/40CM/HD/ACS</strong>) &mdash; contr<span style="font-weight:700;">Ⓐ</span>LS by <span style="font-weight:700;">Ⓐ</span>CS PIR Wide-Angle Sensor &middot; 40 ft high-mount &middot; Bluetooth Mesh &middot; DLC NLC qualified &middot; Made-to-Order</td></tr>
+        <tr id="accRowMSXLV"><td class="code">BLE Mesh Controller</td><td><strong>MSX-LV20-ACS</strong> (canonical <strong>MSX-CTI/LV20/ACS</strong>) &mdash; contr<span style="font-weight:700;">Ⓐ</span>LS by <span style="font-weight:700;">Ⓐ</span>CS J-Box Controller &middot; 100 ft range &middot; Bluetooth Mesh power-pack &middot; Made-to-Order</td></tr>
+        <tr id="accRowKINETIC"><td class="code">Kinetic Wall Switch</td><td><strong>50WM-ACS</strong> (canonical <strong>MSZ-KPI/50WM/ACS</strong>) &mdash; contr<span style="font-weight:700;">Ⓐ</span>LS by <span style="font-weight:700;">Ⓐ</span>CS Kinetic Bluetooth Wall Switch &middot; 100 ft range &middot; no battery, no wiring &middot; DLC NLC qualified &middot; Made-to-Order</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PHOTOMETRIC POLAR PLOT + SUMMARY -->
+  <div class="section-head" style="margin-top: 18px;">
+    <h2 style="font-size: 12pt;">Photometric Data</h2>
+    <div class="section-eyebrow" id="photoEyebrow">LM-79 measured · 100° wide beam · IES Type V symmetric · frosted PC diffuser</div>
+  </div>
+
+  <div class="photo-grid">
+    <div class="photo-polar">
+      <!-- Real polar plot · loaded from assets/photometrics/lcdl6_{w}w_{k}k.svg
+           wired to URL params (wattage/cct).
+           15 SVGs rendered for LCDL6 (3 watts × 5 CCTs).
+           Other sizes (4/8/10) currently fall back to the nearest LCDL6 wattage
+           since the IES polar profile is shape-identical (frosted PC diffuser geometry).
+           ON 404 the IMG.onerror swaps to a fallback message div. -->
+      <img id="submittalPhotoPolar"
+           src="assets/photometrics/lcdl6_22w_5000k.svg"
+           alt="Solstice polar candela distribution · selected wattage/CCT"
+           style="width:100%; height:100%; object-fit:contain;" />
+      <div id="submittalPhotoPolarFallback"
+           style="display:none; color:#888; font-size:8pt; text-align:center; padding:24px;">
+        Polar plot SVG unavailable for the selected configuration.<br/>
+        Reference IES file listed in the photo summary table.
+      </div>
+    </div>
+
+    <div class="photo-summary">
+      <table>
+        <tr><td>Distribution</td><td id="photoDist">Symmetric · IES Type V</td></tr>
+        <tr><td>Peak Candela</td><td id="photoPeak">700 cd @ 0° nadir</td></tr>
+        <tr><td>Total Lumens</td><td id="photoLumens">2,200 lm</td></tr>
+        <tr><td>Efficacy</td><td id="photoEff">100 lm/W</td></tr>
+        <tr><td>Beam Angle</td><td id="photoBeam">100° wide · frosted PC</td></tr>
+        <tr><td>Spill Control</td><td>0% upward · 100% downward</td></tr>
+        <tr><td>Test Lab</td><td>LM-79 / LM-80 accredited</td></tr>
+        <tr><td>Test Standard</td><td>IESNA LM-79 / LM-80</td></tr>
+        <tr><td>IES File</td><td id="photoIesFile" style="font-size: 7pt;">LCDL6-1222CS-22W-50K.ies</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- DLC NLC qualifier note · rebate adder when ⒶCS accessories selected -->
+  <div id="nlcNote" style="display:none; margin-top: 10px; padding: 10px 12px; background: var(--hi); border-left: 3px solid var(--brand-red); font-size: 8pt; line-height: 1.4;">
+    <strong>DLC NLC Rebate Adder</strong> &middot; Selected contr<span style="font-weight:700;">Ⓐ</span>LS by <span style="font-weight:700;">Ⓐ</span>CS sensor / controller accessories qualify this configuration for DLC Networked Lighting Controls rebate adder (typically +$15-30 per fixture beyond base luminaire rebate). Confirm utility rebate amount via Rebate Center per CFG-RBT-2 before commit.
+  </div>
+
+  <!-- CERTIFICATIONS · inline SVG badges so the PDF is self-contained -->
+  <div class="certs">
+    <!-- ETL US/CA -->
+    <svg class="cert-badge-svg" viewBox="0 0 72 36" xmlns="http://www.w3.org/2000/svg" aria-label="ETL Listed US CA">
+      <circle cx="18" cy="18" r="15" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="18" y="22" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="10" font-weight="700">ETL</text>
+      <text x="42" y="16" fill="#0E0E10" font-family="Lato, sans-serif" font-size="7" font-weight="700">US</text>
+      <text x="56" y="16" fill="#0E0E10" font-family="Lato, sans-serif" font-size="7" font-weight="700">CA</text>
+      <text x="42" y="26" fill="#6B6B70" font-family="Lato, sans-serif" font-size="6">LISTED</text>
+    </svg>
+    <!-- ENERGY STAR -->
+    <svg class="cert-badge-svg" viewBox="0 0 96 36" xmlns="http://www.w3.org/2000/svg" aria-label="ENERGY STAR">
+      <rect x="1" y="1" width="94" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="48" y="15" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="8" font-weight="700" letter-spacing="0.3">ENERGY STAR</text>
+      <text x="48" y="27" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="7" font-weight="700" letter-spacing="0.3">QUALIFIED</text>
+    </svg>
+    <!-- FCC -->
+    <svg class="cert-badge-svg" viewBox="0 0 62 36" xmlns="http://www.w3.org/2000/svg" aria-label="FCC Part 15 Class B">
+      <rect x="1" y="1" width="60" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="31" y="16" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="11" font-weight="700">FCC</text>
+      <text x="31" y="27" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="6" letter-spacing="0.3">PART 15 · CLASS B</text>
+    </svg>
+    <!-- RoHS -->
+    <svg class="cert-badge-svg" viewBox="0 0 62 36" xmlns="http://www.w3.org/2000/svg" aria-label="RoHS Compliant">
+      <rect x="1" y="1" width="60" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="31" y="16" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="10" font-weight="700">RoHS</text>
+      <text x="31" y="27" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="6.5" letter-spacing="0.3">COMPLIANT</text>
+    </svg>
+    <!-- Title 24 JA8 -->
+    <svg class="cert-badge-svg" viewBox="0 0 72 36" xmlns="http://www.w3.org/2000/svg" aria-label="Title 24 JA8-2022-E">
+      <rect x="1" y="1" width="70" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="36" y="14" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="9" font-weight="700" letter-spacing="0.4">TITLE 24</text>
+      <text x="36" y="26" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="8" font-weight="700" letter-spacing="0.3">JA8 LISTED</text>
+      <text x="36" y="33" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="5.5">2022-E</text>
+    </svg>
+    <!-- UL Wet Location / IC-Rated -->
+    <svg class="cert-badge-svg" viewBox="0 0 96 36" xmlns="http://www.w3.org/2000/svg" aria-label="UL Wet Location and IC-Rated">
+      <rect x="1" y="1" width="94" height="34" fill="white" stroke="#0E0E10" stroke-width="1.4"/>
+      <text x="48" y="14" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="7.5" font-weight="700" letter-spacing="0.3">UL WET LOCATION</text>
+      <text x="48" y="26" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="8" font-weight="700" letter-spacing="0.3">IC-RATED</text>
+    </svg>
+    <!-- CRI > 90 truⒶCOLOR -->
+    <svg class="cert-badge-svg" viewBox="0 0 84 36" xmlns="http://www.w3.org/2000/svg" aria-label="CRI greater than 90 truⒶCOLOR">
+      <rect x="1" y="1" width="82" height="34" fill="white" stroke="#F32740" stroke-width="1.4"/>
+      <text x="42" y="14" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="10" font-weight="700" letter-spacing="0.4">CRI &gt; 90</text>
+      <text x="42" y="25" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="6.5" font-weight="700" letter-spacing="0.3">tru<tspan font-weight="800">Ⓐ</tspan>COLOR</text>
+      <text x="42" y="32" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="5.5">ALL 5 CCTs</text>
+    </svg>
+    <!-- Tri-Mode Dimming · Solstice differentiator -->
+    <svg class="cert-badge-svg" viewBox="0 0 96 36" xmlns="http://www.w3.org/2000/svg" aria-label="Tri-Mode Dimming TRIAC ELV 0-10V">
+      <rect x="1" y="1" width="94" height="34" fill="white" stroke="#F32740" stroke-width="1.4"/>
+      <text x="48" y="14" text-anchor="middle" fill="#F32740" font-family="Lato, sans-serif" font-size="9" font-weight="700" letter-spacing="0.4">TRI-MODE</text>
+      <text x="48" y="26" text-anchor="middle" fill="#0E0E10" font-family="Lato, sans-serif" font-size="6.5" font-weight="700" letter-spacing="0.3">TRIAC + ELV + 0-10V</text>
+      <text x="48" y="33" text-anchor="middle" fill="#6B6B70" font-family="Lato, sans-serif" font-size="5.5">ONE SKU</text>
+    </svg>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com &middot; LCDL Solstice submittal &middot; Specifications subject to change without notice</div>
+    <div>Rev. 2026-05 &middot; Page 4 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SUBMITTAL AUTO-FILL · LCDL Solstice                           -->
+<!-- ============================================================ -->
+<script>
+/* =============================================================================
+   SUBMITTAL AUTO-FILL · LCDL Solstice
+   ----------------------------------------------------------------------------
+   Reads URL query params from the §9 Configurator and stamps the live catalog
+   number, ordering breakdown, quick specs, photometric peak, and dimension-row
+   highlight across all 4 pages.
+
+   Parameters (all optional · sensible defaults from PDP configurator state):
+     size         — 4 | 6 | 8 | 10 (aperture)
+     wattage      — explicit 3-WATTselect rung (else defaults to size's highest ★)
+     cct          — 2700 | 3000 | 3500 | 4000 | 5000 (default 5000)
+     trim         — DT | SQ (Round Default or Square /SQ suffix)
+     trimcolor    — BK | BN | BR | WH-WW
+     wallwash     — WW | STD
+     mount        — NCP | JCBNCP
+     em           — EM15 | EM24
+     sensor       — MSP20 | MSP40 | MSXLV | KINETIC
+     accessories  — CSV override of accessory codes (BK,BN,BR,WHWW,NCP,NCPJCB,EM15,EM24,MSP20,MSP40,MSXLV,KINETIC)
+     sku          — full canonical SKU override (preferred · auto-built upstream)
+
+   Built SKU pattern: LCDL{size}-{wattcode}CS[/SQ]
+     wattcode per size: 4 → 0612, 6 → 1222, 8 → 1730, 10 → 2238
+   ============================================================================= */
+(function() {
+
+  // ---- Per-size watt ladder + lumens · datasheet pg 2 model spec ----
+  // Each size has its own 3-WATTselect ladder. The wattcode is the watt-ladder identifier on the SKU.
+  // ★ default = the peak (highest) watt per the datasheet bolded values.
+  var SIZE_TABLE = {
+    '4':  { wattcode: '0612', watts: [6,  9,  12], lumens: [600,   900,   1200], lpw: 100 },
+    '6':  { wattcode: '1222', watts: [12, 17, 22], lumens: [1200,  1836,  2200], lpw: 100 },
+    '8':  { wattcode: '1730', watts: [17, 24, 30], lumens: [1870,  2640,  3300], lpw: 110 },
+    '10': { wattcode: '2238', watts: [22, 30, 38], lumens: [2200,  3000,  3876], lpw: 102 }
+  };
+
+  // Aperture dimensions · datasheet pg 2 measurements table
+  var APERTURE_DIM = {
+    '4':  { aperture: '4.33',  cutout: '4 21/64', weight: '~14 oz' },
+    '6':  { aperture: '6.30',  cutout: '6 1/2',   weight: '~22 oz' },
+    '8':  { aperture: '8.07',  cutout: '8 7/64',  weight: '~26 oz' },
+    '10': { aperture: '8.98',  cutout: '10 1/16', weight: '~32 oz' }
+  };
+
+  // Accessory map · CSV code from PDP configurator → submittal matrix row id + ordering-segment label
+  // Trim color kits resolve their {size} placeholder against the selected aperture.
+  var ACC_MAP = {
+    'BK':       { row: 'accRowBK',      label: 'LCDL{size}-SE/BK' },
+    'BN':       { row: 'accRowBN',      label: 'LCDL{size}-SE/BN' },
+    'BR':       { row: 'accRowBR',      label: 'LCDL{size}-SE/BR' },
+    'WHWW':     { row: 'accRowWHWW',    label: 'LCDL{size}-SE/WH/WW' },
+    'NCP':      { row: 'accRowNCP',     label: 'LCDL-SE/NCP' },
+    'NCPJCB':   { row: 'accRowNCPJCB',  label: 'LCDL-SE/JCB/NCP' },
+    'EM15':     { row: 'accRowEM15',    label: 'EM15-HMB/170DC' },
+    'EM24':     { row: 'accRowEM24',    label: 'EM24-JBM' },
+    'MSP20':    { row: 'accRowMSP20',   label: 'MSP-20CM-ACS' },
+    'MSP40':    { row: 'accRowMSP40',   label: 'MSP-40CM-ACS' },
+    'MSXLV':    { row: 'accRowMSXLV',   label: 'MSX-LV20-ACS' },
+    'KINETIC':  { row: 'accRowKINETIC', label: '50WM-ACS' }
+  };
+
+  // ---- Parse URL params ----
+  var params  = new URLSearchParams(window.location.search);
+  var skuQ    = params.get('sku')       || '';
+  var size    = params.get('size')      || '6';
+  var wattQ   = params.get('wattage')   || '';
+  var cct     = params.get('cct')       || '5000';
+  var trimQ   = params.get('trim')      || 'DT';
+  var trimC   = params.get('trimcolor') || '';
+  var wallW   = params.get('wallwash')  || '';
+  var mountQ  = params.get('mount')     || '';
+  var emQ     = params.get('em')        || '';
+  var sensorQ = params.get('sensor')    || '';
+
+  // Merge accessory params: accessories=CSV is primary, individual params are fallback
+  var accCsv  = params.get('accessories') || '';
+  var legacy  = [];
+  // Trim color · WH-WW interpreted as wall-wash white trim (WHWW)
+  if (trimC) {
+    if (trimC === 'WH-WW' || trimC === 'WHWW') legacy.push('WHWW');
+    else if (/^(BK|BN|BR)$/.test(trimC)) {
+      legacy.push(trimC);
+    }
+  }
+  if (wallW === 'WW' && !trimC) legacy.push('WHWW');
+  if (mountQ)  mountQ.split(',').filter(Boolean).forEach(function(m){ legacy.push(m); });
+  if (emQ)     emQ.split(',').filter(Boolean).forEach(function(e){ legacy.push(e); });
+  if (sensorQ) sensorQ.split(',').filter(Boolean).forEach(function(s){ legacy.push(s); });
+  var accessories = accCsv ? accCsv.split(',').filter(Boolean) : legacy;
+
+  // ---- Resolve size-driven defaults ----
+  var sizeSpec = SIZE_TABLE[size] || SIZE_TABLE['6'];
+  var defaultWatt = sizeSpec.watts[sizeSpec.watts.length - 1];  // ★ default = highest rung
+  var wattage = wattQ ? parseInt(wattQ, 10) : defaultWatt;
+  // If user passed a wattage that doesn't match the size's ladder, fall back to the default.
+  if (sizeSpec.watts.indexOf(wattage) === -1) wattage = defaultWatt;
+  var wattIdx = sizeSpec.watts.indexOf(wattage);
+  var lumens  = sizeSpec.lumens[wattIdx];
+  var lpw     = wattage ? Math.round((lumens / wattage) * 10) / 10 : 0;
+  // Peak candela estimate · 100° wide frosted-diffuser ~0.32 cd-per-lm at nadir for symmetric Type V
+  var peakCd  = Math.round(lumens * 0.32);
+
+  // ---- Trim suffix resolution ----
+  // trim=SQ appends /SQ; everything else is Round Default (no suffix)
+  var isSquare = (trimQ.toUpperCase() === 'SQ');
+  var trimSuffix = isSquare ? '/SQ' : '';
+  var trimLabel  = isSquare ? 'Square /SQ' : 'Round';
+
+  // ---- Build SKU if not passed in ----
+  // Canonical pattern · LCDL{size}-{wattcode}CS[/SQ]
+  function buildSku() {
+    if (skuQ) return skuQ;
+    return 'LCDL' + size + '-' + sizeSpec.wattcode + 'CS' + trimSuffix;
+  }
+  var sku = buildSku();
+
+  // ---- Ship-tier resolution (per CFG-CFG-1 v1.2 + Zoho QS/MTO map · Task #131-#132) ----
+  // QS = base SKU + NCP/JCBNCP mounts + EM15/EM24 batteries + BK/BN/BR trim color (sizes 4/6/8)
+  // MTO = any ⒶCS sensor accessory · WHWW trim · BK/BN/BR @ size 10 · all wall-wash variants
+  var isMTO = false;
+  accessories.forEach(function(a) {
+    if (a === 'MSP20' || a === 'MSP40' || a === 'MSXLV' || a === 'KINETIC') isMTO = true;
+    if (a === 'WHWW') isMTO = true;
+    if ((a === 'BK' || a === 'BN' || a === 'BR') && size === '10') isMTO = true;
+  });
+  var isQS = !isMTO;
+
+  // ---- Stamp every visible catalog-number slot ----
+  document.querySelectorAll('#catNum, #catNum2, #catNum3, #catNum4, #liveSku, #piCatNum').forEach(function(el) {
+    el.textContent = sku;
+  });
+
+  // ---- Stock pill (no-print bar) ----
+  var pill = document.getElementById('stockPill');
+  if (isQS) {
+    pill.className = 'qs-pill';
+    pill.textContent = 'QuickShip · 3-5 day';
+  } else {
+    pill.className = 'mto-pill';
+    pill.textContent = 'Made-to-Order · 4-6 wk';
+  }
+
+  // ---- Page 1 · Quick Specs ----
+  document.getElementById('qsLumens').innerHTML   = lumens.toLocaleString() + '<span class="qs-unit">lm @ ' + wattage + 'W</span>';
+  document.getElementById('qsWatts').innerHTML    = wattage + '<span class="qs-unit">W</span>';
+  document.getElementById('qsCct').innerHTML      = cct + '<span class="qs-unit">K</span>';
+  document.getElementById('qsEfficacy').innerHTML = lpw + '<span class="qs-unit">LM/W</span>';
+  document.getElementById('qsBeam').innerHTML     = '100&deg;<span class="qs-unit">WIDE · FROSTED PC</span>';
+  document.getElementById('qsDim').innerHTML      = 'Tri-Mode<span class="qs-unit">TRIAC+ELV+0-10V</span>';
+
+  // ---- Page 2 · Specs eyebrow + electrical/mechanical rows ----
+  var es = document.getElementById('specsEyebrow');
+  if (es) es.innerHTML = sku + ' &middot; LCDL' + size + ' aperture &middot; CS 5-CCT &middot; ' + trimLabel + ' trim';
+  var lumenLine = sizeSpec.watts.map(function(w, i) { return sizeSpec.lumens[i].toLocaleString() + ' lm @ ' + w + 'W'; }).join(' · ');
+  document.getElementById('esLumens').innerHTML  = '<strong>' + lumenLine + '</strong> &middot; LCDL' + size + ' @ 5000K &middot; per IESNA LM-79';
+  document.getElementById('esWatts').innerHTML   = '<strong>3-WATTselect</strong> &middot; ' + sizeSpec.watts.join(' / ') + 'W (LCDL' + size + ') &middot; 3-position DIP &middot; default ' + defaultWatt + 'W ★';
+  document.getElementById('esLpw').innerHTML     = 'Up to <strong>' + sizeSpec.lpw + ' LM/W</strong> (LCDL' + size + ') &middot; family-best <strong>110 LM/W</strong> on LCDL8 at 30W';
+  document.getElementById('esBeam').innerHTML    = '<strong>100&deg; wide</strong> &middot; frosted PC diffuser &middot; glare-free wash &middot; even ceiling coverage in office / hallway / retail grids';
+  document.getElementById('esDim').innerHTML     = '<strong>Tri-Mode dimming</strong> &middot; TRIAC + ELV + 0-10V from ONE SKU &middot; non-flicker constant-current driver &middot; Solstice\'s headline differentiator &middot; no SKU fork when project mixes phase-cut and 0-10V control zones';
+
+  // ---- Page 2 · Mechanical resolved values ----
+  document.getElementById('msSize').innerHTML  = size + '&Prime; &middot; aperture of selected family (4&Prime; / 6&Prime; / 8&Prime; / 10&Prime;)';
+  document.getElementById('msTrim').innerHTML  = (isSquare ? 'Square <strong>/SQ</strong> suffix' : 'Round Default') + ' &middot; trim color kits ship separately (Black / Brushed Nickel / Bronze / White Wall-Wash)';
+  var apDim = APERTURE_DIM[size];
+  if (apDim) {
+    document.getElementById('msAperture').textContent = apDim.aperture + '" (LCDL' + size + ')';
+    document.getElementById('msCutout').textContent   = apDim.cutout + '" (LCDL' + size + ')';
+    document.getElementById('msWeight').textContent   = apDim.weight + ' (LCDL' + size + ')';
+  }
+
+  // ---- Page 3 · Highlight the matching dimension view + row ----
+  ['dimRow4','dimRow6','dimRow8','dimRow10'].forEach(function(id) {
+    var tr = document.getElementById(id);
+    if (tr) tr.classList.remove('active-row');
+  });
+  var row = document.getElementById('dimRow' + size);
+  if (row) row.classList.add('active-row');
+
+  document.querySelectorAll('.dim-view').forEach(function(v) {
+    v.classList.remove('is-active');
+    var l = v.querySelector('.dim-view-label');
+    if (l) l.classList.remove('is-active');
+  });
+  var dimView = document.getElementById('dimView' + size);
+  if (dimView) {
+    dimView.classList.add('is-active');
+    var lbl = dimView.querySelector('.dim-view-label');
+    if (lbl) lbl.classList.add('is-active');
+  }
+
+  // ---- Page 4 · Ordering Code segments ----
+  document.getElementById('ocSize').textContent = 'LCDL' + size;
+  document.getElementById('ocWatt').textContent = sizeSpec.wattcode;
+  document.getElementById('ocTrim').textContent = isSquare ? '/SQ' : 'Round';
+  if (isSquare) {
+    document.getElementById('ocTrimSeg').classList.add('active');
+    var sqRow = document.getElementById('rowTrimSq');
+    if (sqRow) sqRow.classList.add('active-row');
+  } else {
+    var rdRow = document.getElementById('rowTrimRound');
+    if (rdRow) rdRow.classList.add('active-row');
+  }
+
+  // Resolve {size} placeholder in trim-color accessory labels
+  function resolveLabel(label) {
+    return label.replace('{size}', size);
+  }
+
+  // Active highlight on accessory segment if any picked
+  if (accessories.length > 0) {
+    document.getElementById('ocAcc').textContent = accessories.map(function(a) {
+      return (ACC_MAP[a] && resolveLabel(ACC_MAP[a].label)) || a;
+    }).join(' + ');
+    document.getElementById('ocAccSeg').classList.add('active');
+  } else {
+    document.getElementById('ocAcc').textContent = '—';
+  }
+
+  // ---- Page 4 · Highlight active rows in the ordering matrix ----
+  document.getElementById('rowWatt').classList.add('active-row');
+
+  // ---- Page 4 · Highlight selected accessories in the matrix ----
+  var hasAcsAcc = false;
+  accessories.forEach(function(a) {
+    var meta = ACC_MAP[a];
+    if (meta && meta.row) {
+      var r = document.getElementById(meta.row);
+      if (r) r.classList.add('acc-selected');
+    }
+    if (a === 'MSP20' || a === 'MSP40' || a === 'MSXLV' || a === 'KINETIC') hasAcsAcc = true;
+  });
+
+  // ---- DLC NLC qualifier note: only show if at least one ⒶCS accessory was picked ----
+  if (hasAcsAcc) {
+    var note = document.getElementById('nlcNote');
+    if (note) note.style.display = 'block';
+  }
+
+  // ---- Page 4 · Photometric summary ----
+  document.getElementById('photoPeak').textContent   = peakCd.toLocaleString() + ' cd @ 0° nadir';
+  document.getElementById('photoLumens').textContent = lumens.toLocaleString() + ' lm';
+  document.getElementById('photoEff').textContent    = lpw + ' lm/W';
+  document.getElementById('photoBeam').textContent   = '100° wide · frosted PC';
+  document.getElementById('photoIesFile').textContent = 'LCDL' + size + '-' + sizeSpec.wattcode + 'CS-' + wattage + 'W-' + (cct === '5000' ? '50K' : cct.slice(0,2) + 'K') + '.ies';
+
+  // ==========================================================================
+  // Page 1 hero · single aperture-specific real-photo wire-up.
+  //   solstice-aperture-{4|6|8|10}.webp per size · or solstice-square-6 for SQ trim
+  //   ON 404: img.onerror falls through to solstice-hero-1.webp
+  // ==========================================================================
+  (function wireSubmittalHeroPhoto() {
+    var apImg = document.getElementById('submittalHeroAperture');
+    if (apImg) {
+      // Square trim @ 6" has a dedicated photo; everything else uses round-aperture views
+      var apSrc = (isSquare && size === '6')
+        ? 'assets/hero/solstice-square-6.webp'
+        : 'assets/hero/solstice-aperture-' + size + '.webp';
+      apImg.src = apSrc;
+      apImg.alt = 'Solstice at LCDL' + size + ' (' + size + '" aperture)' + (isSquare ? ' · Square trim' : '');
+      apImg.onerror = function() { this.src = 'assets/hero/solstice-hero-1.webp'; this.onerror = null; };
+    }
+  })();
+
+  // ==========================================================================
+  // Page 4 photometric polar SVG · per-config picker.
+  // File pattern: assets/photometrics/lcdl6_{w}w_{k}k.svg
+  //   w · numeric wattage (12 / 17 / 22 for LCDL6 — currently the only rendered size)
+  //   k · CCT in K (2700 / 3000 / 3500 / 4000 / 5000)
+  // 15 SVGs pre-rendered (LCDL6 only · 3 watts × 5 CCTs).
+  // Other sizes (4/8/10) fall back to the nearest LCDL6 wattage because the
+  // frosted-PC diffuser polar profile is shape-identical across sizes.
+  // ON 404 the IMG.onerror swaps to a fallback message div.
+  // ==========================================================================
+  (function wireSubmittalPhotoPolar() {
+    var polarImg      = document.getElementById('submittalPhotoPolar');
+    var polarFallback = document.getElementById('submittalPhotoPolarFallback');
+    if (!polarImg) return;
+
+    var cctPick = parseInt(cct, 10) || 5000;
+    // LCDL6 is the only family with rendered polar SVGs (12/17/22W).
+    // For other sizes, map their wattage to the nearest LCDL6 wattage.
+    var lcdl6Watts = [12, 17, 22];
+    var polarWatt = wattage;
+    if (lcdl6Watts.indexOf(polarWatt) === -1) {
+      // Find nearest LCDL6 watt to selected wattage
+      polarWatt = lcdl6Watts.reduce(function(prev, curr) {
+        return Math.abs(curr - wattage) < Math.abs(prev - wattage) ? curr : prev;
+      });
+    }
+    var svgPath = 'assets/photometrics/lcdl6_' + polarWatt + 'w_' + cctPick + 'k.svg';
+    polarImg.src = svgPath;
+    polarImg.alt = 'Solstice polar candela distribution · LCDL' + size + ' ' + wattage + 'W ' + cctPick + 'K';
+    polarImg.onerror = function() {
+      this.style.display = 'none';
+      if (polarFallback) polarFallback.style.display = 'block';
+    };
+  })();
+
+  // Photo eyebrow · now lists the actual size/watt/cct combo loaded
+  var pe = document.getElementById('photoEyebrow');
+  if (pe) pe.innerHTML = 'LM-79 measured · 100&deg; wide beam · IES Type V symmetric · frosted PC diffuser &middot; <em>polar plot · LCDL' + size + ' @ ' + wattage + 'W · ' + cct + 'K</em>';
+
+  // ---- Date stamps ----
+  var d = new Date();
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('liveDate').textContent =
+    months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  document.getElementById('revDate').textContent =
+    d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+
+  // ============================================================================
+  // CFG-SUB-1 v2 · Editable Catalog Number · snapshot-then-rederive · session-only
+  // ----------------------------------------------------------------------------
+  // James 2026-05-18 playbook rule. User types a project-specific label into
+  // the top-right Catalog Number box (e.g. "ABC-001") and every visible
+  // instance of the ORIGINAL SKU on the page swaps to match in real time.
+  //
+  // V2 fix (snapshot-then-rederive): snapshot the original text of every node
+  // that contains `originalSku` at load time, then on each input event
+  // re-derive each node's text from the cached original via
+  // originalText.split(originalSku).join(override). Idempotent · only matches
+  // the full original SKU string, partial intermediate states can never propagate.
+  //
+  // Edits don't touch <a href>, data-*, scripts, styles, or the `sku` JS variable.
+  // ============================================================================
+  (function setupEditableCatalogNumber() {
+    var originalSku = sku;
+    var editor = document.getElementById('catNum');
+    if (!editor) return;
+
+    if (document.title.indexOf(originalSku) === -1) {
+      document.title = originalSku + ' · ' + document.title;
+    }
+    var originalTitle = document.title;
+
+    var matchedNodes = [];
+    (function snapshot() {
+      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(n) {
+          var p = n.parentNode;
+          while (p) {
+            if (p === editor) return NodeFilter.FILTER_REJECT;
+            if (p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT;
+            p = p.parentNode;
+          }
+          return n.nodeValue.indexOf(originalSku) !== -1
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        }
+      });
+      while (walker.nextNode()) {
+        matchedNodes.push({ node: walker.currentNode, originalText: walker.currentNode.nodeValue });
+      }
+    })();
+
+    function applyOverride(newDisplay) {
+      var override = newDisplay || originalSku;
+      matchedNodes.forEach(function(item) {
+        item.node.nodeValue = item.originalText.split(originalSku).join(override);
+      });
+      document.title = originalTitle.split(originalSku).join(override);
+    }
+
+    editor.addEventListener('input', function() {
+      var raw = (editor.textContent || '').replace(/[\r\n]+/g, ' ').slice(0, 60);
+      var nextDisplay = raw.trim() ? raw : originalSku;
+      applyOverride(nextDisplay);
+    });
+
+    editor.addEventListener('blur', function() {
+      var v = editor.textContent.trim();
+      if (!v) {
+        editor.textContent = originalSku;
+        applyOverride(originalSku);
+      }
+    });
+
+    editor.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        editor.blur();
+      }
+    });
+  })();
+})();
+</script>
+
+</body>
+</html>
