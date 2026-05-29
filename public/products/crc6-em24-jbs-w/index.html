@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="utf-8">
-  <title>constⒶNT EM20-HMB135AC · Mid-Power Value · Interactive Hub</title>
+  <title>constⒶNT CRC6-EM24/JBS/W · CRC J-Box · Datasheet</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #faf9f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
@@ -45,19 +45,24 @@ body { overflow-x: hidden; }
   <div id="__bundler_loading">Unpacking...</div>
 
   <script>
-    
 document.addEventListener('DOMContentLoaded', async function() {
   const loading = document.getElementById('__bundler_loading');
   function setStatus(msg) { if (loading) loading.textContent = msg; }
 
   // Error sink persists across replaceWith since it's on window, not the DOM.
   window.addEventListener('error', function(e) {
+    var msg = e.message || e.type || '';
+    var isCrossOrigin = msg.indexOf('cross-origin') >= 0 || msg.indexOf('Script error') >= 0;
+    if (isCrossOrigin) {
+      console.warn('[bundler] suppressed cross-origin error:', msg, e.filename, e.lineno);
+      return;
+    }
     var p = document.body || document.documentElement;
     var d = document.getElementById('__bundler_err') || p.appendChild(document.createElement('div'));
     d.id = '__bundler_err';
     d.style.cssText = 'position:fixed;bottom:12px;left:12px;right:12px;font:12px/1.4 ui-monospace,monospace;background:#2a1215;color:#ff8a80;padding:10px 14px;border-radius:8px;border:1px solid #5c2b2e;z-index:99999;white-space:pre-wrap;max-height:40vh;overflow:auto';
     d.textContent = (d.textContent ? d.textContent + String.fromCharCode(10) : '') +
-      '[bundle] ' + (e.message || e.type) +
+      '[bundle] ' + msg +
       (e.filename ? ' (' + e.filename.slice(0, 60) + ':' + e.lineno + ')' : '');
   }, true);
 
@@ -77,6 +82,11 @@ document.addEventListener('DOMContentLoaded', async function() {
     setStatus('Unpacking ' + uuids.length + ' assets...');
 
     const blobUrls = {};
+    // blobToText: blob URL → decoded UTF-8 text. Built once during decode for
+    // text/JS assets so the babel-with-src handler below can read the script
+    // body directly instead of fetch()-ing the blob: URL — which strict CSPs
+    // (e.g. Cloudflare Pages default connect-src) block.
+    const blobToText = {};
     await Promise.all(uuids.map(async (uuid) => {
       const entry = manifest[uuid];
       try {
@@ -109,6 +119,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         blobUrls[uuid] = URL.createObjectURL(new Blob([finalBytes], { type: entry.mime }));
+        // Cache decoded text for text/JS assets so we never need fetch() to read it back.
+        const mime = entry.mime || '';
+        if (mime.indexOf('text/') === 0 || mime.indexOf('javascript') >= 0 || mime === '') {
+          try { blobToText[blobUrls[uuid]] = new TextDecoder('utf-8').decode(finalBytes); } catch (e) {}
+        }
       } catch (err) {
         console.error('Failed to decode asset ' + uuid + ':', err);
         blobUrls[uuid] = URL.createObjectURL(new Blob([], { type: entry.mime }));
@@ -127,17 +142,11 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Strip integrity + crossorigin — blob URLs from a file:// document inherit
     // a null origin, so crossorigin forces a CORS fetch that SRI then rejects.
-    // The manifest bytes are ours; SRI protects against CDN compromise, not this.
     template = template.replace(/\s+integrity="[^"]*"/gi, '').replace(/\s+crossorigin="[^"]*"/gi, '');
 
     const resourceScript = '<script>window.__resources = ' +
       JSON.stringify(resourceMap).split('</' + 'script>').join('<\\/' + 'script>') +
       ';</' + 'script>';
-    // Inject after <head> so the DOCTYPE stays first; prepending the script
-    // would push the parser into quirks mode. DOMParser always emits a <head>
-    // (synthesizing one if the source HTML omitted it) but may carry
-    // attributes through, so match the full opening tag. slice() rather than
-    // replace() keeps us clear of $-pattern substitution in resourceScript.
     const headOpen = template.match(/<head[^>]*>/i);
     if (headOpen) {
       const i = headOpen.index + headOpen[0].length;
@@ -150,24 +159,40 @@ document.addEventListener('DOMContentLoaded', async function() {
     // preserve ordering (React before ReactDOM before Babel before text/babel).
     const doc = new DOMParser().parseFromString(template, 'text/html');
     document.documentElement.replaceWith(doc.documentElement);
-    const dead = Array.from(document.scripts);
-    for (const old of dead) {
+
+    // Process head scripts FIRST (React, ReactDOM, Babel) before body scripts.
+    // v6 fix: head-positioned scripts were previously skipped, causing Babel to
+    // be undefined when text/babel body scripts ran.
+    const allScripts = Array.from(document.scripts);
+    // Separate head scripts from body scripts by position
+    const headScripts = allScripts.filter(s => s.closest('head'));
+    const bodyScripts = allScripts.filter(s => !s.closest('head'));
+
+    async function reactivateScript(old) {
       const s = document.createElement('script');
       for (const a of old.attributes) s.setAttribute(a.name, a.value);
       s.textContent = old.textContent;
-      // text/babel scripts with a src: fetch and inline. transformScriptTags
-      // does XHR against the src, but blob:null/ from a file:// origin is
-      // silently dropped. Inlining makes it a plain inline babel script,
-      // which transformScriptTags handles unconditionally.
       if ((s.type === 'text/babel' || s.type === 'text/jsx') && s.src) {
-        const r = await fetch(s.src);
-        s.textContent = await r.text();
+        if (blobToText[s.src]) {
+          s.textContent = blobToText[s.src];
+        } else {
+          try {
+            const r = await fetch(s.src);
+            s.textContent = await r.text();
+          } catch (e) {
+            console.error('[bundler] babel src fetch fallback failed:', e, s.src);
+          }
+        }
         s.removeAttribute('src');
       }
       const p = s.src ? new Promise(function(r) { s.onload = s.onerror = r; }) : null;
       old.replaceWith(s);
       if (p) await p;
     }
+
+    for (const s of headScripts) await reactivateScript(s);
+    for (const s of bodyScripts) await reactivateScript(s);
+
     // Babel standalone auto-transforms type=text/babel on DOMContentLoaded,
     // which fired before we swapped the document. Trigger manually if present.
     if (window.Babel && typeof window.Babel.transformScriptTags === 'function') {
