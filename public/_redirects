@@ -92,3 +92,31 @@
 /products/lrhb-icarus-iii/           /products/lrhb-icarus/               301
 /products/lrhb-jupiter-ii            /products/lrhb-jupiter               301
 /products/lrhb-jupiter-ii/           /products/lrhb-jupiter/              301
+
+# planoARCH xref old-prefix 301s (CFG-NAMING-2 · 2026-05-29)
+/products/lcdl-astra/ /products/astra/ 301
+/products/lcdl-astra /products/astra/ 301
+/products/lcdl-astra-i/ /products/astra/ 301
+/products/lcdl-astra-i /products/astra/ 301
+/products/astra-i/ /products/astra/ 301
+/products/astra-i /products/astra/ 301
+/products/lcdl-solstice/ /products/solstice/ 301
+/products/lcdl-solstice /products/solstice/ 301
+/products/lcdl-solstice-safezone/ /products/solstice-safezone/ 301
+/products/lcdl-solstice-safezone /products/solstice-safezone/ 301
+/products/lcdl-spectra/ /products/spectra/ 301
+/products/lcdl-spectra /products/spectra/ 301
+/products/luxa-luna/ /products/luna/ 301
+/products/luxa-luna /products/luna/ 301
+/products/luxa-lara/ /products/lara/ 301
+/products/luxa-lara /products/lara/ 301
+/products/lpvt-luxmark/ /products/luxmark/ 301
+/products/lpvt-luxmark /products/luxmark/ 301
+/products/lwrl-waymark/ /products/waymark/ 301
+/products/lwrl-waymark /products/waymark/ 301
+/products/ltrk-trackstar/ /products/trackstar/ 301
+/products/ltrk-trackstar /products/trackstar/ 301
+/products/lbol-sentry/ /products/lbol-sentry-bollard/ 301
+/products/lbol-sentry /products/lbol-sentry-bollard/ 301
+/products/proarch/ /products/proarch-t/ 301
+/products/proarch /products/proarch-t/ 301
