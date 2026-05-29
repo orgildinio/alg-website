@@ -67,16 +67,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .bc-current { color: var(--text-primary); font-weight: 700; }
   .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 32px; }
   @media (max-width: 760px) { .container { padding: 0 20px; } }
-  .eyebrow {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: hsl(var(--vert-accent));
-    margin-bottom: 12px;
-  }
+  /* ── Eyebrow: delegated to global sec-eyebrow ── */
   .hero {
     padding: 80px 0 72px;
     background: var(--bg-deepest);
@@ -89,16 +80,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     align-items: start;
   }
   @media (max-width: 900px) { .hero__grid { grid-template-columns: 1fr; } }
-  .hero__eyebrow {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: hsl(var(--vert-accent));
-    margin-bottom: 16px;
-  }
+  /* ── Hero eyebrow: delegated to global sec-eyebrow ── */
   .hero__title { font-size: 52px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.08; color: var(--text-primary); margin: 0 0 20px; }
   @media (max-width: 760px) { .hero__title { font-size: 34px; } }
   .hero__deck { font-size: 17px; color: var(--text-secondary); line-height: 1.6; margin: 0 0 32px; max-width: 560px; }
@@ -116,8 +98,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .stat__value { font-size: 28px; font-weight: 900; letter-spacing: -0.02em; color: hsl(var(--vert-accent)); line-height: 1; margin-bottom: 4px; }
   .stat__label { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
   .section { padding: 72px 0; border-bottom: 1px solid var(--line); }
-  .section-title { font-size: 36px; font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); margin: 0 0 8px; line-height: 1.15; }
-  .section-title--underline { padding-bottom: 14px; border-bottom: 3px solid hsl(var(--vert-accent)); display: inline-block; margin-bottom: 24px; }
+  /* ── Section title: delegated to global sec-title ── */
   .section-deck { font-size: 16px; color: var(--text-secondary); line-height: 1.6; max-width: 680px; margin: 0 0 40px; }
   .zones { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px; }
   .zone-card { background: var(--bg-card); border: 1px solid var(--line); border-left: 4px solid hsl(var(--vert-zone-1)); border-radius: var(--radius); padding: 20px 22px; }
@@ -226,8 +207,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 2. LIGHTING BY ZONE -->
     <section class="section">
       <div class="container">
-        <span class="eyebrow">Lighting by Zone</span>
-        <h2 class="section-title section-title--underline">Every zone in the facility</h2>
+        <span class="sec-eyebrow">Lighting by Zone</span>
+        <h2 class="sec-title">Every zone in the facility</h2>
         <p class="section-deck">Data centers demand reliable, energy-efficient lighting engineered for diverse environments within a single facility. ALG provides purpose-built solutions for every zone &mdash; from high-density server halls to exterior security perimeters &mdash; with sensor-ready controls that help meet ASHRAE 90.1 and reduce PUE.</p>
         <div class="zones">
           <article class="zone-card" data-zone="1">
@@ -313,8 +294,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 3. PRODUCT MATRIX -->
     <section class="section">
       <div class="container">
-        <span class="eyebrow">Product Selection Matrix</span>
-        <h2 class="section-title section-title--underline">Right fixture for every zone</h2>
+        <span class="sec-eyebrow">Product Selection Matrix</span>
+        <h2 class="sec-title">Right fixture for every zone</h2>
         <div class="matrix-wrap">
           <table class="matrix-table">
             <thead>
@@ -342,8 +323,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 4. KEY TECHNOLOGIES -->
     <section class="section">
       <div class="container">
-        <span class="eyebrow">Key Technologies</span>
-        <h2 class="section-title section-title--underline">Built for data centers</h2>
+        <span class="sec-eyebrow">Key Technologies</span>
+        <h2 class="sec-title">Built for data centers</h2>
         <p class="section-deck">The platform technologies engineered for mission-critical environments &mdash; where reliability, efficiency, and compliance are non-negotiable.</p>
         <div class="tech-grid">
           <div class="tech-badge">
@@ -395,8 +376,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 5. APPLICATION SPOTLIGHT -->
     <section class="section">
       <div class="container">
-        <span class="eyebrow">Application Spotlight</span>
-        <h2 class="section-title section-title--underline">Where this portfolio runs</h2>
+        <span class="sec-eyebrow">Application Spotlight</span>
+        <h2 class="sec-title">Where this portfolio runs</h2>
         <p class="section-deck">Three deployment archetypes that cover the bulk of data center specs ALG ships every quarter.</p>
         <div class="spotlight-grid">
           <article class="spotlight-card">
@@ -442,7 +423,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <div class="container">
         <div class="value-banner">
           <div>
-            <span class="eyebrow">Energy &amp; PUE Impact</span>
+            <span class="sec-eyebrow">Energy &amp; PUE Impact</span>
             <h2 class="value-banner__title">40–60% Lighting Energy Reduction</h2>
             <p class="value-banner__body">High-efficacy LED fixtures (150+ lm/W) combined with sensorBLE wireless controls can reduce lighting energy consumption by 40&ndash;60%, directly improving your facility's Power Usage Effectiveness score. Less heat from lighting also reduces cooling load in already thermally-managed environments.</p>
           </div>
@@ -467,8 +448,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 7. PROCUREMENT -->
     <section class="section">
       <div class="container">
-        <span class="eyebrow">Simplify Procurement</span>
-        <h2 class="section-title section-title--underline">One PO. One warranty. One contact.</h2>
+        <span class="sec-eyebrow">Simplify Procurement</span>
+        <h2 class="sec-title">One PO. One warranty. One contact.</h2>
         <p class="section-deck">From high-density server halls to exterior perimeters, ALG delivers a unified lighting solution under one brand. Single-source procurement streamlines your supply chain and ensures consistent quality across every zone.</p>
         <div class="procurement-grid">
           <div class="proc-step">
@@ -496,8 +477,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 8. CLOSING CTA -->
     <section class="section" style="border-bottom:none;">
       <div class="container">
-        <span class="eyebrow">The ALG Advantage</span>
-        <h2 class="section-title section-title--underline">Why specifiers choose us</h2>
+        <span class="sec-eyebrow">The ALG Advantage</span>
+        <h2 class="sec-title">Why specifiers choose us</h2>
         <div class="advantage-strip">
           <div class="advantage-pillar">
             <div class="advantage-pillar__num">5</div>

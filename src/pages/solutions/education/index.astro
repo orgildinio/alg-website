@@ -9,8 +9,8 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 ---
 <BaseLayout
-  title="Education Lighting Solutions · ALG"
-  description="Energy-efficient LED upgrades for K-12 schools, universities, and campus facilities. ALG's selectARCH retrofit kits offer the lowest-disruption upgrade path for schools."
+  title="Education Lighting · ALG"
+  description="LED retrofit and new-build lighting for K–12, higher ed, and campus facilities. selectARCH retrofit kits and control-ready fixtures for fast summer installs and district-wide standardization."
   bodyClass="page-vertical-education"
 >
 <style>
@@ -56,11 +56,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .bc-current { color: var(--text-primary); font-weight: 700; }
   .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 32px; }
   @media (max-width: 760px) { .container { padding: 0 20px; } }
-  .eyebrow { display: block; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: hsl(var(--vert-accent)); margin-bottom: 12px; }
+  /* ── Eyebrow: delegated to global sec-eyebrow ── */
   .hero { padding: 80px 0 72px; background: var(--bg-deepest); border-bottom: 1px solid var(--line); }
   .hero__grid { display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start; }
   @media (max-width: 900px) { .hero__grid { grid-template-columns: 1fr; } }
-  .hero__eyebrow { display: block; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: hsl(var(--vert-accent)); margin-bottom: 16px; }
+  /* ── Hero eyebrow: delegated to global sec-eyebrow ── */
   .hero__title { font-size: 52px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.08; color: var(--text-primary); margin: 0 0 20px; }
   @media (max-width: 760px) { .hero__title { font-size: 34px; } }
   .hero__deck { font-size: 17px; color: var(--text-secondary); line-height: 1.6; margin: 0 0 32px; max-width: 560px; }
@@ -78,8 +78,37 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .stat__value { font-size: 28px; font-weight: 900; letter-spacing: -0.02em; color: hsl(var(--vert-accent)); line-height: 1; margin-bottom: 4px; }
   .stat__label { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
   .section { padding: 72px 0; border-bottom: 1px solid var(--line); }
-  .section-title { font-size: 36px; font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); margin: 0 0 8px; line-height: 1.15; }
-  .section-title--underline { padding-bottom: 14px; border-bottom: 3px solid hsl(var(--vert-accent)); display: inline-block; margin-bottom: 24px; }
+  /* ── Section title: delegated to global sec-title ── */
+
+  /* ── Hero trust line ── */
+  .hero .cta-trust-line {
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.62);
+    margin-top: 12px;
+    max-width: 64ch;
+  }
+
+  /* ── Why bullets ── */
+  .why-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+  }
+  .why-bullets li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .why-bullets li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--brand-red, #F32740);
+    font-weight: 700;
+  }
   .section-deck { font-size: 16px; color: var(--text-secondary); line-height: 1.6; max-width: 680px; margin: 0 0 40px; }
   .zones { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px; }
   .zone-card { background: var(--bg-card); border: 1px solid var(--line); border-left: 4px solid hsl(var(--vert-zone-1)); border-radius: var(--radius); padding: 20px 22px; }
@@ -159,12 +188,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="hero__grid">
           <div>
             <span class="hero__eyebrow">Vertical Solutions · Education</span>
-            <h1 class="hero__title">Education Lighting Solutions</h1>
-            <p class="hero__deck">Energy-Efficient LED Upgrades for K-12 Schools, Universities, and Campus Facilities. ALG's selectARCH retrofit kits offer the lowest-disruption upgrade path &mdash; critical for schools that can only renovate during summer breaks.</p>
+            <h1 class="hero__title">Education Lighting</h1>
+            <p class="hero__deck">LED retrofit and new-build lighting for K–12, higher ed, and campus facilities. ALG's selectARCH retrofit kits and control-ready fixtures support fast summer installs, clean submittals, and repeatable district-wide standardization.</p>
             <div class="hero__cta-row">
-              <a href="/contact" class="btn btn--primary">Request a Layout <span class="arrow">→</span></a>
-              <a href="/contact" class="btn btn--ghost">Download Spec Pack</a>
+              <a href="mailto:sales@archipelagolighting.com?subject=Photometric%20request" class="btn btn--primary">Request a Photometric <span class="arrow">→</span></a>
+              <a href="/contact" class="btn btn--ghost">Download Spec Pack <span class="arrow">→</span></a>
             </div>
+            <p class="cta-trust-line">Spec pack includes cutsheets, IES files, controls narrative, and DLC documentation (where applicable).</p>
           </div>
           <aside class="info-card" aria-label="Key specs">
             <div class="info-card__label">Key Specs</div>
@@ -188,9 +218,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 2. LIGHTING BY ZONE -->
     <section class="section">
       <div class="container">
-        <span class="eyebrow">Lighting by Campus Zone</span>
-        <h2 class="section-title section-title--underline">Every zone on campus</h2>
-        <p class="section-deck">Schools represent the single largest building stock for lighting retrofits in the United States. With ESSER funding still available and state energy mandates tightening, districts are upgrading to LED at unprecedented rates. ALG's selectARCH retrofit kits offer the lowest-disruption upgrade path &mdash; critical for schools that can only renovate during summer breaks.</p>
+        <span class="sec-eyebrow">Lighting by Campus Zone</span>
+        <h2 class="sec-title">Every zone on campus</h2>
+        <p class="section-deck">Schools are one of the largest retrofit opportunities in the U.S.—and the hardest to schedule. ALG supports district-wide LED upgrades with retrofit kits and control-ready fixtures designed for fast summer installs, consistent specifications, and scalable procurement across campuses.</p>
         <div class="zones">
           <article class="zone-card" data-zone="1">
             <div class="zone-card__num">Zone 01</div>
@@ -261,8 +291,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           </article>
         </div>
         <div class="callout-dark">
-          <h4 class="callout-dark__title">ESSER &amp; Funding Compatibility</h4>
-          <p class="callout-dark__body">ESSER (Elementary and Secondary School Emergency Relief) funding through 2026 can be applied to facility improvements including LED lighting upgrades that improve indoor air quality and ventilation environments. ALG's DLC Premium listed products also qualify for utility rebates, stacking incentives for cash-strapped districts. Extended finance terms further ease the capital burden.</p>
+          <h4 class="callout-dark__title">Funding &amp; Incentives Support</h4>
+          <p class="callout-dark__body">Many districts fund LED upgrades through a mix of capital budgets, grants, and incentive programs. We support documentation needs for common funding and rebate pathways.</p>
+          <p class="callout-dark__body" style="margin-top:8px;">DLC-listed products (where applicable) can support utility rebate programs, helping districts improve ROI. Ask our team about documentation packages and project support options.</p>
         </div>
       </div>
     </section>
@@ -270,8 +301,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 3. PRODUCT MATRIX -->
     <section class="section">
       <div class="container">
-        <span class="eyebrow">Product Selection Matrix</span>
-        <h2 class="section-title section-title--underline">Right fixture for every campus zone</h2>
+        <span class="sec-eyebrow">Product Selection Matrix</span>
+        <h2 class="sec-title">Right fixture for every campus zone</h2>
         <div class="matrix-wrap">
           <table class="matrix-table">
             <thead>
@@ -301,8 +332,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 4. KEY TECHNOLOGIES -->
     <section class="section">
       <div class="container">
-        <span class="eyebrow">Why Schools Choose ALG</span>
-        <h2 class="section-title section-title--underline">Built for education</h2>
+        <span class="sec-eyebrow">Why Schools Choose ALG</span>
+        <h2 class="sec-title">Built for education</h2>
         <p class="section-deck">The technologies and features that matter most to school districts, facility managers, and specifiers.</p>
         <div class="tech-grid">
           <div class="tech-badge">
@@ -310,21 +341,21 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
             </div>
             <h3 class="tech-badge__title">Summer-Break Ready</h3>
-            <p class="tech-badge__desc">Retrofit kits &amp; plug-play tubes install during breaks with zero disruption to students.</p>
+            <p class="tech-badge__desc">Retrofit kits and fast-install options designed for summer and off-hours upgrades with minimal disruption.</p>
           </div>
           <div class="tech-badge">
             <div class="tech-badge__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
             <h3 class="tech-badge__title">Budget Friendly</h3>
-            <p class="tech-badge__desc">DLC Premium rebates + extended finance terms help stretch limited school budgets.</p>
+            <p class="tech-badge__desc">Rebate-eligible options (where applicable) and long-life performance help stretch limited budgets.</p>
           </div>
           <div class="tech-badge">
             <div class="tech-badge__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
             </div>
             <h3 class="tech-badge__title">Flicker-Free</h3>
-            <p class="tech-badge__desc">Eliminates flicker that causes headaches &amp; reduces student concentration.</p>
+            <p class="tech-badge__desc">Flicker-conscious performance designed for comfortable learning environments.</p>
           </div>
           <div class="tech-badge">
             <div class="tech-badge__icon">
@@ -338,7 +369,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-4-3-6l-4-5-4 5c-2 2-3 4-3 6a7 7 0 0 0 7 7Z"/></svg>
             </div>
             <h3 class="tech-badge__title">sensorBLE</h3>
-            <p class="tech-badge__desc">Wireless occupancy sensing for gymnasiums and off-hours energy savings.</p>
+            <p class="tech-badge__desc">Wireless occupancy sensing options for gyms, corridors, and after-hours energy savings.</p>
           </div>
         </div>
       </div>
@@ -347,8 +378,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 5. APPLICATION SPOTLIGHT -->
     <section class="section">
       <div class="container">
-        <span class="eyebrow">Application Spotlight</span>
-        <h2 class="section-title section-title--underline">Where this portfolio runs</h2>
+        <span class="sec-eyebrow">Application Spotlight</span>
+        <h2 class="sec-title">Where this portfolio runs</h2>
         <p class="section-deck">Three campus archetypes that cover the bulk of education specs ALG ships every quarter.</p>
         <div class="spotlight-grid">
           <article class="spotlight-card">
@@ -357,7 +388,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             </div>
             <div class="spotlight-card__body">
               <h3 class="spotlight-card__title">K-12 School District</h3>
-              <p class="spotlight-card__desc">Complete campus coverage from classroom troffers to gymnasium high bays to parking lot area lights. Single-source procurement simplifies district bidding.</p>
+              <p class="spotlight-card__desc">Standardize across campuses—from classrooms to gyms to exterior parking. A single-source package simplifies bidding, submittals, and ongoing maintenance.</p>
               <div class="spotlight-card__meta">Zones 1 → 6 · Campus-wide</div>
             </div>
           </article>
@@ -367,7 +398,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             </div>
             <div class="spotlight-card__body">
               <h3 class="spotlight-card__title">University &amp; Community College</h3>
-              <p class="spotlight-card__desc">High-bay linear for lecture halls, flicker-free panels for labs, exterior security for large campuses. sensorBLE reduces energy in intermittently occupied spaces.</p>
+              <p class="spotlight-card__desc">Interior lighting for classrooms, labs, and common areas—plus exterior lighting for safety and security. Add occupancy options to reduce energy in intermittently occupied spaces.</p>
               <div class="spotlight-card__meta">Zones 1, 3, 5 · Multi-building</div>
             </div>
           </article>
@@ -377,14 +408,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             </div>
             <div class="spotlight-card__body">
               <h3 class="spotlight-card__title">Summer Retrofit Program</h3>
-              <p class="spotlight-card__desc">Plug-and-play T8 Type A tubes and selectARCH drop-in kits. Zero classroom disruption. ESSER-fundable. Installed and commissioned before fall semester.</p>
+              <p class="spotlight-card__desc">T8 retrofit options and selectARCH drop-in kits designed for fast summer execution. Standardize SKUs, complete installs during break windows, and open the semester with upgraded lighting in place.</p>
               <div class="spotlight-card__meta">Zone 6 · Retrofit-only</div>
             </div>
           </article>
         </div>
         <div class="callout-dark">
           <h4 class="callout-dark__title">State Energy Mandates &amp; Title 24</h4>
-          <p class="callout-dark__body">States across the country are tightening energy codes for public buildings, with California's Title 24 leading the way. ALG's DLC Premium fixtures with control-ready ports and sensorBLE wireless controls help schools meet these requirements without costly hardwired control systems. BAA/TAA compliance also covers federally funded school projects.</p>
+          <p class="callout-dark__body">Control-ready fixtures and sensing options help schools meet modern energy code requirements while reducing controls complexity. Compliance documentation and TAA/BAA options are available for qualifying projects.</p>
         </div>
       </div>
     </section>
@@ -394,9 +425,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <div class="container">
         <div class="value-banner">
           <div>
-            <span class="eyebrow">The Education Advantage</span>
-            <h2 class="value-banner__title">10+ Years Maintenance-Free</h2>
-            <p class="value-banner__body">50,000-hour L70 rated life means no lamp replacements for over a decade. That's real savings for maintenance departments already stretched thin &mdash; and fewer ladder trips in occupied classrooms. Flicker-free operation and high CRI create comfortable, well-lit learning environments. 0-10V dimming allows teachers to adjust light levels for presentations, reading, or testing.</p>
+            <span class="sec-eyebrow">The Education Advantage</span>
+            <h2 class="value-banner__title">Long-life performance for reduced maintenance</h2>
+            <p class="value-banner__body">Long-life LED performance reduces relamping cycles and maintenance labor over time. That means fewer ladder trips, fewer disruptions, and more predictable maintenance planning. Flicker-conscious operation and high color quality options create comfortable, well-lit learning environments. 0-10V dimming allows teachers to adjust light levels for presentations, reading, or testing.</p>
           </div>
           <div class="value-banner__metrics">
             <div class="value-metric">
@@ -419,27 +450,27 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 7. PROCUREMENT -->
     <section class="section">
       <div class="container">
-        <span class="eyebrow">Simplify Procurement</span>
-        <h2 class="section-title section-title--underline">One PO. One warranty. One contact.</h2>
+        <span class="sec-eyebrow">Simplify Procurement</span>
+        <h2 class="sec-title">One PO. One warranty. One contact.</h2>
         <p class="section-deck">From classroom troffers to gymnasium high bays to parking lot area lights, ALG covers every space on campus. Single-source procurement simplifies bidding for school district purchasing departments.</p>
         <div class="procurement-grid">
           <div class="proc-step">
             <span class="proc-step__big">01</span>
             <span class="proc-step__num">Step 01 · Scope</span>
             <h3 class="proc-step__title">Identify the job</h3>
-            <p class="proc-step__desc">Send the floor plan, zone count, and ceiling heights. ALG's inside sales team returns a fixture-by-fixture takeoff within 48 hours.</p>
+            <p class="proc-step__desc">Send the floor plan, zone count, and ceiling heights. We return a zone-by-zone takeoff within 48 hours, including fixture schedule, quantities, and IES files as needed.</p>
           </div>
           <div class="proc-step">
             <span class="proc-step__big">02</span>
             <span class="proc-step__num">Step 02 · Fund</span>
             <h3 class="proc-step__title">Stack the incentives</h3>
-            <p class="proc-step__desc">ESSER funding, utility rebates, and extended finance terms can be layered. DLC Premium docs and BAA/TAA certificates provided for all filings.</p>
+            <p class="proc-step__desc">We support incentive and compliance documentation needs. DLC documentation (where applicable) and compliance certificates are available for submittals and rebate packages.</p>
           </div>
           <div class="proc-step">
             <span class="proc-step__big">03</span>
             <span class="proc-step__num">Step 03 · Install</span>
             <h3 class="proc-step__title">Summer-break delivery</h3>
-            <p class="proc-step__desc">Quick-ship stock from five U.S. warehouses. Retrofit kits and plug-play tubes install without construction crews or classroom shutdowns.</p>
+            <p class="proc-step__desc">Quick-ship availability from U.S. warehouses. Retrofit-focused options are designed to reduce labor time and minimize disruption during tight install windows.</p>
           </div>
         </div>
       </div>
@@ -448,8 +479,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 8. CLOSING CTA -->
     <section class="section" style="border-bottom:none;">
       <div class="container">
-        <span class="eyebrow">The ALG Advantage</span>
-        <h2 class="section-title section-title--underline">Why schools choose us</h2>
+        <span class="sec-eyebrow">The ALG Advantage</span>
+        <h2 class="sec-title">Why schools choose us</h2>
+        <ul class="why-bullets">
+          <li>Fast summer retrofit path with repeatable, district-wide standardization</li>
+          <li>Controls-ready options to support energy code requirements</li>
+          <li>Submittal support: cutsheets, IES files, takeoffs, and documentation (where applicable)</li>
+        </ul>
         <div class="advantage-strip">
           <div class="advantage-pillar">
             <div class="advantage-pillar__num">#1</div>

@@ -16,8 +16,8 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 ---
 <BaseLayout
-  title="Cold Storage & Grocery Lighting Solutions · ALG"
-  description="Total-Store LED Systems from freezer to fuel canopy. ALG's cold-rated fixtures cover walk-in coolers, refrigerated cases, sales floor, and exterior — under one brand."
+  title="Cold Storage & Grocery Lighting · ALG"
+  description="Total-store LED package from −40°F freezers to fuel canopies. Specify one manufacturer for cooler, sales floor, back-of-house, and exterior zones."
   bodyClass="page-vertical-cold-storage"
 >
 <style>
@@ -86,16 +86,37 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   }
   @media (max-width: 760px) { .container { padding: 0 20px; } }
 
-  /* ── Eyebrow ── */
-  .eyebrow {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 11px;
+  /* ── Eyebrow: delegated to global sec-eyebrow ── */
+
+  /* ── Hero trust line ── */
+  .solutions-hero .cta-trust-line,
+  .hero .cta-trust-line {
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.62);
+    margin-top: 12px;
+    max-width: 64ch;
+  }
+
+  /* ── Why bullets ── */
+  .why-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+  }
+  .why-bullets li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .why-bullets li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--brand-red, #F32740);
     font-weight: 700;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: hsl(var(--vert-accent));
-    margin-bottom: 12px;
   }
 
   /* ── Hero ── */
@@ -111,16 +132,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     align-items: start;
   }
   @media (max-width: 900px) { .hero__grid { grid-template-columns: 1fr; } }
-  .hero__eyebrow {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: hsl(var(--vert-accent));
-    margin-bottom: 16px;
-  }
+  /* ── Hero eyebrow: delegated to global sec-eyebrow ── */
   .hero__title {
     font-size: 52px;
     font-weight: 900;
@@ -195,20 +207,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
   /* ── Section ── */
   .section { padding: 72px 0; border-bottom: 1px solid var(--line); }
-  .section-title {
-    font-size: 36px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--text-primary);
-    margin: 0 0 8px;
-    line-height: 1.15;
-  }
-  .section-title--underline {
-    padding-bottom: 14px;
-    border-bottom: 3px solid hsl(var(--vert-accent));
-    display: inline-block;
-    margin-bottom: 24px;
-  }
+  /* ── Section title: delegated to global sec-title ── */
   .section-deck {
     font-size: 16px;
     color: var(--text-secondary);
@@ -579,12 +578,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="hero__grid">
           <div>
             <span class="hero__eyebrow">Vertical Solutions · Cold Storage &amp; Grocery</span>
-            <h1 class="hero__title">Cold Storage &amp; Grocery Lighting Solutions</h1>
-            <p class="hero__deck">Total-Store LED Systems &mdash; From Freezer to Fuel Canopy. ALG is one of the few manufacturers offering a complete store lighting package under one brand.</p>
+            <h1 class="hero__title">Cold Storage &amp; Grocery Lighting</h1>
+            <p class="hero__deck">Total-store LED package—from −40°F freezers to fuel canopies. Specify one manufacturer for cooler, sales floor, back-of-house, and exterior zones—with consistent performance, documentation, and warranty support.</p>
             <div class="hero__cta-row">
-              <a href="/contact" class="btn btn--primary">Request a Layout <span class="arrow">→</span></a>
-              <a href="/contact" class="btn btn--ghost">Download Spec Pack</a>
+              <a href="mailto:sales@archipelagolighting.com?subject=Photometric%20request" class="btn btn--primary">Request a Photometric <span class="arrow">→</span></a>
+              <a href="/contact" class="btn btn--ghost">Download Spec Pack <span class="arrow">→</span></a>
             </div>
+            <p class="cta-trust-line">Includes cutsheets, IES files, DLC documentation (where applicable), and compliance certificates on request.</p>
           </div>
           <aside class="info-card" aria-label="Key specs">
             <div class="info-card__label">Key Specs</div>
@@ -608,9 +608,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 2. LIGHTING BY ZONE -->
     <section class="section" data-screen-label="Zones">
       <div class="container">
-        <span class="eyebrow">Lighting by Zone</span>
-        <h2 class="section-title section-title--underline">Every zone in the store</h2>
-        <p class="section-deck">Cold storage and grocery facilities present unique challenges: extreme temperatures, moisture, washdown requirements, and the need for high color rendering to make products look their best. ALG is one of the few manufacturers offering a complete solution from −40°F freezer to fuel canopy &mdash; under one brand.</p>
+        <span class="sec-eyebrow">Lighting by Zone</span>
+        <h2 class="sec-title">Every zone in the store</h2>
+        <p class="section-deck">Cold storage and grocery environments demand more than "cold-rated": moisture, washdown, condensation, frequent switching, and visual merchandising all matter. ALG supports a complete package—from −40°F freezer zones to fuel canopies—so teams can standardize performance, documentation, and warranty support across locations.</p>
         <div class="zones">
           <article class="zone-card" data-zone="1">
             <div class="zone-card__num">Zone 01</div>
@@ -696,7 +696,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         </div>
         <div class="callout-dark">
           <h4 class="callout-dark__title">Total-Store, Single-Source Advantage</h4>
-          <p class="callout-dark__body">ALG is one of the few manufacturers offering a complete store lighting package &mdash; from −40°F freezer fixtures to fuel canopy luminaires &mdash; under one brand. Single-source procurement reduces coordination costs, simplifies warranty management, and ensures consistent light quality throughout the customer journey. One PO. One warranty contact. One consistent look.</p>
+          <p class="callout-dark__body">A single-source package—from −40°F freezer fixtures to fuel canopy luminaires—under one brand. Standardizing on one manufacturer reduces coordination, simplifies submittals, and keeps light quality consistent from back-of-house to the sales floor. One PO. One warranty contact. One consistent standard.</p>
         </div>
       </div>
     </section>
@@ -704,8 +704,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 3. PRODUCT MATRIX -->
     <section class="section" data-screen-label="Matrix">
       <div class="container">
-        <span class="eyebrow">Product Selection Matrix</span>
-        <h2 class="section-title section-title--underline">Right fixture for every zone</h2>
+        <span class="sec-eyebrow">Product Selection Matrix</span>
+        <h2 class="sec-title">Right fixture for every zone</h2>
         <div class="matrix-wrap">
           <table class="matrix-table">
             <thead>
@@ -740,8 +740,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 4. KEY TECHNOLOGIES -->
     <section class="section" data-screen-label="Tech">
       <div class="container">
-        <span class="eyebrow">Key Technologies</span>
-        <h2 class="section-title section-title--underline">Built for cold &amp; retail</h2>
+        <span class="sec-eyebrow">Key Technologies</span>
+        <h2 class="sec-title">Built for cold &amp; retail</h2>
         <p class="section-deck">The platform technologies that show up across the cold-chain and grocery portfolio &mdash; specced once, applied everywhere.</p>
         <div class="tech-grid">
           <div class="tech-badge">
@@ -756,7 +756,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-4-3-6l-4-5-4 5c-2 2-3 4-3 6a7 7 0 0 0 7 7Z"/></svg>
             </div>
             <h3 class="tech-badge__title">DampGuard</h3>
-            <p class="tech-badge__desc">Moisture &amp; washdown resistance for wet zones.</p>
+            <p class="tech-badge__desc">Moisture and washdown-ready protection for wet zones and condensation-prone environments.</p>
           </div>
           <div class="tech-badge">
             <div class="tech-badge__icon">
@@ -770,14 +770,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
             </div>
             <h3 class="tech-badge__title">High CRI</h3>
-            <p class="tech-badge__desc">CRI 80+ for true color in produce and meat.</p>
+            <p class="tech-badge__desc">High color quality options for produce, meat, and deli applications where appearance drives sales.</p>
           </div>
           <div class="tech-badge">
             <div class="tech-badge__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M7 6V3M17 6V3M3 12h18"/></svg>
             </div>
             <h3 class="tech-badge__title">Driver-Free AC</h3>
-            <p class="tech-badge__desc">Max cold reliability &mdash; no driver to fail.</p>
+            <p class="tech-badge__desc">Designed to reduce cold-environment failure points and simplify maintenance in hard-to-service zones.</p>
           </div>
         </div>
       </div>
@@ -786,8 +786,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 5. APPLICATION SPOTLIGHT -->
     <section class="section" data-screen-label="Spotlight">
       <div class="container">
-        <span class="eyebrow">Application Spotlight</span>
-        <h2 class="section-title section-title--underline">Where this portfolio runs</h2>
+        <span class="sec-eyebrow">Application Spotlight</span>
+        <h2 class="sec-title">Where this portfolio runs</h2>
         <p class="section-deck">Three deployment archetypes that cover the bulk of cold-chain and grocery specs ALG ships every quarter.</p>
         <div class="spotlight-grid">
           <article class="spotlight-card">
@@ -796,7 +796,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             </div>
             <div class="spotlight-card__body">
               <h3 class="spotlight-card__title">Grocery &amp; Supermarket</h3>
-              <p class="spotlight-card__desc">Complete store coverage from refrigerated cases to checkout aisles to parking lot. High CRI for produce &amp; meat departments.</p>
+              <p class="spotlight-card__desc">Standardize across zones—from refrigerated cases to sales floor to exterior. Support merchandising areas (produce/meat/deli) with color quality options and consistent light levels.</p>
               <div class="spotlight-card__meta">Zones 1 → 7 · Total store</div>
             </div>
           </article>
@@ -806,7 +806,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             </div>
             <div class="spotlight-card__body">
               <h3 class="spotlight-card__title">Convenience Store / Gas</h3>
-              <p class="spotlight-card__desc">Canopy luminaires for fuel islands, interior panels for the shop, wall packs for perimeter. One brand, total coverage.</p>
+              <p class="spotlight-card__desc">Canopy for fuel islands, interior for the shop, perimeter for security and wayfinding—one package that simplifies procurement and rollout across locations.</p>
               <div class="spotlight-card__meta">Zones 3, 5, 6 · Site-wide</div>
             </div>
           </article>
@@ -816,14 +816,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             </div>
             <div class="spotlight-card__body">
               <h3 class="spotlight-card__title">Cold Chain &amp; Distribution</h3>
-              <p class="spotlight-card__desc">Walk-in cooler fixtures &amp; vapor tights for cold chain warehouses. LED in cold environments actually increases efficacy.</p>
+              <p class="spotlight-card__desc">Cooler/freezer fixtures and vapor-tights for cold-chain warehouses—LED performance improves in cold environments, supporting strong efficacy and instant-on operation.</p>
               <div class="spotlight-card__meta">Zones 1, 2 · DC scale</div>
             </div>
           </article>
         </div>
         <div class="callout-dark">
           <h4 class="callout-dark__title">Pharmaceutical &amp; Food Safety Cold Storage</h4>
-          <p class="callout-dark__body">Tightening FDA and FSMA regulations are driving investment in cold chain infrastructure. ALG's IP66, washdown-resistant fixtures with DampGuard protection meet the demands of pharmaceutical cold storage and food processing facilities. BAA/TAA compliance covers government-funded food security projects.</p>
+          <p class="callout-dark__body">Washdown-ready options support pharmaceutical cold storage and food-handling environments where moisture, cleaning, and uptime matter. TAA/BAA options support government-funded and compliance-driven projects.</p>
         </div>
       </div>
     </section>
@@ -833,9 +833,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <div class="container">
         <div class="value-banner">
           <div>
-            <span class="eyebrow">The Cold Math</span>
+            <span class="sec-eyebrow">The Cold Math</span>
             <h2 class="value-banner__title">LED + Cold = Extra Savings</h2>
-            <p class="value-banner__body">LEDs actually perform better in cold environments &mdash; efficacy increases as temperature drops. Unlike fluorescent tubes that struggle below 50°F, ALG LED fixtures deliver full, instant brightness at −40°F. Less heat output also reduces refrigeration load, compounding energy savings.</p>
+            <p class="value-banner__body">LED efficacy improves as ambient temperature drops—making cold environments a strong fit for retrofit ROI. Lower heat load can reduce refrigeration demand—supporting additional savings beyond lighting kWh.</p>
           </div>
           <div class="value-banner__metrics">
             <div class="value-metric">
@@ -858,27 +858,27 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 7. PROCUREMENT -->
     <section class="section" data-screen-label="Procurement">
       <div class="container">
-        <span class="eyebrow">Simplify Procurement</span>
-        <h2 class="section-title section-title--underline">One PO. One warranty. One contact.</h2>
+        <span class="sec-eyebrow">Simplify Procurement</span>
+        <h2 class="sec-title">One PO. One warranty. One contact.</h2>
         <p class="section-deck">With ALG, a grocery chain or c-store operator can source cooler fixtures, sales floor troffers, exterior wall packs, and fuel canopy luminaires from a single manufacturer. One purchase order, one warranty contact, one consistent quality standard across every location.</p>
         <div class="procurement-grid">
           <div class="proc-step">
             <span class="proc-step__big">01</span>
             <span class="proc-step__num">Step 01 · Scope</span>
             <h3 class="proc-step__title">Identify the job</h3>
-            <p class="proc-step__desc">Send the floor plan, zone count, and ceiling heights. ALG's inside sales team returns a fixture-by-fixture takeoff within 48 hours.</p>
+            <p class="proc-step__desc">Send the floor plan, zone count, and ceiling heights. We return a zone-by-zone takeoff within 48 hours, including fixture schedule, quantities, and IES files as needed.</p>
           </div>
           <div class="proc-step">
             <span class="proc-step__big">02</span>
             <span class="proc-step__num">Step 02 · Spec</span>
             <h3 class="proc-step__title">Lock the package</h3>
-            <p class="proc-step__desc">Watt/CCT-selectable SKUs let one PO cover multiple stores. BAA/TAA certificates and DLC docs included for rebate filings.</p>
+            <p class="proc-step__desc">Selectable watt/CCT options help standardize SKUs across store formats. DLC documentation (where applicable) and compliance certificates are available for rebate and submittal packages.</p>
           </div>
           <div class="proc-step">
             <span class="proc-step__big">03</span>
             <span class="proc-step__num">Step 03 · Ship</span>
             <h3 class="proc-step__title">Order direct from ALG</h3>
-            <p class="proc-step__desc">Quick-ship stock from five U.S. warehouses. One warranty contact for the life of the install, backed by a 7-year warranty.</p>
+            <p class="proc-step__desc">Quick-ship availability from U.S. warehouses, backed by a 7-year warranty and a single point of contact for warranty support.</p>
           </div>
         </div>
       </div>
@@ -887,8 +887,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- 8. ALG ADVANTAGE / CLOSING CTA -->
     <section class="section" data-screen-label="Closing" style="border-bottom:none;">
       <div class="container">
-        <span class="eyebrow">The ALG Advantage</span>
-        <h2 class="section-title section-title--underline">Why specifiers choose us</h2>
+        <span class="sec-eyebrow">The ALG Advantage</span>
+        <h2 class="sec-title">Why specifiers choose us</h2>
+        <ul class="why-bullets">
+          <li>Total-store package (freezer, sales floor, exterior) under one manufacturer</li>
+          <li>Cold/wet-zone reliability features designed for uptime</li>
+          <li>Fast submittals: cutsheets, IES files, and rebate-ready documentation</li>
+        </ul>
         <div class="advantage-strip">
           <div class="advantage-pillar">
             <div class="advantage-pillar__num">5</div>
