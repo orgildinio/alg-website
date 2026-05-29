@@ -717,16 +717,20 @@
   }
   .spec-watt-tab {
     flex: 1;
-    padding: 14px 24px;
+    padding: 12px 14px;
     background: transparent;
     border: 1px solid var(--line-medium);
     color: var(--text-primary);
     font-family: inherit;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     cursor: pointer;
     transition: background 0.18s, border-color 0.18s;
     border-radius: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
   }
   .spec-watt-tab:hover { background: rgba(255,255,255,0.05); }
   .spec-watt-tab.active {
