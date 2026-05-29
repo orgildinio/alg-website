@@ -227,17 +227,17 @@ const skus = [
         <a class="browse-tile-link" href="#all-drivers" data-tier-filter="factory">
           <span class="btl-eyebrow">FACTORY</span>
           <span class="btl-name">Factory-Install</span>
-          <span class="btl-meta">2 SKUs · Pre-installed in host fixture</span>
+          <span class="btl-meta">4 SKUs · Pre-installed in host fixture</span>
         </a>
         <a class="browse-tile-link" href="#all-drivers" data-tier-filter="field">
           <span class="btl-eyebrow">FIELD</span>
           <span class="btl-name">Field-Install</span>
-          <span class="btl-meta">6 SKUs · Certified electrician on-site</span>
+          <span class="btl-meta">12 SKUs · Certified electrician on-site</span>
         </a>
         <a class="browse-tile-link" href="#all-drivers" data-tier-filter="quick">
           <span class="btl-eyebrow">QUICK</span>
           <span class="btl-name">Quick-Install</span>
-          <span class="btl-meta">3 SKUs · J-Box remote mount</span>
+          <span class="btl-meta">5 SKUs · J-Box remote mount</span>
         </a>
         <a class="browse-tile-link" href="#product-types">
           <span class="btl-eyebrow">SAFETY</span>
@@ -258,22 +258,22 @@ const skus = [
           <span class="btl-name">Emergency Battery Backup</span>
           <span class="btl-meta">EM &amp; CRC driver line · UL 924</span>
         </a>
-        <a class="browse-tile-link browse-tile-link--live" href="/collections/constant/#all-drivers">
+        <a class="browse-tile-link browse-tile-link--live" href="/collections/constant/#all-drivers?adder=cl">
           <span class="btl-eyebrow">LIVE · 3 SKUS</span>
           <span class="btl-name">const<span class="aa">Ⓐ</span>NTLink EM Batteries</span>
           <span class="btl-meta">Networked NLC battery line · /CL adder</span>
         </a>
-        <a class="browse-tile-link browse-tile-link--live" href="/collections/constant/exit/">
+        <a class="browse-tile-link browse-tile-link--live" href="/collections/constant/exit/#family?form=exit">
           <span class="btl-eyebrow">LIVE · 28 SKUS</span>
           <span class="btl-name">Exit Signs</span>
           <span class="btl-meta">UL 924 listed · LEMX family</span>
         </a>
-        <a class="browse-tile-link browse-tile-link--live" href="/collections/constant/exit/">
+        <a class="browse-tile-link browse-tile-link--live" href="/collections/constant/exit/#family?form=combo">
           <span class="btl-eyebrow">LIVE · 8 SKUS</span>
           <span class="btl-name">Combo Signs</span>
           <span class="btl-meta">Exit + emergency in one unit</span>
         </a>
-        <a class="browse-tile-link browse-tile-link--live" href="/collections/constant/exit/">
+        <a class="browse-tile-link browse-tile-link--live" href="/collections/constant/exit/#family?form=emg-light">
           <span class="btl-eyebrow">LIVE · 5 SKUS</span>
           <span class="btl-name">Emergency Lights</span>
           <span class="btl-meta">2-head · 4-head · remote-capable</span>
@@ -312,8 +312,8 @@ const skus = [
             <button class="fg-toggle" aria-expanded="true">INSTALL TIER <span class="fg-arrow">▲</span></button>
             <div class="fg-body">
               <label class="fg-item"><input type="checkbox" data-facet="tier" value="factory" /><span class="fg-name">Factory-Install</span><span class="fg-count">(4)</span></label>
-              <label class="fg-item"><input type="checkbox" data-facet="tier" value="field" /><span class="fg-name">Field-Install</span><span class="fg-count">(10)</span></label>
-              <label class="fg-item"><input type="checkbox" data-facet="tier" value="quick" /><span class="fg-name">Quick-Install</span><span class="fg-count">(6)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="tier" value="field" /><span class="fg-name">Field-Install</span><span class="fg-count">(12)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="tier" value="quick" /><span class="fg-name">Quick-Install</span><span class="fg-count">(5)</span></label>
             </div>
           </div>
 
@@ -321,9 +321,9 @@ const skus = [
           <div class="filter-group" data-group="power">
             <button class="fg-toggle" aria-expanded="true">POWER CLASS <span class="fg-arrow">▲</span></button>
             <div class="fg-body">
-              <label class="fg-item"><input type="checkbox" data-facet="power" value="low" /><span class="fg-name">Low 5–9W</span><span class="fg-count">(2)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="power" value="low" /><span class="fg-name">Low 5–9W</span><span class="fg-count">(6)</span></label>
               <label class="fg-item"><input type="checkbox" data-facet="power" value="mid" /><span class="fg-name">Mid 15–25W</span><span class="fg-count">(10)</span></label>
-              <label class="fg-item"><input type="checkbox" data-facet="power" value="high" /><span class="fg-name">High 30–60W</span><span class="fg-count">(8)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="power" value="high" /><span class="fg-name">High 30–60W</span><span class="fg-count">(4)</span></label>
             </div>
           </div>
 
@@ -341,8 +341,8 @@ const skus = [
           <div class="filter-group" data-group="output">
             <button class="fg-toggle" aria-expanded="true">OUTPUT TYPE <span class="fg-arrow">▲</span></button>
             <div class="fg-body">
-              <label class="fg-item"><input type="checkbox" data-facet="output" value="dc" /><span class="fg-name">DC Output</span><span class="fg-count">(16)</span></label>
-              <label class="fg-item"><input type="checkbox" data-facet="output" value="ac" /><span class="fg-name">AC Output</span><span class="fg-count">(4)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="output" value="dc" /><span class="fg-name">DC</span><span class="fg-count">(16)</span></label>
+              <label class="fg-item"><input type="checkbox" data-facet="output" value="ac" /><span class="fg-name">AC</span><span class="fg-count">(4)</span></label>
             </div>
           </div>
 
@@ -419,7 +419,8 @@ const skus = [
 
           <div class="fam-grid" id="skuGrid">
             {skus.map(sku => (
-              <div
+              <a
+                href={sku.pdp}
                 class="fam-card"
                 id={sku.id}
                 data-tier={sku.tier}
@@ -445,9 +446,9 @@ const skus = [
                     <span class="fc-watt">{sku.meta}</span>
                     <span class="fc-dlc">UL 924</span>
                   </div>
-                  <a href={sku.pdp} class="fc-view">VIEW →</a>
+                  <span class="fc-view">VIEW →</span>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
           <p class="fam-no-results" id="skuNoResults" style="display:none;">No drivers match the current filters. <button id="skuNoResultsReset">Reset all</button></p>
@@ -900,6 +901,10 @@ const skus = [
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
+  }
+  a.fam-card {
+    text-decoration: none;
+    color: inherit;
   }
   .fam-card {
     background: #0a0e1a;
