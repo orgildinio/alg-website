@@ -1,0 +1,47 @@
+---
+/**
+ * proarch PDP — planoⒶRCH · Astro wrapper
+ * Route: /products/proarch/
+ * LBLP · proⒶRCH — Back-Lit Panel (proⒶRCH-II + proⒶRCH-III)
+ * SEV-0 CSS restoration: extracts <style> blocks + font links from source <head>
+ * and re-emits them via BaseLayout head slot.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+
+const publicHtml = readFileSync(
+  path.join(process.cwd(), 'public/products/proarch/index.html'),
+  'utf-8'
+);
+
+// Extract body content
+const bodyMatch = publicHtml.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+const bodyContent = bodyMatch ? bodyMatch[1] : publicHtml;
+
+// Extract all <style> blocks from <head>
+const headMatch = publicHtml.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
+const headContent = headMatch ? headMatch[1] : '';
+const styleBlocks = [...headContent.matchAll(/<style[^>]*>[\s\S]*?<\/style>/gi)]
+  .map(m => m[0]).join('\n');
+
+// Extract Google Fonts link tags
+const fontLinks = [...headContent.matchAll(/<link[^>]*fonts\.googleapis\.com[^>]*>/gi)]
+  .map(m => m[0]).join('\n');
+const fontPreconnects = [...headContent.matchAll(/<link[^>]*rel="preconnect"[^>]*>/gi)]
+  .map(m => m[0]).join('\n');
+---
+<BaseLayout
+  title="LBLP · proⒶRCH — Back-Lit Panel | planoⒶRCH | Archipelago Lighting Group"
+  description="LBLP proⒶRCH · planoⒶRCH PRO+ · Back-Lit LED Flat Panel · 2×2 / 2×4 / 1×4 · Drop-ceiling grid and surface mount · DLC Premium · CRI 90+."
+  bodyClass="proarch-legacy-pdp"
+>
+  <Fragment slot="head">
+    <Fragment set:html={fontPreconnects} />
+    <Fragment set:html={fontLinks} />
+    <Fragment set:html={styleBlocks} />
+  </Fragment>
+  <div class="proarch-legacy-pdp">
+    <Fragment set:html={bodyContent} />
+  </div>
+</BaseLayout>

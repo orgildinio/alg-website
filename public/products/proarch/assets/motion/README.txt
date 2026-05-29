@@ -1,0 +1,1 @@
+Motion videos already deployed at /products/proarch-t/assets/motion/ — same 6 files. Either: (a) reference them cross-route from this PDP via /products/proarch-t/assets/motion/{file} OR (b) copy them here. See README.md.

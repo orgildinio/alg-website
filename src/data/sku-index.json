@@ -6242,6 +6242,31 @@
           "taa": false,
           "pdpUrl": "/products/waymark/",
           "card_image": "/products/waymark/assets/hero/fam-waymark.webp"
+        },
+        {
+          "family": "proARCH",
+          "sub_category": "Panel",
+          "display_echelon": "PRO+",
+          "max_wattage": 50,
+          "sku_count": 13,
+          "dlc": true,
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V"
+          ],
+          "mount_types": [
+            "Surface",
+            "Grid"
+          ],
+          "taa": true,
+          "pdpUrl": "/products/proarch/",
+          "card_image": "/products/proarch/assets/hero/proarch-hero-1.webp"
         }
       ]
     },
