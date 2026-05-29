@@ -127,7 +127,7 @@ const planoarchData = {
     {
       family: 'proⒶRCH',
       subCategory: 'Panel',
-      displayEchelon: 'PRO+' as const,
+      displayEchelon: 'PRO' as const,
       maxWattage: 30,
       skuCount: 20,
       dlc: true,
