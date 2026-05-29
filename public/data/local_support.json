@@ -1,0 +1,781 @@
+{
+  "_meta": {
+    "generated_at": "2026-05-29",
+    "source": "Zoho CRM (Accounts) + Zoho Books (Locations from screenshot)",
+    "filters": {
+      "sales_reps": "Account_Type='Sales Rep' AND Account_Name not containing 'INACTIVE' AND not ALG itself",
+      "distributors": "Account_Type='C&I-Distributor_Stocking' (stocking only, per hero copy)",
+      "warehouses": "All Books Locations of Type=Warehouse (transcribed from screenshot)"
+    },
+    "counts": {
+      "sales_reps": 28,
+      "distributors": 29,
+      "warehouses": 16,
+      "total": 73
+    },
+    "note_on_geocoding": "lat/lon NOT yet baked. Manus should geocode at build time using city+state, or PM can pre-geocode in a follow-up via Nominatim.",
+    "geocoded_at": "2026-05-29T18:09Z",
+    "geocoding": "Nominatim (OSM) \u2014 city+state+country query"
+  },
+  "sales_reps": [
+    {
+      "id": "4702497000000583432",
+      "name": "NRG INTENSI-T INC",
+      "phone": "450-623-1666",
+      "website": "https://nrgqc.com/",
+      "city": "ST. EUSTACHE",
+      "state": "QUEBEC",
+      "country": "Canada",
+      "lat": 45.5646052,
+      "lon": -73.8929714
+    },
+    {
+      "id": "4702497000000587001",
+      "name": "Riversound Energy Solutions",
+      "phone": null,
+      "website": null,
+      "city": "Marietta",
+      "state": "Georgia",
+      "country": "U.S.A",
+      "lat": 33.9528472,
+      "lon": -84.5496148
+    },
+    {
+      "id": "4702497000000622001",
+      "name": "Lighting Associates",
+      "phone": "(314) 531-3500",
+      "website": "https://laiweb.net",
+      "city": "Webster Groves",
+      "state": "MO",
+      "country": "U.S.A",
+      "lat": 38.592339,
+      "lon": -90.3564329
+    },
+    {
+      "id": "4702497000000626001",
+      "name": "Riffle & Associates",
+      "phone": null,
+      "website": null,
+      "city": "VINE GROVE",
+      "state": "KY",
+      "country": "U.S.A",
+      "lat": 37.8100674,
+      "lon": -85.9813524
+    },
+    {
+      "id": "4702497000000879001",
+      "name": "Federated Lighting",
+      "phone": null,
+      "website": null,
+      "city": "RICHMOND",
+      "state": "Virginia",
+      "country": "U.S.A",
+      "lat": 37.5385087,
+      "lon": -77.43428
+    },
+    {
+      "id": "4702497000005158038",
+      "name": "LAI - Lighting Associates Inc - Houston, TX",
+      "phone": null,
+      "website": null,
+      "city": "Houston",
+      "state": "TX",
+      "country": "U.S.A",
+      "lat": 29.7589382,
+      "lon": -95.3676974
+    },
+    {
+      "id": "4702497000008563007",
+      "name": "Integrated Lighting",
+      "phone": null,
+      "website": "https://www.gotlumens.com/",
+      "city": "BAKERSFIELD",
+      "state": "CA",
+      "country": "U.S.A",
+      "lat": 35.3738712,
+      "lon": -119.019463
+    },
+    {
+      "id": "4702497000013386004",
+      "name": "PLG - Pruitt Lighting Group",
+      "phone": null,
+      "website": null,
+      "city": "Sullivans Island",
+      "state": "South Carolina",
+      "country": "U.S.A",
+      "lat": 32.2780446,
+      "lon": -80.918273
+    },
+    {
+      "id": "4702497000018052816",
+      "name": "CONTRACT SPEC ASSOCIATES",
+      "phone": null,
+      "website": "http://contractspec.com/",
+      "city": "Blue Ridge",
+      "state": "Georgia",
+      "country": "U.S.A",
+      "lat": 34.863972,
+      "lon": -84.324087
+    },
+    {
+      "id": "4702497000026028040",
+      "name": "Triangle Lighting Solutions",
+      "phone": null,
+      "website": null,
+      "city": "RALEIGH",
+      "state": "NC",
+      "country": "U.S.A",
+      "lat": 35.7803977,
+      "lon": -78.6390989
+    },
+    {
+      "id": "4702497000027103150",
+      "name": "Chicago Lightworks",
+      "phone": null,
+      "website": null,
+      "city": "Lisle,",
+      "state": "IL",
+      "country": "U.S.A",
+      "lat": 41.801159,
+      "lon": -88.0747687
+    },
+    {
+      "id": "4702497000035511044",
+      "name": "GIZMO CONSULTING",
+      "phone": null,
+      "website": null,
+      "city": "BATON ROUGE",
+      "state": "Louisiana",
+      "country": "U.S.A",
+      "lat": 30.4494155,
+      "lon": -91.1869659
+    },
+    {
+      "id": "4702497000040441028",
+      "name": "ESA - Electrical Sales Associates",
+      "phone": null,
+      "website": "www.repesa.com",
+      "city": "COVINGTON",
+      "state": "WA",
+      "country": "U.S.A",
+      "lat": 47.3657791,
+      "lon": -122.100222
+    },
+    {
+      "id": "4702497000046302068",
+      "name": "JTH LIGHTING ALLIANCE",
+      "phone": null,
+      "website": null,
+      "city": "APPLE VALLEY",
+      "state": "MN",
+      "country": "U.S.A",
+      "lat": 44.7319094,
+      "lon": -93.21772
+    },
+    {
+      "id": "4702497000048322030",
+      "name": "RDL and Associates",
+      "phone": null,
+      "website": null,
+      "city": "KNOXVILLE",
+      "state": "TN",
+      "country": "U.S.A",
+      "lat": 35.9603948,
+      "lon": -83.9210261
+    },
+    {
+      "id": "4702497000052513415",
+      "name": "GRACE LIGHTING",
+      "phone": null,
+      "website": null,
+      "city": "IOWA CITY",
+      "state": "IA",
+      "country": "U.S.A",
+      "lat": 41.6612561,
+      "lon": -91.5299106
+    },
+    {
+      "id": "4702497000053317038",
+      "name": "ASCEND SALES AND MARKETING",
+      "phone": null,
+      "website": null,
+      "city": "MANVILLE",
+      "state": "NJ",
+      "country": "U.S.A",
+      "lat": 40.5410075,
+      "lon": -74.5875422
+    },
+    {
+      "id": "4702497000055243098",
+      "name": "GD MAC SALES INC",
+      "phone": null,
+      "website": null,
+      "city": "SAN ANTONIO",
+      "state": "TX",
+      "country": "U.S.A",
+      "lat": 29.4246002,
+      "lon": -98.4951405
+    },
+    {
+      "id": "4702497000058407161",
+      "name": "BIBEN MARKETING GROUP, INC",
+      "phone": null,
+      "website": null,
+      "city": "Folcroft",
+      "state": "PA",
+      "country": "U.S.A",
+      "lat": 39.890946,
+      "lon": -75.2837965
+    },
+    {
+      "id": "4702497000058704170",
+      "name": "Yanow, Inc.",
+      "phone": null,
+      "website": null,
+      "city": "BROCKTON",
+      "state": "MA",
+      "country": "U.S.A",
+      "lat": 42.0834335,
+      "lon": -71.0183787
+    },
+    {
+      "id": "4702497000059588133",
+      "name": "LUMINOSITY LIGHTING ASSOCIATES",
+      "phone": null,
+      "website": null,
+      "city": "LANGHORNE",
+      "state": "PA",
+      "country": "U.S.A",
+      "lat": 40.1761812,
+      "lon": -74.9202481
+    },
+    {
+      "id": "4702497000060371236",
+      "name": "AUGUST AGENTS",
+      "phone": null,
+      "website": null,
+      "city": "IRVINE",
+      "state": "CA",
+      "country": "U.S.A",
+      "lat": 33.6856969,
+      "lon": -117.825981
+    },
+    {
+      "id": "4702497000060626080",
+      "name": "Mountain States Agency",
+      "phone": null,
+      "website": null,
+      "city": "Bernalillo",
+      "state": "NM",
+      "country": "U.S.A",
+      "lat": 35.0349239,
+      "lon": -106.6870693
+    },
+    {
+      "id": "4702497000067666026",
+      "name": "Golden Lights",
+      "phone": null,
+      "website": null,
+      "city": "Las Vegas",
+      "state": "NV",
+      "country": "U.S.A",
+      "lat": 36.1674263,
+      "lon": -115.1484131
+    },
+    {
+      "id": "4702497000075053070",
+      "name": "PREMIER LIGHTING GROUP - Little Rock",
+      "phone": null,
+      "website": null,
+      "city": "LITTLE ROCK",
+      "state": "AR",
+      "country": "U.S.A",
+      "lat": 34.7465071,
+      "lon": -92.2896267
+    },
+    {
+      "id": "4702497000075053075",
+      "name": "FORM2LIGHT LLC",
+      "phone": null,
+      "website": null,
+      "city": "LITTLE ROCK",
+      "state": "AR",
+      "country": "U.S.A",
+      "lat": 34.7465071,
+      "lon": -92.2896267
+    },
+    {
+      "id": "4702497000075921388",
+      "name": "Indiana Lightworks",
+      "phone": null,
+      "website": null,
+      "city": "Fishers",
+      "state": "IN",
+      "country": "U.S.A",
+      "lat": 39.9555928,
+      "lon": -86.0138729
+    },
+    {
+      "id": "4702497000090607211",
+      "name": "Southwest Sales, LLC",
+      "phone": null,
+      "website": null,
+      "city": "Coppell",
+      "state": "TX",
+      "country": "U.S.A",
+      "lat": 32.9552598,
+      "lon": -97.0155703
+    }
+  ],
+  "distributors": [
+    {
+      "id": "4702497000000459001",
+      "name": "BULBS.COM",
+      "phone": "888-455-2800",
+      "website": null,
+      "city": "WORCESTER",
+      "state": "MA",
+      "country": "USA",
+      "lat": 42.2625621,
+      "lon": -71.8018877
+    },
+    {
+      "id": "4702497000000580243",
+      "name": "WEDCO - DOMINION ELECTRIC SUPPLY a DIVISION OF BORDER STATES - FARGO, ND",
+      "phone": "701-293-5834",
+      "website": null,
+      "city": "FARGO",
+      "state": "NORTH DAKOTA",
+      "country": "USA",
+      "lat": 46.877229,
+      "lon": -96.789821
+    },
+    {
+      "id": "4702497000000580266",
+      "name": "BULBMAN, INC.",
+      "phone": "775-788-5661",
+      "website": null,
+      "city": "RENO",
+      "state": "NEVADA",
+      "country": "USA",
+      "lat": 39.5261788,
+      "lon": -119.812658
+    },
+    {
+      "id": "4702497000000580537",
+      "name": "CED - EL PASO, TX",
+      "phone": "915-592-8800",
+      "website": null,
+      "city": "EL PASO",
+      "state": "TEXAS",
+      "country": "USA",
+      "lat": 31.7601001,
+      "lon": -106.4870476
+    },
+    {
+      "id": "4702497000000582559",
+      "name": "PACIFIC LAMP WHOLESALE",
+      "phone": "503-643-6516",
+      "website": null,
+      "city": "BEAVERTON",
+      "state": "OREGON",
+      "country": "USA",
+      "lat": 45.4871723,
+      "lon": -122.80378
+    },
+    {
+      "id": "4702497000009696004",
+      "name": "CED - VEGAS ELECTRIC SUPPLY CO",
+      "phone": null,
+      "website": null,
+      "city": "BULLHEAD CITY",
+      "state": "AZ",
+      "country": "USA",
+      "lat": 35.1449998,
+      "lon": -114.5627804
+    },
+    {
+      "id": "4702497000028680116",
+      "name": "CED - LAS CRUCES",
+      "phone": null,
+      "website": null,
+      "city": "Las Cruces",
+      "state": "NM",
+      "country": "USA",
+      "lat": 32.3140354,
+      "lon": -106.779807
+    },
+    {
+      "id": "4702497000030905026",
+      "name": "INTERACTIVE ENERGIES GROUP",
+      "phone": null,
+      "website": null,
+      "city": "MADISON HEIGHTS",
+      "state": "MI",
+      "country": "USA",
+      "lat": 42.4858692,
+      "lon": -83.1052028
+    },
+    {
+      "id": "4702497000034244067",
+      "name": "CES - HUTTO",
+      "phone": null,
+      "website": null,
+      "city": "PFLUGERVILLE",
+      "state": "TX",
+      "country": "USA",
+      "lat": 30.4393696,
+      "lon": -97.6200043
+    },
+    {
+      "id": "4702497000035592101",
+      "name": "CES - TRADESMAN",
+      "phone": null,
+      "website": null,
+      "city": "SAN ANTONIO",
+      "state": "TX",
+      "country": "USA",
+      "lat": 29.4246002,
+      "lon": -98.4951405
+    },
+    {
+      "id": "4702497000035747193",
+      "name": "CED - CHICO, CA",
+      "phone": null,
+      "website": null,
+      "city": "Chico",
+      "state": "CA",
+      "country": "USA",
+      "lat": 39.7284945,
+      "lon": -121.8374777
+    },
+    {
+      "id": "4702497000036785205",
+      "name": "LED ELECTRIC & LIGHTING CONTRACTORS OF SAN ANTONIO",
+      "phone": null,
+      "website": null,
+      "city": "SAN ANTONIO",
+      "state": "TEXAS",
+      "country": "USA",
+      "lat": 29.4246002,
+      "lon": -98.4951405
+    },
+    {
+      "id": "4702497000036794007",
+      "name": "1000Bulbs.com",
+      "phone": null,
+      "website": null,
+      "city": "GARLAND",
+      "state": "TX",
+      "country": "USA",
+      "lat": 32.912624,
+      "lon": -96.6388833
+    },
+    {
+      "id": "4702497000037960129",
+      "name": "BAYOU ELECTRIC & SPECIALTY INC",
+      "phone": null,
+      "website": null,
+      "city": "New Iberia",
+      "state": "LA",
+      "country": "USA",
+      "lat": 30.0035365,
+      "lon": -91.8187285
+    },
+    {
+      "id": "4702497000038332146",
+      "name": "CITY ELECTRIC SUPPLY (CES) - ROCHESTER HILLS, MI",
+      "phone": null,
+      "website": null,
+      "city": "ROCHESTER HILLS",
+      "state": "MI",
+      "country": "USA",
+      "lat": 42.6583661,
+      "lon": -83.1499322
+    },
+    {
+      "id": "4702497000038443511",
+      "name": "CED - NOTOCO INDUSTRIES",
+      "phone": null,
+      "website": null,
+      "city": "BATON ROUGE",
+      "state": "Louisiana",
+      "country": "USA",
+      "lat": 30.4494155,
+      "lon": -91.1869659
+    },
+    {
+      "id": "4702497000038787088",
+      "name": "NATONAL WHOLESALE SUPPLY DBA TEMPLE ELECTIC",
+      "phone": null,
+      "website": null,
+      "city": "DALLAS",
+      "state": "TX",
+      "country": "USA",
+      "lat": 32.7762719,
+      "lon": -96.7968559
+    },
+    {
+      "id": "4702497000039874040",
+      "name": "CED - FRESNO",
+      "phone": null,
+      "website": null,
+      "city": "FRESNO",
+      "state": "CA",
+      "country": "USA",
+      "lat": 36.7394421,
+      "lon": -119.78483
+    },
+    {
+      "id": "4702497000039927213",
+      "name": "CES - CITY ELECTRIC SUPPLY - SAN ANTONIO NORTH",
+      "phone": null,
+      "website": null,
+      "city": "SAN ANTONIO",
+      "state": "TX",
+      "country": "USA",
+      "lat": 29.4246002,
+      "lon": -98.4951405
+    },
+    {
+      "id": "4702497000041381093",
+      "name": "BOWLING GREEN WINLECTRIC CO",
+      "phone": null,
+      "website": null,
+      "city": "BOWLING GREEN",
+      "state": "KY",
+      "country": "USA",
+      "lat": 36.9929203,
+      "lon": -86.4428677
+    },
+    {
+      "id": "4702497000042666035",
+      "name": "CES - DOWNTOWN SAN ANTONIO",
+      "phone": null,
+      "website": null,
+      "city": "SAN ANTONIO",
+      "state": "TX",
+      "country": "USA",
+      "lat": 29.4246002,
+      "lon": -98.4951405
+    },
+    {
+      "id": "4702497000048801148",
+      "name": "STOKES ELECTRIC COMPANY",
+      "phone": null,
+      "website": null,
+      "city": "KNOXVILLE",
+      "state": "TN",
+      "country": "USA",
+      "lat": 35.9603948,
+      "lon": -83.9210261
+    },
+    {
+      "id": "4702497000049119300",
+      "name": "CODALE ELECTRIC SUPPLY - NEDCO SUPPLY",
+      "phone": null,
+      "website": null,
+      "city": "LAS VEGAS",
+      "state": "NEVADA",
+      "country": "USA",
+      "lat": 36.1674263,
+      "lon": -115.1484131
+    },
+    {
+      "id": "4702497000051046228",
+      "name": "DYNA-BRITE LIGHTING, INC - Dickson, TN",
+      "phone": null,
+      "website": null,
+      "city": "DICKSON",
+      "state": "TN",
+      "country": "USA",
+      "lat": 36.1459327,
+      "lon": -87.3480592
+    },
+    {
+      "id": "4702497000052668097",
+      "name": "COMMERCIAL LIGHTING SUPPLY - KNOXVILLE, TN",
+      "phone": null,
+      "website": null,
+      "city": "KNOXVILLE",
+      "state": "TN",
+      "country": "USA",
+      "lat": 35.9603948,
+      "lon": -83.9210261
+    },
+    {
+      "id": "4702497000056017190",
+      "name": "SITLER'S SUPPLIES, INC.",
+      "phone": null,
+      "website": null,
+      "city": "WASHINGTON",
+      "state": "IA",
+      "country": "USA",
+      "lat": 41.3160082,
+      "lon": -91.7340327
+    },
+    {
+      "id": "4702497000056170061",
+      "name": "DYNA-BRITE LIGHTING OF MEMPHIS",
+      "phone": null,
+      "website": null,
+      "city": "MEMPHIS",
+      "state": "TN",
+      "country": "USA",
+      "lat": 35.1460249,
+      "lon": -90.0517638
+    },
+    {
+      "id": "4702497000070368179",
+      "name": "CES - CENTRAL LAS VEGAS",
+      "phone": null,
+      "website": null,
+      "city": "LAS VEGAS",
+      "state": "NEVADA",
+      "country": "USA",
+      "lat": 36.1674263,
+      "lon": -115.1484131
+    },
+    {
+      "id": "4702497000076633502",
+      "name": "PRECISION LIGHTING & TRANSFORMER, INC",
+      "phone": null,
+      "website": null,
+      "city": "MESQUITE",
+      "state": "TX",
+      "country": "USA",
+      "lat": 32.7666103,
+      "lon": -96.599472
+    }
+  ],
+  "warehouses": [
+    {
+      "name": "MIDWEST | DTX",
+      "city": "Stafford",
+      "state": "TX",
+      "country": "USA",
+      "lat": 29.6160671,
+      "lon": -95.5577221
+    },
+    {
+      "name": "FBA Warehouse",
+      "city": "Montclair",
+      "state": "CA",
+      "country": "USA",
+      "lat": 34.0775104,
+      "lon": -117.6897776
+    },
+    {
+      "name": "WEST | Montclair, CA",
+      "city": "Montclair",
+      "state": "CA",
+      "country": "USA",
+      "lat": 34.0775104,
+      "lon": -117.6897776
+    },
+    {
+      "name": "WEST | Riverside, CA",
+      "city": "Riverside",
+      "state": "CA",
+      "country": "USA",
+      "lat": 33.9824949,
+      "lon": -117.374238
+    },
+    {
+      "name": "WEST | C&I Offsite",
+      "city": null,
+      "state": "CA",
+      "country": "USA",
+      "lat": 36.7014631,
+      "lon": -118.755997
+    },
+    {
+      "name": "WEST | Rancho Cucamonga, CA",
+      "city": "Rancho Cucamonga",
+      "state": "CA",
+      "country": "USA",
+      "lat": 34.1033192,
+      "lon": -117.575173
+    },
+    {
+      "name": "MIDWEST | Dallas, TX",
+      "city": "Dallas",
+      "state": "TX",
+      "country": "USA",
+      "lat": 32.7762719,
+      "lon": -96.7968559
+    },
+    {
+      "name": "EAST | DNJ",
+      "city": "Rahway",
+      "state": "NJ",
+      "country": "USA",
+      "lat": 40.6081591,
+      "lon": -74.2776468
+    },
+    {
+      "name": "MIDWEST | Crestwood, IL",
+      "city": "Crestwood",
+      "state": "IL",
+      "country": "USA",
+      "lat": 41.6611444,
+      "lon": -87.7525511
+    },
+    {
+      "name": "_WEST | Montclair (MAIN)",
+      "city": "Montclair",
+      "state": "CA",
+      "country": "USA",
+      "lat": 34.0775104,
+      "lon": -117.6897776
+    },
+    {
+      "name": "EAST | Rahway, NJ",
+      "city": "Rahway",
+      "state": "NJ",
+      "country": "USA",
+      "lat": 40.6081591,
+      "lon": -74.2776468
+    },
+    {
+      "name": "MIDWEST | Cincinnati, OH",
+      "city": "Cincinnati",
+      "state": "OH",
+      "country": "USA",
+      "lat": 39.1012809,
+      "lon": -84.5127405
+    },
+    {
+      "name": "EAST | Brockton, MA",
+      "city": "Brockton",
+      "state": "MA",
+      "country": "USA",
+      "lat": 42.0834335,
+      "lon": -71.0183787
+    },
+    {
+      "name": "MIDWEST | Carrollton, TX",
+      "city": "Carrollton",
+      "state": "TX",
+      "country": "USA",
+      "lat": 32.9515472,
+      "lon": -96.9034244
+    },
+    {
+      "name": "Tocor Lighting",
+      "city": "Louisville",
+      "state": "KY",
+      "country": "USA",
+      "lat": 38.2542376,
+      "lon": -85.759407
+    },
+    {
+      "name": "Loki 3PL",
+      "city": null,
+      "state": "NJ",
+      "country": "USA",
+      "lat": 40.0757384,
+      "lon": -74.4041622
+    }
+  ]
+}

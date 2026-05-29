@@ -449,7 +449,7 @@ const verticals = [
           <span class="loc-filter-label">Show:</span>
           <span class="loc-pill active" data-filter="all">All</span>
             <span class="loc-pill" data-filter="warehouse">
-            <span class="kind-dot wh"></span>Warehouses <span class="loc-count">(6)</span>
+            <span class="kind-dot wh"></span>Warehouses <span class="loc-count">(16)</span>
           </span>
           <span class="loc-pill" data-filter="rep">
             <span class="kind-dot rep"></span>Sales Reps
@@ -470,15 +470,15 @@ const verticals = [
             <h4>Map key</h4>
             <div class="legend-row">
               <span class="legend-dot"><span class="dot-vis" style="background:#F32740;"></span>ALG Warehouse</span>
-              <span class="legend-count">6 locations</span>
+              <span class="legend-count">16 locations</span>
             </div>
             <div class="legend-row">
               <span class="legend-dot"><span class="dot-vis" style="background:#f0a932;"></span>Sales Rep</span>
-              <span class="legend-count">All 50 states</span>
+              <span class="legend-count">28 active reps</span>
             </div>
             <div class="legend-row">
               <span class="legend-dot"><span class="dot-vis" style="background:#0FAE7C;"></span>Stocking Distributor</span>
-              <span class="legend-count">Nationwide</span>
+              <span class="legend-count">29 locations</span>
             </div>
           </div>
           <div class="loc-results">
@@ -2069,14 +2069,14 @@ const verticals = [
   });
   startTimer();
 
-  // Leaflet map
+  // Leaflet map — 73 real pins from /data/local_support.json
   const mapEl = document.getElementById('algLocatorMap');
   if (mapEl) {
     const script = document.createElement('script');
     script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
     script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
     script.crossOrigin = '';
-    script.onload = function () {
+    script.onload = async function () {
       const L = window.L;
       const map = L.map('algLocatorMap', { zoomControl: true, scrollWheelZoom: false }).setView([37.5, -96], 4);
       L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
@@ -2084,21 +2084,60 @@ const verticals = [
         subdomains: 'abcd',
         maxZoom: 19,
       }).addTo(map);
-      const warehouses = [
-        { lat: 34.0776, lng: -117.6897, name: 'Montclair, CA', address: '4615 State Street, Montclair CA' },
-        { lat: 33.9213, lng: -117.3517, name: 'Riverside, CA', address: '9345 Sycamore Canyon Blvd, Riverside CA 92508 (USA Production)' },
-        { lat: 41.6647, lng:  -87.7372, name: 'Crestwood, IL', address: 'Crestwood, IL' },
-        { lat: 40.6082, lng:  -74.2776, name: 'Rahway, NJ', address: 'Rahway, NJ' },
-        { lat: 42.0834, lng:  -71.0184, name: 'Brockton, MA', address: 'Brockton, MA' },
-        { lat: 39.1031, lng:  -84.5120, name: 'Cincinnati, OH', address: 'Cincinnati, OH' },
-      ];
-      const icon = L.divIcon({
-        className: '',
-        html: '<div style="width:12px;height:12px;background:#F32740;border-radius:50%;border:2px solid #fff;box-shadow:0 0 8px rgba(243,39,64,0.6);"></div>',
-        iconSize: [12, 12],
-        iconAnchor: [6, 6],
+
+      // Marker icon factories
+      function makeIcon(color, shadow) {
+        return L.divIcon({
+          className: '',
+          html: '<div style="width:12px;height:12px;background:' + color + ';border-radius:50%;border:2px solid #fff;box-shadow:0 0 8px ' + shadow + ';"></div>',
+          iconSize: [12, 12],
+          iconAnchor: [6, 6],
+          popupAnchor: [0, -8],
+        });
+      }
+      const iconWh   = makeIcon('#F32740', 'rgba(243,39,64,0.6)');
+      const iconRep  = makeIcon('#f0a932', 'rgba(240,169,50,0.5)');
+      const iconDist = makeIcon('#0FAE7C', 'rgba(15,174,124,0.5)');
+
+      // Popup builder
+      function popup(rec, kind) {
+        let html = '<strong>' + rec.name + '</strong>';
+        const loc = [rec.city, rec.state].filter(Boolean).join(', ');
+        if (loc) html += '<br><span style="color:#aaa;font-size:0.85em">' + loc + '</span>';
+        if (kind === 'warehouse') html += '<br><span style="color:#aaa;font-size:0.8em">ALG Warehouse</span>';
+        if (rec.phone) html += '<br><a href="tel:' + rec.phone.replace(/[^+\d]/g,'') + '" style="color:#f0a932">' + rec.phone + '</a>';
+        if (rec.website) {
+          const url = rec.website.startsWith('http') ? rec.website : 'https://' + rec.website;
+          html += '<br><a href="' + url + '" target="_blank" rel="noopener" style="color:#0FAE7C">Website ↗</a>';
+        }
+        return html;
+      }
+
+      // Layer groups for filter pills
+      const layers = { warehouse: L.layerGroup(), rep: L.layerGroup(), dist: L.layerGroup() };
+
+      // Load data
+      try {
+        const res = await fetch('/data/local_support.json');
+        const data = await res.json();
+        data.warehouses.forEach(r => { if (r.lat && r.lon) L.marker([r.lat, r.lon], { icon: iconWh }).bindPopup(popup(r,'warehouse')).addTo(layers.warehouse); });
+        data.sales_reps.forEach(r => { if (r.lat && r.lon) L.marker([r.lat, r.lon], { icon: iconRep }).bindPopup(popup(r,'rep')).addTo(layers.rep); });
+        data.distributors.forEach(r => { if (r.lat && r.lon) L.marker([r.lat, r.lon], { icon: iconDist }).bindPopup(popup(r,'dist')).addTo(layers.dist); });
+      } catch(e) { console.error('ALG locator: failed to load data', e); }
+
+      // Add all layers by default
+      Object.values(layers).forEach(lg => lg.addTo(map));
+
+      // Filter pills
+      document.querySelectorAll('.loc-pill[data-filter]').forEach(pill => {
+        pill.addEventListener('click', () => {
+          document.querySelectorAll('.loc-pill').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          const f = pill.dataset.filter;
+          if (f === 'all') { Object.values(layers).forEach(lg => { if (!map.hasLayer(lg)) lg.addTo(map); }); }
+          else { Object.entries(layers).forEach(([k,lg]) => { if (k === f) { if (!map.hasLayer(lg)) lg.addTo(map); } else { if (map.hasLayer(lg)) map.removeLayer(lg); } }); }
+        });
       });
-      warehouses.forEach(w => L.marker([w.lat, w.lng], { icon }).addTo(map).bindPopup('<strong>' + w.name + '</strong><br>' + w.address));
     };
     document.head.appendChild(script);
   }
