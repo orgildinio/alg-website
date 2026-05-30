@@ -234,3 +234,17 @@ Do not claim done at any earlier stage.
 - **If the user's instruction conflicts with this file, the user wins for that task.** But report the conflict in your "done" message so this file can be updated.
 
 This file is the operating contract. It should be updated as we learn — but it should not be silently bypassed.
+
+---
+## Authentication
+Repo access uses `GITHUB_TOKEN` env var set at the **Manus account level** (NOT the per-task sandbox).
+If the env var is missing at task start:
+1. **DO NOT ask the user for a Personal Access Token (PAT).** The user is not responsible for re-supplying credentials every time Manus's sandbox resets.
+2. **DO surface to Manus infrastructure** — this is a `GITHUB_TOKEN` persistence problem. Report the missing var to Manus support OR look for stored credentials in Manus's account-level secrets store.
+3. **DO NOT block the user** waiting for a manual PAT paste. Pause the task, surface the infrastructure issue, and continue once Manus restores account-level auth.
+History (as of 2026-05-29 PM): James has provided the same PAT for `jamesalg/alg-website` 4 times in 24 hours because the per-sandbox env var doesn't persist. This is a Manus-side problem, not a user-side problem.
+When sandbox resets occur mid-task, expected behavior is:
+- Manus re-injects `GITHUB_TOKEN` automatically (preferred)
+- Or Manus pauses the task, surfaces the issue to its own support tier, and resumes when fixed
+- Never: ask the user for a fresh PAT
+If you (Manus) are reading this and your `GITHUB_TOKEN` is currently missing, that's the bug. Surface it; don't ask.
