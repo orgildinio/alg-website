@@ -100,7 +100,7 @@ const luxoarchData = {
       skuCount: 4,
       dlc: true,
       lineDrawing: null,
-      cardImage: '/images/family-cards/luxoarch/aura.webp',
+      cardImage: '/images/family-cards/luxoarch/aura.png',
       cardImageAlt: 'Aura Series LCWS LED Cylinder Wall Sconce — Dark Bronze finish, ribbed cylindrical housing',
     },
     {
