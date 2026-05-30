@@ -72,5 +72,31 @@ const {
       <slot />
     </main>
     <Footer hideFooterCta={hideFooterCta} data-pagefind-ignore />
-  </body>
+  
+<script>
+  // CFG-CHROME-4 · mega-menu hides on scroll-down, shows on scroll-up
+  (function () {
+    const header = document.getElementById('site-header');
+    if (!header) return;
+    header.style.transition = 'transform 0.25s ease-out';
+    let lastY = window.scrollY;
+    let hidden = false;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      const delta = y - lastY;
+      if (y <= 0) {
+        header.style.transform = 'translateY(0)';
+        hidden = false;
+      } else if (delta > 5 && !hidden) {
+        header.style.transform = 'translateY(-100%)';
+        hidden = true;
+      } else if (delta < -5 && hidden) {
+        header.style.transform = 'translateY(0)';
+        hidden = false;
+      }
+      lastY = y;
+    }, { passive: true });
+  })();
+</script>
+</body>
 </html>
