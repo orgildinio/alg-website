@@ -12,17 +12,17 @@ const luxoarchData = {
   name: 'luxoⒶRCH',
   titleAscii: 'LUXOARCH',
   headlineLine: 'luxo<span class="aa">Ⓐ</span>RCH',
-  description: 'Outdoor lighting for the commercial perimeter. 21 active families, 140 active SKUs.',
+  description: 'Outdoor lighting for the commercial perimeter. 16 active families, 136 active SKUs.',
   pillRow: ['DLC PREMIUM', 'TAA AVAILABLE', '5 US WAREHOUSES', '3-DAY DELIVERY', '10 APPLICATIONS'],
   statStrip: [
-    { value: '21',  label: 'Fixture Families' },
-    { value: '140', label: 'Active SKUs'       },
+    { value: '16',  label: 'Fixture Families' },
+    { value: '136', label: 'Active SKUs'       },
     { value: '10',  label: 'Applications'      },
     { value: 'DLC', label: 'Premium Listed'    },
   ],
   redBanner: [
-    { value: '21',  label: 'Families'     },
-    { value: '140', label: 'Active SKUs'  },
+    { value: '16',  label: 'Families'     },
+    { value: '136', label: 'Active SKUs'  },
     { value: '10',  label: 'Applications' },
     { value: 'DLC', label: 'Premium'      },
     { value: 'TAA', label: 'Available'    },
@@ -75,7 +75,7 @@ const luxoarchData = {
     {
       name: 'Wall Pack | Classic',
       slug: 'wall-pack-classic',
-      skuCount: 18,
+      skuCount: 14,
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="12" rx="2"/><path d="M7 7V5a2 2 0 012-2h6a2 2 0 012 2v2"/><circle cx="12" cy="13" r="2"/></svg>',
     },
     {
@@ -99,7 +99,9 @@ const luxoarchData = {
       maxWattage: 45,
       skuCount: 4,
       dlc: true,
-      lineDrawing: null, // no hero image available yet
+      lineDrawing: null,
+      cardImage: '/images/family-cards/luxoarch/aura.webp',
+      cardImageAlt: 'Aura Series LCWS LED Cylinder Wall Sconce — Dark Bronze finish, ribbed cylindrical housing',
     },
     {
       family: 'Illuminator',
@@ -140,7 +142,7 @@ const luxoarchData = {
     },
   ],
   featuredHeadline: 'Five flagship families from the luxoARCH collection.',
-  familiesHeadline: '21 families. One outdoor portfolio.',
+  familiesHeadline: '16 families. One outdoor portfolio.',
   familiesSubhead: 'Filter by application, echelon, wattage, CCT, and more.',
   legacy: {
     headline: 'Discontinued families.',

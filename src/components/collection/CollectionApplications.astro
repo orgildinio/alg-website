@@ -6,7 +6,7 @@
  * Tiles are light-bg (luxo canonical).
  */
 export interface Props {
-  applications: { name: string; slug: string; skuCount: number; icon: string; appMulti?: string }[];
+  applications: { name: string; slug: string; skuCount: number; icon: string; appMulti?: string; pdpUrl?: string }[];
 }
 const { applications } = Astro.props;
 ---
@@ -16,11 +16,17 @@ const { applications } = Astro.props;
     <div class="sec-eyebrow">Browse by application</div>
     <div class="app-grid">
       {applications.map(app => (
-        <button class="app-tile" data-app={app.slug} data-app-multi={app.appMulti || ''} aria-pressed="false">
-          <span class="app-icon" set:html={app.icon}></span>
-          <span class="app-label">{app.name}</span>
-          <span class="app-count">{app.skuCount} SKUs</span>
-        </button>
+        app.pdpUrl
+          ? <a class="app-tile app-tile--link" href={app.pdpUrl}>
+              <span class="app-icon" set:html={app.icon}></span>
+              <span class="app-label">{app.name}</span>
+              <span class="app-count">{app.skuCount} SKUs</span>
+            </a>
+          : <button class="app-tile" data-app={app.slug} data-app-multi={app.appMulti || ''} aria-pressed="false">
+              <span class="app-icon" set:html={app.icon}></span>
+              <span class="app-label">{app.name}</span>
+              <span class="app-count">{app.skuCount} SKUs</span>
+            </button>
       ))}
     </div>
   </div>
@@ -76,6 +82,7 @@ const { applications } = Astro.props;
     text-align: center;
     color: inherit;
   }
+  .app-tile--link { text-decoration: none; color: inherit; }
   .app-tile:hover {
     box-shadow: 0 6px 24px rgba(0,0,0,0.10);
     transform: translateY(-2px);
