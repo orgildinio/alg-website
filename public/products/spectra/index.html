@@ -5641,9 +5641,7 @@ body { overflow-x: hidden; }
         </div>
       </button>
 
-      <!-- ===================== constⒶNT EMERGENCY (2 cards) ·  real product webps
-           wired 2026-05-22 per James · mirrors Astra canonical (EM webps copied to
-           Spectra-local assets/accessories/em/ from /PM/v2_mockups/planoARCH/LCDL-AstraI/). -->
+      
       <button type="button" class="acc-card" data-cat="emergency" data-id="em15">
         <div class="acc-card-img">
           <span class="acc-card-img-tag">FIELD-INSTALL · 15W</span>
@@ -5674,9 +5672,7 @@ body { overflow-x: hidden; }
         </div>
       </button>
 
-      <!-- ===================== contrⒶLS by ⒶCS (3 cards · aligned with Astra · NO 50WM-ACS) ·
-           real product webps from shared planoARCH/assets/accessories/sensors/ library +
-           ACS App QR overlay (acs-app-qr.png). 2026-05-22 per James. -->
+      
       <button type="button" class="acc-card" data-cat="controls" data-id="msp20">
         <div class="acc-card-img">
           <span class="acc-card-img-tag">PIR · 20 FT RANGE</span>
@@ -6069,32 +6065,7 @@ body { overflow-x: hidden; }
   </div>
 </section>
 
-<!-- ============================================================================
-     SECTION 10 — Documentation & Resources — Spectra
-     6-card primary download grid · 1 of 5 WorkDrive URLs LIVE per memory
-     `reference_spectra_workdrive_urls.md` (captured 2026-05-09):
-        1. Data Sheet         — PDF · WorkDrive · LIVE ✓
-        2. Installation Guide — PDF · WorkDrive · PENDING (target next week per James 2026-05-09)
-        4. SellSheet          — PDF · WorkDrive · PENDING
-        5. IES Bundle         — ZIP · WorkDrive · PENDING (target next week per James 2026-05-09 ·
-                                no IES files on disk yet · §6 photometrics is placeholder until delivered)
-        6. Submittal Generator — local · reads §9 Configurator state · pending submittal/
 
-     Secondary Quick-Links row — Rebate Center (DLC tier verification pending · datasheet silent) ·
-     DLC QPL search · 5-yr Warranty. NOTE: Spectra TAA status not confirmed by datasheet —
-     TAA card omitted until verified per CFG-* discipline.
-
-     Submittal Generator points at `submittal/` (Spectra-specific template PENDING
-     build · §9 Configurator state passes via query string · carry-forward to next session
-     to build the Spectra-aware submittal/ with the 4-required-field encoder +
-     2 reflector shape variants + 4-finish round/square + optional /SP /SS treatment renderings).
-
-     Significantly more PENDING placeholders than Astra (which shipped with 4 of 5 LIVE).
-     Spectra is in the early-launch collateral window — most marketing/install collateral
-     is still in production. James indicated next week 2026-05-09 for IES + remaining PDFs.
-
-     Anchor: #downloads (already wired into sticky-nav from LUNA build).
-     ============================================================================ -->
 <section class="docs-section" id="downloads">
   <div class="docs-inner">
 
@@ -6487,24 +6458,7 @@ body { overflow-x: hidden; }
         </div>
       </a>
 
-      <a href="/products/hallmark/" class="family-card">
-        <div class="family-card-img">
-          <span class="family-card-tag">LAMPAR<span class="aa" aria-hidden="true" style="background-color:#ffffff;">Ⓐ</span>RCH</span>
-          <img class="family-card-photo"
-               src="/products/retroarch-p1/assets/hero/fam-heritage.webp"
-               alt="lamparⒶRCH Hallmark — slim linear LED strip light in white finish, suspended"
-               loading="lazy" />
-        </div>
-        <div class="family-card-body">
-          <div class="family-card-cat">Linear Strip · PRO</div>
-          <div class="family-card-title">Hallmark</div>
-          <div class="family-card-desc">
-            For the back-of-house — utility corridors, parking decks, mechanical rooms, storage spaces, and the high-traffic service areas behind the architectural envelope. Same const<span class="aa">Ⓐ</span>NT EM ecosystem as Spectra · DLC Premium tier · 8 length × wattage configurations from 4FT to 8FT. Pair Hallmark linear strip with Spectra high-output downlights to cover the full warehouse-adjacent + parking-deck + utility corridor envelope.
-          </div>
-          <div class="family-card-stats">3,800-12,000 lm · 4FT/8FT · 95-130W · DLC Premium</div>
-          <span class="family-card-cta">View product →</span>
-        </div>
-      </a>
+      
 
     </div>
   </div>
@@ -7100,8 +7054,7 @@ body { overflow-x: hidden; }
         var sel  = (w === state.watt);
         var star = (w === def) ? ' ★' : '';
         var disabled = !isValidCombo(state.driver, state.trim, state.size, w);
-        return '<button type="button" class="photo-tab' + (sel ? ' active' : '') +
-               '" data-watt="' + w + '" role="tab" aria-selected="' + (sel ? 'true' : 'false') +
+        return '<button type="button" class="photo-tab' + (sel ? ' active' : '') + '" data-watt="' + w + '" role="tab" aria-selected="' + (sel ? 'true' : 'false') +
                '"' + (disabled ? ' disabled style="opacity:0.35;cursor:not-allowed;" title="Combo not in IES bundle"' : '') +
                '>' + w + 'W' + star + '</button>';
       }).join('');
