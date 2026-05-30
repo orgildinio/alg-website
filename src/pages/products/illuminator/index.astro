@@ -54,6 +54,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </script>
   </Fragment>
 <style is:global>
+
   :root {
     --brand-red: #F32740;
     --brand-red-deep: #c81835;
@@ -78,9 +79,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     --bc-color: #666666;
   }
 
-  .page-illuminator-pdp * { box-sizing: border-box; }
-  .page-illuminator-pdp { background: var(--bg-page); color: var(--text-primary); }
-  .page-illuminator-pdp {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg-page); color: var(--text-primary); }
+  body {
     font-family: 'Lato', system-ui, -apple-system, sans-serif;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
@@ -110,8 +111,24 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     overflow: hidden;
     white-space: nowrap;
     letter-spacing: 0 !important;
-    margin: 0 -0.04em;
+    margin: 0 -0.10em;  /* tighten gap to neighbors — bumped from -0.04em 2026-05-10 */
   }
+  /* CFG-MF-13 · Heavy-tracked uppercase contexts (>= 0.12em letter-spacing)
+     need stronger tuck than the base -0.10em. Without these, the Ⓐ glyph
+     still shows visible gaps in labels like "CONTRⒶLS BY ⒶCS" or
+     "CONSTⒶNT EMB". James 2026-05-10. */
+  .acc-card-cat .aa,
+  .cfg-field-label .aa {
+    margin: 0 -0.14em;
+  }
+  .acc-card-img-tag .aa {
+    margin: 0 -0.12em;
+  }
+  .cfg-eyebrow .aa,
+  .hf-tile-tag .aa {
+    margin: 0 -0.18em;
+  }
+
   /* Universal rule: never let the bg color match the Ⓐ color. Use .aa-white on red surfaces. */
   .aa-white { background-color: #ffffff; }
   /* Inherits the parent text color (e.g. inside a link that hovers to a different color). */
@@ -132,19 +149,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   }
 
   /* Site header */
-
-
-
-
-
-
-
-
-
-
-
-
-
+  .site-header {
+    background: var(--bg-page);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 80;
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .logo { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+  .logo-mark { width: 50px; height: 50px; background: var(--brand-red); flex-shrink: 0; }
+  .logo-text { font-weight: 700; font-size: 18px; line-height: 1; letter-spacing: 0.02em; }
+  .logo-text small {
+    font-size: 9px; letter-spacing: 0.22em; opacity: 0.55;
+    display: block; margin-top: 5px; font-weight: 400;
+  }
+  nav.primary { display: flex; gap: 28px; font-size: 14px; font-weight: 400; }
+  nav.primary a {
+    padding: 8px 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.18s, color 0.18s;
+  }
+  nav.primary a:hover { border-bottom-color: var(--brand-red); }
+  .header-actions { display: flex; gap: 12px; align-items: center; }
+  .icon-btn {
+    width: 38px; height: 38px;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--text-secondary);
+  }
+  .icon-btn:hover { color: var(--text-primary); }
+  .icon-btn svg { width: 20px; height: 20px; }
 
   /* Breadcrumb — STAGING LOCKED PATTERN (.breadcrumb-band) */
   .breadcrumb-band {
@@ -180,9 +223,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
      vertical position — letting .ideal-card's bottom (pinned by margin-top: auto
      to the bottom of .hero-info) align with .carousel-wrap's bottom. */
   .hero-left { display: flex; flex-direction: column; min-width: 0; gap: 24px; }
-  .hero-info { display: flex; flex-direction: column; flex: 1; }
+  .hero-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
   .hero h1 {
-    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 30px;
     font-weight: 700;
     display: inline-flex;
@@ -216,13 +258,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     color: var(--tier-proplus-color);
   }
   .hero h2 {
-    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 44px;
     font-weight: 700;
     line-height: 1.05;
     margin: 16px 0 20px;
     letter-spacing: -0.005em;
-    white-space: nowrap;
+    overflow-wrap: break-word; word-break: break-word; min-width: 0;
   }
   .hero-desc {
     font-size: 15px;
@@ -233,11 +274,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .hero-stats {
     display: flex;
     align-items: center;
-    flex-wrap: nowrap;
+    flex-wrap: wrap; row-gap: 6px;
     margin-bottom: 28px;
     font-size: 13.5px;
     color: var(--text-secondary);
-    white-space: nowrap;
+    
   }
   .hero-stats > span {
     padding: 0 14px;
@@ -413,6 +454,20 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     font-weight: 700;
   }
   .sticky-nav a.primary:hover { background: var(--brand-red-deep); }
+  /* CFG-NAV-1 · sticky-nav active-state · the inverse of .primary.
+     Toggled by the IntersectionObserver scroll-spy at the bottom of the page.
+     White bg + brand-red text + 700 weight — visually opposite of the red-bg
+     "Pricing & Availability" CTA, signaling "this is where the reader is now". */
+  .sticky-nav a.is-current {
+    background: #FFFFFF;
+    color: var(--brand-red);
+    font-weight: 700;
+  }
+  .sticky-nav a.is-current:hover {
+    background: #FFFFFF;
+    color: var(--brand-red);
+  }
+  .sticky-nav a.is-current svg { stroke-width: 2; }
   .sticky-nav a svg { width: 15px; height: 15px; flex-shrink: 0; stroke-width: 1.7; }
 
 
@@ -437,7 +492,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     border-bottom: 1px solid var(--line);
   }
   .spec-header h2 {
-    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 34px;
     font-weight: 700;
     letter-spacing: -0.005em;
@@ -806,13 +860,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     background: var(--brand-red);
   }
   .motion-title {
-    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 40px;
     font-weight: 700;
     letter-spacing: -0.005em;
     margin-bottom: 12px;
     line-height: 1.05;
-    color: var(--text-primary);
   }
   .motion-sub {
     font-size: 15px;
@@ -936,7 +988,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     content: ""; display: block; width: 28px; height: 1px; background: var(--brand-red);
   }
   .photo-title {
-    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 38px;
     font-weight: 700;
     letter-spacing: -0.005em;
@@ -998,7 +1049,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     border-radius: 4px;
     padding: 16px;
     overflow: hidden;
-    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
   }
   .photo-plot img { width: 100%; height: auto; display: block; }
   .photo-plot-cap {
@@ -1306,7 +1358,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     background: var(--brand-red);
   }
   .hf-title {
-    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     text-align: center;
     font-size: 38px;
     font-weight: 700;
@@ -1534,7 +1585,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     content: ""; display: block; width: 28px; height: 1px; background: var(--brand-red);
   }
   .acc-title {
-    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 38px;
     font-weight: 700;
     letter-spacing: -0.005em;
@@ -1939,7 +1989,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     content: ""; display: block; width: 28px; height: 1px; background: var(--brand-red);
   }
   .cfg-title {
-    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 38px;
     font-weight: 700;
     letter-spacing: -0.005em;
@@ -2239,6 +2288,170 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .cfg-ral-input-wrap.invalid .hint { display: none; }
 
   /* Live preview card */
+  /* ============================================================================
+     CFG-CFG-1 · Asymmetric Row-Rails (added 2026-05-18 PM by row-rails transformer)
+     Layered on top of the old chip-cluster CSS above. The old `.cfg-fields` grid
+     is replaced by `.cfg-rows` (a vertical stack), and each chip group is now a
+     `.cfg-seg` (CSS grid with explicit `repeat(N, 1fr)` columns set inline).
+     ============================================================================ */
+  .cfg-body.split-60-40 { grid-template-columns: 1.6fr 1fr !important; padding: 0; }
+  .cfg-body.split-40-60 { grid-template-columns: 1fr 1.6fr !important; padding: 0; }
+
+  .cfg-body.split-60-40 .cfg-col-req,
+  .cfg-body.split-40-60 .cfg-col-req { background: rgba(255,255,255,0.012); padding: 28px 32px 32px; border-left: none; }
+  .cfg-body.split-60-40 .cfg-col-opt,
+  .cfg-body.split-40-60 .cfg-col-opt { padding: 28px 32px 32px; border-left: 1px solid var(--line); }
+  .cfg-body.split-60-40 .cfg-col + .cfg-col,
+  .cfg-body.split-40-60 .cfg-col + .cfg-col { border-left: 1px solid var(--line); }
+
+  .cfg-body.split-60-40 .cfg-col-head,
+  .cfg-body.split-40-60 .cfg-col-head { padding-bottom: 14px; margin-bottom: 12px; }
+
+  .cfg-body.split-60-40 .cfg-col-title,
+  .cfg-body.split-40-60 .cfg-col-title {
+    font: 700 12px 'JetBrains Mono', monospace; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--text-primary);
+    position: relative; padding-left: 14px;
+  }
+  .cfg-body.split-60-40 .cfg-col-title::before,
+  .cfg-body.split-40-60 .cfg-col-title::before {
+    content: ""; position: absolute; left: 0; top: 2px; bottom: 2px;
+    width: 3px; background: var(--brand-red);
+  }
+  .cfg-body.split-60-40 .cfg-col-opt .cfg-col-title::before,
+  .cfg-body.split-40-60 .cfg-col-opt .cfg-col-title::before { background: rgba(255,255,255,0.4); }
+  .cfg-body.split-60-40 .cfg-col-title-required::after,
+  .cfg-body.split-40-60 .cfg-col-title-required::after { display: none; }
+
+  .cfg-rows { display: flex; flex-direction: column; gap: 0; }
+
+  .cfg-row {
+    display: grid; grid-template-columns: 170px 1fr;
+    gap: 14px; align-items: center;
+    padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .cfg-row:last-child { border-bottom: none; }
+  .cfg-row-stack { grid-template-columns: 1fr; gap: 8px; padding: 12px 0; }
+
+  .cfg-row-l { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .cfg-row-l-stack { flex-direction: row; align-items: baseline; gap: 8px; justify-content: space-between; }
+
+  .cfg-row-label {
+    font: 600 13.5px/1.2 'Lato', sans-serif; letter-spacing: -0.005em;
+    color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    text-transform: none;
+  }
+  .cfg-req { color: var(--brand-red); margin-left: 3px; font-weight: 700; }
+  .cfg-row-code {
+    font: 600 10px/1.1 'JetBrains Mono', monospace; letter-spacing: 0.04em;
+    color: var(--brand-red); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cfg-row-code.is-empty { color: var(--text-muted); }
+
+  .cfg-seg {
+    display: grid; border: 1px solid var(--line-medium);
+    background: rgba(255,255,255,0.018); min-width: 0;
+  }
+
+  .cfg-seg .cfg-chip {
+    position: relative; display: block;
+    background: transparent; border: none;
+    border-right: 1px solid var(--line);
+    border-radius: 0; padding: 9px 10px 9px 13px;
+    text-align: center; cursor: pointer;
+    color: var(--text-primary); font-family: inherit; min-width: 0; min-height: 0;
+    transition: background 0.12s, color 0.12s;
+    grid-template-columns: none;
+    grid-template-rows: none;
+  }
+  .cfg-seg .cfg-chip:last-child { border-right: none; }
+  .cfg-seg .cfg-chip:hover:not(.selected):not(.locked):not(.disabled) {
+    background: rgba(255,255,255,0.05); border-color: transparent; color: var(--text-primary);
+  }
+  .cfg-seg .cfg-chip.selected,
+  .cfg-seg .cfg-chip.locked.selected {
+    background: var(--brand-red); border-color: transparent; color: #fff;
+  }
+  .cfg-seg .cfg-chip.locked { cursor: default; opacity: 1; background: var(--brand-red); color: #fff; }
+  .cfg-seg .cfg-chip.disabled { opacity: 0.32; cursor: not-allowed; }
+
+  .cfg-chip-stripe {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 3px; pointer-events: none;
+  }
+  .cfg-chip-stripe.qs  { background: #58C998; }
+  .cfg-chip-stripe.mto { background: #FFB562; }
+  .cfg-chip-stripe.wb  { background: #7fb6ff; }
+  .cfg-seg .cfg-chip.selected .cfg-chip-stripe { opacity: 0.85; }
+
+  .cfg-chip-main {
+    display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+    font-size: 12.5px; font-weight: 600; line-height: 1.15;
+    white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cfg-chip-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cfg-chip-sw {
+    width: 12px; height: 12px; border: 1px solid rgba(255,255,255,0.3); flex-shrink: 0;
+  }
+  .cfg-chip-star { color: #fff; font-size: 11px; flex-shrink: 0; }
+  .cfg-seg .cfg-chip.selected .cfg-chip-star { color: #fff; }
+
+  .cfg-seg .cfg-chip > .cfg-chip-stock,
+  .cfg-seg .cfg-chip > .cfg-chip-val,
+  .cfg-seg .cfg-chip > .cfg-chip-code,
+  .cfg-seg .cfg-chip > .cfg-finish-swatch { display: none; }
+
+  .cfg-adapter-select-wrap select.cfg-adapter-select,
+  select.cfg-select {
+    width: 100%; background: var(--bg-card); color: var(--text-primary);
+    border: 1px solid var(--line-medium);
+    padding: 9px 32px 9px 12px;
+    font: 500 12px 'JetBrains Mono', monospace; cursor: pointer; appearance: none;
+    text-overflow: ellipsis;
+    background-image: linear-gradient(45deg, transparent 50%, var(--text-secondary) 50%),
+                      linear-gradient(135deg, var(--text-secondary) 50%, transparent 50%);
+    background-position: calc(100% - 16px) center, calc(100% - 11px) center;
+    background-size: 5px 5px; background-repeat: no-repeat;
+  }
+
+  .cfg-legend {
+    margin-top: 16px; padding: 12px 14px;
+    background: rgba(255,255,255,0.025); border: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 6px;
+    font: 500 11px/1.3 'Lato', sans-serif; color: var(--text-secondary);
+  }
+  /* CFG-CFG-1 v1.4 · Legend disclaimer · James 2026-05-22 · quiet legal cover */
+  .cfg-disclaimer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--text-muted);
+    opacity: 0.65;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px dashed rgba(255,255,255,0.08);
+  }
+  .cfg-legend-row { display: flex; align-items: center; gap: 8px; }
+  .cfg-legend-key.star { color: #fff; font-weight: 700; width: 14px; text-align: center; }
+  .cfg-legend-stripe {
+    display: inline-block; width: 4px; height: 14px; vertical-align: middle;
+  }
+  .cfg-legend-stripe.qs  { background: #58C998; }
+  .cfg-legend-stripe.mto { background: #FFB562; }
+  .cfg-legend-key.qs:not(:has(.cfg-legend-stripe)),
+  .cfg-legend-key.mto:not(:has(.cfg-legend-stripe)) { font-size: 9px; }
+
+  @media (max-width: 880px) {
+    .cfg-body.split-60-40, .cfg-body.split-40-60 { grid-template-columns: 1fr !important; }
+    .cfg-body.split-60-40 .cfg-col-opt,
+    .cfg-body.split-40-60 .cfg-col-opt { border-left: none; border-top: 1px solid var(--line); }
+    .cfg-row { grid-template-columns: 1fr; gap: 8px; padding: 12px 0; }
+    .cfg-row-l { flex-direction: row; align-items: baseline; gap: 8px; justify-content: space-between; }
+  }
+  /* ====================  end CFG-CFG-1 row-rails  ==================== */
+
+
   .cfg-preview-wrap {
     background: var(--bg-page);
     padding: 56px 32px 88px;
@@ -2452,20 +2665,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     width: max-content;
     max-width: 100%;
   }
-
-  /* CFG-CFG-1 v1.4 · Legend disclaimer · James 2026-05-22 · quiet legal cover */
-  .cfg-disclaimer {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10.5px;
-    font-style: italic;
-    color: var(--text-muted);
-    opacity: 0.65;
-    letter-spacing: 0.02em;
-    line-height: 1.4;
-    margin-top: 8px;
-    padding-top: 6px;
-    border-top: 1px dashed rgba(255,255,255,0.08);
-  }
   .cfg-legend-row { display: contents; }
   .cfg-legend-key {
     display: inline-flex;
@@ -2540,7 +2739,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     content: ""; display: block; width: 28px; height: 1px; background: var(--brand-red);
   }
   .docs-title {
-    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 38px;
     font-weight: 700;
     letter-spacing: -0.005em;
@@ -2830,7 +3028,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     content: ""; display: block; width: 28px; height: 1px; background: var(--brand-red);
   }
   .closing-title {
-    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 38px;
     font-weight: 700;
     letter-spacing: -0.005em;
@@ -3172,40 +3369,47 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     .hero-grid { grid-template-columns: 1fr; gap: 32px; }
     .hero h2 { font-size: 36px; white-space: normal; }
     .hero-stats { flex-wrap: wrap; }
-  
+    nav.primary { display: none; }
     .sticky-nav { width: calc(100% - 32px); overflow-x: auto; justify-content: flex-start; }
   }
 
+  /* CFG-TYPE-1 (2026-05-18 PM) — Pin Lato !important on h1/h2 because Shopify
+     global injects Cormorant. Scoped to body.illuminator-pdp to match collection. */
+  body.illuminator-pdp h1, body.illuminator-pdp h2 {
+    font-family: 'Lato', system-ui, sans-serif !important;
+    font-weight: 700 !important;
+  }
+  
+/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+body { overflow-x: hidden; }
+
 </style>
 
-<!-- ALG global header injected by BaseLayout.astro -->
-
-<!-- Breadcrumb — STAGING-LOCKED .breadcrumb-band pattern -->
+  <!-- CFG-CHROME-2 · .mockup-banner removed 2026-05-18 PM -->
+  <!-- CFG-CHROME-1 · inline <header class="site-header"> removed 2026-05-18 PM — canonical chrome comes from Astro layout. -->
+  <!-- Breadcrumb — STAGING-LOCKED .breadcrumb-band pattern -->
 <nav class="breadcrumb-band" aria-label="Breadcrumb">
-  <a href="/">HOME</a>
-  <span class="bc-sep">›</span>
-  <a href="/collections">PRODUCTS</a>
-  <span class="bc-sep">›</span>
-  <a href="/collections/outdoor">OUTDOOR</a>
-  <span class="bc-sep">›</span>
-  <a href="/collections/luxoarch">LUXO<span class="aa">Ⓐ</span>RCH</a>
-  <span class="bc-sep">›</span>
-  <span class="bc-plain">SPORTS LIGHTING</span>
-  <span class="bc-sep">›</span>
-  <span class="bc-current">ILLUMINATOR SERIES</span>
-</nav>
+      <a href="/">HOME</a>
+      <span class="bc-sep">›</span>
+      <a href="/collections">PRODUCTS</a>
+      <span class="bc-sep">›</span>
+      <a href="/collections/outdoor">OUTDOOR</a>
+      <span class="bc-sep">›</span>
+      <a href="/collections/luxoarch">LUXO<span class="aa">Ⓐ</span>RCH</a>
+      <span class="bc-sep">›</span>
+      <span class="bc-plain">SPORTS LIGHTING</span>
+      <span class="bc-sep">›</span>
+      <span class="bc-current">ILLUMINATOR SERIES</span>
+    </nav>
 
-
-<div data-pagefind-meta="keywords:LSPL,sports lighting,stadium,broadcast lighting,sports floodlight,116000 lumens,150 lm/W,DLC premium sports,proⒶPTICS,POWERⒶIM,trunnion mount,slip-fitter,WATTSELECT,CCTSELECT" data-pagefind-ignore="all" style="display:none"></div><section class="hero">
+<section class="hero">
   <div class="hero-grid">
     <div class="hero-left">
       <div class="hero-info">
-      <h1 data-pagefind-weight="10">
+      <h1>
         Illuminator Series
         <span class="tier-badge tier-pro-plus">PRO+</span>
       </h1>
-<span data-pagefind-meta="sku_pattern:LILL" style="display:none">LILL</span>
-<span data-pagefind-meta="breadcrumb:Outdoor › luxoⒶRCH › Sports Lighter" data-pagefind-ignore="all" style="display:none"></span>
       <h2>Professional Sports Lighter</h2>
       <p class="hero-desc">
         The Illuminator series is engineered for professional sports venues and high-performance facilities needing superior illumination from heights over 100FT. It's ideal for professional stadiums, colleges, municipal fields, and Olympic-grade training facilities requiring broadcast-quality lighting.
@@ -3338,40 +3542,38 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
                alpha-cutout; the build script (process_carousel.py) just crops
                to content + resizes + transcodes to WebP for web delivery. -->
           <div class="carousel-slide">
-            <picture>
-              <source type="image/webp" srcset="/products/illuminator/assets/hero/illuminator-hero-1.webp">
-              <img class="slide-img"
-                   src="/products/illuminator/assets/hero/illuminator-hero-1.webp"
-                   alt="Illuminator — 3/4 angle hero, LED face illuminated, orange pivot pin visible"
-                   loading="eager" />
-            </picture>
+            <img class="slide-img"
+                 src="/products/illuminator/assets/hero/illuminator-hero-1.webp"
+                 alt="Illuminator — 3/4 angle hero, LED face illuminated, orange pivot pin visible"
+                 loading="eager" />
           </div>
           <div class="carousel-slide">
-            <picture>
-              <source type="image/webp" srcset="/products/illuminator/assets/hero/illuminator-hero-2.webp">
-              <img class="slide-img"
-                   src="/products/illuminator/assets/hero/illuminator-hero-2.webp"
-                   alt="Illuminator — side profile detail showing trunnion yoke and pivot pin assembly"
-                   loading="lazy" />
-            </picture>
+            <img class="slide-img"
+                 src="/products/illuminator/assets/hero/illuminator-hero-2.webp"
+                 alt="Illuminator — side profile detail showing trunnion yoke and pivot pin assembly"
+                 loading="lazy" />
           </div>
           <div class="carousel-slide">
-            <picture>
-              <source type="image/webp" srcset="/products/illuminator/assets/hero/illuminator-hero-3.webp">
-              <img class="slide-img"
-                   src="/products/illuminator/assets/hero/illuminator-hero-3.webp"
-                   alt="Illuminator — back-quarter view showing heat-sink fin geometry and rear housing"
-                   loading="lazy" />
-            </picture>
+            <img class="slide-img"
+                 src="/products/illuminator/assets/hero/illuminator-hero-3.webp"
+                 alt="Illuminator — back-quarter view showing heat-sink fin geometry and rear housing"
+                 loading="lazy" />
           </div>
           <div class="carousel-slide">
-            <picture>
-              <source type="image/webp" srcset="/products/illuminator/assets/hero/illuminator-hero-4.webp">
-              <img class="slide-img"
-                   src="/products/illuminator/assets/hero/illuminator-hero-4.webp"
-                   alt="Illuminator — three-luminaire array on a stadium pole crossarm"
-                   loading="lazy" />
-            </picture>
+            <img class="slide-img"
+                 src="/products/illuminator/assets/hero/illuminator-hero-4.webp"
+                 alt="Illuminator — three-luminaire array on a stadium pole crossarm"
+                 loading="lazy" />
+          </div>
+          <!-- Slide 5 — environmental / lifestyle placeholder. Awaiting AI-render
+               or photography of the Illuminator in-context: 4 luminaires on a
+               stadium pole at night, basketball/football field below. -->
+          <div class="carousel-slide">
+            <div class="slide-placeholder">
+              <div class="slide-tag">Slide 05 / 05</div>
+              <div class="slide-source">[ AI-generated · awaiting asset ]</div>
+              <div class="slide-note">Sports field at night · 4 luminaires on a pole · environmental context shot</div>
+            </div>
           </div>
         </div>
         <div class="carousel-dots" id="carouselDots">
@@ -3379,25 +3581,24 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <span data-i="1"></span>
           <span data-i="2"></span>
           <span data-i="3"></span>
+          <span data-i="4"></span>
         </div>
       </div>
 
       <!-- Compliance row — official logos pulled from production CDN -->
       <div class="hero-compliance" aria-label="Certifications">
         <div class="cb">
-          <img src="/assets/certs/dlc.svg" alt="DLC Listed" />
+          <img src="/products/illuminator/assets/certs/dlc.svg" alt="DLC Listed" />
           <div class="cb-label">DLC Listed</div>
         </div>
-        <div class="cb">
-          <img src="/assets/certs/etl.svg" alt="ETL Listed" />
-          <div class="cb-label">ETL Listed</div>
+        
         </div>
         <div class="cb">
-          <img src="/assets/certs/rohs.svg" alt="RoHS Compliant" />
+          <img src="/products/illuminator/assets/certs/rohs.svg" alt="RoHS Compliant" />
           <div class="cb-label">RoHS</div>
         </div>
         <div class="cb">
-          <img src="/assets/certs/wet-location.svg" alt="Suitable for Wet Location" />
+          <img src="/products/illuminator/assets/certs/wet-location.svg" alt="Suitable for Wet Location" />
           <div class="cb-label">Wet Location</div>
         </div>
       </div>
@@ -3478,33 +3679,25 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
     <div class="compliance-badges" aria-label="Certifications">
       <div class="cb">
-        <div class="cb-mark cb-circle">DLC</div>
+  <img class="cb-cert-img" src="/products/illuminator/assets/certs/dlc.svg" alt="Listed" height="36" data-cert="listed">
+  <div class="cb-label">Listed</div>
+</div>
+      <div class="cb">
+        
         <div class="cb-label">Listed</div>
       </div>
       <div class="cb">
-        <div class="cb-mark cb-diamond"><span>ETL</span></div>
-        <div class="cb-label">Listed</div>
-      </div>
+  <img class="cb-cert-img" src="/products/illuminator/assets/certs/rohs.svg" alt="RoHS" height="36" data-cert="rohs">
+  <div class="cb-label">RoHS</div>
+</div>
       <div class="cb">
-        <div class="cb-mark cb-circle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 12 10 16 18 8"/>
-          </svg>
-        </div>
-        <div class="cb-label">RoHS</div>
-      </div>
+  <img class="cb-cert-img" src="/products/illuminator/assets/certs/dlc-premium.svg" alt="Premium" height="36" data-cert="premium">
+  <div class="cb-label">Premium</div>
+</div>
       <div class="cb">
-        <div class="cb-mark cb-circle">DLC+</div>
-        <div class="cb-label">Premium</div>
-      </div>
-      <div class="cb">
-        <div class="cb-mark cb-circle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 4 Q6 12 6 16 a6 6 0 0 0 12 0 Q18 12 12 4 Z"/>
-          </svg>
-        </div>
-        <div class="cb-label">Wet Loc</div>
-      </div>
+  <img class="cb-cert-img" src="/products/illuminator/assets/certs/wet-loc.svg" alt="Wet Loc" height="36" data-cert="wet-loc">
+  <div class="cb-label">Wet Loc</div>
+</div>
     </div>
 
   </div>
@@ -3607,7 +3800,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             </svg>
           </div>
           <div class="meta-stat-text">
-            <span class="meta-stat-num">10 yr · 100k hr</span>
+            <span class="meta-stat-num">5 yr · 50k hr</span>
             <span class="meta-stat-sub">Limited Liability</span>
           </div>
         </div>
@@ -3751,7 +3944,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <section class="motion-section" id="motion" aria-label="Illuminator in motion">
 
   <div class="motion-inner">
-    <p class="motion-eyebrow">Engineering In Motion</p>
+    <p class="motion-eyebrow">ENGINEERING IN MOTION</p>
     <h2 class="motion-title">See the Illuminator in action.</h2>
     <p class="motion-sub">
       Six short clips covering the features that matter on the field — selectable wattage, 90° pivot aiming,
@@ -3768,7 +3961,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       muted
       playsinline
       preload="metadata"
-      poster="/products/illuminator/assets/hero/illuminator-hero-1.webp"
+      poster=""
     ></video>
     <div class="motion-caption" id="motionCaption" aria-live="polite"></div>
   </div>
@@ -3825,7 +4018,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <div class="hf-tile-overlay">
             <div class="hf-tile-tag">Optics</div>
             <h3>NEMA 3-Distribution.</h3>
-            <p>PRO<span class="aa">Ⓐ</span>PTICS™ delivers uniform field coverage at 35° standard with 20° / 55° / 90° options. B4-U0-G5 BUG rating keeps the spill where it belongs.</p>
+            <p>PROⒶPTICS™ delivers uniform field coverage at 35° standard with 20° / 55° / 90° options. B4-U0-G5 BUG rating keeps the spill where it belongs.</p>
           </div>
         </div>
       </div>
@@ -3850,7 +4043,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           </div>
           <div class="hf-tile-overlay">
             <div class="hf-tile-tag">Aiming</div>
-            <h3>power<span class="aa">Ⓐ</span>IM™ Hinge.</h3>
+            <h3>powerⒶIM™ Hinge.</h3>
             <p>90° upward / downward pivot with integrated laser-sight guide for first-pass beam alignment. Locks to within ±1° at any installation height.</p>
           </div>
         </div>
@@ -3909,7 +4102,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     for products with multiple compatible controls solutions.
 
     <svg class="tac-sensor-svg" data-platform="acs" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-      [<span class="aa">Ⓐ</span>CS PIR sensor — square fixture-mounted, ALG-branded. SVG body preserved in v2 git history. ]
+      [ⒶCS PIR sensor — square fixture-mounted, ALG-branded. SVG body preserved in v2 git history. ]
     </svg>
     <svg class="tac-sensor-svg" data-platform="bilevel" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg">
       [Bi-Level — rectangular driver-mounted controller w/ 2 indicator LEDs + antenna nub.]
@@ -3931,18 +4124,18 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
       <!-- Callout — Illuminator has only ONE compatible controls solution (Synapse). Single tab.
            Multi-platform structure is preserved in the commented block below for products that ARE
-           compatible with multiple platforms (pro<span class="aa">Ⓐ</span>RCH-III / Symmetry / Titan all support Bi-Level
-           + <span class="aa">Ⓐ</span>CS + SILVAIR + Synapse per their datasheets). When porting this section, uncomment +
+           compatible with multiple platforms (proⒶRCH-III / Symmetry / Titan all support Bi-Level
+           + ⒶCS + SILVAIR + Synapse per their datasheets). When porting this section, uncomment +
            adapt the additional <button> elements + corresponding sensor SVGs in .tac-sensor-area. -->
       <div class="tac-callout">
         <div class="tac-callout-tabs" role="tablist">
           <button type="button" class="tac-callout-tab active" role="tab" aria-selected="true" data-platform="synapse">
-            <span>contr<span class="aa aa-white"><span class="aa">Ⓐ</span></span>LS · technology by Synapse</span>
+            <span>contr<span class="aa aa-white">Ⓐ</span>LS · technology by Synapse</span>
           </button>
           <!--
           Multi-platform variant — uncomment for products with multiple compatible controls solutions:
           <button type="button" class="tac-callout-tab" role="tab" aria-selected="false" data-platform="acs">
-            <span>by <span class="aa aa-inherit"><span class="aa">Ⓐ</span></span>CS</span>
+            <span>by <span class="aa aa-inherit">Ⓐ</span>CS</span>
           </button>
           <button type="button" class="tac-callout-tab" role="tab" aria-selected="false" data-platform="bilevel">
             <span>by Bi-Level</span>
@@ -3955,7 +4148,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="tac-callout-body" id="tacCalloutBody">
           <!-- Platform-specific copy. Default = Synapse. Updated by JS on tab click. -->
           <p id="tacCalloutCopy">Enterprise-grade networked lighting control with advanced commissioning, scalability, and cloud integration for large facilities and campuses. Mesh-network site management, theatrical RGBW show programs through DMX/DALI gateways, and dual sensor inputs for advanced automation.</p>
-          <a href="/safety-controls/controls/" class="tac-callout-link">
+          <a href="/products/controls/" class="tac-callout-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <path d="M2 8a15 15 0 0 1 20 0"/>
               <path d="M5 12a10 10 0 0 1 14 0"/>
@@ -4047,7 +4240,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
      Production accessory pattern: dark grid → click card → modal with specs +
      3 CTAs (Pricing & Availability, Data Sheet, Request Quote).
      14 accessories sourced from LSPL Illuminator datasheet, grouped by category:
-       • contr<span class="aa">Ⓐ</span>LS (2)         — DMX, WiFi
+       • contrⒶLS (2)         — DMX, WiFi
        • Glare Control (2)    — Shield, Visor
        • Mount (2)            — Slip-Fitter, Trunnion
        • Optics (4)           — 20°, 35°, 55°, 90°
@@ -4063,7 +4256,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <h2 class="acc-title">Engineered Accessories</h2>
       <p class="acc-sub">
         Enhance performance and versatility with accessories engineered specifically
-        for the Illuminator <span class="aa" aria-hidden="true"><span class="aa">Ⓐ</span></span> Series &mdash; controllers, optics, glare
+        for the Illuminator <span class="aa" aria-hidden="true">Ⓐ</span> Series &mdash; controllers, optics, glare
         control, surge protection, and field-aiming tools, all factory-matched to the luminaire.
       </p>
     </div>
@@ -4074,7 +4267,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         All Accessories <span class="acc-pill-count">14</span>
       </button>
       <button type="button" class="acc-pill" data-filter="controls"   role="tab" aria-selected="false">
-        contr<span class="aa" aria-hidden="true"><span class="aa">Ⓐ</span></span>LS <span class="acc-pill-count">2</span>
+        contr<span class="aa" aria-hidden="true">Ⓐ</span>LS <span class="acc-pill-count">2</span>
       </button>
       <button type="button" class="acc-pill" data-filter="glare"      role="tab" aria-selected="false">
         Glare Control <span class="acc-pill-count">2</span>
@@ -4096,7 +4289,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <!-- Card grid -->
     <div class="acc-grid" id="accGrid">
 
-      <!-- ===================== contr<span class="aa">Ⓐ</span>LS (2) =====================
+      <!-- ===================== contrⒶLS (2) =====================
            Both controllers OEM'd from Synapse Wireless. SKU shown on the card
            is the ALG ordering code; underlying Synapse part is referenced in
            the modal spec sheet. Real product photography awaits Synapse asset
@@ -4116,7 +4309,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
                loading="lazy" />
         </div>
         <div class="acc-card-body">
-          <div class="acc-card-cat">contr<span class="aa">Ⓐ</span>LS · BASE STATION</div>
+          <div class="acc-card-cat">contrⒶLS · BASE STATION</div>
           <div class="acc-card-title">NEMA Base Station · Cloud-Ready</div>
           <div class="acc-card-sku">CTRL-SYCB-450CL</div>
           <div class="acc-card-cta">View details →</div>
@@ -4135,7 +4328,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
                loading="lazy" />
         </div>
         <div class="acc-card-body">
-          <div class="acc-card-cat">contr<span class="aa">Ⓐ</span>LS · RETROFIT</div>
+          <div class="acc-card-cat">contrⒶLS · RETROFIT</div>
           <div class="acc-card-title">External IP65 Controller · 220-F</div>
           <div class="acc-card-sku">CTRL-SYRC-220F</div>
           <div class="acc-card-cta">View details →</div>
@@ -4179,7 +4372,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <button type="button" class="acc-card" data-cat="mount" data-id="mount-sf">
         <div class="acc-card-img">
           <span class="acc-card-img-tag">MOUNT</span>
-          <!-- Real LSPL-I1/SF slip-fitter bracket photo (luxo<span class="aa">Ⓐ</span>RCH photo library) -->
+          <!-- Real LSPL-I1/SF slip-fitter bracket photo (luxoⒶRCH photo library) -->
           <img class="acc-card-photo"
                src="/products/illuminator/assets/accessories/mount-sf.webp"
                alt="LSPL-I1/SF slip-fitter bracket — die-cast aluminum mounting flange with 2.5-inch tenon receptacle"
@@ -4344,7 +4537,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <button type="button" class="acc-card" data-cat="peripheral" data-id="lsg">
         <div class="acc-card-img">
           <span class="acc-card-img-tag">FIELD-AIM</span>
-          <!-- Real LSPL-I1/LSG laser pointer photo (luxo<span class="aa">Ⓐ</span>RCH photo library) -->
+          <!-- Real LSPL-I1/LSG laser pointer photo (luxoⒶRCH photo library) -->
           <img class="acc-card-photo"
                src="/products/illuminator/assets/accessories/periph-lsg.webp"
                alt="LSPL-I1/LSG laser sight guide — handheld field-aiming laser pointer with lanyard"
@@ -4396,7 +4589,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
      SECTION 8 — Configurator (Build Your Model)
      7 required fields + 5 optional fields. SKU is built live by the JS engine
      below. The chip pattern + SKU encoder is the canonical template — for the
-     other 4 v2 PDPs (pro<span class="aa">Ⓐ</span>RCH-III, Nebula-II, Symmetry, Titan), only the
+     other 4 v2 PDPs (proⒶRCH-III, Nebula-II, Symmetry, Titan), only the
      CFG_FIELDS + CFG_SPECS_FN need to change.
      Anchor: #configurator (already wired into sticky-nav).
      ============================================================================ -->
@@ -4426,270 +4619,52 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       </button>
     </div>
 
-    <div class="cfg-body">
+    <div class="cfg-body split-60-40">
       <!-- ============== REQUIRED COLUMN ============== -->
-      <div class="cfg-col">
+      <div class="cfg-col cfg-col-req">
         <div class="cfg-col-head">
           <div class="cfg-col-title cfg-col-title-required">Required</div>
           <div class="cfg-col-meta">7 fields · all must be set</div>
         </div>
-        <div class="cfg-fields">
+        <div class="cfg-rows">
 
-          <div class="cfg-field" data-field="model">
-            <div class="cfg-field-label">Model Series <span class="req">*</span></div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip selected" data-field="model" data-val="600" data-code="LSPL600">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">600W Max</span>
-                <span class="cfg-chip-code">LSPL600</span>
-              </button>
-              <button type="button" class="cfg-chip" data-field="model" data-val="800" data-code="LSPL800">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">800W Max</span>
-                <span class="cfg-chip-code">LSPL800</span>
-              </button>
-            </div>
-          </div>
+          <div class="cfg-row" data-field="model"><div class="cfg-row-l"><span class="cfg-row-label">Model Series<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="model">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip selected" data-code="LSPL600" data-field="model" data-val="600" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">600W Max</span></span></button><button class="cfg-chip" data-code="LSPL800" data-field="model" data-val="800" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">800W Max</span></span></button></div></div>
 
-          <div class="cfg-field" data-field="cct">
-            <div class="cfg-field-label">CCT <span class="req">*</span></div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip" data-field="cct" data-val="40" data-code="40">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">4000K</span>
-                <span class="cfg-chip-code">-40</span>
-              </button>
-              <button type="button" class="cfg-chip" data-field="cct" data-val="50" data-code="50">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">5000K</span>
-                <span class="cfg-chip-code">-50</span>
-              </button>
-            </div>
-          </div>
+          <div class="cfg-row" data-field="cct"><div class="cfg-row-l"><span class="cfg-row-label">CCT<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="cct">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip" data-code="40" data-field="cct" data-val="40" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">4000K</span></span></button><button class="cfg-chip" data-code="50" data-field="cct" data-val="50" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">5000K</span></span></button></div></div>
 
-          <div class="cfg-field" data-field="voltage">
-            <div class="cfg-field-label">Voltage <span class="req">*</span></div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip" data-field="voltage" data-val="U" data-code="U">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">120-277V</span>
-                <span class="cfg-chip-code">-U</span>
-              </button>
-              <button type="button" class="cfg-chip" data-field="voltage" data-val="H" data-code="H">
-                <span class="cfg-chip-stock mto">MTO</span>
-                <span class="cfg-chip-val">277-480V</span>
-                <span class="cfg-chip-code">-H</span>
-              </button>
-            </div>
-          </div>
+          <div class="cfg-row" data-field="voltage"><div class="cfg-row-l"><span class="cfg-row-label">Voltage<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="voltage">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip" data-code="U" data-field="voltage" data-val="U" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">120–277V</span></span></button><button class="cfg-chip" data-code="H" data-field="voltage" data-val="H" type="button"><span class="cfg-chip-stripe mto"></span><span class="cfg-chip-main"><span class="cfg-chip-label">277–480V</span></span></button></div></div>
 
-          <div class="cfg-field" data-field="optic">
-            <div class="cfg-field-label">Optics <span class="req">*</span></div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip" data-field="optic" data-val="20" data-code="O20">
-                <span class="cfg-chip-stock mto">MTO</span>
-                <span class="cfg-chip-val">20°</span>
-                <span class="cfg-chip-code">/O20</span>
-              </button>
-              <button type="button" class="cfg-chip" data-field="optic" data-val="35" data-code="">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">35° ★</span>
-                <span class="cfg-chip-code">(blank)</span>
-              </button>
-              <button type="button" class="cfg-chip" data-field="optic" data-val="55" data-code="O55">
-                <span class="cfg-chip-stock mto">MTO</span>
-                <span class="cfg-chip-val">55°</span>
-                <span class="cfg-chip-code">/O55</span>
-              </button>
-              <button type="button" class="cfg-chip" data-field="optic" data-val="90" data-code="O90" data-only-model="600">
-                <span class="cfg-chip-stock mto">MTO</span>
-                <span class="cfg-chip-val">90°</span>
-                <span class="cfg-chip-code">/O90</span>
-              </button>
-            </div>
-          </div>
+          <div class="cfg-row" data-field="optic"><div class="cfg-row-l"><span class="cfg-row-label">Optics<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="optic">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(4, 1fr);"><button class="cfg-chip" data-code="O20" data-field="optic" data-val="20" type="button"><span class="cfg-chip-stripe mto"></span><span class="cfg-chip-main"><span class="cfg-chip-label">20°</span></span></button><button class="cfg-chip" data-code="" data-field="optic" data-star="1" data-val="35" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">35°</span><span class="cfg-chip-star">★</span></span></button><button class="cfg-chip" data-code="O55" data-field="optic" data-val="55" type="button"><span class="cfg-chip-stripe mto"></span><span class="cfg-chip-main"><span class="cfg-chip-label">55°</span></span></button><button class="cfg-chip" data-code="O90" data-field="optic" data-only-model="600" data-val="90" type="button"><span class="cfg-chip-stripe mto"></span><span class="cfg-chip-main"><span class="cfg-chip-label">90°</span></span></button></div></div>
 
-          <div class="cfg-field" data-field="finish" style="grid-column: 1 / -1;">
-            <div class="cfg-field-label">Finish <span class="req">*</span></div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip cfg-chip-finish" data-field="finish" data-val="B" data-code="B">
-                <span class="cfg-finish-swatch" style="background:#1a1a1a;"></span>
-                <span class="cfg-chip-val">Black ★</span>
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-code">B</span>
-              </button>
-              <button type="button" class="cfg-chip cfg-chip-finish" data-field="finish" data-val="D" data-code="D">
-                <span class="cfg-finish-swatch" style="background:#3a2e22;"></span>
-                <span class="cfg-chip-val">Bronze</span>
-                <span class="cfg-chip-stock mto">MTO</span>
-                <span class="cfg-chip-code">D</span>
-              </button>
-              <button type="button" class="cfg-chip cfg-chip-finish" data-field="finish" data-val="S" data-code="S">
-                <span class="cfg-finish-swatch" style="background:#b8b8b8;"></span>
-                <span class="cfg-chip-val">Silver</span>
-                <span class="cfg-chip-stock mto">MTO</span>
-                <span class="cfg-chip-code">S</span>
-              </button>
-              <button type="button" class="cfg-chip cfg-chip-finish" data-field="finish" data-val="W" data-code="W">
-                <span class="cfg-finish-swatch" style="background:#f5f5f5;"></span>
-                <span class="cfg-chip-val">White</span>
-                <span class="cfg-chip-stock mto">MTO</span>
-                <span class="cfg-chip-code">W</span>
-              </button>
-              <button type="button" class="cfg-chip cfg-chip-finish" data-field="finish" data-val="RAL" data-code="RAL#">
-                <span class="cfg-finish-swatch" style="background:linear-gradient(135deg,#e63946 0,#457b9d 50%,#a8dadc 100%);"></span>
-                <span class="cfg-chip-val">Custom RAL</span>
-                <span class="cfg-chip-stock mto">MTO</span>
-                <span class="cfg-chip-code">RAL#</span>
-              </button>
-            </div>
-            <!-- RAL number input — only shown when Custom RAL chip is the active finish.
-                 Validates the typed 4-digit number against the RAL Classic spec list
-                 (213 codes); a valid entry replaces the /RAL#/ placeholder in the SKU
-                 with the literal /####/ value. Live on every keystroke. -->
-            <div class="cfg-ral-input-wrap" id="cfgRalInputWrap" role="group" aria-label="RAL Classic number entry">
-              <span class="cfg-ral-label">RAL Classic Number</span>
-              <span class="cfg-ral-input-group">
-                <span class="cfg-ral-input-prefix">RAL</span>
-                <input type="text" id="cfgRalInput" class="cfg-ral-input" maxlength="4" inputmode="numeric" autocomplete="off" placeholder="9005" aria-label="RAL Classic 4-digit number" />
-              </span>
-              <span class="cfg-ral-status">
-                <span class="hint">Enter a 4-digit RAL Classic code (e.g. 9005 · Jet Black).</span>
-                <span class="ok">✓ Valid · <span id="cfgRalName">—</span></span>
-                <span class="err">Not a valid RAL Classic code. See <a href="https://www.ral-farben.de/" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline;">ral-farben.de</a> for the official list.</span>
-              </span>
-            </div>
-          </div>
+          <div class="cfg-row" data-field="finish"><div class="cfg-row-l"><span class="cfg-row-label">Finish<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="finish">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(5, 1fr);"><button class="cfg-chip cfg-chip-finish" data-code="B" data-field="finish" data-star="1" data-val="B" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-sw" style="background:#1a1a1a;"></span><span class="cfg-chip-label">Black</span><span class="cfg-chip-star">★</span></span></button><button class="cfg-chip cfg-chip-finish" data-code="D" data-field="finish" data-val="D" type="button"><span class="cfg-chip-stripe mto"></span><span class="cfg-chip-main"><span class="cfg-chip-sw" style="background:#3a2e22;"></span><span class="cfg-chip-label">Bronze</span></span></button><button class="cfg-chip cfg-chip-finish" data-code="S" data-field="finish" data-val="S" type="button"><span class="cfg-chip-stripe mto"></span><span class="cfg-chip-main"><span class="cfg-chip-sw" style="background:#b8b8b8;"></span><span class="cfg-chip-label">Silver</span></span></button><button class="cfg-chip cfg-chip-finish" data-code="W" data-field="finish" data-val="W" type="button"><span class="cfg-chip-stripe mto"></span><span class="cfg-chip-main"><span class="cfg-chip-sw" style="background:#f5f5f5;"></span><span class="cfg-chip-label">White</span></span></button><button class="cfg-chip cfg-chip-finish" data-code="RAL#" data-field="finish" data-val="RAL" type="button"><span class="cfg-chip-stripe mto"></span><span class="cfg-chip-main"><span class="cfg-chip-sw" style="background:linear-gradient(135deg,#e63946 0,#457b9d 50%,#a8dadc 100%);"></span><span class="cfg-chip-label">Custom RAL</span></span></button></div></div>
 
-          <div class="cfg-field" data-field="mount">
-            <div class="cfg-field-label">Mount <span class="req">*</span></div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip" data-field="mount" data-val="TR" data-code="TR">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">Trunnion ★</span>
-                <span class="cfg-chip-code">/TR</span>
-              </button>
-              <button type="button" class="cfg-chip" data-field="mount" data-val="SF" data-code="SF">
-                <span class="cfg-chip-stock mto">MTO</span>
-                <span class="cfg-chip-val">Slip-Fitter</span>
-                <span class="cfg-chip-code">/SF</span>
-              </button>
-            </div>
-          </div>
+          <div class="cfg-row" data-field="mount"><div class="cfg-row-l"><span class="cfg-row-label">Mount<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="mount">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip" data-code="TR" data-field="mount" data-star="1" data-val="TR" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Trunnion</span><span class="cfg-chip-star">★</span></span></button><button class="cfg-chip" data-code="SF" data-field="mount" data-val="SF" type="button"><span class="cfg-chip-stripe mto"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Slip-Fitter</span></span></button></div></div>
 
-          <div class="cfg-field" data-field="taa">
-            <div class="cfg-field-label">TAA Compliance <span class="req">*</span></div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip cfg-chip-toggle" data-field="taa" data-val="STD" data-code="">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">Standard</span>
-                <span class="cfg-chip-code">(blank)</span>
-              </button>
-              <button type="button" class="cfg-chip cfg-chip-toggle" data-field="taa" data-val="TAA" data-code="TAA">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">TAA Compliant</span>
-                <span class="cfg-chip-code">/TAA</span>
-              </button>
-            </div>
-          </div>
+          <div class="cfg-row" data-field="taa"><div class="cfg-row-l"><span class="cfg-row-label">TAA Compliance<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="taa">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip cfg-chip-toggle" data-code="" data-field="taa" data-val="STD" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Standard</span></span></button><button class="cfg-chip cfg-chip-toggle" data-code="TAA" data-field="taa" data-val="TAA" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">TAA Compliant</span></span></button></div></div>
 
         </div>
       </div>
 
       <!-- ============== OPTIONAL COLUMN ============== -->
-      <div class="cfg-col cfg-col-optional-flex">
+      <div class="cfg-col cfg-col-optional-flex cfg-col-opt">
         <div class="cfg-col-head">
           <div class="cfg-col-title">Optional</div>
           <div class="cfg-col-meta">4 add-ons · pick any combination</div>
         </div>
-        <div class="cfg-fields">
+        <div class="cfg-rows">
 
-          <div class="cfg-field" data-field="surge" style="grid-column: 1 / -1;">
-            <div class="cfg-field-label">const<span class="aa" aria-hidden="true"><span class="aa">Ⓐ</span></span>NT · Surge Protection <span style="color:var(--text-muted); font-weight:400; letter-spacing:0.06em;">(pick one)</span></div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip cfg-chip-toggle" data-field="surge" data-val="10SP277" data-code="10SP/277">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">10kA · 277V</span>
-                <span class="cfg-chip-code">/10SP/277</span>
-              </button>
-              <button type="button" class="cfg-chip cfg-chip-toggle" data-field="surge" data-val="10SP480" data-code="10SP/480">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">10kA · 480V</span>
-                <span class="cfg-chip-code">/10SP/480</span>
-              </button>
-              <button type="button" class="cfg-chip cfg-chip-toggle" data-field="surge" data-val="20SP277" data-code="20SP/277">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">20kA · 277V</span>
-                <span class="cfg-chip-code">/20SP/277</span>
-              </button>
-              <button type="button" class="cfg-chip cfg-chip-toggle" data-field="surge" data-val="20SP480" data-code="20SP/480">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">20kA · 480V</span>
-                <span class="cfg-chip-code">/20SP/480</span>
-              </button>
-            </div>
-          </div>
+          <div class="cfg-row cfg-row-stack" data-field="surge"><div class="cfg-row-l cfg-row-l-stack"><span class="cfg-row-label">const<span aria-hidden="true" class="aa">Ⓐ</span>NT · Surge Protection</span><span class="cfg-row-code is-empty" data-field-code="surge">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(4, 1fr);"><button class="cfg-chip cfg-chip-toggle" data-code="10SP/277" data-field="surge" data-val="10SP277" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">10kA · 277V</span></span></button><button class="cfg-chip cfg-chip-toggle" data-code="10SP/480" data-field="surge" data-val="10SP480" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">10kA · 480V</span></span></button><button class="cfg-chip cfg-chip-toggle" data-code="20SP/277" data-field="surge" data-val="20SP277" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">20kA · 277V</span></span></button><button class="cfg-chip cfg-chip-toggle" data-code="20SP/480" data-field="surge" data-val="20SP480" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">20kA · 480V</span></span></button></div></div>
 
-          <div class="cfg-field" data-field="controls" data-multi="true">
-            <div class="cfg-field-label">contr<span class="aa" aria-hidden="true"><span class="aa">Ⓐ</span></span>LS · Controller <span style="color:var(--text-muted); font-weight:400; letter-spacing:0.06em;">(pick any)</span></div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip cfg-chip-toggle" data-field="controls" data-val="DMX" data-code="DMX">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">DMX</span>
-                <span class="cfg-chip-code">/DMX</span>
-              </button>
-              <button type="button" class="cfg-chip cfg-chip-toggle" data-field="controls" data-val="WIFI" data-code="WIFI">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">WiFi</span>
-                <span class="cfg-chip-code">/WIFI</span>
-              </button>
-            </div>
-          </div>
+          <div class="cfg-row cfg-row-stack" data-field="controls"><div class="cfg-row-l cfg-row-l-stack"><span class="cfg-row-label">contr<span aria-hidden="true" class="aa">Ⓐ</span>LS · Controller</span><span class="cfg-row-code is-empty" data-field-code="controls">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip cfg-chip-toggle" data-code="DMX" data-field="controls" data-val="DMX" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">DMX</span></span></button><button class="cfg-chip cfg-chip-toggle" data-code="WIFI" data-field="controls" data-val="WIFI" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">WiFi</span></span></button></div></div>
 
-          <div class="cfg-field" data-field="glare" data-multi="true">
-            <div class="cfg-field-label">Glare Control <span style="color:var(--text-muted); font-weight:400; letter-spacing:0.06em;">(pick any)</span></div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip cfg-chip-toggle" data-field="glare" data-val="GS" data-code="GS">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">Shield</span>
-                <span class="cfg-chip-code">/GS</span>
-              </button>
-              <button type="button" class="cfg-chip cfg-chip-toggle" data-field="glare" data-val="GV" data-code="GV">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">Visor</span>
-                <span class="cfg-chip-code">/GV</span>
-              </button>
-            </div>
-          </div>
+          <div class="cfg-row cfg-row-stack" data-field="glare"><div class="cfg-row-l cfg-row-l-stack"><span class="cfg-row-label">Glare Control</span><span class="cfg-row-code is-empty" data-field-code="glare">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button class="cfg-chip cfg-chip-toggle" data-code="GS" data-field="glare" data-val="GS" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Shield</span></span></button><button class="cfg-chip cfg-chip-toggle" data-code="GV" data-field="glare" data-val="GV" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Visor</span></span></button></div></div>
 
-          <div class="cfg-field" data-field="laser">
-            <div class="cfg-field-label">Peripheral · Laser Sight Guide</div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip cfg-chip-toggle" data-field="laser" data-val="LSG" data-code="LSG">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">Add LSG</span>
-                <span class="cfg-chip-code">/LSG</span>
-              </button>
-            </div>
-          </div>
+          <div class="cfg-row cfg-row-stack" data-field="laser"><div class="cfg-row-l cfg-row-l-stack"><span class="cfg-row-label">Peripheral · Laser Sight Guide</span><span class="cfg-row-code is-empty" data-field-code="laser">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(1, 1fr);"><button class="cfg-chip cfg-chip-toggle" data-code="LSG" data-field="laser" data-val="LSG" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Add LSG</span></span></button></div></div>
 
         </div>
 
         <!-- Legend block — explains ★ / QS / MTO markers used on chips above -->
-        <div class="cfg-legend" aria-label="Configurator marker legend">
-          <div class="cfg-legend-row">
-            <span class="cfg-legend-key star">★</span>
-            <span class="cfg-legend-val">Factory-default ship configuration</span>
-          </div>
-          <div class="cfg-legend-row">
-            <span class="cfg-legend-key qs">QS</span>
-            <span class="cfg-legend-val">QuickShip — in-stock, 1-3 day lead</span>
-          </div>
-          <div class="cfg-legend-row">
-            <span class="cfg-legend-key mto">MTO</span>
-            <span class="cfg-legend-val">Made-to-Order — 4-6 week lead</span>
-          </div>
-        </div>
+        <div aria-label="Configurator marker legend" class="cfg-legend"><div class="cfg-legend-row"><span class="cfg-legend-key star">★</span><span class="cfg-legend-val">Factory-default ship configuration</span></div><div class="cfg-legend-row"><span class="cfg-legend-key qs"><span class="cfg-legend-stripe qs"></span></span><span class="cfg-legend-val">QuickShip · 3-5 day lead</span></div><div class="cfg-legend-row"><span class="cfg-legend-key mto"><span class="cfg-legend-stripe mto"></span></span><span class="cfg-legend-val">Made-to-Order · 4-6 week lead</span></div></div>
         <!-- CFG-CFG-1 v1.4 · Legend disclaimer (James 2026-05-22) -->
         <div class="cfg-disclaimer">
           Estimates &middot; not guarantees &middot; subject to availability &middot; confirm before committing.
@@ -4725,6 +4700,16 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
               <span id="cfgSkuCopyLabel">Copy SKU</span>
             </button>
+          </div>
+
+          <!-- CFG-STATE-1: ship-tier indicator derived from chip badges (QS/MTO/WB).
+               Shows "QuickShip · à-la-carte assembly" when every selected chip is QS,
+               "Workbench Assembly" when any chip is WB, "Made-to-Order" when any chip
+               is MTO or finish=Custom RAL. Updates on every chip click. -->
+          <div id="cfgShipTier" style="margin: 12px 0 6px; padding: 10px 14px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.5; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <span id="cfgShipTierIcon" style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; flex-shrink: 0;"></span>
+            <span id="cfgShipTierText" style="flex: 1; min-width: 200px;">— deriving ship tier —</span>
+            <span id="cfgShipTierStock" style="font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-muted);"></span>
           </div>
 
           <div class="cfg-spec-grid" id="cfgSpecGrid">
@@ -4771,7 +4756,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
               Pricing &amp; Availability
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <a href="/products/illuminator/submittal/index.html" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
+            <a href="submittal_template.html" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
               Generate Submittal PDF
             </a>
@@ -4889,7 +4874,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         </div>
       </a>
 
-      <a href="/products/illuminator/submittal/index.html?sku=LSPL600-50-UB/TR" target="_blank" rel="noopener" class="docs-card">
+      <a href="submittal_template.html?sku=LSPL600-50-UB/TR" target="_blank" rel="noopener" class="docs-card">
         <div class="docs-card-head">
           <div class="docs-card-icon">
             <!-- Document with stamp icon -->
@@ -4930,7 +4915,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="14" x2="13" y2="14"/></svg>
           Rebate Center · DLC Premium Listed
         </a>
-        <a href="#" style="display:none" class="docs-secondary-link" download>
+        <a href="/files/lspl-illuminator/LSPL-TAA-Certificate.pdf" class="docs-secondary-link" download>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 14 11 16 15 12"/></svg>
           TAA Certificate of Compliance
         </a>
@@ -5028,7 +5013,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="family-card-body">
           <div class="family-card-cat">
             LSPL · Beacon
-            <span class="tier-badge tier-proplus" style="margin-left:auto;">PRO+</span>
+            <span class="tier-badge tier-pro-plus" style="margin-left:auto;">PRO+</span>
           </div>
           <div class="family-card-title">Beacon</div>
           <div class="family-card-desc">
@@ -5046,7 +5031,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <!-- ============================================================================
      SECTION 11 — Page closer.
      (a) Round Out the Project — 4 cross-line complementary product cards
-         from the v2 PDP buildout (Symmetry, Titan, pro<span class="aa">Ⓐ</span>RCH-III, Nebula-II).
+         from the v2 PDP buildout (Symmetry, Titan, proⒶRCH-III, Nebula-II).
          Different categories — for the complete venue lighting package.
      (b) Support + Great Rebates — 2-up pillar cards.
      (c) Final red CTA strip — site-wide same-business-day promise.
@@ -5072,7 +5057,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
       <a href="/products/symmetry/" class="family-card">
         <div class="family-card-img">
-          <span class="family-card-tag">CITY<span class="aa" aria-hidden="true" style="background-color:#ffffff;"><span class="aa">Ⓐ</span></span>RCH</span>
+          <span class="family-card-tag">CITY<span class="aa" aria-hidden="true" style="background-color:#ffffff;">Ⓐ</span>RCH</span>
           <img class="family-card-photo"
                src="/products/illuminator/assets/hero/fam-symmetry.webp"
                alt="cityⒶRCH Symmetry — round disc-top post luminaire on tapered Y-pole"
@@ -5091,7 +5076,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
       <a href="/products/titan/" class="family-card">
         <div class="family-card-img">
-          <span class="family-card-tag">LAMPAR<span class="aa" aria-hidden="true" style="background-color:#ffffff;"><span class="aa">Ⓐ</span></span>RCH</span>
+          <span class="family-card-tag">LAMPAR<span class="aa" aria-hidden="true" style="background-color:#ffffff;">Ⓐ</span>RCH</span>
           <img class="family-card-photo"
                src="/products/illuminator/assets/hero/fam-titan.webp"
                alt="lamparⒶRCH Titan — linear high-bay luminaire with twin LED face panels"
@@ -5110,7 +5095,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
       <a href="/products/proarch-iii/" class="family-card">
         <div class="family-card-img">
-          <span class="family-card-tag">PLAN<span class="aa" aria-hidden="true" style="background-color:#ffffff;"><span class="aa">Ⓐ</span></span>RCH</span>
+          <span class="family-card-tag">PLAN<span class="aa" aria-hidden="true" style="background-color:#ffffff;">Ⓐ</span>RCH</span>
           <img class="family-card-photo"
                src="/products/illuminator/assets/hero/fam-proarch-iii.webp"
                alt="planoⒶRCH proⒶRCH-III — 2x4 back-lit LED panel, isometric view"
@@ -5118,7 +5103,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         </div>
         <div class="family-card-body">
           <div class="family-card-cat">Back-Lit Panel</div>
-          <div class="family-card-title">pro<span class="aa" aria-hidden="true"><span class="aa">Ⓐ</span></span>RCH-III</div>
+          <div class="family-card-title">pro<span class="aa" aria-hidden="true">Ⓐ</span>RCH-III</div>
           <div class="family-card-desc">
             Spec-grade panel for locker rooms, training centers, press boxes, and admin offices in the same building. CCT-select + step-dim ready.
           </div>
@@ -5129,7 +5114,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
       <a href="/products/nebula-ii/" class="family-card">
         <div class="family-card-img">
-          <span class="family-card-tag">MULTI-F<span class="aa" aria-hidden="true" style="background-color:#ffffff;"><span class="aa">Ⓐ</span></span>MILY</span>
+          <span class="family-card-tag">MULTI-F<span class="aa" aria-hidden="true" style="background-color:#ffffff;">Ⓐ</span>MILY</span>
           <img class="family-card-photo"
                src="/products/illuminator/assets/hero/fam-nebula-ii.webp"
                alt="multi-fⒶMILY Nebula-II — round retrofit downlight with E26 adapter and spring clips"
@@ -5165,7 +5150,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="pillar-eyebrow">Specifier Support</div>
         <h3 class="pillar-title">Direct line to your regional rep.</h3>
         <p class="pillar-body">
-          Five US warehouses ship in 2-3 days. Layout requests come back inside 48 hours.
+          Five US warehouses ship in 3-5 days. Layout requests come back inside 48 hours.
           Quotes, sample requests, and rebate matches reply same business day. No portal-as-the-only-channel: you get a person.
         </p>
         <div class="pillar-stats">
@@ -5233,10 +5218,24 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
   </div>
 
+  <!-- 10C — Final red CTA strip ================================================ -->
+  <div class="closing-cta-strip">
+    <div class="closing-cta-strip-inner">
+      <div class="closing-cta-msg">
+        Need a quote, layout, sample, or rebate match?
+        <strong>We respond same business day.</strong>
+      </div>
+      <div class="closing-cta-buttons">
+        <a href="/contact/" class="closing-cta-btn solid">Contact Sales</a>
+        <a href="/contact/?type=layout" class="closing-cta-btn">Request Layout</a>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <!-- Sticky bottom nav — icons mirror the actual section content / icons used inline -->
-<nav class="sticky-nav" data-pagefind-ignore>
+<nav class="sticky-nav">
 
   <!-- Pricing & Availability — primary CTA. Targets the dedicated landing page (next deliverable):
        /pricing-availability/ — two-box landing with AURA Portal (sales reps) + ALG Shop (distributors/specifiers)
@@ -5274,7 +5273,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     Highlights
   </a>
 
-  <!-- contr<span class="aa">Ⓐ</span>LS — wifi-radiating icon, mirrors the "Discover contr<span class="aa">Ⓐ</span>LS" link icon in Section 5 -->
+  <!-- contrⒶLS — wifi-radiating icon, mirrors the "Discover contrⒶLS" link icon in Section 5 -->
   <a href="#controls">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
       <path d="M2 8a15 15 0 0 1 20 0"/>
@@ -5282,7 +5281,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <path d="M8.5 16a5 5 0 0 1 7 0"/>
       <circle cx="12" cy="20" r="1.4" fill="currentColor"/>
     </svg>
-    <span>contr<span class="aa aa-inherit"><span class="aa">Ⓐ</span></span>LS</span>
+    <span>contr<span class="aa aa-inherit">Ⓐ</span>LS</span>
   </a>
 
   <!-- Photometrics — radiating beam icon, mirrors the polar plot in Section 6 -->
@@ -5352,8 +5351,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   <div class="zoom-modal-hint">Click anywhere or press ESC to close</div>
 </div>
 
+
 <script>
-// Carousel autoplay — count is read from actual DOM so adding/removing slides
+// Carousel autoplay - count is read from actual DOM so adding/removing slides
 // doesn't drift the modulo math.
 (function() {
   var track = document.getElementById('carouselTrack');
@@ -5376,20 +5376,20 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   });
 })();
 
-// Spec model toggle — full WATTSELECT set per model (LSPL Illuminator datasheet)
+// Spec model toggle - full WATTSELECT set per model (LSPL Illuminator datasheet)
 // LSPL600: 400W / 500W / 600W (default 600W)
 // LSPL800: 600W / 700W / 800W (default 800W)
 (function() {
   var data = {
     '600': [
-      { watt: '400W',  lumens: '60,000 lm',  lpw: '150 lm/W', cct: '4000K · 5000K', volt: '120-277V · 200-480V', def: false },
-      { watt: '500W',  lumens: '74,000 lm',  lpw: '148 lm/W', cct: '4000K · 5000K', volt: '120-277V · 200-480V', def: false },
-      { watt: '600W ★', lumens: '88,200 lm', lpw: '147 lm/W', cct: '4000K · 5000K', volt: '120-277V · 200-480V', def: true  }
+      { watt: '400W',  lumens: '60,000 lm',  lpw: '150 lm/W', cct: '4000K . 5000K', volt: '120-277V . 200-480V', def: false },
+      { watt: '500W',  lumens: '74,000 lm',  lpw: '148 lm/W', cct: '4000K . 5000K', volt: '120-277V . 200-480V', def: false },
+      { watt: '600W *', lumens: '88,200 lm', lpw: '147 lm/W', cct: '4000K . 5000K', volt: '120-277V . 200-480V', def: true  }
     ],
     '800': [
-      { watt: '600W',  lumens: '89,400 lm',  lpw: '149 lm/W', cct: '4000K · 5000K', volt: '120-277V · 200-480V', def: false },
-      { watt: '700W',  lumens: '102,000 lm', lpw: '146 lm/W', cct: '4000K · 5000K', volt: '120-277V · 200-480V', def: false },
-      { watt: '800W ★', lumens: '116,000 lm', lpw: '145 lm/W', cct: '4000K · 5000K', volt: '120-277V · 200-480V', def: true  }
+      { watt: '600W',  lumens: '89,400 lm',  lpw: '149 lm/W', cct: '4000K . 5000K', volt: '120-277V . 200-480V', def: false },
+      { watt: '700W',  lumens: '102,000 lm', lpw: '146 lm/W', cct: '4000K . 5000K', volt: '120-277V . 200-480V', def: false },
+      { watt: '800W *', lumens: '116,000 lm', lpw: '145 lm/W', cct: '4000K . 5000K', volt: '120-277V . 200-480V', def: true  }
     ]
   };
   var tbody = document.getElementById('specTableBody');
@@ -5416,7 +5416,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   render('600');
 })();
 
-// Dimensions zoom modal — click magnifier to open, click anywhere or ESC to close
+// Dimensions zoom modal - click magnifier to open, click anywhere or ESC to close
 (function() {
   function initZoom() {
     var btn      = document.querySelector('.spec-dim-zoom');
@@ -5459,13 +5459,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   }
 })();
 
-// Section 5 — Total Adaptive Control: platform tab → swap sensor SVG, swap body copy, trigger ripple shockwave
+// Section 5 - Total Adaptive Control: platform tab -> swap sensor SVG, swap body copy, trigger ripple shockwave
 (function() {
   var copy = {
     synapse: "Enterprise-grade networked lighting control with advanced commissioning, scalability, and cloud integration for large facilities and campuses. Mesh-network site management, theatrical RGBW show programs through DMX/DALI gateways, and dual sensor inputs for advanced automation.",
-    acs:     "ALG’s in-house ⒶCS controls platform — daylight harvesting, occupancy sensing, and 0-10V dimming wired directly to the luminaire. Field-commissionable via DIP-switch or AURA app. Ideal for sealed-envelope installs without a wireless gateway.",
-    bilevel: "Two-stage hardwired bi-level control — full output at occupancy, dimmed standby at vacancy. No commissioning, no gateway, no app. Drop-in compliance for ASHRAE 90.1 and Title 24 occupancy reduction requirements.",
-    silvair: "SILVAIR Bluetooth Mesh — qualified mesh nodes built into the driver. Self-healing topology, no gateway required, full control via the SILVAIR commissioning app. Enterprise-scale deployments without the wired backhaul."
+    acs:     "ALG's in-house ACS controls platform - daylight harvesting, occupancy sensing, and 0-10V dimming wired directly to the luminaire. Field-commissionable via DIP-switch or AURA app. Ideal for sealed-envelope installs without a wireless gateway.",
+    bilevel: "Two-stage hardwired bi-level control - full output at occupancy, dimmed standby at vacancy. No commissioning, no gateway, no app. Drop-in compliance for ASHRAE 90.1 and Title 24 occupancy reduction requirements.",
+    silvair: "SILVAIR Bluetooth Mesh - qualified mesh nodes built into the driver. Self-healing topology, no gateway required, full control via the SILVAIR commissioning app. Enterprise-scale deployments without the wired backhaul."
   };
   function init() {
     var tabs = document.querySelectorAll('.tac-callout-tab');
@@ -5499,19 +5499,19 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   }
 })();
 
-// Section 6 — Photometrics: model + optic toggle drives polar plot SVG swap
+// Section 6 - Photometrics: model + optic toggle drives polar plot SVG swap
 (function() {
-  // Real IES test data — peak candela and total lumens per (model × optic) combo
+  // Real IES test data - peak candela and total lumens per (model x optic) combo
   // Polar plots: dark-theme semi-circle, IESNA conventions. Curves derived directly from the IES files
   // (same data the InventFine GPM-1800B test report rendered in each PDF page 3, just restyled to fit our palette).
   var data = {
-    '600_20': { svg: '/products/illuminator/assets/photometrics/lspl600_20.svg', peak: '388,500', lumens: '94,439',  file: 'LSPL600-50-UBTR-600W-20D.IES' },
-    '600_35': { svg: '/products/illuminator/assets/photometrics/lspl600_35.svg', peak: '176,443', lumens: '87,618',  file: 'LSPL600-277V-35D.IES' },
-    '600_55': { svg: '/products/illuminator/assets/photometrics/lspl600_55.svg', peak: '102,154', lumens: '90,655',  file: 'LSPL600-50-UBTR-600W-55D.IES' },
-    '600_90': { svg: '/products/illuminator/assets/photometrics/lspl600_90.svg', peak: '47,102',  lumens: '91,871',  file: 'LSPL600-50-UBTR-600W-90D.IES' },
-    '800_20': { svg: '/products/illuminator/assets/photometrics/lspl800_20.svg', peak: '440,924', lumens: '121,000', file: 'LSPL800-277V-20D.IES' },
-    '800_35': { svg: '/products/illuminator/assets/photometrics/lspl800_35.svg', peak: '245,983', lumens: '122,133', file: 'LSPL800-277V-35D.IES' },
-    '800_55': { svg: '/products/illuminator/assets/photometrics/lspl800_55.svg', peak: '112,457', lumens: '119,689', file: 'LSPL800-277V-55D.IES' }
+    '600_20': { svg: 'assets/photometrics/lspl600_20.svg', peak: '388,500', lumens: '94,439',  file: 'LSPL600-50-UBTR-600W-20D.IES' },
+    '600_35': { svg: 'assets/photometrics/lspl600_35.svg', peak: '176,443', lumens: '87,618',  file: 'LSPL600-277V-35D.IES' },
+    '600_55': { svg: 'assets/photometrics/lspl600_55.svg', peak: '102,154', lumens: '90,655',  file: 'LSPL600-50-UBTR-600W-55D.IES' },
+    '600_90': { svg: 'assets/photometrics/lspl600_90.svg', peak: '47,102',  lumens: '91,871',  file: 'LSPL600-50-UBTR-600W-90D.IES' },
+    '800_20': { svg: 'assets/photometrics/lspl800_20.svg', peak: '440,924', lumens: '121,000', file: 'LSPL800-277V-20D.IES' },
+    '800_35': { svg: 'assets/photometrics/lspl800_35.svg', peak: '245,983', lumens: '122,133', file: 'LSPL800-277V-35D.IES' },
+    '800_55': { svg: 'assets/photometrics/lspl800_55.svg', peak: '112,457', lumens: '119,689', file: 'LSPL800-277V-55D.IES' }
   };
   // Per datasheet all 4 optics are available across both models. IES file presence differs.
   var optics = { '600': ['20','35','55','90'], '800': ['20','35','55'] };
@@ -5525,8 +5525,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     if (!img || !statPeak) return;
     var modelTabs = document.querySelectorAll('.photo-tab[data-model]');
     var opticTabs = document.querySelectorAll('.photo-tab[data-optic]');
-    var state = { model: '600', optic: '35' };  // 35° is the datasheet default optic
-    // Mark the 35° optic tab active on initial load
+    var state = { model: '600', optic: '35' };  // 35deg is the datasheet default optic
+    // Mark the 35deg optic tab active on initial load
     opticTabs.forEach(function(t) { t.classList.toggle('active', t.dataset.optic === state.optic); t.setAttribute('aria-selected', t.dataset.optic === state.optic ? 'true' : 'false'); });
 
     function refreshOpticTabs() {
@@ -5552,7 +5552,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       var d = data[key];
       if (!d) return;
       img.src = d.svg;
-      img.alt = 'LSPL' + state.model + ' ' + state.optic + '° optic — luminous distribution';
+      img.alt = 'LSPL' + state.model + ' ' + state.optic + 'deg optic - luminous distribution';
       statPeak.textContent = d.peak + ' cd';
       statLum.textContent = d.lumens + ' lm';
       statFile.textContent = d.file;
@@ -5590,45 +5590,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 })();
 
 // =============================================================================
-// SECTION 7 — Compatible Accessories: filter pills + click-modal
-// Data map keyed by data-id — each entry holds modal copy + 6 spec rows.
+// SECTION 7 - Compatible Accessories: filter pills + click-modal
+// Data map keyed by data-id - each entry holds modal copy + 6 spec rows.
 // SVG icon for the modal is cloned from the same card the user clicked, so
 // the modal art always matches the card art and we don't duplicate the SVG.
 // =============================================================================
 (function() {
   var ACC = {
-    // ---------- contrⒶLS ----------
+    // ---------- contrALS ----------
     // OEM'd from Synapse Wireless. ALG SKU is the headline; Synapse part number
     // is surfaced as one of the 6 spec rows. datasheet=null suppresses the
     // Data Sheet CTA in the modal (handled in openModal).
     'ctrl-sycb': {
-      cat: 'contrⒶLS · BASE STATION',
-      title: 'NEMA Base Station · Cloud-Ready',
+      cat: 'contrALS . BASE STATION',
+      title: 'NEMA Base Station . Cloud-Ready',
       sku: 'CTRL-SYCB-450CL',
-      desc: 'NEMA twist-lock photocell-receptacle base station for SimplySNAP wireless lighting control. One-year basic SimplySNAP cloud subscription included for remote dashboard, scheduling, and group dimming. Drop-in upgrade for any luminaire with a 7-pin NEMA receptacle — no rewiring required.',
+      desc: 'NEMA twist-lock photocell-receptacle base station for SimplySNAP wireless lighting control. One-year basic SimplySNAP cloud subscription included for remote dashboard, scheduling, and group dimming. Drop-in upgrade for any luminaire with a 7-pin NEMA receptacle - no rewiring required.',
       datasheet: null,
       specs: [
         ['Synapse Part No.',     'CBSSW-450-002'],
         ['Mount',                '7-pin NEMA twist-lock'],
         ['Voltage',              '120-480V AC universal'],
-        ['Network',              'IEEE 802.15.4 mesh · 2.4 GHz'],
-        ['Cloud',                'SimplySNAP — 1-yr basic subscription incl.'],
-        ['Compliance',           'FCC Part 15 · IC RSS · IP66 enclosure']
+        ['Network',              'IEEE 802.15.4 mesh . 2.4 GHz'],
+        ['Cloud',                'SimplySNAP - 1-yr basic subscription incl.'],
+        ['Compliance',           'FCC Part 15 . IC RSS . IP66 enclosure']
       ]
     },
     'ctrl-syrc': {
-      cat: 'contrⒶLS · RETROFIT',
-      title: 'External IP65 Controller · 220-F',
+      cat: 'contrALS . RETROFIT',
+      title: 'External IP65 Controller . 220-F',
       sku: 'CTRL-SYRC-220F',
-      desc: 'External wireless controller for retrofit installs on legacy luminaires lacking a NEMA receptacle. Bolt-on IP65 enclosure with integrated antenna and 0-10V dimming flying-leads. Joins any existing SimplySNAP mesh — no rewiring of the luminaire driver beyond the dimming pair.',
+      desc: 'External wireless controller for retrofit installs on legacy luminaires lacking a NEMA receptacle. Bolt-on IP65 enclosure with integrated antenna and 0-10V dimming flying-leads. Joins any existing SimplySNAP mesh - no rewiring of the luminaire driver beyond the dimming pair.',
       datasheet: null,
       specs: [
         ['Synapse Part No.',     'DIM10-220-F'],
-        ['Mount',                'External bolt-on · IP65 rated'],
+        ['Mount',                'External bolt-on . IP65 rated'],
         ['Voltage',              '120-277V AC'],
-        ['Dimming Output',       '0-10V · sourced 2 mA per fixture'],
-        ['Network',              'IEEE 802.15.4 mesh · joins SimplySNAP'],
-        ['Compliance',           'FCC Part 15 · IC RSS · UL 8750']
+        ['Dimming Output',       '0-10V . sourced 2 mA per fixture'],
+        ['Network',              'IEEE 802.15.4 mesh . joins SimplySNAP'],
+        ['Compliance',           'FCC Part 15 . IC RSS . UL 8750']
       ]
     },
 
@@ -5640,27 +5640,27 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       desc: 'Snap-on shallow shield reduces backlight and trespass without sacrificing forward throw. Ideal for sites bordering residential zones or where dark-sky compliance is required.',
       datasheet: '/files/lspl-illuminator/LSPL-I1-GS-spec.pdf',
       specs: [
-        ['Material',          'Die-cast aluminum · powder-coat'],
+        ['Material',          'Die-cast aluminum . powder-coat'],
         ['Finish',            'Dark bronze (matches housing)'],
-        ['Light Reduction',   'Backlight: -38% · Uplight: -100%'],
-        ['Mount',             'Tool-less snap-on · 4 stainless tabs'],
-        ['Wind Load',         'EPA +0.06 ft²'],
-        ['BUG Impact',        'Improves to B2-U0-G2 (60° tilt)']
+        ['Light Reduction',   'Backlight: -38% . Uplight: -100%'],
+        ['Mount',             'Tool-less snap-on . 4 stainless tabs'],
+        ['Wind Load',         'EPA +0.06 ft2'],
+        ['BUG Impact',        'Improves to B2-U0-G2 (60deg tilt)']
       ]
     },
     'glare-visor': {
       cat: 'Glare Control',
       title: 'Glare Visor (Deep Hood)',
       sku: 'LSPL-I1/GV',
-      desc: 'Deep-hood glare visor for the most demanding spillage-control sites — broadcast venues, multi-field complexes, and DarkSky-certified municipalities. Cuts trespass without throwing the field photometric off-spec.',
+      desc: 'Deep-hood glare visor for the most demanding spillage-control sites - broadcast venues, multi-field complexes, and DarkSky-certified municipalities. Cuts trespass without throwing the field photometric off-spec.',
       datasheet: '/files/lspl-illuminator/LSPL-I1-GV-spec.pdf',
       specs: [
-        ['Material',          'Die-cast aluminum · powder-coat'],
+        ['Material',          'Die-cast aluminum . powder-coat'],
         ['Finish',            'Dark bronze (matches housing)'],
-        ['Light Reduction',   'Backlight: -62% · Uplight: -100%'],
-        ['Mount',             'Bolt-on · 6 M6 stainless fasteners'],
-        ['Wind Load',         'EPA +0.11 ft²'],
-        ['BUG Impact',        'Improves to B1-U0-G1 (60° tilt)']
+        ['Light Reduction',   'Backlight: -62% . Uplight: -100%'],
+        ['Mount',             'Bolt-on . 6 M6 stainless fasteners'],
+        ['Wind Load',         'EPA +0.11 ft2'],
+        ['BUG Impact',        'Improves to B1-U0-G1 (60deg tilt)']
       ]
     },
 
@@ -5669,12 +5669,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       cat: 'Mount',
       title: 'Slip-Fitter Mount (2" Pole)',
       sku: 'LSPL-I1/SF',
-      desc: 'Heavy-duty slip-fitter mount for 2"-2.5" tenon poles. Stainless-steel set screws lock the luminaire at any rotation; trunnion yoke allows 90° tilt with detents at 0°/30°/45°/60°/90°.',
+      desc: 'Heavy-duty slip-fitter mount for 2"-2.5" tenon poles. Stainless-steel set screws lock the luminaire at any rotation; trunnion yoke allows 90deg tilt with detents at 0deg/30deg/45deg/60deg/90deg.',
       datasheet: '/files/lspl-illuminator/LSPL-I1-SF-spec.pdf',
       specs: [
         ['Pole Compatibility','2.0" - 2.5" OD round tenon'],
-        ['Tilt Range',        '0° to 90° · 5 detent stops'],
-        ['Material',          'Cast 6061 aluminum · stainless hardware'],
+        ['Tilt Range',        '0deg to 90deg . 5 detent stops'],
+        ['Material',          'Cast 6061 aluminum . stainless hardware'],
         ['Vibration Rating',  '3G ANSI C136.31'],
         ['Weight',            '4.8 lbs (2.2 kg)'],
         ['Compliance',        'IP66 with luminaire installed']
@@ -5687,9 +5687,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       desc: 'Surface-mount trunnion yoke with stainless pivot pins, dual-side aiming hardware, and ANSI 4-bolt pattern. Direct-mount to flat surfaces, brackets, or pole crossarms.',
       datasheet: '/files/lspl-illuminator/LSPL-I1-TN-spec.pdf',
       specs: [
-        ['Mount Pattern',     'ANSI 4-bolt · 4.5" × 4.5"'],
-        ['Tilt Range',        '0° to 90° · continuous lock'],
-        ['Material',          'Cast 6061 aluminum · 18-8 SS pins'],
+        ['Mount Pattern',     'ANSI 4-bolt . 4.5" x 4.5"'],
+        ['Tilt Range',        '0deg to 90deg . continuous lock'],
+        ['Material',          'Cast 6061 aluminum . 18-8 SS pins'],
         ['Vibration Rating',  '3G ANSI C136.31'],
         ['Weight',            '5.6 lbs (2.5 kg)'],
         ['Compliance',        'IP66 with luminaire installed']
@@ -5698,142 +5698,142 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
     // ---------- Optics ----------
     'optic-20': {
-      cat: 'Optics · Spot',
-      title: '20° Spot Optic',
+      cat: 'Optics . Spot',
+      title: '20deg Spot Optic',
       sku: 'LSPL-I1/O20',
-      desc: 'Tightest beam in the family — 20° NEMA Type 1 narrow distribution. Used for long-throw applications: stadium poles >120 ft, broadcast tower mounts, large-radius field corners requiring concentrated lumens at distance.',
+      desc: 'Tightest beam in the family - 20deg NEMA Type 1 narrow distribution. Used for long-throw applications: stadium poles >120 ft, broadcast tower mounts, large-radius field corners requiring concentrated lumens at distance.',
       datasheet: '/files/lspl-illuminator/LSPL-I1-O20-spec.pdf',
       specs: [
-        ['Beam Spread',       '20° (FWHM) · NEMA Type 1'],
+        ['Beam Spread',       '20deg (FWHM) . NEMA Type 1'],
         ['Peak Intensity',    'Up to 440,924 cd (LSPL800)'],
-        ['Best For',          'Field corners · long-throw · 120ft+ poles'],
-        ['Compatible With',   'LSPL600 · LSPL800'],
-        ['Material',          'Acrylic optic · TIR collimator'],
+        ['Best For',          'Field corners . long-throw . 120ft+ poles'],
+        ['Compatible With',   'LSPL600 . LSPL800'],
+        ['Material',          'Acrylic optic . TIR collimator'],
         ['Spec Sheet IES',    'LSPL600/800-50-UBTR-20D.IES']
       ]
     },
     'optic-35': {
-      cat: 'Optics · Default',
-      title: '35° Standard Optic',
+      cat: 'Optics . Default',
+      title: '35deg Standard Optic',
       sku: 'LSPL-I1/O35',
-      desc: 'The default factory-shipped optic. NEMA Type 3 distribution — the all-around choice for sports lighting at 80-120 ft mounting heights. Used in the majority of high-school and collegiate field installations.',
+      desc: 'The default factory-shipped optic. NEMA Type 3 distribution - the all-around choice for sports lighting at 80-120 ft mounting heights. Used in the majority of high-school and collegiate field installations.',
       datasheet: '/files/lspl-illuminator/LSPL-I1-O35-spec.pdf',
       specs: [
-        ['Beam Spread',       '35° (FWHM) · NEMA Type 3'],
+        ['Beam Spread',       '35deg (FWHM) . NEMA Type 3'],
         ['Peak Intensity',    'Up to 245,983 cd (LSPL800)'],
-        ['Best For',          'Standard sports field · 80-120ft poles'],
-        ['Compatible With',   'LSPL600 · LSPL800 · default ship config'],
-        ['Material',          'Acrylic optic · TIR collimator'],
+        ['Best For',          'Standard sports field . 80-120ft poles'],
+        ['Compatible With',   'LSPL600 . LSPL800 . default ship config'],
+        ['Material',          'Acrylic optic . TIR collimator'],
         ['Spec Sheet IES',    'LSPL600/800-50-UBTR-35D.IES']
       ]
     },
     'optic-55': {
-      cat: 'Optics · Wide',
-      title: '55° Wide Optic',
+      cat: 'Optics . Wide',
+      title: '55deg Wide Optic',
       sku: 'LSPL-I1/O55',
-      desc: 'Wide NEMA Type 4 distribution. Optimized for shorter-throw applications — basketball / volleyball / pickleball courts, multi-purpose recreation centers, walkway floods, and 60-80 ft pole installations.',
+      desc: 'Wide NEMA Type 4 distribution. Optimized for shorter-throw applications - basketball / volleyball / pickleball courts, multi-purpose recreation centers, walkway floods, and 60-80 ft pole installations.',
       datasheet: '/files/lspl-illuminator/LSPL-I1-O55-spec.pdf',
       specs: [
-        ['Beam Spread',       '55° (FWHM) · NEMA Type 4'],
+        ['Beam Spread',       '55deg (FWHM) . NEMA Type 4'],
         ['Peak Intensity',    'Up to 112,457 cd (LSPL800)'],
-        ['Best For',          'Recreation courts · 60-80ft poles'],
-        ['Compatible With',   'LSPL600 · LSPL800'],
-        ['Material',          'Acrylic optic · TIR collimator'],
+        ['Best For',          'Recreation courts . 60-80ft poles'],
+        ['Compatible With',   'LSPL600 . LSPL800'],
+        ['Material',          'Acrylic optic . TIR collimator'],
         ['Spec Sheet IES',    'LSPL600/800-50-UBTR-55D.IES']
       ]
     },
     'optic-90': {
-      cat: 'Optics · Flood',
-      title: '90° Flood Optic',
+      cat: 'Optics . Flood',
+      title: '90deg Flood Optic',
       sku: 'LSPL-I1/O90',
-      desc: 'Widest beam in the family — NEMA Type 5 floodlight. Designed for low-mount perimeter security flood, parking apron lighting, and area-fill applications where the luminaire is mounted ≤60 ft. LSPL600 only.',
+      desc: 'Widest beam in the family - NEMA Type 5 floodlight. Designed for low-mount perimeter security flood, parking apron lighting, and area-fill applications where the luminaire is mounted ≤60 ft. LSPL600 only.',
       datasheet: '/files/lspl-illuminator/LSPL-I1-O90-spec.pdf',
       specs: [
-        ['Beam Spread',       '90° (FWHM) · NEMA Type 5'],
+        ['Beam Spread',       '90deg (FWHM) . NEMA Type 5'],
         ['Peak Intensity',    '47,102 cd (LSPL600)'],
-        ['Best For',          'Low-mount flood · perimeter · ≤60ft'],
+        ['Best For',          'Low-mount flood . perimeter . ≤60ft'],
         ['Compatible With',   'LSPL600 only (not available on LSPL800)'],
-        ['Material',          'Acrylic optic · TIR collimator'],
+        ['Material',          'Acrylic optic . TIR collimator'],
         ['Spec Sheet IES',    'LSPL600-50-UBTR-90D.IES']
       ]
     },
 
     // ---------- Surge Protection ----------
     'surge-10-277': {
-      cat: 'Surge Protection · Standard',
-      title: '10 kA Surge Protector · 277V',
+      cat: 'Surge Protection . Standard',
+      title: '10 kA Surge Protector . 277V',
       sku: 'LSPL-I1/10SP/277',
-      desc: 'In-line 10 kA surge protection module for 120-277V circuits. Sacrificial design — protects driver and LED arrays from line transients caused by lightning, switching events, or grid faults. UL 1449 listed.',
+      desc: 'In-line 10 kA surge protection module for 120-277V circuits. Sacrificial design - protects driver and LED arrays from line transients caused by lightning, switching events, or grid faults. UL 1449 listed.',
       datasheet: '/files/lspl-illuminator/LSPL-I1-10SP-277-spec.pdf',
       specs: [
         ['Surge Rating',      '10 kA (8/20 µs waveform)'],
-        ['Voltage',           '120-277V AC · 50/60 Hz'],
-        ['Mode',              'L-N · L-G · N-G full protection'],
-        ['Compatible With',   'LSPL600 · LSPL800 (277V circuits)'],
+        ['Voltage',           '120-277V AC . 50/60 Hz'],
+        ['Mode',              'L-N . L-G . N-G full protection'],
+        ['Compatible With',   'LSPL600 . LSPL800 (277V circuits)'],
         ['Form Factor',       'In-line driver compartment module'],
-        ['Compliance',        'UL 1449 4th Ed. · IEEE C62.41-2002']
+        ['Compliance',        'UL 1449 4th Ed. . IEEE C62.41-2002']
       ]
     },
     'surge-10-480': {
-      cat: 'Surge Protection · Standard',
-      title: '10 kA Surge Protector · 480V',
+      cat: 'Surge Protection . Standard',
+      title: '10 kA Surge Protector . 480V',
       sku: 'LSPL-I1/10SP/480',
       desc: 'In-line 10 kA surge protection module for 347-480V high-voltage circuits typical in commercial and industrial sports installations. Sacrificial design with status LED indicator. UL 1449 listed.',
       datasheet: '/files/lspl-illuminator/LSPL-I1-10SP-480-spec.pdf',
       specs: [
         ['Surge Rating',      '10 kA (8/20 µs waveform)'],
-        ['Voltage',           '347-480V AC · 50/60 Hz'],
-        ['Mode',              'L-N · L-G · N-G full protection'],
-        ['Compatible With',   'LSPL600 · LSPL800 (480V circuits)'],
+        ['Voltage',           '347-480V AC . 50/60 Hz'],
+        ['Mode',              'L-N . L-G . N-G full protection'],
+        ['Compatible With',   'LSPL600 . LSPL800 (480V circuits)'],
         ['Form Factor',       'In-line driver compartment module'],
-        ['Compliance',        'UL 1449 4th Ed. · IEEE C62.41-2002']
+        ['Compliance',        'UL 1449 4th Ed. . IEEE C62.41-2002']
       ]
     },
     'surge-20-277': {
-      cat: 'Surge Protection · Heavy',
-      title: '20 kA Surge Protector · 277V',
+      cat: 'Surge Protection . Heavy',
+      title: '20 kA Surge Protector . 277V',
       sku: 'LSPL-I1/20SP/277',
-      desc: 'Heavy-duty 20 kA surge protector for high-exposure installations — coastal venues, mountain-top fields, and areas with frequent lightning activity. 2× the surge capacity of the standard module.',
+      desc: 'Heavy-duty 20 kA surge protector for high-exposure installations - coastal venues, mountain-top fields, and areas with frequent lightning activity. 2x the surge capacity of the standard module.',
       datasheet: '/files/lspl-illuminator/LSPL-I1-20SP-277-spec.pdf',
       specs: [
         ['Surge Rating',      '20 kA (8/20 µs waveform)'],
-        ['Voltage',           '120-277V AC · 50/60 Hz'],
-        ['Mode',              'L-N · L-G · N-G full protection'],
-        ['Compatible With',   'LSPL600 · LSPL800 (277V high-exposure)'],
+        ['Voltage',           '120-277V AC . 50/60 Hz'],
+        ['Mode',              'L-N . L-G . N-G full protection'],
+        ['Compatible With',   'LSPL600 . LSPL800 (277V high-exposure)'],
         ['Form Factor',       'In-line driver compartment module'],
-        ['Compliance',        'UL 1449 4th Ed. · IEEE C62.41-2002']
+        ['Compliance',        'UL 1449 4th Ed. . IEEE C62.41-2002']
       ]
     },
     'surge-20-480': {
-      cat: 'Surge Protection · Heavy',
-      title: '20 kA Surge Protector · 480V',
+      cat: 'Surge Protection . Heavy',
+      title: '20 kA Surge Protector . 480V',
       sku: 'LSPL-I1/20SP/480',
       desc: 'Heavy-duty 20 kA surge protector for 347-480V high-voltage high-exposure installations. Recommended for stadium installs in lightning-active geographies and grid-feed sites. UL 1449 listed.',
       datasheet: '/files/lspl-illuminator/LSPL-I1-20SP-480-spec.pdf',
       specs: [
         ['Surge Rating',      '20 kA (8/20 µs waveform)'],
-        ['Voltage',           '347-480V AC · 50/60 Hz'],
-        ['Mode',              'L-N · L-G · N-G full protection'],
-        ['Compatible With',   'LSPL600 · LSPL800 (480V high-exposure)'],
+        ['Voltage',           '347-480V AC . 50/60 Hz'],
+        ['Mode',              'L-N . L-G . N-G full protection'],
+        ['Compatible With',   'LSPL600 . LSPL800 (480V high-exposure)'],
         ['Form Factor',       'In-line driver compartment module'],
-        ['Compliance',        'UL 1449 4th Ed. · IEEE C62.41-2002']
+        ['Compliance',        'UL 1449 4th Ed. . IEEE C62.41-2002']
       ]
     },
 
     // ---------- Peripheral ----------
     'lsg': {
-      cat: 'Peripheral · Field-Aim',
+      cat: 'Peripheral . Field-Aim',
       title: 'Laser Sight Guide (LSG)',
       sku: 'LSPL-I1/LSG',
-      desc: 'Field-installable Class II red laser sight pre-aligned to the luminaire optical axis. Lets the install crew aim each fixture with surgical precision from the ground — no lift, no spotter, no trial-and-error pre-energization.',
+      desc: 'Field-installable Class II red laser sight pre-aligned to the luminaire optical axis. Lets the install crew aim each fixture with surgical precision from the ground - no lift, no spotter, no trial-and-error pre-energization.',
       datasheet: '/files/lspl-illuminator/LSPL-I1-LSG-spec.pdf',
       specs: [
-        ['Laser Class',       'Class II · <1 mW · 650 nm red'],
-        ['Aim Accuracy',      '±0.25° to optical axis'],
-        ['Battery',           'CR2 lithium · 8-hr field life'],
-        ['Compatible With',   'LSPL600 · LSPL800 · all optics'],
+        ['Laser Class',       'Class II . <1 mW . 650 nm red'],
+        ['Aim Accuracy',      '±0.25deg to optical axis'],
+        ['Battery',           'CR2 lithium . 8-hr field life'],
+        ['Compatible With',   'LSPL600 . LSPL800 . all optics'],
         ['Mount',             'M6 thread on trunnion yoke (factory)'],
-        ['Compliance',        'CDRH 21 CFR 1040.10/.11 · CE']
+        ['Compliance',        'CDRH 21 CFR 1040.10/.11 . CE']
       ]
     }
   };
@@ -5873,15 +5873,15 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       var d  = ACC[id];
       if (!d) { console.warn('acc-modal: no data for id', id); return; }
       // Populate static text
-      catEl.textContent   = d.cat.replace(/Ⓐ/g, '');  // category badge — Ⓐ rendered separately below if needed
+      catEl.textContent   = d.cat.replace(/A/g, '');  // category badge - A rendered separately below if needed
       titleEl.textContent = d.title;
       skuEl.textContent   = d.sku;
       descEl.textContent  = d.desc;
-      // (Per-accessory Data Sheet CTA removed — accessories ship without individual spec sheets.
+      // (Per-accessory Data Sheet CTA removed - accessories ship without individual spec sheets.
       //  Family-level Data Sheet lives in Section 9.)
-      // Re-inject Ⓐ glyph in category badge if the category contains it
-      if (d.cat.indexOf('Ⓐ') >= 0) {
-        catEl.innerHTML = d.cat.replace(/Ⓐ/g, '<span class="aa" aria-hidden="true">Ⓐ</span>');
+      // Re-inject A glyph in category badge if the category contains it
+      if (d.cat.indexOf('A') >= 0) {
+        catEl.innerHTML = d.cat.replace(/A/g, '<span class="aa" aria-hidden="true">A</span>');
       }
       // Specs
       specsEl.innerHTML = d.specs.map(function(s) {
@@ -5896,7 +5896,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       Array.from(imgWrap.querySelectorAll('svg, img.acc-card-photo')).forEach(function(s){ s.remove(); });
       if (srcMedia) {
         var clone = srcMedia.cloneNode(true);
-        // For real photos, scale up in the modal (modal img-area is taller — let
+        // For real photos, scale up in the modal (modal img-area is taller - let
         // the photo fill the available space, capped at the box).
         if (clone.tagName === 'IMG') {
           clone.style.width = '100%';
@@ -5944,34 +5944,34 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 })();
 
 // =============================================================================
-// SECTION 8 — Configurator (Build Your Model)
+// SECTION 8 - Configurator (Build Your Model)
 // State engine + chip click handler + dependency rules + live SKU encoder.
 // All chips have data-field + data-val + data-code; required fields are
 // single-select, optional fields are toggle (click again to deselect).
 // =============================================================================
 (function() {
-  // Required and optional field IDs — mirror the data-field attrs in the markup.
-  // Mount is REQUIRED (datasheet — every order ships with one mounting option).
+  // Required and optional field IDs - mirror the data-field attrs in the markup.
+  // Mount is REQUIRED (datasheet - every order ships with one mounting option).
   var REQUIRED  = ['model', 'cct', 'voltage', 'optic', 'finish', 'mount', 'taa'];
   var OPTIONAL  = ['surge', 'controls', 'glare', 'laser'];
-  // Multi-select fields — chip toggle is and/or (Set semantics) instead of single-pick.
+  // Multi-select fields - chip toggle is and/or (Set semantics) instead of single-pick.
   var MULTI     = ['controls', 'glare'];
 
-  // SKU encoding rules — anchored to the canonical example LSPL600-50-HB/TR/TAA:
-  //   prefix      LSPL{model}            — no separator (e.g. LSPL600)
-  //   cct         -{40|50}               — leading dash
-  //   voltage     -{U|H}                 — leading dash
-  //   finish      {B|D|S|W|RAL#}         — NO separator (attached directly to voltage)
-  //   optic       (blank for 35°)|/O20|/O55|/O90  — leading slash, omitted when default
-  //   mount       /{TR|SF}               — leading slash (always present)
-  //   taa         (blank)|/TAA           — leading slash, omitted when standard
-  //   surge       /{10SP/277|...}        — leading slash (the inner /277 is part of the code)
-  //   controls    /{DMX|WIFI}            — leading slash · multi-select · /DMX/WIFI possible
-  //   glare       /{GS|GV}               — leading slash · multi-select · /GS/GV possible
-  //   laser       /LSG                   — leading slash
+  // SKU encoding rules - anchored to the canonical example LSPL600-50-HB/TR/TAA:
+  //   prefix      LSPL{model}            - no separator (e.g. LSPL600)
+  //   cct         -{40|50}               - leading dash
+  //   voltage     -{U|H}                 - leading dash
+  //   finish      {B|D|S|W|RAL#}         - NO separator (attached directly to voltage)
+  //   optic       (blank for 35deg)|/O20|/O55|/O90  - leading slash, omitted when default
+  //   mount       /{TR|SF}               - leading slash (always present)
+  //   taa         (blank)|/TAA           - leading slash, omitted when standard
+  //   surge       /{10SP/277|...}        - leading slash (the inner /277 is part of the code)
+  //   controls    /{DMX|WIFI}            - leading slash . multi-select . /DMX/WIFI possible
+  //   glare       /{GS|GV}               - leading slash . multi-select . /GS/GV possible
+  //   laser       /LSG                   - leading slash
   // SKU_ORDER drives the segment order after the prefix.
   var SKU_ORDER = ['cct', 'voltage', 'finish', 'optic', 'mount', 'taa', 'controls', 'glare', 'surge', 'laser'];
-  // SEPARATOR map — how each segment attaches to the previous one.
+  // SEPARATOR map - how each segment attaches to the previous one.
   //   '-'  : leading dash    (cct, voltage)
   //   ''   : direct attach   (finish - sits flush with voltage)
   //   '/'  : leading slash   (everything else)
@@ -5984,12 +5984,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   // Lumens / LPW reference the WATTSELECT max output per model (datasheet).
   var SPEC_TABLE = {
     model: {
-      '600': { name: 'LSPL600 · Up to 600W', lumens: '60,000 - 88,200 lm', lumensMax: '88,200 lm', lpw: '147-150 lm/W' },
-      '800': { name: 'LSPL800 · Up to 800W', lumens: '89,400 - 116,000 lm', lumensMax: '116,000 lm', lpw: '145-149 lm/W' }
+      '600': { name: 'LSPL600 . Up to 600W', lumens: '60,000 - 88,200 lm', lumensMax: '88,200 lm', lpw: '147-150 lm/W' },
+      '800': { name: 'LSPL800 . Up to 800W', lumens: '89,400 - 116,000 lm', lumensMax: '116,000 lm', lpw: '145-149 lm/W' }
     },
     cct: {
-      '40': '4000K · Neutral White',
-      '50': '5000K · Cool White'
+      '40': '4000K . Neutral White',
+      '50': '5000K . Cool White'
     },
     voltage: {
       'U': '120-277V (50/60Hz)',
@@ -6001,32 +6001,32 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       '800_20': '440,924 cd', '800_35': '245,983 cd', '800_55': '112,457 cd'
     },
     optic: {
-      '20': '20° Spot · NEMA 1',
-      '35': '35° Standard · NEMA 3',
-      '55': '55° Wide · NEMA 4',
-      '90': '90° Flood · NEMA 5'
+      '20': '20deg Spot . NEMA 1',
+      '35': '35deg Standard . NEMA 3',
+      '55': '55deg Wide . NEMA 4',
+      '90': '90deg Flood . NEMA 5'
     },
     finish: {
-      'B':   'Black · Standard',
+      'B':   'Black . Standard',
       'D':   'Bronze',
       'S':   'Silver',
       'W':   'White',
-      'RAL': 'Custom RAL — specify'
+      'RAL': 'Custom RAL - specify'
     },
-    // Live-preview image src per finish — real product photography
-    // recolored via build_finishes.py. RAL uses the white→black 45° gradient
+    // Live-preview image src per finish - real product photography
+    // recolored via build_finishes.py. RAL uses the white->black 45deg gradient
     // until the user enters a valid RAL number (in which case the SKU updates
-    // but the preview stays on the gradient — no per-RAL render exists).
+    // but the preview stays on the gradient - no per-RAL render exists).
     finishImg: {
-      'B':   '/products/illuminator/assets/finishes/illuminator-finish-black.webp',
-      'D':   '/products/illuminator/assets/finishes/illuminator-finish-bronze.webp',
-      'S':   '/products/illuminator/assets/finishes/illuminator-finish-silver.webp',
-      'W':   '/products/illuminator/assets/finishes/illuminator-finish-white.webp',
-      'RAL': '/products/illuminator/assets/finishes/illuminator-finish-ral.webp'
+      'B':   'assets/finishes/illuminator-finish-black.webp',
+      'D':   'assets/finishes/illuminator-finish-bronze.webp',
+      'S':   'assets/finishes/illuminator-finish-silver.webp',
+      'W':   'assets/finishes/illuminator-finish-white.webp',
+      'RAL': 'assets/finishes/illuminator-finish-ral.webp'
     }
   };
 
-  // Default starting state — model 600 is preselected (matches markup).
+  // Default starting state - model 600 is preselected (matches markup).
   var DEFAULT_STATE = { model: '600' };
 
   // ---- RAL Classic validation table ----
@@ -6046,7 +6046,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     9001,9002,9003,9004,9005,9006,9007,9010,9011,9016,9017,9018,9022,9023
   ]);
   // Friendly names for the most common architectural / industrial RAL codes.
-  // Anything not in this map still validates — we just show "Valid" with the number.
+  // Anything not in this map still validates - we just show "Valid" with the number.
   var RAL_NAMES = {
     1013:'Oyster White', 1015:'Light Ivory', 1018:'Zinc Yellow', 1023:'Traffic Yellow',
     2003:'Pastel Orange', 2004:'Pure Orange', 2008:'Bright Red Orange',
@@ -6121,14 +6121,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         if (raw.length === 0) {
           delete state.finishRAL;
         } else if (raw.length < 4) {
-          // Not enough digits yet — neutral state, but no SKU code
+          // Not enough digits yet - neutral state, but no SKU code
           delete state.finishRAL;
         } else {
           var num = parseInt(raw, 10);
           if (RAL_VALID.has(num)) {
             state.finishRAL = raw;
             ralWrap.classList.add('valid');
-            if (ralName) ralName.textContent = 'RAL ' + raw + (RAL_NAMES[num] ? ' · ' + RAL_NAMES[num] : '');
+            if (ralName) ralName.textContent = 'RAL ' + raw + (RAL_NAMES[num] ? ' . ' + RAL_NAMES[num] : '');
           } else {
             delete state.finishRAL;
             ralWrap.classList.add('invalid');
@@ -6161,11 +6161,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         }
       });
 
-      // RAL input wrap visibility — only when Custom RAL is the active finish
+      // RAL input wrap visibility - only when Custom RAL is the active finish
       var ralWrapEl = document.getElementById('cfgRalInputWrap');
       if (ralWrapEl) ralWrapEl.classList.toggle('show', state.finish === 'RAL');
 
-      // Required-counter — RAL finish counts as set ONLY when a valid RAL number is entered
+      // Required-counter - RAL finish counts as set ONLY when a valid RAL number is entered
       var ralPending = (state.finish === 'RAL' && !state.finishRAL);
       var filled = REQUIRED.filter(function(k) {
         if (k === 'finish' && ralPending) return false;
@@ -6193,12 +6193,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     // ---- SKU encoder ----
     // Walks SKU_ORDER and concatenates each segment with its SEP rule.
     // Multi-select fields (controls, glare) emit one /CODE per selected value.
-    // Optic uses '' (blank) as its code when 35° is selected → no segment emitted.
+    // Optic uses '' (blank) as its code when 35deg is selected -> no segment emitted.
     function renderSKU(complete) {
       var html = 'LSPL' + (state.model || '<span class="placeholder">[600|800]</span>');
       SKU_ORDER.forEach(function(k) {
         // Use hasOwnProperty so an EMPTY-STRING separator (finish: '') is preserved.
-        // Earlier `SEP[k] || '/'` short-circuited the '' case → finish got a stray '/'.
+        // Earlier `SEP[k] || '/'` short-circuited the '' case -> finish got a stray '/'.
         var sep = Object.prototype.hasOwnProperty.call(SEP, k) ? SEP[k] : '/';
         var val = state[k];
         var isReq = REQUIRED.indexOf(k) >= 0;
@@ -6207,12 +6207,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         // No selection?
         if (val == null || (isMulti && (!Array.isArray(val) || val.length === 0))) {
           if (isReq) html += sep + '<span class="placeholder">' + placeholderFor(k) + '</span>';
-          // Optional + unset → no segment emitted
+          // Optional + unset -> no segment emitted
           return;
         }
 
-        // Finish = Custom RAL → special-case: emit the 4-digit code (or RAL#
-        // placeholder) flush against voltage — Finish never adds a leading
+        // Finish = Custom RAL -> special-case: emit the 4-digit code (or RAL#
+        // placeholder) flush against voltage - Finish never adds a leading
         // separator, same rule as B / D / S / W.
         if (k === 'finish' && val === 'RAL') {
           if (state.finishRAL) {
@@ -6236,10 +6236,10 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           return;
         }
 
-        // Single-select — look up the code from the matching chip
+        // Single-select - look up the code from the matching chip
         var chip = section.querySelector('.cfg-chip[data-field="' + k + '"][data-val="' + val + '"]');
         var code = chip ? chip.dataset.code : '';
-        if (code === '') return;          // default optic / standard TAA → blank
+        if (code === '') return;          // default optic / standard TAA -> blank
         html += sep + code;
       });
       skuEl.innerHTML = html;
@@ -6262,25 +6262,25 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       setSpec('cct',     state.cct      ? SPEC_TABLE.cct[state.cct]                     : null);
       setSpec('voltage', state.voltage  ? SPEC_TABLE.voltage[state.voltage]             : null);
       setSpec('optic',   state.optic    ? SPEC_TABLE.optic[state.optic]                 : null);
-      setSpec('peak',    (state.model && state.optic) ? SPEC_TABLE.peak[state.model + '_' + state.optic] || '—' : null);
-      // Finish — for Custom RAL, show "RAL 9005 · Jet Black" (or just "RAL 9005") instead
+      setSpec('peak',    (state.model && state.optic) ? SPEC_TABLE.peak[state.model + '_' + state.optic] || '-' : null);
+      // Finish - for Custom RAL, show "RAL 9005 . Jet Black" (or just "RAL 9005") instead
       var finishVal = null;
       if (state.finish === 'RAL') {
         if (state.finishRAL) {
           var ralNum = parseInt(state.finishRAL, 10);
-          finishVal = 'RAL ' + state.finishRAL + (RAL_NAMES[ralNum] ? ' · ' + RAL_NAMES[ralNum] : '');
+          finishVal = 'RAL ' + state.finishRAL + (RAL_NAMES[ralNum] ? ' . ' + RAL_NAMES[ralNum] : '');
         }
       } else if (state.finish) {
         finishVal = SPEC_TABLE.finish[state.finish];
       }
       setSpec('finish', finishVal);
       // Compliance auto-updates with TAA selection
-      var compliance = 'DLC Premium · IP66';
-      if (state.taa === 'TAA') compliance += ' · TAA Compliant';
-      if (state.surge) compliance += ' · Surge-Protected';
+      var compliance = 'DLC Premium . IP66';
+      if (state.taa === 'TAA') compliance += ' . TAA Compliant';
+      if (state.surge) compliance += ' . Surge-Protected';
       setSpec('compliance', compliance);
       // Swap the live-preview image src per selected finish.
-      // Soft cross-fade: opacity 0 → swap src → opacity 1 (200ms).
+      // Soft cross-fade: opacity 0 -> swap src -> opacity 1 (200ms).
       var previewImg = document.getElementById('cfgPreviewImg');
       var newSrc = state.finish ? SPEC_TABLE.finishImg[state.finish] : SPEC_TABLE.finishImg['B'];
       if (previewImg && newSrc && !previewImg.src.endsWith(newSrc)) {
@@ -6294,8 +6294,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     function setSpec(name, val) {
       var el = section.querySelector('[data-spec="' + name + '"]');
       if (!el) return;
-      if (val == null || val === '—') {
-        el.textContent = '—';
+      if (val == null || val === '-') {
+        el.textContent = '-';
         el.classList.add('placeholder');
       } else {
         el.textContent = val;
@@ -6330,7 +6330,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       }
     });
 
-    // ---- Submittal PDF — opens /products/illuminator/submittal/index.html in new tab with full config in query string ----
+    // ---- Submittal PDF - opens submittal_template.html in new tab with full config in query string ----
     // The template auto-fills page-1 catalog number, quick specs, ordering-code matrix, and photometric data.
     // Manus replaces this with a real backend at /submittal-generator/?sku=… on production.
     function buildSubmittalUrl() {
@@ -6345,7 +6345,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         mount:   state.mount   || 'TR',
         taa:     (Array.isArray(state.compliance) && state.compliance.indexOf('TAA') >= 0) ? '1' : '0'
       });
-      return '/products/illuminator/submittal/index.html?' + params.toString();
+      return 'submittal_template.html?' + params.toString();
     }
     ctaPdf.addEventListener('click', function(e) {
       if (ctaPdf.classList.contains('disabled')) { e.preventDefault(); return; }
@@ -6363,16 +6363,85 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   }
 })();
 
-// Section 3 — Motion video carousel
+// CFG-STATE-1 - derive ship-tier (QS / WB / MTO) from selected chip badges, render
+// canonical 3-state status panel. Self-contained module . no dependency on the
+// configurator's state object . re-derives by walking selected chips on every click.
+// Custom RAL forces MTO (custom paint = factory work).
 (function() {
-  // Self-hosted motion clips — served from /products/illuminator/assets/motion/
+  function deriveShipTier() {
+    var section = document.getElementById('configurator');
+    if (!section) return 'QS';
+    var chips = section.querySelectorAll('.cfg-chip.selected, .cfg-chip[aria-pressed="true"]');
+    var worst = 'QS';
+    var sawCustomRal = false;
+    chips.forEach(function(chip) {
+      if (chip.dataset.field === 'finish' && chip.dataset.val === 'RAL') sawCustomRal = true;
+      if (chip.querySelector('.cfg-chip-stock.mto')) worst = 'MTO';
+      else if (chip.querySelector('.cfg-chip-stock.wb') && worst !== 'MTO') worst = 'WB';
+    });
+    if (sawCustomRal) {
+      var input = document.getElementById('cfgRalInput');
+      if (input && input.value && /^[0-9]{4}$/.test(input.value)) return 'MTO';
+    }
+    return worst;
+  }
+  function refreshShipTier() {
+    var tier = deriveShipTier();
+    var rowEl = document.getElementById('cfgShipTier');
+    var iconEl = document.getElementById('cfgShipTierIcon');
+    var textEl = document.getElementById('cfgShipTierText');
+    var stockEl = document.getElementById('cfgShipTierStock');
+    if (!rowEl || !iconEl || !textEl || !stockEl) return;
+    if (tier === 'QS') {
+      rowEl.style.background = 'rgba(95,199,122,0.08)';
+      rowEl.style.border = '1px solid rgba(95,199,122,0.40)';
+      iconEl.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#7fc998" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      textEl.innerHTML = '<strong style="color:#9bd6b1;">QuickShip . a-la-carte assembly</strong> . <span style="color:var(--text-secondary);">All selected components in stock - ships 3-5 day.</span>';
+      stockEl.textContent = 'QuickShip . 3-5 day';
+      stockEl.style.color = '#9bd6b1';
+    } else if (tier === 'WB') {
+      rowEl.style.background = 'rgba(96,168,255,0.08)';
+      rowEl.style.border = '1px solid rgba(96,168,255,0.40)';
+      iconEl.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#7fb6ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>';
+      textEl.innerHTML = '<strong style="color:#a8c9ff;">Workbench Assembly . ~1-3 wk</strong> . <span style="color:var(--text-secondary);">One or more selected components are workbench-assembled to order.</span>';
+      stockEl.textContent = 'WB . ~1-3 wk';
+      stockEl.style.color = '#a8c9ff';
+    } else {
+      rowEl.style.background = 'rgba(255,159,28,0.08)';
+      rowEl.style.border = '1px solid rgba(255,159,28,0.40)';
+      iconEl.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ffb14d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+      textEl.innerHTML = '<strong style="color:#ffb14d;">Custom build . Made-to-Order . ~4-6 wk</strong> . <span style="color:var(--text-secondary);">One or more selected components are MTO (custom finish, MTO option, or non-stocked variant).</span>';
+      stockEl.textContent = 'MTO . ~4-6 wk';
+      stockEl.style.color = '#ffb14d';
+    }
+  }
+  function init() {
+    var section = document.getElementById('configurator');
+    if (!section) return;
+    section.addEventListener('click', function(e) {
+      if (e.target.closest('.cfg-chip')) setTimeout(refreshShipTier, 50);
+    });
+    var ralInput = document.getElementById('cfgRalInput');
+    if (ralInput) ralInput.addEventListener('input', function() { setTimeout(refreshShipTier, 50); });
+    refreshShipTier();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+
+// Section 3 - Motion video carousel
+(function() {
+  // 6 clips sliced from ALG's master Illuminator promo video (the source mp4 lives
+  // in WorkDrive: luxoARCH/LSPL - Sports Lighting/VIDEOS/LSPL - PromoVideo_NoText.mp4).
+  // Each is 8 seconds, 720p, ~0.2-3.5 MB, h.264 + faststart for web playback.
+  // Manus uploads these to Shopify's video CDN at production time and updates the URLs.
   var clips = [
-    { url: '/products/illuminator/assets/motion/illum-motion-1-wattselect.mp4',  tag: 'WATTSELECT',          title: 'Field-selectable wattage — tune the output to the install.' },
-    { url: '/products/illuminator/assets/motion/illum-motion-2-poweraim.mp4',     tag: 'POWERⒶIM™', title: '90° pivot hinge for full-range beam aiming and laser-sight install.' },
-    { url: '/products/illuminator/assets/motion/illum-motion-3-trunnion.mp4',     tag: 'TRUNNION MOUNT',      title: 'Trunnion bracket — versatile, field-ready installation.' },
-    { url: '/products/illuminator/assets/motion/illum-motion-4-slipfitter.mp4',   tag: 'SLIP-FITTER',         title: 'Slip-fitter mount — pole-top mounting flexibility.' },
-    { url: '/products/illuminator/assets/motion/illum-motion-5-stackable.mp4',    tag: 'STACKABLE DESIGN',    title: 'Stackable arrays for limitless field illumination.' },
-    { url: '/products/illuminator/assets/motion/illum-motion-6-controls.mp4',     tag: 'CONTRⒶLS-READY',  title: 'Synapse SimplySNAP integration — wireless networked control.' }
+    { url: 'assets/motion/illum-motion-1-wattselect.mp4',  tag: 'WATTSELECT',          title: 'Field-selectable wattage - tune the output to the install.' },
+    { url: 'assets/motion/illum-motion-2-poweraim.mp4',    tag: 'POWERAIM(TM)',         title: '90deg pivot hinge for full-range beam aiming and laser-sight install.' },
+    { url: 'assets/motion/illum-motion-3-trunnion.mp4',    tag: 'TRUNNION MOUNT',      title: 'Trunnion bracket - versatile, field-ready installation.' },
+    { url: 'assets/motion/illum-motion-4-slipfitter.mp4',  tag: 'SLIP-FITTER',         title: 'Slip-fitter mount - pole-top mounting flexibility.' },
+    { url: 'assets/motion/illum-motion-5-stackable.mp4',   tag: 'STACKABLE DESIGN',    title: 'Stackable arrays for limitless field illumination.' },
+    { url: 'assets/motion/illum-motion-6-controls.mp4',    tag: 'CONTRALS-READY',    title: 'Synapse SimplySNAP integration - wireless networked control.' }
   ];
   function init() {
     var video    = document.getElementById('motionVideo');
@@ -6391,7 +6460,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       var play = video.play();
       if (play && typeof play.catch === 'function') play.catch(function(){});
       caption.innerHTML =
-        '<div class="motion-caption-eyebrow">' + (idx + 1).toString().padStart(2, '0') + ' / 06 · ' + c.tag + '</div>' +
+        '<div class="motion-caption-eyebrow">' + (idx + 1).toString().padStart(2, '0') + ' / 06 . ' + c.tag + '</div>' +
         '<div class="motion-caption-title">' + c.title + '</div>';
       dotsRow.querySelectorAll('button').forEach(function(b, n) {
         b.classList.toggle('active', n === idx);
@@ -6405,7 +6474,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       var num = (n + 1).toString().padStart(2, '0');
       return '<button type="button" data-i="' + n + '" role="tab"' +
              (n === 0 ? ' class="active" aria-selected="true"' : ' aria-selected="false"') +
-             '>' + num + ' · ' + c.tag + '</button>';
+             '>' + num + ' . ' + c.tag + '</button>';
     }).join('');
     dotsRow.querySelectorAll('button').forEach(function(b) {
       b.addEventListener('click', function() {
@@ -6415,7 +6484,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       });
     });
 
-    // Progress bar — animates to 100% over the auto-advance window
+    // Progress bar - animates to 100% over the auto-advance window
     function startTicker() {
       var DURATION = 6000; // 6s per clip auto-advance
       var start = Date.now();
@@ -6446,6 +6515,196 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     init();
   }
 })();
-
 </script>
+
+
+<script>
+/* =============================================================================
+   CFG-NAV-1 . Sticky-nav scroll-spy
+   ----------------------------------------------------------------------------
+   IntersectionObserver watches each section the sticky-nav links to. The link
+   whose target is "most visible" gets `.is-current` (white bg + red text . the
+   visual inverse of `.primary`). One observer, one Map, one CSS class toggle.
+   The Pricing & Availability primary button is NOT a section anchor (its href
+   is /pricing-availability/), so it's excluded from the spy by the
+   `a[href^="#"]` selector below.
+   ============================================================================= */
+(function() {
+  var nav = document.querySelector('.sticky-nav');
+  if (!nav) return;
+  var links = Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]'));
+  if (!links.length) return;
+  var entries = [];
+  links.forEach(function(a) {
+    var id = a.getAttribute('href').slice(1);
+    var sec = id ? document.getElementById(id) : null;
+    if (sec) entries.push({ sec: sec, link: a, ratio: 0 });
+  });
+  if (!entries.length) return;
+  function update() {
+    var best = null, bestRatio = 0;
+    entries.forEach(function(e) { if (e.ratio > bestRatio) { bestRatio = e.ratio; best = e; } });
+    entries.forEach(function(e) { e.link.classList.toggle('is-current', e === best && bestRatio > 0); });
+  }
+  var io = new IntersectionObserver(function(items) {
+    items.forEach(function(item) {
+      entries.forEach(function(e) { if (e.sec === item.target) e.ratio = item.intersectionRatio; });
+    });
+    update();
+  }, {
+    rootMargin: '-20% 0px -55% 0px',
+    threshold: [0, 0.1, 0.25, 0.5, 0.75, 1.0]
+  });
+  entries.forEach(function(e) { io.observe(e.sec); });
+})();
+</script>
+<script>
+/* ============================================================================
+   CFG-CFG-1 row-rails sync shim . injected 2026-05-18 PM by row-rails transformer
+   Self-contained . does NOT modify the per-PDP SKU engine. Hooks chip clicks +
+   select changes + RAL input events and updates the new .cfg-row-code labels
+   and #cfgRalInputWrap visibility based on .selected class detection in DOM.
+   ============================================================================ */
+(function() {
+  'use strict';
+
+  var SLASH_PREFIXED = ['mount','optic','photocell','sensor','shield','surge','taa',
+                        'em','spd','dss','wg','ps','laser','glare','controls','ba',
+                        'dim','dualcast','options','wattage','watt','model','series',
+                        'wg','dualcast','adapter','finishmount'];
+
+  function syncRowCodes() {
+    document.querySelectorAll('.cfg-row-code[data-field-code]').forEach(function(rc) {
+      var field = rc.getAttribute('data-field-code');
+      // CCT and other locked-default fields stay populated - skip if their row
+      // has a locked + selected chip (the locked label shows in the row-code).
+      var newText = '-', isEmpty = true;
+      // Pole Adapter <select> path
+      if (field === 'adapter') {
+        var sel = document.getElementById('cfgAdapterSelect');
+        if (sel && sel.value) { newText = '/' + sel.value; isEmpty = false; }
+      } else {
+        // Find the selected chip for this field (or locked chip - both count)
+        var selChip = document.querySelector('.cfg-chip.selected[data-field="' + field + '"]')
+                   || document.querySelector('.cfg-chip.locked[data-field="' + field + '"]');
+        if (selChip) {
+          var code = selChip.getAttribute('data-code') || '';
+          // Custom RAL field - show RAL number once valid
+          if (field === 'finish' && code === 'RAL#') {
+            var ralVal = '';
+            var ralInput = document.getElementById('cfgRalInput');
+            if (ralInput) ralVal = (ralInput.value || '').replace(/\D/g, '');
+            var isValid = ralVal && ralVal.length === 4
+              && typeof window.RAL_VALID !== 'undefined'
+              && window.RAL_VALID.has && window.RAL_VALID.has(parseInt(ralVal, 10));
+            newText = isValid ? '/RAL' + ralVal : 'RAL# (enter code below)';
+            isEmpty = false;
+          } else if (code) {
+            var alreadySlash = code.charAt(0) === '/';
+            newText = (SLASH_PREFIXED.indexOf(field) >= 0 && !alreadySlash) ? '/' + code : code;
+            isEmpty = false;
+          }
+        }
+      }
+      rc.textContent = newText;
+      rc.classList.toggle('is-empty', isEmpty);
+    });
+  }
+
+  function syncRalInput() {
+    var wrap = document.getElementById('cfgRalInputWrap');
+    if (!wrap) return; // PDP has no RAL field
+    var nameEl = document.getElementById('cfgRalName');
+    var ralInput = document.getElementById('cfgRalInput');
+    // RAL chip selected? (look for .selected chip with data-code="RAL#" or data-val="RAL")
+    var ralChip = document.querySelector('.cfg-chip.selected[data-field="finish"][data-val="RAL"]')
+               || document.querySelector('.cfg-chip.selected[data-field="finish"][data-code="RAL#"]');
+    if (!ralChip) {
+      wrap.style.display = 'none';
+      wrap.classList.remove('valid', 'invalid');
+      return;
+    }
+    wrap.style.display = '';
+    var raw = ralInput ? (ralInput.value || '').replace(/\D/g, '') : '';
+    if (!raw) {
+      wrap.classList.remove('valid', 'invalid');
+      return;
+    }
+    var isValid = raw.length === 4
+      && typeof window.RAL_VALID !== 'undefined'
+      && window.RAL_VALID.has && window.RAL_VALID.has(parseInt(raw, 10));
+    if (isValid) {
+      wrap.classList.add('valid');
+      wrap.classList.remove('invalid');
+      if (nameEl) nameEl.textContent = 'RAL ' + raw;
+    } else {
+      wrap.classList.add('invalid');
+      wrap.classList.remove('valid');
+    }
+  }
+
+  function syncAll() {
+    syncRowCodes();
+    syncRalInput();
+  }
+
+  // Hook event listeners after DOM ready
+  function init() {
+    // Delegated click on any cfg-chip
+    document.addEventListener('click', function(e) {
+      var chip = e.target.closest && e.target.closest('.cfg-chip');
+      if (chip) {
+        // Defer to let the existing engine apply .selected class first
+        setTimeout(syncAll, 0);
+      }
+    });
+
+    // Pole Adapter <select> change
+    var adapterSel = document.getElementById('cfgAdapterSelect');
+    if (adapterSel) {
+      adapterSel.addEventListener('change', syncAll);
+    }
+
+    // RAL input change
+    var ralInput = document.getElementById('cfgRalInput');
+    if (ralInput) {
+      ralInput.addEventListener('input', syncAll);
+    }
+
+    // MutationObserver - catches indirect .selected toggles (e.g. share-link
+    // hydration, reset button, locked-default initialization).
+    var observer = new MutationObserver(function(mutations) {
+      for (var i = 0; i < mutations.length; i++) {
+        var m = mutations[i];
+        if (m.type === 'attributes' && m.attributeName === 'class'
+            && m.target.classList && m.target.classList.contains('cfg-chip')) {
+          syncAll();
+          return;
+        }
+      }
+    });
+    document.querySelectorAll('.cfg-chip').forEach(function(chip) {
+      observer.observe(chip, { attributes: true, attributeFilter: ['class'] });
+    });
+
+    // Initial sync after a beat (give per-PDP engines time to set defaults)
+    setTimeout(syncAll, 100);
+    setTimeout(syncAll, 500);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  // Expose RAL_VALID on window so the shim can access it (each PDP declares
+  // RAL_VALID inside its own IIFE - we read from window if exposed).
+  // PDPs that haven't exposed it: shim will still work, just no RAL validation.
+  window.__cfg_cfg_1_sync = syncAll;
+})();
+</script>
+
+
 </BaseLayout>
+

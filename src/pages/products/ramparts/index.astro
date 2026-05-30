@@ -103,8 +103,24 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     overflow: hidden;
     white-space: nowrap;
     letter-spacing: 0 !important;
-    margin: 0 -0.04em;
+    margin: 0 -0.10em;  /* tighten gap to neighbors — bumped from -0.04em 2026-05-10 */
   }
+  /* CFG-MF-13 · Heavy-tracked uppercase contexts (>= 0.12em letter-spacing)
+     need stronger tuck than the base -0.10em. Without these, the Ⓐ glyph
+     still shows visible gaps in labels like "CONTRⒶLS BY ⒶCS" or
+     "CONSTⒶNT EMB". James 2026-05-10. */
+  .acc-card-cat .aa,
+  .cfg-field-label .aa {
+    margin: 0 -0.14em;
+  }
+  .acc-card-img-tag .aa {
+    margin: 0 -0.12em;
+  }
+  .cfg-eyebrow .aa,
+  .hf-tile-tag .aa {
+    margin: 0 -0.18em;
+  }
+
   /* Universal rule: never let the bg color match the Ⓐ color. Use .aa-white on red surfaces. */
   .aa-white { background-color: #ffffff; }
   /* Inherits the parent text color (e.g. inside a link that hovers to a different color). */
@@ -200,7 +216,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
      vertical position — letting .ideal-card's bottom (pinned by margin-top: auto
      to the bottom of .hero-info) align with .carousel-wrap's bottom. */
   .hero-left { display: flex; flex-direction: column; min-width: 0; gap: 24px; }
-  .hero-info { display: flex; flex-direction: column; flex: 1; }
+  .hero-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
   .hero h1 {
     font-size: 30px;
     font-weight: 700;
@@ -253,11 +269,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .hero-stats {
     display: flex;
     align-items: center;
-    flex-wrap: nowrap;
+    flex-wrap: wrap; row-gap: 6px;
     margin-bottom: 28px;
     font-size: 13.5px;
     color: var(--text-secondary);
-    white-space: nowrap;
+    
   }
   .hero-stats > span {
     padding: 0 14px;
@@ -402,6 +418,41 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   }
   .carousel-dots > span.active { background: var(--brand-red); }
 
+
+  /* CFG-HERO-2 · Labeled chip selector (Waymark canonical · per James 2026-05-25).
+     Replaces bare `.carousel-dots`. Glass-morphism pill bar with brand-red
+     active chip · JetBrains Mono 11px · per-angle descriptive labels. */
+  .carousel-chips {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    background: rgba(10,12,14,0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 4px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.10);
+    z-index: 5;
+  }
+  .carousel-chips > button {
+    appearance: none;
+    border: 0;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: rgba(255,255,255,0.65);
+    background: transparent;
+    padding: 6px 12px;
+    border-radius: 999px;
+    transition: color 0.2s, background 0.2s;
+    white-space: nowrap;
+  }
+  .carousel-chips > button:hover { color: #fff; }
+  .carousel-chips > button.active { background: var(--brand-red); color: #fff; }
   /* Sticky bottom nav — production-grade with red border */
   .sticky-nav {
     position: fixed;
@@ -913,6 +964,170 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .cfg-chip-finish > .cfg-chip-stock { grid-column: 3; grid-row: 1; }
   .cfg-chip.selected .cfg-finish-swatch { border-color: rgba(255,255,255,0.6); }
   .cfg-chip-toggle .cfg-chip-val { font-size: 11px; }
+  /* ============================================================================
+     CFG-CFG-1 · Asymmetric Row-Rails (added 2026-05-18 PM by row-rails transformer)
+     Layered on top of the old chip-cluster CSS above. The old `.cfg-fields` grid
+     is replaced by `.cfg-rows` (a vertical stack), and each chip group is now a
+     `.cfg-seg` (CSS grid with explicit `repeat(N, 1fr)` columns set inline).
+     ============================================================================ */
+  .cfg-body.split-60-40 { grid-template-columns: 1.6fr 1fr !important; padding: 0; }
+  .cfg-body.split-40-60 { grid-template-columns: 1fr 1.6fr !important; padding: 0; }
+
+  .cfg-body.split-60-40 .cfg-col-req,
+  .cfg-body.split-40-60 .cfg-col-req { background: rgba(255,255,255,0.012); padding: 28px 32px 32px; border-left: none; }
+  .cfg-body.split-60-40 .cfg-col-opt,
+  .cfg-body.split-40-60 .cfg-col-opt { padding: 28px 32px 32px; border-left: 1px solid var(--line); }
+  .cfg-body.split-60-40 .cfg-col + .cfg-col,
+  .cfg-body.split-40-60 .cfg-col + .cfg-col { border-left: 1px solid var(--line); }
+
+  .cfg-body.split-60-40 .cfg-col-head,
+  .cfg-body.split-40-60 .cfg-col-head { padding-bottom: 14px; margin-bottom: 12px; }
+
+  .cfg-body.split-60-40 .cfg-col-title,
+  .cfg-body.split-40-60 .cfg-col-title {
+    font: 700 12px 'JetBrains Mono', monospace; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--text-primary);
+    position: relative; padding-left: 14px;
+  }
+  .cfg-body.split-60-40 .cfg-col-title::before,
+  .cfg-body.split-40-60 .cfg-col-title::before {
+    content: ""; position: absolute; left: 0; top: 2px; bottom: 2px;
+    width: 3px; background: var(--brand-red);
+  }
+  .cfg-body.split-60-40 .cfg-col-opt .cfg-col-title::before,
+  .cfg-body.split-40-60 .cfg-col-opt .cfg-col-title::before { background: rgba(255,255,255,0.4); }
+  .cfg-body.split-60-40 .cfg-col-title-required::after,
+  .cfg-body.split-40-60 .cfg-col-title-required::after { display: none; }
+
+  .cfg-rows { display: flex; flex-direction: column; gap: 0; }
+
+  .cfg-row {
+    display: grid; grid-template-columns: 170px 1fr;
+    gap: 14px; align-items: center;
+    padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .cfg-row:last-child { border-bottom: none; }
+  .cfg-row-stack { grid-template-columns: 1fr; gap: 8px; padding: 12px 0; }
+
+  .cfg-row-l { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .cfg-row-l-stack { flex-direction: row; align-items: baseline; gap: 8px; justify-content: space-between; }
+
+  .cfg-row-label {
+    font: 600 13.5px/1.2 'Lato', sans-serif; letter-spacing: -0.005em;
+    color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    text-transform: none;
+  }
+  .cfg-req { color: var(--brand-red); margin-left: 3px; font-weight: 700; }
+  .cfg-row-code {
+    font: 600 10px/1.1 'JetBrains Mono', monospace; letter-spacing: 0.04em;
+    color: var(--brand-red); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cfg-row-code.is-empty { color: var(--text-muted); }
+
+  .cfg-seg {
+    display: grid; border: 1px solid var(--line-medium);
+    background: rgba(255,255,255,0.018); min-width: 0;
+  }
+
+  .cfg-seg .cfg-chip {
+    position: relative; display: block;
+    background: transparent; border: none;
+    border-right: 1px solid var(--line);
+    border-radius: 0; padding: 9px 10px 9px 13px;
+    text-align: center; cursor: pointer;
+    color: var(--text-primary); font-family: inherit; min-width: 0; min-height: 0;
+    transition: background 0.12s, color 0.12s;
+    grid-template-columns: none;
+    grid-template-rows: none;
+  }
+  .cfg-seg .cfg-chip:last-child { border-right: none; }
+  .cfg-seg .cfg-chip:hover:not(.selected):not(.locked):not(.disabled) {
+    background: rgba(255,255,255,0.05); border-color: transparent; color: var(--text-primary);
+  }
+  .cfg-seg .cfg-chip.selected,
+  .cfg-seg .cfg-chip.locked.selected {
+    background: var(--brand-red); border-color: transparent; color: #fff;
+  }
+  .cfg-seg .cfg-chip.locked { cursor: default; opacity: 1; background: var(--brand-red); color: #fff; }
+  .cfg-seg .cfg-chip.disabled { opacity: 0.32; cursor: not-allowed; }
+
+  .cfg-chip-stripe {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 3px; pointer-events: none;
+  }
+  .cfg-chip-stripe.qs  { background: #58C998; }
+  .cfg-chip-stripe.mto { background: #FFB562; }
+  .cfg-chip-stripe.wb  { background: #7fb6ff; }
+  .cfg-seg .cfg-chip.selected .cfg-chip-stripe { opacity: 0.85; }
+
+  .cfg-chip-main {
+    display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+    font-size: 12.5px; font-weight: 600; line-height: 1.15;
+    white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cfg-chip-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cfg-chip-sw {
+    width: 12px; height: 12px; border: 1px solid rgba(255,255,255,0.3); flex-shrink: 0;
+  }
+  .cfg-chip-star { color: #fff; font-size: 11px; flex-shrink: 0; }
+  .cfg-seg .cfg-chip.selected .cfg-chip-star { color: #fff; }
+
+  .cfg-seg .cfg-chip > .cfg-chip-stock,
+  .cfg-seg .cfg-chip > .cfg-chip-val,
+  .cfg-seg .cfg-chip > .cfg-chip-code,
+  .cfg-seg .cfg-chip > .cfg-finish-swatch { display: none; }
+
+  .cfg-adapter-select-wrap select.cfg-adapter-select,
+  select.cfg-select {
+    width: 100%; background: var(--bg-card); color: var(--text-primary);
+    border: 1px solid var(--line-medium);
+    padding: 9px 32px 9px 12px;
+    font: 500 12px 'JetBrains Mono', monospace; cursor: pointer; appearance: none;
+    text-overflow: ellipsis;
+    background-image: linear-gradient(45deg, transparent 50%, var(--text-secondary) 50%),
+                      linear-gradient(135deg, var(--text-secondary) 50%, transparent 50%);
+    background-position: calc(100% - 16px) center, calc(100% - 11px) center;
+    background-size: 5px 5px; background-repeat: no-repeat;
+  }
+
+  .cfg-legend {
+    margin-top: 16px; padding: 12px 14px;
+    background: rgba(255,255,255,0.025); border: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 6px;
+    font: 500 11px/1.3 'Lato', sans-serif; color: var(--text-secondary);
+  }
+  /* CFG-CFG-1 v1.4 · Legend disclaimer · James 2026-05-22 · quiet legal cover */
+  .cfg-disclaimer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--text-muted);
+    opacity: 0.65;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px dashed rgba(255,255,255,0.08);
+  }
+  .cfg-legend-row { display: flex; align-items: center; gap: 8px; }
+  .cfg-legend-key.star { color: #fff; font-weight: 700; width: 14px; text-align: center; }
+  .cfg-legend-stripe {
+    display: inline-block; width: 4px; height: 14px; vertical-align: middle;
+  }
+  .cfg-legend-stripe.qs  { background: #58C998; }
+  .cfg-legend-stripe.mto { background: #FFB562; }
+  .cfg-legend-key.qs:not(:has(.cfg-legend-stripe)),
+  .cfg-legend-key.mto:not(:has(.cfg-legend-stripe)) { font-size: 9px; }
+
+  @media (max-width: 880px) {
+    .cfg-body.split-60-40, .cfg-body.split-40-60 { grid-template-columns: 1fr !important; }
+    .cfg-body.split-60-40 .cfg-col-opt,
+    .cfg-body.split-40-60 .cfg-col-opt { border-left: none; border-top: 1px solid var(--line); }
+    .cfg-row { grid-template-columns: 1fr; gap: 8px; padding: 12px 0; }
+    .cfg-row-l { flex-direction: row; align-items: baseline; gap: 8px; justify-content: space-between; }
+  }
+  /* ====================  end CFG-CFG-1 row-rails  ==================== */
+
+
   .cfg-preview-wrap { background: var(--bg-page); padding: 56px 32px 88px; }
   .cfg-preview { max-width: 1400px; margin: 0 auto; background: var(--bg-spec); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
   .cfg-preview-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 0; }
@@ -1000,20 +1215,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
     color: var(--text-secondary); letter-spacing: 0.04em;
     width: max-content; max-width: 100%;
-  }
-
-  /* CFG-CFG-1 v1.4 · Legend disclaimer · James 2026-05-22 · quiet legal cover */
-  .cfg-disclaimer {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10.5px;
-    font-style: italic;
-    color: var(--text-muted);
-    opacity: 0.65;
-    letter-spacing: 0.02em;
-    line-height: 1.4;
-    margin-top: 8px;
-    padding-top: 6px;
-    border-top: 1px dashed rgba(255,255,255,0.08);
   }
   .cfg-legend-row { display: contents; }
   .cfg-legend-key {
@@ -2370,26 +2571,33 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   }
 
   /* === PLAYBOOK LESSON #4 · force Lato on h1/h2 to override theme global serif === */
-  body.page-ramparts-pdp h1, body.page-ramparts-pdp h2 {
+  .ramparts-pdp h1, .ramparts-pdp h2,
+  body.ramparts-pdp h1, body.ramparts-pdp h2 {
     font-family: 'Lato', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
     font-weight: 700;
   }
 
+/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+body { overflow-x: hidden; }
+
 </style>
-<!-- Breadcrumb — STAGING-LOCKED .breadcrumb-band pattern (matches Sentinel + Illuminator) -->
+
+  <!-- CFG-CHROME-2 · .mockup-banner removed 2026-05-18 PM -->
+  <!-- CFG-CHROME-1 · inline <header class="site-header"> removed 2026-05-18 PM — canonical chrome comes from Astro layout. -->
+  <!-- Breadcrumb — STAGING-LOCKED .breadcrumb-band pattern (matches Sentinel + Illuminator) -->
 <nav class="breadcrumb-band" aria-label="Breadcrumb">
-  <a href="/">HOME</a>
-  <span class="bc-sep">›</span>
-  <a href="/collections">PRODUCTS</a>
-  <span class="bc-sep">›</span>
-  <a href="/collections/outdoor">OUTDOOR</a>
-  <span class="bc-sep">›</span>
-  <a href="/collections/luxoarch">LUXO<span class="aa"><span class="aa">Ⓐ</span></span>RCH</a>
-  <span class="bc-sep">›</span>
-  <span class="bc-plain">WALL PACK | ENTRYWAY</span>
-  <span class="bc-sep">›</span>
-  <span class="bc-current">RAMPARTS SERIES</span>
-</nav>
+      <a href="/">HOME</a>
+      <span class="bc-sep">›</span>
+      <a href="/collections">PRODUCTS</a>
+      <span class="bc-sep">›</span>
+      <a href="/collections/outdoor">OUTDOOR</a>
+      <span class="bc-sep">›</span>
+      <a href="/collections/luxoarch">LUXO<span class="aa">Ⓐ</span>RCH</a>
+      <span class="bc-sep">›</span>
+      <span class="bc-plain">WALL PACK | ENTRYWAY</span>
+      <span class="bc-sep">›</span>
+      <span class="bc-current">RAMPARTS SERIES</span>
+    </nav>
 
 <!-- ============================================================================
      SECTION 2 — Hero (carousel + headline + 3 stat callouts + ideal apps + feature pills + compliance)
@@ -2400,25 +2608,22 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
        • Compact form factor (5.35" × 8.70" × 2.81") — fits standard 4" J-box
        • Single SKU (LWPE20) — minimal spec'er decision-tree
        • Integrated photocell STANDARD — dusk-to-dawn out of the box, no upgrade
-       • surge<span class="aa">Ⓐ</span>RMOR™ — branded 2.5kV surge protection (unique to Ramparts)
-       • thermal<span class="aa">Ⓐ</span>RMOR™ — -40°F to 122°F (warmer max than the rest of the line)
+       • surgeⒶRMOR™ — branded 2.5kV surge protection (unique to Ramparts)
+       • thermalⒶRMOR™ — -40°F to 122°F (warmer max than the rest of the line)
        • Up to 139 lm/W at 15W setting (peak efficacy point)
      Tier: ECO — entry-tier replacement for legacy small wall packs (60W HID equiv).
      ============================================================================ -->
-
-<div data-pagefind-meta="keywords:LWPC,LWPF,LWPA,LWPE,wall pack,full cutoff wall pack,classic wall pack,adjustable wall pack,entryway wall pack,security lighting,perimeter wall pack,dock wall,parking wall pack,IP65 wall pack" data-pagefind-ignore="all" style="display:none"></div><section class="hero">
+<section class="hero">
   <div class="hero-grid">
     <div class="hero-left">
       <div class="hero-info">
-      <h1 data-pagefind-weight="10">
+      <h1>
         Ramparts Series
         <span class="tier-badge tier-eco">ECO</span>
       </h1>
-<span data-pagefind-meta="sku_pattern:LRMP" style="display:none">LRMP</span>
-<span data-pagefind-meta="breadcrumb:Outdoor › luxoⒶRCH › Wall Pack" data-pagefind-ignore="all" style="display:none"></span>
       <h2>Ramparts: Compact wall pack. Photocell included.</h2>
       <p class="hero-desc">
-        The entryway-grade upgrade for legacy 60–100W HID wall packs. <strong>Single SKU</strong>, <strong>integrated photocell standard</strong>, drop-in to a standard 4" J-box — Ramparts ships dusk-to-dawn ready, no controls package required. Field-selectable wattage (10&nbsp;/&nbsp;15&nbsp;/&nbsp;20W) and CCT (3000K&nbsp;/&nbsp;4000K&nbsp;/&nbsp;5000K) cover shed walls, barn doorways, side-entry doors, walk-up canopies, and small commercial entries. Up to <strong>2,750 lm at 20W · 4000K (139 lm/W peak)</strong>, surge<span class="aa"><span class="aa">Ⓐ</span></span>RMOR™ 2.5kV, thermal<span class="aa"><span class="aa">Ⓐ</span></span>RMOR™ −40°F to 122°F, 5-year warranty.
+        The entryway-grade upgrade for legacy 60–100W HID wall packs. <strong>Single SKU</strong>, <strong>integrated photocell standard</strong>, drop-in to a standard 4" J-box — Ramparts ships dusk-to-dawn ready, no controls package required. Field-selectable wattage (10&nbsp;/&nbsp;15&nbsp;/&nbsp;20W) and CCT (3000K&nbsp;/&nbsp;4000K&nbsp;/&nbsp;5000K) cover shed walls, barn doorways, side-entry doors, walk-up canopies, and small commercial entries. Up to <strong>2,750 lm at 20W · 4000K (139 lm/W peak)</strong>, surge<span class="aa">Ⓐ</span>RMOR™ 2.5kV, thermal<span class="aa">Ⓐ</span>RMOR™ −40°F to 122°F, 5-year warranty.
       </p>
 
       <div class="hero-stats">
@@ -2431,7 +2636,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="ideal-card-title">Ideal Applications</div>
         <!-- Ramparts datasheet "Ideal Applications" set:
              Entryways · Perimeter · Commercial · Security.
-             SVGs reused from the shared luxo<span class="aa">Ⓐ</span>RCH wall pack icon set. -->
+             SVGs reused from the shared luxoⒶRCH wall pack icon set. -->
         <div class="ideal-tiles">
           <div class="ideal-tile">
             <div class="ideal-icon">
@@ -2463,10 +2668,10 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <!-- end .hero-info -->
 
       <!-- Feature icons row — 4 Ramparts-specific pills:
-           3-WATTselect · 3-CCTselect · DUSK TO DAWN · surge<span class="aa">Ⓐ</span>RMOR
+           3-WATTselect · 3-CCTselect · DUSK TO DAWN · surgeⒶRMOR
            Datasheet calls the integrated photocell "Photocell Ready" but the
            function it delivers is dusk-to-dawn automation — that's the user-facing
-           label we lead with. surge<span class="aa">Ⓐ</span>RMOR is Ramparts-specific (2.5kV built-in). -->
+           label we lead with. surgeⒶRMOR is Ramparts-specific (2.5kV built-in). -->
       <div class="hero-feature-icons" aria-label="Product features">
 
         <div class="feature-chip">
@@ -2521,7 +2726,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
         <div class="feature-chip">
           <div class="feature-chip-icon">
-            <!-- surge<span class="aa">Ⓐ</span>RMOR — shield + lightning bolt (built-in surge protection) -->
+            <!-- surgeⒶRMOR — shield + lightning bolt (built-in surge protection) -->
             <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="30" cy="30" r="26" stroke-width="1.4" opacity="0.35"/>
               <!-- Shield silhouette -->
@@ -2532,7 +2737,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
                     fill="#F32740" stroke="#F32740" stroke-linejoin="round"/>
             </svg>
           </div>
-          <div class="feature-chip-label">surge<span class="aa aa-inherit"><span class="aa">Ⓐ</span></span>RMOR</div>
+          <div class="feature-chip-label">surge<span class="aa aa-inherit">Ⓐ</span>RMOR</div>
         </div>
 
       </div>
@@ -2568,30 +2773,48 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
                  loading="lazy" />
           </div>
         </div>
-        <div class="carousel-dots" id="carouselDots">
-          <span class="active" data-i="0"></span>
-          <span data-i="1"></span>
-          <span data-i="2"></span>
-          <span data-i="3"></span>
-        </div>
+        <!-- CFG-HERO-2 · labeled chip selector (Waymark canonical · James 2026-05-25) -->
+    <div class="carousel-chips" id="carouselChips" aria-label="Photo angle selector">
+      <button type="button" class="active" data-i="0">FRONT</button>
+      <button type="button" data-i="1">SIDE</button>
+      <button type="button" data-i="2">DETAIL</button>
+      <button type="button" data-i="3">MOUNT</button>
+    </div>
       </div>
 
       <!-- Compliance row — production CDN logos -->
       <div class="hero-compliance" aria-label="Certifications">
         <div class="cb">
-          <img src="/assets/certs/dlc.svg" alt="DLC Listed" />
+          <svg class="cb-img" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DLC Listed">
+  <circle cx="30" cy="30" r="22" stroke-width="1.8"/>
+  <text x="30" y="26" text-anchor="middle" fill="#F32740" font-size="9" font-family="Inter, sans-serif" font-weight="700" letter-spacing="0.5">DLC</text>
+  <text x="30" y="38" text-anchor="middle" fill="currentColor" font-size="6" font-family="Inter, sans-serif" letter-spacing="0.4">LISTED</text>
+  <line x1="14" y1="44" x2="46" y2="44" stroke="#F32740" stroke-width="1.5"/>
+</svg>
           <div class="cb-label">DLC Listed</div>
         </div>
         <div class="cb">
-          <img src="/assets/certs/etl.svg" alt="UL/cUL Listed" />
+          <svg class="cb-img" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="UL Listed">
+  <circle cx="30" cy="30" r="22" stroke-width="1.8"/>
+  <text x="30" y="28" text-anchor="middle" fill="#F32740" font-size="11" font-family="Inter, sans-serif" font-weight="700" letter-spacing="0.4">UL</text>
+  <text x="30" y="40" text-anchor="middle" fill="currentColor" font-size="5.5" font-family="Inter, sans-serif" letter-spacing="0.4">LISTED</text>
+</svg>
           <div class="cb-label">UL Listed</div>
         </div>
         <div class="cb">
-          <img src="/assets/certs/rohs.svg" alt="RoHS Compliant" />
+          <svg class="cb-img" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RoHS Compliant">
+  <circle cx="30" cy="30" r="22" stroke-width="1.8"/>
+  <path d="M22 30 L28 36 L40 24" stroke="#F32740" stroke-width="2.4"/>
+  <text x="30" y="50" text-anchor="middle" fill="currentColor" font-size="6.5" font-family="Inter, sans-serif" font-weight="700" letter-spacing="0.6">RoHS</text>
+</svg>
           <div class="cb-label">RoHS</div>
         </div>
         <div class="cb">
-          <img src="/assets/certs/wet-location.svg" alt="Suitable for Wet Location" />
+          <svg class="cb-img" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Suitable for Wet Location">
+  <path d="M30 12 Q18 28 18 38 a12 12 0 0 0 24 0 Q42 28 30 12 Z" stroke="#F32740" stroke-width="2"/>
+  <path d="M27 36 Q27 40 30 40" stroke="currentColor" stroke-width="1.4" fill="none"/>
+  <text x="30" y="55" text-anchor="middle" fill="currentColor" font-size="5.5" font-family="Inter, sans-serif" font-weight="700" letter-spacing="0.6">WET LOC</text>
+</svg>
           <div class="cb-label">Wet Location</div>
         </div>
       </div>
@@ -2613,6 +2836,30 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
      For the per-wattage rows shown here, lumens are linear-scaled from the 20W
      5000K-default (134 lm/W). Footer flags the 4000K peak-efficacy CCT honestly.
      ============================================================================ -->
+<style>
+  /* Section-scoped override for the canonical spec-table flex-stretch behavior:
+     Multi-row spec tables need natural row height (not 100%-fill) so all rows
+     stay visible when the dim panel is taller than the table column. */
+  .spec-section .spec-table-wrap-outer { flex: 0 0 auto; min-width: 0; }
+  .spec-section .spec-table-wrap { flex: 0 0 auto; }
+  .spec-section table.spec-table { height: auto; }
+  /* CFG-SPEC-1: table-layout:auto + white-space:normal lets CCT + Voltage wrap
+     inside their own cells instead of overflowing into adjacent columns
+     (canonical head has table-layout:fixed + white-space:nowrap which bleeds). */
+  .spec-section table.spec-table { table-layout: auto; }
+  .spec-section .spec-table th,
+  .spec-section .spec-table td {
+    white-space: normal;
+    vertical-align: middle;
+    overflow-wrap: anywhere;
+  }
+  /* Watt + Lumens + lm/W stay short — keep them on one line.
+     CCT + Voltage are the cells that need to wrap when room is tight. */
+  .spec-section .spec-table td:nth-child(1),
+  .spec-section .spec-table td:nth-child(2),
+  .spec-section .spec-table td:nth-child(3) { white-space: nowrap; }
+</style>
+
 <section class="spec-section" id="specifications" aria-label="Model Specifications">
   <div class="spec-inner">
 
@@ -2691,7 +2938,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           </div>
           <div class="meta-stat-text">
             <span class="meta-stat-num">5 yr · 50k hr</span>
-            <span class="meta-stat-sub">Limited Warranty</span>
+            <span class="meta-stat-sub">Limited Liability</span>
           </div>
         </div>
       </div>
@@ -2760,7 +3007,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             </svg>
           </button>
           <div class="spec-dim-image" id="dimImageHost">
-            <img id="dimImg" src="/products/ramparts/assets/ramparts-dimensions.svg"
+            <img id="dimImg" src="/products/ramparts/assets/dimensions/Ramparts-Dimensions.svg"
                  alt="Ramparts dimensions — front view 5.35 in wide × 8.70 in tall · side view 2.81 in deep · sourced from LWPE Ramparts datasheet Sizing &amp; Measurements" />
           </div>
         </div>
@@ -2774,7 +3021,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <div class="zoom-modal" id="dimZoomModal" role="dialog" aria-label="Dimensions zoomed">
   <button type="button" class="zoom-modal-close" id="dimZoomClose" aria-label="Close zoom">CLOSE ✕</button>
   <div class="zoom-modal-content">
-    <img id="dimZoomImg" src="/products/ramparts/assets/ramparts-dimensions.svg" alt="Ramparts dimensions zoomed" />
+    <img id="dimZoomImg" src="/products/ramparts/assets/dimensions/Ramparts-Dimensions.svg" alt="Ramparts dimensions zoomed" />
   </div>
 </div>
 
@@ -2783,7 +3030,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
      Ramparts datasheet sources:
        • Page 1 — Main Features (8 bullets)
        • Page 2 — Highlights table (6 features): 3-WATTselect · 3-CCTselect ·
-                  Photocell Ready · surge<span class="aa">Ⓐ</span>RMOR · thermal<span class="aa">Ⓐ</span>RMOR · WetGuard
+                  Photocell Ready · surgeⒶRMOR · thermalⒶRMOR · WetGuard
 
      5 tiles = 1 hero + 2 rows of 2. Compressed to 5 (vs 7 on Watchtower/Nightwatch)
      because Ramparts is the simpler product — fewer differentiators, fewer tiles.
@@ -2792,7 +3039,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
        2. Optics: 103° Prismatic · uniform distribution
        3. 3-WATTselect × 3-CCTselect (field-adjustable)
        4. Dusk-to-Dawn (Photocell Ready)
-       5. Triple-<span class="aa">Ⓐ</span>RMOR Build (surge<span class="aa">Ⓐ</span>RMOR + thermal<span class="aa">Ⓐ</span>RMOR + WetGuard combined)
+       5. Triple-ⒶRMOR Build (surgeⒶRMOR + thermalⒶRMOR + WetGuard combined)
 
      PLACEHOLDER ASSETS: tile images cycle through the 4 Ramparts hero photos.
      ============================================================================ -->
@@ -2848,7 +3095,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         </div>
       </div>
 
-      <!-- Row 2 — Dusk-to-Dawn + Triple-<span class="aa">Ⓐ</span>RMOR Build -->
+      <!-- Row 2 — Dusk-to-Dawn + Triple-ⒶRMOR Build -->
       <div class="hf-row-2">
         <div class="hf-tile hf-tile-grad-4">
           <div class="hf-tile-image">
@@ -2867,9 +3114,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
                  alt="Ramparts back / side view showing the die-cast aluminum housing with WetGuard sealing and J-box mounting plate" />
           </div>
           <div class="hf-tile-overlay">
-            <div class="hf-tile-tag">Triple-<span class="aa aa-inherit"><span class="aa">Ⓐ</span></span>RMOR Build</div>
-            <h3>surge<span class="aa aa-inherit"><span class="aa">Ⓐ</span></span>RMOR · thermal<span class="aa aa-inherit"><span class="aa">Ⓐ</span></span>RMOR · WetGuard.</h3>
-            <p>Three layers of build quality protect the LEDs and the driver: <strong>surge<span class="aa"><span class="aa">Ⓐ</span></span>RMOR™</strong> 2.5kV built-in surge protection guards against utility transients · <strong>thermal<span class="aa"><span class="aa">Ⓐ</span></span>RMOR™</strong> die-cast thermal pathway holds LED junction temperature across <strong>−40°F to 122°F</strong> ambient · <strong>WetGuard™</strong> IP65 sealing keeps water and contaminants out. 5-year warranty backs all three.</p>
+            <div class="hf-tile-tag">Triple-<span class="aa aa-inherit">Ⓐ</span>RMOR Build</div>
+            <h3>surge<span class="aa aa-inherit">Ⓐ</span>RMOR · thermal<span class="aa aa-inherit">Ⓐ</span>RMOR · WetGuard.</h3>
+            <p>Three layers of build quality protect the LEDs and the driver: <strong>surgeⒶRMOR™</strong> 2.5kV built-in surge protection guards against utility transients · <strong>thermalⒶRMOR™</strong> die-cast thermal pathway holds LED junction temperature across <strong>−40°F to 122°F</strong> ambient · <strong>WetGuard™</strong> IP65 sealing keeps water and contaminants out. 5-year warranty backs all three.</p>
           </div>
         </div>
       </div>
@@ -2884,7 +3131,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
      ============================================================================ -->
 
 <!-- ============================================================================
-     SECTION 6 — contr<span class="aa">Ⓐ</span>LS · Integrated Photocell (simplest contr<span class="aa">Ⓐ</span>LS in the line)
+     SECTION 6 — contrⒶLS · Integrated Photocell (simplest contrⒶLS in the line)
      Ramparts ships with the photocell PRE-INSTALLED at the factory — no optional
      PSB upgrade like Nightwatch, no Multi-Functional Operations Control Center
      like Watchtower/Guardian, no microwave occupancy sensor option. The whole
@@ -2912,7 +3159,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   <div class="tac-grid">
     <div class="tac-spacer"></div>
     <div class="tac-content">
-      <p class="tac-eyebrow"><span>contr<span class="aa"><span class="aa">Ⓐ</span></span>LS</span></p>
+      <p class="tac-eyebrow"><span>contr<span class="aa">Ⓐ</span>LS</span></p>
       <h2 class="tac-title">Photocell, pre-installed.</h2>
       <p class="tac-desc">
         The simplest controls story in the wall pack line. Every Ramparts ships with the photocell <strong>installed and wired from the factory</strong> — automatic dusk-to-dawn operation, no controls package to add, no commissioning visit, no central panel. The fixture turns on at sundown and off at sunrise on its own. Title 24 + ASHRAE 90.1 compliant out of the box, no separate line item on the BOM.
@@ -2921,7 +3168,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <div class="tac-callout">
         <div class="tac-callout-tabs" role="tablist">
           <button type="button" class="tac-callout-tab active" role="tab" aria-selected="true" data-platform="integrated-photocell">
-            <span>contr<span class="aa aa-white"><span class="aa">Ⓐ</span></span>LS · Integrated Photocell</span>
+            <span>contr<span class="aa aa-white">Ⓐ</span>LS · Integrated Photocell</span>
           </button>
         </div>
         <div class="tac-callout-body" id="tacCalloutBody">
@@ -3214,55 +3461,55 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 <script>
 /* =============================================================================
-   SECTION 8 \u2014 "What's in the Box" modal wiring for Ramparts.
-   3 entries \u00B7 all standard \u00B7 click-to-detail pattern from the family scaffold.
+   SECTION 8 - "What's in the Box" modal wiring for Ramparts.
+   3 entries . all standard . click-to-detail pattern from the family scaffold.
    No filter pills. No /PSB suffix. No EM module. Just what ships in the box.
    ============================================================================= */
 (function() {
   var ACC = {
     'photocell': {
-      cat: 'Standard \u00B7 Dusk-to-Dawn',
+      cat: 'Standard . Dusk-to-Dawn',
       title: 'Integrated Photocell',
       sku: 'Cast into upper housing',
-      model: 'Button photocell \u00B7 factory-mounted',
-      desc: 'Button photocell mounted directly into the upper face of the cast-aluminum housing. Provides automatic dusk-to-dawn ON/OFF switching \u2014 fixture turns on at sundown, off at sunrise. No /PSB suffix to specify, no NEMA twist-lock cap to commission, no controls package required. Standard on every Ramparts SKU.',
+      model: 'Button photocell . factory-mounted',
+      desc: 'Button photocell mounted directly into the upper face of the cast-aluminum housing. Provides automatic dusk-to-dawn ON/OFF switching - fixture turns on at sundown, off at sunrise. No /PSB suffix to specify, no NEMA twist-lock cap to commission, no controls package required. Standard on every Ramparts SKU.',
       specs: [
-        ['Type', 'Button photocell \u00B7 factory-cast-in'],
+        ['Type', 'Button photocell . factory-cast-in'],
         ['Operation', 'Dusk-to-dawn ON/OFF (automatic)'],
-        ['Threshold', 'Factory-set \u00B7 no field adjustment'],
-        ['Spec on SKU', 'Standard \u2014 no suffix needed'],
+        ['Threshold', 'Factory-set . no field adjustment'],
+        ['Spec on SKU', 'Standard - no suffix needed'],
         ['Override', 'Wired to mains; can be disabled at install if a separate control system manages switching'],
-        ['Versus PRO/PRO+ models', 'Sentinel/Guardian/Watchtower/Nightwatch use a sensor cap port + optional /PSB. Ramparts is integrated only \u2014 simpler.']
+        ['Versus PRO/PRO+ models', 'Sentinel/Guardian/Watchtower/Nightwatch use a sensor cap port + optional /PSB. Ramparts is integrated only - simpler.']
       ]
     },
     'jbox': {
-      cat: 'Standard \u00B7 Wall Mount',
+      cat: 'Standard . Wall Mount',
       title: 'Mounting Junction Box',
-      sku: 'Included \u00B7 pre-fitted',
-      model: 'Wall-mount J-box \u00B7 4-corner anchor',
+      sku: 'Included . pre-fitted',
+      model: 'Wall-mount J-box . 4-corner anchor',
       desc: 'Pre-formed mounting junction box ships with every Ramparts. Captures the supply wiring behind the fixture, hides the rough-in opening, and provides the structural anchor point for the four corner mounting screws (also included). Compatible with single-gang and 4-inch octagonal rough-in boxes for new construction or remodel. No separate hardware purchase, no contractor sourcing.',
       specs: [
         ['Type', 'Wall-mount junction box'],
-        ['Mounting', '4 corner screws \u00B7 included'],
-        ['Wall opening', 'Compatible with single-gang or 4\u2033 octagonal rough-in'],
-        ['Wire entry', 'Top knockout \u00B7 rear knockout'],
-        ['Material', 'Cast aluminum \u00B7 matches housing finish'],
+        ['Mounting', '4 corner screws . included'],
+        ['Wall opening', 'Compatible with single-gang or 4″ octagonal rough-in'],
+        ['Wire entry', 'Top knockout . rear knockout'],
+        ['Material', 'Cast aluminum . matches housing finish'],
         ['Service', 'Removable for re-lamp or wiring service']
       ]
     },
     'gasket': {
-      cat: 'Standard \u00B7 WetGuard\u2122',
+      cat: 'Standard . WetGuard(TM)',
       title: 'Wet Location Gasket',
-      sku: 'Pre-installed \u00B7 IP65 seal',
+      sku: 'Pre-installed . IP65 seal',
       model: 'Continuous-perimeter foam gasket',
-      desc: 'Continuous foam gasket runs the full perimeter where the housing meets the junction box, sealing out wind-driven rain, snowmelt, and condensation. The gasket is what gets Ramparts to its IP65 wet-location rating \u2014 qualifying it for direct exposure to weather, building eaves, and uncovered entryways. Pre-installed at the factory; never needs replacement during the fixture\'s service life.',
+      desc: 'Continuous foam gasket runs the full perimeter where the housing meets the junction box, sealing out wind-driven rain, snowmelt, and condensation. The gasket is what gets Ramparts to its IP65 wet-location rating - qualifying it for direct exposure to weather, building eaves, and uncovered entryways. Pre-installed at the factory; never needs replacement during the fixture\'s service life.',
       specs: [
-        ['Material', 'Closed-cell foam \u00B7 UV-stabilized'],
+        ['Material', 'Closed-cell foam . UV-stabilized'],
         ['Seal class', 'IP65 wet-location rated'],
-        ['Coverage', 'Full perimeter \u00B7 continuous bead'],
-        ['Operating range', '\u221240\u00B0F to 122\u00B0F (thermal\u24B6RMOR\u2122)'],
-        ['Service', 'Pre-installed \u00B7 maintenance-free'],
-        ['Tested to', 'Wind-driven rain \u00B7 ANSI/UL 1598 wet location']
+        ['Coverage', 'Full perimeter . continuous bead'],
+        ['Operating range', '-40degF to 122degF (thermalARMOR(TM))'],
+        ['Service', 'Pre-installed . maintenance-free'],
+        ['Tested to', 'Wind-driven rain . ANSI/UL 1598 wet location']
       ]
     }
   };
@@ -3285,16 +3532,16 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       var id = card.dataset.id;
       var d  = ACC[id];
       if (!d) { console.warn('acc-modal: no data for id', id); return; }
-      catEl.textContent   = d.cat.replace(/\u24B6/g, '');
+      catEl.textContent   = d.cat.replace(/A/g, '');
       titleEl.textContent = d.title;
       skuEl.innerHTML     = d.sku + (d.model && d.model !== d.sku ? '<div style="font-size:11px;color:var(--text-muted);font-weight:400;margin-top:2px;">' + d.model + '</div>' : '');
       descEl.textContent  = d.desc;
-      if (d.cat.indexOf('\u24B6') >= 0) {
-        catEl.innerHTML = d.cat.replace(/\u24B6/g, '<span class="aa" aria-hidden="true">\u24B6</span>');
+      if (d.cat.indexOf('A') >= 0) {
+        catEl.innerHTML = d.cat.replace(/A/g, '<span class="aa" aria-hidden="true">A</span>');
       }
-      // Per-spec \u24B6 rendering (e.g. thermal\u24B6RMOR appears in the gasket specs)
+      // Per-spec A rendering (e.g. thermalARMOR appears in the gasket specs)
       specsEl.innerHTML = d.specs.map(function(s) {
-        var v = (s[1] || '').toString().replace(/\u24B6/g, '<span class="aa" aria-hidden="true">\u24B6</span>');
+        var v = (s[1] || '').toString().replace(/A/g, '<span class="aa" aria-hidden="true">A</span>');
         return '<div class="acc-spec-row">' +
                  '<div class="acc-spec-key">' + s[0] + '</div>' +
                  '<div class="acc-spec-val">' + v + '</div>' +
@@ -3358,7 +3605,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
      post-install. They do NOT appear in the SKU. The configurator shows them
      in a second column (informational only) so the spec writer can preview
      output ranges without contaminating the order code.
-     The simplicity story: order one SKU per finish — dial in the rest at install.
+     The simplicity story: order one SKU per finish — pick the rest at install.
      ============================================================================= -->
 <section class="cfg-section" id="configurator" aria-label="Configurator · Build Your Model">
   <div class="cfg-inner">
@@ -3382,70 +3629,27 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       </button>
     </div>
 
-    <div class="cfg-body">
+    <div class="cfg-body split-60-40">
 
       <!-- ============== LEFT COLUMN · SKU FIELDS ============== -->
-      <div class="cfg-col">
+      <div class="cfg-col cfg-col-req">
         <div class="cfg-col-head">
           <div class="cfg-col-title cfg-col-title-required">SKU Fields</div>
           <div class="cfg-col-meta">4 fields · 3 locked · 1 to choose</div>
         </div>
-        <div class="cfg-fields">
+        <div class="cfg-rows">
 
           <!-- 1. Model — LWPE20 (locked, only option) -->
-          <div class="cfg-field" data-field="model" style="grid-column: 1 / -1;">
-            <div class="cfg-field-label">Model</div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip locked selected" data-field="model" data-val="LWPE20" data-code="LWPE20" aria-pressed="true">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">LWPE20 · Entryway Wall Pack</span>
-                <span class="cfg-chip-code">LWPE20</span>
-              </button>
-            </div>
-          </div>
+          <div class="cfg-row" data-field="model"><div class="cfg-row-l"><span class="cfg-row-label">Model</span><span class="cfg-row-code is-empty" data-field-code="model">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(1, 1fr);"><button aria-pressed="true" class="cfg-chip locked selected" data-code="LWPE20" data-field="model" data-val="LWPE20" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">LWPE20 · Entryway Wall Pack</span></span></button></div></div>
 
           <!-- 2. Series — S3 (locked, only option) -->
-          <div class="cfg-field" data-field="series" style="grid-column: 1 / -1;">
-            <div class="cfg-field-label">Series</div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip locked selected" data-field="series" data-val="S3R" data-code="S3R" aria-pressed="true">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">S3R · Ramparts · 3-CCTselect</span>
-                <span class="cfg-chip-code">-S3R</span>
-              </button>
-            </div>
-          </div>
+          <div class="cfg-row" data-field="series"><div class="cfg-row-l"><span class="cfg-row-label">Series</span><span class="cfg-row-code is-empty" data-field-code="series">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(1, 1fr);"><button aria-pressed="true" class="cfg-chip locked selected" data-code="S3R" data-field="series" data-val="S3R" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">S3R · Ramparts · 3-CCTselect</span></span></button></div></div>
 
           <!-- 3. Voltage — U (Universal 120-277V), locked -->
-          <div class="cfg-field" data-field="voltage" style="grid-column: 1 / -1;">
-            <div class="cfg-field-label">Voltage</div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip locked selected" data-field="voltage" data-val="U" data-code="U" aria-pressed="true">
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">Universal · 120–277V</span>
-                <span class="cfg-chip-code">-U</span>
-              </button>
-            </div>
-          </div>
+          <div class="cfg-row" data-field="voltage"><div class="cfg-row-l"><span class="cfg-row-label">Voltage</span><span class="cfg-row-code is-empty" data-field-code="voltage">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(1, 1fr);"><button aria-pressed="true" class="cfg-chip locked selected" data-code="U" data-field="voltage" data-val="U" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">Universal · 120–277V</span></span></button></div></div>
 
           <!-- 4. Finish — Dark Bronze | Black (USER CHOICE) -->
-          <div class="cfg-field" data-field="finish" style="grid-column: 1 / -1;">
-            <div class="cfg-field-label">Finish <span class="req">*</span></div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip cfg-chip-finish" data-field="finish" data-val="D" data-code="D" aria-pressed="false">
-                <span class="cfg-finish-swatch" style="background:linear-gradient(145deg,#3a2d1f,#1f180f);"></span>
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">Dark Bronze</span>
-                <span class="cfg-chip-code">D</span>
-              </button>
-              <button type="button" class="cfg-chip cfg-chip-finish" data-field="finish" data-val="B" data-code="B" aria-pressed="false">
-                <span class="cfg-finish-swatch" style="background:linear-gradient(145deg,#1c1c1c,#080808);"></span>
-                <span class="cfg-chip-stock qs">QS</span>
-                <span class="cfg-chip-val">Black</span>
-                <span class="cfg-chip-code">B</span>
-              </button>
-            </div>
-          </div>
+          <div class="cfg-row" data-field="finish"><div class="cfg-row-l"><span class="cfg-row-label">Finish<span class="cfg-req">*</span></span><span class="cfg-row-code is-empty" data-field-code="finish">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(2, 1fr);"><button aria-pressed="false" class="cfg-chip cfg-chip-finish" data-code="D" data-field="finish" data-val="D" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-sw" style="background:linear-gradient(145deg,#3a2d1f,#1f180f);"></span><span class="cfg-chip-label">Dark Bronze</span></span></button><button aria-pressed="false" class="cfg-chip cfg-chip-finish" data-code="B" data-field="finish" data-val="B" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-sw" style="background:linear-gradient(145deg,#1c1c1c,#080808);"></span><span class="cfg-chip-label">Black</span></span></button></div></div>
 
         </div>
       </div>
@@ -3454,77 +3658,27 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <!-- CFG-5a marker: cfg-col-legend-floor anchors the legend block to the
            bottom of the field-set column so the marker key sits flush with
            the SKU column floor across viewport sizes. -->
-      <div class="cfg-col cfg-col-optional-flex cfg-col-legend-floor">
+      <div class="cfg-col cfg-col-optional-flex cfg-col-legend-floor cfg-col-opt">
         <div class="cfg-col-head">
           <div class="cfg-col-title">Field-Set at Install</div>
           <div class="cfg-col-meta">DIP-controlled · not in SKU</div>
         </div>
 
         <!-- Informational callout -->
-        <div class="cfg-fields">
+        <div class="cfg-rows">
 
           <!-- 5. Wattage (informational) -->
-          <div class="cfg-field" data-field="wattage" style="grid-column: 1 / -1;">
-            <div class="cfg-field-label">
-              Wattage Preview
-              <span style="font-family:'JetBrains Mono', monospace; font-size:9px; padding:2px 5px; border-radius:1px; background:rgba(96,168,255,0.16); color:#7fb6ff; border:1px solid rgba(96,168,255,0.40); letter-spacing:0.10em; margin-left:6px;">DIP</span>
-            </div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip cfg-chip-toggle" data-field="wattage" data-val="10" data-code="10W" aria-pressed="false">
-                <span class="cfg-chip-val">10W</span>
-                <span class="cfg-chip-code">DIP-1</span>
-              </button>
-              <button type="button" class="cfg-chip cfg-chip-toggle" data-field="wattage" data-val="15" data-code="15W" aria-pressed="false">
-                <span class="cfg-chip-val">15W</span>
-                <span class="cfg-chip-code">DIP-2</span>
-              </button>
-              <button type="button" class="cfg-chip cfg-chip-toggle selected" data-field="wattage" data-val="20" data-code="20W" aria-pressed="true">
-                <span class="cfg-chip-val">20W</span>
-                <span class="cfg-chip-code">DIP-3 ★</span>
-              </button>
-            </div>
-          </div>
+          <div class="cfg-row cfg-row-stack" data-field="wattage"><div class="cfg-row-l cfg-row-l-stack"><span class="cfg-row-label">Wattage Preview
+              <span style="font-family:'JetBrains Mono', monospace; font-size:9px; padding:2px 5px; border-radius:1px; background:rgba(96,168,255,0.16); color:#7fb6ff; border:1px solid rgba(96,168,255,0.40); letter-spacing:0.10em; margin-left:6px;">DIP</span></span><span class="cfg-row-code is-empty" data-field-code="wattage">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(3, 1fr);"><button aria-pressed="false" class="cfg-chip cfg-chip-toggle" data-code="10W" data-field="wattage" data-val="10" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">10W</span></span></button><button aria-pressed="false" class="cfg-chip cfg-chip-toggle" data-code="15W" data-field="wattage" data-val="15" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">15W</span></span></button><button aria-pressed="true" class="cfg-chip cfg-chip-toggle selected" data-code="20W" data-field="wattage" data-val="20" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">20W</span></span></button></div></div>
 
           <!-- 6. CCT (informational) -->
-          <div class="cfg-field" data-field="cct" style="grid-column: 1 / -1;">
-            <div class="cfg-field-label">
-              CCT Preview
-              <span style="font-family:'JetBrains Mono', monospace; font-size:9px; padding:2px 5px; border-radius:1px; background:rgba(96,168,255,0.16); color:#7fb6ff; border:1px solid rgba(96,168,255,0.40); letter-spacing:0.10em; margin-left:6px;">DIP</span>
-            </div>
-            <div class="cfg-chips">
-              <button type="button" class="cfg-chip cfg-chip-toggle" data-field="cct" data-val="30" data-code="3000K" aria-pressed="false">
-                <span class="cfg-chip-val">3000K · Warm</span>
-                <span class="cfg-chip-code">DIP-1</span>
-              </button>
-              <button type="button" class="cfg-chip cfg-chip-toggle" data-field="cct" data-val="40" data-code="4000K" aria-pressed="false">
-                <span class="cfg-chip-val">4000K · Neutral</span>
-                <span class="cfg-chip-code">DIP-2 ★</span>
-              </button>
-              <button type="button" class="cfg-chip cfg-chip-toggle selected" data-field="cct" data-val="50" data-code="5000K" aria-pressed="true">
-                <span class="cfg-chip-val">5000K · Daylight</span>
-                <span class="cfg-chip-code">DIP-3</span>
-              </button>
-            </div>
-            <div class="cfg-field-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; line-height:1.4;">4000K is peak efficacy (139 lm/W).</div>
-          </div>
+          <div class="cfg-row cfg-row-stack" data-field="cct"><div class="cfg-row-l cfg-row-l-stack"><span class="cfg-row-label">CCT Preview
+              <span style="font-family:'JetBrains Mono', monospace; font-size:9px; padding:2px 5px; border-radius:1px; background:rgba(96,168,255,0.16); color:#7fb6ff; border:1px solid rgba(96,168,255,0.40); letter-spacing:0.10em; margin-left:6px;">DIP</span></span><span class="cfg-row-code is-empty" data-field-code="cct">—</span></div><div class="cfg-seg" style="grid-template-columns: repeat(3, 1fr);"><button aria-pressed="false" class="cfg-chip cfg-chip-toggle" data-code="3000K" data-field="cct" data-val="30" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">3000K · Warm</span></span></button><button aria-pressed="false" class="cfg-chip cfg-chip-toggle" data-code="4000K" data-field="cct" data-val="40" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">4000K · Neutral</span></span></button><button aria-pressed="true" class="cfg-chip cfg-chip-toggle selected" data-code="5000K" data-field="cct" data-val="50" type="button"><span class="cfg-chip-stripe qs"></span><span class="cfg-chip-main"><span class="cfg-chip-label">5000K · Daylight</span></span></button></div></div>
 
         </div>
 
         <!-- Legend (locked / required indicator) -->
-        <div class="cfg-legend">
-          <div class="cfg-legend-row">
-            <span class="cfg-legend-key qs">QS</span>
-            <span class="cfg-legend-val">QuickShip — in stock</span>
-          </div>
-          <div class="cfg-legend-row">
-            <span class="cfg-legend-key" style="background:rgba(96,168,255,0.16); color:#7fb6ff; border:1px solid rgba(96,168,255,0.40);">DIP</span>
-            <span class="cfg-legend-val">Field-set · not in SKU</span>
-          </div>
-          <div class="cfg-legend-row">
-            <span class="cfg-legend-key" style="background:rgba(255,255,255,0.04); color:var(--text-secondary); border:1px solid var(--line-medium);">LCK</span>
-            <span class="cfg-legend-val">Auto-selected · only option</span>
-          </div>
-        </div>
+        <div aria-label="Configurator marker legend" class="cfg-legend"><div class="cfg-legend-row"><span class="cfg-legend-key star">★</span><span class="cfg-legend-val">Factory-default ship configuration</span></div><div class="cfg-legend-row"><span class="cfg-legend-key qs"><span class="cfg-legend-stripe qs"></span></span><span class="cfg-legend-val">QuickShip · 3-5 day lead</span></div><div class="cfg-legend-row"><span class="cfg-legend-key mto"><span class="cfg-legend-stripe mto"></span></span><span class="cfg-legend-val">Made-to-Order · 4-6 week lead</span></div></div>
         <!-- CFG-CFG-1 v1.4 · Legend disclaimer (James 2026-05-22) -->
         <div class="cfg-disclaimer">
           Estimates &middot; not guarantees &middot; subject to availability &middot; confirm before committing.
@@ -3627,29 +3781,29 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 <script>
 /* =============================================================================
-   SECTION 9 \u2014 Configurator engine (Ramparts)
-   Single user choice (finish). Wattage + CCT are DIP-set previews \u2014 they
+   SECTION 9 - Configurator engine (Ramparts)
+   Single user choice (finish). Wattage + CCT are DIP-set previews - they
    update the spec grid and lumen output but do NOT modify the SKU.
    SKU pattern: LWPE20-S3-U{D|B}
    ============================================================================= */
 (function() {
-  // Lumen output table \u2014 precomputed from datasheet. All values at MAX wattage
+  // Lumen output table - precomputed from datasheet. All values at MAX wattage
   // (20W) per CCT, then linear-scaled to lower wattage settings via watt ratio.
   // Peak intensity (cd) reflects the real IES test point at 20W/3000K (1,212 cd).
   var LUMEN = {
     // [wattage][cct] = lumens. Anchored on the Section 3 published 5000K table
-    // (10W=1,340 \u00B7 15W=2,010 \u00B7 20W=2,650) and scaled by CCT efficacy ratio
-    // (3000K=124, 4000K=139, 5000K=134 lm/W \u2192 0.925\u00D7 / 1.037\u00D7 of 5000K).
-    // 20W\u00B73000K and 20W\u00B74000K hit the datasheet values exactly (2,450 / 2,750).
+    // (10W=1,340 . 15W=2,010 . 20W=2,650) and scaled by CCT efficacy ratio
+    // (3000K=124, 4000K=139, 5000K=134 lm/W -> 0.925x / 1.037x of 5000K).
+    // 20W.3000K and 20W.4000K hit the datasheet values exactly (2,450 / 2,750).
     '10': { '30': 1240, '40': 1390, '50': 1340 },
     '15': { '30': 1860, '40': 2085, '50': 2010 },
     '20': { '30': 2450, '40': 2750, '50': 2650 }
   };
-  // Peak intensity (cd) at each (W, CCT) \u2014 IES test was 20W/3000K = 1,212 cd
-  // Linear scaled (cd \u221D lumens within the same beam shape).
+  // Peak intensity (cd) at each (W, CCT) - IES test was 20W/3000K = 1,212 cd
+  // Linear scaled (cd ∝ lumens within the same beam shape).
   function peakCd(w, cct) {
     var lm = LUMEN[w][cct];
-    var ratio = lm / 2450; // anchor at 20W\u00B73000K \u00B7 1212 cd
+    var ratio = lm / 2450; // anchor at 20W.3000K . 1212 cd
     return Math.round(1212 * ratio);
   }
 
@@ -3658,29 +3812,29 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     model:   'LWPE20',
     series:  'S3R',  // 3-CCTselect series identifier
     voltage: 'U',
-    finish:  null,   // user choice \u2014 drives counter
-    wattage: '20',   // DIP default \u00B7 max wattage
-    cct:     '50'    // DIP default \u00B7 5000K
+    finish:  null,   // user choice - drives counter
+    wattage: '20',   // DIP default . max wattage
+    cct:     '50'    // DIP default . 5000K
   };
 
   // Finish-aware preview images (background already removed)
   var FINISH_IMG = {
-    'B': '/products/ramparts/assets/hero/configurator-black.webp',
-    'D': '/products/ramparts/assets/hero/configurator-darkbronze.webp'
+    'B': 'assets/ramparts/hero/configurator-black.webp',
+    'D': 'assets/ramparts/hero/configurator-darkbronze.webp'
   };
 
   function render() {
     // Counter
     var counterEl = document.getElementById('cfgCounter');
     var countEl   = document.getElementById('cfgCounterCount');
-    // Model + Series + Voltage are auto-locked \u2192 3 fields always counted.
+    // Model + Series + Voltage are auto-locked -> 3 fields always counted.
     // Finish adds the 4th once picked.
     var locked = 3 + (state.finish ? 1 : 0);
     countEl.textContent = locked;
     counterEl.classList.toggle('complete', locked === 4);
 
     // SKU pattern: LWPE20-S3R-U{D|B}/PS
-    //   LWPE20 = family \u00B7 -S3R = Ramparts 3-CCTselect series
+    //   LWPE20 = family . -S3R = Ramparts 3-CCTselect series
     //   -U     = Universal 120-277V
     //   {D|B}  = finish (Dark Bronze | Black)
     //   /PS    = integrated photocell (standard, always appended)
@@ -3693,7 +3847,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     if (imgEl) {
       var src = state.finish ? FINISH_IMG[state.finish] : FINISH_IMG['B'];
       if (imgEl.getAttribute('src') !== src) imgEl.setAttribute('src', src);
-      imgEl.alt = 'Ramparts LWPE20 \u2014 ' + (state.finish === 'D' ? 'Dark Bronze' : 'Black') + ' finish preview';
+      imgEl.alt = 'Ramparts LWPE20 - ' + (state.finish === 'D' ? 'Dark Bronze' : 'Black') + ' finish preview';
     }
 
     // Tag
@@ -3704,22 +3858,22 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       tag.textContent = 'UNCONFIGURED';
     }
 
-    // Spec grid \u00B7 finish
+    // Spec grid . finish
     var sf = document.getElementById('cfgSpecFinish');
     if (state.finish) {
       sf.classList.remove('placeholder');
       sf.textContent = (state.finish === 'D') ? 'Dark Bronze' : 'Black';
     } else {
       sf.classList.add('placeholder');
-      sf.textContent = '\u2014 pick one \u2014';
+      sf.textContent = '- pick one -';
     }
 
-    // Spec grid \u00B7 wattage / CCT / output
+    // Spec grid . wattage / CCT / output
     document.getElementById('cfgSpecWattage').textContent = state.wattage + 'W';
     var cctMap = { '30': '3000K', '40': '4000K', '50': '5000K' };
     document.getElementById('cfgSpecCCT').textContent = cctMap[state.cct];
     var lumens = LUMEN[state.wattage][state.cct];
-    document.getElementById('cfgSpecLumens').textContent = lumens.toLocaleString() + ' lm \u00B7 ' + peakCd(state.wattage, state.cct).toLocaleString() + ' cd';
+    document.getElementById('cfgSpecLumens').textContent = lumens.toLocaleString() + ' lm . ' + peakCd(state.wattage, state.cct).toLocaleString() + ' cd';
 
     // Incomplete warning + CTA gating
     var warn = document.getElementById('cfgIncomplete');
@@ -3766,7 +3920,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       });
     });
 
-    // Reset button \u2014 clears finish, restores DIP defaults
+    // Reset button - clears finish, restores DIP defaults
     var resetBtn = document.getElementById('cfgReset');
     if (resetBtn) {
       resetBtn.addEventListener('click', function() {
@@ -3971,7 +4125,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
        Ramparts    · LWPE     · ECO    · Entryway 103° prismatic (current · YOU ARE HERE)
        Guardian    · LWPF-G1  · PRO    · SLIM low-profile semi-cutoff (closest aesthetic match)
        Watchtower  · LWPC     · PRO+   · Full-cutoff CONTRACTOR-grade · 3-WATTselect
-       Nightwatch  · LWPC     · PRO+   · Full-cutoff COMMERCIAL-grade · 4-WATTselect + beam<span class="aa">Ⓐ</span>DJUST
+       Nightwatch  · LWPC     · PRO+   · Full-cutoff COMMERCIAL-grade · 4-WATTselect + beamⒶDJUST
      Sentinel (PRO Classic) intentionally omitted — its deeper architectural
      housing is a poor cross-shop for entryway-replacement buyers; the slim
      and full-cutoff alternatives are more relevant upgrade targets.
@@ -3984,7 +4138,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <div class="wp-family-eyebrow">WALL PACK FAMILY</div>
       <h2 class="wp-family-title">Meet the Wall Pack Family.</h2>
       <p class="wp-family-sub">
-        Ramparts is the entry point — the simplest spec in the luxo<span class="aa"><span class="aa">Ⓐ</span></span>RCH wall pack line, sized for entryways and shallow facades.
+        Ramparts is the entry point — the simplest spec in the luxo<span class="aa">Ⓐ</span>RCH wall pack line, sized for entryways and shallow facades.
         If the project needs more lumens, full-cutoff aesthetics, or field-adjustable distribution, these siblings share the same engineering language,
         the same controls platform, and the same factory.
       </p>
@@ -4021,7 +4175,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="family-card-img">
           <span class="family-card-tag">LWPF-G1 · SLIM · PRO</span>
           <img class="family-card-photo"
-               src="/products/guardian/assets/hero/guardian-hero-1.webp"
+               src="/products/ramparts/assets/guardian/hero/guardian-hero-1.webp"
                alt="LWPF-G1 Guardian — SLIM low-profile semi-cutoff wall pack, dark bronze, 3/4 angle hero shot"
                loading="lazy" />
         </div>
@@ -4044,7 +4198,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="family-card-img">
           <span class="family-card-tag">LWPC · FULL-CUTOFF · PRO+</span>
           <img class="family-card-photo"
-               src="/products/watchtower/assets/hero/watchtower-hero-1.webp"
+               src="/products/ramparts/assets/watchtower/hero/watchtower-hero-1.webp"
                alt="LWPC Watchtower — PRO+ full-cutoff wall pack with darkⒶRCH angled-top geometry, dark bronze finish"
                loading="lazy" />
         </div>
@@ -4055,7 +4209,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           </div>
           <div class="family-card-title">Watchtower</div>
           <div class="family-card-desc">
-            PRO+ full-cutoff wall pack — contractor-grade. dark<span class="aa"><span class="aa">Ⓐ</span></span>RCH angled-top geometry, BUG U0 inherent, IDA / DarkSky-friendly out of the box. Pick when full-cutoff is required for zoning compliance and the project doesn't need beam<span class="aa"><span class="aa">Ⓐ</span></span>DJUST configurability.
+            PRO+ full-cutoff wall pack — contractor-grade. dark<span class="aa">Ⓐ</span>RCH angled-top geometry, BUG U0 inherent, IDA / DarkSky-friendly out of the box. Pick when full-cutoff is required for zoning compliance and the project doesn't need beam<span class="aa">Ⓐ</span>DJUST configurability.
           </div>
           <div class="family-card-stats">5,440–16,680 lm · 40 / 60 / 80 / 100 / 120W · 3-WATTselect</div>
           <span class="family-card-cta">View product →</span>
@@ -4067,7 +4221,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="family-card-img">
           <span class="family-card-tag">LWPC · COMMERCIAL · PRO+</span>
           <img class="family-card-photo"
-               src="/products/nightwatch/assets/hero/nightwatch-hero-1.webp"
+               src="/products/ramparts/assets/nightwatch/hero/nightwatch-hero-1.webp"
                alt="LWPC Nightwatch — PRO+ commercial-grade full-cutoff wall pack with beamⒶDJUST throw selector, dark bronze finish"
                loading="lazy" />
         </div>
@@ -4078,9 +4232,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           </div>
           <div class="family-card-title">Nightwatch</div>
           <div class="family-card-desc">
-            PRO+ commercial-grade full-cutoff wall pack with <strong>beam<span class="aa"><span class="aa">Ⓐ</span></span>DJUST™</strong> field-selectable Type-I/II/III/IV throw and <strong>4-WATTselect</strong>. 7 model classes, up to 158 lm/W, BUG U0 inherent. The top of the line.
+            PRO+ commercial-grade full-cutoff wall pack with <strong>beam<span class="aa">Ⓐ</span>DJUST™</strong> field-selectable Type-I/II/III/IV throw and <strong>4-WATTselect</strong>. 7 model classes, up to 158 lm/W, BUG U0 inherent. The top of the line.
           </div>
-          <div class="family-card-stats">4,400–20,200 lm · 12–135W · beam<span class="aa"><span class="aa">Ⓐ</span></span>DJUST + 4-WATTselect</div>
+          <div class="family-card-stats">4,400–20,200 lm · 12–135W · beam<span class="aa">Ⓐ</span>DJUST + 4-WATTselect</div>
           <span class="family-card-cta">View product →</span>
         </div>
       </a>
@@ -4123,7 +4277,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <!-- 1. Pathfinder canopy — the awning ABOVE the Ramparts entry — strongest pairing -->
       <a href="/products/pathfinder/" class="family-card">
         <div class="family-card-img">
-          <span class="family-card-tag">LUXO<span class="aa" aria-hidden="true" style="background-color:#ffffff;"><span class="aa"><span class="aa">Ⓐ</span></span></span>RCH · LCNP</span>
+          <span class="family-card-tag">LUXO<span class="aa" aria-hidden="true" style="background-color:#ffffff;">Ⓐ</span>RCH · LCNP</span>
           <img class="family-card-photo"
                src="/products/sentinel/assets/roundout/pathfinder-canopy.webp"
                alt="luxoⒶRCH Pathfinder — recessed canopy light for entryway awnings, drive-through canopies, and porte-cochères"
@@ -4144,7 +4298,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <!-- 2. Dusk-to-Dawn — ECO-tier sibling with the same integrated photocell story -->
       <a href="/products/dusk-to-dawn/" class="family-card">
         <div class="family-card-img">
-          <span class="family-card-tag">LUXO<span class="aa" aria-hidden="true" style="background-color:#ffffff;"><span class="aa"><span class="aa">Ⓐ</span></span></span>RCH · LDTD</span>
+          <span class="family-card-tag">LUXO<span class="aa" aria-hidden="true" style="background-color:#ffffff;">Ⓐ</span>RCH · LDTD</span>
           <img class="family-card-photo"
                src="/products/sentinel/assets/roundout/dusk-to-dawn.webp"
                alt="luxoⒶRCH dusk-to-dawn area light — silver finish, integrated photocell head, mounting arm"
@@ -4165,7 +4319,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <!-- 3. Yosemite flood — facade wash above or beside the entryway -->
       <a href="/products/yosemite/" class="family-card">
         <div class="family-card-img">
-          <span class="family-card-tag">LUXO<span class="aa" aria-hidden="true" style="background-color:#ffffff;"><span class="aa"><span class="aa">Ⓐ</span></span></span>RCH · LFLD</span>
+          <span class="family-card-tag">LUXO<span class="aa" aria-hidden="true" style="background-color:#ffffff;">Ⓐ</span>RCH · LFLD</span>
           <img class="family-card-photo"
                src="/products/sentinel/assets/roundout/yosemite-flood.webp"
                alt="luxoⒶRCH Yosemite — outdoor flood light, 45–100W variants, dark bronze finish, trunnion-mount"
@@ -4186,7 +4340,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <!-- 4. Heritage shoebox — parking lot beyond the entry -->
       <a href="/products/heritage/" class="family-card">
         <div class="family-card-img">
-          <span class="family-card-tag">LUXO<span class="aa" aria-hidden="true" style="background-color:#ffffff;"><span class="aa"><span class="aa">Ⓐ</span></span></span>RCH · LSBX</span>
+          <span class="family-card-tag">LUXO<span class="aa" aria-hidden="true" style="background-color:#ffffff;">Ⓐ</span>RCH · LSBX</span>
           <img class="family-card-photo"
                src="/products/sentinel/assets/roundout/heritage-shoebox.webp"
                alt="luxoⒶRCH Heritage — outdoor shoebox area light on slip-fitter pole mount, dark bronze"
@@ -4262,7 +4416,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <h3 class="pillar-title">Stack the rebates.</h3>
         <p class="pillar-body">
           Even at the ECO price point, Ramparts is DLC-eligible — qualifying for utility rebate programs that
-          typically offset 15–40% of project cost. multi-family and small-commercial projects with multiple entryways
+          typically offset 15–40% of project cost. Multi-family and small-commercial projects with multiple entryways
           frequently clear the per-fixture rebate threshold. We'll match your project to active programs in your ZIP and pull the paperwork.
         </p>
         <div class="pillar-stats">
@@ -4307,12 +4461,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </section>
 
 <!-- =================== PLACEHOLDER · Section 5 (motion video) DEFERRED — page complete =================== -->
-<div style="max-width:1280px; margin:0 auto; padding:48px 32px 72px; text-align:center; opacity:0.32; font-family: 'JetBrains Mono', monospace;">
-  <div style="font-size:11px; letter-spacing:2px; color:var(--brand-red); font-weight:700; margin-bottom:10px;">RAMPARTS PDP · DRAFT COMPLETE</div>
-  <div style="font-size:13px;">Sections 1–4 + 6–12 IN REVIEW · Section 5 (Motion / Video carousel) DEFERRED — no Ramparts-specific footage available.</div>
-</div>
-
-<nav class="sticky-nav" data-pagefind-ignore aria-label="On-page section navigation">
+<!-- (dev banner stripped 2026-05-28 · CFG-CHROME-2) -->
+<nav class="sticky-nav" aria-label="On-page section navigation">
 
   <a href="/pricing-availability/" class="primary">Pricing &amp; Availability</a>
 
@@ -4343,7 +4493,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <path d="M8.5 16a5 5 0 0 1 7 0"/>
       <circle cx="12" cy="20" r="1.4" fill="currentColor"/>
     </svg>
-    <span>contr<span class="aa aa-inherit"><span class="aa">Ⓐ</span></span>LS</span>
+    <span>contr<span class="aa aa-inherit">Ⓐ</span>LS</span>
   </a>
 
   <a href="#photometrics">
@@ -4403,10 +4553,10 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <script>
 (function() {
   var track = document.getElementById('carouselTrack');
-  var dots  = document.getElementById('carouselDots');
+  var dots  = document.getElementById('carouselChips');
   if (!track || !dots) return;
   var slides = track.querySelectorAll('.carousel-slide');
-  var dotEls = dots.querySelectorAll('span');
+  var dotEls = dots.querySelectorAll('button');
   var i = 0;
   function show(n) {
     i = (n + slides.length) % slides.length;
@@ -4420,7 +4570,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </script>
 
 <!-- =============================================================================
-     SECTION 6 — contr<span class="aa">Ⓐ</span>LS · click ripple/shockwave handler (lazy init).
+     SECTION 6 — contrⒶLS · click ripple/shockwave handler (lazy init).
      Markup will arrive when Section 6 is built; this handler is harmless until then.
      ============================================================================= -->
 <script>
@@ -4469,13 +4619,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
      ============================================================================= -->
 <script>
 (function() {
-  // Per-CCT data at 20W max \u2014 all from the datasheet model-spec table.
+  // Per-CCT data at 20W max - all from the datasheet model-spec table.
   // Peak intensity is linear-scaled from the 3000K IES (1,212 cd at 2,450 lm)
-  // assuming uniform beam shape: cd/lm = 1212/2450 \u2248 0.495.
+  // assuming uniform beam shape: cd/lm = 1212/2450 ≈ 0.495.
   var DATA = {
     '30': { svg: '/products/ramparts/assets/photometrics/ramparts_20w_30k.svg', peak: '1,212 cd', lumens: '2,450 lm', lpw: '124 lm/W efficacy', file: 'LWPE-20WBMDA1-abW30-120V-8.ies' },
-    '40': { svg: '/products/ramparts/assets/photometrics/ramparts_20w_30k.svg', peak: '1,361 cd', lumens: '2,750 lm', lpw: '139 lm/W efficacy', file: 'LWPE-20WBMDA1-abW30-120V-8.ies (4000K \u00B7 scaled)' },
-    '50': { svg: '/products/ramparts/assets/photometrics/ramparts_20w_30k.svg', peak: '1,311 cd', lumens: '2,650 lm', lpw: '134 lm/W efficacy', file: 'LWPE-20WBMDA1-abW30-120V-8.ies (5000K \u00B7 scaled)' }
+    '40': { svg: '/products/ramparts/assets/photometrics/ramparts_20w_30k.svg', peak: '1,361 cd', lumens: '2,750 lm', lpw: '139 lm/W efficacy', file: 'LWPE-20WBMDA1-abW30-120V-8.ies (4000K . scaled)' },
+    '50': { svg: '/products/ramparts/assets/photometrics/ramparts_20w_30k.svg', peak: '1,311 cd', lumens: '2,650 lm', lpw: '134 lm/W efficacy', file: 'LWPE-20WBMDA1-abW30-120V-8.ies (5000K . scaled)' }
   };
 
   function init() {
@@ -4494,10 +4644,10 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       var d = DATA[state.cct];
       if (!d) return;
       img.src = d.svg;
-      img.alt = 'LWPE20 \u00B7 20W \u00B7 ' + state.cct + '00K \u00B7 103\u00B0 prismatic forward throw';
+      img.alt = 'LWPE20 . 20W . ' + state.cct + '00K . 103deg prismatic forward throw';
       statPeak.textContent = d.peak;
       // Sub-text follows the active CCT toggle so the label always matches the value above
-      if (statPeakSub) statPeakSub.textContent = 'forward throw at 20W \u00B7 ' + state.cct + '00K';
+      if (statPeakSub) statPeakSub.textContent = 'forward throw at 20W . ' + state.cct + '00K';
       statLum.textContent  = d.lumens;
       statLpw.textContent  = d.lpw;
       statFile.textContent = d.file;
@@ -4525,14 +4675,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 <script>
 /* =============================================================================
-   CFG-NAV-1 \u00B7 Sticky-nav scroll-spy
+   CFG-NAV-1 . Sticky-nav scroll-spy
    ----------------------------------------------------------------------------
    IntersectionObserver watches each section the sticky-nav links to. The link
-   whose target is "most visible" gets '.is-current' (white bg + red text \u00B7 the
-   visual inverse of '.primary'). One observer, one Map, one CSS class toggle.
+   whose target is "most visible" gets `.is-current` (white bg + red text . the
+   visual inverse of `.primary`). One observer, one Map, one CSS class toggle.
    The Pricing & Availability primary button is NOT a section anchor (its href
    is /pricing-availability/), so it's excluded from the spy by the
-   'a[href^="#"]' selector below.
+   `a[href^="#"]` selector below.
    ============================================================================= */
 (function() {
   var nav = document.querySelector('.sticky-nav');
@@ -4565,9 +4715,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </script>
 
 <script>
-// CFG-STATE-1 \u2014 derive ship-tier (QS / WB / MTO) from selected chip badges, render
-// canonical 3-state status panel. Self-contained module \u00B7 no dependency on the
-// configurator's state object \u00B7 re-derives by walking selected chips on every click.
+// CFG-STATE-1 - derive ship-tier (QS / WB / MTO) from selected chip badges, render
+// canonical 3-state status panel. Self-contained module . no dependency on the
+// configurator's state object . re-derives by walking selected chips on every click.
 // Custom RAL forces MTO (custom paint = factory work).
 (function() {
   function deriveShipTier() {
@@ -4598,22 +4748,22 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       rowEl.style.background = 'rgba(95,199,122,0.08)';
       rowEl.style.border = '1px solid rgba(95,199,122,0.40)';
       iconEl.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#7fc998" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
-      textEl.innerHTML = '<strong style="color:#9bd6b1;">QuickShip \u00B7 \u00E0-la-carte assembly</strong> &middot; <span style="color:var(--text-secondary);">All selected components in stock \u2014 ships 2-3 day.</span>';
-      stockEl.textContent = 'QuickShip \u00B7 2-3 day';
+      textEl.innerHTML = '<strong style="color:#9bd6b1;">QuickShip . a-la-carte assembly</strong> &middot; <span style="color:var(--text-secondary);">All selected components in stock - ships 3-5 day.</span>';
+      stockEl.textContent = 'QuickShip . 3-5 day';
       stockEl.style.color = '#9bd6b1';
     } else if (tier === 'WB') {
       rowEl.style.background = 'rgba(96,168,255,0.08)';
       rowEl.style.border = '1px solid rgba(96,168,255,0.40)';
       iconEl.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#7fb6ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>';
       textEl.innerHTML = '<strong style="color:#a8c9ff;">Workbench Assembly &middot; ~1-3 wk</strong> &middot; <span style="color:var(--text-secondary);">One or more selected components are workbench-assembled to order.</span>';
-      stockEl.textContent = 'WB \u00B7 ~1-3 wk';
+      stockEl.textContent = 'WB . ~1-3 wk';
       stockEl.style.color = '#a8c9ff';
     } else {
       rowEl.style.background = 'rgba(255,159,28,0.08)';
       rowEl.style.border = '1px solid rgba(255,159,28,0.40)';
       iconEl.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ffb14d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
       textEl.innerHTML = '<strong style="color:#ffb14d;">Custom build &middot; Made-to-Order &middot; ~4-6 wk</strong> &middot; <span style="color:var(--text-secondary);">One or more selected components are MTO (custom finish, MTO option, or non-stocked variant).</span>';
-      stockEl.textContent = 'MTO \u00B7 ~4-6 wk';
+      stockEl.textContent = 'MTO . ~4-6 wk';
       stockEl.style.color = '#ffb14d';
     }
   }
@@ -4631,4 +4781,154 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   else init();
 })();
 </script>
+
+<script>
+/* ============================================================================
+   CFG-CFG-1 row-rails sync shim . injected 2026-05-18 PM by row-rails transformer
+   Self-contained . does NOT modify the per-PDP SKU engine. Hooks chip clicks +
+   select changes + RAL input events and updates the new .cfg-row-code labels
+   and #cfgRalInputWrap visibility based on .selected class detection in DOM.
+   ============================================================================ */
+(function() {
+  'use strict';
+
+  var SLASH_PREFIXED = ['mount','optic','photocell','sensor','shield','surge','taa',
+                        'em','spd','dss','wg','ps','laser','glare','controls','ba',
+                        'dim','dualcast','options','wattage','watt','model','series',
+                        'wg','dualcast','adapter','finishmount'];
+
+  function syncRowCodes() {
+    document.querySelectorAll('.cfg-row-code[data-field-code]').forEach(function(rc) {
+      var field = rc.getAttribute('data-field-code');
+      // CCT and other locked-default fields stay populated - skip if their row
+      // has a locked + selected chip (the locked label shows in the row-code).
+      var newText = '-', isEmpty = true;
+      // Pole Adapter <select> path
+      if (field === 'adapter') {
+        var sel = document.getElementById('cfgAdapterSelect');
+        if (sel && sel.value) { newText = '/' + sel.value; isEmpty = false; }
+      } else {
+        // Find the selected chip for this field (or locked chip - both count)
+        var selChip = document.querySelector('.cfg-chip.selected[data-field="' + field + '"]')
+                   || document.querySelector('.cfg-chip.locked[data-field="' + field + '"]');
+        if (selChip) {
+          var code = selChip.getAttribute('data-code') || '';
+          // Custom RAL field - show RAL number once valid
+          if (field === 'finish' && code === 'RAL#') {
+            var ralVal = '';
+            var ralInput = document.getElementById('cfgRalInput');
+            if (ralInput) ralVal = (ralInput.value || '').replace(/\D/g, '');
+            var isValid = ralVal && ralVal.length === 4
+              && typeof window.RAL_VALID !== 'undefined'
+              && window.RAL_VALID.has && window.RAL_VALID.has(parseInt(ralVal, 10));
+            newText = isValid ? '/RAL' + ralVal : 'RAL# (enter code below)';
+            isEmpty = false;
+          } else if (code) {
+            var alreadySlash = code.charAt(0) === '/';
+            newText = (SLASH_PREFIXED.indexOf(field) >= 0 && !alreadySlash) ? '/' + code : code;
+            isEmpty = false;
+          }
+        }
+      }
+      rc.textContent = newText;
+      rc.classList.toggle('is-empty', isEmpty);
+    });
+  }
+
+  function syncRalInput() {
+    var wrap = document.getElementById('cfgRalInputWrap');
+    if (!wrap) return; // PDP has no RAL field
+    var nameEl = document.getElementById('cfgRalName');
+    var ralInput = document.getElementById('cfgRalInput');
+    // RAL chip selected? (look for .selected chip with data-code="RAL#" or data-val="RAL")
+    var ralChip = document.querySelector('.cfg-chip.selected[data-field="finish"][data-val="RAL"]')
+               || document.querySelector('.cfg-chip.selected[data-field="finish"][data-code="RAL#"]');
+    if (!ralChip) {
+      wrap.style.display = 'none';
+      wrap.classList.remove('valid', 'invalid');
+      return;
+    }
+    wrap.style.display = '';
+    var raw = ralInput ? (ralInput.value || '').replace(/\D/g, '') : '';
+    if (!raw) {
+      wrap.classList.remove('valid', 'invalid');
+      return;
+    }
+    var isValid = raw.length === 4
+      && typeof window.RAL_VALID !== 'undefined'
+      && window.RAL_VALID.has && window.RAL_VALID.has(parseInt(raw, 10));
+    if (isValid) {
+      wrap.classList.add('valid');
+      wrap.classList.remove('invalid');
+      if (nameEl) nameEl.textContent = 'RAL ' + raw;
+    } else {
+      wrap.classList.add('invalid');
+      wrap.classList.remove('valid');
+    }
+  }
+
+  function syncAll() {
+    syncRowCodes();
+    syncRalInput();
+  }
+
+  // Hook event listeners after DOM ready
+  function init() {
+    // Delegated click on any cfg-chip
+    document.addEventListener('click', function(e) {
+      var chip = e.target.closest && e.target.closest('.cfg-chip');
+      if (chip) {
+        // Defer to let the existing engine apply .selected class first
+        setTimeout(syncAll, 0);
+      }
+    });
+
+    // Pole Adapter <select> change
+    var adapterSel = document.getElementById('cfgAdapterSelect');
+    if (adapterSel) {
+      adapterSel.addEventListener('change', syncAll);
+    }
+
+    // RAL input change
+    var ralInput = document.getElementById('cfgRalInput');
+    if (ralInput) {
+      ralInput.addEventListener('input', syncAll);
+    }
+
+    // MutationObserver - catches indirect .selected toggles (e.g. share-link
+    // hydration, reset button, locked-default initialization).
+    var observer = new MutationObserver(function(mutations) {
+      for (var i = 0; i < mutations.length; i++) {
+        var m = mutations[i];
+        if (m.type === 'attributes' && m.attributeName === 'class'
+            && m.target.classList && m.target.classList.contains('cfg-chip')) {
+          syncAll();
+          return;
+        }
+      }
+    });
+    document.querySelectorAll('.cfg-chip').forEach(function(chip) {
+      observer.observe(chip, { attributes: true, attributeFilter: ['class'] });
+    });
+
+    // Initial sync after a beat (give per-PDP engines time to set defaults)
+    setTimeout(syncAll, 100);
+    setTimeout(syncAll, 500);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  // Expose RAL_VALID on window so the shim can access it (each PDP declares
+  // RAL_VALID inside its own IIFE - we read from window if exposed).
+  // PDPs that haven't exposed it: shim will still work, just no RAL validation.
+  window.__cfg_cfg_1_sync = syncAll;
+})();
+</script>
+
+
 </BaseLayout>
+
