@@ -6053,7 +6053,7 @@ body { overflow-x: hidden; }
               Pricing &amp; Availability
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <a href="submittal_spectra.html" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
+            <a href="submittal/" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
               Generate Submittal PDF
             </a>
@@ -6078,15 +6078,15 @@ body { overflow-x: hidden; }
         4. SellSheet          — PDF · WorkDrive · PENDING
         5. IES Bundle         — ZIP · WorkDrive · PENDING (target next week per James 2026-05-09 ·
                                 no IES files on disk yet · §6 photometrics is placeholder until delivered)
-        6. Submittal Generator — local · reads §9 Configurator state · pending submittal_spectra.html
+        6. Submittal Generator — local · reads §9 Configurator state · pending submittal/
 
      Secondary Quick-Links row — Rebate Center (DLC tier verification pending · datasheet silent) ·
      DLC QPL search · 5-yr Warranty. NOTE: Spectra TAA status not confirmed by datasheet —
      TAA card omitted until verified per CFG-* discipline.
 
-     Submittal Generator points at `submittal_spectra.html` (Spectra-specific template PENDING
+     Submittal Generator points at `submittal/` (Spectra-specific template PENDING
      build · §9 Configurator state passes via query string · carry-forward to next session
-     to build the Spectra-aware submittal_spectra.html with the 4-required-field encoder +
+     to build the Spectra-aware submittal/ with the 4-required-field encoder +
      2 reflector shape variants + 4-finish round/square + optional /SP /SS treatment renderings).
 
      Significantly more PENDING placeholders than Astra (which shipped with 4 of 5 LIVE).
@@ -6219,8 +6219,8 @@ body { overflow-x: hidden; }
         </div>
       </a>
 
-      <!-- 6 / Submittal Generator — local · reads §9 Configurator state · pending submittal_spectra.html -->
-      <a href="submittal_spectra.html?driver=DMS2740&shape=RF&size=6&finish=WF" target="_blank" rel="noopener" class="docs-card docs-card-pending" data-doc="submittal" aria-disabled="true" onclick="event.preventDefault();" title="Spectra submittal generator pending build">
+      <!-- 6 / Submittal Generator — local · reads §9 Configurator state · pending submittal/ -->
+      <a href="submittal/?driver=DMS2740&shape=RF&size=6&finish=WF" target="_blank" rel="noopener" class="docs-card docs-card-pending" data-doc="submittal" aria-disabled="true" onclick="event.preventDefault();" title="Spectra submittal generator pending build">
         <div class="docs-card-head">
           <div class="docs-card-icon">
             <!-- Document with stamp icon -->
@@ -7869,7 +7869,7 @@ body { overflow-x: hidden; }
       }
     });
 
-    // ---- Submittal PDF — opens submittal_spectra.html with config in query string ----
+    // ---- Submittal PDF — opens submittal/ with config in query string ----
     function buildSubmittalUrl() {
       var core = skuEl.querySelector('.cfg-sku-core');
       var sku  = core ? core.textContent.trim() : '';
@@ -7884,7 +7884,7 @@ body { overflow-x: hidden; }
         em:        (state.em     || []).join(','),
         sensor:    (state.sensor || []).join(',')
       });
-      return 'submittal_spectra.html?' + params.toString();
+      return 'submittal/?' + params.toString();
     }
     if (ctaPdf) {
       ctaPdf.addEventListener('click', function(e) {

@@ -5217,7 +5217,7 @@ body.cityarch-pdp .acc-card-copy {
               Pricing &amp; Availability
               <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
 </a>
-<a class="cfg-cta outline disabled" href="submittal_unity.html" id="cfgCtaPdf" rel="noopener" target="_blank">
+<a class="cfg-cta outline disabled" href="submittal/" id="cfgCtaPdf" rel="noopener" target="_blank">
 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" x2="12" y1="18" y2="12"></line><polyline points="9 15 12 12 15 15"></polyline></svg>
               Generate Submittal PDF
             </a>
@@ -5326,7 +5326,7 @@ body.cityarch-pdp .acc-card-copy {
 <span class="docs-card-updated">LM-63-2002</span>
 </div>
 </a>
-<a class="docs-card" href="submittal_unity.html?sku=LPTP3W150-US3-UB&amp;model=3w150" rel="noopener" target="_blank">
+<a class="docs-card" href="submittal/?sku=LPTP3W150-US3-UB&amp;model=3w150" rel="noopener" target="_blank">
 <div class="docs-card-head">
 <div class="docs-card-icon">
 <!-- Document with stamp icon -->
@@ -6649,7 +6649,7 @@ body.cityarch-pdp .acc-card-copy {
       }
     });
 
-    // ---- Submittal PDF — opens submittal_unity.html in new tab with full config in query string ----
+    // ---- Submittal PDF — opens submittal/ in new tab with full config in query string ----
     // Per CFG-SUB-1 v2, the catalog number is editable inline on the rendered submittal.
     function buildSubmittalUrl() {
       var sku = skuEl.textContent.trim();
@@ -6658,7 +6658,7 @@ body.cityarch-pdp .acc-card-copy {
         model:     state.model     || '3w150',
         photocell: state.photocell || ''
       });
-      return 'submittal_unity.html?' + params.toString();
+      return 'submittal/?' + params.toString();
     }
     ctaPdf.addEventListener('click', function(e) {
       if (ctaPdf.classList.contains('disabled')) { e.preventDefault(); return; }

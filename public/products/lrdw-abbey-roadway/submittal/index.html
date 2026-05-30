@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LRDW Abbey · Submittal Sheet</title>
+<title>LRDW · Abbey · Submittal Sheet</title>
 
 <!--
   ALG SUBMITTAL TEMPLATE · LRDW Abbey v1
@@ -320,6 +320,16 @@
     cursor: pointer; font-family: inherit; font-size: 9pt;
   }
   .actions-bar a { color: white; text-decoration: underline; opacity: 0.85; }
+
+/* CFG-TYPE-1 · Lato lock — Shopify global cascades Cormorant onto inline Lato.
+   This !important rule pins Lato on h1/h2 for this collection's PDP body class. */
+body.cityarch-pdp h1,
+body.cityarch-pdp h2 {
+  font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+}
+
+/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+body { overflow-x: hidden; }
 </style>
 </head>
 <body>

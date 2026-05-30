@@ -6286,7 +6286,7 @@ body { overflow-x: hidden; }
               Pricing &amp; Availability
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <a href="submittal_astra.html" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
+            <a href="submittal/" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
               Generate Submittal PDF
             </a>
@@ -6310,15 +6310,15 @@ body { overflow-x: hidden; }
         2. Installation Guide — PDF · WorkDrive · LIVE
         4. SellSheet          — PDF · WorkDrive · LIVE
         5. IES Bundle         — ZIP · WorkDrive · PENDING (23 files on disk · 24 incl. 277V)
-        6. Submittal Generator — local · reads §9 Configurator state · pending submittal_astra.html
+        6. Submittal Generator — local · reads §9 Configurator state · pending submittal/
 
      Secondary Quick-Links row — Rebate Center (DLC tier verification pending) · DLC QPL ·
      5-yr Warranty. NOTE: Astra TAA status not confirmed by datasheet — TAA card omitted
      until verified per CFG-* discipline (Astra datasheet does not list TAA on cert badge row).
 
-     Submittal Generator points at `submittal_astra.html` (Astra-specific template PENDING
+     Submittal Generator points at `submittal/` (Astra-specific template PENDING
      build · §9 Configurator state passes via query string · carry-forward to next session
-     to build the Astra-aware submittal_astra.html with the 4-required-field encoder +
+     to build the Astra-aware submittal/ with the 4-required-field encoder +
      2 reflector shape variants + 6-finish round + 2-finish square renderings).
 
      Anchor: #downloads (already wired into sticky-nav from LUNA build).
@@ -6450,8 +6450,8 @@ body { overflow-x: hidden; }
       </a>
 
       <!-- 6 / Submittal Generator — LIVE 2026-05-22 · reads §9 Configurator state ·
-           submittal_astra.html (4-page · CFG-SUB-1 v2 editable Catalog Number) -->
-      <a href="submittal_astra.html?driver=DMS1830&amp;shape=RF&amp;size=6&amp;finish=WF&amp;wattage=30&amp;cct=5000" target="_blank" rel="noopener" class="docs-card" data-doc="submittal" title="Astra submittal generator · 4-page · prints to PDF (letter portrait)">
+           submittal/ (4-page · CFG-SUB-1 v2 editable Catalog Number) -->
+      <a href="submittal/?driver=DMS1830&amp;shape=RF&amp;size=6&amp;finish=WF&amp;wattage=30&amp;cct=5000" target="_blank" rel="noopener" class="docs-card" data-doc="submittal" title="Astra submittal generator · 4-page · prints to PDF (letter portrait)">
         <div class="docs-card-head">
           <div class="docs-card-icon">
             <!-- Document with stamp icon -->
@@ -8099,8 +8099,8 @@ body { overflow-x: hidden; }
       }
     });
 
-    // ---- Submittal PDF — opens submittal_astra.html with config in query string ----
-    // Emits params the submittal autofill engine expects (see submittal_astra.html
+    // ---- Submittal PDF — opens submittal/ with config in query string ----
+    // Emits params the submittal autofill engine expects (see submittal/
     // script header). `accessories=CSV` is the unified canonical key the submittal
     // reads first; legacy `mount/em/sensor` still passed for back-compat. Default
     // wattage = the driver's highest (★ default · matches submittal defaultWattFor).
@@ -8128,7 +8128,7 @@ body { overflow-x: hidden; }
         em:          (state.em     || []).join(','),
         sensor:      (state.sensor || []).join(',')
       });
-      return 'submittal_astra.html?' + params.toString();
+      return 'submittal/?' + params.toString();
     }
     if (ctaPdf) {
       ctaPdf.addEventListener('click', function(e) {

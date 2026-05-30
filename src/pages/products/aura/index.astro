@@ -3153,7 +3153,7 @@ body { overflow-x: hidden; }
  · S9 Configurator — Build the SKU · 4 housings × 4-WATTSELECT
  × 3-CCTSELECT × DualCast/DualCast+BA × 5
  finishes · build AURA CFG block in
- submittal_template.html
+ submittal/
  · S10 Documentation — Datasheet URL LIVE · 4 other slots TBC
  (Install / Quick / Sell / IES bundle)
  · S11 Cylinder Family — TBD posture · could surface the 4 LCWS
@@ -5385,14 +5385,14 @@ body { overflow-x: hidden; }
  });
  }
 
- // ---- Submittal CTA - opens submittal_template.html in new tab with SKU ----
+ // ---- Submittal CTA - opens submittal/ in new tab with SKU ----
  function bindSubmittalCta() {
  var btn = document.getElementById('cfgCtaSubmittal');
  if (!btn) return;
  btn.addEventListener('click', function(e) {
  e.preventDefault();
  var sku = computeSku();
- // submittal_template.html lives in the same directory; pass full state.
+ // submittal/ lives in the same directory; pass full state.
  var params = [
  'product=aura',
  'sku=' + encodeURIComponent(sku),
@@ -5405,7 +5405,7 @@ body { overflow-x: hidden; }
  'dualcast=' + state.dualcast
  ];
  if (state.finish === 'RAL' && state.ralCode) params.push('ral=' + state.ralCode);
- var url = 'submittal_template.html?' + params.join('&');
+ var url = 'submittal/?' + params.join('&');
  window.open(url, '_blank', 'noopener');
  });
  }
@@ -5592,7 +5592,7 @@ body { overflow-x: hidden; }
  </a>
 
  <!-- 4. Submittal Sheet — opens the per-SKU generator (AURA CFG live) -->
- <a href="submittal_template.html?product=aura&amp;sku=LCWS30-3CS-27VD4%2FA1DC%2FBA%2FDB&amp;housing=30&amp;wattage=30&amp;cct=40&amp;finish=DB&amp;ba=BA&amp;dim=&amp;dualcast=full" target="_blank" rel="noopener" class="docs-card">
+ <a href="submittal/?product=aura&amp;sku=LCWS30-3CS-27VD4%2FA1DC%2FBA%2FDB&amp;housing=30&amp;wattage=30&amp;cct=40&amp;finish=DB&amp;ba=BA&amp;dim=&amp;dualcast=full" target="_blank" rel="noopener" class="docs-card">
  <div class="docs-card-head">
  <div class="docs-card-icon">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

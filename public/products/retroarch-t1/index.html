@@ -6523,7 +6523,7 @@ body { overflow-x: hidden; }
               Pricing &amp; Availability
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <a href="submittal_retroarch_t1.html" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
+            <a href="submittal/" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
               Generate Submittal PDF
             </a>
@@ -6546,7 +6546,7 @@ body { overflow-x: hidden; }
        2. IES Bundle (LIVE) — WorkDrive URL · 3 LM-79 files · LPVR14/22/24 default-WATT 3500K
        3. Installation Guide (PENDING) — ALG to provide
        5. Sell Sheet (PENDING) — supplier to provide
-       6. Submittal Generator (PENDING) — submittal_retroarch_t1.html · same blocker as Astra/Spectra
+       6. Submittal Generator (PENDING) — submittal/ · same blocker as Astra/Spectra
      Quick-links row: Rebate Center · Warranty · contrⒶLS · TAA Compliance Statement
      Per memory reference_retroarch_t1_workdrive_urls.md (2026-05-09):
        Datasheet:  https://workdrive.archipelagolighting.com/external/6b1d23f01d80d7437dadd722273a744e32a9686118358434997e99838e1064df
@@ -6673,7 +6673,7 @@ body { overflow-x: hidden; }
       </a>
 
       <!-- 6. Submittal Generator (LIVE 2026-05-12) — reads §9 SKU + auto-fills 4-page submittal -->
-      <a href="submittal_retroarch_t1.html?class=LPVR24&watt=44&cct=5000" target="_blank" rel="noopener" class="docs-card" title="Submittal generator HTML — 4-page · prints to PDF (letter portrait)">
+      <a href="submittal/?class=LPVR24&watt=44&cct=5000" target="_blank" rel="noopener" class="docs-card" title="Submittal generator HTML — 4-page · prints to PDF (letter portrait)">
         <div class="docs-card-head">
           <div class="docs-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -7611,7 +7611,7 @@ body { overflow-x: hidden; }
       }
     });
 
-    // ---- Submittal PDF — opens submittal_retroarch_t1.html?form=… ----
+    // ---- Submittal PDF — opens submittal/?form=… ----
     function buildSubmittalUrl() {
       var sku = skuEl.textContent.trim();
       var params = new URLSearchParams({
@@ -7625,7 +7625,7 @@ body { overflow-x: hidden; }
         emergency: state.emergency || '',
         whip:      state.whip    || ''
       });
-      return 'submittal_retroarch_t1.html?' + params.toString();
+      return 'submittal/?' + params.toString();
     }
     ctaPdf.addEventListener('click', function(e) {
       if (ctaPdf.classList.contains('disabled')) { e.preventDefault(); return; }

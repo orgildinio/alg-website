@@ -4238,7 +4238,7 @@ body { overflow-x: hidden; }
  // Submittal CTA - pass full state as query params
  var sub = document.getElementById('cfgCtaSubmittal');
  if (sub) {
- sub.href = 'submittal_template.html?product=atlanta&sku=' + encodeURIComponent(sku) +
+ sub.href = 'submittal/?product=atlanta&sku=' + encodeURIComponent(sku) +
  '&model=' + state.model +
  '&wattage=' + state.watt +
  '&cct=' + state.cct +
@@ -4341,7 +4341,7 @@ body { overflow-x: hidden; }
  vs Anaheim where every card was PENDING. Three primary cards all LIVE:
  1. Data Sheet — real WorkDrive URL (datasheet PDF in Zoho)
  2. Installation Guide — real WorkDrive URL (install PDF in Zoho)
- 3. Submittal Generator — opens submittal_template.html?product=atlanta
+ 3. Submittal Generator — opens submittal/?product=atlanta
  Secondary quick-link row: IES Library (9 LWPA3W80 polar SVGs from
  /products/atlanta/assets/photometrics/ · 100W/120W pending) · Quick Sheet pending
  · Sell Sheet pending · Rebate Center · Warranty.
@@ -4417,7 +4417,7 @@ body { overflow-x: hidden; }
  </a>
 
  <!-- 3. Submittal Sheet — opens the per-SKU generator -->
- <a href="submittal_template.html?product=atlanta&amp;sku=LWPA3W80-3A1-UD%2FPS&amp;model=3W80&amp;wattage=80&amp;cct=40&amp;voltage=U&amp;finish=D" target="_blank" rel="noopener" class="docs-card">
+ <a href="submittal/?product=atlanta&amp;sku=LWPA3W80-3A1-UD%2FPS&amp;model=3W80&amp;wattage=80&amp;cct=40&amp;voltage=U&amp;finish=D" target="_blank" rel="noopener" class="docs-card">
  <div class="docs-card-head">
  <div class="docs-card-icon">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

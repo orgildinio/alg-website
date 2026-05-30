@@ -3812,7 +3812,7 @@ body { overflow-x: hidden; }
  Pricing &amp; Availability
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
  </a>
- <a href="submittal_template.html" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
+ <a href="submittal/" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
  Generate Submittal PDF
  </a>
@@ -3833,7 +3833,7 @@ body { overflow-x: hidden; }
  4-card primary download grid (Datasheet, Install Guide, IES Library,
  Submittal Generator) + secondary quick-link row (Quick Sheet, Rebate Center,
  Warranty). Stub WorkDrive URLs pending Manus upload of the LWPC files.
- The submittal card opens the per-SKU generator at submittal_template.html
+ The submittal card opens the per-SKU generator at submittal/
  with the LWPC65 / Nightwatch-I baseline preset.
  Anchor: #downloads.
  ============================================================================ -->
@@ -3932,8 +3932,8 @@ body { overflow-x: hidden; }
  </div>
  </a>
 
- <!-- 4. Submittal Sheet — opens the per-SKU generator at submittal_template.html -->
- <a href="submittal_template.html?product=nightwatch&amp;sku=LWPC65-S3N-UD/PSB&amp;wattage=65&amp;series=S3N&amp;voltage=U&amp;finish=D&amp;photocell=PSB" target="_blank" rel="noopener" class="docs-card">
+ <!-- 4. Submittal Sheet — opens the per-SKU generator at submittal/ -->
+ <a href="submittal/?product=nightwatch&amp;sku=LWPC65-S3N-UD/PSB&amp;wattage=65&amp;series=S3N&amp;voltage=U&amp;finish=D&amp;photocell=PSB" target="_blank" rel="noopener" class="docs-card">
  <div class="docs-card-head">
  <div class="docs-card-icon">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -5220,7 +5220,7 @@ body { overflow-x: hidden; }
  } catch (e) {}
  });
 
- // ---- Submittal PDF - opens submittal_template.html with full config in query string ----
+ // ---- Submittal PDF - opens submittal/ with full config in query string ----
  function buildSubmittalUrl() {
  var sku = buildSku() || 'LWPC65-S3N-UD/PSB';
  var modelCode = state.model && MODEL_SPEC[state.model] ? MODEL_SPEC[state.model].name.replace('LWPC', '') : '65';
@@ -5234,7 +5234,7 @@ body { overflow-x: hidden; }
  photocell: state.photocell || 'CAP',
  em: state.em || ''
  });
- return 'submittal_template.html?' + params.toString();
+ return 'submittal/?' + params.toString();
  }
  ctaPdf.addEventListener('click', function(e) {
  if (ctaPdf.classList.contains('disabled')) { e.preventDefault(); return; }

@@ -4330,7 +4330,7 @@ body { overflow-x: hidden; }
  var optTokens = [];
  if (state.bls) optTokens.push('BLS');
  if (state.em05) optTokens.push('EM05');
- sub.href = 'submittal_template.html?product=pathfinder&sku=' + encodeURIComponent(sku) +
+ sub.href = 'submittal/?product=pathfinder&sku=' + encodeURIComponent(sku) +
  '&housing=' + state.housing + '&wattage=' + state.watt +
  '&cct=' + state.cct + '&voltage=27V' + '&series=P1' +
  '&finish=' + state.finish + (state.ralCode ? '&ral=' + state.ralCode : '') +
@@ -4441,7 +4441,7 @@ body { overflow-x: hidden; }
  WorkDrive external URL pending (TBC — fetch from Active_SKUs sheet).
  ✓ Quick Sheet — LCNP-Pathfinder-Quicksheet.pdf staged. URL TBC.
  ✓ Install Guide — LCNP-Pathfinder-Instructions.pdf staged. URL TBC.
- ✓ Submittal Generator — submittal_template.html?product=pathfinder LIVE
+ ✓ Submittal Generator — submittal/?product=pathfinder LIVE
  (PATHFINDER CFG block in template wired with /BLS + /EM05 multi-option).
  ☐ Sell Sheet — pending engineering / marketing deliverable.
  ☐ DLC Premium QPL ID — datasheet says "application pending" · do NOT
@@ -4552,7 +4552,7 @@ body { overflow-x: hidden; }
  </a>
 
  <!-- 4. Submittal Sheet — opens the per-SKU generator (PATHFINDER CFG live) -->
- <a href="submittal_template.html?product=pathfinder&amp;sku=LCNP060-3CS%2F27VP1%2FDB&amp;housing=060&amp;wattage=60&amp;cct=40&amp;voltage=27V&amp;series=P1&amp;finish=DB&amp;option=" target="_blank" rel="noopener" class="docs-card">
+ <a href="submittal/?product=pathfinder&amp;sku=LCNP060-3CS%2F27VP1%2FDB&amp;housing=060&amp;wattage=60&amp;cct=40&amp;voltage=27V&amp;series=P1&amp;finish=DB&amp;option=" target="_blank" rel="noopener" class="docs-card">
  <div class="docs-card-head">
  <div class="docs-card-icon">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

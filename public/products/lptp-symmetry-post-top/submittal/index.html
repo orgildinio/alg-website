@@ -3,26 +3,32 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LPTP Unity-I · Submittal Sheet</title>
+<title>LPTP · Symmetry · Submittal Sheet</title>
 
 <!--
-  ALG SUBMITTAL TEMPLATE · LPTP Unity-I Post-Top v1
+  ALG SUBMITTAL TEMPLATE · LPTP Symmetry-I Post-Top v2
   =====================================================
-  Reads URL query params populated by mockup_unity_pdp_v1.html Section 9 (the
+  Reads URL query params populated by mockup_symmetry_pdp_v1.html Section 9 (the
   Configurator) and auto-fills the catalog number + quick specs + ordering
-  breakdown + stock pill for a project-stampable PDF.
+  breakdown + photometric data for a project-stampable PDF.
 
   Example invocation (matches the configurator's Generate Submittal PDF CTA):
-    submittal_unity.html?sku=LPTP3W150-US3-UB&model=3w150
+    submittal_symmetry.html?sku=LPTP130-3CS/27VS1/DB/FD
+        &housing=130&voltage=27V&finish=DB&optic=FD
 
   Print: File → Print → Save as PDF (letter portrait) → 2-page submittal.
 
-  AUTHORITATIVE 2-SKU MATRIX (Zoho Books verified 2026-05-19 · both QS):
-    LPTP3W75-US3-UB   ·  35/50/75W   · 3CS · 120-277V · Black · stock=31  · DLC Listed (S-NHF4Q8)
-    LPTP3W150-US3-UB  · 100/125/150W · 3CS · 120-277V · Black · stock=123 · DLC pending ★ default
+  AUTHORITATIVE 25-SKU MAIN-MATRIX (James 2026-05-19 · 4 QS · 21 MTO):
+    QS (4 SKUs · all LPTP130-3CS/27VS1):
+      LPTP130-3CS/27VS1/B/FD    · Black       · Frosted
+      LPTP130-3CS/27VS1/DB/BL   · Dark Bronze · BeamLogic
+      LPTP130-3CS/27VS1/DB/FD   · Dark Bronze · Frosted   ★ default
+      LPTP130-3CS/27VS1/W/FD    · White       · Frosted   (only W variant)
+    MTO (21 other combos across 090/130/160 × 27V/48V × {B,DB} × {BL,FD})
 
-  Both SKUs ship 3-5 day. The only variable is the wattage class.
-  Voltage (120-277V universal) and finish (Black) are LOCKED — no other variants exist.
+  ALTERNATE PLATFORMS (4 SKUs · informational footer · not in main encoder):
+    LPTP4W-S3-U{B|D|W}                · 4-WATTselect lamp variant
+    LPTP5W130-5CS-48VS2/3BL/DB        · 5-WATTselect + 5-CCT special build
 
   CFG-SUB-1 V2 (snapshot-then-rederive) built in from first save.
 -->
@@ -457,6 +463,16 @@
     font-family: inherit; font-size: 9pt;
   }
   .actions-bar a { color: white; text-decoration: underline; opacity: 0.85; }
+
+/* CFG-TYPE-1 · Lato lock — Shopify global cascades Cormorant onto inline Lato.
+   This !important rule pins Lato on h1/h2 for this collection's PDP body class. */
+body.cityarch-pdp h1,
+body.cityarch-pdp h2 {
+  font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+}
+
+/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+body { overflow-x: hidden; }
 </style>
 </head>
 <body>
@@ -466,7 +482,7 @@
 <!-- ============================================================ -->
 <div class="actions-bar no-print">
   <div>
-    LPTP Unity-I · LED Post-Top Submittal Sheet · <span id="liveSku" class="mono"></span>
+    LPTP Symmetry · LED Post-Top Submittal Sheet · <span id="liveSku" class="mono"></span>
   </div>
   <div>
     <a href="#" onclick="history.back(); return false;">← Back to Configurator</a>
@@ -492,36 +508,35 @@
     </div>
     <div class="catalog-block">
       <div class="catalog-eyebrow">Catalog Number <span class="no-print" style="font-family:'JetBrains Mono',monospace; font-size:7pt; color:var(--brand-red); letter-spacing:0.6pt; margin-left:6px;">✎ click to edit</span></div>
-      <div class="catalog-number editable-catalog" id="catNum" contenteditable="true" spellcheck="false">LPTP3W150-US3-UB</div>
+      <div class="catalog-number editable-catalog" id="catNum" contenteditable="true" spellcheck="false">LPTP130-3CS/27VS1/DB/FD</div>
     </div>
   </div>
 
   <!-- Cover banner -->
   <div class="cover-banner">
     <div>
-      <div class="cover-tag">city<span class="aa"></span>RCH · ECO POST-TOP · LPTP Unity-I</div>
-      <h1>Unity</h1>
-      <div class="cover-sub">LED Post-Top Luminaire · 3-WATTselect &middot; 3-CCTselect &middot; Foldable Single-Can Mount</div>
+      <div class="cover-tag">city<span class="aa"></span>RCH · PRO POST-TOP · LPTP Symmetry-I</div>
+      <h1>Symmetry</h1>
+      <div class="cover-sub">LED Post-Top Luminaire · 4-WATTselect &middot; 3-CCTselect &middot; V-Yoke Spider Mount</div>
       <div class="cover-tagline" id="taglineLumens">
-        Cost-engineered ECO-grade post-top for streetscapes, parking-lot pedestrian pathways, and parks.
-        <strong id="taglineWatts">100 / 125 / 150W</strong> at
-        <strong id="taglineLums">11,500 - 17,250 lm</strong> &middot;
+        Spec-grade architectural post-top for streetscapes, parks, plazas, and pedestrian malls.
+        <strong id="taglineWatts">130W max</strong> at
+        <strong id="taglineLums">19,500 lm</strong> &middot;
         <strong id="taglineCct">3-CCTselect (3000K / 4000K / 5000K dip-switch)</strong>.
-        Single-can-mount sharing with Symmetry-I &middot; foldable design unique cost differentiator.
-        5-year / 50,000-hour warranty.
+        BeamLogic&trade; directional optic OR Frosted symmetric optic. 5-year / 50,000-hour warranty.
       </div>
     </div>
     <div style="text-align: right;">
       <div class="cover-tag" style="color:white; opacity:0.6;">Stock Status</div>
       <div id="stockPill" class="qs-pill">QuickShip · 3-5 day</div>
       <div style="font-size: 8pt; color: rgba(255,255,255,0.65); margin-top: 6px; line-height: 1.4;">
-        Both 2 active SKUs are QuickShip.<br/>120-277V universal · Black-only finish.
+        4 of 25 main-matrix SKUs are QS.<br/>All QS combos are LPTP130 + 120-277V.
       </div>
     </div>
   </div>
   <!-- v9 · Product hero strip (added 2026-05-20 PM per James submittal canonical request) -->
   <div class="hero-strip" style="margin: 12px 0 16px 0; padding: 12px; border: 1px solid var(--rule); background: #f7f7f7; display: flex; align-items: center; justify-content: center; min-height: 180px;">
-    <img src="assets/unity/unity-hero-1.webp" alt="Unity-I LPTP post-top luminaire — black housing, foldable cantilever" style="max-width: 100%; max-height: 200px; height: auto; object-fit: contain;"
+    <img src="assets/symmetry/hero/symmetry-1-front-round.png" alt="Symmetry-Series LPTP post-top luminaire — front round" style="max-width: 100%; max-height: 200px; height: auto; object-fit: contain;"
          onerror="this.style.display='none';" />
   </div>
 
@@ -549,16 +564,16 @@
   <!-- Quick Specs -->
   <div class="quickspec-grid">
     <div class="qs-cell">
-      <div class="qs-label">Max Lumens</div>
-      <div class="qs-value" id="qsLumens">17,250<span class="qs-unit">lm</span></div>
+      <div class="qs-label">Peak Lumens</div>
+      <div class="qs-value" id="qsLumens">19,500<span class="qs-unit">lm</span></div>
     </div>
     <div class="qs-cell">
       <div class="qs-label">Wattage (max)</div>
-      <div class="qs-value" id="qsWatts">150<span class="qs-unit">W</span></div>
+      <div class="qs-value" id="qsWatts">130<span class="qs-unit">W</span></div>
     </div>
     <div class="qs-cell">
       <div class="qs-label">Efficacy</div>
-      <div class="qs-value" id="qsEfficacy">115<span class="qs-unit">lm/W</span></div>
+      <div class="qs-value" id="qsEfficacy">173<span class="qs-unit">lm/W</span></div>
     </div>
     <div class="qs-cell">
       <div class="qs-label">Voltage</div>
@@ -572,25 +587,27 @@
 
   <!-- Tagline / hero claim -->
   <div class="tagline-block">
-    <strong>One canister housing. Two wattage classes. Two SKUs. Both QuickShip.</strong>
-    Unity-I is the cost-engineered cityⒶRCH post-top &mdash; a single foldable can-housing that ships in either the
-    <strong>3W75</strong> ECO class (35/50/75W &middot; 115 lm/W &middot; DLC Listed) or the
-    <strong>3W150</strong> high-output class (100/125/150W &middot; 115 lm/W). 3-WATTselect + 3-CCTselect dip-switches
-    field-tune output and color in &lt;30 seconds. Single-can-mount sharing with Symmetry-I across the
-    Unity / Symmetry post-top platform &mdash; same hardware, different optical tier.
-    <strong style="color:#2C7A4A;">Both active Unity SKUs are QuickShip — LPTP3W75 (ECO class) and LPTP3W150 (high-output class).</strong>
+    <strong>One post-top family. Three housing classes. Two optic platforms. 25 main-matrix SKUs.</strong>
+    Symmetry replaces a stock-room of single-spec post-tops with one configurable spec line &mdash; 90 / 130 / 160W
+    housings, 120-277V or 277-480V drivers, Black or Dark Bronze (White on the lone 130/27V/Frosted variant),
+    and either the <strong>BeamLogic&trade;</strong> directional optic or the <strong>Frosted Optics</strong>
+    symmetric optic. Field-tunable CCT via 3-CCTselect dip-switch (3000K / 4000K / 5000K) on every SKU.
+    <strong style="color:#2C7A4A;">4 SKUs are QuickShip (all LPTP130 + 120-277V combinations);
+    the other 21 main-matrix SKUs are MTO with ~4-6 wk lead.</strong>
   </div>
 
   <!-- Ordering Code visual breakdown -->
   <div class="section-head">
     <h2>Ordering Code</h2>
-    <div class="section-eyebrow">3 segments · Family-Wattage · Voltage-Series · Voltage-Finish</div>
+    <div class="section-eyebrow">4 segments · Family·Housing · CCT-bundle · Voltage·Series · Finish · Optic</div>
   </div>
 
-  <div class="order-code" style="grid-template-columns: repeat(3, 1fr);">
-    <div class="order-segment active"><div class="order-seg-label">Family · Wattage</div><div class="order-seg-value" id="ocModel">LPTP3W150</div></div>
-    <div class="order-segment fixed"><div class="order-seg-label">Voltage · Series</div><div class="order-seg-value">US3</div></div>
-    <div class="order-segment fixed"><div class="order-seg-label">Voltage · Finish</div><div class="order-seg-value">UB</div></div>
+  <div class="order-code" style="grid-template-columns: repeat(5, 1fr);">
+    <div class="order-segment active"><div class="order-seg-label">Family · Housing</div><div class="order-seg-value" id="ocHousing">LPTP130</div></div>
+    <div class="order-segment fixed"><div class="order-seg-label">CCT Bundle</div><div class="order-seg-value">3CS</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Voltage · Series</div><div class="order-seg-value" id="ocVoltage">27VS1</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Finish</div><div class="order-seg-value" id="ocFinish">DB</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Optic</div><div class="order-seg-value" id="ocOptic">FD</div></div>
   </div>
 
   <table class="order-matrix">
@@ -601,28 +618,34 @@
       </tr>
     </thead>
     <tbody>
-      <tr id="rowModel"><td class="code">LPTP3W75 / LPTP3W150</td><td>Family &middot; Wattage Class &mdash; <strong>LPTP3W75</strong> (35/50/75W &middot; up to 8,625 lm &middot; ECO class &middot; DLC Listed S-NHF4Q8) &middot; <strong>LPTP3W150</strong> (100/125/150W &middot; up to 17,250 lm &middot; high-output class &middot; ★ volume center)</td></tr>
-      <tr><td class="code">US3</td><td>Voltage &middot; Series &mdash; <strong>U</strong> 120-277V universal + <strong>S3</strong> 3-CCTselect series (every Unity SKU ships dip-switch field-tunable across 3000K / 4000K / 5000K)</td></tr>
-      <tr><td class="code">UB</td><td>Voltage &middot; Finish &mdash; <strong>U</strong> universal voltage repeat + <strong>B</strong> Black powder-coat (only finish in active production)</td></tr>
+      <tr id="rowHousing"><td class="code">LPTP090 / LPTP130 / LPTP160</td><td>Housing class &mdash; <strong>LPTP090</strong> (36-90W &middot; 11,500 lm peak) &middot; <strong>LPTP130</strong> (52-130W &middot; 19,500 lm peak &middot; volume center, only QS housing) &middot; <strong>LPTP160</strong> (64-160W &middot; 25,500 lm peak)</td></tr>
+      <tr><td class="code">3CS</td><td>3-CCTselect bundle &mdash; every unit ships field-tunable: 3000K &middot; 4000K &middot; 5000K (dip-switch)</td></tr>
+      <tr id="rowVoltage"><td class="code">27VS1 / 48VS1</td><td>Voltage &middot; Series &mdash; <strong>27VS1</strong> 120-277Vac (only QS voltage) &middot; <strong>48VS1</strong> 277-480Vac high-voltage variant</td></tr>
+      <tr id="rowFinish"><td class="code">B / DB / W</td><td>Finish &mdash; <strong>B</strong> Black &middot; <strong>DB</strong> Dark Bronze (★ volume) &middot; <strong>W</strong> White (LPTP130 + 27V + Frosted only &mdash; the lone W-finish SKU)</td></tr>
+      <tr id="rowOptic"><td class="code">BL / FD</td><td>Optic &mdash; <strong>BL</strong> BeamLogic&trade; directional throw + visual-comfort tilt &middot; <strong>FD</strong> Frosted Optics symmetric darkⒶRCH-style distribution</td></tr>
     </tbody>
   </table>
 
-  <!-- Authoritative 2-SKU matrix -->
+  <!-- Authoritative 25-SKU matrix (4 QS · 21 MTO) -->
   <table class="order-matrix" style="margin-top: 6px;">
     <thead>
       <tr>
         <th>Catalog Number</th>
-        <th>Specifications · Stock (Zoho 2026-05-19)</th>
+        <th>Specifications · Stock (James 2026-05-19)</th>
       </tr>
     </thead>
     <tbody>
-      <tr id="skuRow_3w75"><td class="code">LPTP3W75-US3-UB</td><td>35/50/75W (3-WATTselect) &middot; 3CS (3000K/4000K/5000K dip) &middot; 120-277V &middot; Black &middot; up to 8,625 lm &middot; 115 lm/W &middot; <strong style="color:#2C7A4A;">★ QuickShip</strong> &middot; DLC Listed S-NHF4Q8 &middot; UPC 819313022902</td></tr>
-      <tr id="skuRow_3w150"><td class="code">LPTP3W150-US3-UB</td><td>100/125/150W (3-WATTselect) &middot; 3CS (3000K/4000K/5000K dip) &middot; 120-277V &middot; Black &middot; up to 17,250 lm &middot; 115 lm/W &middot; <strong style="color:#2C7A4A;">★ QuickShip</strong> &middot; default ship config &middot; UPC 819313022919</td></tr>
+      <tr id="skuRow_QS"><td class="code" colspan="2" style="background:#E0F2E5; color:#2C7A4A; text-align: center; padding: 6px;"><strong>★ QuickShip · ships 3-5 day · 4 SKUs (all LPTP130 + 120-277V)</strong></td></tr>
+      <tr id="skuRow_130_27V_B_FD"><td class="code">LPTP130-3CS/27VS1/B/FD</td><td>130W &middot; 120-277V &middot; Black &middot; Frosted Optics &middot; <strong style="color:#2C7A4A;">QS</strong></td></tr>
+      <tr id="skuRow_130_27V_DB_BL"><td class="code">LPTP130-3CS/27VS1/DB/BL</td><td>130W &middot; 120-277V &middot; Dark Bronze &middot; BeamLogic&trade; &middot; <strong style="color:#2C7A4A;">QS</strong></td></tr>
+      <tr id="skuRow_130_27V_DB_FD"><td class="code">LPTP130-3CS/27VS1/DB/FD</td><td>130W &middot; 120-277V &middot; Dark Bronze &middot; Frosted Optics &middot; <strong style="color:#2C7A4A;">★ QS</strong> &middot; default ship config</td></tr>
+      <tr id="skuRow_130_27V_W_FD"><td class="code">LPTP130-3CS/27VS1/W/FD</td><td>130W &middot; 120-277V &middot; White &middot; Frosted Optics &middot; <strong style="color:#2C7A4A;">QS</strong> &middot; the lone White-finish SKU</td></tr>
+      <tr><td class="code" colspan="2" style="background:#FFF2DA; color:#B36A00; text-align: center; padding: 6px;"><strong>MTO · ~4-6 wk lead · 21 SKUs (all housing × voltage × finish × optic combos not listed above)</strong></td></tr>
     </tbody>
   </table>
 
   <div class="page-foot">
-    <div>archipelagolighting.com · LPTP Unity-I submittal · Specifications subject to change</div>
+    <div>archipelagolighting.com · LPTP Symmetry-I submittal · Specifications subject to change</div>
     <div>Rev. <span id="revDate">2026-05</span> · Page 1 of 2</div>
   </div>
 </div>
@@ -643,56 +666,56 @@
     </div>
     <div class="catalog-block">
       <div class="catalog-eyebrow">Catalog Number</div>
-      <div class="catalog-number" id="catNum2">LPTP3W150-US3-UB</div>
+      <div class="catalog-number" id="catNum2">LPTP130-3CS/27VS1/DB/FD</div>
     </div>
   </div>
 
   <div class="section-head">
     <h2>Detailed Specifications</h2>
-    <div class="section-eyebrow">LPTP Unity-I · LED Post-Top · cityⒶRCH ECO Outdoor</div>
+    <div class="section-eyebrow">LPTP Symmetry-I · LED Post-Top · cityⒶRCH PRO Outdoor</div>
   </div>
 
   <table class="spec-table">
     <tbody>
       <tr class="spec-section-head"><td colspan="2">Optical &amp; Performance</td></tr>
-      <tr><td class="spec-attr">Distribution</td><td class="spec-val">Type V &middot; 360&deg; symmetric &middot; zero uplight (U0)</td></tr>
-      <tr><td class="spec-attr">CCT Bundle (3CS)</td><td class="spec-val">3000K &middot; 4000K &middot; 5000K field-selectable via dip-switch (universal across both active SKUs)</td></tr>
-      <tr><td class="spec-attr">CRI</td><td class="spec-val">CRI &ge; 70 (R9 typical 20+)</td></tr>
-      <tr><td class="spec-attr" id="specWattLabel">Wattage Class · LPTP3W150</td><td class="spec-val" id="specWattRow">3-WATTselect dip-switch: 100W / 125W / 150W field-set &middot; 11,500 / 14,375 / 17,250 lm &middot; 115 lm/W flat across the dial</td></tr>
-      <tr><td class="spec-attr">Peak Intensity</td><td class="spec-val" id="specPeak">8,070 cd (LPTP3W150 @ 150W &middot; LM-79 tested)</td></tr>
+      <tr><td class="spec-attr" id="specOpticLabel">Optic Platform (selected)</td><td class="spec-val" id="specOpticRow">Frosted Optics &middot; symmetric darkⒶRCH-style distribution &middot; soft visual-comfort character</td></tr>
+      <tr><td class="spec-attr">CCT Bundle (3CS)</td><td class="spec-val">3000K · 4000K · 5000K field-selectable via dip-switch (universal across every active SKU)</td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val">CRI &ge; 80 across all variants</td></tr>
+      <tr><td class="spec-attr" id="specHousingLabel">Housing Class · LPTP130</td><td class="spec-val" id="specHousingRow">52-130W (4-WATTselect dip) &middot; 19,500 lm peak @ 173 lm/W</td></tr>
+      <tr><td class="spec-attr">Peak Intensity</td><td class="spec-val" id="specPeak">19,500 lm / 130W &middot; tested per IESNA LM-79</td></tr>
 
       <tr class="spec-section-head"><td colspan="2">Electrical</td></tr>
-      <tr><td class="spec-attr">Input Voltage</td><td class="spec-val">120-277VAC universal &middot; 50/60Hz</td></tr>
-      <tr><td class="spec-attr">Driver</td><td class="spec-val">Constant-current LED driver &middot; PF &gt; 0.90 at full load &middot; THD &lt; 20% &middot; integrated 3-WATTselect + 3-CCTselect dip-switches</td></tr>
-      <tr><td class="spec-attr">Surge Protection</td><td class="spec-val">6kV dual-mode (L/N-PE and L-N) per IEEE C62.41 &middot; standard internal &middot; upstream 10SP/20SP accessories available via constⒶNT add-on</td></tr>
-      <tr><td class="spec-attr">Photocell (optional)</td><td class="spec-val" id="specPhotocell">Twist-lock photocell receptacle &mdash; factory-install only (field-add via accessory SKU). Not currently selected.</td></tr>
+      <tr><td class="spec-attr">Input Voltage (selected)</td><td class="spec-val" id="specVoltage">120-277VAC universal &middot; 50/60Hz</td></tr>
+      <tr><td class="spec-attr">Driver</td><td class="spec-val">Constant-current LED driver &middot; PF &gt; 0.90 at full load &middot; THD &lt; 20% &middot; integrated WATTSELECT + CCTselect dip-switches</td></tr>
+      <tr><td class="spec-attr">Surge Protection (base)</td><td class="spec-val">6kV dual-mode (L/N-PE and L-N) per IEEE C62.41 &middot; standard &middot; 10kV / 20kV options via constⒶNT add-on (separate line item)</td></tr>
+      <tr><td class="spec-attr">Controls (optional)</td><td class="spec-val">Bi-Level &middot; Bi-Level + 5-Dial &middot; ⒶCS Mesh + Cloud &middot; SILVAIR Mesh &mdash; all separate line items via contrⒶLS adders</td></tr>
 
       <tr class="spec-section-head"><td colspan="2">Construction &amp; Mounting</td></tr>
-      <tr><td class="spec-attr">Housing</td><td class="spec-val">Foldable die-cast aluminum can &middot; powder-coat outdoor finish &middot; Black-only in active production</td></tr>
-      <tr><td class="spec-attr">Form Factor</td><td class="spec-val" id="specForm">Single-can-mount post-top &middot; shared mounting hardware with Symmetry-I (cost-engineered platform sharing)</td></tr>
-      <tr><td class="spec-attr">Carton Dimensions</td><td class="spec-val">70.5&Prime; &times; 70.5&Prime; &times; 24&Prime; &middot; 15 lb per fixture</td></tr>
-      <tr><td class="spec-attr">Foldable Design</td><td class="spec-val">Unique cost differentiator &mdash; flat-pack shipping reduces freight cost vs traditional single-piece die-cast post-tops</td></tr>
+      <tr><td class="spec-attr">Housing</td><td class="spec-val">Die-cast aluminum &middot; powder-coat outdoor finish &middot; V-yoke spider mount &middot; round-top form factor</td></tr>
+      <tr><td class="spec-attr">Finish (selected)</td><td class="spec-val" id="specFinish">Dark Bronze · powder-coat outdoor</td></tr>
+      <tr><td class="spec-attr">Standard Mount</td><td class="spec-val">Pole-top (spider yoke) &middot; alternate mounts (Conduit Pendant / Gooseneck / Surface / Wall) available as MTO</td></tr>
+      <tr><td class="spec-attr">Tenon Adapters</td><td class="spec-val">4&Prime; or 5&Prime; Round / Square tenon-adapter accessories (separate line item)</td></tr>
 
       <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
-      <tr><td class="spec-attr">Listings</td><td class="spec-val" id="specListings">cULus Listed &middot; DLC Listed (LPTP3W75: S-NHF4Q8) &middot; FCC Title 47 Part 15B &middot; RoHS &middot; Wet Location &middot; IP65</td></tr>
+      <tr><td class="spec-attr">Listings</td><td class="spec-val">cULus Listed &middot; DLC Listed &middot; FCC Title 47 Part 15B &middot; RoHS &middot; Wet Location</td></tr>
       <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">&minus;40&deg;F to +113&deg;F (&minus;40&deg;C to +45&deg;C)</td></tr>
-      <tr><td class="spec-attr">Warranty</td><td class="spec-val">5-year limited &middot; 50,000-hour rated lifetime</td></tr>
-      <tr><td class="spec-attr">Stock Status</td><td class="spec-val" id="specStock"><strong style="color:#2C7A4A;">★ QuickShip</strong> &middot; ships 3-5 day &middot;.</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val">7-year limited &middot; 75,000-hour rated lifetime</td></tr>
+      <tr><td class="spec-attr">Stock Status</td><td class="spec-val" id="specStock"><strong style="color:#2C7A4A;">★ QuickShip</strong> &middot; ships 3-5 day. (4 of 25 main-matrix SKUs are QS &mdash; all on LPTP130 + 120-277V. Other 21 main-matrix SKUs are MTO with ~4-6 wk lead.)</td></tr>
     </tbody>
   </table>
 
   <!-- Dimensions + Photometric — side-by-side -->
   <div class="section-head" style="margin-top: 14px;">
     <h2>Dimensions &amp; Photometric Data</h2>
-    <div class="section-eyebrow">Foldable can post-top &middot; Type-V symmetric polar &middot; LM-79 tested</div>
+    <div class="section-eyebrow">Type V semi-circle polar · IES candela source</div>
   </div>
 
   <div class="dim-grid">
     <div>
       <div class="dim-view">
-        <div class="dim-view-label">Unity-I Post-Top · Form Factor</div>
-        <img src="assets/unity/Unity-Dimensions_outlines.svg"
-             alt="LPTP Unity-I dimensions — round canister post-top · 70.5 inch × 70.5 inch carton × 24 inch height · 15 lb per fixture"
+        <div class="dim-view-label">Post-Top · Side Profile · V-Yoke Spider Mount</div>
+        <img src="assets/symmetry/Symmetry-Dimensions_outlines.svg"
+             alt="LPTP Symmetry-I dimensions — round-top housing on V-yoke spider mount · driver compartment below LED plane · pole-top engagement"
              id="dimImg"
              style="max-height: 220px;"
              onerror="this.style.display='none';" />
@@ -701,16 +724,15 @@
 
     <div>
       <div class="dim-view">
-        <div class="dim-view-label">Wattage-Class Comparison</div>
+        <div class="dim-view-label">Housing-Class Comparison</div>
         <table class="photo-summary" style="font-size: 8pt;">
           <tbody>
-            <tr><td>LPTP3W75</td><td>35-75W · up to 8,625 lm · 4,350 cd peak</td></tr>
-            <tr><td>LPTP3W150</td><td>100-150W · up to 17,250 lm · 8,070 cd peak</td></tr>
-            <tr><td>Efficacy (both)</td><td>115 lm/W flat across the dial</td></tr>
-            <tr><td>CCT (both)</td><td>3CS dip · 3000K / 4000K / 5000K</td></tr>
-            <tr><td>Voltage (both)</td><td>120-277V universal</td></tr>
-            <tr><td>Finish (both)</td><td>Black powder-coat</td></tr>
-            <tr><td>Mount (both)</td><td>Single-can · Symmetry-I sharing</td></tr>
+            <tr><td>LPTP090</td><td>36-90W &middot; 11,500 lm &middot; 161 lm/W (FD) / 189 (BL)</td></tr>
+            <tr><td>LPTP130</td><td>52-130W &middot; 19,500 lm &middot; 173 lm/W (FD) / 183 (BL)</td></tr>
+            <tr><td>LPTP160</td><td>64-160W &middot; 25,500 lm &middot; 173 lm/W (FD) / 180 (BL)</td></tr>
+            <tr><td>Mount</td><td>V-yoke spider · pole-top standard</td></tr>
+            <tr><td>CCT (all)</td><td>3CS dip-switch · 3000K / 4000K / 5000K</td></tr>
+            <tr><td>CRI (all)</td><td>&ge; 80</td></tr>
           </tbody>
         </table>
       </div>
@@ -721,7 +743,7 @@
     <div>
       <div class="dim-view" style="background:#0E0E10;">
         <div class="dim-view-label" style="color:#999;">Photometric Distribution · Polar Plot</div>
-        <img src="assets/unity/photometrics/unity-3w150-3000k.svg" alt="Unity LPTP3W150 · 3000K · Type V 360° polar plot"
+        <img src="assets/symmetry/photometrics/symmetry_130_bl4.svg" alt="Symmetry LPTP130 · TYPE IV optic · 4000K polar plot"
              style="width:100%; max-height:240px; object-fit:contain; background:#0E0E10; padding:8px;"
              onerror="this.style.display='none';" />
       </div>
@@ -731,7 +753,7 @@
         <div class="dim-view-label">Photometric Reference</div>
         <table class="photo-summary" style="font-size: 8pt;">
           <tbody>
-            <tr><td>Distribution</td><td>Unity LPTP3W150 · 3000K · Type V 360° polar plot</td></tr>
+            <tr><td>Distribution</td><td>Symmetry LPTP130 · TYPE IV optic · 4000K polar plot</td></tr>
             <tr><td>Test Standard</td><td>IESNA LM-79 · LM-80 lumen-maintenance verified</td></tr>
             <tr><td>Source</td><td>Per-cell .ies bundle linked from §6 Photometrics</td></tr>
           </tbody>
@@ -743,14 +765,22 @@
 
   <table class="photo-summary" style="margin-top: 8px;">
     <tbody>
-      <tr><td>Peak Intensity (selected)</td><td id="photoPeak">8,070 cd @ 150W (LPTP3W150 max setting)</td></tr>
-      <tr><td>Peak Lumen Output</td><td id="photoLumens">17,250 lm</td></tr>
-      <tr><td>Peak Efficacy</td><td id="photoEff">115 lm/W (LPTP3W150 max setting)</td></tr>
-      <tr><td>Distribution</td><td>Type V · 360° symmetric · zero uplight</td></tr>
-      <tr><td>Test Standard</td><td>IESNA LM-79 · LM-80 lumen-maintenance verified</td></tr>
-      <tr><td>IES File</td><td id="photoIesFile">LPTP3W150-US3-UB 3000K.ies · UTEST · BLC2210023E-A · 150W max setting</td></tr>
+      <tr><td>Peak Intensity (selected)</td><td id="photoPeak">19,500 lm @ 130W (LPTP130 · Frosted Optics)</td></tr>
+      <tr><td>Peak Efficacy</td><td id="photoEff">173 lm/W (LPTP130 + Frosted Optics @ 4000K)</td></tr>
+      <tr><td>Distribution</td><td id="photoDist">Frosted Optics · symmetric · darkⒶRCH-style visual-comfort character</td></tr>
+      <tr><td>Test Standard</td><td>IESNA LM-79 (per-cell)</td></tr>
+      <tr><td>IES Bundle</td><td>Available on WorkDrive · external/1a55938bcd670ee02b6a9c47a64670125d4d64b803727ba0b1ad8c10328e1b5c</td></tr>
     </tbody>
   </table>
+
+  <!-- Alternate-platform footer (4-WATTselect + 5W130-5CS) -->
+  <div class="tagline-block" style="margin-top: 10px; font-size: 8.5pt;">
+    <strong>Alternate Symmetry platforms (not represented in the matrix above &mdash; specify separately):</strong>
+    <span class="mono">LPTP4W-S3-UB</span> (4-WATTselect lamp &middot; Black) &middot;
+    <span class="mono">LPTP4W-S3-UD</span> (4-WATTselect lamp &middot; Dark Bronze) &middot;
+    <span class="mono">LPTP4W-S3-UW</span> (4-WATTselect lamp &middot; White) &middot;
+    <span class="mono">LPTP5W130-5CS-48VS2/3BL/DB</span> (5-WATTselect + 5-CCT special build &middot; 130W &middot; 277-480V &middot; BeamLogic T3 &middot; Dark Bronze).
+  </div>
 
   <!-- Certifications row -->
   <div class="certs" id="certsRow">
@@ -758,13 +788,13 @@
     <span class="cert-badge brand">DLC LISTED</span>
     <span class="cert-badge">FCC 47 / 15B</span>
     <span class="cert-badge">RoHS</span>
-    <span class="cert-badge">IP65 · Wet Loc</span>
+    <span class="cert-badge">Wet Location</span>
     <span class="cert-badge brand">5-yr / 50k-hr</span>
-    <span class="cert-badge brand">Foldable Design</span>
+    <span class="cert-badge">CRI &ge; 80</span>
   </div>
 
   <div class="page-foot">
-    <div>archipelagolighting.com · LPTP Unity-I submittal · Specifications subject to change</div>
+    <div>archipelagolighting.com · LPTP Symmetry-I submittal · Specifications subject to change</div>
     <div>Rev. <span class="mono">2026-05</span> · Page 2 of 2</div>
   </div>
 </div>
@@ -772,65 +802,93 @@
 
 <script>
 /* =============================================================================
-   SUBMITTAL AUTO-FILL · LPTP Unity-I LED Post-Top
+   SUBMITTAL AUTO-FILL · LPTP Symmetry-I LED Post-Top
    ----------------------------------------------------------------------------
    Reads URL query params from the Section 9 configurator and stamps the live
-   catalog number, ordering breakdown, quick specs, photometric data, and
-   stock-status pill across both pages.
+   catalog number, ordering breakdown, quick specs, and stock pill across
+   both pages.
 
    Parameters:
-     sku   — full canonical SKU (auto-built upstream)
-     model — 3w75 | 3w150
+     sku     — full canonical SKU (auto-built upstream)
+     housing — 090 | 130 | 160
+     voltage — 27V (120-277V) | 48V (277-480V)
+     finish  — B (Black) | DB (Dark Bronze) | W (White, 130/27V/FD only)
+     optic   — BL (BeamLogic™) | FD (Frosted Optics)
 
-   AUTHORITATIVE 2-SKU MATRIX (Zoho 2026-05-19 · both QS):
-     LPTP3W75-US3-UB   ·  35/50/75W · DLC Listed (S-NHF4Q8)
-     LPTP3W150-US3-UB  · 100/125/150W · DLC pending ★ default
+   AUTHORITATIVE 25-SKU MAIN-MATRIX (James 2026-05-19, 4 QS · 21 MTO):
+     QS (all LPTP130 + 120-277V):
+       LPTP130-3CS/27VS1/B/FD    · Black · Frosted
+       LPTP130-3CS/27VS1/DB/BL   · Dark Bronze · BeamLogic
+       LPTP130-3CS/27VS1/DB/FD   · Dark Bronze · Frosted   ★ default
+       LPTP130-3CS/27VS1/W/FD    · White · Frosted (only W variant)
+     MTO: 21 other housing × voltage × finish × optic combinations.
    ============================================================================= */
 (function() {
 
-  // ---- Authoritative QS combos — both SKUs in stock (Zoho 2026-05-19) ----
+  // ---- Authoritative QS combos — James 2026-05-19 ----
   var QS_COMBOS = new Set([
-    'LPTP3W75-US3-UB',
-    'LPTP3W150-US3-UB'
+    'LPTP130-3CS/27VS1/B/FD',
+    'LPTP130-3CS/27VS1/DB/BL',
+    'LPTP130-3CS/27VS1/DB/FD',
+    'LPTP130-3CS/27VS1/W/FD'
   ]);
 
-  // ---- Wattage-class specs ----
-  var MODEL_DATA = {
-    '3w75': {
-      label: 'LPTP3W75', sku: 'LPTP3W75-US3-UB',
-      wattSteps: '35 / 50 / 75W', maxW: 75,
-      lumSteps: '4,005 / 5,750 / 8,625 lm', maxLm: 8625,
-      peakCd: 4350, lpw: 115, stock: 31, dlc: 'DLC Listed · S-NHF4Q8',
-      upc: '819313022902', tier: 'ECO',
-      specRow: '3-WATTselect dip-switch: 35W / 50W / 75W field-set · 4,005 / 5,750 / 8,625 lm · 115 lm/W flat across the dial'
-    },
-    '3w150': {
-      label: 'LPTP3W150', sku: 'LPTP3W150-US3-UB',
-      wattSteps: '100 / 125 / 150W', maxW: 150,
-      lumSteps: '11,500 / 14,375 / 17,250 lm', maxLm: 17250,
-      peakCd: 8070, lpw: 115, stock: 123, dlc: 'DLC pending',
-      upc: '819313022919', tier: 'ECO',
-      specRow: '3-WATTselect dip-switch: 100W / 125W / 150W field-set · 11,500 / 14,375 / 17,250 lm · 115 lm/W flat across the dial'
-    }
+  // ---- Housing-class specs (knowledge pack §5 · 4000K peak operating point) ----
+  var HOUSING_DATA = {
+    '090': { label: 'LPTP090', minW: 36, maxW: 90,  fdLm: 11500, blLm: 14800, fdLpw: 161, blLpw: 189 },
+    '130': { label: 'LPTP130', minW: 52, maxW: 130, fdLm: 19500, blLm: 20000, fdLpw: 173, blLpw: 183 },
+    '160': { label: 'LPTP160', minW: 64, maxW: 160, fdLm: 19500, blLm: 25500, fdLpw: 173, blLpw: 180 }
+  };
+
+  // ---- Voltage labels ----
+  var VOLT_DATA = {
+    '27V': { code: '27VS1', label: '120-277VAC universal' },
+    '48V': { code: '48VS1', label: '277-480VAC high voltage' }
+  };
+
+  // ---- Finish labels ----
+  var FIN_DATA = {
+    'B':  'Black · powder-coat outdoor',
+    'DB': 'Dark Bronze · powder-coat outdoor',
+    'W':  'White · powder-coat outdoor'
+  };
+
+  // ---- Optic labels ----
+  var OPTIC_DATA = {
+    'BL': { label: 'BeamLogic™', desc: 'directional throw + visual-comfort tilt' },
+    'FD': { label: 'Frosted Optics', desc: 'symmetric · darkⒶRCH-style visual-comfort character' }
   };
 
   // ---- Parse URL params ----
-  var params = new URLSearchParams(window.location.search);
-  var sku    = params.get('sku')    || 'LPTP3W150-US3-UB';
-  var model  = params.get('model')  || '3w150';
+  var params  = new URLSearchParams(window.location.search);
+  var sku     = params.get('sku')     || 'LPTP130-3CS/27VS1/DB/FD';
+  var housing = params.get('housing') || '130';
+  var voltage = params.get('voltage') || '27V';
+  var finish  = params.get('finish')  || 'DB';
+  var optic   = params.get('optic')   || 'FD';
 
-  // If model not in URL but sku is, parse from sku
-  // Pattern: LPTP3W{75|150}-US3-UB
+  // If housing/voltage/finish/optic not in URL but sku is, parse from sku
+  // Pattern: LPTP{housing}-3CS/{voltage}S1/{finish}/{optic}
   if (sku) {
-    var m = sku.match(/^LPTP3W(75|150)-US3-UB$/);
+    var m = sku.match(/^LPTP(\d{3})-3CS\/(\d{2}V)S1\/(B|DB|W)\/(BL|FD)$/);
     if (m) {
-      model = '3w' + m[1];
+      housing = m[1] || housing;
+      voltage = m[2] || voltage;
+      finish  = m[3] || finish;
+      optic   = m[4] || optic;
     }
   }
 
-  // ---- Resolve / clamp ----
-  var data = MODEL_DATA[model] || MODEL_DATA['3w150'];
-  sku = data.sku; // Snap to canonical SKU if model is valid
+  // ---- Compute derived values ----
+  var hData = HOUSING_DATA[housing] || HOUSING_DATA['130'];
+  var vData = VOLT_DATA[voltage]    || VOLT_DATA['27V'];
+  var finLabel = FIN_DATA[finish]   || FIN_DATA['DB'];
+  var oData = OPTIC_DATA[optic]     || OPTIC_DATA['FD'];
+
+  // Peak output depends on housing × optic
+  var peakLm  = (optic === 'BL') ? hData.blLm  : hData.fdLm;
+  var peakLpw = (optic === 'BL') ? hData.blLpw : hData.fdLpw;
+
   var isQS = QS_COMBOS.has(sku);
 
   // ---- Stamp all the catalog-number slots ----
@@ -842,50 +900,63 @@
   var pill = document.getElementById('stockPill');
   if (isQS) {
     pill.className = 'qs-pill';
-    pill.textContent = 'QuickShip · 3-5 day';   // CFG-INV-1 · no inventory counts in customer-facing copy
+    pill.textContent = 'QuickShip · 3-5 day · in stock';
   } else {
     pill.className = 'mto-pill';
-    pill.textContent = 'Made-to-Order · 4-6 wk';
+    pill.textContent = 'Made-to-Order · ~4-6 wk lead';
   }
 
   // ---- Cover banner taglines ----
-  document.getElementById('taglineWatts').textContent = data.wattSteps;
-  document.getElementById('taglineLums').textContent  = data.lumSteps;
-  document.getElementById('taglineCct').textContent   = '3-CCTselect (3000K / 4000K / 5000K dip-switch)';
+  document.getElementById('taglineWatts').textContent =
+    hData.maxW + 'W max · ' + hData.label;
+  document.getElementById('taglineLums').textContent =
+    peakLm.toLocaleString() + ' lm peak · ' + peakLpw + ' lm/W';
+  document.getElementById('taglineCct').textContent = '3-CCTselect (3000K / 4000K / 5000K dip-switch)';
 
   // ---- Quick Specs ----
-  document.getElementById('qsLumens').innerHTML   = data.maxLm.toLocaleString() + '<span class="qs-unit">lm</span>';
-  document.getElementById('qsWatts').innerHTML    = data.maxW + '<span class="qs-unit">W</span>';
-  document.getElementById('qsEfficacy').innerHTML = data.lpw + '<span class="qs-unit">lm/W</span>';
-  document.getElementById('qsVoltage').innerHTML  = '120-277<span class="qs-unit">V</span>';
+  document.getElementById('qsLumens').innerHTML   = peakLm.toLocaleString() + '<span class="qs-unit">lm</span>';
+  document.getElementById('qsWatts').innerHTML    = hData.maxW + '<span class="qs-unit">W</span>';
+  document.getElementById('qsEfficacy').innerHTML = peakLpw + '<span class="qs-unit">lm/W</span>';
+  document.getElementById('qsVoltage').innerHTML  = (voltage === '27V' ? '120-277' : '277-480') + '<span class="qs-unit">V</span>';
   document.getElementById('qsCct').innerHTML      = '3CS<span class="qs-unit">dip</span>';
 
   // ---- Ordering Code segments ----
-  document.getElementById('ocModel').textContent = data.label;
+  document.getElementById('ocHousing').textContent = 'LPTP' + housing;
+  document.getElementById('ocVoltage').textContent = vData.code;
+  document.getElementById('ocFinish').textContent  = finish;
+  document.getElementById('ocOptic').textContent   = optic;
 
-  // ---- Highlight active rows in the ordering matrix + 2-SKU table ----
-  document.getElementById('rowModel').classList.add('active-row');
-  var skuRow = document.getElementById('skuRow_' + model);
-  if (skuRow) skuRow.classList.add('active-row');
+  // ---- Highlight active rows in the ordering matrix ----
+  document.querySelectorAll('#rowHousing, #rowVoltage, #rowFinish, #rowOptic').forEach(function(tr) {
+    tr.classList.add('active-row');
+  });
+  // Highlight the matching QS-SKU row if applicable
+  var qsRowKey = 'skuRow_' + housing + '_' + voltage + '_' + finish + '_' + optic;
+  var qsRow = document.getElementById(qsRowKey);
+  if (qsRow) qsRow.classList.add('active-row');
 
   // ---- Page 2 — Detailed Specs ----
-  document.getElementById('specWattLabel').textContent = 'Wattage Class · ' + data.label;
-  document.getElementById('specWattRow').textContent = data.specRow;
+  document.getElementById('specOpticLabel').textContent = 'Optic Platform (selected · ' + optic + ')';
+  document.getElementById('specOpticRow').textContent =
+    oData.label + ' · ' + oData.desc;
+  document.getElementById('specHousingLabel').textContent = 'Housing Class · ' + hData.label;
+  document.getElementById('specHousingRow').textContent =
+    hData.minW + '-' + hData.maxW + 'W (4-WATTselect dip) · ' +
+    peakLm.toLocaleString() + ' lm peak @ ' + peakLpw + ' lm/W';
   document.getElementById('specPeak').textContent =
-    data.peakCd.toLocaleString() + ' cd (' + data.label + ' @ ' + data.maxW + 'W · LM-79 tested)';
-  document.getElementById('specListings').textContent =
-    'cULus Listed · ' + data.dlc + ' · FCC Title 47 Part 15B · RoHS · Wet Location · IP65';
-  // CFG-INV-1 · no inventory counts or warehouse location in spec-stock cell
-  document.getElementById('specStock').innerHTML =
-    '<strong style="color:#2C7A4A;">★ QuickShip</strong> · ships 3-5 day. The other Unity SKU is also QS.';
+    peakLm.toLocaleString() + ' lm @ ' + hData.maxW + 'W (' + hData.label + ' + ' + oData.label + ') · LM-79 tested';
+  document.getElementById('specVoltage').textContent = vData.label + ' · 50/60Hz';
+  document.getElementById('specFinish').textContent = finLabel;
+  document.getElementById('specStock').innerHTML = isQS
+    ? '<strong style="color:#2C7A4A;">★ QuickShip</strong> · ships 3-5 day. 4 of 25 main-matrix SKUs are QS (all LPTP130 + 120-277V). Other 21 main-matrix SKUs are MTO with ~4-6 wk lead.'
+    : '<strong style="color:#B36A00;">Made-to-Order · ~4-6 wk lead.</strong> (The 4 QS Symmetry SKUs as of 2026-05-19: LPTP130-3CS/27VS1/{B/FD, DB/BL, DB/FD, W/FD}.)';
 
   // ---- Photometric summary ----
   document.getElementById('photoPeak').textContent =
-    data.peakCd.toLocaleString() + ' cd @ ' + data.maxW + 'W (' + data.label + ' max setting)';
-  document.getElementById('photoLumens').textContent = data.maxLm.toLocaleString() + ' lm';
-  document.getElementById('photoEff').textContent = data.lpw + ' lm/W (' + data.label + ' max setting)';
-  document.getElementById('photoIesFile').textContent =
-    data.sku + ' 3000K.ies · LM-79 tested · ' + data.maxW + 'W max setting';
+    peakLm.toLocaleString() + ' lm @ ' + hData.maxW + 'W (' + hData.label + ' · ' + oData.label + ')';
+  document.getElementById('photoEff').textContent =
+    peakLpw + ' lm/W (' + hData.label + ' + ' + oData.label + ' @ 4000K)';
+  document.getElementById('photoDist').textContent = oData.label + ' · ' + oData.desc;
 
   // ---- Issue date ----
   var d = new Date();

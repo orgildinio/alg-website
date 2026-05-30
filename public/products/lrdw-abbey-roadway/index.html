@@ -4759,7 +4759,7 @@ body.cityarch-pdp .acc-card-copy {
               Pricing &amp; Availability
               <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
 </a>
-<a class="cfg-cta outline disabled" href="submittal_abbey.html" id="cfgCtaPdf" rel="noopener" target="_blank">
+<a class="cfg-cta outline disabled" href="submittal/" id="cfgCtaPdf" rel="noopener" target="_blank">
 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" x2="12" y1="18" y2="12"></line><polyline points="9 15 12 12 15 15"></polyline></svg>
               Generate Submittal PDF
             </a>
@@ -4873,7 +4873,7 @@ body.cityarch-pdp .acc-card-copy {
 </div>
 </a>
 <!-- 04 · Submittal Sheet — generated from Section 9 SKU -->
-<a class="docs-card" href="submittal_abbey.html?sku=LRDW200-40-27V3S-A2&amp;variant=A2&amp;housing=200&amp;cct=40&amp;voltage=LV&amp;distribution=3&amp;finish=S" rel="noopener" target="_blank">
+<a class="docs-card" href="submittal/?sku=LRDW200-40-27V3S-A2&amp;variant=A2&amp;housing=200&amp;cct=40&amp;voltage=LV&amp;distribution=3&amp;finish=S" rel="noopener" target="_blank">
 <div class="docs-card-head">
 <div class="docs-card-icon">
 <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewbox="0 0 24 24">
@@ -6185,7 +6185,7 @@ body.cityarch-pdp .acc-card-copy {
       }
     });
 
-    // ---- Submittal PDF — opens submittal_abbey.html in new tab with full config in query string ----
+    // ---- Submittal PDF — opens submittal/ in new tab with full config in query string ----
     // The submittal renders page-1 catalog number, quick specs, ordering-code matrix, and photometric data.
     // Per CFG-SUB-1, the catalog number is editable inline on the rendered submittal (TreeWalker text sweep).
     function buildSubmittalUrl() {
@@ -6200,7 +6200,7 @@ body.cityarch-pdp .acc-card-copy {
         finish:   state.finish   || 'S',
         taa:      state.taa === 'TAA' ? '1' : '0'
       });
-      return 'submittal_abbey.html?' + params.toString();
+      return 'submittal/?' + params.toString();
     }
     ctaPdf.addEventListener('click', function(e) {
       if (ctaPdf.classList.contains('disabled')) { e.preventDefault(); return; }

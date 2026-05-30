@@ -4606,7 +4606,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     // Submittal CTA \u2014 pass full state as query params
     var sub = document.getElementById('cfgCtaSubmittal');
     if (sub) {
-      sub.href = 'submittal_template.html?product=navigator&sku=' + encodeURIComponent(sku) +
+      sub.href = 'submittal/?product=navigator&sku=' + encodeURIComponent(sku) +
                  '&housing=' + state.housing +
                  '&wattage=' + state.watt +
                  '&cct=' + state.cct +
@@ -4730,7 +4730,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
      SECTION 10 — Documentation & Resources
      -------------------------------------------------------------------------
      Navigator asset status (2026-05-02 — URL drop):
-       ✓ Submittal Generator — submittal_template.html?product=navigator LIVE
+       ✓ Submittal Generator — submittal/?product=navigator LIVE
          (NAVIGATOR CFG block in template wired with /EM08 + /EM20 + /MSP-XXX
          single-pick SKU pattern, RAL Classic validator, finish-image swap).
        ✓ Datasheet — LCNP-Navigator-Datasheet.pdf published at WorkDrive
@@ -4890,11 +4890,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         </div>
       </a>
 
-      <!-- 4. Submittal Sheet — LIVE (NAVIGATOR CFG block wired in submittal_template.html).
+      <!-- 4. Submittal Sheet — LIVE (NAVIGATOR CFG block wired in submittal/).
            Default URL params reflect Navigator's QuickShip default SKU:
              LCNP3W100-3N1-UD  (housing 100W · CCTSELECT locked · 120-277V · Dark Bronze)
            Section 9 selections override these at runtime via the Submittal CTA. -->
-      <a href="submittal_template.html?product=navigator&amp;sku=LCNP3W100-3N1-UD&amp;housing=100&amp;wattage=100&amp;cct=50&amp;voltage=U&amp;finish=D&amp;em=&amp;sensor=" target="_blank" rel="noopener" class="docs-card">
+      <a href="submittal/?product=navigator&amp;sku=LCNP3W100-3N1-UD&amp;housing=100&amp;wattage=100&amp;cct=50&amp;voltage=U&amp;finish=D&amp;em=&amp;sensor=" target="_blank" rel="noopener" class="docs-card">
         <div class="docs-card-head">
           <div class="docs-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

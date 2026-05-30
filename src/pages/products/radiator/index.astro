@@ -3198,7 +3198,7 @@ body { overflow-x: hidden; }
  · S6 contrⒶLS — 2-tab callout (Bi-Level BLS · ⒶCS Bluetooth Mesh · DLC NLC pending) — NO SILVAIR tab
  · S7 Photometrics — 18 polar plots staged (LSBX3W150 + LSBX3W300 × 70/100/150W or 200/240/300W × 3000K/4000K/5000K)
  · S8 In the Box — 3-card grid · luminaire + photocell-ready receptacle + sensor (BLS / ACS) + mount adders
- · S9 Configurator — 3-WATTSELECT × 3-CCTSELECT · independent toggle accessories /UA /PS /BLS · build HERITAGE CFG block in submittal_template.html
+ · S9 Configurator — 3-WATTSELECT × 3-CCTSELECT · independent toggle accessories /UA /PS /BLS · build HERITAGE CFG block in submittal/
  · S10 Documentation — 4 of 5 URLs LIVE (Datasheet · Install · Quick · Sell) · IES bundle URL TBC · DLC SSL + DLC NLC pending posture
  · S11 LSBX Shoebox Family — 3-CARD grid (different from canopy 2-card pattern) · Heritage ECO + Liberty PRO + Rosetta-III PRO+
  · S12 Page closer — Round Out (Atlanta wall + LCNP canopy + Yosemite flood + Dusk-to-Dawn) · Support + Rebates · CTA strip · honest CFG-RBT-1 framing
@@ -5827,7 +5827,7 @@ body { overflow-x: hidden; }
  LSPL-1200-50/R2/U/B/TR/O30 (the bid-sheet flagship)
  LSPL-480-RGB/R3/U/B/TR/O30
 
- Submittal CTA opens submittal_template.html?product=radiator&sku=…
+ Submittal CTA opens submittal/?product=radiator&sku=…
  Submittal template carries RADIATOR CFG block (handled in next pass).
  ============================================================================ -->
 <section class="cfg-section" id="configurator" aria-label="Configurator · Build Your Radiator">
@@ -6402,7 +6402,7 @@ body { overflow-x: hidden; }
  'optic=' + state.optic
  ];
  if (state.taa) params.push('taa=' + state.taa);
- var url = 'submittal_template.html?' + params.join('&');
+ var url = 'submittal/?' + params.join('&');
  window.open(url, '_blank', 'noopener');
  });
  }
@@ -6436,8 +6436,8 @@ body { overflow-x: hidden; }
  ✓ Datasheet — LSPL | Radiator | Datasheet.pdf · WorkDrive external URL LIVE
  (de3db03277e8f8f0702dc65086ed1fe6815d127fc0e8cab51efc2ccbe416238d ·
  5 pages · captured from production page Section 3 download link)
- ✓ Submittal Generator — submittal_template.html?product=radiator LIVE
- (RADIATOR CFG block wired in submittal_template.html: 7-field URL
+ ✓ Submittal Generator — submittal/?product=radiator LIVE
+ (RADIATOR CFG block wired in submittal/: 7-field URL
  param mapping · series + wattage + cct + voltage + optic + taa +
  finish locked B/TR · catalog match indicator)
  ☐ Installation Guide — LSPL-Radiator-II_Installation.pdf staged in Zoho
@@ -6586,7 +6586,7 @@ body { overflow-x: hidden; }
  </a>
 
  <!-- 4. Submittal Sheet — opens the per-SKU generator (RADIATOR CFG live) -->
- <a href="submittal_template.html?product=radiator&amp;sku=LSPL-850-57%2FR1%2FU%2FB%2FTR%2FO30&amp;series=R1&amp;wattage=850&amp;cct=57&amp;voltage=U&amp;optic=O30" target="_blank" rel="noopener" class="docs-card">
+ <a href="submittal/?product=radiator&amp;sku=LSPL-850-57%2FR1%2FU%2FB%2FTR%2FO30&amp;series=R1&amp;wattage=850&amp;cct=57&amp;voltage=U&amp;optic=O30" target="_blank" rel="noopener" class="docs-card">
  <div class="docs-card-head">
  <div class="docs-card-icon">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

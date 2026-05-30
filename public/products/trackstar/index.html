@@ -5975,7 +5975,7 @@ body { overflow-x: hidden; }
               Pricing &amp; Availability
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <a href="submittal_trackstar.html" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
+            <a href="submittal/" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
               Generate Submittal PDF
             </a>
@@ -5998,7 +5998,7 @@ body { overflow-x: hidden; }
         2. Installation Guide    — PDF · WorkDrive URL pending
         4. SellSheet             — PDF · WorkDrive URL pending
         5. IES Photometric Bundle — ZIP · 60 files · LM-79 lab measurement queued
-        6. Submittal Generator   — local · submittal_trackstar.html template pending
+        6. Submittal Generator   — local · submittal/ template pending
 
      Per ALG honest-call-out tradition: ship the section with full card chrome +
      pending-state labels and onclick guards · spec writers see the catalog of
@@ -6007,7 +6007,7 @@ body { overflow-x: hidden; }
      Secondary Quick-Links row — Rebate Center (DLC Listed per memory) · DLC QPL ·
      5-yr Warranty. NOTE: NO TAA card (Trackstar is Made in China · heads up).
 
-     Submittal Generator points at `submittal_trackstar.html` template PENDING
+     Submittal Generator points at `submittal/` template PENDING
      build · §9 Configurator state passes via query string · carry-forward to
      next session.
 
@@ -6121,8 +6121,8 @@ body { overflow-x: hidden; }
         </div>
       </a>
 
-      <!-- 6 / Submittal Generator — submittal_trackstar.html LIVE (2026-05-24) -->
-      <a href="submittal_trackstar.html?class=3W30&finish=B&watt=30&cct=50" target="_blank" rel="noopener" class="docs-card" data-doc="submittal" title="Generate Trackstar submittal sheet · 4 pages · editable Catalog Number">
+      <!-- 6 / Submittal Generator — submittal/ LIVE (2026-05-24) -->
+      <a href="submittal/?class=3W30&finish=B&watt=30&cct=50" target="_blank" rel="noopener" class="docs-card" data-doc="submittal" title="Generate Trackstar submittal sheet · 4 pages · editable Catalog Number">
         <div class="docs-card-head">
           <div class="docs-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -7360,7 +7360,7 @@ body { overflow-x: hidden; }
           watt:   state.watt   || '30',
           cct:    state.cct    || '50'
         });
-        ctaPdf.href = 'submittal_trackstar.html?' + subParams.toString();
+        ctaPdf.href = 'submittal/?' + subParams.toString();
         // Ship-tier rendering deferred to CFG-STATE-1 IIFE (chip-badge derived · canonical).
       } else {
         skuEl.innerHTML = '<span class="placeholder">LTRK3W[20|30]-5CS/90/2050/[B|W]</span>';

@@ -8,7 +8,7 @@
  *   - Mockup banner div stripped
  *   - Fake <header class="site-header"> stripped
  *   - Asset paths: assets/* → /products/multi-family/gehry/assets/*
- *   - Submittal href: submittal_gehry.html → /products/multi-family/gehry/submittal/
+ *   - Submittal href: submittal/ → /products/multi-family/gehry/submittal/
  *   - Family card hrefs: /products/* → /products/multi-family/*
  *   - Self-hosted fonts via brand.css (Lato + JetBrains Mono already loaded)
  *   - JSON-LD Product schema injected in <head> slot
@@ -5078,7 +5078,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
       </a>
 
       <!-- DOC-4 · Submittal Sheet generator (live, reads §8 SKU) -->
-      <a href="submittal_gehry.html?sku=CRC6-SB-E26" target="_blank" rel="noopener" class="docs-card">
+      <a href="submittal/?sku=CRC6-SB-E26" target="_blank" rel="noopener" class="docs-card">
         <div class="docs-card-head">
           <div class="docs-card-icon">
             <!-- Document with stamp icon -->
@@ -6455,7 +6455,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
       }
     });
 
-    // ---- Submittal PDF — opens submittal_gehry.html in new tab with full config in query string ----
+    // ---- Submittal PDF — opens submittal/ in new tab with full config in query string ----
     // The template auto-fills page-1 catalog number, quick specs, ordering-code matrix, and photometric data.
     // Canonical params per CFG-QA-1: sku · size · base
     //   plus optional companion line items (module + lamp), with module SKU

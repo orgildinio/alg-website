@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LDRS Radius SafeZone — Submittal Sheet</title>
+
+<!--
+  ALG RADIUS SAFEZONE SUBMITTAL TEMPLATE v1
+  =========================================
+  2-HOUR FIRE-RATED · UL 263 + ASTM E119 · multi-fⒶMILY · planoⒶRCH · PRO+
+
+  Reads URL query params from the §8 SafeZone configurator and auto-fills:
+    - Catalog number (4 page headers + project info form)
+    - Quick spec grid (Lumens / Wattage / CCT / CRI / Beam / Voltage / Fire Rating)
+    - Ordering code visual breakdown — 5 segments: LDRS · {size+wcode} · -RSZ5 · /F · [/6PK]
+    - Companion BOM list — SafeZone 5-accessory ladder (EM15 · JBM · TGK-4 · TGK-6 · CRCU-EM/JBM)
+    - Per-accessory full spec block on Page 2 (Eclipse-II canonical pattern)
+    - Photometric polar plot + IES file name + peak intensity per size+CCT
+
+  Param schema (matches buildSubmittalUrl() in mockup_radius-safezone_pdp_v1.html):
+    ?sku=LDRS411-RSZ5/F
+    &size=306|411|615|819               (full size+wattage code · 3″=06, 4″=11, 6″=15, 8″=19)
+    &pack=SINGLE|6PK                    (REQUIRED — replaces Radius-II trim=B|F · SafeZone is /F only)
+    &cct=2700|3000|3500|4000|5000       (optional · defaults 4000K · CCT is dip switch on J-Box, not SKU)
+    [&emergency=EM15|JBM|CRCU-EM-JBM]   (3 emergency-driver options)
+    [&sensor=MSP-SRI-8CM|MSP-SRI-40CM]  (contrⒶLS by ⒶCS · BLE SigMesh)
+    [&tgrid=TGK-4|TGK-6]                (T-Grid Installation Kit · size-gated · 4″ + 6″ only)
+    [&dimmer=LEV-6674|LUT-MACL153M|...] (12 approved dimmers · Leviton + Lutron)
+    [&autoprint=1]                       ← auto-trigger window.print() on load (default behavior)
+
+  SafeZone-specific notes:
+    - 4 base SKUs (3″ / 4″ / 6″ / 8″) — wattage baked into the SKU (no separate watt code)
+    - Trim is Flat (/F) ONLY — Baffle is NOT offered on SafeZone per datasheet
+    - Pack suffix /6PK is optional (carton-pack discount line for spec-volume orders)
+    - 5-Year / 50,000-Hour warranty (NOT 7-yr — heads up · shorter than typical PRO+)
+    - JBM (Universal J-Box + 15W EMB) is 6″ + 8″ ONLY per datasheet note 3
+
+  Print: page auto-fires window.print() 600 ms after load. The user gets the
+  browser's Save-as-PDF dialog without an extra click. To suppress, append
+  &autoprint=0 to the URL.
+-->
+
+<style>
+  /* ============= PRINT-OPTIMIZED CSS ============= */
+  @page {
+    size: letter portrait;
+    margin: 0.5in 0.6in;
+  }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+    .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+    .page:last-of-type { page-break-after: auto; }
+  }
+
+  /* ============= TYPE + COLOR TOKENS — match Radius SafeZone PDP palette ============= */
+  :root {
+    --brand-red: #E3353C;
+    --ink: #0E0E10;
+    --ink-2: #2A2A2D;
+    --muted: #6B6B70;
+    --rule: #DCDEE2;
+    --rule-strong: #A6A4A0;
+    --tint: #F1ECE3;        /* warm-paper background — matches PDP --bg-darker */
+    --hi: #FFF6E5;
+    --grn: #0FAE7C;
+    --yel: #FDD85E;
+    --fire: #C2270C;        /* fire-rating callout · darker than brand-red */
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Sora', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.5pt;
+    line-height: 1.4;
+    background: #E8E6E2;
+  }
+  body { padding: 24px 12px; }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 24px;
+    padding: 0.55in 0.65in;
+    background: white;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  h1, h2, h3, h4 { font-family: 'Sora', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+  .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+  .aa { font-family: 'Sora', sans-serif; }   /* Ⓐ glyph wrapper — same font as body, no special handling */
+
+  /* ============= PAGE HEADER (every page) ============= */
+  .submittal-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+  .submittal-head .brand-mark {
+    width: 28px; height: 28px; background: var(--brand-red);
+    display: inline-block;
+  }
+  .submittal-head .brand-name {
+    font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1;
+  }
+  .submittal-head .brand-sub {
+    font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .submittal-head .catalog-block { text-align: right; }
+  .submittal-head .catalog-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .submittal-head .catalog-number {
+    font-size: 12pt; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+    border: 1.5px solid var(--ink);
+    padding: 4px 10px; display: inline-block;
+    letter-spacing: 0.5pt;
+  }
+
+  /* ============= FIRE-RATING BRAND STRIP (SafeZone-only · above the page header) ============= */
+  .fire-strip {
+    background: var(--fire); color: white;
+    padding: 5px 14px;
+    font-size: 8pt; font-weight: 700; letter-spacing: 1.5pt;
+    text-transform: uppercase;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .fire-strip .fs-tag { display: flex; gap: 10px; align-items: center; }
+  .fire-strip .fs-cert {
+    background: white; color: var(--fire); padding: 2px 6px;
+    font-family: 'JetBrains Mono', monospace; font-size: 7pt; letter-spacing: 0.6pt;
+  }
+
+  /* ============= PROJECT INFO FORM ============= */
+  .project-info {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    border: 1px solid var(--rule-strong); margin-bottom: 14px;
+  }
+  .pi-cell {
+    padding: 6px 9px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    min-height: 38px;
+  }
+  .pi-cell:nth-child(3n) { border-right: none; }
+  .pi-cell:nth-child(n+4) { border-bottom: none; }
+  .pi-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .pi-value {
+    border-bottom: 1px dotted var(--rule-strong); min-height: 14px; padding-top: 2px;
+  }
+
+  /* ============= PRODUCT TITLE BAND ============= */
+  .product-title { margin: 14px 0 14px; }
+  .product-title h1 { font-size: 22pt; line-height: 1; margin: 0; }
+  .product-title .tagline {
+    font-size: 10pt; color: var(--ink-2); margin-top: 4px; line-height: 1.3;
+  }
+
+  /* ============= HERO + QUICK SPECS GRID ============= */
+  .at-a-glance {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; margin-bottom: 12px;
+  }
+  .hero-img {
+    background: var(--tint); border: 1px solid var(--rule);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-img img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+  .qs-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  }
+  .qs-cell {
+    border: 1px solid var(--rule-strong); padding: 8px 10px; min-height: 56px;
+  }
+  .qs-cell.fire {
+    border-color: var(--fire); background: rgba(194, 39, 12, 0.06);
+  }
+  .qs-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 3px;
+  }
+  .qs-cell.fire .qs-label { color: var(--fire); }
+  .qs-value { font-size: 14pt; font-weight: 700; line-height: 1.05; }
+  .qs-cell.fire .qs-value { color: var(--fire); font-size: 11pt; }
+  .qs-unit { font-size: 8pt; font-weight: 400; color: var(--muted); margin-left: 2px; }
+
+  /* ============= FEATURE BAND ============= */
+  .feature-band {
+    background: var(--ink); color: white;
+    padding: 8px 14px;
+    display: flex; gap: 18px; align-items: center;
+    margin-bottom: 12px;
+  }
+  .feature-band .fb-pill {
+    background: var(--fire); color: white;
+    font-size: 7pt; font-weight: 700; letter-spacing: 1.2pt;
+    padding: 3px 7px; text-transform: uppercase;
+  }
+  .feature-band .fb-features { font-size: 9pt; line-height: 1.3; }
+  .feature-band .fb-features strong { font-weight: 700; }
+
+  /* ============= COMPANION BOM PANEL (page 1) ============= */
+  .bom-panel {
+    border: 1px dashed var(--brand-red);
+    background: rgba(227, 53, 60, 0.04);
+    padding: 10px 14px; margin: 10px 0 12px;
+  }
+  .bom-eyebrow {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .bom-list {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4px 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 9pt;
+  }
+  .bom-list li { display: flex; gap: 6px; }
+  .bom-list li .plus { color: var(--brand-red); font-weight: 700; }
+  .bom-list li .pair-name {
+    font-family: 'Sora', sans-serif; font-size: 8pt; color: var(--muted); display: block;
+  }
+  .bom-list li .gate-warning {
+    font-family: 'Sora', sans-serif; font-size: 7.5pt; color: var(--brand-red);
+    font-weight: 700; display: block; margin-top: 2px;
+  }
+
+  /* ============= APPROVAL SIGNATURE BLOCK ============= */
+  .approval-block {
+    display: grid; grid-template-columns: 2fr 1fr; gap: 18px;
+    margin-top: 14px; padding-top: 8px;
+    border-top: 1px dashed var(--rule-strong);
+  }
+  .approval-cell {
+    display: grid; grid-template-columns: max-content 1fr;
+    gap: 8px; align-items: end; font-size: 8pt;
+  }
+  .approval-line { border-bottom: 1px solid var(--ink); height: 16px; }
+
+  /* ============= SECTION HEAD (page 2+) ============= */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 4px; margin-bottom: 10px; margin-top: 4px;
+  }
+  .section-head h2 { font-size: 14pt; line-height: 1; }
+  .section-head .section-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= SPEC TABLE ============= */
+  .spec-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  .spec-table th, .spec-table td {
+    text-align: left; padding: 5px 8px;
+    border-bottom: 1px solid var(--rule); vertical-align: top;
+  }
+  .spec-table .spec-section-head td {
+    background: var(--tint);
+    font-weight: 700; font-size: 9pt; letter-spacing: 0.3pt;
+    border-bottom: 1px solid var(--rule-strong);
+    padding: 6px 8px;
+  }
+  .spec-table .spec-section-head.fire-section td {
+    background: rgba(194, 39, 12, 0.08);
+    color: var(--fire);
+    border-bottom: 1px solid var(--fire);
+  }
+  .spec-table .spec-attr { width: 30%; font-weight: 600; color: var(--ink-2); }
+  .spec-table .spec-val  { width: 70%; }
+
+  /* ============= ORDERING CODE MATRIX ============= */
+  .order-code {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px;
+    margin-bottom: 10px;
+  }
+  .order-segment {
+    background: var(--tint); border: 1px solid var(--rule-strong);
+    padding: 8px 6px; text-align: center;
+  }
+  .order-segment.active {
+    background: var(--brand-red); color: white; border-color: var(--brand-red);
+  }
+  .order-segment.fixed {
+    background: var(--ink); color: white; border-color: var(--ink);
+  }
+  .order-segment.opt {
+    background: var(--tint); color: var(--muted); border-style: dashed;
+  }
+  .order-seg-label {
+    font-size: 7pt; letter-spacing: 1pt; text-transform: uppercase;
+    margin-bottom: 4px; opacity: 0.85;
+  }
+  .order-seg-value {
+    font-family: 'JetBrains Mono', monospace; font-size: 11pt; font-weight: 700;
+  }
+  .order-matrix { width: 100%; border-collapse: collapse; font-size: 7.5pt; }
+  .order-matrix th, .order-matrix td {
+    border: 1px solid var(--rule); padding: 4px 6px; text-align: left;
+    vertical-align: top;
+  }
+  .order-matrix th {
+    background: var(--ink); color: white;
+    font-size: 7pt; letter-spacing: 1pt; text-transform: uppercase;
+  }
+  .order-matrix .code {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; width: 80px;
+  }
+
+  /* ============= DIMENSIONS LAYOUT ============= */
+  .dim-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 14px; }
+  .dim-view {
+    border: 1px solid var(--rule-strong);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    background: white; position: relative; overflow: hidden;
+  }
+  .dim-view img, .dim-view svg { width: 100%; height: 100%; object-fit: contain; }
+  .dim-view-label {
+    position: absolute; top: 4px; left: 6px;
+    font-size: 7pt; letter-spacing: 1pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= PHOTOMETRIC DATA ============= */
+  .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .photo-polar {
+    border: 1px solid var(--rule-strong); padding: 10px;
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    background: white; overflow: hidden;
+  }
+  .photo-polar svg { width: 100%; height: 100%; }
+  .photo-polar.pending {
+    background: var(--tint);
+    font-size: 8pt; color: var(--muted); text-align: center;
+    flex-direction: column; gap: 6px; padding: 18px;
+  }
+  .photo-summary { border: 1px solid var(--rule); }
+  .photo-summary table { width: 100%; border-collapse: collapse; font-size: 8pt; }
+  .photo-summary table td {
+    padding: 4px 8px; border-bottom: 1px solid var(--rule);
+  }
+  .photo-summary table tr:last-child td { border-bottom: none; }
+  .photo-summary td:first-child { color: var(--muted); }
+  .photo-summary td:last-child {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; text-align: right;
+  }
+
+  /* ============= CERTIFICATIONS ============= */
+  .certs {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 8px 10px; border: 1px solid var(--rule); margin-top: 10px;
+  }
+  .cert-badge {
+    font-size: 7.5pt; font-weight: 700;
+    border: 1.5px solid var(--ink); padding: 3px 8px;
+    letter-spacing: 0.6pt; text-transform: uppercase;
+  }
+  .cert-badge.brand { border-color: var(--brand-red); color: var(--brand-red); }
+  .cert-badge.fire { border-color: var(--fire); color: var(--fire); background: rgba(194, 39, 12, 0.05); }
+
+  /* ============= PAGE FOOTER ============= */
+  .page-foot {
+    position: absolute;
+    bottom: 0.4in; left: 0.65in; right: 0.65in;
+    display: flex; justify-content: space-between;
+    font-size: 7pt; color: var(--muted);
+    padding-top: 6px; border-top: 1px solid var(--rule);
+  }
+
+  /* ============= NO-PRINT CONTROLS BAR ============= */
+  .controls {
+    max-width: 8.5in; margin: 0 auto 18px;
+    background: white; padding: 14px 18px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  }
+  .controls .ctrl-label {
+    font-size: 9pt; font-weight: 600; color: var(--muted);
+    letter-spacing: 0.5pt; text-transform: uppercase;
+  }
+  .controls .ctrl-value {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11pt;
+  }
+  .controls button {
+    background: var(--brand-red); color: white;
+    border: none; padding: 8px 16px;
+    font-family: inherit; font-weight: 700; font-size: 9pt;
+    letter-spacing: 0.5pt; text-transform: uppercase;
+    cursor: pointer; margin-left: auto;
+  }
+  .controls button:hover { background: #B0252B; }
+  .controls .ctrl-back {
+    background: transparent; color: var(--ink); border: 1px solid var(--ink);
+    margin-left: 8px;
+  }
+  .controls .ctrl-back:hover { background: var(--ink); color: white; }
+
+/* CFG-TYPE-1 · Lato lock — Shopify global cascades Cormorant onto inline Lato.
+   This !important rule pins Lato on h1/h2 for this collection's PDP body class. */
+body.multifamily-pdp h1,
+body.multifamily-pdp h2 {
+  font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+}
+
+/* CFG-MOBILE-1 · image responsive reset (injected by cfg_mobile_1_readiness_sweep.py) */
+img { max-width: 100%; height: auto; }
+
+/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+body { overflow-x: hidden; }
+</style>
+</head>
+<body>
+
+<!-- ============= NO-PRINT CONTROLS BAR =============
+     The Save-as-PDF button stays accessible after the auto-print fires —
+     in case the user dismissed the print dialog and wants a second shot.
+     The Back-to-Configurator link rewinds to the PDP using document.referrer. -->
+<div class="controls no-print">
+  <div>
+    <div class="ctrl-label">Configured SKU</div>
+    <div class="ctrl-value" id="liveSku" contenteditable="true">LDRS411-RSZ5/F</div>
+  </div>
+  <div>
+    <div class="ctrl-label">Generated</div>
+    <div class="ctrl-value" id="liveDate" style="font-size:9pt; font-weight:400;">—</div>
+  </div>
+  <button onclick="window.print()">Save as PDF →</button>
+  <button class="ctrl-back" onclick="history.length > 1 ? history.back() : window.close()">← Back to Configurator</button>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — AT A GLANCE                                          -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+  <!-- Fire-rating brand strip · SafeZone-only · sits ABOVE the standard header -->
+  <div class="fire-strip">
+    <div class="fs-tag">
+      <span>multi-fⒶMILY · planoⒶRCH · PRO+ · 2-HOUR FIRE-RATED</span>
+    </div>
+    <div class="fs-tag">
+      <span class="fs-cert">UL 263</span>
+      <span class="fs-cert">ASTM E119</span>
+    </div>
+  </div>
+
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum" contenteditable="true">LDRS411-RSZ5/F</div>
+    </div>
+  </div>
+
+  <div class="project-info">
+    <div class="pi-cell"><div class="pi-label">Project</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Type</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Catalog #</div><div class="pi-value" id="piCatNum" contenteditable="true"></div></div>
+    <div class="pi-cell"><div class="pi-label">Prepared By</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Notes</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Date</div><div class="pi-value"></div></div>
+  </div>
+
+  <div class="product-title">
+    <h1 id="productTitle">Radius SafeZone Series · 4″ Slim Wafer Recessed Downlight (Flat Trim)</h1>
+    <div class="tagline" id="productTagline">
+      Performance that won&rsquo;t melt. &middot; Multi-f<span class="aa" aria-hidden="true">Ⓐ</span>MILY PRO+ slim wafer with <strong>2-hour fire-resistant construction</strong> tested to <strong>UL 263 + ASTM E119</strong> &middot; 4 sizes (3&Prime; / 4&Prime; / 6&Prime; / 8&Prime;) &middot; 5-CCTselect 2700/3000/3500/4000/5000K via dip switch on Plug-n-Play J-Box &middot; 110° even-distribution beam &middot; CRI 90+ TruColor &middot; ELV + TRIAC dim 10&ndash;100% &middot; IC Rated &middot; Wet Location &middot; ASTM E283 Air-Leak &middot; ETL / ENERGY STAR / Title-24 / JA8 / NEC &middot; const<span class="aa" aria-hidden="true">Ⓐ</span>NT CRCU-EM/JBM 15W EMB (UL 924 &middot; 90 min) &middot; contr<span class="aa" aria-hidden="true">Ⓐ</span>LS by <span class="aa" aria-hidden="true">Ⓐ</span>CS PIR sensors (8 FT &middot; 40 FT) &middot; T-Grid Kit drop-ceiling option (4&Prime; + 6&Prime;)
+    </div>
+  </div>
+
+  <div class="at-a-glance">
+    <div class="hero-img">
+      <!-- Real Radius SafeZone hero image. JS swaps based on the size param.
+           SafeZone reuses Radius-II hero photography until SafeZone-specific
+           production shots are on disk (size-to-photo mapping is approximate).
+           mix-blend-mode: multiply preserves the white finish against the warm panel. -->
+      <img id="heroImg" src="assets/radius-ii/radius-ii-4in-hero-1.png"
+           alt="LDRS Radius SafeZone — 4″ slim wafer recessed downlight, white finish, flat trim, fire-rated housing, front 3/4 angle" />
+    </div>
+    <div class="qs-grid">
+      <div class="qs-cell">
+        <div class="qs-label">Lumens (4000K)</div>
+        <div class="qs-value" id="qsLumens">957<span class="qs-unit">lm</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Wattage</div>
+        <div class="qs-value" id="qsWatts">11<span class="qs-unit">W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Efficacy</div>
+        <div class="qs-value" id="qsLpw">87<span class="qs-unit">lm/W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CCT (selectable)</div>
+        <div class="qs-value">2700-5000<span class="qs-unit">K</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CRI · Lifetime</div>
+        <div class="qs-value">≥ 90 · 50,000 <span class="qs-unit">hr</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Beam · Voltage</div>
+        <div class="qs-value">110° · 120<span class="qs-unit">V</span></div>
+      </div>
+      <div class="qs-cell fire" style="grid-column: 1 / -1;">
+        <div class="qs-label">Fire Rating</div>
+        <div class="qs-value">UL 263 · ASTM E119 · 2-Hour Fire-Resistant Construction</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feature-band">
+    <div class="fb-pill">FIRE-RATED 5-AMPLIFIER STACK</div>
+    <div class="fb-features">
+      <strong>2-Hour UL 263 + ASTM E119</strong> &middot;
+      <strong>4 sizes (3&Prime; / 4&Prime; / 6&Prime; / 8&Prime;)</strong> &middot;
+      <strong>5-CCT on the Plug-n-Play J-Box</strong> (not the disk) &middot;
+      <strong>ASTM E283 air-leak listed</strong> &middot;
+      <strong>const<span class="aa" aria-hidden="true">Ⓐ</span>NT</strong> 15W EMB · UL 924 / 90 min &middot;
+      <strong>Wet Location</strong> + IC Rated across all 4 base SKUs
+    </div>
+  </div>
+
+  <!-- Companion BOM — only shows when at least one companion is selected.
+       Populated by JS from the URL params (emergency / sensor / tgrid / dimmer). -->
+  <div class="bom-panel" id="bomPanel" style="display:none;">
+    <div class="bom-eyebrow">Pair-With · Separate Line Items</div>
+    <ul class="bom-list" id="bomList"></ul>
+  </div>
+
+  <div class="approval-block">
+    <div class="approval-cell">
+      <span><strong>Approved by</strong></span>
+      <div class="approval-line"></div>
+    </div>
+    <div class="approval-cell">
+      <span><strong>Date</strong></span>
+      <div class="approval-line"></div>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LDRS Radius SafeZone submittal · UL 263 + ASTM E119 2-Hour Fire-Rated · ETL + ENERGY STAR + Title-24/JA8 + Wet Location · Specifications subject to change</div>
+    <div>Rev. <span id="revDate">2026-05</span> · Page 1 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — SPECIFICATIONS                                       -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum2" contenteditable="true">LDRS411-RSZ5/F</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Specifications</h2>
+    <div class="section-eyebrow" id="specEyebrow">LDRS Radius SafeZone · 3″ + 4″ + 6″ + 8″ Slim Wafer Fire-Rated Recessed Downlight (White · Wet Location · Flat Trim Only)</div>
+  </div>
+
+  <table class="spec-table">
+    <tbody>
+      <tr class="spec-section-head fire-section"><td colspan="2">Fire-Resistance &amp; Listings (2-Hour Rated)</td></tr>
+      <tr><td class="spec-attr">UL 263</td><td class="spec-val">Fire Tests of Building Construction and Materials — <strong>2-hour rating</strong> when installed per fire-rated ceiling assembly instructions · housing engineered to maintain assembly integrity through the rated burn period without compromising the ceiling membrane</td></tr>
+      <tr><td class="spec-attr">ASTM E119</td><td class="spec-val">Standard Test Methods for Fire Tests of Building Construction and Materials · pairs with UL 263 to certify the 2-hour rating · authority-having-jurisdiction (AHJ) submittal acceptance across IBC § 711, NFPA 5000, and most state codes</td></tr>
+      <tr><td class="spec-attr">ASTM E283</td><td class="spec-val">Standard Test Method for Determining Rate of Air Leakage — SafeZone housing is <strong>airtight listed</strong> · qualifies for ASHRAE 90.1 envelope leakage compliance and CA Title-24 air-leakage credit</td></tr>
+      <tr><td class="spec-attr">Application</td><td class="spec-val">Approved for multi-family corridors, exit-path ceilings, stairwell soffits, unit-to-unit fire-rated assemblies, and any spec requiring 2-hour fire-resistant ceiling penetrations. <strong>No fire-box accessory required</strong> — the SafeZone disk + J-Box themselves carry the UL 263 / ASTM E119 listing.</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Construction</td></tr>
+      <tr><td class="spec-attr">Housing</td><td class="spec-val">Aluminum heat-sink with fire-resistant construction · ultra-slim wafer profile (11/16″ depth across all 4 sizes) · spring-loaded retention clips · plenum-rated quick-connect cable from disk to remote J-Box</td></tr>
+      <tr><td class="spec-attr">Lens / Diffuser</td><td class="spec-val">Frosted polycarbonate lens · edge-lit distribution: light disperses uniformly across the diffuser face with no glare or dark spots · 110° even beam angle</td></tr>
+      <tr><td class="spec-attr">Finish</td><td class="spec-val">White (standard) — only finish offered on Radius SafeZone (no Matte Black / Copper trim accessories on the SafeZone SKU line · those are Radius-II-only)</td></tr>
+      <tr><td class="spec-attr">Trim Style</td><td class="spec-val">Flat (/F) — standard low-profile aesthetic · <strong>Baffle is NOT offered on Radius SafeZone</strong> per datasheet. If a baffle trim is required for a glare-control application, spec the standard Radius-II (non-fire-rated) instead.</td></tr>
+      <tr><td class="spec-attr">Ingress / Location</td><td class="spec-val">Wet-location listed across all 4 sizes × Flat trim = 4 base SKUs · IC Rated for direct insulation contact · suitable for indoor and outdoor in dry, damp, and wet locations · NEC-compliant closet installs</td></tr>
+      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">−4°F to +104°F (−20°C to +40°C) ambient</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">LED &amp; Optics</td></tr>
+      <tr><td class="spec-attr">LED Source</td><td class="spec-val">High-flux mid-power LED engine · 50,000-hr L70 lumen maintenance · LM80 chip lifetime testing per datasheet · ANSI C78.377-2017 chromaticity tolerance</td></tr>
+      <tr><td class="spec-attr">CCT (5-CCTselect)</td><td class="spec-val">Field-selectable via dip switch <strong>on the Plug-n-Play J-Box</strong> (not the disk — install-ergonomics differentiator): 2700K / 3000K / 3500K / 4000K / 5000K — no SKU change required, single fixture covers any spec</td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val">≥ 90 CRI TruColor (per datasheet Highlights) · meets CA Title-24 JA8 high-efficacy threshold</td></tr>
+      <tr><td class="spec-attr">Beam Distribution</td><td class="spec-val">110° even-distribution edge-lit beam · uniform illuminance from edge to center of the aperture · no field-replaceable optic</td></tr>
+      <tr><td class="spec-attr">Lumen Output (4000K)</td><td class="spec-val">See Page 4 for full 4-size × 5-CCT lumen matrix · 550 lm (3″ · 6.5W · 85 lm/W) · 957 lm (4″ · 11W · 87 lm/W) · 1,330 lm (6″ · 15W · 89 lm/W) · 1,692 lm (8″ · 19W · 89 lm/W)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Driver &amp; Electrical</td></tr>
+      <tr><td class="spec-attr">Voltage</td><td class="spec-val">120V AC · 60 Hz (single voltage — not 120-277V universal)</td></tr>
+      <tr><td class="spec-attr">Driver</td><td class="spec-val">Constant-current driver in <strong>remote Plug-n-Play J-Box</strong> · electronically isolated · plenum-rated quick-connect cable from disk to J-Box · J-Box sized for AWG12-AWG20 supply cable with strain-relief design</td></tr>
+      <tr><td class="spec-attr">Power Factor</td><td class="spec-val">&gt; 0.9 Non-Flicker</td></tr>
+      <tr><td class="spec-attr">THD</td><td class="spec-val">&lt; 20%</td></tr>
+      <tr><td class="spec-attr">Dimming</td><td class="spec-val">ELV + TRIAC · 10% to 100% · approved 12-SKU dimmer list (6 Leviton + 6 Lutron — see Page 4 dimmer matrix)</td></tr>
+
+      <!-- Selected Companion Accessory Specs · DYNAMIC ----------------------
+           JS reads URL params (emergency, sensor, tgrid, dimmer) and injects a
+           section-head + spec rows for each selected accessory by inserting
+           BEFORE this anchor row using ACC_SPEC_TABLE. Anchor stays display:none
+           in the rendered table. Eclipse-II canonical pattern. -->
+      <tr id="accSpecAnchor" style="display:none"><td colspan="2"></td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Mounting</td></tr>
+      <tr><td class="spec-attr">Standard Install</td><td class="spec-val">Direct-cutout install — no separate housing required. Cutout per size: Ø 3-9/16″ (LDRS3) · Ø 4-3/4″ (LDRS4) · Ø 6-13/16″ (LDRS6) · Ø 8-7/8″ (LDRS8). Wafer drops into cutout, spring clips lock from above.</td></tr>
+      <tr><td class="spec-attr">Plug-n-Play J-Box</td><td class="spec-val">Remote driver J-Box mounts above the ceiling in the cavity, plenum-rated quick-connect cable to the wafer. Color-select dip switch on J-Box face. Mount J-Box to joist or T-grid drop.</td></tr>
+      <tr><td class="spec-attr">New Construction · Retrofit</td><td class="spec-val">Suitable for new construction OR retrofit applications. For drop-ceiling commercial install, pair with the T-Grid Installation Kit (4″ + 6″ only — LDRS-4R1/TGK · LDRS-6R1/TGK).</td></tr>
+      <tr><td class="spec-attr">Fire-Rated Assembly</td><td class="spec-val">Install per fire-rated ceiling assembly instructions. The UL 263 / ASTM E119 2-hour rating applies <strong>only when the SafeZone is installed in a properly constructed fire-rated assembly</strong>. The disk + J-Box carry the listing; the assembly must satisfy ceiling-membrane and joist-spacing details on file.</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
+      <tr><td class="spec-attr">Fire / Safety</td><td class="spec-val"><strong>UL 263 · ASTM E119 · ASTM E283</strong> — the 3-listing fire+air-leak stack that wins permit acceptance in multi-family corridor + stairwell specs</td></tr>
+      <tr><td class="spec-attr">Standards</td><td class="spec-val">ETL listed (US + Canada · UL 1598) · ENERGY STAR certified · CA Title-24 Part 6 + JA8 compliant · NEC compliant · IC Rated · Wet Location listed · RoHS</td></tr>
+      <tr><td class="spec-attr">Rebate-Ready</td><td class="spec-val">ENERGY STAR + JA8 paths qualify for residential + light-commercial utility-rebate programs at PG&amp;E, SCE, SDG&amp;E, and most state IOUs · PRO+ tier · search "LDRS" at archipelagolighting.com/pages/rebate-center</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val"><strong>10-year limited / 100,000-hour L70 rated life</strong> — heads up: this is shorter than the typical 10-yr PRO+ warranty across the rest of the planoⒶRCH lineup · luminaire · light output · driver performance · fixture finish</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LDRS Radius SafeZone submittal · UL 263 + ASTM E119 2-Hour Fire-Rated · ETL + ENERGY STAR + Title-24/JA8 + Wet Location · Specifications subject to change</div>
+    <div>Rev. <span class="rev-date">2026-05</span> · Page 2 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 3 — DIMENSIONS & MOUNTING                                -->
+<!-- ============================================================ -->
+<div class="page" id="page-3">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum3" contenteditable="true">LDRS411-RSZ5/F</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Dimensions &amp; Mounting</h2>
+    <div class="section-eyebrow">Top + Side views · Slim wafer ultra-thin profile (11/16″ depth) · Plug-n-Play J-Box · spring-clip retention · T-Grid Kit drop-ceiling option (4″ + 6″ only)</div>
+  </div>
+
+  <div class="dim-grid">
+    <div class="dim-view" id="dimView">
+      <div class="dim-view-label">Top + Side views (in)</div>
+      <!-- Inline SVG dimension diagram — covers all 4 sizes; JS swaps the labels
+           (trim Ø, aperture cutout Ø, depth) based on the size param. -->
+      <svg id="dimSvg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Top view — circle (disk face seen from below) -->
+        <g transform="translate(110, 70)">
+          <text x="0" y="-8" font-family="JetBrains Mono, monospace" font-size="9" fill="#6B6B70" letter-spacing="1">TOP · DISK FACE</text>
+          <!-- Outer trim ring -->
+          <circle cx="60" cy="60" r="58" fill="none" stroke="#0E0E10" stroke-width="1.4"/>
+          <!-- Inner emit aperture (back-lit polycarbonate diffuser) -->
+          <circle cx="60" cy="60" r="42" fill="rgba(227, 53, 60, 0.06)" stroke="#A6A4A0" stroke-width="0.6"/>
+          <!-- Center LED engine marker -->
+          <circle cx="60" cy="60" r="2" fill="#E3353C"/>
+          <line x1="2" y1="60" x2="118" y2="60" stroke="#A6A4A0" stroke-width="0.5"/>
+          <text id="dimTopWidth" x="60" y="138" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#0E0E10" font-weight="700">Ø 5-3/4″</text>
+          <text id="dimAperture" x="60" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#6B6B70" dx="0" dy="22">Ø 4-3/4″ aperture</text>
+        </g>
+        <!-- Side view -->
+        <g transform="translate(260, 70)">
+          <text x="0" y="-8" font-family="JetBrains Mono, monospace" font-size="9" fill="#6B6B70" letter-spacing="1">SIDE · SLIM WAFER</text>
+          <!-- ceiling line (dashed) -->
+          <line x1="-8" y1="40" x2="120" y2="40" stroke="#0E0E10" stroke-width="0.8"/>
+          <line x1="-8" y1="44" x2="120" y2="44" stroke="#A6A4A0" stroke-width="0.4" stroke-dasharray="1,1"/>
+          <!-- J-box (above ceiling) -->
+          <rect x="40" y="20" width="40" height="20" fill="#F1ECE3" stroke="#A6A4A0" stroke-width="0.8"/>
+          <text x="60" y="34" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#6B6B70">J-BOX</text>
+          <!-- Disk body (in fire-rated cavity) -->
+          <rect x="14" y="40" width="92" height="10" fill="#F1ECE3" stroke="#0E0E10" stroke-width="1.2"/>
+          <!-- Fire-rated callout -->
+          <text x="60" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5" fill="#C2270C" font-weight="700">FIRE-RATED HOUSING</text>
+          <!-- Diffuser face (red accent line) -->
+          <line x1="14" y1="50" x2="106" y2="50" stroke="#E3353C" stroke-width="1.2"/>
+          <!-- Centered LED engine indicator -->
+          <circle cx="60" cy="45" r="2" fill="#E3353C"/>
+          <!-- depth dim -->
+          <text id="dimDepth" x="60" y="72" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#0E0E10" font-weight="700">depth 11/16″</text>
+          <text id="dimRecess" x="60" y="86" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#6B6B70">slim wafer · 0″ projection</text>
+        </g>
+      </svg>
+    </div>
+
+    <div>
+      <table class="spec-table">
+        <tbody>
+          <tr class="spec-section-head"><td colspan="2">Dimensions (in)</td></tr>
+          <tr><td class="spec-attr">Trim Outer Ø</td><td class="spec-val" id="specOd">5-3/4″ (LDRS411)</td></tr>
+          <tr><td class="spec-attr">Aperture Cutout</td><td class="spec-val" id="specAp">Ø 4-3/4″</td></tr>
+          <tr><td class="spec-attr">Wafer Depth</td><td class="spec-val" id="specDepth">11/16″ (ultra-slim wafer · uniform across all 4 SafeZone sizes)</td></tr>
+          <tr><td class="spec-attr">Recess</td><td class="spec-val" id="specRecess">Wafer recesses into ceiling cutout · 0″ projection below ceiling line</td></tr>
+          <tr><td class="spec-attr">J-Box</td><td class="spec-val" id="specCutout">Plug-n-Play J-Box mounts remote (above ceiling) · plenum-rated quick-connect cable to wafer · NO separate housing required at the wafer cutout</td></tr>
+          <tr class="spec-section-head"><td colspan="2">In-the-Box Components</td></tr>
+          <tr><td class="spec-attr">Disk + J-Box</td><td class="spec-val">Slim wafer disk + remote Plug-n-Play J-Box · plenum-rated quick-connect cable pre-installed between them</td></tr>
+          <tr><td class="spec-attr">Retention</td><td class="spec-val">Spring-loaded retention clips · pre-installed on the wafer</td></tr>
+          <tr><td class="spec-attr">Single Unit Pkg</td><td class="spec-val">Single-fixture retail box (no /6PK suffix on catalog number)</td></tr>
+          <tr><td class="spec-attr">6-Pack Carton</td><td class="spec-val" id="specWeight">6-pack contractor carton available (catalog suffix /6PK · per current pack)</td></tr>
+          <tr class="spec-section-head"><td colspan="2">Mount Path</td></tr>
+          <tr><td class="spec-attr">Standard Install</td><td class="spec-val" id="mountStd">Direct cutout · spring clips lock from above · pop-in install · no separate housing required</td></tr>
+          <tr><td class="spec-attr">Drop-Ceiling (Opt)</td><td class="spec-val" id="mountT24">T-Grid Installation Kit (LDRS-4R1/TGK 4″ · LDRS-6R1/TGK 6″ · QuickShip · <strong>4″ + 6″ only</strong> — no 3″ or 8″ T-grid kits in production) — lay-in to 2×2 or 2×4 ceiling tile without cutting</td></tr>
+          <tr><td class="spec-attr">Fire-Rated Assembly</td><td class="spec-val">Install per UL 263 / ASTM E119 fire-rated ceiling assembly instructions — ceiling membrane and joist details on file at archipelagolighting.com</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LDRS Radius SafeZone submittal · UL 263 + ASTM E119 2-Hour Fire-Rated · ETL + ENERGY STAR + Title-24/JA8 + Wet Location · Specifications subject to change</div>
+    <div>Rev. <span class="rev-date">2026-05</span> · Page 3 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 4 — ORDERING CODE & PHOTOMETRICS                         -->
+<!-- ============================================================ -->
+<div class="page" id="page-4">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum4" contenteditable="true">LDRS411-RSZ5/F</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Ordering Information</h2>
+    <div class="section-eyebrow">Configure your catalog number</div>
+  </div>
+
+  <!-- ORDERING CODE VISUAL BREAKDOWN — 5 segments matching the SafeZone SKU pattern:
+         LDRS{size+wcode}-RSZ5/F[/6PK]
+       - Family   = LDRS
+       - Size+Watt = 306 (3″/6.5W → rounded "06") | 411 (4″/11W) | 615 (6″/15W) | 819 (8″/19W)
+       - -RSZ5    = Radius SafeZone + 5-CCTselect (fixed family designator)
+       - /F       = Flat trim — only trim offered on SafeZone (no Baffle variant)
+       - [/6PK]   = optional 6-Pack carton suffix · omitted for single-unit orders -->
+  <div class="order-code" style="grid-template-columns: repeat(5, 1fr);">
+    <div class="order-segment active"><div class="order-seg-label">Family</div><div class="order-seg-value">LDRS</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Size + Wattage</div><div class="order-seg-value" id="ocSize">411</div></div>
+    <div class="order-segment fixed"><div class="order-seg-label">Gen · CCT</div><div class="order-seg-value">-RSZ5</div></div>
+    <div class="order-segment fixed"><div class="order-seg-label">Trim</div><div class="order-seg-value">/F</div></div>
+    <div class="order-segment opt" id="ocPackSeg"><div class="order-seg-label">Pack</div><div class="order-seg-value" id="ocPack">single</div></div>
+  </div>
+
+  <table class="order-matrix">
+    <thead>
+      <tr>
+        <th style="width:14%">Segment</th>
+        <th>Available Codes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="code">LDRS</td><td>Multi-fⒶMILY LED Slim Wafer family prefix</td></tr>
+      <tr><td class="code">306 / 411 / 615 / 819</td><td>Size &amp; wattage — 3″/6.5W (rounded "06" in SKU) · 4″/11W · 6″/15W · <strong>8″/19W</strong> (4 sizes in the SafeZone active SKU set — wattage is baked into the size code, no separate WATTSELECT)</td></tr>
+      <tr><td class="code">-RSZ5</td><td>Family designator — Radius SafeZone + 5-CCTselect · fixed across all SKUs · CCT set on the Plug-n-Play J-Box dip switch</td></tr>
+      <tr><td class="code">/F</td><td>Flat trim — <strong>only trim offered on Radius SafeZone</strong> (Baffle is NOT available — for a baffle trim spec the standard Radius-II instead)</td></tr>
+      <tr><td class="code">/6PK</td><td>Optional 6-Pack contractor carton suffix · omit for single-unit retail box · used on volume-quote line items</td></tr>
+      <tr><td class="code">+ Accessories</td><td>EM15 (15W EM Driver · UL 924 · all sizes) · JBM (Universal J-Box + 15W EMB · <strong>6″ + 8″ only</strong>) · LDRS-4R1/TGK + LDRS-6R1/TGK (T-Grid Kits · 4″ + 6″ only) · CRCU-EM/JBM (constⒶNT Universal-Mount Mid-Power EMB · 15W · 4/5/6/7″ J-Box) · MSP-SRI/8CM/ⒶCS + MSP-SRI/40CM/ⒶCS (contrⒶLS by ⒶCS PIR sensors) · 12 Datasheet-listed dimmers — all separate-line accessory SKUs (see Page 1 Pair-With panel + Page 2 Selected Companion specs)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ACTIVE SKU TABLE — 4 base + 4 6PK = 8 valid SKU strings -->
+  <table class="order-matrix" style="margin-top: 10px;">
+    <thead>
+      <tr>
+        <th style="width:30%">Active SKU</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="code">LDRS306-RSZ5/F</td><td>3″ · 6.5W · 550 lm @ 4000K · 85 lm/W · 5-CCTselect · Flat trim · UL 263 + ASTM E119 2-hr fire-rated</td></tr>
+      <tr><td class="code">LDRS411-RSZ5/F</td><td>4″ · 11W · 957 lm @ 4000K · 87 lm/W · 5-CCTselect · Flat trim · UL 263 + ASTM E119 2-hr fire-rated · <strong>high-volume multifamily SKU</strong></td></tr>
+      <tr><td class="code">LDRS615-RSZ5/F</td><td>6″ · 15W · 1,330 lm @ 4000K · 89 lm/W · 5-CCTselect · Flat trim · UL 263 + ASTM E119 2-hr fire-rated · <strong>JBM compatible</strong></td></tr>
+      <tr><td class="code">LDRS819-RSZ5/F</td><td>8″ · 19W · 1,692 lm @ 4000K · 89 lm/W · 5-CCTselect · Flat trim · UL 263 + ASTM E119 2-hr fire-rated · <strong>large-aperture · JBM compatible</strong></td></tr>
+      <tr><td class="code">…/6PK</td><td>Append /6PK to any base SKU above for the 6-pack contractor carton line item · e.g. LDRS411-RSZ5/F/6PK</td></tr>
+    </tbody>
+  </table>
+
+  <!-- PHOTOMETRIC DATA — 110° even distribution.
+       4″ + 6″ have real LM-79 IES files (reused Radius-II tested data — same edge-lit
+       optical engine across the family). 3″ + 8″ photometrics not yet published. -->
+  <div class="section-head" style="margin-top: 16px;">
+    <h2>Photometric Data</h2>
+    <div class="section-eyebrow" id="photoEyebrow">110° even distribution · LDRS411 · 11W · 4000K · Radius SafeZone · white · wet location · UL 263 fire-rated</div>
+  </div>
+
+  <div class="photo-grid">
+    <div class="photo-polar" id="photoPolar">
+      <!-- Photometric polar plot — loads the SAME LM-79-generated SVG files the
+           §6 mockup viewer uses, from `assets/photometrics/radius-ii_{409|612}_{cct}.svg`.
+           Mockup size→SVG mapping (also enforced here): 411→409 · 615→612.
+           Default render = 4″ (LDRS411) @ 4000K · JS swaps src per URL params.
+           For 3″ (306) and 8″ (819) SafeZone sizes, JS replaces this <img> with a
+           "Photometric pending" placeholder block (no SVG exists yet for those apertures). -->
+      <img id="photoPolarImg"
+           src="assets/photometrics/radius-ii_409_4000.svg"
+           alt="LDRS Radius SafeZone LDRS411 photometric distribution — 4″ · 11W · 4000K · 110° even-distribution PMMA · 957 lm catalog total · platform-shared with Radius-II LM-79"
+           style="width:100%; height:100%; object-fit:contain;"/>
+    </div>
+
+    <div class="photo-summary">
+      <table>
+        <tbody>
+          <tr><td>Peak Intensity (est.)</td><td id="photoPeak">305 cd</td></tr>
+          <tr><td>Total Lumen Output</td><td id="photoLumens">957 lm</td></tr>
+          <tr><td>Beam Angle</td><td>110° (even distribution)</td></tr>
+          <tr><td>Optic</td><td>Edge-lit frosted polycarbonate</td></tr>
+          <tr><td>Source</td><td>High-flux mid-power LED engine</td></tr>
+          <tr><td>CRI</td><td>≥ 90 TruColor (per datasheet)</td></tr>
+          <tr><td>L70 Lumen Maint.</td><td>50,000 hr</td></tr>
+          <tr><td>IES File</td><td id="photoIesFile">LDRS411-RSZ5_4000K.IES</td></tr>
+          <tr><td>IES Bundle</td><td><span style="color:var(--muted);">URL pending · IES files in lab</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <p style="font-size:7.5pt; color:var(--muted); margin-top: 8px; line-height: 1.35;">
+    <strong>Photometric note:</strong> 4″ and 6″ cells above are based on real LM-79 IES data tested by
+    EVERFINE on a GO-2000B goniophotometer (shared edge-lit optical engine with Radius-II — same beam
+    profile across the family). <strong>3″ and 8″ photometrics not yet published</strong> — flagged for
+    engineering follow-up. ENERGY STAR certification URL also pending.
+  </p>
+
+  <!-- CERTIFICATIONS — SafeZone fire-rated cert stack -->
+  <div class="certs">
+    <span class="cert-badge fire">UL 263 · 2-HR FIRE</span>
+    <span class="cert-badge fire">ASTM E119</span>
+    <span class="cert-badge fire">ASTM E283 AIR-LEAK</span>
+    <span class="cert-badge brand">JA8 / Title-24</span>
+    <span class="cert-badge brand">ENERGY STAR</span>
+    <span class="cert-badge brand">Wet Location</span>
+    <span class="cert-badge">IC Rated</span>
+    <span class="cert-badge">ETL · UL 1598</span>
+    <span class="cert-badge">NEC</span>
+    <span class="cert-badge">RoHS</span>
+    <span class="cert-badge">CA Title-24 Part 6</span>
+    <span class="cert-badge">10-Yr Warranty</span>
+    <span class="cert-badge">50,000 hr L70</span>
+    <span class="cert-badge">PF &gt; 0.9</span>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LDRS Radius SafeZone submittal · UL 263 + ASTM E119 2-Hour Fire-Rated · ETL + ENERGY STAR + Title-24/JA8 + Wet Location · Specifications subject to change</div>
+    <div>Rev. <span class="rev-date">2026-05</span> · Page 4 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============= URL PARAM POPULATION + AUTO-PRINT ============= -->
+<script>
+(function() {
+  // --- PARSE URL PARAMS · Radius SafeZone configurator → submittal pipeline ---
+  // Canonical params: sku · size · pack (REPLACES Radius-II trim=B|F · SafeZone /F only)
+  //                 + companions: emergency (EM15 · JBM · CRCU-EM-JBM)
+  //                 · sensor (MSP-SRI-8CM · MSP-SRI-40CM)
+  //                 · tgrid (TGK-4 · TGK-6)
+  //                 · dimmer (12 approved · Leviton + Lutron)
+  // Each selected companion populates: (a) the Page 1 BOM panel + (b) a dynamic
+  // full-specs section on Page 2 (Eclipse-II canonical pattern).
+  var params = new URLSearchParams(window.location.search);
+  var sku       = params.get('sku')       || 'LDRS411-RSZ5/F';
+  var size      = params.get('size')      || '411';   // 306 | 411 | 615 | 819
+  var pack      = params.get('pack')      || 'SINGLE'; // SINGLE | 6PK
+  var cct       = params.get('cct')       || '4000';
+  var emergency = params.get('emergency') || '';
+  var sensor    = params.get('sensor')    || '';
+  var tgrid     = params.get('tgrid')     || '';
+  var autoprint = params.get('autoprint') !== '0';   // default ON
+
+  // --- DEFENSIVE: normalize legacy single-digit size codes (3|4|6|8) to 3-digit (306|411|615|819).
+  // Old configurator builds passed size=4 instead of size=411. Accept both.
+  var SIZE_NORMALIZE = { '3': '306', '4': '411', '6': '615', '8': '819' };
+  if (SIZE_NORMALIZE[size]) size = SIZE_NORMALIZE[size];
+  // --- DEFENSIVE: legacy pack-param name was "trim" with values SINGLE|6PK.
+  // Accept it as a fallback when the explicit `pack` param is missing.
+  if (!params.get('pack') && params.get('trim') === '6PK') pack = '6PK';
+
+  // --- 4-SIZE LOOKUP TABLE (LDRS Radius SafeZone Datasheet § Sizing & Measurements) ---
+  // Wattage is baked into the size code: 3″=06 (rounded from 6.5W) · 4″=11 · 6″=15 · 8″=19.
+  // Lumens are 4000K representative · all 4 sizes deliver 85-89 lm/W (uniform efficacy band).
+  // 4″ + 6″ have real LM-79 IES tested data (edge-lit optical engine shared with Radius-II);
+  // 3″ + 8″ photometric polar plots are pending engineering publication.
+  var sizeData = {
+    '306': { in: 3, wcode: '06', wattLabel: '6.5W', watt: 6.5, lumens: '550',   defCct: '4000', lpw: '85', peak: '175', trimOd: '4-7/16″',  aperture: '3-9/16″', depth: '11/16″', heroImg: 'assets/radius-ii/radius-ii-4in-hero-1.png', photoPending: true },
+    '411': { in: 4, wcode: '11', wattLabel: '11W',  watt: 11,  lumens: '957',   defCct: '4000', lpw: '87', peak: '305', trimOd: '5-3/4″',   aperture: '4-3/4″',  depth: '11/16″', heroImg: 'assets/radius-ii/radius-ii-4in-hero-1.png', photoPending: false },
+    '615': { in: 6, wcode: '15', wattLabel: '15W',  watt: 15,  lumens: '1,330', defCct: '4000', lpw: '89', peak: '424', trimOd: '7-13/16″', aperture: '6-13/16″',depth: '11/16″', heroImg: 'assets/radius-ii/radius-ii-6in-hero-1.png', photoPending: false },
+    '819': { in: 8, wcode: '19', wattLabel: '19W',  watt: 19,  lumens: '1,692', defCct: '4000', lpw: '89', peak: '540', trimOd: '9-3/4″',   aperture: '8-7/8″',  depth: '11/16″', heroImg: 'assets/radius-ii/radius-ii-6in-hero-1.png', photoPending: true }
+  };
+  var sd = sizeData[size] || sizeData['411'];
+
+  // --- REBUILD SKU from params if sku param wasn't passed cleanly ---
+  // SafeZone SKU pattern: LDRS{size}-RSZ5/F[/6PK]
+  var packSuffix = (pack === '6PK') ? '/6PK' : '';
+  var rebuiltSku = 'LDRS' + size + '-RSZ5/F' + packSuffix;
+  // If passed sku doesn't match params, trust the params and rebuild.
+  if (!sku || sku.indexOf('LDRS' + size) === -1) {
+    sku = rebuiltSku;
+  } else if (pack === '6PK' && sku.indexOf('/6PK') === -1) {
+    sku = sku + '/6PK';
+  } else if (pack === 'SINGLE' && sku.indexOf('/6PK') !== -1) {
+    sku = sku.replace('/6PK', '');
+  }
+
+  // --- AUTOFILL CATALOG NUMBER (4 page headers + project info form + control bar) ---
+  document.querySelectorAll('#catNum, #catNum2, #catNum3, #catNum4, #liveSku').forEach(function(el) {
+    el.textContent = sku;
+  });
+  var pi = document.getElementById('piCatNum');
+  if (pi) pi.textContent = sku;
+
+  // --- AUTOFILL PRODUCT TITLE ---
+  var packLabel = (pack === '6PK') ? '6-Pack Carton' : 'Single Unit';
+  document.getElementById('productTitle').textContent =
+    'Radius SafeZone Series · ' + sd.in + '″ · ' + sd.wattLabel + ' · Slim Wafer Fire-Rated Recessed Downlight (White · Flat Trim · ' + packLabel + ')';
+
+  // --- AUTOFILL QUICK SPECS (4000K representative row · uniform efficacy band 85-89 lm/W) ---
+  document.getElementById('qsLumens').innerHTML = sd.lumens + '<span class="qs-unit">lm</span>';
+  document.getElementById('qsWatts').innerHTML  = sd.wattLabel.replace('W','') + '<span class="qs-unit">W</span>';
+  document.getElementById('qsLpw').innerHTML    = sd.lpw    + '<span class="qs-unit">lm/W</span>';
+
+  // --- AUTOFILL HERO IMAGE — SafeZone reuses Radius-II hero photography ---
+  var heroImg = document.getElementById('heroImg');
+  if (heroImg) {
+    heroImg.src = sd.heroImg;
+    heroImg.alt = sku + ' Radius SafeZone — ' + sd.in + '″ slim wafer fire-rated recessed downlight, white finish, flat trim, edge-lit polycarbonate, UL 263 2-hour rated';
+  }
+
+  // --- AUTOFILL ORDERING CODE BREAKDOWN (Page 4) ---
+  // SafeZone SKU pattern: LDRS{size}-RSZ5/F[/6PK] — 5 segments visualized
+  document.getElementById('ocSize').textContent = size;
+  var ocPack = document.getElementById('ocPack');
+  var ocPackSeg = document.getElementById('ocPackSeg');
+  if (ocPack) {
+    if (pack === '6PK') {
+      ocPack.textContent = '/6PK';
+      if (ocPackSeg) ocPackSeg.classList.add('active');
+      if (ocPackSeg) ocPackSeg.classList.remove('opt');
+    } else {
+      ocPack.textContent = 'single';
+    }
+  }
+
+  // --- AUTOFILL DIMENSIONS (Page 3) per size ---
+  var specOd     = document.getElementById('specOd');     if (specOd)     specOd.textContent     = sd.trimOd + ' (LDRS' + size + ')';
+  var specAp     = document.getElementById('specAp');     if (specAp)     specAp.textContent     = 'Ø ' + sd.aperture;
+  var specCutout = document.getElementById('specCutout'); if (specCutout) specCutout.textContent = 'Plug-n-Play J-Box mounts remote (above ceiling) · plenum-rated quick-connect cable to wafer · NO separate housing required at the wafer cutout';
+  var specRecess = document.getElementById('specRecess'); if (specRecess) specRecess.textContent = 'Wafer recesses into ceiling cutout · 0″ projection below ceiling line';
+  var specDepth  = document.getElementById('specDepth');  if (specDepth)  specDepth.textContent  = sd.depth + ' (ultra-slim wafer · uniform across all 4 SafeZone sizes)';
+  var specWeight = document.getElementById('specWeight'); if (specWeight) specWeight.textContent = '6-pack contractor carton available (catalog suffix /6PK · current sku: ' + sku + ')';
+  var mountStd   = document.getElementById('mountStd');   if (mountStd)   mountStd.textContent   = 'Direct cutout · spring clips lock from above · pop-in install · no separate housing required';
+  var mountT24   = document.getElementById('mountT24');
+  if (mountT24) {
+    // T-Grid kits are size-gated to 4″ + 6″
+    if (sd.in === 4 || sd.in === 6) {
+      mountT24.innerHTML = 'T-Grid Installation Kit (LDRS-' + sd.in + 'R1/TGK · QuickShip · matched to this ' + sd.in + '″ aperture) — lay-in to 2×2 or 2×4 ceiling tile without cutting';
+    } else {
+      mountT24.innerHTML = 'T-Grid Installation Kit is <strong>4″ + 6″ only</strong> (LDRS-4R1/TGK · LDRS-6R1/TGK) — no T-Grid Kit in production for ' + sd.in + '″ aperture · standard direct cutout install applies';
+    }
+  }
+  var dimTopW    = document.getElementById('dimTopWidth');if (dimTopW)    dimTopW.textContent    = 'Ø ' + sd.trimOd;
+  var dimAp      = document.getElementById('dimAperture');if (dimAp)      dimAp.textContent      = 'Ø ' + sd.aperture + ' aperture';
+  var dimDp      = document.getElementById('dimDepth');   if (dimDp)      dimDp.textContent      = 'depth ' + sd.depth;
+  var dimRc      = document.getElementById('dimRecess');  if (dimRc)      dimRc.textContent      = 'slim wafer · 0″ projection';
+
+  // --- AUTOFILL PHOTOMETRIC PAGE 4 ---
+  var photoNote = sd.photoPending ? ' · ' + sd.in + '″ photometrics not yet published — see footnote' : '';
+  document.getElementById('photoEyebrow').textContent =
+    '110° even distribution · LDRS' + size + ' · ' + sd.wattLabel + ' · ' + sd.defCct + 'K · Radius SafeZone · white · wet location · UL 263 fire-rated' + photoNote;
+  document.getElementById('photoPeak').textContent    = sd.peak + ' cd' + (sd.photoPending ? ' (est.)' : '');
+  document.getElementById('photoLumens').textContent  = sd.lumens + ' lm';
+  document.getElementById('photoIesFile').textContent = 'LDRS' + size + '-RSZ5_' + sd.defCct + 'K.IES' + (sd.photoPending ? ' (' + sd.in + '″ pending)' : '');
+
+  // --- POLAR PLOT — load the SAME SVG file the mockup §6 viewer uses ---
+  // Mockup JS mapping (mockup_radius-safezone_pdp_v1.html line ~5736):
+  //   var svgMap = { '411': '409', '615': '612' };
+  // The asset suffixes (409 / 612) date back to the original Radius-II IES files;
+  // 4″ + 6″ SafeZone reuses the same beam profile (shared edge-lit optical engine).
+  // 3″ (306) + 8″ (819) have no LM-79 SVG yet → render pending placeholder block.
+  var svgMap = { '411': '409', '615': '612' };
+  var svgKey = svgMap[size];
+  var cctParam = (params.cct && /^(2700|3000|3500|4000|5000)$/.test(params.cct)) ? params.cct : sd.defCct;
+  var photoPolar = document.getElementById('photoPolar');
+  if (svgKey) {
+    // 4″ or 6″ — load the same SVG the mockup uses (replace any prior child content).
+    photoPolar.innerHTML = '<img id="photoPolarImg" ' +
+      'src="assets/photometrics/radius-ii_' + svgKey + '_' + cctParam + '.svg" ' +
+      'alt="LDRS Radius SafeZone LDRS' + size + ' photometric distribution — ' +
+        sd.in + '″ · ' + sd.wattLabel + ' · ' + cctParam + 'K · 110° even-distribution PMMA · ' +
+        sd.lumens + ' lm catalog total · platform-shared with Radius-II LM-79" ' +
+      'style="width:100%; height:100%; object-fit:contain;"/>';
+  } else {
+    // 3″ or 8″ — pending placeholder (matches mockup's heads up language).
+    photoPolar.classList.add('pending');
+    photoPolar.innerHTML =
+      '<div style="text-align:center; padding:24px 16px; color:var(--muted); font-size:8.5pt; line-height:1.45;">' +
+        '<div style="font-family:JetBrains Mono,monospace; font-size:9pt; font-weight:700; color:var(--ink); letter-spacing:0.4pt; margin-bottom:6px;">' +
+          sd.in + '″ POLAR PLOT PENDING' +
+        '</div>' +
+        sd.in + '″ (LDRS' + size + ') photometric SVG not yet published. The 4″ + 6″ SafeZone cells share an edge-lit optical engine with Radius-II — same 110° even-distribution beam profile is expected for ' + sd.in + '″. ' +
+        'Lab follow-up scheduled.' +
+      '</div>';
+  }
+
+  // --- COMPANION BOM (Page 1) + DYNAMIC ACCESSORY SPECS (Page 2) ---
+  // SafeZone 5-accessory ladder + ⒶCS sensors + 12 approved dimmers:
+  //   3 emergency: EM15 (all sizes) · JBM (6″+8″ only) · CRCU-EM/JBM (constⒶNT)
+  // + 2 contrⒶLS by ⒶCS sensors (MSP-SRI/8CM · MSP-SRI/40CM)
+  // + 2 T-Grid Kits (LDRS-4R1/TGK · LDRS-6R1/TGK · 4″ + 6″ only)
+  // + 12 Approved Dimmers (6 Leviton + 6 Lutron · Datasheet-listed)
+  var pairMap = {
+    // EMERGENCY (3 options)
+    'EM15':         { sku: 'EM15',               name: 'EM15 — 15W EM Driver · UL 924 · ≥90 min runtime · all 4 SafeZone sizes compatible' },
+    'JBM':          { sku: 'JBM',                name: 'JBM — Universal J-Box NC + 15W EMB inside · UL 924 · 6″ + 8″ ONLY per datasheet note 3', gated: '6+8' },
+    'CRCU-EM-JBM':  { sku: 'CRCU-EM/JBM',        name: 'CRCU-EM/JBM — constⒶNT Universal-Mount Mid-Power EMB · 15W max · UL 924 · 4/5/6/7″ J-Box compatible' },
+    // contrⒶLS by ⒶCS
+    'MSP-SRI-8CM':  { sku: 'MSP-SRI/8CM/HD/ACS', name: 'MSP-SRI/8CM/ⒶCS — 8 FT Wide-Area PIR (BLE SigMesh · 500-node mesh · DLC NLC Qualified · in-unit)' },
+    'MSP-SRI-40CM': { sku: 'MSP-SRI/40CM/HD/ACS',name: 'MSP-SRI/40CM/ⒶCS — 40 FT High-Bay PIR (BLE SigMesh · 500-node mesh · DLC NLC Qualified · high-bay)' },
+    // T-Grid Kits (size-gated)
+    'TGK-4':        { sku: 'LDRS-4R1/TGK',       name: 'LDRS-4R1/TGK — 4″ T-Grid Installation Kit · steel construction · lay-in to 2×2 / 2×4 drop ceiling' },
+    'TGK-6':        { sku: 'LDRS-6R1/TGK',       name: 'LDRS-6R1/TGK — 6″ T-Grid Installation Kit · steel construction · lay-in to 2×2 / 2×4 drop ceiling' },
+    // 12 Approved dimmers (separate-line SKUs · Datasheet-listed)
+    'LEV-6674':     { sku: 'Leviton 6674',       name: 'Leviton 6674 — Decora Dimmer (TRIAC+ELV · Datasheet-listed)' },
+    'LEV-DDE06':    { sku: 'Leviton DDE06',      name: 'Leviton DDE06 — Decora Digital (Datasheet-listed)' },
+    'LEV-DDL06':    { sku: 'Leviton DDL06',      name: 'Leviton DDL06 — Decora Smart Dimmer (Datasheet-listed)' },
+    'LEV-DSL06':    { sku: 'Leviton DSL06',      name: 'Leviton DSL06 — Decora Smart LED (Datasheet-listed)' },
+    'LEV-DSE06':    { sku: 'Leviton DSE06',      name: 'Leviton DSE06 — Decora Smart ELV (Datasheet-listed)' },
+    'LEV-IPL06':    { sku: 'Leviton IPL06',      name: 'Leviton IPL06 — Decora ELV (Datasheet-listed)' },
+    'LUT-MACL153M': { sku: 'Lutron MACL-153M',   name: 'Lutron MACL-153M — Maestro CL Multi-Location (Datasheet-listed)' },
+    'LUT-DVCL153P': { sku: 'Lutron DVCL-153P',   name: 'Lutron DVCL-153P — Diva CL paddle+slide (Datasheet-listed)' },
+    'LUT-CTCL153P': { sku: 'Lutron CTCL-153P',   name: 'Lutron CTCL-153P — Caseta CL (Datasheet-listed)' },
+    'LUT-STCL153M': { sku: 'Lutron STCL-153M',   name: 'Lutron STCL-153M — Maestro Sensor CL (Datasheet-listed)' },
+    'LUT-DVSCELV300P': { sku: 'Lutron DVSCELV-300P', name: 'Lutron DVSCELV-300P — Diva ELV (Datasheet-listed)' },
+    'LUT-CTELV300P': { sku: 'Lutron CTELV-300P', name: 'Lutron CTELV-300P — Caseta ELV (Datasheet-listed)' }
+  };
+
+  // --- ACC_SPEC_TABLE · full spec rows for the dynamic Page-2 accessory section.
+  // Each entry: section-head + spec rows (key + value). JS injects a section-head
+  // <tr.spec-section-head> followed by spec rows <tr><td.spec-attr><td.spec-val>
+  // before the #accSpecAnchor element. Eclipse-II canonical pattern.
+  var ACC_SPEC_TABLE = {
+    'EM15': {
+      sectionHead: 'Selected Companion · EM15 — 15W EM Driver (separate SKU)',
+      specs: [
+        ['Output Power',      '15 W max · constant-power emergency driver'],
+        ['Runtime',           '≥ 90 min at reduced lumens (UL 924)'],
+        ['Input Voltage',     '120 V AC · 60 Hz'],
+        ['Battery',           'NiMH or LiFePO4 · self-test/diagnostic LED · 24-hr recharge · 5-yr design life'],
+        ['Mount',             'In-ceiling above the SafeZone J-Box · plug-n-play connection to the wafer'],
+        ['Compatible With',   'all 4 LDRS Radius SafeZone sizes (3″ / 4″ / 6″ / 8″)'],
+        ['Egress Performance','≥ 90 min · NFPA 101 § 7.9 · IBC § 1008.3 means-of-egress compliant'],
+        ['Certification',     'UL 924 · CSA C22.2 No.141 · CEC Title 20']
+      ]
+    },
+    'JBM': {
+      sectionHead: 'Selected Companion · JBM — Universal J-Box NC + 15W EMB (separate SKU)',
+      specs: [
+        ['Output Power',      '15 W max · constant-power emergency driver inside the J-Box'],
+        ['Runtime',           '≥ 90 min at reduced lumens (UL 924)'],
+        ['Input Voltage',     '120 V AC · 60 Hz'],
+        ['Battery',           'Sealed Pb-acid or LiFePO4 · 24-hr recharge · 5-yr design life'],
+        ['Mount',             'Universal J-Box · new-construction · accepts SafeZone plug-n-play cable directly'],
+        ['Compatible With',   '<strong>6″ and 8″ Radius SafeZone ONLY</strong> per datasheet note 3 — not approved for 3″ or 4″ sizes'],
+        ['Egress Performance','≥ 90 min · NFPA 101 § 7.9 · IBC § 1008.3 means-of-egress compliant'],
+        ['Certification',     'UL 924 · UL listed J-Box · CSA C22.2 No.141']
+      ]
+    },
+    'CRCU-EM-JBM': {
+      sectionHead: 'Selected Companion · constⒶNT CRCU-EM/JBM (separate SKU)',
+      specs: [
+        ['Output Power',      '15 W max · constant-power EMB'],
+        ['Runtime',           '≥ 90 min at reduced lumens (UL 924)'],
+        ['Input Voltage',     '120 V AC · 50/60 Hz'],
+        ['Battery',           'LiFePO4 · 24-hr recharge · 5-yr design life'],
+        ['Mount',             'Universal cover · fits 4″ / 5″ / 6″ / 7″ round + octagonal J-Box openings'],
+        ['Compatible With',   'all 4 LDRS Radius SafeZone sizes (3″ / 4″ / 6″ / 8″)'],
+        ['Egress Performance','≥ 90 min · NFPA 101 § 7.9 · IBC § 1008.3 means-of-egress compliant'],
+        ['Certification',     'UL 924 · CSA C22.2 No.141 · CEC Title 20']
+      ]
+    },
+    'MSP-SRI-8CM': {
+      sectionHead: 'Selected Companion · contrⒶLS by ⒶCS · MSP-SRI/8CM/HD/ACS (separate SKU)',
+      specs: [
+        ['Detection Tech',    'PIR Wide-Area · ceiling-mount'],
+        ['Max Mount Height',  '8 ft (2.4 m)'],
+        ['Network',           'BLE SigMesh · up to 500-node mesh'],
+        ['Input Voltage',     '120-277 V AC'],
+        ['Commissioning',     'ⒶCS by ALG App (iOS) · zone scheduling · OTA firmware'],
+        ['Application',       'In-unit ceilings (closets, baths, laundry, leasing offices, amenity rooms)'],
+        ['IP Rating',         'IP20 (interior) · −20°C to +50°C operating range'],
+        ['Certification',     'UL Listed · DLC NLC Qualified for utility rebates']
+      ]
+    },
+    'MSP-SRI-40CM': {
+      sectionHead: 'Selected Companion · contrⒶLS by ⒶCS · MSP-SRI/40CM/HD/ACS (separate SKU)',
+      specs: [
+        ['Detection Tech',    'PIR Wide-Area · High-Detection'],
+        ['Max Mount Height',  '40 ft (12 m)'],
+        ['Network',           'BLE SigMesh · up to 500-node mesh (shared with 8CM session)'],
+        ['Input Voltage',     '120-277 V AC'],
+        ['Commissioning',     'ⒶCS by ALG App (iOS)'],
+        ['Application',       'Parking decks · stairwells · mechanical rooms · tall amenity ceilings'],
+        ['IP Rating',         'IP20 (interior) · −20°C to +50°C operating range'],
+        ['Certification',     'UL Listed · DLC NLC Qualified for utility rebates']
+      ]
+    },
+    'TGK-4': {
+      sectionHead: 'Selected Companion · LDRS-4R1/TGK — 4″ T-Grid Installation Kit (separate SKU)',
+      specs: [
+        ['Aperture',           '4″ (matched to LDRS411-RSZ5/F)'],
+        ['Material',           'Steel construction · powder-coat finish'],
+        ['Mount Options',      'Drop-ceiling lay-in to 2×2 or 2×4 standard T-grid (no cutting required)'],
+        ['Compatibility',      'Radius SafeZone 4″ AND Radius-II 4″ — shared T-Grid Kit across both families'],
+        ['Lead Time',          'QuickShip'],
+        ['Note',               '<strong>T-Grid Kits are 4″ + 6″ only</strong> — no kit in production for the 3″ or 8″ sizes']
+      ]
+    },
+    'TGK-6': {
+      sectionHead: 'Selected Companion · LDRS-6R1/TGK — 6″ T-Grid Installation Kit (separate SKU)',
+      specs: [
+        ['Aperture',           '6″ (matched to LDRS615-RSZ5/F)'],
+        ['Material',           'Steel construction · powder-coat finish'],
+        ['Mount Options',      'Drop-ceiling lay-in to 2×2 or 2×4 standard T-grid (no cutting required)'],
+        ['Compatibility',      'Radius SafeZone 6″ AND Radius-II 6″ — shared T-Grid Kit across both families'],
+        ['Lead Time',          'QuickShip'],
+        ['Note',               '<strong>T-Grid Kits are 4″ + 6″ only</strong> — no kit in production for the 3″ or 8″ sizes']
+      ]
+    },
+    'LEV-6674': {
+      sectionHead: 'Selected Companion · Leviton 6674 Decora Dimmer (separate SKU)',
+      specs: [
+        ['Type',          'Decora paddle dimmer (TRIAC + ELV)'],
+        ['Dim Range',     '10% to 100% (per SafeZone datasheet)'],
+        ['Compatible',    'All 4 Radius SafeZone sizes (3″ · 4″ · 6″ · 8″)'],
+        ['Notes',         'One of 6 Leviton dimmers approved on the SafeZone datasheet — sister SKUs: DDE06, DDL06, DSL06, DSE06, IPL06']
+      ]
+    },
+    'LEV-DDE06': {
+      sectionHead: 'Selected Companion · Leviton DDE06 — Decora Digital (separate SKU)',
+      specs: [
+        ['Type',          'Decora Digital dimmer'],
+        ['Dim Range',     '10% to 100%'],
+        ['Compatible',    'All 4 Radius SafeZone sizes'],
+        ['Notes',         'One of 6 Leviton dimmers approved on the SafeZone datasheet']
+      ]
+    },
+    'LEV-DDL06': {
+      sectionHead: 'Selected Companion · Leviton DDL06 — Decora Smart Dimmer (separate SKU)',
+      specs: [
+        ['Type',          'Decora Smart Dimmer'],
+        ['Dim Range',     '10% to 100%'],
+        ['Compatible',    'All 4 Radius SafeZone sizes'],
+        ['Notes',         'One of 6 Leviton dimmers approved on the SafeZone datasheet']
+      ]
+    },
+    'LEV-DSL06': {
+      sectionHead: 'Selected Companion · Leviton DSL06 — Decora Smart LED (separate SKU)',
+      specs: [
+        ['Type',          'Decora Smart LED dimmer'],
+        ['Dim Range',     '10% to 100%'],
+        ['Compatible',    'All 4 Radius SafeZone sizes'],
+        ['Notes',         'One of 6 Leviton dimmers approved on the SafeZone datasheet']
+      ]
+    },
+    'LEV-DSE06': {
+      sectionHead: 'Selected Companion · Leviton DSE06 — Decora Smart ELV (separate SKU)',
+      specs: [
+        ['Type',          'Decora Smart ELV dimmer'],
+        ['Dim Range',     '10% to 100%'],
+        ['Compatible',    'All 4 Radius SafeZone sizes'],
+        ['Notes',         'One of 6 Leviton dimmers approved on the SafeZone datasheet']
+      ]
+    },
+    'LEV-IPL06': {
+      sectionHead: 'Selected Companion · Leviton IPL06 — Decora ELV (separate SKU)',
+      specs: [
+        ['Type',          'Decora ELV dimmer'],
+        ['Dim Range',     '10% to 100%'],
+        ['Compatible',    'All 4 Radius SafeZone sizes'],
+        ['Notes',         'One of 6 Leviton dimmers approved on the SafeZone datasheet']
+      ]
+    },
+    'LUT-MACL153M': {
+      sectionHead: 'Selected Companion · Lutron MACL-153M Maestro CL (separate SKU)',
+      specs: [
+        ['Type',          'Maestro CL · multi-location (3-way/4-way with companion remote)'],
+        ['Dim Range',     '10% to 100% (per SafeZone datasheet)'],
+        ['Multi-Location','3-way / 4-way with companion remote'],
+        ['Compatible',    'All 4 Radius SafeZone sizes (3″ · 4″ · 6″ · 8″)']
+      ]
+    },
+    'LUT-DVCL153P': {
+      sectionHead: 'Selected Companion · Lutron DVCL-153P Diva CL (separate SKU)',
+      specs: [
+        ['Type',          'Diva CL · paddle + slide'],
+        ['Dim Range',     '10% to 100%'],
+        ['Compatible',    'All 4 Radius SafeZone sizes']
+      ]
+    },
+    'LUT-CTCL153P': {
+      sectionHead: 'Selected Companion · Lutron CTCL-153P Caseta CL (separate SKU)',
+      specs: [
+        ['Type',          'Caseta CL · smart dimmer'],
+        ['Dim Range',     '10% to 100%'],
+        ['Compatible',    'All 4 Radius SafeZone sizes']
+      ]
+    },
+    'LUT-STCL153M': {
+      sectionHead: 'Selected Companion · Lutron STCL-153M Maestro Sensor CL (separate SKU)',
+      specs: [
+        ['Type',          'Maestro Sensor CL · occupancy + dimming'],
+        ['Dim Range',     '10% to 100%'],
+        ['Compatible',    'All 4 Radius SafeZone sizes']
+      ]
+    },
+    'LUT-DVSCELV300P': {
+      sectionHead: 'Selected Companion · Lutron DVSCELV-300P Diva ELV (separate SKU)',
+      specs: [
+        ['Type',          'Diva ELV dimmer'],
+        ['Dim Range',     '10% to 100%'],
+        ['Compatible',    'All 4 Radius SafeZone sizes']
+      ]
+    },
+    'LUT-CTELV300P': {
+      sectionHead: 'Selected Companion · Lutron CTELV-300P Caseta ELV (separate SKU)',
+      specs: [
+        ['Type',          'Caseta ELV smart dimmer'],
+        ['Dim Range',     '10% to 100%'],
+        ['Compatible',    'All 4 Radius SafeZone sizes']
+      ]
+    }
+  };
+
+  var bomEntries = [];
+  if (emergency) bomEntries.push(pairMap[emergency]);
+  if (sensor)    bomEntries.push(pairMap[sensor]);
+  if (tgrid)     bomEntries.push(pairMap[tgrid]);
+  if (dimmer)    bomEntries.push(pairMap[dimmer]);
+  bomEntries = bomEntries.filter(Boolean);
+
+  if (bomEntries.length) {
+    var bomList = document.getElementById('bomList');
+    if (bomList) {
+      bomList.innerHTML = bomEntries.map(function(e) {
+        // JBM gate warning when size is 3″ or 4″
+        var gateNote = '';
+        if (e.gated === '6+8' && (sd.in === 3 || sd.in === 4)) {
+          gateNote = '<span class="gate-warning">⚠ JBM is 6″ + 8″ ONLY — not approved for the configured ' + sd.in + '″ aperture</span>';
+        }
+        return '<li><span class="plus">+</span><span><strong>' + e.sku + '</strong>' +
+               '<span class="pair-name">' + e.name + '</span>' + gateNote + '</span></li>';
+      }).join('');
+      var bomPanel = document.getElementById('bomPanel');
+      if (bomPanel) bomPanel.style.display = 'block';
+    }
+  }
+
+  // --- Page 2 · Dynamic Selected-Companion Accessory Specs section ---
+  // For each selected companion, insert a section-head row + spec rows before
+  // the #accSpecAnchor placeholder. Eclipse-II canonical pattern.
+  var anchor = document.getElementById('accSpecAnchor');
+  if (anchor) {
+    var selectedAcc = [emergency, sensor, tgrid, dimmer].filter(Boolean);
+    selectedAcc.forEach(function(key) {
+      var entry = ACC_SPEC_TABLE[key];
+      if (!entry) return;
+      var html = '<tr class="spec-section-head"><td colspan="2">' + entry.sectionHead + '</td></tr>';
+      entry.specs.forEach(function(s) {
+        html += '<tr><td class="spec-attr">' + s[0] + '</td><td class="spec-val">' + s[1] + '</td></tr>';
+      });
+      anchor.insertAdjacentHTML('beforebegin', html);
+    });
+  }
+
+  // --- LIVE DATE ---
+  var d = new Date();
+  var liveDate = document.getElementById('liveDate');
+  if (liveDate) liveDate.textContent = d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+  var revStr = d.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit' }).replace('/', '-');
+  var revDate = document.getElementById('revDate');
+  if (revDate) revDate.textContent = revStr;
+  document.querySelectorAll('.rev-date').forEach(function(el) { el.textContent = revStr; });
+
+  // --- AUTO-PRINT ---
+  // Fires window.print() 600 ms after load — long enough for the browser to
+  // paint the 4 pages and load the hero image. Skippable with ?autoprint=0.
+  if (autoprint) {
+    window.addEventListener('load', function() {
+      setTimeout(function() { window.print(); }, 600);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -3,34 +3,28 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LPTP Symmetry · Submittal Sheet</title>
+<title>LBOL · Sentry · Submittal Sheet</title>
 
 <!--
-  ALG SUBMITTAL TEMPLATE · LPTP Symmetry-I Post-Top v2
-  =====================================================
-  Reads URL query params populated by mockup_symmetry_pdp_v1.html Section 9 (the
+  ALG SUBMITTAL TEMPLATE · LBOL Sentry v1
+  =========================================
+  Reads URL query params populated by mockup_sentry_pdp_v1.html Section 9 (the
   Configurator) and auto-fills the catalog number + quick specs + ordering
-  breakdown + photometric data for a project-stampable PDF.
+  breakdown + photometric polar plot for a project-stampable PDF.
 
   Example invocation (matches the configurator's Generate Submittal PDF CTA):
-    submittal_symmetry.html?sku=LPTP130-3CS/27VS1/DB/FD
-        &housing=130&voltage=27V&finish=DB&optic=FD
+    submittal_sentry.html?sku=LBOL-24-3CS-27V-S1/DB/R/DFR
+        &wc=24&finish=DB&pole=R&crown=DFR[&em=EM]
 
   Print: File → Print → Save as PDF (letter portrait) → 2-page submittal.
+  Manus replaces this with a real backend at /submittal-generator/?sku=…
+  on production; until then this static template renders identical output.
 
-  AUTHORITATIVE 25-SKU MAIN-MATRIX (James 2026-05-19 · 4 QS · 21 MTO):
-    QS (4 SKUs · all LPTP130-3CS/27VS1):
-      LPTP130-3CS/27VS1/B/FD    · Black       · Frosted
-      LPTP130-3CS/27VS1/DB/BL   · Dark Bronze · BeamLogic
-      LPTP130-3CS/27VS1/DB/FD   · Dark Bronze · Frosted   ★ default
-      LPTP130-3CS/27VS1/W/FD    · White       · Frosted   (only W variant)
-    MTO (21 other combos across 090/130/160 × 27V/48V × {B,DB} × {BL,FD})
-
-  ALTERNATE PLATFORMS (4 SKUs · informational footer · not in main encoder):
-    LPTP4W-S3-U{B|D|W}                · 4-WATTselect lamp variant
-    LPTP5W130-5CS-48VS2/3BL/DB        · 5-WATTselect + 5-CCT special build
-
-  CFG-SUB-1 V2 (snapshot-then-rederive) built in from first save.
+  Pattern mirrors submittal_symmetry.html. Sentry adaptations:
+    - 7-segment LBOL ordering code (LBOL-WC-3CS-27V-S1/FIN/POLE/CROWN[/EM])
+    - 2 wattage classes × 4 finishes × 2 poles × 12 crowns + optional /EM
+    - Type V 360° full-cutoff bollard (no NEMA distribution)
+    - Combo-aware QS: 6 stocked combinations from James 2026-05-19
 -->
 
 <style>
@@ -463,6 +457,16 @@
     font-family: inherit; font-size: 9pt;
   }
   .actions-bar a { color: white; text-decoration: underline; opacity: 0.85; }
+
+/* CFG-TYPE-1 · Lato lock — Shopify global cascades Cormorant onto inline Lato.
+   This !important rule pins Lato on h1/h2 for this collection's PDP body class. */
+body.cityarch-pdp h1,
+body.cityarch-pdp h2 {
+  font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+}
+
+/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+body { overflow-x: hidden; }
 </style>
 </head>
 <body>
@@ -472,7 +476,7 @@
 <!-- ============================================================ -->
 <div class="actions-bar no-print">
   <div>
-    LPTP Symmetry · LED Post-Top Submittal Sheet · <span id="liveSku" class="mono"></span>
+    LBOL Sentry · Submittal Sheet · <span id="liveSku" class="mono"></span>
   </div>
   <div>
     <a href="#" onclick="history.back(); return false;">← Back to Configurator</a>
@@ -498,35 +502,32 @@
     </div>
     <div class="catalog-block">
       <div class="catalog-eyebrow">Catalog Number <span class="no-print" style="font-family:'JetBrains Mono',monospace; font-size:7pt; color:var(--brand-red); letter-spacing:0.6pt; margin-left:6px;">✎ click to edit</span></div>
-      <div class="catalog-number editable-catalog" id="catNum" contenteditable="true" spellcheck="false">LPTP130-3CS/27VS1/DB/FD</div>
+      <div class="catalog-number editable-catalog" id="catNum" contenteditable="true" spellcheck="false">LBOL-24-3CS-27V-S1/DB/R/DFR</div>
     </div>
   </div>
 
   <!-- Cover banner -->
   <div class="cover-banner">
     <div>
-      <div class="cover-tag">city<span class="aa"></span>RCH · PRO POST-TOP · LPTP Symmetry-I</div>
-      <h1>Symmetry</h1>
-      <div class="cover-sub">LED Post-Top Luminaire · 4-WATTselect &middot; 3-CCTselect &middot; V-Yoke Spider Mount</div>
+      <div class="cover-tag">city<span class="aa"></span>RCH · PRO BOLLARD · LBOL Sentry-I</div>
+      <h1>Sentry</h1>
+      <div class="cover-sub">LED Bollard · Type V Full-Cutoff · 36–42&Prime; pier-mount</div>
       <div class="cover-tagline" id="taglineLumens">
-        Spec-grade architectural post-top for streetscapes, parks, plazas, and pedestrian malls.
-        <strong id="taglineWatts">130W max</strong> at
-        <strong id="taglineLums">19,500 lm</strong> &middot;
-        <strong id="taglineCct">3-CCTselect (3000K / 4000K / 5000K dip-switch)</strong>.
-        BeamLogic&trade; directional optic OR Frosted symmetric optic. 5-year / 50,000-hour warranty.
+        Spec-grade pedestrian-scale bollard. <strong id="taglineWatts">10/14/19/24W</strong> field-tunable across <strong id="taglineCct">3-CCTselect</strong>.
+        Dome / Round / Square crown options. 7-year warranty.
       </div>
     </div>
     <div style="text-align: right;">
       <div class="cover-tag" style="color:white; opacity:0.6;">Stock Status</div>
       <div id="stockPill" class="qs-pill">QuickShip · 3-5 day</div>
       <div style="font-size: 8pt; color: rgba(255,255,255,0.65); margin-top: 6px; line-height: 1.4;">
-        4 of 25 main-matrix SKUs are QS.<br/>All QS combos are LPTP130 + 120-277V.
+        Anchor bolt kit ships standard.<br/>Optional pole set ordered separately.
       </div>
     </div>
   </div>
   <!-- v9 · Product hero strip (added 2026-05-20 PM per James submittal canonical request) -->
   <div class="hero-strip" style="margin: 12px 0 16px 0; padding: 12px; border: 1px solid var(--rule); background: #f7f7f7; display: flex; align-items: center; justify-content: center; min-height: 180px;">
-    <img src="assets/symmetry/hero/symmetry-1-front-round.png" alt="Symmetry-Series LPTP post-top luminaire — front round" style="max-width: 100%; max-height: 200px; height: auto; object-fit: contain;"
+    <img src="assets/sentry/sentry-hero-1.webp" alt="Sentry LBOL bollard — Dark Bronze finish, full elevation" style="max-width: 100%; max-height: 200px; height: auto; object-fit: contain;"
          onerror="this.style.display='none';" />
   </div>
 
@@ -554,50 +555,49 @@
   <!-- Quick Specs -->
   <div class="quickspec-grid">
     <div class="qs-cell">
-      <div class="qs-label">Peak Lumens</div>
-      <div class="qs-value" id="qsLumens">19,500<span class="qs-unit">lm</span></div>
+      <div class="qs-label">Max Lumens</div>
+      <div class="qs-value" id="qsLumens">3,200<span class="qs-unit">lm</span></div>
     </div>
     <div class="qs-cell">
-      <div class="qs-label">Wattage (max)</div>
-      <div class="qs-value" id="qsWatts">130<span class="qs-unit">W</span></div>
+      <div class="qs-label">Wattage Range</div>
+      <div class="qs-value" id="qsWatts">10–24<span class="qs-unit">W</span></div>
     </div>
     <div class="qs-cell">
-      <div class="qs-label">Efficacy</div>
-      <div class="qs-value" id="qsEfficacy">173<span class="qs-unit">lm/W</span></div>
+      <div class="qs-label">Efficacy (max)</div>
+      <div class="qs-value" id="qsEfficacy">145<span class="qs-unit">lm/W</span></div>
     </div>
     <div class="qs-cell">
       <div class="qs-label">Voltage</div>
       <div class="qs-value" id="qsVoltage">120-277<span class="qs-unit">V</span></div>
     </div>
     <div class="qs-cell">
-      <div class="qs-label">CCT</div>
-      <div class="qs-value" id="qsCct">3CS<span class="qs-unit">dip</span></div>
+      <div class="qs-label">CCT (3CS)</div>
+      <div class="qs-value" id="qsCct">30/40/50<span class="qs-unit">00K</span></div>
     </div>
   </div>
 
   <!-- Tagline / hero claim -->
   <div class="tagline-block">
-    <strong>One post-top family. Three housing classes. Two optic platforms. 25 main-matrix SKUs.</strong>
-    Symmetry replaces a stock-room of single-spec post-tops with one configurable spec line &mdash; 90 / 130 / 160W
-    housings, 120-277V or 277-480V drivers, Black or Dark Bronze (White on the lone 130/27V/Frosted variant),
-    and either the <strong>BeamLogic&trade;</strong> directional optic or the <strong>Frosted Optics</strong>
-    symmetric optic. Field-tunable CCT via 3-CCTselect dip-switch (3000K / 4000K / 5000K) on every SKU.
-    <strong style="color:#2C7A4A;">4 SKUs are QuickShip (all LPTP130 + 120-277V combinations);
-    the other 21 main-matrix SKUs are MTO with ~4-6 wk lead.</strong>
+    <strong>One bollard family. Twelve aesthetic combinations.</strong> Sentry replaces a stock-room of single-spec
+    bollards with one SKU — Dome Top / Round Top / Square Top crowns × Clear Louver / Clear Reflector /
+    Frosted Louver / Frosted Reflector optics. Field-tunable wattage and CCT via dip-switch (3CS bundle).
+    constⒶNT-Ready: factory-install 8W/900lm/90-min emergency backup available. 7-yr / 75k-hr limited warranty.
   </div>
 
   <!-- Ordering Code visual breakdown -->
   <div class="section-head">
     <h2>Ordering Code</h2>
-    <div class="section-eyebrow">4 segments · Family·Housing · CCT-bundle · Voltage·Series · Finish · Optic</div>
+    <div class="section-eyebrow">7 segments · Family · Wattage · 3CS · Voltage · Series · Finish · Pole · Crown</div>
   </div>
 
-  <div class="order-code" style="grid-template-columns: repeat(5, 1fr);">
-    <div class="order-segment active"><div class="order-seg-label">Family · Housing</div><div class="order-seg-value" id="ocHousing">LPTP130</div></div>
+  <div class="order-code">
+    <div class="order-segment active"><div class="order-seg-label">Family</div><div class="order-seg-value">LBOL</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Wattage</div><div class="order-seg-value" id="ocWc">24</div></div>
     <div class="order-segment fixed"><div class="order-seg-label">CCT Bundle</div><div class="order-seg-value">3CS</div></div>
-    <div class="order-segment active"><div class="order-seg-label">Voltage · Series</div><div class="order-seg-value" id="ocVoltage">27VS1</div></div>
+    <div class="order-segment fixed"><div class="order-seg-label">Voltage</div><div class="order-seg-value">27V</div></div>
+    <div class="order-segment fixed"><div class="order-seg-label">Series</div><div class="order-seg-value">S1</div></div>
     <div class="order-segment active"><div class="order-seg-label">Finish</div><div class="order-seg-value" id="ocFinish">DB</div></div>
-    <div class="order-segment active"><div class="order-seg-label">Optic</div><div class="order-seg-value" id="ocOptic">FD</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Pole · Crown</div><div class="order-seg-value" id="ocPoleCrown">R/DFR</div></div>
   </div>
 
   <table class="order-matrix">
@@ -608,34 +608,20 @@
       </tr>
     </thead>
     <tbody>
-      <tr id="rowHousing"><td class="code">LPTP090 / LPTP130 / LPTP160</td><td>Housing class &mdash; <strong>LPTP090</strong> (36-90W &middot; 11,500 lm peak) &middot; <strong>LPTP130</strong> (52-130W &middot; 19,500 lm peak &middot; volume center, only QS housing) &middot; <strong>LPTP160</strong> (64-160W &middot; 25,500 lm peak)</td></tr>
-      <tr><td class="code">3CS</td><td>3-CCTselect bundle &mdash; every unit ships field-tunable: 3000K &middot; 4000K &middot; 5000K (dip-switch)</td></tr>
-      <tr id="rowVoltage"><td class="code">27VS1 / 48VS1</td><td>Voltage &middot; Series &mdash; <strong>27VS1</strong> 120-277Vac (only QS voltage) &middot; <strong>48VS1</strong> 277-480Vac high-voltage variant</td></tr>
-      <tr id="rowFinish"><td class="code">B / DB / W</td><td>Finish &mdash; <strong>B</strong> Black &middot; <strong>DB</strong> Dark Bronze (★ volume) &middot; <strong>W</strong> White (LPTP130 + 27V + Frosted only &mdash; the lone W-finish SKU)</td></tr>
-      <tr id="rowOptic"><td class="code">BL / FD</td><td>Optic &mdash; <strong>BL</strong> BeamLogic&trade; directional throw + visual-comfort tilt &middot; <strong>FD</strong> Frosted Optics symmetric darkⒶRCH-style distribution</td></tr>
-    </tbody>
-  </table>
-
-  <!-- Authoritative 25-SKU matrix (4 QS · 21 MTO) -->
-  <table class="order-matrix" style="margin-top: 6px;">
-    <thead>
-      <tr>
-        <th>Catalog Number</th>
-        <th>Specifications · Stock (James 2026-05-19)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr id="skuRow_QS"><td class="code" colspan="2" style="background:#E0F2E5; color:#2C7A4A; text-align: center; padding: 6px;"><strong>★ QuickShip · ships 3-5 day · 4 SKUs (all LPTP130 + 120-277V)</strong></td></tr>
-      <tr id="skuRow_130_27V_B_FD"><td class="code">LPTP130-3CS/27VS1/B/FD</td><td>130W &middot; 120-277V &middot; Black &middot; Frosted Optics &middot; <strong style="color:#2C7A4A;">QS</strong></td></tr>
-      <tr id="skuRow_130_27V_DB_BL"><td class="code">LPTP130-3CS/27VS1/DB/BL</td><td>130W &middot; 120-277V &middot; Dark Bronze &middot; BeamLogic&trade; &middot; <strong style="color:#2C7A4A;">QS</strong></td></tr>
-      <tr id="skuRow_130_27V_DB_FD"><td class="code">LPTP130-3CS/27VS1/DB/FD</td><td>130W &middot; 120-277V &middot; Dark Bronze &middot; Frosted Optics &middot; <strong style="color:#2C7A4A;">★ QS</strong> &middot; default ship config</td></tr>
-      <tr id="skuRow_130_27V_W_FD"><td class="code">LPTP130-3CS/27VS1/W/FD</td><td>130W &middot; 120-277V &middot; White &middot; Frosted Optics &middot; <strong style="color:#2C7A4A;">QS</strong> &middot; the lone White-finish SKU</td></tr>
-      <tr><td class="code" colspan="2" style="background:#FFF2DA; color:#B36A00; text-align: center; padding: 6px;"><strong>MTO · ~4-6 wk lead · 21 SKUs (all housing × voltage × finish × optic combos not listed above)</strong></td></tr>
+      <tr><td class="code">LBOL</td><td>LED Bollard family</td></tr>
+      <tr id="rowWc"><td class="code">24 / 26</td><td>Wattage class — <strong>LBOL24</strong> (10/14/19/24W · up to 145 lm/W · Dome/Round/Square crowns) · <strong>LBOL26</strong> (10/16/21/26W · 119 lm/W · Round Top only)</td></tr>
+      <tr><td class="code">3CS</td><td>3-CCTselect bundle — every unit ships field-tunable: 3000K · 4000K · 5000K (4-position dip-switch)</td></tr>
+      <tr><td class="code">27V</td><td>Universal voltage — 120-277Vac · 50/60Hz</td></tr>
+      <tr><td class="code">S1</td><td>Sentry-I product series</td></tr>
+      <tr id="rowFin"><td class="code">B / DB / S / W</td><td>Finish — <strong>B</strong> Black (QS) · <strong>DB</strong> Dark Bronze (★ QS · ships volume) · <strong>S</strong> Silver (MTO) · <strong>W</strong> White (QS)</td></tr>
+      <tr id="rowPole"><td class="code">R / S</td><td>Pole type — <strong>R</strong> Round pole + anchor bolt kit · <strong>S</strong> Square pole + anchor bolt kit</td></tr>
+      <tr id="rowCrown"><td class="code">DCL/DCT/DFL/DFR · RCL/RCT/RFL/RFR · SCL/SCT/SFL/SFR</td><td>Crown × Optic — Dome / Round / Square Top × Clear Louver / Clear Reflector / Frosted Louver / Frosted Reflector (LBOL24 unlocks all 12 · LBOL26 only Round Top)</td></tr>
+      <tr id="rowEm"><td class="code">/EM</td><td>Optional Emergency Battery — 8W / 900lm / 90 min (constⒶNT factory-install only · not field-retrofit)</td></tr>
     </tbody>
   </table>
 
   <div class="page-foot">
-    <div>archipelagolighting.com · LPTP Symmetry-I submittal · Specifications subject to change</div>
+    <div>archipelagolighting.com · LBOL Sentry submittal · Specifications subject to change</div>
     <div>Rev. <span id="revDate">2026-05</span> · Page 1 of 2</div>
   </div>
 </div>
@@ -656,41 +642,41 @@
     </div>
     <div class="catalog-block">
       <div class="catalog-eyebrow">Catalog Number</div>
-      <div class="catalog-number" id="catNum2">LPTP130-3CS/27VS1/DB/FD</div>
+      <div class="catalog-number" id="catNum2">LBOL-24-3CS-27V-S1/DB/R/DFR</div>
     </div>
   </div>
 
   <div class="section-head">
     <h2>Detailed Specifications</h2>
-    <div class="section-eyebrow">LPTP Symmetry-I · LED Post-Top · cityⒶRCH PRO Outdoor</div>
+    <div class="section-eyebrow">LBOL Sentry · LED Bollard · Pedestrian-Scale Outdoor</div>
   </div>
 
   <table class="spec-table">
     <tbody>
       <tr class="spec-section-head"><td colspan="2">Optical &amp; Performance</td></tr>
-      <tr><td class="spec-attr" id="specOpticLabel">Optic Platform (selected)</td><td class="spec-val" id="specOpticRow">Frosted Optics &middot; symmetric darkⒶRCH-style distribution &middot; soft visual-comfort character</td></tr>
-      <tr><td class="spec-attr">CCT Bundle (3CS)</td><td class="spec-val">3000K · 4000K · 5000K field-selectable via dip-switch (universal across every active SKU)</td></tr>
-      <tr><td class="spec-attr">CRI</td><td class="spec-val">CRI &ge; 80 across all variants</td></tr>
-      <tr><td class="spec-attr" id="specHousingLabel">Housing Class · LPTP130</td><td class="spec-val" id="specHousingRow">52-130W (4-WATTselect dip) &middot; 19,500 lm peak @ 173 lm/W</td></tr>
-      <tr><td class="spec-attr">Peak Intensity</td><td class="spec-val" id="specPeak">19,500 lm / 130W &middot; tested per IESNA LM-79</td></tr>
+      <tr><td class="spec-attr">Distribution</td><td class="spec-val">Type V · 360° · Full Cutoff · Zero Uplight</td></tr>
+      <tr><td class="spec-attr">CCT Bundle (3CS)</td><td class="spec-val">3000K · 4000K · 5000K (field-selectable via dip-switch · CCT shift &le; 180K over 75,000 hrs)</td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val">&ge; 70 across all variants (R9 typical 30+)</td></tr>
+      <tr><td class="spec-attr" id="specWcLabel">Wattage Class · LBOL24</td><td class="spec-val" id="specWcRow">10W / 14W / 19W / 24W field-set · 1,400 / 2,000 / 2,750 / 3,200 lm · up to 145 lm/W</td></tr>
+      <tr><td class="spec-attr">Crown × Optic Matrix</td><td class="spec-val" id="specCrown">Dome Top × Frosted Reflector (DFR) · Type V atomization optic · soft visual-comfort distribution</td></tr>
 
       <tr class="spec-section-head"><td colspan="2">Electrical</td></tr>
-      <tr><td class="spec-attr">Input Voltage (selected)</td><td class="spec-val" id="specVoltage">120-277VAC universal &middot; 50/60Hz</td></tr>
-      <tr><td class="spec-attr">Driver</td><td class="spec-val">Constant-current LED driver &middot; PF &gt; 0.90 at full load &middot; THD &lt; 20% &middot; integrated WATTSELECT + CCTselect dip-switches</td></tr>
-      <tr><td class="spec-attr">Surge Protection (base)</td><td class="spec-val">6kV dual-mode (L/N-PE and L-N) per IEEE C62.41 &middot; standard &middot; 10kV / 20kV options via constⒶNT add-on (separate line item)</td></tr>
-      <tr><td class="spec-attr">Controls (optional)</td><td class="spec-val">Bi-Level &middot; Bi-Level + 5-Dial &middot; ⒶCS Mesh + Cloud &middot; SILVAIR Mesh &mdash; all separate line items via contrⒶLS adders</td></tr>
+      <tr><td class="spec-attr">Input Voltage</td><td class="spec-val">120–277VAC · 50/60Hz · Universal</td></tr>
+      <tr><td class="spec-attr">Driver</td><td class="spec-val">Constant-current LED driver · PF &gt; 0.90 at full load · THD &lt; 20%</td></tr>
+      <tr><td class="spec-attr">Surge Protection</td><td class="spec-val">6kV dual-mode (L/N-PE and L-N) per IEEE C62.41 · standard</td></tr>
+      <tr><td class="spec-attr">Emergency Backup</td><td class="spec-val" id="specEm">Optional constⒶNT EM08 — 8W / 900 lm / 90 min · factory-install only</td></tr>
 
       <tr class="spec-section-head"><td colspan="2">Construction &amp; Mounting</td></tr>
-      <tr><td class="spec-attr">Housing</td><td class="spec-val">Die-cast aluminum &middot; powder-coat outdoor finish &middot; V-yoke spider mount &middot; round-top form factor</td></tr>
-      <tr><td class="spec-attr">Finish (selected)</td><td class="spec-val" id="specFinish">Dark Bronze · powder-coat outdoor</td></tr>
-      <tr><td class="spec-attr">Standard Mount</td><td class="spec-val">Pole-top (spider yoke) &middot; alternate mounts (Conduit Pendant / Gooseneck / Surface / Wall) available as MTO</td></tr>
-      <tr><td class="spec-attr">Tenon Adapters</td><td class="spec-val">4&Prime; or 5&Prime; Round / Square tenon-adapter accessories (separate line item)</td></tr>
+      <tr><td class="spec-attr">Housing</td><td class="spec-val">Die-cast aluminum · powder-coat outdoor finish · IP65 wet<span class="aa"></span>GUARD</td></tr>
+      <tr><td class="spec-attr">Shaft Dimensions</td><td class="spec-val">36–42&Prime; tall · &Oslash; 6.5&Prime; shaft · 4-bolt anchor base · &Oslash; 7.0&Prime; crown</td></tr>
+      <tr><td class="spec-attr">Anchor Base</td><td class="spec-val">4-bolt template · &Oslash; 4.5&Prime; PCD · M12 thread · &frac12;&Prime; anchor bolts · standard kit ships in box</td></tr>
+      <tr><td class="spec-attr">Pole Type (selected)</td><td class="spec-val" id="specPole">Round pole + anchor bolt kit (R)</td></tr>
+      <tr><td class="spec-attr">Net Weight</td><td class="spec-val">~22 lb</td></tr>
 
       <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
-      <tr><td class="spec-attr">Listings</td><td class="spec-val">cULus Listed &middot; DLC Listed &middot; FCC Title 47 Part 15B &middot; RoHS &middot; Wet Location</td></tr>
-      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">&minus;40&deg;F to +113&deg;F (&minus;40&deg;C to +45&deg;C)</td></tr>
-      <tr><td class="spec-attr">Warranty</td><td class="spec-val">7-year limited &middot; 75,000-hour rated lifetime</td></tr>
-      <tr><td class="spec-attr">Stock Status</td><td class="spec-val" id="specStock"><strong style="color:#2C7A4A;">★ QuickShip</strong> &middot; ships 3-5 day. (4 of 25 main-matrix SKUs are QS &mdash; all on LPTP130 + 120-277V. Other 21 main-matrix SKUs are MTO with ~4-6 wk lead.)</td></tr>
+      <tr><td class="spec-attr">Listings</td><td class="spec-val">cULus Listed · DLC Listed · FCC Title 47 Part 15B · RoHS · Wet Location</td></tr>
+      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">−40°F to +113°F (−40°C to +45°C)</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val">7-year limited · 75,000-hour rated lifetime · CCT-shift &le; 180K warrantied across the period</td></tr>
     </tbody>
   </table>
 
@@ -700,91 +686,51 @@
     <div class="section-eyebrow">Type V semi-circle polar · IES candela source</div>
   </div>
 
-  <div class="dim-grid">
+  <div class="photo-grid">
     <div>
       <div class="dim-view">
-        <div class="dim-view-label">Post-Top · Side Profile · V-Yoke Spider Mount</div>
-        <img src="assets/symmetry/Symmetry-Dimensions_outlines.svg"
-             alt="LPTP Symmetry-I dimensions — round-top housing on V-yoke spider mount · driver compartment below LED plane · pole-top engagement"
+        <div class="dim-view-label">Bollard · Front + Anchor Bolt Template</div>
+        <img src="assets/sentry/Sentry-Dimensions_outlines.svg"
+             alt="Sentry bollard dimensions — front view 36-42 in tall × 6.5 in shaft × 7.0 in crown · anchor bolt template Ø 4.5 in PCD with 4 bolt positions"
              id="dimImg"
-             style="max-height: 220px;"
              onerror="this.style.display='none';" />
       </div>
     </div>
 
     <div>
-      <div class="dim-view">
-        <div class="dim-view-label">Housing-Class Comparison</div>
-        <table class="photo-summary" style="font-size: 8pt;">
-          <tbody>
-            <tr><td>LPTP090</td><td>36-90W &middot; 11,500 lm &middot; 161 lm/W (FD) / 189 (BL)</td></tr>
-            <tr><td>LPTP130</td><td>52-130W &middot; 19,500 lm &middot; 173 lm/W (FD) / 183 (BL)</td></tr>
-            <tr><td>LPTP160</td><td>64-160W &middot; 25,500 lm &middot; 173 lm/W (FD) / 180 (BL)</td></tr>
-            <tr><td>Mount</td><td>V-yoke spider · pole-top standard</td></tr>
-            <tr><td>CCT (all)</td><td>3CS dip-switch · 3000K / 4000K / 5000K</td></tr>
-            <tr><td>CRI (all)</td><td>&ge; 80</td></tr>
-          </tbody>
-        </table>
+      <div class="photo-polar">
+        <img id="photoPolarImg"
+             src="assets/sentry/photometrics/sentry-lbol26-5000k.svg"
+             alt="Sentry LBOL bollard photometric distribution — Type V 360° full cutoff polar plot from IES test data"
+             onerror="this.parentElement.innerHTML='<span>IES polar plot · Type V 360° · pending ALG delivery</span>'; this.parentElement.classList.add('fallback');" />
       </div>
     </div>
   </div>
-  <!-- v9 · Photometric polar plot (added 2026-05-20 PM per James submittal canonical request) -->
-  <div class="dim-grid" style="margin-top: 12px;">
-    <div>
-      <div class="dim-view" style="background:#0E0E10;">
-        <div class="dim-view-label" style="color:#999;">Photometric Distribution · Polar Plot</div>
-        <img src="assets/symmetry/photometrics/symmetry_130_bl4.svg" alt="Symmetry LPTP130 · TYPE IV optic · 4000K polar plot"
-             style="width:100%; max-height:240px; object-fit:contain; background:#0E0E10; padding:8px;"
-             onerror="this.style.display='none';" />
-      </div>
-    </div>
-    <div>
-      <div class="dim-view">
-        <div class="dim-view-label">Photometric Reference</div>
-        <table class="photo-summary" style="font-size: 8pt;">
-          <tbody>
-            <tr><td>Distribution</td><td>Symmetry LPTP130 · TYPE IV optic · 4000K polar plot</td></tr>
-            <tr><td>Test Standard</td><td>IESNA LM-79 · LM-80 lumen-maintenance verified</td></tr>
-            <tr><td>Source</td><td>Per-cell .ies bundle linked from §6 Photometrics</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
 
   <table class="photo-summary" style="margin-top: 8px;">
     <tbody>
-      <tr><td>Peak Intensity (selected)</td><td id="photoPeak">19,500 lm @ 130W (LPTP130 · Frosted Optics)</td></tr>
-      <tr><td>Peak Efficacy</td><td id="photoEff">173 lm/W (LPTP130 + Frosted Optics @ 4000K)</td></tr>
-      <tr><td>Distribution</td><td id="photoDist">Frosted Optics · symmetric · darkⒶRCH-style visual-comfort character</td></tr>
-      <tr><td>Test Standard</td><td>IESNA LM-79 (per-cell)</td></tr>
-      <tr><td>IES Bundle</td><td>Available on WorkDrive · external/1a55938bcd670ee02b6a9c47a64670125d4d64b803727ba0b1ad8c10328e1b5c</td></tr>
+      <tr><td>Peak Intensity</td><td id="photoPeak">~650 cd @ 24W setting</td></tr>
+      <tr><td>Peak Lumen Output</td><td id="photoLumens">3,200 lm</td></tr>
+      <tr><td>Peak Efficacy</td><td id="photoEff">145 lm/W (LBOL24 · 19W cell)</td></tr>
+      <tr><td>Distribution</td><td>Type V · 360° · Full Cutoff · Zero Uplight</td></tr>
+      <tr><td>Test Standard</td><td>IESNA LM-79 (in lab) · LM-80 lumen maintenance verified</td></tr>
+      <tr><td>IES File</td><td id="photoIesFile">LBOL24-3CS-S1.IES · pending complete coverage from ALG</td></tr>
     </tbody>
   </table>
 
-  <!-- Alternate-platform footer (4-WATTselect + 5W130-5CS) -->
-  <div class="tagline-block" style="margin-top: 10px; font-size: 8.5pt;">
-    <strong>Alternate Symmetry platforms (not represented in the matrix above &mdash; specify separately):</strong>
-    <span class="mono">LPTP4W-S3-UB</span> (4-WATTselect lamp &middot; Black) &middot;
-    <span class="mono">LPTP4W-S3-UD</span> (4-WATTselect lamp &middot; Dark Bronze) &middot;
-    <span class="mono">LPTP4W-S3-UW</span> (4-WATTselect lamp &middot; White) &middot;
-    <span class="mono">LPTP5W130-5CS-48VS2/3BL/DB</span> (5-WATTselect + 5-CCT special build &middot; 130W &middot; 277-480V &middot; BeamLogic T3 &middot; Dark Bronze).
-  </div>
-
   <!-- Certifications row -->
-  <div class="certs" id="certsRow">
+  <div class="certs">
     <span class="cert-badge">cULus Listed</span>
     <span class="cert-badge brand">DLC LISTED</span>
     <span class="cert-badge">FCC 47 / 15B</span>
     <span class="cert-badge">RoHS</span>
-    <span class="cert-badge">Wet Location</span>
-    <span class="cert-badge brand">5-yr / 50k-hr</span>
-    <span class="cert-badge">CRI &ge; 80</span>
+    <span class="cert-badge">IP65 · Wet Loc</span>
+    <span class="cert-badge brand">wet<span class="aa"></span>GUARD</span>
+    <span class="cert-badge brand">7-yr / 75k-hr</span>
   </div>
 
   <div class="page-foot">
-    <div>archipelagolighting.com · LPTP Symmetry-I submittal · Specifications subject to change</div>
+    <div>archipelagolighting.com · LBOL Sentry submittal · Specifications subject to change</div>
     <div>Rev. <span class="mono">2026-05</span> · Page 2 of 2</div>
   </div>
 </div>
@@ -792,94 +738,134 @@
 
 <script>
 /* =============================================================================
-   SUBMITTAL AUTO-FILL · LPTP Symmetry-I LED Post-Top
+   SUBMITTAL AUTO-FILL · LBOL Sentry
    ----------------------------------------------------------------------------
    Reads URL query params from the Section 9 configurator and stamps the live
-   catalog number, ordering breakdown, quick specs, and stock pill across
-   both pages.
+   catalog number, ordering breakdown, quick specs, photometric polar plot,
+   and stock-status pill across both pages.
 
    Parameters:
-     sku     — full canonical SKU (auto-built upstream)
-     housing — 090 | 130 | 160
-     voltage — 27V (120-277V) | 48V (277-480V)
-     finish  — B (Black) | DB (Dark Bronze) | W (White, 130/27V/FD only)
-     optic   — BL (BeamLogic™) | FD (Frosted Optics)
-
-   AUTHORITATIVE 25-SKU MAIN-MATRIX (James 2026-05-19, 4 QS · 21 MTO):
-     QS (all LPTP130 + 120-277V):
-       LPTP130-3CS/27VS1/B/FD    · Black · Frosted
-       LPTP130-3CS/27VS1/DB/BL   · Dark Bronze · BeamLogic
-       LPTP130-3CS/27VS1/DB/FD   · Dark Bronze · Frosted   ★ default
-       LPTP130-3CS/27VS1/W/FD    · White · Frosted (only W variant)
-     MTO: 21 other housing × voltage × finish × optic combinations.
+     sku    — full canonical SKU (auto-built upstream)
+     wc     — 24 | 26
+     finish — B | DB | S | W (optional RAL# for future)
+     pole   — R | S
+     crown  — DCL | DCT | DFL | DFR | RCL | RCT | RFL | RFR | SCL | SCT | SFL | SFR
+     em     — EM (optional)
    ============================================================================= */
 (function() {
 
-  // ---- Authoritative QS combos — James 2026-05-19 ----
+  // ---- Authoritative QS combo table — mirrors mockup_sentry_pdp_v1.html ----
   var QS_COMBOS = new Set([
-    'LPTP130-3CS/27VS1/B/FD',
-    'LPTP130-3CS/27VS1/DB/BL',
-    'LPTP130-3CS/27VS1/DB/FD',
-    'LPTP130-3CS/27VS1/W/FD'
+    'LBOL24-DB-R-DFR',
+    'LBOL24-DB-R-RFR',
+    'LBOL24-DB-S-SCT',   // James 2026-05-19 source said "CDR" — assumed SCT typo
+    'LBOL26-B-R-RCT',
+    'LBOL26-DB-R-RCT',
+    'LBOL26-W-R-RCT'
   ]);
 
-  // ---- Housing-class specs (knowledge pack §5 · 4000K peak operating point) ----
-  var HOUSING_DATA = {
-    '090': { label: 'LPTP090', minW: 36, maxW: 90,  fdLm: 11500, blLm: 14800, fdLpw: 161, blLpw: 189 },
-    '130': { label: 'LPTP130', minW: 52, maxW: 130, fdLm: 19500, blLm: 20000, fdLpw: 173, blLpw: 183 },
-    '160': { label: 'LPTP160', minW: 64, maxW: 160, fdLm: 19500, blLm: 25500, fdLpw: 173, blLpw: 180 }
-  };
-
-  // ---- Voltage labels ----
-  var VOLT_DATA = {
-    '27V': { code: '27VS1', label: '120-277VAC universal' },
-    '48V': { code: '48VS1', label: '277-480VAC high voltage' }
+  // ---- Wattage Class specs ----
+  var WC_DATA = {
+    '24': {
+      label: 'LBOL24', wattRange: '10–24W', wattList: '10W / 14W / 19W / 24W',
+      lumens: [1400, 2000, 2750, 3200], peakLumens: 3200,
+      lpwMax: 145, peakWatt: 24, peakCd: '~650',
+      specRow: '10W / 14W / 19W / 24W field-set · 1,400 / 2,000 / 2,750 / 3,200 lm · up to 145 lm/W',
+      crownNote: 'Dome / Round / Square crowns available (full 12-combo matrix)'
+    },
+    '26': {
+      label: 'LBOL26', wattRange: '10–26W', wattList: '10W / 16W / 21W / 26W',
+      lumens: [1150, 1840, 2450, 3050], peakLumens: 3050,
+      lpwMax: 119, peakWatt: 26, peakCd: '~620',
+      specRow: '10W / 16W / 21W / 26W field-set · 1,150 / 1,840 / 2,450 / 3,050 lm · up to 119 lm/W',
+      crownNote: 'Round Top crown only (4 optic variants)'
+    }
   };
 
   // ---- Finish labels ----
-  var FIN_DATA = {
-    'B':  'Black · powder-coat outdoor',
-    'DB': 'Dark Bronze · powder-coat outdoor',
-    'W':  'White · powder-coat outdoor'
+  var FIN = {
+    'B':  'Black',
+    'DB': 'Dark Bronze',
+    'S':  'Silver',
+    'W':  'White'
   };
 
-  // ---- Optic labels ----
-  var OPTIC_DATA = {
-    'BL': { label: 'BeamLogic™', desc: 'directional throw + visual-comfort tilt' },
-    'FD': { label: 'Frosted Optics', desc: 'symmetric · darkⒶRCH-style visual-comfort character' }
+  // ---- Pole labels ----
+  var POLE = {
+    'R': 'Round pole + anchor bolt kit (R)',
+    'S': 'Square pole + anchor bolt kit (S)'
   };
+
+  // ---- Crown × Optic labels ----
+  var CROWN = {
+    'DCL': 'Dome Top × Clear Louver (DCL)',
+    'DCT': 'Dome Top × Clear Reflector (DCT)',
+    'DFL': 'Dome Top × Frosted Louver (DFL)',
+    'DFR': 'Dome Top × Frosted Reflector (DFR)',
+    'RCL': 'Round Top × Clear Louver (RCL)',
+    'RCT': 'Round Top × Clear Reflector (RCT)',
+    'RFL': 'Round Top × Frosted Louver (RFL)',
+    'RFR': 'Round Top × Frosted Reflector (RFR)',
+    'SCL': 'Square Top × Clear Louver (SCL)',
+    'SCT': 'Square Top × Clear Reflector (SCT)',
+    'SFL': 'Square Top × Frosted Louver (SFL)',
+    'SFR': 'Square Top × Frosted Reflector (SFR)'
+  };
+
+  // Optical character — Louver = broader/diffused, Reflector = sharper
+  var CROWN_OPTIC_DESC = {
+    'CL': 'soft diffusion · broad pedestrian-area distribution',
+    'CT': 'sharper clear-reflector distribution · higher peak candela',
+    'FL': 'frosted louver · max visual comfort · diffused distribution',
+    'FR': 'frosted reflector · balanced visual comfort + throw'
+  };
+
+  // ---- Polar plot SVG map (current asset coverage) ----
+  // We currently have polar SVGs for LBOL26 @ 4000K + 5000K only. LBOL24 + 3000K
+  // fall back to the nearest available. Per memory · IES bundle still pending.
+  var POLAR_MAP = {
+    'lbol26-50': 'assets/sentry/photometrics/sentry-lbol26-5000k.svg',
+    'lbol26-40': 'assets/sentry/photometrics/sentry-lbol26-4000k.svg'
+  };
+  function polarFor(wc) {
+    var key = 'lbol' + wc + '-50';
+    if (POLAR_MAP[key]) return POLAR_MAP[key];
+    return POLAR_MAP['lbol26-50']; // fallback while LBOL24 IES is pending
+  }
 
   // ---- Parse URL params ----
-  var params  = new URLSearchParams(window.location.search);
-  var sku     = params.get('sku')     || 'LPTP130-3CS/27VS1/DB/FD';
-  var housing = params.get('housing') || '130';
-  var voltage = params.get('voltage') || '27V';
-  var finish  = params.get('finish')  || 'DB';
-  var optic   = params.get('optic')   || 'FD';
+  var params = new URLSearchParams(window.location.search);
+  var sku    = params.get('sku')    || 'LBOL-24-3CS-27V-S1/DB/R/DFR';
+  var wc     = params.get('wc')     || '24';
+  var finish = params.get('finish') || 'DB';
+  var pole   = params.get('pole')   || 'R';
+  var crown  = params.get('crown')  || 'DFR';
+  var em     = params.get('em')     || '';
 
-  // If housing/voltage/finish/optic not in URL but sku is, parse from sku
-  // Pattern: LPTP{housing}-3CS/{voltage}S1/{finish}/{optic}
+  // If wc/finish/pole/crown aren't in URL but sku is, parse from sku
+  // SKU pattern: LBOL-{WC}-3CS-27V-S1/{FIN}/{POLE}/{CROWN}[/EM]
   if (sku) {
-    var m = sku.match(/^LPTP(\d{3})-3CS\/(\d{2}V)S1\/(B|DB|W)\/(BL|FD)$/);
+    var m = sku.match(/^LBOL-(\d+)-3CS-27V-S1\/([A-Z]+(?:\d+)?)\/([A-Z])\/([A-Z]+)(\/EM)?$/);
     if (m) {
-      housing = m[1] || housing;
-      voltage = m[2] || voltage;
-      finish  = m[3] || finish;
-      optic   = m[4] || optic;
+      wc     = m[1] || wc;
+      finish = m[2] || finish;
+      pole   = m[3] || pole;
+      crown  = m[4] || crown;
+      em     = m[5] ? 'EM' : em;
     }
   }
 
   // ---- Compute derived values ----
-  var hData = HOUSING_DATA[housing] || HOUSING_DATA['130'];
-  var vData = VOLT_DATA[voltage]    || VOLT_DATA['27V'];
-  var finLabel = FIN_DATA[finish]   || FIN_DATA['DB'];
-  var oData = OPTIC_DATA[optic]     || OPTIC_DATA['FD'];
+  var wcData = WC_DATA[wc] || WC_DATA['24'];
+  var finLabel = FIN[finish] || finish;
+  var poleLabel = POLE[pole] || pole;
+  var crownLabel = CROWN[crown] || crown;
+  var crownSuffix = crown.length === 3 ? crown.substr(1) : '';
+  var crownOptic = CROWN_OPTIC_DESC[crownSuffix] || '';
 
-  // Peak output depends on housing × optic
-  var peakLm  = (optic === 'BL') ? hData.blLm  : hData.fdLm;
-  var peakLpw = (optic === 'BL') ? hData.blLpw : hData.fdLpw;
-
-  var isQS = QS_COMBOS.has(sku);
+  // Combo-aware QS lookup
+  var comboKey = 'LBOL' + wc + '-' + finish + '-' + pole + '-' + crown;
+  var isQS = QS_COMBOS.has(comboKey);
 
   // ---- Stamp all the catalog-number slots ----
   document.querySelectorAll('#catNum, #catNum2, #liveSku').forEach(function(el) {
@@ -890,63 +876,58 @@
   var pill = document.getElementById('stockPill');
   if (isQS) {
     pill.className = 'qs-pill';
-    pill.textContent = 'QuickShip · 3-5 day · in stock';
+    pill.textContent = 'QuickShip · 3-5 day';
   } else {
     pill.className = 'mto-pill';
-    pill.textContent = 'Made-to-Order · ~4-6 wk lead';
+    pill.textContent = 'Made-to-Order · 4-6 wk';
   }
 
   // ---- Cover banner taglines ----
-  document.getElementById('taglineWatts').textContent =
-    hData.maxW + 'W max · ' + hData.label;
-  document.getElementById('taglineLums').textContent =
-    peakLm.toLocaleString() + ' lm peak · ' + peakLpw + ' lm/W';
-  document.getElementById('taglineCct').textContent = '3-CCTselect (3000K / 4000K / 5000K dip-switch)';
+  document.getElementById('taglineWatts').textContent = wcData.wattList;
+  document.getElementById('taglineCct').textContent = '3-CCTselect (3000K · 4000K · 5000K)';
 
   // ---- Quick Specs ----
-  document.getElementById('qsLumens').innerHTML   = peakLm.toLocaleString() + '<span class="qs-unit">lm</span>';
-  document.getElementById('qsWatts').innerHTML    = hData.maxW + '<span class="qs-unit">W</span>';
-  document.getElementById('qsEfficacy').innerHTML = peakLpw + '<span class="qs-unit">lm/W</span>';
-  document.getElementById('qsVoltage').innerHTML  = (voltage === '27V' ? '120-277' : '277-480') + '<span class="qs-unit">V</span>';
-  document.getElementById('qsCct').innerHTML      = '3CS<span class="qs-unit">dip</span>';
+  document.getElementById('qsLumens').innerHTML   = wcData.peakLumens.toLocaleString() + '<span class="qs-unit">lm</span>';
+  document.getElementById('qsWatts').innerHTML    = wcData.wattRange.replace('W','') + '<span class="qs-unit">W</span>';
+  document.getElementById('qsEfficacy').innerHTML = wcData.lpwMax + '<span class="qs-unit">lm/W</span>';
+  document.getElementById('qsVoltage').innerHTML  = '120-277<span class="qs-unit">V</span>';
+  document.getElementById('qsCct').innerHTML      = '30/40/50<span class="qs-unit">00K</span>';
 
   // ---- Ordering Code segments ----
-  document.getElementById('ocHousing').textContent = 'LPTP' + housing;
-  document.getElementById('ocVoltage').textContent = vData.code;
-  document.getElementById('ocFinish').textContent  = finish;
-  document.getElementById('ocOptic').textContent   = optic;
+  document.getElementById('ocWc').textContent       = wc;
+  document.getElementById('ocFinish').textContent   = finish;
+  document.getElementById('ocPoleCrown').textContent = pole + '/' + crown + (em ? '/EM' : '');
 
   // ---- Highlight active rows in the ordering matrix ----
-  document.querySelectorAll('#rowHousing, #rowVoltage, #rowFinish, #rowOptic').forEach(function(tr) {
-    tr.classList.add('active-row');
+  document.querySelectorAll('#rowWc, #rowFin, #rowPole, #rowCrown, #rowEm').forEach(function(tr) {
+    tr.classList.remove('active-row');
   });
-  // Highlight the matching QS-SKU row if applicable
-  var qsRowKey = 'skuRow_' + housing + '_' + voltage + '_' + finish + '_' + optic;
-  var qsRow = document.getElementById(qsRowKey);
-  if (qsRow) qsRow.classList.add('active-row');
+  document.getElementById('rowWc').classList.add('active-row');
+  document.getElementById('rowFin').classList.add('active-row');
+  document.getElementById('rowPole').classList.add('active-row');
+  document.getElementById('rowCrown').classList.add('active-row');
+  if (em === 'EM') document.getElementById('rowEm').classList.add('active-row');
 
   // ---- Page 2 — Detailed Specs ----
-  document.getElementById('specOpticLabel').textContent = 'Optic Platform (selected · ' + optic + ')';
-  document.getElementById('specOpticRow').textContent =
-    oData.label + ' · ' + oData.desc;
-  document.getElementById('specHousingLabel').textContent = 'Housing Class · ' + hData.label;
-  document.getElementById('specHousingRow').textContent =
-    hData.minW + '-' + hData.maxW + 'W (4-WATTselect dip) · ' +
-    peakLm.toLocaleString() + ' lm peak @ ' + peakLpw + ' lm/W';
-  document.getElementById('specPeak').textContent =
-    peakLm.toLocaleString() + ' lm @ ' + hData.maxW + 'W (' + hData.label + ' + ' + oData.label + ') · LM-79 tested';
-  document.getElementById('specVoltage').textContent = vData.label + ' · 50/60Hz';
-  document.getElementById('specFinish').textContent = finLabel;
-  document.getElementById('specStock').innerHTML = isQS
-    ? '<strong style="color:#2C7A4A;">★ QuickShip</strong> · ships 3-5 day. 4 of 25 main-matrix SKUs are QS (all LPTP130 + 120-277V). Other 21 main-matrix SKUs are MTO with ~4-6 wk lead.'
-    : '<strong style="color:#B36A00;">Made-to-Order · ~4-6 wk lead.</strong> (The 4 QS Symmetry SKUs as of 2026-05-19: LPTP130-3CS/27VS1/{B/FD, DB/BL, DB/FD, W/FD}.)';
+  document.getElementById('specWcLabel').textContent = 'Wattage Class · ' + wcData.label;
+  document.getElementById('specWcRow').textContent = wcData.specRow;
+  document.getElementById('specCrown').textContent = crownLabel + ' · ' + crownOptic;
+  document.getElementById('specPole').textContent = poleLabel;
+  document.getElementById('specEm').textContent = em === 'EM'
+    ? 'INCLUDED: constⒶNT EM08 — 8W / 900 lm / 90 min · factory-installed'
+    : 'Optional constⒶNT EM08 — 8W / 900 lm / 90 min · factory-install only';
+
+  // ---- Polar plot ----
+  document.getElementById('photoPolarImg').src = polarFor(wc);
+  document.getElementById('photoPolarImg').alt =
+    'Sentry ' + wcData.label + ' photometric distribution · Type V 360° full cutoff polar plot';
 
   // ---- Photometric summary ----
-  document.getElementById('photoPeak').textContent =
-    peakLm.toLocaleString() + ' lm @ ' + hData.maxW + 'W (' + hData.label + ' · ' + oData.label + ')';
-  document.getElementById('photoEff').textContent =
-    peakLpw + ' lm/W (' + hData.label + ' + ' + oData.label + ' @ 4000K)';
-  document.getElementById('photoDist').textContent = oData.label + ' · ' + oData.desc;
+  document.getElementById('photoPeak').textContent   = wcData.peakCd + ' cd @ ' + wcData.peakWatt + 'W setting';
+  document.getElementById('photoLumens').textContent = wcData.peakLumens.toLocaleString() + ' lm';
+  document.getElementById('photoEff').textContent    = wcData.lpwMax + ' lm/W (' + wcData.label + ' max)';
+  document.getElementById('photoIesFile').textContent =
+    'LBOL' + wc + '-3CS-S1.IES · partial coverage available · full IES bundle pending ALG';
 
   // ---- Issue date ----
   var d = new Date();

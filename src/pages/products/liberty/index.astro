@@ -7017,7 +7017,7 @@ body { overflow-x: hidden; }
  10. Glare Shield · None | /S100 | /S200 | /S300 | /S450 (Black or Bronze)
 
  Per playbook:
- CFG-1 Generate Submittal opens submittal_template.html with URL params
+ CFG-1 Generate Submittal opens submittal/ with URL params
  CFG-3 Each chip has stock-state badge (QS / MTO / WB)
  CFG-5/5a Share Configuration emits ?w=...&cct=...&fin=... params
  CFG-COPY-3 chip-codes are SKU fragments only · cfg-field-notes ≤1 row · 0 callouts
@@ -7514,7 +7514,7 @@ body { overflow-x: hidden; }
  Pricing &amp; Availability
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
  </a>
- <a href="submittal_template.html" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
+ <a href="submittal/" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
  Generate Submittal PDF
  </a>
@@ -7816,7 +7816,7 @@ body { overflow-x: hidden; }
  params.set('sku', sku);
  Object.keys(state).forEach(function(k) { if (state[k]) params.set(k, state[k]); });
  var pdfBtn = document.getElementById('cfgCtaPdf');
- if (pdfBtn) pdfBtn.href = 'submittal_template.html?' + params.toString();
+ if (pdfBtn) pdfBtn.href = 'submittal/?' + params.toString();
 
  // CFG-CFG-1 (2026-05-18 PM) - sync each row's `.cfg-row-code` label to
  // the selected chip's data-code (or to the adapter select's value).
@@ -8034,7 +8034,7 @@ body { overflow-x: hidden; }
  ✓ IES Bundle — full 18-file matrix (2 housings × 3 WATTSELECT × 3 CCT) ·
  WorkDrive external URL LIVE per James 2026-05-02 PM dashboard drop
  (better coverage than Navigator/Pathfinder bundles)
- ✓ Submittal Generator — submittal_template.html?product=heritage LIVE
+ ✓ Submittal Generator — submittal/?product=heritage LIVE
  (HERITAGE CFG block in template wired with /optic + /mount + /PS +
  single-pick /sensor SKU pattern + RAL Classic legal validator +
  Zoho catalog match indicator)
@@ -8164,7 +8164,7 @@ body { overflow-x: hidden; }
  </div>
  </a>
 
- <a href="submittal_template.html?sku=LSBX100-3CS-ULD" target="_blank" rel="noopener" class="docs-card">
+ <a href="submittal/?sku=LSBX100-3CS-ULD" target="_blank" rel="noopener" class="docs-card">
  <div class="docs-card-head">
  <div class="docs-card-icon">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -8470,7 +8470,7 @@ body { overflow-x: hidden; }
 
  Block A · Submittal Generator hero
  - Inherits S9 configurator state (CFG-1 contract)
- - "Generate Submittal PDF" button opens submittal_template.html
+ - "Generate Submittal PDF" button opens submittal/
  with Liberty CFG block hydrated
  - Quick description of what's in the submittal (4-page A4
  stamped spec doc with SKU + dims + photometric polar +

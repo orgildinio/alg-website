@@ -3197,7 +3197,7 @@ body { overflow-x: hidden; }
  · S6 contrⒶLS — 2-tab callout (Bi-Level BLS · ⒶCS Bluetooth Mesh · DLC NLC pending) — NO SILVAIR tab
  · S7 Photometrics — 18 polar plots staged (LSBX3W150 + LSBX3W300 × 70/100/150W or 200/240/300W × 3000K/4000K/5000K)
  · S8 In the Box — 3-card grid · luminaire + photocell-ready receptacle + sensor (BLS / ACS) + mount adders
- · S9 Configurator — 3-WATTSELECT × 3-CCTSELECT · independent toggle accessories /UA /PS /BLS · build HERITAGE CFG block in submittal_template.html
+ · S9 Configurator — 3-WATTSELECT × 3-CCTSELECT · independent toggle accessories /UA /PS /BLS · build HERITAGE CFG block in submittal/
  · S10 Documentation — 4 of 5 URLs LIVE (Datasheet · Install · Quick · Sell) · IES bundle URL TBC · DLC SSL + DLC NLC pending posture
  · S11 LSBX Shoebox Family — 3-CARD grid (different from canopy 2-card pattern) · Heritage ECO + Liberty PRO + Rosetta-III PRO+
  · S12 Page closer — Round Out (Atlanta wall + LCNP canopy + Yosemite flood + Dusk-to-Dawn) · Support + Rebates · CTA strip · honest CFG-RBT-1 framing
@@ -6398,7 +6398,7 @@ body { overflow-x: hidden; }
  // Submittal CTA - pass full state as query params
  var sub = document.getElementById('cfgCtaSubmittal');
  if (sub) {
- sub.href = 'submittal_template.html?product=heritage&sku=' + encodeURIComponent(sku) +
+ sub.href = 'submittal/?product=heritage&sku=' + encodeURIComponent(sku) +
  '&housing=' + state.housing +
  '&wattage=' + state.watt +
  '&cct=' + state.cct +
@@ -6532,7 +6532,7 @@ body { overflow-x: hidden; }
  ✓ IES Bundle — full 18-file matrix (2 housings × 3 WATTSELECT × 3 CCT) ·
  WorkDrive external URL LIVE per James 2026-05-02 PM dashboard drop
  (better coverage than Navigator/Pathfinder bundles)
- ✓ Submittal Generator — submittal_template.html?product=heritage LIVE
+ ✓ Submittal Generator — submittal/?product=heritage LIVE
  (HERITAGE CFG block in template wired with /optic + /mount + /PS +
  single-pick /sensor SKU pattern + RAL Classic legal validator +
  Zoho catalog match indicator)
@@ -6647,7 +6647,7 @@ body { overflow-x: hidden; }
  </a>
 
  <!-- 4. Submittal Sheet — opens the per-SKU generator (HERITAGE CFG live) -->
- <a href="submittal_template.html?product=heritage&amp;sku=LSBX3W150-3H1-UD3%2FRB3&amp;housing=150&amp;wattage=150&amp;cct=50&amp;voltage=U&amp;finish=D&amp;optic=3&amp;mount=&amp;ps=&amp;sensor=" target="_blank" rel="noopener" class="docs-card">
+ <a href="submittal/?product=heritage&amp;sku=LSBX3W150-3H1-UD3%2FRB3&amp;housing=150&amp;wattage=150&amp;cct=50&amp;voltage=U&amp;finish=D&amp;optic=3&amp;mount=&amp;ps=&amp;sensor=" target="_blank" rel="noopener" class="docs-card">
  <div class="docs-card-head">
  <div class="docs-card-icon">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

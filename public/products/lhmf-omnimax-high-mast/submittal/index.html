@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LHMF · OmniMax · Submittal Sheet</title>
+
+<!--
+ ALG SUBMITTAL TEMPLATE · LHMF OmniMax-I High-Mast v1
+ =====================================================
+ Reads URL query params populated by mockup_omnimax_pdp_v1.html Section 9 (the
+ Configurator) and auto-fills the catalog number + quick specs + ordering
+ breakdown + photometric polar plot for a project-stampable PDF.
+
+ Example invocation (matches the configurator's Generate Submittal PDF CTA):
+ submittal_omnimax.html?sku=LHMF8W750-50UOM/S/5/RB3
+ &housing=750&voltage=U&finish=S&taa=0
+
+ Print: File → Print → Save as PDF (letter portrait) → 2-page submittal.
+
+ AUTHORITATIVE 10-SKU MATRIX (Zoho Books verified 2026-05-19, James rule: QS iff stock > 0):
+ 500W variants (4 SKUs · all stock=0 · MTO):
+ LHMF8W500-50HOM/B/5/RB3 · 277-480V · Black
+ LHMF8W500-50HOM/B/5/RB3/TAA · 277-480V · Black · TAA
+ LHMF8W500-50UOM/B/5/RB3 · 120-277V · Black
+ LHMF8W500-50UOM/B/5/RB3/TAA · 120-277V · Black · TAA
+ 750W variants (6 SKUs · 1 QS + 5 MTO):
+ LHMF8W750-50HOM/B/5/RB3 · 277-480V · Black · MTO
+ LHMF8W750-50HOM/B/5/RB3/TAA · 277-480V · Black · TAA · MTO
+ LHMF8W750-50UOM/B/5/RB3 · 120-277V · Black · MTO
+ LHMF8W750-50UOM/B/5/RB3/TAA · 120-277V · Black · TAA · MTO
+ LHMF8W750-50UOM/S/5/RB3 · 120-277V · Silver · QS ★
+ LHMF8W750-50UOM/S/5/RB3/TAA · 120-277V · Silver · TAA · MTO
+
+ CFG-SUB-1 V2 (snapshot-then-rederive) built in from first save.
+-->
+
+<style>
+ /* ============= PRINT-OPTIMIZED CSS ============= */
+ @page { size: letter portrait; margin: 0.5in 0.6in; }
+ @media print {
+ .no-print { display: none !important; }
+ body { background: white !important; }
+ .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+ .page:last-of-type { page-break-after: auto; }
+ }
+
+ :root {
+ --brand-red: #F32740;
+ --ink: #0E0E10;
+ --ink-2: #2A2A2D;
+ --muted: #6B6B70;
+ --rule: #D8D6D2;
+ --rule-strong: #A6A4A0;
+ --tint: #F6F4F0;
+ --hi: #FFF6E5;
+ --qs: #2C7A4A;
+ --qs-tint: #E0F2E5;
+ --mto: #B36A00;
+ --mto-tint: #FFF2DA;
+ }
+ * { box-sizing: border-box; }
+ html, body {
+ margin: 0; padding: 0;
+ font-family: 'Lato', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+ color: var(--ink);
+ font-size: 9.5pt;
+ line-height: 1.4;
+ background: #E8E6E2;
+ }
+ body { padding: 24px 12px; }
+ .page {
+ width: 8.5in;
+ min-height: 11in;
+ margin: 0 auto 24px;
+ padding: 0.55in 0.65in;
+ background: white;
+ box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+ position: relative;
+ }
+ h1, h2, h3, h4 { font-family: 'Lato', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+ .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+
+ /* Ⓐ glyph — currentColor SVG mask, falls back to literal Ⓐ */
+ .aa {
+ display: inline-block;
+ width: 0.85em; height: 0.85em;
+ vertical-align: -0.06em;
+ background-color: currentColor;
+ -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10.5' fill='none' stroke='%23000' stroke-width='1.6'/><text x='12' y='17' font-family='Arial, sans-serif' font-size='14' font-weight='700' text-anchor='middle' fill='%23000'>A</text></svg>") no-repeat center / contain;
+ mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10.5' fill='none' stroke='%23000' stroke-width='1.6'/><text x='12' y='17' font-family='Arial, sans-serif' font-size='14' font-weight='700' text-anchor='middle' fill='%23000'>A</text></svg>") no-repeat center / contain;
+ }
+
+ /* ============= PAGE HEADER (every page) ============= */
+ .submittal-head {
+ display: flex; align-items: flex-end; justify-content: space-between;
+ border-bottom: 2px solid var(--ink);
+ padding-bottom: 8px; margin-bottom: 14px;
+ }
+ .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+ .submittal-head .brand-mark {
+ width: 28px; height: 28px; background: var(--brand-red);
+ display: inline-block;
+ }
+ .submittal-head .brand-name {
+ font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1;
+ }
+ .submittal-head .brand-sub {
+ font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted);
+ text-transform: uppercase;
+ }
+ .submittal-head .catalog-block { text-align: right; }
+ .catalog-eyebrow {
+ font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+ text-transform: uppercase; margin-bottom: 2px;
+ }
+ .catalog-number {
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 12.5pt; font-weight: 700; color: var(--ink);
+ letter-spacing: 0.5pt;
+ }
+
+ /* CFG-SUB-1 · Editable Catalog Number (James 2026-05-18 playbook rule).
+ User types a project-specific label (e.g., "ABC-001") and every visible
+ instance of the original SKU on the page sweeps to match. Session-only. */
+ .editable-catalog {
+ cursor: text;
+ border-bottom: 1px dashed transparent;
+ transition: border-bottom-color .15s ease;
+ }
+ .editable-catalog:hover { border-bottom-color: var(--brand-red); }
+ .editable-catalog:focus {
+ outline: 2px solid var(--brand-red);
+ outline-offset: 2px;
+ border-bottom-color: transparent;
+ }
+ @media print {
+ .editable-catalog,
+ .editable-catalog:hover,
+ .editable-catalog:focus {
+ cursor: auto;
+ border-bottom: 0 !important;
+ outline: 0 !important;
+ }
+ }
+
+ /* ============= COVER BANNER (Page 1) ============= */
+ .cover-banner {
+ background: var(--ink);
+ color: white;
+ padding: 22px 24px;
+ margin-bottom: 16px;
+ display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px;
+ }
+ .cover-banner h1 {
+ font-size: 22pt; font-weight: 700; color: white; margin-bottom: 4px;
+ }
+ .cover-banner .cover-sub {
+ font-size: 10pt; color: rgba(255,255,255,0.75); margin-bottom: 8px;
+ }
+ .cover-banner .cover-tag {
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 8.5pt; letter-spacing: 1pt;
+ color: var(--brand-red); text-transform: uppercase;
+ margin-bottom: 6px;
+ }
+ .cover-banner .cover-tagline {
+ font-size: 10pt; line-height: 1.5; color: rgba(255,255,255,0.85);
+ }
+ .cover-banner .qs-pill {
+ display: inline-block;
+ padding: 4px 10px;
+ background: var(--qs-tint); color: var(--qs);
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 8pt; font-weight: 700; letter-spacing: 1pt;
+ border-radius: 2px; text-transform: uppercase;
+ margin-top: 4px;
+ }
+ .cover-banner .mto-pill {
+ display: inline-block;
+ padding: 4px 10px;
+ background: var(--mto-tint); color: var(--mto);
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 8pt; font-weight: 700; letter-spacing: 1pt;
+ border-radius: 2px; text-transform: uppercase;
+ margin-top: 4px;
+ }
+
+ /* Project block — top of Page 1, fillable by spec engineer */
+ .proj-block {
+ display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+ padding: 8px 0 12px; border-bottom: 1px solid var(--rule); margin-bottom: 14px;
+ }
+ .proj-cell {
+ display: flex; flex-direction: column; gap: 2px;
+ }
+ .proj-label {
+ font-size: 7pt; letter-spacing: 1.2pt;
+ text-transform: uppercase; color: var(--muted);
+ }
+ .proj-line {
+ border-bottom: 1px solid var(--ink);
+ height: 14px;
+ }
+
+ /* Quick Specs grid — 5 large stats */
+ .quickspec-grid {
+ display: grid;
+ grid-template-columns: repeat(5, 1fr);
+ gap: 6px; margin-bottom: 14px;
+ }
+ .qs-cell {
+ border: 1px solid var(--rule);
+ background: var(--tint);
+ padding: 8px 10px;
+ text-align: center;
+ }
+ .qs-label {
+ font-size: 6.5pt; letter-spacing: 1.2pt;
+ text-transform: uppercase; color: var(--muted);
+ margin-bottom: 3px;
+ }
+ .qs-value {
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 14pt; font-weight: 700; line-height: 1.05;
+ color: var(--ink);
+ }
+ .qs-unit {
+ font-size: 8pt; font-weight: 400; color: var(--muted);
+ margin-left: 3px;
+ }
+
+ /* Section heads */
+ .section-head {
+ display: flex; align-items: baseline; justify-content: space-between;
+ border-bottom: 1.5px solid var(--ink);
+ padding-bottom: 4px; margin: 14px 0 10px;
+ }
+ .section-head h2 {
+ font-size: 11pt; letter-spacing: 0.4pt;
+ }
+ .section-eyebrow {
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 7.5pt; color: var(--muted);
+ text-transform: uppercase; letter-spacing: 1pt;
+ }
+
+ /* Tagline (above ordering breakdown) */
+ .tagline-block {
+ background: var(--hi);
+ padding: 10px 14px;
+ margin-bottom: 12px;
+ border-left: 3px solid var(--brand-red);
+ font-size: 9pt; line-height: 1.5;
+ }
+ .tagline-block strong { font-weight: 700; }
+
+ /* Ordering Code visual breakdown */
+ .order-code {
+ display: grid;
+ grid-template-columns: repeat(7, 1fr);
+ gap: 4px;
+ margin-bottom: 8px;
+ }
+ .order-segment {
+ border: 1px solid var(--rule);
+ padding: 6px 4px 7px;
+ text-align: center;
+ background: var(--tint);
+ min-width: 0;
+ }
+ .order-segment.active {
+ background: var(--ink); color: white;
+ border-color: var(--ink);
+ }
+ .order-segment.fixed { background: var(--ink-2); color: white; border-color: var(--ink-2); }
+ .order-segment.optional { background: white; color: var(--muted); }
+ .order-seg-label {
+ font-size: 6pt; letter-spacing: 1pt;
+ text-transform: uppercase; margin-bottom: 1px;
+ opacity: 0.7;
+ }
+ .order-seg-value {
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 10.5pt; font-weight: 700;
+ }
+
+ /* Ordering matrix — full table */
+ .order-matrix {
+ width: 100%; border-collapse: collapse;
+ font-size: 8.5pt; margin-bottom: 10px;
+ }
+ .order-matrix th, .order-matrix td {
+ border: 1px solid var(--rule);
+ padding: 4px 7px;
+ vertical-align: top;
+ text-align: left;
+ }
+ .order-matrix th {
+ background: var(--tint);
+ font-weight: 700;
+ text-transform: uppercase;
+ letter-spacing: 0.4pt; font-size: 7.5pt;
+ }
+ .order-matrix .code {
+ font-family: 'JetBrains Mono', monospace;
+ font-weight: 700;
+ background: var(--tint);
+ white-space: nowrap;
+ width: 18%;
+ }
+ .order-matrix tr.active-row .code {
+ background: var(--brand-red); color: white;
+ }
+ .order-matrix tr.active-row td {
+ background: var(--hi);
+ }
+
+ /* Anatomy block — full-width image + 6 callout grid */
+ .anat-block {
+ margin-bottom: 12px;
+ }
+ .anat-figure {
+ background: var(--tint);
+ border: 1px solid var(--rule);
+ padding: 12px;
+ margin-bottom: 8px;
+ aspect-ratio: 2.2 / 1;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ }
+ .anat-figure img { max-width: 100%; max-height: 100%; }
+ .anat-callouts {
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 4px;
+ font-size: 8pt;
+ }
+ .anat-cell {
+ border: 1px solid var(--rule);
+ padding: 4px 6px;
+ }
+ .anat-cell-num {
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 7pt; font-weight: 700;
+ color: var(--brand-red); margin-right: 4px;
+ }
+
+ /* Spec table — used on page 2 */
+ .spec-table {
+ width: 100%; border-collapse: collapse;
+ font-size: 8.5pt;
+ }
+ .spec-table td {
+ border: 1px solid var(--rule);
+ padding: 4px 8px;
+ vertical-align: top;
+ }
+ .spec-table .spec-section-head td {
+ background: var(--ink); color: white;
+ font-weight: 700; text-transform: uppercase;
+ letter-spacing: 0.5pt; font-size: 7.5pt;
+ padding: 5px 8px;
+ }
+ .spec-table .spec-attr {
+ background: var(--tint);
+ font-weight: 700;
+ width: 32%;
+ }
+ .spec-table .spec-val strong { font-weight: 700; }
+
+ /* Dimensions + Photometric layout */
+ .dim-grid {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 10px;
+ margin-bottom: 12px;
+ }
+ .dim-view {
+ border: 1px solid var(--rule);
+ background: var(--tint);
+ padding: 8px;
+ }
+ .dim-view-label {
+ font-size: 7pt; letter-spacing: 1pt;
+ text-transform: uppercase; color: var(--muted);
+ margin-bottom: 6px;
+ }
+ .dim-view img { width: 100%; height: auto; }
+
+ .photo-grid {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 10px;
+ }
+ .photo-polar {
+ border: 1px solid var(--rule);
+ background: #0E0E10;
+ padding: 8px;
+ aspect-ratio: 1 / 1;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ }
+ .photo-polar img { max-width: 100%; max-height: 100%; }
+ .photo-polar.fallback {
+ color: var(--muted); font-family: 'JetBrains Mono', monospace;
+ font-size: 8pt; text-align: center;
+ }
+ .photo-summary table {
+ width: 100%; border-collapse: collapse;
+ font-size: 8.5pt;
+ }
+ .photo-summary td {
+ border-bottom: 1px solid var(--rule);
+ padding: 4px 6px;
+ }
+ .photo-summary td:first-child {
+ color: var(--muted); width: 45%;
+ }
+ .photo-summary td:last-child {
+ font-family: 'JetBrains Mono', monospace;
+ font-weight: 700;
+ }
+
+ /* Certifications row */
+ .certs {
+ display: flex; flex-wrap: wrap; gap: 6px;
+ padding: 10px; background: var(--tint);
+ border: 1px solid var(--rule);
+ margin-top: 10px;
+ }
+ .cert-badge {
+ font-family: 'JetBrains Mono', monospace;
+ font-size: 7.5pt; font-weight: 700;
+ padding: 3px 7px;
+ background: white; border: 1px solid var(--rule-strong);
+ letter-spacing: 0.5pt;
+ }
+ .cert-badge.brand { background: var(--ink); color: white; border-color: var(--ink); }
+
+ /* Footer */
+ .page-foot {
+ position: absolute;
+ bottom: 0.35in; left: 0.65in; right: 0.65in;
+ border-top: 1px solid var(--rule);
+ padding-top: 5px;
+ display: flex; justify-content: space-between;
+ font-size: 7pt; color: var(--muted);
+ }
+
+ /* No-print actions bar (top of doc) */
+ .actions-bar {
+ max-width: 8.5in; margin: 0 auto 14px;
+ display: flex; justify-content: space-between; align-items: center;
+ padding: 10px 14px;
+ background: var(--ink); color: white;
+ font-size: 9pt;
+ }
+ .actions-bar .btn {
+ background: var(--brand-red); color: white;
+ border: 0; padding: 6px 14px;
+ font-weight: 700; cursor: pointer;
+ font-family: inherit; font-size: 9pt;
+ }
+ .actions-bar a { color: white; text-decoration: underline; opacity: 0.85; }
+
+/* CFG-TYPE-1 · Lato lock — Shopify global cascades Cormorant onto inline Lato.
+ This !important rule pins Lato on h1/h2 for this collection's PDP body class. */
+body.cityarch-pdp h1,
+body.cityarch-pdp h2 {
+ font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+}
+
+/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+body { overflow-x: hidden; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- NO-PRINT ACTIONS BAR — at the top, hidden when printed -->
+<!-- ============================================================ -->
+<div class="actions-bar no-print">
+ <div>
+ LHMF OmniMax · High-Mast Submittal Sheet · <span id="liveSku" class="mono"></span>
+ </div>
+ <div>
+ <a href="#" onclick="history.back(); return false;">← Back to Configurator</a>
+ &nbsp;&nbsp;|&nbsp;&nbsp;
+ <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+ </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — COVER · QUICK SPECS · ANATOMY · ORDERING CODE -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+ <!-- Header -->
+ <div class="submittal-head">
+ <div class="brand">
+ <span class="brand-mark"></span>
+ <div>
+ <div class="brand-name">ARCHIPELAGO</div>
+ <div class="brand-sub">Lighting Group</div>
+ </div>
+ </div>
+ <div class="catalog-block">
+ <div class="catalog-eyebrow">Catalog Number <span class="no-print" style="font-family:'JetBrains Mono',monospace; font-size:7pt; color:var(--brand-red); letter-spacing:0.6pt; margin-left:6px;">✎ click to edit</span></div>
+ <div class="catalog-number editable-catalog" id="catNum" contenteditable="true" spellcheck="false">LHMF8W750-50UOM/S/5/RB3</div>
+ </div>
+ </div>
+
+ <!-- Cover banner -->
+ <div class="cover-banner">
+ <div>
+ <div class="cover-tag">city<span class="aa"></span>RCH · PRO+ HIGH MAST · LHMF OmniMax-I</div>
+ <h1>OmniMax</h1>
+ <div class="cover-sub">LED High-Mast Luminaire · 8-WATTSELECT Driver · Type V · 165&deg; Optical Rotation</div>
+ <div class="cover-tagline" id="taglineLumens">
+ Spec-grade LED high-mast luminaire for ports, highways, rail yards, stadiums, and large industrial campuses.
+ <strong id="taglineWatts">8-step WATTSELECT 200&ndash;750W</strong> at
+ <strong id="taglineLums">up to 107,250 lm</strong> &middot;
+ <strong id="taglineCct">5000K Cool White</strong>. 165&deg; optical-assembly rotation is the unique
+ differentiator vs spec-grade fixtures. 5-year / 50,000-hour warranty.
+ </div>
+ </div>
+ <div style="text-align: right;">
+ <div class="cover-tag" style="color:white; opacity:0.6;">Stock Status</div>
+ <div id="stockPill" class="qs-pill">QuickShip · 3-5 day</div>
+ <div style="font-size: 8pt; color: rgba(255,255,255,0.65); margin-top: 6px; line-height: 1.4;">
+ Made-In-Vietnam (non-TAA) or<br/>Made-In-Mexico (TAA Compliant).
+ </div>
+ </div>
+ </div>
+ <!-- v9 · Product hero strip (added 2026-05-20 PM per James submittal canonical request) -->
+ <div class="hero-strip" style="margin: 12px 0 16px 0; padding: 12px; border: 1px solid var(--rule); background: #f7f7f7; display: flex; align-items: center; justify-content: center; min-height: 180px;">
+ <img src="assets/omnimax/hero/omnimax-hero-1.webp" alt="OmniMax LHMF high-mast luminaire — silver finish" style="max-width: 100%; max-height: 200px; height: auto; object-fit: contain;"
+ onerror="this.style.display='none';" />
+ </div>
+
+
+ <!-- Project block -->
+ <div class="proj-block">
+ <div class="proj-cell">
+ <div class="proj-label">Project Name</div>
+ <div class="proj-line"></div>
+ </div>
+ <div class="proj-cell">
+ <div class="proj-label">Project Number</div>
+ <div class="proj-line"></div>
+ </div>
+ <div class="proj-cell">
+ <div class="proj-label">Fixture Schedule</div>
+ <div class="proj-line"></div>
+ </div>
+ <div class="proj-cell">
+ <div class="proj-label">Issue Date</div>
+ <div class="proj-line" id="liveDate"></div>
+ </div>
+ </div>
+
+ <!-- Quick Specs -->
+ <div class="quickspec-grid">
+ <div class="qs-cell">
+ <div class="qs-label">Max Lumens</div>
+ <div class="qs-value" id="qsLumens">107,250<span class="qs-unit">lm</span></div>
+ </div>
+ <div class="qs-cell">
+ <div class="qs-label">Wattage (max)</div>
+ <div class="qs-value" id="qsWatts">750<span class="qs-unit">W</span></div>
+ </div>
+ <div class="qs-cell">
+ <div class="qs-label">Efficacy</div>
+ <div class="qs-value" id="qsEfficacy">143<span class="qs-unit">lm/W</span></div>
+ </div>
+ <div class="qs-cell">
+ <div class="qs-label">Voltage</div>
+ <div class="qs-value" id="qsVoltage">120-277<span class="qs-unit">V</span></div>
+ </div>
+ <div class="qs-cell">
+ <div class="qs-label">CCT</div>
+ <div class="qs-value" id="qsCct">5000<span class="qs-unit">K</span></div>
+ </div>
+ </div>
+
+ <!-- Tagline / hero claim -->
+ <div class="tagline-block">
+ <strong>One disc-housing family. 8-step WATTSELECT driver. 165&deg; optical rotation.</strong>
+ OmniMax-I is the cityⒶRCH high-mast crown — a single die-cast disc-form housing that ships in 500W or
+ 750W driver classes and rotates the optical assembly 165&deg; for asymmetric throw correction.
+ Specification grade: cULus + DLC Listed + IP65 wet location + 24/7-rated continuous operation. Up to
+ four fixtures crown a single pole, each independently rotated for the field-coverage pattern.
+ <strong style="color:#2C7A4A;">Silver 750W-120/277V is currently the only in-stock variant
+ the other 9 SKUs are MTO with ~4-6 wk lead.</strong>
+ </div>
+
+ <!-- Ordering Code visual breakdown -->
+ <div class="section-head">
+ <h2>Ordering Code</h2>
+ <div class="section-eyebrow">7 segments · Family · Housing · Voltage · Series · Finish · Distribution · Photocell · TAA</div>
+ </div>
+
+ <div class="order-code" style="grid-template-columns: repeat(7, 1fr);">
+ <div class="order-segment active"><div class="order-seg-label">Family</div><div class="order-seg-value">LHMF</div></div>
+ <div class="order-segment active"><div class="order-seg-label">Housing</div><div class="order-seg-value" id="ocHousing">8W750</div></div>
+ <div class="order-segment fixed"><div class="order-seg-label">CCT</div><div class="order-seg-value">50</div></div>
+ <div class="order-segment active"><div class="order-seg-label">Voltage</div><div class="order-seg-value" id="ocVoltage">UOM</div></div>
+ <div class="order-segment active"><div class="order-seg-label">Finish</div><div class="order-seg-value" id="ocFinish">S</div></div>
+ <div class="order-segment fixed"><div class="order-seg-label">Dist · Photocell</div><div class="order-seg-value">5/RB3</div></div>
+ <div class="order-segment active"><div class="order-seg-label">TAA</div><div class="order-seg-value" id="ocTaa">—</div></div>
+ </div>
+
+ <table class="order-matrix">
+ <thead>
+ <tr>
+ <th>Segment</th>
+ <th>Available Codes</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr><td class="code">LHMF</td><td>LED High-Mast Fixture family</td></tr>
+ <tr id="rowHousing"><td class="code">8W500 / 8W750</td><td>Housing &middot; 8-step WATTSELECT &mdash; <strong>8W500</strong> (125/200/250/300/350/400/450/500W &middot; max 71,500 lm) &middot; <strong>8W750</strong> (200/300/375/450/525/600/675/750W &middot; max 107,250 lm &middot; line-topper)</td></tr>
+ <tr><td class="code">50</td><td>CCT &mdash; 5000K Cool White (universal across all 10 active SKUs)</td></tr>
+ <tr id="rowVoltage"><td class="code">UOM / HOM</td><td>Voltage &middot; OmniMax driver &mdash; <strong>UOM</strong> 120-277Vac universal &middot; <strong>HOM</strong> 277-480Vac high voltage</td></tr>
+ <tr id="rowFinish"><td class="code">B / S</td><td>Finish &mdash; <strong>B</strong> Black (8 of 10 SKUs) &middot; <strong>S</strong> Silver (2 SKUs only &mdash; 750W &times; 120-277V combos)</td></tr>
+ <tr><td class="code">5</td><td>Distribution &mdash; Type V (155&deg; &times; 155&deg; symmetric &middot; only active distribution &middot; Type II/III/IV available as MTO)</td></tr>
+ <tr><td class="code">RB3</td><td>Photocell receptacle &mdash; RB3 twist-lock (standard on every active SKU)</td></tr>
+ <tr id="rowTaa"><td class="code">(blank) / TAA</td><td>Origin &mdash; <strong>(blank)</strong> Made-in-Vietnam &middot; <strong>/TAA</strong> Made-in-Mexico TAA Compliant (federally-funded projects)</td></tr>
+ </tbody>
+ </table>
+
+ <!-- Authoritative 10-SKU matrix with current stock status -->
+ <table class="order-matrix" style="margin-top: 6px;">
+ <thead>
+ <tr>
+ <th>Catalog Number</th>
+ <th>Specifications &middot; Stock (Zoho 2026-05-19)</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr id="skuRow_500_H_B_0"><td class="code">LHMF8W500-50HOM/B/5/RB3</td><td>500W max &middot; 277-480V &middot; Black &middot; <strong style="color:#B36A00;">MTO</strong> &middot; ~4-6 wk lead</td></tr>
+ <tr id="skuRow_500_H_B_1"><td class="code">LHMF8W500-50HOM/B/5/RB3/TAA</td><td>500W max &middot; 277-480V &middot; Black &middot; TAA &middot; <strong style="color:#B36A00;">MTO</strong></td></tr>
+ <tr id="skuRow_500_U_B_0"><td class="code">LHMF8W500-50UOM/B/5/RB3</td><td>500W max &middot; 120-277V &middot; Black &middot; <strong style="color:#B36A00;">MTO</strong></td></tr>
+ <tr id="skuRow_500_U_B_1"><td class="code">LHMF8W500-50UOM/B/5/RB3/TAA</td><td>500W max &middot; 120-277V &middot; Black &middot; TAA &middot; <strong style="color:#B36A00;">MTO</strong></td></tr>
+ <tr id="skuRow_750_H_B_0"><td class="code">LHMF8W750-50HOM/B/5/RB3</td><td>750W max &middot; 277-480V &middot; Black &middot; <strong style="color:#B36A00;">MTO</strong></td></tr>
+ <tr id="skuRow_750_H_B_1"><td class="code">LHMF8W750-50HOM/B/5/RB3/TAA</td><td>750W max &middot; 277-480V &middot; Black &middot; TAA &middot; <strong style="color:#B36A00;">MTO</strong></td></tr>
+ <tr id="skuRow_750_U_B_0"><td class="code">LHMF8W750-50UOM/B/5/RB3</td><td>750W max &middot; 120-277V &middot; Black &middot; <strong style="color:#B36A00;">MTO</strong></td></tr>
+ <tr id="skuRow_750_U_B_1"><td class="code">LHMF8W750-50UOM/B/5/RB3/TAA</td><td>750W max &middot; 120-277V &middot; Black &middot; TAA &middot; <strong style="color:#B36A00;">MTO</strong></td></tr>
+ <tr id="skuRow_750_U_S_0"><td class="code">LHMF8W750-50UOM/S/5/RB3</td><td>750W max &middot; 120-277V &middot; Silver &middot; <strong style="color:#2C7A4A;">★ QuickShip</strong> &middot; ships 3-5 day</td></tr>
+ <tr id="skuRow_750_U_S_1"><td class="code">LHMF8W750-50UOM/S/5/RB3/TAA</td><td>750W max &middot; 120-277V &middot; Silver &middot; TAA &middot; <strong style="color:#B36A00;">MTO</strong></td></tr>
+ </tbody>
+ </table>
+
+ <div class="page-foot">
+ <div>archipelagolighting.com · LHMF OmniMax submittal · Specifications subject to change</div>
+ <div>Rev. <span id="revDate">2026-05</span> · Page 1 of 2</div>
+ </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — SPECS · DIMENSIONS · PHOTOMETRICS · CERTIFICATIONS -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+
+ <div class="submittal-head">
+ <div class="brand">
+ <span class="brand-mark"></span>
+ <div>
+ <div class="brand-name">ARCHIPELAGO</div>
+ <div class="brand-sub">Lighting Group</div>
+ </div>
+ </div>
+ <div class="catalog-block">
+ <div class="catalog-eyebrow">Catalog Number</div>
+ <div class="catalog-number" id="catNum2">LHMF8W750-50UOM/S/5/RB3</div>
+ </div>
+ </div>
+
+ <div class="section-head">
+ <h2>Detailed Specifications</h2>
+ <div class="section-eyebrow">LHMF OmniMax-I · LED High-Mast · cityⒶRCH PRO+ Outdoor</div>
+ </div>
+
+ <table class="spec-table">
+ <tbody>
+ <tr class="spec-section-head"><td colspan="2">Optical &amp; Performance</td></tr>
+ <tr><td class="spec-attr">Distribution</td><td class="spec-val">Type V &middot; 155&deg; &times; 155&deg; symmetric beamspread &middot; zero uplight (U0) for Dark Sky compliance</td></tr>
+ <tr><td class="spec-attr">CCT</td><td class="spec-val">5000K Cool White (universal across all 10 active SKUs)</td></tr>
+ <tr><td class="spec-attr">CRI</td><td class="spec-val">CRI &ge; 70</td></tr>
+ <tr><td class="spec-attr" id="specHousingLabel">Housing Class · LHMF8W750</td><td class="spec-val" id="specHousingRow">8-step WATTSELECT: 200 / 300 / 375 / 450 / 525 / 600 / 675 / 750W &middot; up to 107,250 lm &middot; 143 lm/W max</td></tr>
+ <tr><td class="spec-attr">Optical Rotation</td><td class="spec-val">165&deg; optical-assembly rotation &mdash; UNIQUE differentiator vs spec-grade fixtures for asymmetric throw correction in irregular pole-spacing layouts</td></tr>
+ <tr><td class="spec-attr">Peak Intensity</td><td class="spec-val" id="specPeakCd">27,346 cd (LM-79 tested · Belling BLC2009004E-A · 14m test distance)</td></tr>
+
+ <tr class="spec-section-head"><td colspan="2">Electrical</td></tr>
+ <tr><td class="spec-attr">Input Voltage</td><td class="spec-val" id="specVoltage">120-277VAC universal &middot; 50/60Hz</td></tr>
+ <tr><td class="spec-attr">Driver</td><td class="spec-val">Constant-current LED driver &middot; 8-step WATTSELECT dip-switch &middot; PF &gt; 0.90 &middot; THD &lt; 20%</td></tr>
+ <tr><td class="spec-attr">Surge Protection</td><td class="spec-val">10kV / 10kA surge module &middot; IEEE C62.41 Cat C &middot; standard</td></tr>
+ <tr><td class="spec-attr">Photocell Receptacle</td><td class="spec-val">RB3 twist-lock (standard on every active SKU)</td></tr>
+
+ <tr class="spec-section-head"><td colspan="2">Construction &amp; Mounting</td></tr>
+ <tr><td class="spec-attr">Housing</td><td class="spec-val">Die-cast aluminum disc-form &middot; powder-coat outdoor finish &middot; IP65 wet location</td></tr>
+ <tr><td class="spec-attr">Form Factor</td><td class="spec-val">Circular disc &middot; 4-section LED face &middot; integrated driver compartment behind the LED plane</td></tr>
+ <tr><td class="spec-attr">Mounting</td><td class="spec-val">Horizontal mast-arm engagement &middot; up to 4 fixtures per pole crown &middot; each independently rotatable through 165&deg;</td></tr>
+ <tr><td class="spec-attr">Finish (selected)</td><td class="spec-val" id="specFinish">Silver &middot; powder-coat outdoor</td></tr>
+ <tr><td class="spec-attr">Origin (selected)</td><td class="spec-val" id="specOrigin">Made in Vietnam (non-TAA)</td></tr>
+
+ <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
+ <tr><td class="spec-attr">Listings</td><td class="spec-val" id="specListings">cULus Listed &middot; DLC Listed &middot; FCC Title 47 Part 15B &middot; RoHS &middot; Wet Location &middot; 24/7 continuous operation rated</td></tr>
+ <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">&minus;40&deg;F to +131&deg;F (&minus;40&deg;C to +55&deg;C)</td></tr>
+ <tr><td class="spec-attr">Warranty</td><td class="spec-val">10-year limited &middot; 100,000-hour rated lifetime</td></tr>
+ <tr><td class="spec-attr">Stock Status</td><td class="spec-val" id="specStock"><strong style="color:#2C7A4A;">★ QuickShip</strong> &middot; ships 3-5 day. Other 9 LHMF OmniMax SKUs are MTO with ~4-6 wk lead.</td></tr>
+ </tbody>
+ </table>
+
+ <!-- Dimensions + Photometric — side-by-side -->
+ <div class="section-head" style="margin-top: 14px;">
+ <h2>Dimensions &amp; Photometric Data</h2>
+ <div class="section-eyebrow">Type V symmetric polar &middot; IES tested at Belling Test Lab BLC2009004E-A</div>
+ </div>
+
+ <div class="photo-grid">
+ <div>
+ <div class="dim-view">
+ <div class="dim-view-label">Disc-Form Housing · Side Profile</div>
+ <img src="assets/omnimax/OmniMax-Dimensions_outlines.svg"
+ alt="LHMF OmniMax dimensions — circular disc-form housing side profile · driver compartment behind LED plane · 4-section LED face · mast-arm engagement at rear"
+ id="dimImg"
+ style="max-height: 220px;"
+ onerror="this.style.display='none';" />
+ </div>
+ </div>
+
+ <div>
+ <div class="photo-polar">
+ <img id="photoPolarImg"
+ src="assets/photometrics/omnimax-750-U.svg"
+ alt="LHMF OmniMax photometric distribution · Type V 155° × 155° symmetric polar plot from IES test data"
+ onerror="this.parentElement.innerHTML='<span>IES polar plot · Type V symmetric · 750-U cell</span>'; this.parentElement.classList.add('fallback');" />
+ </div>
+ </div>
+ </div>
+
+ <table class="photo-summary" style="margin-top: 8px;">
+ <tbody>
+ <tr><td>Peak Intensity</td><td id="photoPeak">27,346 cd</td></tr>
+ <tr><td>Peak Lumen Output</td><td id="photoLumens">106,370 lm (LM-79 tested)</td></tr>
+ <tr><td>Tested Input Watts</td><td id="photoWatts">766.6W (8th step / max)</td></tr>
+ <tr><td>Peak Efficacy</td><td id="photoEff">139 lm/W (750-U cell)</td></tr>
+ <tr><td>Distribution</td><td>Type V &middot; 155&deg; &times; 155&deg; symmetric &middot; zero uplight</td></tr>
+ <tr><td>Test Standard</td><td>IESNA LM-79 &middot; Belling Test Lab BLC2009004E-A &middot; 14m test distance</td></tr>
+ <tr><td>IES File</td><td id="photoIesFile">LHMF750-4000-120V-5.ies</td></tr>
+ </tbody>
+ </table>
+
+ <!-- Certifications row -->
+ <div class="certs" id="certsRow">
+ <span class="cert-badge">cULus Listed</span>
+ <span class="cert-badge brand">DLC LISTED</span>
+ <span class="cert-badge">FCC 47 / 15B</span>
+ <span class="cert-badge">RoHS</span>
+ <span class="cert-badge">IP65 · Wet Loc</span>
+ <span class="cert-badge">24/7 Rated</span>
+ <span class="cert-badge brand">5-yr / 50k-hr</span>
+ <span class="cert-badge" id="taaBadge" style="display: none; background:#FFF2DA; color:#B36A00; border-color:#B36A00;">TAA Compliant</span>
+ </div>
+
+ <div class="page-foot">
+ <div>archipelagolighting.com · LHMF OmniMax submittal · Specifications subject to change</div>
+ <div>Rev. <span class="mono">2026-05</span> · Page 2 of 2</div>
+ </div>
+</div>
+
+
+<script>
+/* =============================================================================
+ SUBMITTAL AUTO-FILL · LHMF OmniMax-I LED High-Mast
+ ----------------------------------------------------------------------------
+ Reads URL query params from the Section 9 configurator and stamps the live
+ catalog number, ordering breakdown, quick specs, photometric polar plot,
+ and stock-status pill across both pages.
+
+ Parameters:
+ sku — full canonical SKU (auto-built upstream)
+ housing — 500 | 750
+ voltage — U (120-277V) | H (277-480V)
+ finish — B (Black) | S (Silver)
+ taa — 0 | 1 (no TAA / TAA Compliant Mexico-build)
+
+ AUTHORITATIVE 10-SKU MATRIX (Zoho Books 2026-05-19 · QS iff stock > 0):
+ Only ONE SKU is QS: LHMF8W750-50UOM/S/5/RB3 The other 9 are MTO (zero stock).
+ ============================================================================= */
+(function() {
+
+ // ---- Authoritative QS combos — only 1 SKU has stock > 0 (Zoho 2026-05-19) ----
+ var QS_COMBOS = new Set([
+ 'LHMF8W750-50UOM/S/5/RB3'
+ ]);
+
+ // ---- Per-SKU stock map (Zoho 2026-05-19) ----
+ // Key format: housing_voltage_finish_taa (e.g., 750_U_S_0 for non-TAA Silver)
+ var STOCK_MAP = {
+ '500_H_B_0': 0,
+ '500_H_B_1': 0,
+ '500_U_B_0': 0,
+ '500_U_B_1': 0,
+ '750_H_B_0': 0,
+ '750_H_B_1': 0,
+ '750_U_B_0': 0,
+ '750_U_B_1': 0,
+ '750_U_S_0': 99,
+ '750_U_S_1': 0
+ };
+
+ // ---- Housing class specs (8-step WATTSELECT × max lumens × peak efficacy) ----
+ var HOUSING_DATA = {
+ '500': {
+ label: 'LHMF8W500',
+ wattSteps: '125 / 200 / 250 / 300 / 350 / 400 / 450 / 500W',
+ maxWatts: 500, maxLumens: 71500, lpwMax: 146,
+ specRow: '8-step WATTSELECT: 125 / 200 / 250 / 300 / 350 / 400 / 450 / 500W · up to 71,500 lm · 146 lm/W max'
+ },
+ '750': {
+ label: 'LHMF8W750',
+ wattSteps: '200 / 300 / 375 / 450 / 525 / 600 / 675 / 750W',
+ maxWatts: 750, maxLumens: 107250, lpwMax: 143,
+ specRow: '8-step WATTSELECT: 200 / 300 / 375 / 450 / 525 / 600 / 675 / 750W · up to 107,250 lm · 143 lm/W max'
+ }
+ };
+
+ // ---- Voltage labels ----
+ var VOLT_DATA = {
+ 'U': { code: 'UOM', label: '120-277VAC universal' },
+ 'H': { code: 'HOM', label: '277-480VAC high voltage' }
+ };
+
+ // ---- Finish labels ----
+ var FIN_DATA = {
+ 'B': 'Black · powder-coat outdoor',
+ 'S': 'Silver · powder-coat outdoor'
+ };
+
+ // ---- Per-cell IES test data (Belling Test Lab BLC2009004E-A) ----
+ var IES_DATA = {
+ '500_U': { peak: '20,051', lumens: '74,279', watts: '521.5', efficacy: '142', file: 'LHMF500-4000K-120V-5.ies', polar: 'assets/photometrics/omnimax-500-U.svg' },
+ '500_H': { peak: '19,849', lumens: '73,602', watts: '502.7', efficacy: '146', file: 'LHMF500-4000K-277V-9.ies', polar: 'assets/photometrics/omnimax-500-H.svg' },
+ '750_U': { peak: '27,346', lumens: '106,370', watts: '766.6', efficacy: '139', file: 'LHMF750-4000-120V-5.ies', polar: 'assets/photometrics/omnimax-750-U.svg' },
+ '750_H': { peak: '26,763', lumens: '104,412', watts: '727.4', efficacy: '143', file: 'LHMF750-4000-277V-8.ies', polar: 'assets/photometrics/omnimax-750-H.svg' }
+ };
+
+ // ---- Parse URL params ----
+ var params = new URLSearchParams(window.location.search);
+ var sku = params.get('sku') || 'LHMF8W750-50UOM/S/5/RB3';
+ var housing = params.get('housing') || '750';
+ var voltage = params.get('voltage') || 'U';
+ var finish = params.get('finish') || 'S';
+ var taa = params.get('taa') || '0';
+
+ // If housing/voltage/finish/taa not in URL but sku is, parse from sku
+ // Pattern: LHMF8W{housing}-50{voltage}OM/{finish}/5/RB3[/TAA]
+ if (sku) {
+ var m = sku.match(/^LHMF8W(\d{3})-50([UH])OM\/([BS])\/5\/RB3(\/TAA)?$/);
+ if (m) {
+ housing = m[1] || housing;
+ voltage = m[2] || voltage;
+ finish = m[3] || finish;
+ taa = m[4] ? '1' : '0';
+ }
+ }
+
+ // ---- Compute derived values ----
+ var hData = HOUSING_DATA[housing] || HOUSING_DATA['750'];
+ var vData = VOLT_DATA[voltage] || VOLT_DATA['U'];
+ var finLabel = FIN_DATA[finish] || FIN_DATA['B'];
+ var iesKey = housing + '_' + voltage;
+ var ies = IES_DATA[iesKey] || IES_DATA['750_U'];
+ var stockKey = housing + '_' + voltage + '_' + finish + '_' + taa;
+ var stock = STOCK_MAP[stockKey] != null ? STOCK_MAP[stockKey] : 0;
+
+ // Combo-aware QS lookup
+ var isQS = QS_COMBOS.has(sku);
+
+ // ---- Stamp all the catalog-number slots ----
+ document.querySelectorAll('#catNum, #catNum2, #liveSku').forEach(function(el) {
+ el.textContent = sku;
+ });
+
+ // ---- Stock pill ----
+ var pill = document.getElementById('stockPill');
+ if (isQS) {
+ pill.className = 'qs-pill';
+ pill.textContent = 'QuickShip · 3-5 day';
+ } else {
+ pill.className = 'mto-pill';
+ pill.textContent = 'Made-to-Order · ~4-6 wk';
+ }
+
+ // ---- Cover banner taglines ----
+ document.getElementById('taglineWatts').textContent =
+ '8-step WATTSELECT ' + hData.wattSteps.replace(/ \/ /g, ' / ').split(' / ').slice(0,1)[0] + '-' + hData.maxWatts + 'W';
+ document.getElementById('taglineLums').textContent =
+ 'up to ' + hData.maxLumens.toLocaleString() + ' lm';
+ document.getElementById('taglineCct').textContent = '5000K Cool White';
+
+ // ---- Quick Specs ----
+ document.getElementById('qsLumens').innerHTML = hData.maxLumens.toLocaleString() + '<span class="qs-unit">lm</span>';
+ document.getElementById('qsWatts').innerHTML = hData.maxWatts + '<span class="qs-unit">W</span>';
+ document.getElementById('qsEfficacy').innerHTML = hData.lpwMax + '<span class="qs-unit">lm/W</span>';
+ document.getElementById('qsVoltage').innerHTML = (voltage === 'U' ? '120-277' : '277-480') + '<span class="qs-unit">V</span>';
+ document.getElementById('qsCct').innerHTML = '5000<span class="qs-unit">K</span>';
+
+ // ---- Ordering Code segments ----
+ document.getElementById('ocHousing').textContent = '8W' + housing;
+ document.getElementById('ocVoltage').textContent = vData.code;
+ document.getElementById('ocFinish').textContent = finish;
+ document.getElementById('ocTaa').textContent = taa === '1' ? 'TAA' : '—';
+
+ // ---- Highlight active rows in the ordering matrix ----
+ document.querySelectorAll('#rowHousing, #rowVoltage, #rowFinish, #rowTaa').forEach(function(tr) {
+ tr.classList.add('active-row');
+ });
+ // Highlight the matching SKU row in the 10-SKU matrix
+ var skuRow = document.getElementById('skuRow_' + housing + '_' + voltage + '_' + finish + '_' + taa);
+ if (skuRow) skuRow.classList.add('active-row');
+
+ // ---- Page 2 — Detailed Specs ----
+ document.getElementById('specHousingLabel').textContent = 'Housing Class · ' + hData.label;
+ document.getElementById('specHousingRow').textContent = hData.specRow;
+ document.getElementById('specPeakCd').textContent =
+ ies.peak + ' cd (LM-79 tested · Belling BLC2009004E-A · ' + housing + '-' + voltage + ' cell · 14m test distance)';
+ document.getElementById('specVoltage').textContent = vData.label + ' · 50/60Hz';
+ document.getElementById('specFinish').textContent = finLabel;
+ document.getElementById('specOrigin').textContent = taa === '1'
+ ? 'Made in Mexico · TAA Compliant (federally-funded project eligible)'
+ : 'Made in Vietnam · non-TAA (commercial spec)';
+ document.getElementById('specListings').textContent = taa === '1'
+ ? 'cULus Listed · DLC Listed · FCC Title 47 Part 15B · RoHS · Wet Location · 24/7 continuous operation rated · TAA Compliant'
+ : 'cULus Listed · DLC Listed · FCC Title 47 Part 15B · RoHS · Wet Location · 24/7 continuous operation rated';
+ // CFG-INV-1 · no inventory counts or warehouse location in spec-stock cell
+ document.getElementById('specStock').innerHTML = isQS
+ ? '<strong style="color:#2C7A4A;">★ QuickShip</strong> · ships 3-5 day. Other 9 LHMF OmniMax SKUs are MTO with ~4-6 wk lead.'
+ : '<strong style="color:#B36A00;">Made-to-Order · ~4-6 wk lead.</strong> (The only QS LHMF OmniMax SKU as of 2026-05-19 is LHMF8W750-50UOM/S/5/RB3.)';
+
+ // ---- TAA cert badge — only show on TAA-suffixed SKUs ----
+ var taaBadge = document.getElementById('taaBadge');
+ if (taaBadge) taaBadge.style.display = taa === '1' ? '' : 'none';
+
+ // ---- Polar plot ----
+ document.getElementById('photoPolarImg').src = ies.polar;
+ document.getElementById('photoPolarImg').alt =
+ 'LHMF OmniMax ' + hData.label + ' photometric distribution · Type V 155° × 155° symmetric polar plot (' +
+ housing + '-' + voltage + ' cell)';
+
+ // ---- Photometric summary ----
+ document.getElementById('photoPeak').textContent = ies.peak + ' cd';
+ document.getElementById('photoLumens').textContent = ies.lumens + ' lm (LM-79 tested)';
+ document.getElementById('photoWatts').textContent = ies.watts + 'W (8th step / max)';
+ document.getElementById('photoEff').textContent = ies.efficacy + ' lm/W (' + housing + '-' + voltage + ' cell)';
+ document.getElementById('photoIesFile').textContent = ies.file;
+
+ // ---- Issue date ----
+ var d = new Date();
+ var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+ document.getElementById('liveDate').textContent =
+ months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+ document.getElementById('revDate').textContent =
+ d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+
+ // ============================================================================
+ // CFG-SUB-1 · Editable Catalog Number with full-page text sweep · session-only
+ // ----------------------------------------------------------------------------
+ // James 2026-05-18 playbook rule. User types a project-specific label into the
+ // top-right Catalog Number box (e.g., "ABC-001") and every visible instance of
+ // the ORIGINAL SKU on the page swaps to match in real time.
+ //
+ // IMPORTANT — snapshot-then-rederive pattern (V2 fix 2026-05-18 PM)
+ // ----------------------------------------------------------------------------
+ // V1 of this code tracked a `currentDisplay` and swept `currentDisplay → newVal`
+ // on every keystroke. That was catastrophic: after one keystroke turned the SKU
+ // into "A", the next keystroke swept "A → AB" across the WHOLE page, replacing
+ // every literal "A" in "ARCHIPELAGO", "BOLLARD", "AVAILABLE", "Anchor", etc.
+ //
+ // V2 fixes it by SNAPSHOTTING the original text of every node that contains
+ // `originalSku` at load time, then on each input event re-deriving each node's
+ // text from its cached original via originalText.split(originalSku).join(override).
+ // The sweep is idempotent and only ever matches the full original SKU string —
+ // partial intermediate states (single chars, prefixes) can never propagate.
+ //
+ // Edits don't touch <a href>, data-*, scripts, styles, or the `sku` JS variable.
+ // ============================================================================
+ (function setupEditableCatalogNumber() {
+ var originalSku = sku;
+ var editor = document.getElementById('catNum');
+ if (!editor) return;
+
+ // Seed document.title with the SKU so Save-as-PDF picks up a useful filename
+ // AND so the title sweep below has originalSku to find on user override.
+ if (document.title.indexOf(originalSku) === -1) {
+ document.title = originalSku + ' · ' + document.title;
+ }
+ var originalTitle = document.title;
+
+ // ── SNAPSHOT — record original text of every node that contains originalSku ──
+ // Skips <script>, <style>, and the editor itself. Captured once, at load.
+ var matchedNodes = []; // [{node, originalText}, ...]
+ (function snapshot() {
+ var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+ acceptNode: function(n) {
+ var p = n.parentNode;
+ while (p) {
+ if (p === editor) return NodeFilter.FILTER_REJECT;
+ if (p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT;
+ p = p.parentNode;
+ }
+ return n.nodeValue.indexOf(originalSku) !== -1
+ ? NodeFilter.FILTER_ACCEPT
+ : NodeFilter.FILTER_REJECT;
+ }
+ });
+ while (walker.nextNode()) {
+ matchedNodes.push({ node: walker.currentNode, originalText: walker.currentNode.nodeValue });
+ }
+ })();
+
+ // ── APPLY — re-derive every matched node from its cached original ──
+ // Idempotent. Calling applyOverride('X') then applyOverride('YZ') is exactly
+ // the same as starting fresh and calling applyOverride('YZ') directly.
+ function applyOverride(newDisplay) {
+ var override = newDisplay || originalSku;
+ matchedNodes.forEach(function(item) {
+ item.node.nodeValue = item.originalText.split(originalSku).join(override);
+ });
+ document.title = originalTitle.split(originalSku).join(override);
+ }
+
+ editor.addEventListener('input', function() {
+ // Strip newlines, cap at 40 chars. Don't re-write editor.textContent — caret would jump.
+ var raw = (editor.textContent || '').replace(/[\r\n]+/g, ' ').slice(0, 40);
+ var nextDisplay = raw.trim() ? raw : originalSku;
+ applyOverride(nextDisplay);
+ });
+
+ editor.addEventListener('blur', function() {
+ // Empty field on blur → restore original everywhere
+ var v = editor.textContent.trim();
+ if (!v) {
+ editor.textContent = originalSku;
+ applyOverride(originalSku);
+ }
+ });
+
+ // Keep field single-line — Enter commits + blurs
+ editor.addEventListener('keydown', function(e) {
+ if (e.key === 'Enter') {
+ e.preventDefault();
+ editor.blur();
+ }
+ });
+ })();
+})();
+</script>
+
+</body>
+</html>

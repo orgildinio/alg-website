@@ -5997,7 +5997,7 @@ body { overflow-x: hidden; }
               Pricing &amp; Availability
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <a href="submittal_waymark.html" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
+            <a href="submittal/" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
               Generate Submittal PDF
             </a>
@@ -6020,16 +6020,16 @@ body { overflow-x: hidden; }
         2. Installation Guide — PDF · WorkDrive · LIVE
         4. SellSheet          — PDF · WorkDrive · PENDING
         5. IES Bundle (32)    — ZIP · WorkDrive · LIVE
-        6. Submittal Generator — local · reads §9 Configurator state · pending submittal_waymark.html
+        6. Submittal Generator — local · reads §9 Configurator state · pending submittal/
 
      Secondary Quick-Links row — Rebate Center (DLC tier verification pending per
      CFG-RBT-2: datasheet pg 1 says "DLC Premium" but pg 2 cert badge row says
      "DLC LISTED" only · Rebate Center wins) · DLC QPL · 7-yr Warranty.
      NOTE: Waymark is Made in China · NO TAA · TAA card omitted.
 
-     Submittal Generator points at `submittal_waymark.html` (Waymark-specific template
+     Submittal Generator points at `submittal/` (Waymark-specific template
      PENDING build · §9 Configurator state passes via query string · carry-forward to
-     next session to build the Waymark-aware submittal_waymark.html with the LWRL2/
+     next session to build the Waymark-aware submittal/ with the LWRL2/
      LWRL4 class encoder + /W## /C## factory-lock + 15-line accessory BOM rendering).
 
      Anchor: #downloads (already wired into sticky-nav).
@@ -6156,8 +6156,8 @@ body { overflow-x: hidden; }
         </div>
       </a>
 
-      <!-- 6 / Submittal Generator — LIVE 2026-05-12 · reads §9 Configurator state · submittal_waymark.html ships 4-page submittal -->
-      <a href="submittal_waymark.html?form=4&wattage=50&cct=5000" target="_blank" rel="noopener" class="docs-card" data-doc="submittal">
+      <!-- 6 / Submittal Generator — LIVE 2026-05-12 · reads §9 Configurator state · submittal/ ships 4-page submittal -->
+      <a href="submittal/?form=4&wattage=50&cct=5000" target="_blank" rel="noopener" class="docs-card" data-doc="submittal">
         <div class="docs-card-head">
           <div class="docs-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -7785,7 +7785,7 @@ body { overflow-x: hidden; }
       }
     });
 
-    // ---- Submittal PDF — opens submittal_waymark.html with config in query string.
+    // ---- Submittal PDF — opens submittal/ with config in query string.
     //      2026-05-26 BUG-FIX — was reading legacy state.class/wlock/clock/em/bilevel/
     //      acs/silvair after the §9 rebuild renamed fields. Now reads state.form +
     //      state.wattage + state.cct + state.emergency + state.sensor, and pulls
@@ -7824,7 +7824,7 @@ body { overflow-x: hidden; }
         clock:       clock,          // "" when ★ default (5000K)
         accessories: accs.join(',')
       });
-      return 'submittal_waymark.html?' + params.toString();
+      return 'submittal/?' + params.toString();
     }
     if (ctaPdf) {
       ctaPdf.addEventListener('click', function(e) {
