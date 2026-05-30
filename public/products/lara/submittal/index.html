@@ -557,7 +557,7 @@ body { overflow-x: hidden; }
            ON 404: img.onerror falls through to lara-4ft-white.webp.
            For 2FT/8FT when finish=B, CSS filter renders as black. -->
       <img id="submittalHeroAperture"
-           src="assets/hero/lara-4ft-white.webp"
+           src="/products/lara/assets/hero/lara-4ft-white.webp"
            alt="LARA at selected length and finish" />
     </div>
     <div class="qs-grid">
@@ -922,7 +922,7 @@ body { overflow-x: hidden; }
              CCTs: 2700 / 3000 / 3500 / 4000 / 5000
            ON 404 the IMG.onerror swaps to a fallback message div. -->
       <img id="submittalPhotoPolar"
-           src="assets/photometrics/lara_luxa4_40w_5000k.svg"
+           src="/products/lara/assets/photometrics/lara_luxa4_40w_5000k.svg"
            alt="LARA polar candela distribution · selected length/wattage/CCT" />
       <div id="submittalPhotoPolarFallback"
            style="display:none; color:#888; font-size:8pt; text-align:center; padding:24px;">
@@ -1238,19 +1238,19 @@ body { overflow-x: hidden; }
         ? 'assets/hero/lara-4ft-black.webp'
         : 'assets/hero/lara-4ft-white.webp';
     } else if (length === '2') {
-      src = 'assets/hero/lara-2ft.webp';
+      src = '/products/lara/assets/hero/lara-2ft.webp';
       if (finish === 'B') applyBlackFilter = true;
     } else if (length === '8') {
-      src = 'assets/hero/lara-8ft.webp';
+      src = '/products/lara/assets/hero/lara-8ft.webp';
       if (finish === 'B') applyBlackFilter = true;
     } else {
-      src = 'assets/hero/lara-4ft-white.webp';
+      src = '/products/lara/assets/hero/lara-4ft-white.webp';
     }
 
     apImg.src = src;
     apImg.alt = 'LARA at LUXA' + length + ' (' + length + ' ft) · ' + finishLabel + ' finish';
     apImg.onerror = function() {
-      this.src = 'assets/hero/lara-4ft-white.webp';
+      this.src = '/products/lara/assets/hero/lara-4ft-white.webp';
       if (frame) frame.classList.remove('finish-black');
       this.onerror = null;
     };
@@ -1283,7 +1283,7 @@ body { overflow-x: hidden; }
         return Math.abs(curr - wattage) < Math.abs(prev - wattage) ? curr : prev;
       });
     }
-    var svgPath = 'assets/photometrics/lara_luxa' + length + '_' + polarWatt + 'w_' + cctPick + 'k.svg';
+    var svgPath = '/products/lara/assets/photometrics/lara_luxa' + length + '_' + polarWatt + 'w_' + cctPick + 'k.svg';
     polarImg.src = svgPath;
     polarImg.alt = 'LARA polar candela distribution · LUXA' + length + ' ' + polarWatt + 'W ' + cctPick + 'K';
     polarImg.onerror = function() {

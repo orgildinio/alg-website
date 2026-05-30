@@ -510,7 +510,7 @@ body { overflow-x: hidden; }
              (square 6" → solstice-square-6.webp)
            ON 404: img.onerror falls through to solstice-hero-1.webp. -->
       <img id="submittalHeroAperture"
-           src="assets/hero/solstice-aperture-6.webp"
+           src="/products/solstice/assets/hero/solstice-aperture-6.webp"
            alt="Solstice at selected aperture size"
            style="max-width:100%; max-height:100%; object-fit:contain; display:block; margin:0 auto;" />
     </div>
@@ -911,7 +911,7 @@ body { overflow-x: hidden; }
            since the IES polar profile is shape-identical (frosted PC diffuser geometry).
            ON 404 the IMG.onerror swaps to a fallback message div. -->
       <img id="submittalPhotoPolar"
-           src="assets/photometrics/lcdl6_22w_5000k.svg"
+           src="/products/solstice/assets/photometrics/lcdl6_22w_5000k.svg"
            alt="Solstice polar candela distribution · selected wattage/CCT"
            style="width:100%; height:100%; object-fit:contain;" />
       <div id="submittalPhotoPolarFallback"
@@ -1264,10 +1264,10 @@ body { overflow-x: hidden; }
       // Square trim @ 6" has a dedicated photo; everything else uses round-aperture views
       var apSrc = (isSquare && size === '6')
         ? 'assets/hero/solstice-square-6.webp'
-        : 'assets/hero/solstice-aperture-' + size + '.webp';
+        : '/products/solstice/assets/hero/solstice-aperture-' + size + '.webp';
       apImg.src = apSrc;
       apImg.alt = 'Solstice at LCDL' + size + ' (' + size + '" aperture)' + (isSquare ? ' · Square trim' : '');
-      apImg.onerror = function() { this.src = 'assets/hero/solstice-hero-1.webp'; this.onerror = null; };
+      apImg.onerror = function() { this.src = '/products/solstice/assets/hero/solstice-hero-1.webp'; this.onerror = null; };
     }
   })();
 
@@ -1297,7 +1297,7 @@ body { overflow-x: hidden; }
         return Math.abs(curr - wattage) < Math.abs(prev - wattage) ? curr : prev;
       });
     }
-    var svgPath = 'assets/photometrics/lcdl6_' + polarWatt + 'w_' + cctPick + 'k.svg';
+    var svgPath = '/products/solstice/assets/photometrics/lcdl6_' + polarWatt + 'w_' + cctPick + 'k.svg';
     polarImg.src = svgPath;
     polarImg.alt = 'Solstice polar candela distribution · LCDL' + size + ' ' + wattage + 'W ' + cctPick + 'K';
     polarImg.onerror = function() {

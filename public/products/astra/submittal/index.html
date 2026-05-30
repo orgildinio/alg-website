@@ -503,13 +503,13 @@ body { overflow-x: hidden; }
       <div class="hero-photo-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; width:100%; height:100%; align-items:center;">
         <div class="hero-photo-cell" style="display:flex; align-items:center; justify-content:center; height:100%; padding:6px;">
           <img id="submittalHeroModule"
-               src="assets/hero/astra-finish-white.webp"
+               src="/products/astra/assets/hero/astra-finish-white.webp"
                alt="Astra-I full module + reflector render · selected finish"
                style="max-width:100%; max-height:100%; object-fit:contain;" />
         </div>
         <div class="hero-photo-cell" style="display:flex; align-items:center; justify-content:center; height:100%; padding:6px;">
           <img id="submittalHeroReflector"
-               src="assets/preview/rf-6-WF.webp"
+               src="/products/astra/assets/preview/rf-6-WF.webp"
                alt="Astra-I reflector at selected aperture size + finish"
                style="max-width:100%; max-height:100%; object-fit:contain;" />
         </div>
@@ -907,7 +907,7 @@ body { overflow-x: hidden; }
            Available SVGs: dms1830 + dms3050 × 18/24/30W (dms1830) or 30/40W (dms3050) × 24°/60°
            × 2700K/5000K. JS at end of file picks the best-match SVG; ON 404 shows fallback note. -->
       <img id="submittalPhotoPolar"
-           src="assets/photometrics/dms1830_30w_60deg_5000k.svg"
+           src="/products/astra/assets/photometrics/dms1830_30w_60deg_5000k.svg"
            alt="LCDL Astra-I polar candela distribution · selected driver/wattage/CCT"
            style="width:100%; height:100%; object-fit:contain;" />
       <div id="submittalPhotoPolarFallback"
@@ -1274,9 +1274,9 @@ body { overflow-x: hidden; }
     // LEFT: full module+reflector render — astra-finish-{name}.webp (always available · 7 variants)
     var moduleImg = document.getElementById('submittalHeroModule');
     if (moduleImg) {
-      moduleImg.src = 'assets/hero/astra-finish-' + finishPhoto + '.webp';
+      moduleImg.src = '/products/astra/assets/hero/astra-finish-' + finishPhoto + '.webp';
       moduleImg.alt = 'Astra-I full fixture render · ' + finishPhoto.replace(/-/g, ' ') + ' finish';
-      moduleImg.onerror = function() { this.src = 'assets/preview/default.webp'; };
+      moduleImg.onerror = function() { this.src = '/products/astra/assets/preview/default.webp'; };
     }
 
     // RIGHT: aperture-specific reflector-only photo · {shape-lower}-{size}-{finishCode}.webp
@@ -1286,13 +1286,13 @@ body { overflow-x: hidden; }
       var refSrc;
       if (driver === 'DMS1830' && shape === 'RF' && size === '6' &&
           ['BF','WF','SP','SS','MWSP','MWSS'].indexOf(finishCode) >= 0) {
-        refSrc = 'assets/preview/dms1830-full-' + finishCode + '.webp';
+        refSrc = '/products/astra/assets/preview/dms1830-full-' + finishCode + '.webp';
       } else {
-        refSrc = 'assets/preview/' + shape.toLowerCase() + '-' + size + '-' + finishCode + '.webp';
+        refSrc = '/products/astra/assets/preview/' + shape.toLowerCase() + '-' + size + '-' + finishCode + '.webp';
       }
       reflectorImg.src = refSrc;
       reflectorImg.alt = 'Astra-I reflector · ' + shape + size + '" aperture · ' + finishCode + ' finish';
-      reflectorImg.onerror = function() { this.src = 'assets/preview/default.webp'; };
+      reflectorImg.onerror = function() { this.src = '/products/astra/assets/preview/default.webp'; };
     }
   })();
 
@@ -1342,7 +1342,7 @@ body { overflow-x: hidden; }
       return;
     }
 
-    var svgPath = 'assets/photometrics/' + driverFile + '_' + wattPick + 'w_' + beamPick + 'deg_' + cctPick + 'k.svg';
+    var svgPath = '/products/astra/assets/photometrics/' + driverFile + '_' + wattPick + 'w_' + beamPick + 'deg_' + cctPick + 'k.svg';
     polarImg.src = svgPath;
     polarImg.alt = 'LCDL Astra-I polar candela distribution · ' + driver + ' ' + wattPick + 'W ' + beamPick + '° ' + cctPick + 'K';
     polarImg.onerror = function() {

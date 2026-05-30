@@ -587,7 +587,7 @@ body { overflow-x: hidden; }
            per the resolved `optic` URL param.  Falls back to luna-pendant-diffuser.webp
            then luna-hero-1.webp on 404. -->
       <img id="submittalHeroPhoto"
-           src="assets/hero/luna-pendant-diffuser.webp"
+           src="/products/luna/assets/hero/luna-pendant-diffuser.webp"
            alt="LUXA Luna · pendant suspension · Diffuser optic" />
     </div>
     <div class="qs-grid">
@@ -877,7 +877,7 @@ body { overflow-x: hidden; }
            57 SVGs pre-rendered (3 lengths × 4 optics × up to 7 ratios).
            ON 404 the IMG.onerror swaps to a fallback message div. -->
       <img id="submittalPhotoPolar"
-           src="assets/photometrics/luna_4ft_diffuser_up50down50.svg"
+           src="/products/luna/assets/photometrics/luna_4ft_diffuser_up50down50.svg"
            alt="LUXA Luna polar candela distribution &middot; selected length / optic / ratio" />
       <div id="submittalPhotoPolarFallback"
            style="display:none; color:#888; font-size:8pt; text-align:center; padding:24px;">
@@ -1252,16 +1252,16 @@ body { overflow-x: hidden; }
     var heroImg = document.getElementById('submittalHeroPhoto');
     if (!heroImg) return;
     var heroOptic = od.hero;
-    heroImg.src = 'assets/hero/luna-pendant-' + heroOptic + '.webp';
+    heroImg.src = '/products/luna/assets/hero/luna-pendant-' + heroOptic + '.webp';
     heroImg.alt = 'LUXA Luna · pendant suspension · ' + od.short + ' optic';
     heroImg.onerror = function() {
       // First fallback · default optic photo
       this.onerror = function() {
         // Second fallback · generic Luna hero
         this.onerror = null;
-        this.src = 'assets/hero/luna-hero-1.webp';
+        this.src = '/products/luna/assets/hero/luna-hero-1.webp';
       };
-      this.src = 'assets/hero/luna-pendant-diffuser.webp';
+      this.src = '/products/luna/assets/hero/luna-pendant-diffuser.webp';
     };
   })();
 
@@ -1358,7 +1358,7 @@ body { overflow-x: hidden; }
       key = 'luna_' + svgN + 'ft_' + svgOptic + '_' + svgRatio;
     }
 
-    var svgPath = 'assets/photometrics/' + key + '.svg';
+    var svgPath = '/products/luna/assets/photometrics/' + key + '.svg';
     polarImg.src = svgPath;
     polarImg.alt = 'LUXA Luna polar candela distribution · ' + svgN + ' FT · ' + od.short + ' · ' + (RATIO_DATA[svgRatio] || rd).label;
     polarImg.onerror = function() {

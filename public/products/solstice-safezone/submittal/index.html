@@ -501,7 +501,7 @@ body { overflow-x: hidden; }
              size → assets/hero/safezone-aperture-{4|6|8|10}.webp
            ON 404: img.onerror falls through to safezone-hero-1.webp. -->
       <img id="submittalHeroAperture"
-           src="assets/hero/safezone-aperture-6.webp"
+           src="/products/solstice-safezone/assets/hero/safezone-aperture-6.webp"
            alt="Solstice SafeZone at selected aperture size"
            style="max-width:100%; max-height:100%; object-fit:contain; display:block; margin:0 auto;" />
     </div>
@@ -899,7 +899,7 @@ body { overflow-x: hidden; }
            60 SVGs already rendered for the family (4 sizes × 3 watts × 5 CCTs).
            ON 404 the IMG.onerror swaps to a fallback message div. -->
       <img id="submittalPhotoPolar"
-           src="assets/photometrics/safezone_lcdl6_19w_5000k.svg"
+           src="/products/solstice-safezone/assets/photometrics/safezone_lcdl6_19w_5000k.svg"
            alt="Solstice SafeZone polar candela distribution · selected size/wattage/CCT"
            style="width:100%; height:100%; object-fit:contain;" />
       <div id="submittalPhotoPolarFallback"
@@ -1232,9 +1232,9 @@ body { overflow-x: hidden; }
   (function wireSubmittalHeroPhoto() {
     var apImg = document.getElementById('submittalHeroAperture');
     if (apImg) {
-      apImg.src = 'assets/hero/safezone-aperture-' + size + '.webp';
+      apImg.src = '/products/solstice-safezone/assets/hero/safezone-aperture-' + size + '.webp';
       apImg.alt = 'Solstice SafeZone at LCDL' + size + ' (' + size + '" aperture)';
-      apImg.onerror = function() { this.src = 'assets/hero/safezone-hero-1.webp'; this.onerror = null; };
+      apImg.onerror = function() { this.src = '/products/solstice-safezone/assets/hero/safezone-hero-1.webp'; this.onerror = null; };
     }
   })();
 
@@ -1252,7 +1252,7 @@ body { overflow-x: hidden; }
     if (!polarImg) return;
 
     var cctPick = parseInt(cct, 10) || 5000;
-    var svgPath = 'assets/photometrics/safezone_lcdl' + size + '_' + wattage + 'w_' + cctPick + 'k.svg';
+    var svgPath = '/products/solstice-safezone/assets/photometrics/safezone_lcdl' + size + '_' + wattage + 'w_' + cctPick + 'k.svg';
     polarImg.src = svgPath;
     polarImg.alt = 'Solstice SafeZone polar candela distribution · LCDL' + size + ' ' + wattage + 'W ' + cctPick + 'K';
     polarImg.onerror = function() {

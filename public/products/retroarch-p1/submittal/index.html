@@ -464,7 +464,7 @@ body { overflow-x: hidden; }
  <!-- HERO + QUICK SPECS -->
  <div class="at-a-glance">
  <div class="hero-img">
- <img id="heroImg" src="assets/hero/lblr24-hero-2.webp"
+ <img id="heroImg" src="/products/retroarch-p1/assets/hero/lblr24-hero-2.webp"
  alt="LBLR retroⒶRCH-P1 LBLR24 retrofit back-lit panel · 2x4 drop-in replacement for fluorescent troffers" />
  </div>
  <div class="qs-grid">
@@ -748,7 +748,7 @@ body { overflow-x: hidden; }
 
  <div class="photo-grid">
  <div class="photo-polar">
- <img src="assets/photometrics/lblr24_44W_3500K.svg"
+ <img src="/products/retroarch-p1/assets/photometrics/lblr24_44W_3500K.svg"
  alt="LBLR retroⒶRCH-P1 LBLR24 measured polar photometric distribution &middot; 120-degree uniform back-lit panel" id="photoPolarImg" />
  </div>
 
@@ -831,7 +831,7 @@ body { overflow-x: hidden; }
  };
  heroImg.src = heroMap[skuClass] || heroMap['LBLR24'];
  heroImg.alt = 'LBLR retroⒶRCH-P1 ' + skuClass + ' retrofit back-lit panel · ' + effWatt + 'W · ' + effCct + 'K';
- heroImg.onerror = function() { this.src = 'assets/hero/lblr24-hero-2.webp'; };
+ heroImg.onerror = function() { this.src = '/products/retroarch-p1/assets/hero/lblr24-hero-2.webp'; };
  }
 
  // --- LUMENS LOOKUP (datasheet pg 2 · 125 LM/W flat across the dial) ---
@@ -884,7 +884,7 @@ body { overflow-x: hidden; }
  if (photoEyebrow) photoEyebrow.textContent = skuClass + ' \u00b7 ' + effWatt + 'W \u00b7 ' + effCct + 'K \u00b7 LM-79 measured';
  var photoPolarImg = document.getElementById('photoPolarImg');
  if (photoPolarImg) {
- photoPolarImg.src = 'assets/photometrics/' + skuClass.toLowerCase() + '_' + effWatt + 'w_' + effCct + 'k.svg';
+ photoPolarImg.src = '/products/retroarch-p1/assets/photometrics/' + skuClass.toLowerCase() + '_' + effWatt + 'w_' + effCct + 'k.svg';
  photoPolarImg.onerror = function() {
  this.style.display = 'none';
  this.parentElement.innerHTML += '<div style="color:#999;font-size:8pt;text-align:center;">Polar plot unavailable<br/>for ' + skuClass + ' / ' + effWatt + 'W / ' + effCct + 'K</div>';

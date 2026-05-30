@@ -464,7 +464,7 @@ body { overflow-x: hidden; }
  <!-- HERO + QUICK SPECS -->
  <div class="at-a-glance">
  <div class="hero-img">
- <img id="heroImg" src="assets/hero/LPVT24-3550CS/LPVT24-3550CS-FRONT.png"
+ <img id="heroImg" src="/products/luxmark/assets/hero/LPVT24-3550CS/LPVT24-3550CS-FRONT.png"
  alt="LPVT Luxmark LPVT24 center-basket troffer · 2x4 drop-in T-bar grid" />
  </div>
  <div class="qs-grid">
@@ -741,7 +741,7 @@ body { overflow-x: hidden; }
 
  <div class="photo-grid">
  <div class="photo-polar">
- <img src="assets/photometrics/lpvt24_50W_5000K.svg"
+ <img src="/products/luxmark/assets/photometrics/lpvt24_50W_5000K.svg"
  alt="LPVT Luxmark measured polar photometric distribution &middot; 120-degree Lambertian troffer" id="photoPolarImg" />
  </div>
 
@@ -833,7 +833,7 @@ body { overflow-x: hidden; }
  'LPVT22': 'LPVT Luxmark LPVT22 center-basket troffer · 2×2 drop-in T-bar grid',
  'LPVT24': 'LPVT Luxmark LPVT24 center-basket troffer · 2×4 drop-in T-bar grid'
  };
- heroImg.src = 'assets/hero/' + baseSku + '/' + baseSku + '-FRONT.png';
+ heroImg.src = '/products/luxmark/assets/hero/' + baseSku + '/' + baseSku + '-FRONT.png';
  heroImg.alt = heroAlt[skuClass] || heroAlt['LPVT24'];
  }
 
@@ -888,7 +888,7 @@ body { overflow-x: hidden; }
  if (photoEyebrow) photoEyebrow.textContent = skuClass + ' \u00b7 ' + effWatt + 'W \u00b7 ' + effCct + 'K \u00b7 LM-79 measured';
  var photoPolarImg = document.getElementById('photoPolarImg');
  if (photoPolarImg) {
- photoPolarImg.src = 'assets/photometrics/' + skuClass.toLowerCase() + '_' + effWatt + 'W_' + effCct + 'K.svg';
+ photoPolarImg.src = '/products/luxmark/assets/photometrics/' + skuClass.toLowerCase() + '_' + effWatt + 'W_' + effCct + 'K.svg';
  photoPolarImg.onerror = function() {
  this.style.display = 'none';
  this.parentElement.innerHTML += '<div style="color:#999;font-size:8pt;text-align:center;">Polar plot unavailable<br/>for ' + skuClass + ' / ' + effWatt + 'W / ' + effCct + 'K</div>';
