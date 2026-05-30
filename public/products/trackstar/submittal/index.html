@@ -403,7 +403,7 @@ body { overflow-x: hidden; }
   <div class="at-a-glance">
     <div class="hero-img">
       <img id="submittalHeroPhoto"
-           src="assets/hero/1.png"
+           src="/products/trackstar/assets/hero/1.png"
            alt="LTRK Trackstar &middot; spec-grade adjustable architectural track light · 3/4 angle hero" />
     </div>
     <div class="qs-grid">
@@ -693,7 +693,7 @@ body { overflow-x: hidden; }
       <!-- Reference polar SVG · ltrk_ref_20deg | ltrk_ref_50deg
            Selected by URL `watt` param (lower watt → wider beam reference). -->
       <img id="submittalPhotoPolar"
-           src="assets/photometrics/ltrk_ref_20deg.svg"
+           src="/products/trackstar/assets/photometrics/ltrk_ref_20deg.svg"
            alt="LTRK Trackstar polar candela distribution &middot; reference plot at 20-degree narrow accent setting" />
       <div id="submittalPhotoPolarFallback"
            style="display:none; color:#888; font-size:8pt; text-align:center; padding:24px;">
@@ -868,7 +868,7 @@ body { overflow-x: hidden; }
   (function wireHero() {
     var img = document.getElementById('submittalHeroPhoto');
     if (!img) return;
-    img.src = 'assets/hero/1.png';
+    img.src = '/products/trackstar/assets/hero/1.png';
     img.alt = 'LTRK Trackstar · ' + cd.short + ' · ' + fd.short + ' finish · cylindrical track head with adjustable optical collar';
     img.onerror = function() {
       this.style.display = 'none';
@@ -901,7 +901,7 @@ body { overflow-x: hidden; }
 
     // Pick beam endpoint: low watt rungs use the 50° wide reference, high-watt rungs use 20° narrow.
     var beam = (parseInt(wKey, 10) <= 15) ? '50deg' : '20deg';
-    var svgPath = 'assets/photometrics/ltrk_ref_' + beam + '.svg';
+    var svgPath = '/products/trackstar/assets/photometrics/ltrk_ref_' + beam + '.svg';
     polarImg.src = svgPath;
     polarImg.alt = 'LTRK Trackstar polar candela distribution · ' + cd.short + ' · ' + wKey + 'W · ' + ct.kelvin + ' · ' + beam.replace('deg', '°') + ' beam';
     polarImg.onerror = function() {
