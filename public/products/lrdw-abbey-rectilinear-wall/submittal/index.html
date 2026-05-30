@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LRDW · Abbey · Submittal Sheet</title>
+
+<!--
+  ALG SUBMITTAL TEMPLATE · LRDW Abbey v1
+  =========================================
+  Reads URL query params populated by mockup_abbey_pdp_v1.html Section 9 (the
+  Configurator) and auto-fills the catalog number + quick specs + ordering
+  breakdown + photometric polar plot for a project-stampable PDF.
+
+  Built with CFG-SUB-1 (editable catalog number) from the first save · James
+  2026-05-18 playbook rule. User types a project-specific label and every
+  visible instance of the original SKU sweeps to match (session-only).
+
+  Example invocation (matches the configurator's Generate Submittal PDF CTA):
+    submittal_abbey.html?sku=LRDW200-40-27V3S-A2
+        &variant=A2&housing=200&cct=40&voltage=LV
+
+  Print: File → Print → Save as PDF (letter portrait) → 2-page submittal.
+
+  Pattern mirrors submittal_sentry.html. Abbey adaptations:
+    - Two variant SKU patterns (Abbey-I fixed-W · Abbey-II 4-step WATTSELECT)
+    - 12 QS combos (5 Abbey-I + 7 Abbey-II) per James 2026-05-19 authoritative list
+    - Type III roadway distribution (no NEMA matrix)
+    - 7-pin ANSI C136.41 photocell receptacle as standard
+-->
+
+<style>
+  /* ============= PRINT-OPTIMIZED CSS ============= */
+  @page { size: letter portrait; margin: 0.5in 0.6in; }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+    .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+    .page:last-of-type { page-break-after: auto; }
+  }
+
+  :root {
+    --brand-red: #F32740;
+    --ink: #0E0E10;
+    --ink-2: #2A2A2D;
+    --muted: #6B6B70;
+    --rule: #D8D6D2;
+    --rule-strong: #A6A4A0;
+    --tint: #F6F4F0;
+    --hi: #FFF6E5;
+    --qs: #2C7A4A;
+    --qs-tint: #E0F2E5;
+    --mto: #B36A00;
+    --mto-tint: #FFF2DA;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Lato', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.5pt;
+    line-height: 1.4;
+    background: #E8E6E2;
+  }
+  body { padding: 24px 12px; }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 24px;
+    padding: 0.55in 0.65in;
+    background: white;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  h1, h2, h3, h4 { font-family: 'Lato', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+  .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+
+  /* Ⓐ glyph — currentColor SVG mask */
+  .aa {
+    display: inline-block;
+    width: 0.85em; height: 0.85em;
+    vertical-align: -0.06em;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10.5' fill='none' stroke='%23000' stroke-width='1.6'/><text x='12' y='17' font-family='Arial, sans-serif' font-size='14' font-weight='700' text-anchor='middle' fill='%23000'>A</text></svg>") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10.5' fill='none' stroke='%23000' stroke-width='1.6'/><text x='12' y='17' font-family='Arial, sans-serif' font-size='14' font-weight='700' text-anchor='middle' fill='%23000'>A</text></svg>") no-repeat center / contain;
+  }
+
+  /* ============= PAGE HEADER ============= */
+  .submittal-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+  .submittal-head .brand-mark {
+    width: 28px; height: 28px; background: var(--brand-red);
+    display: inline-block;
+  }
+  .submittal-head .brand-name {
+    font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1;
+  }
+  .submittal-head .brand-sub {
+    font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .submittal-head .catalog-block { text-align: right; }
+  .catalog-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .catalog-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5pt; font-weight: 700; color: var(--ink);
+    letter-spacing: 0.5pt;
+  }
+
+  /* CFG-SUB-1 · Editable Catalog Number (James 2026-05-18 playbook rule). */
+  .editable-catalog {
+    cursor: text;
+    border-bottom: 1px dashed transparent;
+    transition: border-bottom-color .15s ease;
+  }
+  .editable-catalog:hover { border-bottom-color: var(--brand-red); }
+  .editable-catalog:focus {
+    outline: 2px solid var(--brand-red);
+    outline-offset: 2px;
+    border-bottom-color: transparent;
+  }
+  @media print {
+    .editable-catalog,
+    .editable-catalog:hover,
+    .editable-catalog:focus {
+      cursor: auto;
+      border-bottom: 0 !important;
+      outline: 0 !important;
+    }
+  }
+
+  /* ============= COVER BANNER ============= */
+  .cover-banner {
+    background: var(--ink); color: white;
+    padding: 22px 24px; margin-bottom: 16px;
+    display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px;
+  }
+  .cover-banner h1 { font-size: 22pt; color: white; margin-bottom: 4px; }
+  .cover-banner .cover-sub { font-size: 10pt; color: rgba(255,255,255,0.75); margin-bottom: 8px; }
+  .cover-banner .cover-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5pt; letter-spacing: 1pt;
+    color: var(--brand-red); text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .cover-banner .cover-tagline { font-size: 10pt; line-height: 1.5; color: rgba(255,255,255,0.85); }
+  .cover-banner .qs-pill {
+    display: inline-block; padding: 4px 10px;
+    background: var(--qs-tint); color: var(--qs);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt; font-weight: 700; letter-spacing: 1pt;
+    border-radius: 2px; text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .cover-banner .mto-pill {
+    display: inline-block; padding: 4px 10px;
+    background: var(--mto-tint); color: var(--mto);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt; font-weight: 700; letter-spacing: 1pt;
+    border-radius: 2px; text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* Project block */
+  .proj-block {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+    padding: 8px 0 12px; border-bottom: 1px solid var(--rule); margin-bottom: 14px;
+  }
+  .proj-cell { display: flex; flex-direction: column; gap: 2px; }
+  .proj-label {
+    font-size: 7pt; letter-spacing: 1.2pt;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .proj-line { border-bottom: 1px solid var(--ink); height: 14px; }
+
+  /* Quick Specs grid */
+  .quickspec-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 6px; margin-bottom: 14px;
+  }
+  .qs-cell {
+    border: 1px solid var(--rule); background: var(--tint);
+    padding: 8px 10px; text-align: center;
+  }
+  .qs-label {
+    font-size: 6.5pt; letter-spacing: 1.2pt;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 3px;
+  }
+  .qs-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14pt; font-weight: 700; line-height: 1.05; color: var(--ink);
+  }
+  .qs-unit { font-size: 8pt; font-weight: 400; color: var(--muted); margin-left: 3px; }
+
+  /* Section heads */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 4px; margin: 14px 0 10px;
+  }
+  .section-head h2 { font-size: 11pt; letter-spacing: 0.4pt; }
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.5pt; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 1pt;
+  }
+
+  /* Tagline */
+  .tagline-block {
+    background: var(--hi); padding: 10px 14px; margin-bottom: 12px;
+    border-left: 3px solid var(--brand-red);
+    font-size: 9pt; line-height: 1.5;
+  }
+  .tagline-block strong { font-weight: 700; }
+
+  /* Ordering Code visual breakdown */
+  .order-code {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    gap: 4px; margin-bottom: 8px;
+  }
+  .order-segment {
+    border: 1px solid var(--rule); padding: 6px 4px 7px;
+    text-align: center; background: var(--tint); min-width: 0;
+  }
+  .order-segment.active { background: var(--ink); color: white; border-color: var(--ink); }
+  .order-segment.fixed { background: var(--ink-2); color: white; border-color: var(--ink-2); }
+  .order-seg-label {
+    font-size: 6pt; letter-spacing: 1pt;
+    text-transform: uppercase; margin-bottom: 1px; opacity: 0.7;
+  }
+  .order-seg-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5pt; font-weight: 700;
+  }
+
+  .order-matrix {
+    width: 100%; border-collapse: collapse;
+    font-size: 8.5pt; margin-bottom: 10px;
+  }
+  .order-matrix th, .order-matrix td {
+    border: 1px solid var(--rule); padding: 4px 7px;
+    vertical-align: top; text-align: left;
+  }
+  .order-matrix th {
+    background: var(--tint); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.4pt; font-size: 7.5pt;
+  }
+  .order-matrix .code {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    background: var(--tint); white-space: nowrap; width: 22%;
+  }
+  .order-matrix tr.active-row .code { background: var(--brand-red); color: white; }
+  .order-matrix tr.active-row td { background: var(--hi); }
+
+  /* Spec table */
+  .spec-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  .spec-table td { border: 1px solid var(--rule); padding: 4px 8px; vertical-align: top; }
+  .spec-table .spec-section-head td {
+    background: var(--ink); color: white; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5pt; font-size: 7.5pt;
+    padding: 5px 8px;
+  }
+  .spec-table .spec-attr { background: var(--tint); font-weight: 700; width: 32%; }
+
+  /* Photometric/dimensions panels */
+  .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .dim-view, .photo-polar {
+    border: 1px solid var(--rule); background: var(--tint);
+    padding: 8px; aspect-ratio: 1 / 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .photo-polar { background: #0E0E10; }
+  .photo-polar img, .dim-view img { max-width: 100%; max-height: 100%; }
+  .photo-polar.fallback {
+    color: var(--muted); font-family: 'JetBrains Mono', monospace;
+    font-size: 8pt; text-align: center;
+  }
+  .photo-summary table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  .photo-summary td { border-bottom: 1px solid var(--rule); padding: 4px 6px; }
+  .photo-summary td:first-child { color: var(--muted); width: 45%; }
+  .photo-summary td:last-child { font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+
+  /* Certs */
+  .certs {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 10px; background: var(--tint);
+    border: 1px solid var(--rule); margin-top: 10px;
+  }
+  .cert-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.5pt; font-weight: 700;
+    padding: 3px 7px; background: white;
+    border: 1px solid var(--rule-strong); letter-spacing: 0.5pt;
+  }
+  .cert-badge.brand { background: var(--ink); color: white; border-color: var(--ink); }
+
+  .page-foot {
+    position: absolute; bottom: 0.35in; left: 0.65in; right: 0.65in;
+    border-top: 1px solid var(--rule); padding-top: 5px;
+    display: flex; justify-content: space-between;
+    font-size: 7pt; color: var(--muted);
+  }
+
+  /* No-print actions bar */
+  .actions-bar {
+    max-width: 8.5in; margin: 0 auto 14px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px; background: var(--ink); color: white; font-size: 9pt;
+  }
+  .actions-bar .btn {
+    background: var(--brand-red); color: white;
+    border: 0; padding: 6px 14px; font-weight: 700;
+    cursor: pointer; font-family: inherit; font-size: 9pt;
+  }
+  .actions-bar a { color: white; text-decoration: underline; opacity: 0.85; }
+
+/* CFG-TYPE-1 · Lato lock — Shopify global cascades Cormorant onto inline Lato.
+   This !important rule pins Lato on h1/h2 for this collection's PDP body class. */
+body.cityarch-pdp h1,
+body.cityarch-pdp h2 {
+  font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+}
+
+/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+body { overflow-x: hidden; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- NO-PRINT ACTIONS BAR                                          -->
+<!-- ============================================================ -->
+<div class="actions-bar no-print">
+  <div>
+    LRDW Abbey · Submittal Sheet · <span id="liveSku" class="mono"></span>
+  </div>
+  <div>
+    <a href="#" onclick="history.back(); return false;">← Back to Configurator</a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — COVER · QUICK SPECS · ORDERING CODE                  -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number <span class="no-print" style="font-family:'JetBrains Mono',monospace; font-size:7pt; color:var(--brand-red); letter-spacing:0.6pt; margin-left:6px;">✎ click to edit</span></div>
+      <div class="catalog-number editable-catalog" id="catNum" contenteditable="true" spellcheck="false">LRDW200-40-27V3S-A2</div>
+    </div>
+  </div>
+
+  <div class="cover-banner">
+    <div>
+      <div class="cover-tag">city<span class="aa"></span>RCH · PRO ROADWAY · LRDW Abbey</div>
+      <h1>Abbey</h1>
+      <div class="cover-sub">LED Roadway · Type III Distribution · Pole / Bracket Mount</div>
+      <div class="cover-tagline" id="taglineCopy">
+        Spec-grade roadway luminaire. Abbey-II: <strong id="taglineWatts">80-200W</strong> 4-step WATTSELECT · <strong id="taglineCct">3-CCTselect (4000K · 5000K)</strong> · 7-pin ANSI C136.41 photocell receptacle ships standard.
+      </div>
+    </div>
+    <div style="text-align: right;">
+      <div class="cover-tag" style="color:white; opacity:0.6;">Stock Status</div>
+      <div id="stockPill" class="qs-pill">QuickShip · 3-5 day</div>
+      <div style="font-size: 8pt; color: rgba(255,255,255,0.65); margin-top: 6px; line-height: 1.4;">
+        Standard pole/bracket-mount ships ready.<br/>Accessory SPDs ordered separately.
+      </div>
+    </div>
+  </div>
+  <!-- v9 · Product hero strip (added 2026-05-20 PM per James submittal canonical request) -->
+  <div class="hero-strip" style="margin: 12px 0 16px 0; padding: 12px; border: 1px solid var(--rule); background: #f7f7f7; display: flex; align-items: center; justify-content: center; min-height: 180px;">
+    <img src="assets/abbey/abbey-hero-1.webp" alt="Abbey LRDW roadway luminaire — silver finish" style="max-width: 100%; max-height: 200px; height: auto; object-fit: contain;"
+         onerror="this.style.display='none';" />
+  </div>
+
+
+  <!-- Project block -->
+  <div class="proj-block">
+    <div class="proj-cell">
+      <div class="proj-label">Project Name</div>
+      <div class="proj-line"></div>
+    </div>
+    <div class="proj-cell">
+      <div class="proj-label">Project Number</div>
+      <div class="proj-line"></div>
+    </div>
+    <div class="proj-cell">
+      <div class="proj-label">Fixture Schedule</div>
+      <div class="proj-line"></div>
+    </div>
+    <div class="proj-cell">
+      <div class="proj-label">Issue Date</div>
+      <div class="proj-line" id="liveDate"></div>
+    </div>
+  </div>
+
+  <!-- Quick Specs -->
+  <div class="quickspec-grid">
+    <div class="qs-cell">
+      <div class="qs-label">Max Lumens</div>
+      <div class="qs-value" id="qsLumens">29,000<span class="qs-unit">lm</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">Wattage</div>
+      <div class="qs-value" id="qsWatts">80-200<span class="qs-unit">W</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">Efficacy (peak)</div>
+      <div class="qs-value" id="qsEfficacy">182<span class="qs-unit">lm/W</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">Voltage</div>
+      <div class="qs-value" id="qsVoltage">120-277<span class="qs-unit">V</span></div>
+    </div>
+    <div class="qs-cell">
+      <div class="qs-label">CCT</div>
+      <div class="qs-value" id="qsCct">4000<span class="qs-unit">K</span></div>
+    </div>
+  </div>
+
+  <div class="tagline-block">
+    <strong>One roadway head. Photocell-ready out of the box.</strong> Abbey ships with the 7-pin ANSI C136.41 twist-lock receptacle standard — drop any vendor-neutral photocell or NEMA-DIM controller into the top without rewiring the head. Abbey-II adds the 4-step WATTSELECT dip-switch across 3 housing classes (100W / 200W / 300W) so one stocked SKU covers four wattage bins. 10-year limited warranty.
+  </div>
+
+  <!-- Ordering Code visual breakdown -->
+  <div class="section-head">
+    <h2>Ordering Code</h2>
+    <div class="section-eyebrow" id="orderEyebrow">6 segments · Family · Housing · CCT · Voltage · 3S · A2</div>
+  </div>
+
+  <div class="order-code">
+    <div class="order-segment active"><div class="order-seg-label">Family</div><div class="order-seg-value">LRDW</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Housing</div><div class="order-seg-value" id="ocHousing">200</div></div>
+    <div class="order-segment active"><div class="order-seg-label">CCT</div><div class="order-seg-value" id="ocCct">40</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Voltage</div><div class="order-seg-value" id="ocVoltage">27V</div></div>
+    <div class="order-segment fixed"><div class="order-seg-label">Type III</div><div class="order-seg-value">3S</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Variant</div><div class="order-seg-value" id="ocVariant">-A2</div></div>
+  </div>
+
+  <table class="order-matrix">
+    <thead>
+      <tr><th>Segment</th><th>Available Codes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="code">LRDW</td><td>LED Roadway family</td></tr>
+      <tr id="rowHousing"><td class="code">100 / 150 / 200 / 300</td><td>Housing class — <strong>Abbey-I</strong>: 100W / 150W fixed · <strong>Abbey-II</strong>: 100W / 200W / 300W with 4-step WATTSELECT</td></tr>
+      <tr id="rowCct"><td class="code">30 / 40 / 50</td><td>CCT — 3000K (Abbey-I only) · 4000K (★ Abbey-I + Abbey-II) · 5000K (Abbey-I + Abbey-II)</td></tr>
+      <tr id="rowVoltage"><td class="code">U / H · 27V / 48V</td><td>Voltage — <strong>Abbey-I</strong>: U (120-277V) / H (347-480V) · <strong>Abbey-II</strong>: 27V (120-277V universal) / 48V (347-480V high-voltage)</td></tr>
+      <tr><td class="code">3S</td><td>Type III distribution (Silver finish · locked)</td></tr>
+      <tr id="rowVariant"><td class="code">(blank) / -A2</td><td>Variant — (blank) Abbey-I fixed wattage · <strong>-A2</strong> Abbey-II 4-step WATTSELECT (★ QuickShip default)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LRDW Abbey submittal · Specifications subject to change</div>
+    <div>Rev. <span id="revDate">2026-05</span> · Page 1 of 2</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — DETAILED SPECS · DIMENSIONS · PHOTOMETRICS           -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum2">LRDW200-40-27V3S-A2</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Detailed Specifications</h2>
+    <div class="section-eyebrow">LRDW Abbey · LED Roadway · Type III</div>
+  </div>
+
+  <table class="spec-table">
+    <tbody>
+      <tr class="spec-section-head"><td colspan="2">Optical &amp; Performance</td></tr>
+      <tr><td class="spec-attr">Distribution</td><td class="spec-val">Type III · Roadway · Full-cutoff · Zero uplight</td></tr>
+      <tr><td class="spec-attr">CCT</td><td class="spec-val" id="specCct">4000K · CCT shift ≤ 180K over 75,000 hrs</td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val">&ge; 70 across all variants</td></tr>
+      <tr><td class="spec-attr" id="specVariantLabel">Wattage · Abbey-II 4-step WATTSELECT</td><td class="spec-val" id="specVariantRow">80W / 120W / 160W / 200W field-set · up to 29,000 lm · up to 182 lm/W (80W cell)</td></tr>
+      <tr><td class="spec-attr">Optical Geometry</td><td class="spec-val">IES Type III roadway · 2:1 lateral-to-vertical width ratio · drop-lens optical assembly</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Electrical</td></tr>
+      <tr><td class="spec-attr">Input Voltage</td><td class="spec-val" id="specVoltage">120-277Vac · 50/60Hz · Universal</td></tr>
+      <tr><td class="spec-attr">Driver</td><td class="spec-val">Constant-current LED driver · PF &gt; 0.90 · THD &lt; 20%</td></tr>
+      <tr><td class="spec-attr">Surge Protection</td><td class="spec-val">10kV built-in · optional 20kA inline SPD (Section 8 · 10SP-277 / 10SP-480 / 20SP-277 / 20SP-480)</td></tr>
+      <tr><td class="spec-attr">Photocontrol Receptacle</td><td class="spec-val">7-pin ANSI C136.41 twist-lock · vendor-neutral · accepts any compliant photocell or NEMA-DIM controller · shorting cap included</td></tr>
+      <tr><td class="spec-attr">Dimming</td><td class="spec-val">0-10V analog dim standard · 100% to ~10% smooth dim</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Construction &amp; Mounting</td></tr>
+      <tr><td class="spec-attr">Housing</td><td class="spec-val">Die-cast aluminum · Silver powder-coat coastal-rated · IP66 weather sealed</td></tr>
+      <tr><td class="spec-attr">Vibration Rating</td><td class="spec-val">3G ANSI C136.31 (bridge / overpass applications)</td></tr>
+      <tr><td class="spec-attr">Mounting</td><td class="spec-val">Standard pole/bracket mount · 1-1/4&Prime; or 2&Prime; pipe-arm tenon · ±5° tilt adjustment via slipfitter</td></tr>
+      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">−40°F to +122°F (−40°C to +50°C)</td></tr>
+      <tr><td class="spec-attr">EPA</td><td class="spec-val">Up to 0.85 sq ft (housing + bracket assembly)</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
+      <tr><td class="spec-attr">Listings</td><td class="spec-val">cULus Listed · DLC Standard · FCC Title 47 Part 15B · RoHS · Wet Location · IP66</td></tr>
+      <tr><td class="spec-attr">Roadway Standards</td><td class="spec-val">ANSI C136.10 (cobra-head replacement) · ANSI C136.31 (3G vibration) · ANSI C136.41 (7-pin receptacle)</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val">7-year limited · 75,000-hour rated lifetime · CCT-shift ≤ 180K warrantied across the period</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-head" style="margin-top: 14px;">
+    <h2>Photometric &amp; Dimensional Data</h2>
+    <div class="section-eyebrow">Type III roadway · IES candela source</div>
+  </div>
+
+  <div class="photo-grid">
+    <div class="photo-polar">
+      <img id="photoPolarImg"
+           src="assets/photometrics/abbey-150-50-U.svg"
+           alt="Abbey LRDW Type III roadway photometric polar plot · semi-circle IESNA convention"
+           onerror="this.parentElement.innerHTML='<span>Type III roadway polar plot · IES bundle in lab</span>'; this.parentElement.classList.add('fallback');" />
+    </div>
+    <div class="photo-polar fallback" style="background: #14171b;">
+      <span style="color: rgba(255,255,255,0.65); font-family:'JetBrains Mono',monospace; font-size:8pt; text-align:center; padding:8px;">
+        Dimensions drawing<br/>(pending Engineering update)
+      </span>
+    </div>
+  </div>
+
+  <table class="photo-summary" style="margin-top: 8px;">
+    <tbody>
+      <tr><td>Peak Intensity</td><td id="photoPeak">~20,000 cd @ 200W setting</td></tr>
+      <tr><td>Peak Lumen Output</td><td id="photoLumens">29,000 lm</td></tr>
+      <tr><td>Peak Efficacy</td><td id="photoEff">182 lm/W (Abbey-II · 80W cell)</td></tr>
+      <tr><td>Distribution</td><td>Type III · Roadway · BUG B2-U0-G1 (typical)</td></tr>
+      <tr><td>Test Standard</td><td>IESNA LM-79 · LM-80 lumen maintenance verified</td></tr>
+      <tr><td>IES File</td><td id="photoIesFile">LRDW200-40-27V3S-A2.IES · 8-IES bundle available</td></tr>
+    </tbody>
+  </table>
+
+  <div class="certs">
+    <span class="cert-badge">cULus Listed</span>
+    <span class="cert-badge brand">DLC LISTED</span>
+    <span class="cert-badge">FCC 47 / 15B</span>
+    <span class="cert-badge">RoHS</span>
+    <span class="cert-badge">IP66 · Wet Loc</span>
+    <span class="cert-badge">ANSI C136.10 / .31 / .41</span>
+    <span class="cert-badge brand">10-yr / 100k-hr</span>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LRDW Abbey submittal · Specifications subject to change</div>
+    <div>Rev. <span class="mono">2026-05</span> · Page 2 of 2</div>
+  </div>
+</div>
+
+
+<script>
+/* =============================================================================
+   SUBMITTAL AUTO-FILL · LRDW Abbey
+   ----------------------------------------------------------------------------
+   Reads URL query params from Section 9 (Configurator) and stamps catalog
+   number, ordering breakdown, quick specs, photometric plot, and the
+   combo-aware QS/MTO stock pill across both pages.
+
+   Parameters:
+     sku     — full canonical SKU (auto-built upstream)
+     variant — A1 (Abbey-I fixed-W) | A2 (Abbey-II 4-step WATTSELECT)
+     housing — 100 | 150 (A1) · 100 | 200 | 300 (A2)
+     cct     — 30 | 40 | 50
+     voltage — LV (U/27V) | HV (H/48V)
+   ============================================================================= */
+(function() {
+
+  // ---- Authoritative QS combo table (James 2026-05-19) ----
+  var QS_COMBOS = new Set([
+    // Abbey-I
+    'A1-100-40-HV', 'A1-100-40-LV', 'A1-100-50-LV',
+    'A1-150-50-HV', 'A1-150-50-LV',
+    // Abbey-II
+    'A2-100-40-LV', 'A2-100-40-HV', 'A2-100-50-LV',
+    'A2-200-40-LV', 'A2-200-50-LV',
+    'A2-300-40-LV', 'A2-300-50-LV'
+  ]);
+
+  var WC_DATA = {
+    'A1-100': { label: 'Abbey-I · LRDW100', wattRange: '105W (fixed)', peakLumens: 14600, lpwMax: 139 },
+    'A1-150': { label: 'Abbey-I · LRDW150', wattRange: '150W (fixed)', peakLumens: 20000, lpwMax: 133 },
+    'A2-100': { label: 'Abbey-II · LRDW100', wattRange: '40-100W', peakLumens: 14600, lpwMax: 146 },
+    'A2-200': { label: 'Abbey-II · LRDW200', wattRange: '80-200W', peakLumens: 29000, lpwMax: 182 },
+    'A2-300': { label: 'Abbey-II · LRDW300', wattRange: '120-300W', peakLumens: 42000, lpwMax: 140 }
+  };
+
+  // Map LV/HV to voltage code per variant
+  function voltageCode(variant, voltage) {
+    if (variant === 'A1') return voltage === 'LV' ? 'U' : 'H';
+    return voltage === 'LV' ? '27V' : '48V';
+  }
+  function voltageLabel(variant, voltage) {
+    if (variant === 'A1') return voltage === 'LV' ? 'U (120-277V universal)' : 'H (347-480V high-voltage)';
+    return voltage === 'LV' ? '27V (120-277V universal)' : '48V (347-480V high-voltage)';
+  }
+  function voltageDisplay(voltage) { return voltage === 'LV' ? '120-277V' : '347-480V'; }
+
+  // Polar plot map — limited coverage; falls back to one available SVG
+  var POLAR_MAP = {
+    '100-30-U': 'assets/photometrics/abbey-100-30-U.svg',
+    '100-30-H': 'assets/photometrics/abbey-100-30-H.svg',
+    '100-50-U': 'assets/photometrics/abbey-100-50-U.svg',
+    '100-50-H': 'assets/photometrics/abbey-100-50-H.svg',
+    '150-30-U': 'assets/photometrics/abbey-150-30-U.svg',
+    '150-30-H': 'assets/photometrics/abbey-150-30-H.svg',
+    '150-50-U': 'assets/photometrics/abbey-150-50-U.svg',
+    '150-50-H': 'assets/photometrics/abbey-150-50-H.svg'
+  };
+  function polarFor(housing, cct, voltage) {
+    var v = (voltage === 'LV') ? 'U' : 'H';
+    var key = housing + '-' + cct + '-' + v;
+    if (POLAR_MAP[key]) return POLAR_MAP[key];
+    // Fallback nearest available
+    return POLAR_MAP['150-50-U'];
+  }
+
+  // ---- Parse URL params ----
+  var params  = new URLSearchParams(window.location.search);
+  var sku     = params.get('sku')     || 'LRDW200-40-27V3S-A2';
+  var variant = params.get('variant') || 'A2';
+  var housing = params.get('housing') || '200';
+  var cct     = params.get('cct')     || '40';
+  var voltage = params.get('voltage') || 'LV';
+
+  // Try to reverse-parse from sku if individual params missing
+  if (!params.get('variant') && sku) {
+    if (/-A2$/.test(sku)) variant = 'A2';
+    else variant = 'A1';
+    var skuM = sku.match(/^LRDW(\d+)-(\d+)-(.+?)3S(?:-A2)?$/);
+    if (skuM) {
+      housing = skuM[1];
+      cct = skuM[2];
+      var v = skuM[3];
+      if (v === 'U' || v === '27V') voltage = 'LV';
+      else if (v === 'H' || v === '48V') voltage = 'HV';
+    }
+  }
+
+  // ---- Derive ----
+  var wcKey = variant + '-' + housing;
+  var wcData = WC_DATA[wcKey] || WC_DATA['A2-200'];
+  var comboKey = variant + '-' + housing + '-' + cct + '-' + voltage;
+  var isQS = QS_COMBOS.has(comboKey);
+
+  // ---- Stamp catalog numbers ----
+  document.querySelectorAll('#catNum, #catNum2, #liveSku').forEach(function(el) {
+    el.textContent = sku;
+  });
+
+  // ---- Stock pill ----
+  var pill = document.getElementById('stockPill');
+  if (isQS) {
+    pill.className = 'qs-pill';
+    pill.textContent = 'QuickShip · 3-5 day';
+  } else {
+    pill.className = 'mto-pill';
+    pill.textContent = 'Made-to-Order · 4-6 wk';
+  }
+
+  // ---- Cover tagline ----
+  document.getElementById('taglineWatts').textContent = wcData.wattRange;
+  document.getElementById('taglineCct').textContent = '3-CCTselect · ' + cct + '00K factory default';
+
+  // ---- Quick Specs ----
+  document.getElementById('qsLumens').innerHTML   = wcData.peakLumens.toLocaleString() + '<span class="qs-unit">lm</span>';
+  document.getElementById('qsWatts').innerHTML    = wcData.wattRange.replace('W','').replace(' (fixed)','') + '<span class="qs-unit">W</span>';
+  document.getElementById('qsEfficacy').innerHTML = wcData.lpwMax + '<span class="qs-unit">lm/W</span>';
+  document.getElementById('qsVoltage').innerHTML  = voltageDisplay(voltage).replace('V','') + '<span class="qs-unit">V</span>';
+  document.getElementById('qsCct').innerHTML      = cct + '00<span class="qs-unit">K</span>';
+
+  // ---- Ordering Code segments ----
+  document.getElementById('ocHousing').textContent = housing;
+  document.getElementById('ocCct').textContent     = cct;
+  document.getElementById('ocVoltage').textContent = voltageCode(variant, voltage);
+  document.getElementById('ocVariant').textContent = variant === 'A2' ? '-A2' : '(blank)';
+
+  // ---- Highlight active rows ----
+  ['rowHousing','rowCct','rowVoltage','rowVariant'].forEach(function(id) {
+    var tr = document.getElementById(id);
+    if (tr) tr.classList.add('active-row');
+  });
+
+  // ---- Page 2 spec rows ----
+  document.getElementById('specCct').textContent = cct + '00K · CCT shift ≤ 180K over 75,000 hrs';
+  document.getElementById('specVariantLabel').textContent = 'Wattage · ' + wcData.label;
+  document.getElementById('specVariantRow').textContent = wcData.wattRange + ' · up to ' + wcData.peakLumens.toLocaleString() + ' lm · up to ' + wcData.lpwMax + ' lm/W';
+  document.getElementById('specVoltage').textContent = voltageLabel(variant, voltage) + ' · 50/60Hz';
+
+  // ---- Polar plot ----
+  document.getElementById('photoPolarImg').src = polarFor(housing, cct, voltage);
+  document.getElementById('photoPolarImg').alt =
+    'Abbey ' + wcData.label + ' photometric distribution · Type III roadway polar plot at ' + cct + '00K';
+
+  // ---- Photometric summary ----
+  document.getElementById('photoPeak').textContent = '~' + Math.round(wcData.peakLumens / 1.5).toLocaleString() + ' cd peak intensity';
+  document.getElementById('photoLumens').textContent = wcData.peakLumens.toLocaleString() + ' lm';
+  document.getElementById('photoEff').textContent = wcData.lpwMax + ' lm/W (' + wcData.label + ' peak)';
+  document.getElementById('photoIesFile').textContent = sku + '.IES · 8-IES bundle available · contact ALG for full distribution coverage';
+
+  // ---- Issue date ----
+  var d = new Date();
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('liveDate').textContent =
+    months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  document.getElementById('revDate').textContent =
+    d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+
+  // ============================================================================
+  // CFG-SUB-1 · Editable Catalog Number with full-page text sweep · session-only
+  // V2 snapshot-then-rederive pattern — see submittal_sentry.html for full rationale.
+  // ============================================================================
+  (function setupEditableCatalogNumber() {
+    var originalSku = sku;
+    var editor = document.getElementById('catNum');
+    if (!editor) return;
+
+    if (document.title.indexOf(originalSku) === -1) {
+      document.title = originalSku + ' · ' + document.title;
+    }
+    var originalTitle = document.title;
+
+    // Snapshot: cache original text of every node that contains originalSku
+    var matchedNodes = [];
+    (function snapshot() {
+      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(n) {
+          var p = n.parentNode;
+          while (p) {
+            if (p === editor) return NodeFilter.FILTER_REJECT;
+            if (p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT;
+            p = p.parentNode;
+          }
+          return n.nodeValue.indexOf(originalSku) !== -1
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        }
+      });
+      while (walker.nextNode()) {
+        matchedNodes.push({ node: walker.currentNode, originalText: walker.currentNode.nodeValue });
+      }
+    })();
+
+    // Re-derive every matched node from its cached original — idempotent
+    function applyOverride(newDisplay) {
+      var override = newDisplay || originalSku;
+      matchedNodes.forEach(function(item) {
+        item.node.nodeValue = item.originalText.split(originalSku).join(override);
+      });
+      document.title = originalTitle.split(originalSku).join(override);
+    }
+
+    editor.addEventListener('input', function() {
+      var raw = (editor.textContent || '').replace(/[\r\n]+/g, ' ').slice(0, 40);
+      var nextDisplay = raw.trim() ? raw : originalSku;
+      applyOverride(nextDisplay);
+    });
+
+    editor.addEventListener('blur', function() {
+      var v = editor.textContent.trim();
+      if (!v) { editor.textContent = originalSku; applyOverride(originalSku); }
+    });
+
+    editor.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); editor.blur(); }
+    });
+  })();
+})();
+</script>
+
+</body>
+</html>
