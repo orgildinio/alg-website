@@ -5858,7 +5858,6 @@ body { overflow-x: hidden; }
       counterEl.classList.toggle('complete', filled === required.length);
 
       // Update counter label dynamically (3 or 4)
-      var counterLbl = counterEl.querySelector('strong + ');
       // Just update the surrounding text via outerHTML rebuild
       counterEl.innerHTML = '<strong id="cfgCount">' + filled + '</strong> of ' + required.length +
         ' selections complete (' +
