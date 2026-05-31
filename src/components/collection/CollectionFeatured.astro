@@ -32,7 +32,7 @@ const { collectionName, collectionSlug, featured, featuredHeadline } = Astro.pro
     </div>
     <div class="feat-grid">
       {featured.map(f => (
-        <div class={f.displayEchelon ? `feat-card tier-${f.displayEchelon.replace('+','-plus').toLowerCase()}` : 'feat-card tier-none'}>
+        <div class={f.displayEchelon ? `feat-card tier-${f.displayEchelon.replace('+','-plus').toLowerCase()}` : 'feat-card tier-none'} data-family={f.family}>
           <!-- Top strip: sub-category + tier badge -->
           <div class="feat-top">
             <span class="feat-subcat">{f.subCategory.toUpperCase()}</span>
@@ -57,7 +57,7 @@ const { collectionName, collectionSlug, featured, featuredHeadline } = Astro.pro
               <span class="feat-skus">{f.skuCount} SKUs</span>
               {f.dlc && <span class="feat-dlc-badge">DLC</span>}
             </div>
-            <a href={f.pdpUrl ?? `/collections/${collectionSlug}/${f.family.toLowerCase().replace(/\s+/g,'-')}`} class="feat-view">VIEW →</a>
+            <button class="feat-view" data-href={f.pdpUrl ?? `/collections/${collectionSlug}/${f.family.toLowerCase().replace(/\s+/g,'-')}`} onclick="window.location.href=this.dataset.href">VIEW →</button>
           </div>
         </div>
       ))}

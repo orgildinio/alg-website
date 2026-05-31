@@ -212,6 +212,7 @@ const skusJson = JSON.stringify(skus);
                 data-echelon={fam.display_echelon}
                 data-maxwatt={fam.max_wattage}
                 data-skus={JSON.stringify(famSkus)}
+                href={(fam as any).pdpUrl ?? `/collections/${collectionSlug}/${fam.family.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')}`}
               >
                 <div class="fc-top">
                   <span class="fc-subcat">{fam.sub_category.toUpperCase()}</span>
