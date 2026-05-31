@@ -9,7 +9,7 @@ const lampararchData = {
   parentVertical: 'Indoor',
   parentSubVertical: 'Industrial',
   name: 'lamparⒶRCH',
-  titleAscii: 'LAMPARARCH',
+  titleAscii: 'LAMPARⒶRCH',
   headlineLine: 'lampar<span class="aa">Ⓐ</span>RCH',
   description: 'Linear high-bay, low-bay, vapor-tight, and linear strip — DLC Premium-listed across the catalog, project-specified for warehouse, manufacturing, and distribution-center installs where lumen efficiency and 80,000+ hours of L80 matter. lampar<span class="aa">Ⓐ</span>RCH is the ALG line that ships when the photometric layout is the conversation.',
   pillRow: ['DLC PREMIUM', 'HIGH LUMEN EFFICIENCY', 'LONG PHOTOMETRIC THROW', 'PROJECT-SPECIFIED', '80,000-HR L80'],

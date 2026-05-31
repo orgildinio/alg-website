@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 320" role="img" aria-label="Icarus-III 150-class polar candela distribution at 5000K · peak 12281 cd · beam 84&#xB0;" style="width:100%;height:auto;font-family:JetBrains Mono, monospace">
+<title>Icarus-III 150-class &#xB7; polar candela distribution &#xB7; 5000K</title>
+<path d="M 177.5 56.0 A 52.5 52.5 0 0 0 282.5 56.0" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.8" stroke-dasharray="3 3"/>
+<text x="282.5" y="50.0" font-size="9" fill="rgba(255,255,255,0.5)" text-anchor="middle">3,070</text>
+<path d="M 125.0 56.0 A 105.0 105.0 0 0 0 335.0 56.0" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.8" stroke-dasharray="3 3"/>
+<text x="335.0" y="50.0" font-size="9" fill="rgba(255,255,255,0.5)" text-anchor="middle">6,140</text>
+<path d="M 72.5 56.0 A 157.5 157.5 0 0 0 387.5 56.0" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.8" stroke-dasharray="3 3"/>
+<text x="387.5" y="50.0" font-size="9" fill="rgba(255,255,255,0.5)" text-anchor="middle">9,210</text>
+<path d="M 20.0 56.0 A 210.0 210.0 0 0 0 440.0 56.0" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/>
+<text x="440.0" y="50.0" font-size="9" fill="rgba(255,255,255,0.5)" text-anchor="middle">12,280</text>
+<text x="440.0" y="38.0" font-size="8" fill="rgba(255,255,255,0.5)" text-anchor="middle" letter-spacing="1.5">CANDELA</text>
+<line x1="230.0" y1="56.0" x2="20.0" y2="56.0" stroke="rgba(255,255,255,0.18)" stroke-width="0.6"/>
+<text x="2.0" y="56.0" font-size="9.5" fill="rgba(255,255,255,0.5)" text-anchor="middle" dominant-baseline="middle">90&#xB0;</text>
+<line x1="230.0" y1="56.0" x2="48.1" y2="161.0" stroke="rgba(255,255,255,0.18)" stroke-width="0.6"/>
+<text x="32.5" y="170.0" font-size="9.5" fill="rgba(255,255,255,0.5)" text-anchor="middle" dominant-baseline="middle">60&#xB0;</text>
+<line x1="230.0" y1="56.0" x2="125.0" y2="237.9" stroke="rgba(255,255,255,0.18)" stroke-width="0.6"/>
+<text x="116.0" y="253.5" font-size="9.5" fill="rgba(255,255,255,0.5)" text-anchor="middle" dominant-baseline="middle">30&#xB0;</text>
+<line x1="230.0" y1="56.0" x2="230.0" y2="266.0" stroke="rgba(255,255,255,0.18)" stroke-width="0.6"/>
+<text x="230.0" y="284.0" font-size="9.5" fill="rgba(255,255,255,0.5)" text-anchor="middle" dominant-baseline="middle">0&#xB0;</text>
+<line x1="230.0" y1="56.0" x2="335.0" y2="237.9" stroke="rgba(255,255,255,0.18)" stroke-width="0.6"/>
+<text x="344.0" y="253.5" font-size="9.5" fill="rgba(255,255,255,0.5)" text-anchor="middle" dominant-baseline="middle">30&#xB0;</text>
+<line x1="230.0" y1="56.0" x2="411.9" y2="161.0" stroke="rgba(255,255,255,0.18)" stroke-width="0.6"/>
+<text x="427.5" y="170.0" font-size="9.5" fill="rgba(255,255,255,0.5)" text-anchor="middle" dominant-baseline="middle">60&#xB0;</text>
+<line x1="230.0" y1="56.0" x2="440.0" y2="56.0" stroke="rgba(255,255,255,0.18)" stroke-width="0.6"/>
+<text x="458.0" y="56.0" font-size="9.5" fill="rgba(255,255,255,0.5)" text-anchor="middle" dominant-baseline="middle">90&#xB0;</text>
+<line x1="12.0" y1="56.0" x2="448.0" y2="56.0" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+<path d="M 229.8 56.0 L 229.8 56.0 L 229.6 56.0 L 229.3 56.0 L 228.9 56.1 L 228.5 56.1 L 228.0 56.2 L 227.5 56.3 L 227.0 56.4 L 226.4 56.6 L 225.8 56.7 L 225.1 57.0 L 224.4 57.2 L 223.7 57.5 L 222.9 57.8 L 222.2 58.1 L 221.3 58.5 L 220.5 58.9 L 219.6 59.4 L 218.7 59.9 L 217.8 60.4 L 216.7 61.1 L 215.6 61.8 L 214.6 62.6 L 213.4 63.4 L 212.0 64.4 L 210.7 65.4 L 209.2 66.6 L 207.6 67.9 L 205.7 69.4 L 203.6 71.2 L 201.4 73.2 L 199.2 75.2 L 196.8 77.5 L 194.2 80.1 L 192.0 82.6 L 189.5 85.4 L 187.0 88.4 L 184.2 91.8 L 181.6 95.2 L 179.2 98.6 L 176.8 102.2 L 174.1 106.4 L 171.6 110.5 L 169.2 114.7 L 166.9 119.1 L 164.0 124.3 L 161.7 129.2 L 159.4 134.4 L 157.3 139.6 L 155.0 145.3 L 153.0 151.1 L 151.3 156.7 L 149.9 162.4 L 148.6 168.0 L 147.5 173.9 L 146.8 179.4 L 146.4 184.7 L 146.2 190.1 L 146.4 195.2 L 146.6 200.5 L 147.3 205.2 L 148.1 210.1 L 149.2 214.6 L 150.6 218.9 L 152.1 223.1 L 153.8 227.2 L 155.8 230.8 L 157.9 234.5 L 160.3 237.7 L 162.6 241.1 L 165.3 244.0 L 168.0 246.8 L 170.9 249.3 L 174.0 251.4 L 177.0 253.8 L 180.2 255.7 L 183.5 257.6 L 186.9 259.0 L 190.3 260.4 L 193.8 261.5 L 197.3 262.4 L 200.9 263.2 L 204.5 263.7 L 208.1 264.6 L 211.7 265.0 L 215.4 265.4 L 219.0 265.7 L 222.7 265.7 L 226.3 265.6 L 230.0 265.7 L 233.7 265.6 L 237.3 265.7 L 241.0 265.7 L 244.6 265.4 L 248.3 265.0 L 251.9 264.6 L 255.5 263.7 L 259.1 263.2 L 262.7 262.4 L 266.2 261.5 L 269.7 260.4 L 273.1 259.0 L 276.5 257.6 L 279.8 255.7 L 283.0 253.8 L 286.0 251.4 L 289.1 249.3 L 292.0 246.8 L 294.7 244.0 L 297.4 241.1 L 299.7 237.7 L 302.1 234.5 L 304.2 230.8 L 306.2 227.2 L 307.9 223.1 L 309.4 218.9 L 310.8 214.6 L 311.9 210.1 L 312.7 205.2 L 313.4 200.5 L 313.6 195.2 L 313.8 190.1 L 313.6 184.7 L 313.2 179.4 L 312.5 173.9 L 311.4 168.0 L 310.1 162.4 L 308.7 156.7 L 307.0 151.1 L 305.0 145.3 L 302.7 139.6 L 300.6 134.4 L 298.3 129.2 L 296.0 124.3 L 293.1 119.1 L 290.8 114.7 L 288.4 110.5 L 285.9 106.4 L 283.2 102.2 L 280.8 98.6 L 278.4 95.2 L 275.8 91.8 L 273.0 88.4 L 270.5 85.4 L 268.0 82.6 L 265.8 80.1 L 263.2 77.5 L 260.8 75.2 L 258.6 73.2 L 256.4 71.2 L 254.3 69.4 L 252.4 67.9 L 250.8 66.6 L 249.3 65.4 L 248.0 64.4 L 246.6 63.4 L 245.4 62.6 L 244.4 61.8 L 243.3 61.1 L 242.2 60.4 L 241.3 59.9 L 240.4 59.4 L 239.5 58.9 L 238.7 58.5 L 237.8 58.1 L 237.1 57.8 L 236.3 57.5 L 235.6 57.2 L 234.9 57.0 L 234.2 56.7 L 233.6 56.6 L 233.0 56.4 L 232.5 56.3 L 232.0 56.2 L 231.5 56.1 L 231.1 56.1 L 230.7 56.0 L 230.4 56.0 L 230.2 56.0 L 230.2 56.0 Z" fill="#F32740" fill-opacity="0.22" stroke="#F32740" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="230.0" cy="56.0" r="3" fill="#F32740"/>
+</svg>
