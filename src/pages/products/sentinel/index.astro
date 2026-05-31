@@ -7271,7 +7271,7 @@ body { overflow-x: hidden; }
       }
     });
 
-    // ---- Submittal PDF — opens submittal_template.html in new tab with full config in query string ----
+    // ---- Submittal PDF — opens submittal/ in new tab with full config in query string ----
     // The template auto-fills page-1 catalog number, quick specs, ordering-code matrix, and photometric data.
     // Manus replaces this with a real backend at /submittal-generator/?sku=… on production.
     function buildSubmittalUrl() {
@@ -7288,7 +7288,7 @@ body { overflow-x: hidden; }
         em:        state.em        || '',
         spd:       state.spd       || ''
       });
-      return 'submittal_template.html?' + params.toString();
+      return 'submittal/?' + params.toString();
     }
     ctaPdf.addEventListener('click', function(e) {
       if (ctaPdf.classList.contains('disabled')) { e.preventDefault(); return; }

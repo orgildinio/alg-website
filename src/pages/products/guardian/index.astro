@@ -5354,7 +5354,7 @@ body { overflow-x: hidden; }
  } catch (e) {}
  });
 
- // ---- Submittal PDF — opens submittal_template.html in new tab with full config in query string ----
+ // ---- Submittal PDF — opens submittal/ in new tab with full config in query string ----
  // Template auto-fills page-1 catalog number, quick specs, ordering matrix, photometric data.
  // Manus replaces this with a real backend at /submittal-generator/?product=guardian&sku=… on production.
  function buildSubmittalUrl() {
@@ -5373,7 +5373,7 @@ body { overflow-x: hidden; }
  dss: state.dss || '',
  wg: state.wg || ''
  });
- return 'submittal_template.html?' + params.toString();
+ return 'submittal/?' + params.toString();
  }
  ctaPdf.addEventListener('click', function(e) {
  if (ctaPdf.classList.contains('disabled')) { e.preventDefault(); return; }
