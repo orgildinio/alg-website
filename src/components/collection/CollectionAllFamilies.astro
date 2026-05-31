@@ -223,11 +223,11 @@ const skusJson = JSON.stringify(skus);
                 <div class="fc-img">
                   {(fam as any).card_image
                     ? <img src={(fam as any).card_image} alt={fam.family} class="fc-product-img" loading="lazy" />
-                    : <span class="fc-watermark" set:html={wrapAa(fam.family)}></span>
+                    : <span class="fc-watermark" set:html={wrapAa((fam as any).display_name ?? fam.family)}></span>
                   }
                 </div>
                 <div class="fc-bottom">
-                  <div class="fc-name" set:html={wrapAa(fam.family)}></div>
+                  <div class="fc-name" set:html={wrapAa((fam as any).display_name ?? fam.family)}></div>
                   <div class="fc-meta">
                     {fam.max_wattage > 0 && <span class="fc-watt">{fam.max_wattage}W max</span>}
                     <span class="fc-skucount">· {fam.sku_count} SKUs</span>

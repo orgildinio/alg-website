@@ -9806,7 +9806,8 @@
           ],
           "taa": true,
           "pdp_ready": true,
-          "pdpUrl": "/products/jupiter/"
+          "pdpUrl": "/products/jupiter/",
+          "card_image": "/products/jupiter/assets/hero/fam-jupiter-020.webp"
         },
         {
           "family": "Titan",
@@ -9826,7 +9827,29 @@
           "mount_types": [],
           "taa": true,
           "pdp_ready": true,
-          "pdpUrl": "/products/titan/"
+          "pdpUrl": "/products/titan/",
+          "card_image": "/products/titan/assets/hero/fam-titan-01.webp"
+        },
+        {
+          "family": "Tiny",
+          "sub_category": "Linear High Bay",
+          "display_echelon": "ECO",
+          "max_wattage": 220,
+          "sku_count": 6,
+          "dlc": true,
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V"
+          ],
+          "mount_types": [],
+          "taa": false,
+          "pdp_ready": true,
+          "pdpUrl": "/products/tiny/",
+          "card_image": "/products/tiny/assets/hero/fam-tiny.webp"
         },
         {
           "family": "Vanguard-I",
@@ -9866,12 +9889,13 @@
           "mount_types": [],
           "taa": false,
           "pdp_ready": true,
-          "pdpUrl": "/products/hallmark/"
+          "pdpUrl": "/products/hallmark/",
+          "card_image": "/images/families/fam-hallmark.webp"
         },
         {
           "family": "retroⒶRCH-L1",
           "sub_category": "Retrofit Linear Strip",
-          "display_echelon": "",
+          "display_echelon": "PRO",
           "max_wattage": 90,
           "sku_count": 4,
           "dlc": true,
@@ -9930,7 +9954,9 @@
           ],
           "taa": false,
           "pdpUrl": "/products/eureka/",
-          "pdp_ready": true
+          "pdp_ready": true,
+          "display_name": "Eureka",
+          "card_image": "/products/eureka/assets/hero/fam-eureka.webp"
         },
         {
           "family": "Canadarm",
