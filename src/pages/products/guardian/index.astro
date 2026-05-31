@@ -4470,6 +4470,7 @@ body { overflow-x: hidden; }
  var complete = (have === REQUIRED.length);
  ctaPrice.classList.toggle('disabled', !complete);
  ctaPdf.classList.toggle('disabled', !complete);
+ if (complete) ctaPdf.setAttribute('href', buildSubmittalUrl());
  warnEl.classList.toggle('show', !complete);
 
  // Preview image swap (cross-fade)
@@ -5299,6 +5300,7 @@ body { overflow-x: hidden; }
  var complete = (have === REQUIRED.length);
  ctaPrice.classList.toggle('disabled', !complete);
  ctaPdf.classList.toggle('disabled', !complete);
+ if (complete) ctaPdf.setAttribute('href', buildSubmittalUrl());
  warnEl.classList.toggle('show', !complete);
 
  // Preview image swap (cross-fade)

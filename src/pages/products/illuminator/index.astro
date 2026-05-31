@@ -6263,6 +6263,7 @@ body { overflow-x: hidden; }
       warning.classList.toggle('show', !complete);
       ctaPrice.classList.toggle('disabled', !complete);
       ctaPdf.classList.toggle('disabled', !complete);
+      if (complete) ctaPdf.setAttribute('href', buildSubmittalUrl());
       copyBtn.disabled = !complete;
       // Reset copy-button state when SKU changes
       copyBtn.classList.remove('copied');
