@@ -7,7 +7,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 ---
 <BaseLayout
-  title="LY-T10 · LED Slimline T10 Sign Lamp — Archipelago Lighting Group"
+  title="LY-T10 · LED Slimline T10 Sign Lamp — ArchipelagoⒶ Lighting Group"
   description="LY-T10 LED Slimline T10 Sign Lamp from Archipelago Lighting Group."
   bodyClass="cityarch-pdp page-lyt10-pdp"
   hideFooterCta={true}
@@ -32,7 +32,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <div class="hero-left">
 <div class="hero-info">
 <h1>
-        LY-T10
+        LY-T10 · LED Slimline T10 Sign Lamp
         <span class="tier-badge tier-eco">ECO</span>
 </h1>
 <h2>Slimline T10. No mercury. Drops into the socket you have.</h2>
@@ -832,7 +832,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
               Pricing &amp; Availability
               <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
 </a>
-<a class="cfg-cta outline disabled" href="submittal_lyt10.html" id="cfgCtaPdf" rel="noopener" target="_blank">
+<a class="cfg-cta outline disabled" href="submittal/" id="cfgCtaPdf" rel="noopener" target="_blank">
 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" x2="12" y1="18" y2="12"></line><polyline points="9 15 12 12 15 15"></polyline></svg>
               Generate Submittal PDF
             </a>
@@ -882,7 +882,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <span class="docs-card-updated">URL pending ALG upload</span>
 </div>
 </a>
-<a class="docs-card" href="submittal_lyt10.html?sku=LY-T10L2400-44W-50K-A&amp;length=2400&amp;cct=50" rel="noopener" target="_blank">
+<a class="docs-card" href="submittal/?sku=LY-T10L2400-44W-50K-A&amp;length=2400&amp;cct=50" rel="noopener" target="_blank">
 <div class="docs-card-head">
 <div class="docs-card-icon">
 <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewbox="0 0 24 24">
@@ -1162,19 +1162,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </div>
 </div>
 </div>
-<!-- 10C — Final red CTA strip ================================================ -->
-<div class="closing-cta-strip">
-<div class="closing-cta-strip-inner">
-<div class="closing-cta-msg">
-        Need a quote, layout, sample, or rebate match?
-        <strong>We respond same business day.</strong>
-</div>
-<div class="closing-cta-buttons">
-<a class="closing-cta-btn solid" href="/contact/">Contact Sales</a>
-<a class="closing-cta-btn" href="/contact/?type=layout">Request Layout</a>
-</div>
-</div>
-</div>
+
 </section>
 <!-- Sticky bottom nav — icons mirror the actual section content / icons used inline -->
 <nav class="sticky-nav">
@@ -2181,7 +2169,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       }
     });
 
-    // ---- Submittal PDF — opens submittal_lyt10.html in new tab with full config in query string ----
+    // ---- Submittal PDF — opens submittal/ in new tab with full config in query string ----
     // Per CFG-SUB-1 v2, the catalog number is editable inline on the rendered submittal.
     function buildSubmittalUrl() {
       var sku = skuEl.textContent.trim();
@@ -2190,7 +2178,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         length: state.length || '2400',
         cct:    state.cct    || '50'
       });
-      return 'submittal_lyt10.html?' + params.toString();
+      return 'submittal/?' + params.toString();
     }
     ctaPdf.addEventListener('click', function(e) {
       if (ctaPdf.classList.contains('disabled')) { e.preventDefault(); return; }

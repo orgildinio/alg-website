@@ -7,7 +7,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 ---
 <BaseLayout
-  title="Symmetry-Series — Archipelago Lighting Group"
+  title="LPTP · Symmetry — ArchipelagoⒶ Lighting Group"
   description="Symmetry post-top luminaire from Archipelago Lighting Group."
   bodyClass="cityarch-pdp page-symmetry-pdp"
   hideFooterCta={true}
@@ -98,7 +98,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <div class="hero-left">
 <div class="hero-info">
 <h1>
- LPTP · Symmetry-Series
+ LPTP · Symmetry
  <span class="tier-badge tier-pro">PRO</span>
 </h1>
 <h2>Three distributions. One optic. Pick at install.</h2>
@@ -2434,7 +2434,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
  Pricing &amp; Availability
  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
 </a>
-<a class="cfg-cta outline" href="submittal_symmetry.html?sku=LPTP130-3CS/27VS1/DB/FD&amp;housing=130&amp;voltage=27V&amp;finish=DB&amp;optic=FD" id="cfgCtaPdf" rel="noopener" target="_blank">
+<a class="cfg-cta outline" href="submittal/?sku=LPTP130-3CS/27VS1/DB/FD&amp;housing=130&amp;voltage=27V&amp;finish=DB&amp;optic=FD" id="cfgCtaPdf" rel="noopener" target="_blank">
 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
  Submittal PDF
  </a>
@@ -2640,7 +2640,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
  ctaPdf.classList.remove('disabled');
  ctaPrice.setAttribute('href', '/pricing-availability/?sku=' + encodeURIComponent(sku));
 
- // Submittal PDF — emit submittal_symmetry.html?sku=…&housing=…&voltage=…&finish=…&optic=…
+ // Submittal PDF — emit submittal/?sku=…&housing=…&voltage=…&finish=…&optic=…
  // Per CFG-SUB-1 v2, the catalog number is editable inline on the rendered submittal.
  var subParts = [
  'sku=' + encodeURIComponent(sku),
@@ -2653,7 +2653,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
  ['controls','surge','glare','tenon'].forEach(function(k){
  if (state[k]) subParts.push(k + '=' + encodeURIComponent(state[k]));
  });
- ctaPdf.setAttribute('href', 'submittal_symmetry.html?' + subParts.join('&'));
+ ctaPdf.setAttribute('href', 'submittal/?' + subParts.join('&'));
  } else {
  skuEl.innerHTML = '<span class="placeholder">LPTP[H]-3CS/[V]S1/[F]/[O]</span>';
  copyBtn.disabled = true;
@@ -2768,7 +2768,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
  placeholder until James drops the URLs into the URL Dashboard.
 
  Submittal Sheet card targets the local generator we just shipped at
- /v2_mockups/cityARCH/submittal_symmetry.html — reads the configurator's
+ /v2_mockups/cityARCH/submittal/ — reads the configurator's
  resolved SKU via URL params.
  ============================================================================ -->
 <section class="docs-section" id="downloads">
@@ -2859,7 +2859,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </div>
 </a>
 <!-- Card 4 · Submittal Sheet — local generator -->
-<a class="docs-card" href="submittal_symmetry.html?sku=LPTP-3CS-130-27V/S1/DB//FD&amp;housing=130&amp;voltage=27V&amp;cct=40&amp;optic=FD&amp;finish=DB&amp;mount=POLE&amp;taa=STD" rel="noopener" target="_blank">
+<a class="docs-card" href="submittal/?sku=LPTP-3CS-130-27V/S1/DB//FD&amp;housing=130&amp;voltage=27V&amp;cct=40&amp;optic=FD&amp;finish=DB&amp;mount=POLE&amp;taa=STD" rel="noopener" target="_blank">
 <div class="docs-card-head">
 <div class="docs-card-icon">
 <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewbox="0 0 24 24">
@@ -3195,19 +3195,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </div>
 </div>
 </div>
-<!-- 12C · Final brand-red CTA strip -->
-<div class="closing-cta-strip">
-<div class="closing-cta-strip-inner">
-<div class="closing-cta-msg">
- Need a quote, layout, sample, or rebate match?
- <strong>We respond same business day.</strong>
-</div>
-<div class="closing-cta-buttons">
-<a class="closing-cta-btn solid" href="/contact/">Contact Sales</a>
-<a class="closing-cta-btn" href="/contact/?type=layout">Request Layout</a>
-</div>
-</div>
-</div>
+
 </section>
 <!-- ============================================================================
  Symmetry-Series PDP v1 · ALL 12 SECTIONS SHIPPED
@@ -3225,7 +3213,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
  Section 11 · cityⒶRCH PRO Post-Top Family (5-card cross-shop)
  Section 12 · Closing (cross-line round-out + pillars + CTA strip)
 
- Submittal generator: ./submittal_symmetry.html (4-page print-ready)
+ Submittal generator: ./submittal/ (4-page print-ready)
  Polar plot SVGs: ./assets/symmetry/photometrics/symmetry_*.svg (9 files)
  ============================================================================ -->
 <!-- Carousel auto-advance + dot interaction (golden baseline · matches

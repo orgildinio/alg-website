@@ -7,7 +7,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 ---
 <BaseLayout
-  title="Sentry · LBOL Bollard — Archipelago Lighting Group"
+  title="LBOL · Sentry — ArchipelagoⒶ Lighting Group"
   description="Sentry LBOL bollard luminaire from Archipelago Lighting Group."
   bodyClass="cityarch-pdp page-sentry-pdp"
   hideFooterCta={true}
@@ -32,7 +32,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <div class="hero-left">
 <div class="hero-info">
 <h1>
-        LBOL · · · Sentry
+        LBOL · Sentry
         <span class="tier-badge tier-pro">PRO</span>
 </h1>
 <h2>Twelve looks. One bollard.</h2>
@@ -1393,7 +1393,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
               Pricing &amp; Availability
               <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
 </a>
-<a class="cfg-cta outline disabled" href="submittal_sentry.html" id="cfgCtaPdf" rel="noopener" target="_blank">
+<a class="cfg-cta outline disabled" href="submittal/" id="cfgCtaPdf" rel="noopener" target="_blank">
 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" x2="12" y1="18" y2="12"></line><polyline points="9 15 12 12 15 15"></polyline></svg>
               Generate Submittal PDF
             </a>
@@ -1480,7 +1480,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <span class="docs-card-updated">LM-63-2002</span>
 </div>
 </a>
-<a class="docs-card" href="submittal_sentry.html?sku=LBOL-24-3CS-27V-S1/DB/R/DFR&amp;wc=24&amp;finish=DB&amp;pole=R&amp;crown=DFR" rel="noopener" target="_blank">
+<a class="docs-card" href="submittal/?sku=LBOL-24-3CS-27V-S1/DB/R/DFR&amp;wc=24&amp;finish=DB&amp;pole=R&amp;crown=DFR" rel="noopener" target="_blank">
 <div class="docs-card-head">
 <div class="docs-card-icon">
 <svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewbox="0 0 24 24">
@@ -1747,19 +1747,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </div>
 </div>
 </div>
-<!-- 10C — Final red CTA strip ================================================ -->
-<div class="closing-cta-strip">
-<div class="closing-cta-strip-inner">
-<div class="closing-cta-msg">
-        Need a quote, layout, sample, or rebate match?
-        <strong>We respond same business day.</strong>
-</div>
-<div class="closing-cta-buttons">
-<a class="closing-cta-btn solid" href="/contact/">Contact Sales</a>
-<a class="closing-cta-btn" href="/contact/?type=layout">Request Layout</a>
-</div>
-</div>
-</div>
+
 </section>
 <!-- Sticky bottom nav — icons mirror the actual section content / icons used inline -->
 <nav class="sticky-nav">
@@ -2683,8 +2671,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       }
     });
 
-    // ---- Submittal PDF — opens submittal_sentry.html in new tab with full config in query string ----
-    // The static template (submittal_sentry.html) reads ?sku= + wc/finish/pole/crown/em params and stamps:
+    // ---- Submittal PDF — opens submittal/ in new tab with full config in query string ----
+    // The static template (submittal/) reads ?sku= + wc/finish/pole/crown/em params and stamps:
     //   • catalog number across both pages
     //   • cover banner + Quick Specs (wattage-class-aware)
     //   • ordering-code segments + matrix row highlighting
@@ -2701,7 +2689,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         crown:  state.crown  || 'DFR'
       });
       if (state.em === 'EM') params.set('em', 'EM');
-      return 'submittal_sentry.html?' + params.toString();
+      return 'submittal/?' + params.toString();
     }
     ctaPdf.addEventListener('click', function(e) {
       if (ctaPdf.classList.contains('disabled')) { e.preventDefault(); return; }
