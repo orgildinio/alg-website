@@ -5659,7 +5659,7 @@ body { overflow-x: hidden; }
               Pricing &amp; Availability
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <a href="../submittal_template_jupiter.html" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
+            <a href="submittal/" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
               Generate Submittal PDF
             </a>
@@ -5778,7 +5778,7 @@ body { overflow-x: hidden; }
       </a>
 
       <!-- Submittal Sheet — generated from Section 9 configurator -->
-      <a href="../submittal_template_jupiter.html?family=jupiter&amp;wattage=240&amp;wattselect=240&amp;cct=3CS&amp;voltage=U&amp;finish=W&amp;optic=90&amp;taa=STD" target="_blank" rel="noopener" class="docs-card">
+      <a href="submittal/?family=jupiter&amp;wattage=240&amp;wattselect=240&amp;cct=3CS&amp;voltage=U&amp;finish=W&amp;optic=90&amp;taa=STD" target="_blank" rel="noopener" class="docs-card">
         <div class="docs-card-head">
           <div class="docs-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -6719,7 +6719,7 @@ body { overflow-x: hidden; }
         surge:      state.surge      || '',
         stepdown:   state.stepdown   || ''
       });
-      return '../submittal_template_jupiter.html?' + params.toString();
+      return 'submittal/?' + params.toString();
     }
     ctaPdf.addEventListener('click', function(e) {
       if (ctaPdf.classList.contains('disabled')) { e.preventDefault(); return; }
