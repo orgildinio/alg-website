@@ -6966,7 +6966,7 @@ body { overflow-x: hidden; }
   };
 
   // Default starting state — model 600 is preselected (matches markup).
-  var DEFAULT_STATE = { model: '600' };
+  var DEFAULT_STATE = { model: '120', cct: '50', voltage: 'U', finish: 'D', photocell: 'PS', mount: 'WALL' };
 
   // ---- RAL Classic validation table ----
   // 213 official RAL Classic codes (numbered ranges with intentional gaps).
@@ -7120,6 +7120,7 @@ body { overflow-x: hidden; }
       warning.classList.toggle('show', !complete);
       ctaPrice.classList.toggle('disabled', !complete);
       ctaPdf.classList.toggle('disabled', !complete);
+      if (complete) { ctaPdf.setAttribute('href', buildSubmittalUrl()); } else { ctaPdf.setAttribute('href', 'submittal/'); }
       copyBtn.disabled = !complete;
       // Reset copy-button state when SKU changes
       copyBtn.classList.remove('copied');
