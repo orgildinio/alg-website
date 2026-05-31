@@ -401,6 +401,38 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     cursor: pointer;
   }
   .carousel-dots > span.active { background: var(--brand-red); }
+  /* CFG-HERO-3 v2 · bubble chip selector */
+  .carousel-chips {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    background: rgba(10,12,14,0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 4px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.10);
+    z-index: 5;
+  }
+  .carousel-chips > button {
+    appearance: none;
+    border: 0;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: rgba(255,255,255,0.65);
+    background: transparent;
+    padding: 6px 12px;
+    border-radius: 999px;
+    transition: color 0.2s, background 0.2s;
+    white-space: nowrap;
+  }
+  .carousel-chips > button:hover { color: #fff; }
+  .carousel-chips > button.active { background: var(--brand-red); color: #fff; }
 
   /* Sticky bottom nav — production-grade with red border */
   .sticky-nav {
@@ -2822,9 +2854,10 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
                  loading="lazy" />
           </div>
         </div>
-        <div class="carousel-dots" id="carouselDots">
-          <span class="active" data-i="0"></span>
-          <span data-i="1"></span>
+        <!-- CFG-HERO-3 v2 · bubble chip selector -->
+        <div class="carousel-chips" id="carouselChips" aria-label="Photo angle selector">
+          <button type="button" class="active" data-i="0">FRONT</button>
+          <button type="button" data-i="1">SIDE</button>
         </div>
       </div>
 
@@ -5425,17 +5458,17 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <script is:inline>
 (function() {
   var track = document.getElementById('carouselTrack');
-  var dots  = document.getElementById('carouselDots');
-  if (!track || !dots) return;
+  var chips = document.getElementById('carouselChips');
+  if (!track || !chips) return;
   var slides = track.querySelectorAll('.carousel-slide');
-  var dotEls = dots.querySelectorAll('span');
+  var chipEls = chips.querySelectorAll('button');
   var i = 0;
   function show(n) {
     i = (n + slides.length) % slides.length;
     track.style.transform = 'translateX(-' + (i * 100) + '%)';
-    dotEls.forEach(function(d, k) { d.classList.toggle('active', k === i); });
+    chipEls.forEach(function(d, k) { d.classList.toggle('active', k === i); });
   }
-  dotEls.forEach(function(d, k) { d.addEventListener('click', function() { show(k); }); });
+  chipEls.forEach(function(d, k) { d.addEventListener('click', function() { show(k); }); });
   setInterval(function() { show(i + 1); }, 5000);
 })();
 </script>

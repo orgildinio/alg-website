@@ -3025,18 +3025,45 @@ body { overflow-x: hidden; }
  carousel of 4-5 Aura hero photos when Rooster delivers the LCWS shoot.
  ===================================================================== -->
  <div class="carousel-track" id="carouselTrack">
+ <!-- CFG-HERO-3 v2 · 5 hero webps from asset pack -->
  <div class="carousel-slide">
- <!-- 6.1.webp hero wired 2026-05-30 · CFG-PHOTO-2 v2 bg removed (floodfill ≤6%) -->
- <img
- src="/products/aura/assets/hero/aura-hero-1_nobg.png"
- alt="Aura Series LCWS LED Cylinder Wall Sconce — Dark Bronze finish, ribbed cylindrical housing with wall bracket, LED aperture at bottom"
- class="slide-img"
- width="2048" height="1106"
- />
+ <img class="slide-img"
+      src="/products/aura/assets/hero/aura-hero-1.webp"
+      alt="Aura Series LCWS LED Cylinder Wall Sconce — Dark Bronze finish, ribbed cylindrical housing with wall bracket, LED aperture at bottom"
+      loading="eager" />
+ </div>
+ <div class="carousel-slide">
+ <img class="slide-img"
+      src="/products/aura/assets/hero/aura-hero-2.webp"
+      alt="Aura Series — side profile view showing cylindrical housing and wall bracket assembly"
+      loading="lazy" />
+ </div>
+ <div class="carousel-slide">
+ <img class="slide-img"
+      src="/products/aura/assets/hero/aura-hero-3.webp"
+      alt="Aura Series — detail view of the LED aperture and ribbed heat-sink geometry"
+      loading="lazy" />
+ </div>
+ <div class="carousel-slide">
+ <img class="slide-img"
+      src="/products/aura/assets/hero/aura-hero-4.webp"
+      alt="Aura Series — mount detail showing wall bracket and wiring entry"
+      loading="lazy" />
+ </div>
+ <div class="carousel-slide">
+ <img class="slide-img"
+      src="/products/aura/assets/hero/aura-hero-5.webp"
+      alt="Aura Series — environmental context shot, cylinder sconce installed on exterior wall"
+      loading="lazy" />
  </div>
  </div>
- <div class="carousel-dots" id="carouselDots">
- <span class="active" data-i="0"></span>
+ <!-- CFG-HERO-3 v2 · bubble chip selector -->
+ <div class="carousel-chips" id="carouselChips" aria-label="Photo angle selector">
+ <button type="button" class="active" data-i="0">FRONT</button>
+ <button type="button" data-i="1">SIDE</button>
+ <button type="button" data-i="2">DETAIL</button>
+ <button type="button" data-i="3">MOUNT</button>
+ <button type="button" data-i="4">CONTEXT</button>
  </div>
  </div>
 
@@ -6254,17 +6281,17 @@ body { overflow-x: hidden; }
 <script is:inline>
 (function() {
  var track = document.getElementById('carouselTrack');
- var dots = document.getElementById('carouselDots');
- if (!track || !dots) return;
+ var chips = document.getElementById('carouselChips');
+ if (!track || !chips) return;
  var slides = track.querySelectorAll('.carousel-slide');
- var dotEls = dots.querySelectorAll('span');
+ var chipEls = chips.querySelectorAll('button');
  var i = 0;
  function show(n) {
  i = (n + slides.length) % slides.length;
  track.style.transform = 'translateX(-' + (i * 100) + '%)';
- dotEls.forEach(function(d, k) { d.classList.toggle('active', k === i); });
+ chipEls.forEach(function(d, k) { d.classList.toggle('active', k === i); });
  }
- dotEls.forEach(function(d, k) { d.addEventListener('click', function() { show(k); }); });
+ chipEls.forEach(function(d, k) { d.addEventListener('click', function() { show(k); }); });
  setInterval(function() { show(i + 1); }, 5000);
 })();
 </script>
