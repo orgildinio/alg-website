@@ -3471,7 +3471,7 @@ body { overflow-x: hidden; }
  </div>
 </div>
 
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 3 - Everest spec table housing switcher.
  AUTHORITATIVE source: LFLD | Everest | Datasheet.pdf pg 2 Model Specifications
@@ -3974,7 +3974,7 @@ body { overflow-x: hidden; }
 
 </section>
 
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 6 - Everest contrALS tab switcher: 2-tab layout (photocell + DMX).
  Both tabs ride the shared LFLD-I1/* controller line - same ordering desk
@@ -4177,7 +4177,7 @@ body { overflow-x: hidden; }
  </div>
 </section>
 
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 7 - Everest Photometrics: 3 housings x 3 W x 3 CCTs = 27 LM-79
  measured stat tuples. Polar SVG swaps per (housing x W x CCT). Stat panel
@@ -4565,7 +4565,7 @@ body { overflow-x: hidden; }
  </div>
 </div>
 
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 8 - Everest "In the Box" modal wiring.
  4 entries . all factory-installed . click-to-detail pattern (CFG-ACC-1).
@@ -4911,7 +4911,7 @@ body { overflow-x: hidden; }
 
 </section>
 
-<script>
+<script is:inline>
 /* SECTION 8b . 4-mount card-to-modal pattern (CFG-ACC-1)
  Mounts shipped per housing-compatibility matrix:
  KN : Everest-I, II, III . QuickShip
@@ -5201,7 +5201,7 @@ body { overflow-x: hidden; }
  </div>
 </section>
 
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 9 - Everest Configurator engine
  2 user choices (Housing + Finish) . 2 auto-locked (Voltage U + Photocell PS)
@@ -6152,7 +6152,7 @@ body { overflow-x: hidden; }
 </nav>
 
 <!-- Inline carousel JS — minimal auto-rotator + click-to-jump dots -->
-<script>
+<script is:inline>
 (function() {
  var track = document.getElementById('carouselTrack');
  var dots = document.getElementById('carouselChips');
@@ -6171,7 +6171,7 @@ body { overflow-x: hidden; }
 </script>
 
 
-<script>
+<script is:inline>
 /* =============================================================================
  CFG-NAV-1 . Sticky-nav scroll-spy
  ----------------------------------------------------------------------------
@@ -6212,7 +6212,7 @@ body { overflow-x: hidden; }
 })();
 </script>
 
-<script>
+<script is:inline>
 // CFG-STATE-1 - derive ship-tier (QS / WB / MTO) from selected chip badges, render
 // canonical 3-state status panel. Self-contained module . no dependency on the
 // configurator's state object . re-derives by walking selected chips on every click.
@@ -6280,7 +6280,7 @@ body { overflow-x: hidden; }
 })();
 </script>
 
-<script>
+<script is:inline>
 /* ============================================================================
  CFG-CFG-1 row-rails sync shim . injected 2026-05-18 PM by row-rails transformer
  Self-contained . does NOT modify the per-PDP SKU engine. Hooks chip clicks +

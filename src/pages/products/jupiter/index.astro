@@ -3810,7 +3810,7 @@ body { overflow-x: hidden; }
      Datasheet page 2 model-specifications table is canonical. Default WATTSELECT (★) is the MAX position
      out of carton; mid-position is the BEST efficacy (150 lm/W). LRHB400 is single-WATT (no WATTSELECT)
      with 2 single-CCT options (4000K@168 lm/W or 5000K@160 lm/W). -->
-<script>
+<script is:inline>
 (function() {
   var THREE_CCT = '3500K · 4000K · 5000K';
   var UT_VOLT   = '120-277V';
@@ -3967,7 +3967,7 @@ body { overflow-x: hidden; }
      (eyebrow numero + tag, then narrative title). Each clip is 9s exact,
      so we sync the progress bar to video.currentTime and auto-advance on
      video.ended (cleaner than a wallclock ticker for video-driven progress). -->
-<script>
+<script is:inline>
 (function(){
   // 5 slides spliced 2026-05-05 from "LRHB - Jupiter PromoVideo_NoText.mp4" via splice_jupiter_video.sh.
   // Best-of-class marketing copy per slide — specifier-grade, number-led, competitively framed.
@@ -4352,7 +4352,7 @@ body { overflow-x: hidden; }
 <!-- Section 6 photometrics · Jupiter 4-housing × 1-optic data · IES-rendered polar img swap.
      Values for 150/240/300 classes are LM-79 measured (parse_ies.py 2026-05-27).
      LRHB400 polar deferred — no 400W IES in the 2026-05-27 drop · falls back to a placeholder polar. -->
-<script>
+<script is:inline>
 (function(){
   // IES-measured values per max-WATTSELECT step @ 5000K (jupiter/parse_ies.py 2026-05-27).
   // The polarFile maps to assets/polar/jupiter-polar-{class}-class.svg generated from the IES bundle.
@@ -5198,7 +5198,7 @@ body { overflow-x: hidden; }
 </section>
 
 <!-- Section 8 accessories — Jupiter filter pill driver -->
-<script>
+<script is:inline>
 (function(){
   var pills = document.querySelectorAll('.acc-pill');
   var cards = document.querySelectorAll('#accGrid .acc-card');
@@ -6287,7 +6287,7 @@ body { overflow-x: hidden; }
 </div>
 
 
-<script>
+<script is:inline>
 // Carousel autoplay · CFG-HERO-2 canonical · binds both #carouselDots (legacy) AND #carouselChips (pill labels).
 // Count is read from actual DOM so adding/removing slides doesn't drift the modulo math.
 (function() {
@@ -6876,7 +6876,7 @@ body { overflow-x: hidden; }
 </script>
 
 
-<script>
+<script is:inline>
 /* =============================================================================
    CFG-NAV-1 · Sticky-nav scroll-spy
    ----------------------------------------------------------------------------

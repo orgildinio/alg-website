@@ -3794,7 +3794,7 @@ body { overflow-x: hidden; }
 <!-- Section 2 spec-table populator + dimension swap (Hallmark · 3 length classes × 4-WATTSELECT × 4-CCT)
      Datasheet page 2 model-specifications table is canonical. Default WATTSELECT (★) is the MAX position
      out of carton (4-CCT field-selectable applies to ALL positions on ALL lengths · no single-CCT exception). -->
-<script>
+<script is:inline>
 (function() {
   var FOUR_CCT = '3000K · 3500K · 4000K · 5000K';
   var UT_VOLT  = '120-277V';
@@ -3944,7 +3944,7 @@ body { overflow-x: hidden; }
      (eyebrow numero + tag, then narrative title). Each clip is 9s exact,
      so we sync the progress bar to video.currentTime and auto-advance on
      video.ended (cleaner than a wallclock ticker for video-driven progress). -->
-<script>
+<script is:inline>
 (function(){
   // 5 slides spliced 2026-05-05 from "LLSN - Hallmark PromoVideo_NoText.mp4" via splice_hallmark_video.sh.
   // Best-of-class marketing copy per slide — specifier-grade, number-led, competitively framed.
@@ -4368,7 +4368,7 @@ body { overflow-x: hidden; }
      Backing data parsed from hallmark/ies/ (LM-63-2002, 5000K, max WATTSELECT per length)
      via hallmark/parse_ies.py · rendered as assets/polar/hallmark-polar-{"{"}N{"}"}ft-{optic}.svg.
      Values below are measured (cd, lm, W, lm/W, beam-angle deg) — not estimated. -->
-<script>
+<script is:inline>
 (function(){
   // 3 lengths × 3 optics = 9 IES samples. Each tab click swaps photoPolarImg.src
   // and updates the metrics text. No FR data exists in the supplied IES library, so
@@ -4760,7 +4760,7 @@ body { overflow-x: hidden; }
 </section>
 
 <!-- Section 8 accessories — Hallmark filter pill driver -->
-<script>
+<script is:inline>
 (function(){
   var pills = document.querySelectorAll('.acc-pill');
   var cards = document.querySelectorAll('#accGrid .acc-card');
@@ -5705,7 +5705,7 @@ body { overflow-x: hidden; }
 </div>
 
 
-<script>
+<script is:inline>
 // Hero carousel — CFG-HERO-2 · optic-chip selector (planoⒶRCH canonical · Spectra-I 2026-05-22).
 // Dot-nav replaced with optic chips (ROUND / FLAT / WIDE / REFLECTOR). Selector swapped
 // from #carouselDots > span to #carouselChips > button. Default opens on slide 1 (= FLAT,
@@ -6312,7 +6312,7 @@ body { overflow-x: hidden; }
 </script>
 
 
-<script>
+<script is:inline>
 /* =============================================================================
    CFG-NAV-1 · Sticky-nav scroll-spy
    ----------------------------------------------------------------------------

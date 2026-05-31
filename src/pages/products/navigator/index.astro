@@ -3093,7 +3093,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   </div>
 </div>
 
-<script>
+<script is:inline>
 /* =============================================================================
    SECTION 3 \u2014 Navigator spec table model switcher.
    AUTHORITATIVE source: LCNP | Navigator | Datasheet.pdf (Zoho WorkDrive).
@@ -3393,7 +3393,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 </section>
 
-<script>
+<script is:inline>
 /* =============================================================================
    SECTION 6 \u2014 Navigator Tab switcher: 3-tab contr\u24B6LS layout.
    Tabs: bls \u00B7 acs \u00B7 silvair (per James 2026-05-02 \u2014 focus on contr\u24B6LS only)
@@ -3575,7 +3575,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   </div>
 </section>
 
-<script>
+<script is:inline>
 /* =============================================================================
    SECTION 7 \u2014 Navigator Photometrics: 2 housings \u00D7 3 CCTs = 6 LM-79 measured
    stat tuples. Polar SVG swaps per (wattage \u00D7 CCT). Stat panel updates per
@@ -3860,7 +3860,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   </div>
 </div>
 
-<script>
+<script is:inline>
 /* =============================================================================
    SECTION 8 \u2014 Navigator "In the Box" modal wiring.
    3 entries \u00B7 all standard \u00B7 click-to-detail pattern from Pathfinder scaffold.
@@ -4382,7 +4382,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   </div>
 </section>
 
-<script>
+<script is:inline>
 /* =============================================================================
    SECTION 9 \u2014 Navigator Configurator engine
    5 user choices (Housing \u00B7 Voltage \u00B7 Finish \u00B7 EM \u00B7 Sensor) \u00B7 1 auto-locked
@@ -5422,7 +5422,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </nav>
 
 <!-- Inline carousel JS — minimal auto-rotator + click-to-jump dots -->
-<script>
+<script is:inline>
 (function() {
   var track = document.getElementById('carouselTrack');
   var dots  = document.getElementById('carouselDots');
@@ -5441,7 +5441,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </script>
 
 
-<script>
+<script is:inline>
 /* =============================================================================
    CFG-NAV-1 \u00B7 Sticky-nav scroll-spy
    ----------------------------------------------------------------------------
@@ -5482,7 +5482,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 })();
 </script>
 
-<script>
+<script is:inline>
 // CFG-STATE-1 \u2014 derive ship-tier (QS / WB / MTO) from selected chip badges, render
 // canonical 3-state status panel. Self-contained module \u00B7 no dependency on the
 // configurator's state object \u00B7 re-derives by walking selected chips on every click.

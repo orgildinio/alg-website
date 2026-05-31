@@ -3838,7 +3838,7 @@ body { overflow-x: hidden; }
      · LLHB400 (400W Max class). Default WATTSELECT (★) is the MAX position within each housing class. CCT is
      field-toggled on the housing dip-switch (4000K / 5000K) — does NOT appear in part number; the SKU stem is
      "-2CS-UT/d/b" or "-2CS-HT/d/b" regardless of CCT chosen at install. -->
-<script>
+<script is:inline>
 (function() {
   var TWO_CCT = '4000K · 5000K (field)';
   var UT_VOLT = '120-277V (U)';
@@ -4005,7 +4005,7 @@ body { overflow-x: hidden; }
      (eyebrow numero + tag, then narrative title). Each clip is 9s exact,
      so we sync the progress bar to video.currentTime and auto-advance on
      video.ended (cleaner than a wallclock ticker for video-driven progress). -->
-<script>
+<script is:inline>
 (function(){
   // 4 clips spliced 2026-05-09 from "LLHB - Titan PromoVideo_NoText.mp4" via splice_titan_video.sh.
   // James greenlit all 4 in the frame-strip preflight; specifier-grade, number-led, competitively framed copy.
@@ -4426,7 +4426,7 @@ body { overflow-x: hidden; }
        320W class · 4000K → LLHB320_320W_4000K-120V.ies   (peak 25,524 cd · 48,926 lm · 155 lm/W)
        400W class · 5000K → LLHB400W-120V-5K-90X90.IES    (peak 27,431 cd · 59,764 lm · 150 lm/W)
        400W class · 4000K → LLHB400W-120V-4K-90X90.IES    (peak 26,668 cd · 57,685 lm · 149 lm/W) -->
-<script>
+<script is:inline>
 (function(){
   var data = {
     '155_5000': { peak: '12,278 cd', lumens: '23,848 lm', watts: '157W', lpw: '152 lm/W', ies: 'LLHB155_155W_5000K-120V.IES' },
@@ -4856,7 +4856,7 @@ body { overflow-x: hidden; }
 </section>
 
 <!-- Section 8 accessories — Titan filter pill driver -->
-<script>
+<script is:inline>
 (function(){
   var pills = document.querySelectorAll('.acc-pill');
   var cards = document.querySelectorAll('#accGrid .acc-card');
@@ -5814,7 +5814,7 @@ body { overflow-x: hidden; }
 </div>
 
 
-<script>
+<script is:inline>
 // Carousel autoplay — count is read from actual DOM so adding/removing slides
 // doesn't drift the modulo math.
 (function() {
@@ -6439,7 +6439,7 @@ body { overflow-x: hidden; }
 </script>
 
 
-<script>
+<script is:inline>
 /* =============================================================================
    CFG-NAV-1 · Sticky-nav scroll-spy
    ----------------------------------------------------------------------------

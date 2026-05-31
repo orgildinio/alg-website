@@ -3094,7 +3094,7 @@ body { overflow-x: hidden; }
  </div>
 </div>
 
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 3 - Spec table model switcher (Anaheim . 5 discrete-wattage SKUs).
  Each tab swaps the table body to that SKU's CCT x output map. Lumen + watt
@@ -3366,7 +3366,7 @@ body { overflow-x: hidden; }
 
 </section>
 
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 6 - Tab switcher: swap the callout body copy and "Discover" link
  label based on the active platform (dimming . photocell). Reuses the
@@ -3535,7 +3535,7 @@ body { overflow-x: hidden; }
  </div>
 </section>
 
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 7 - Photometrics: 4 wattages x 2 CCTs = 8 stat tuples.
  Polar SVG swaps per wattage (each LWPA SKU has its own beam-shape file).
@@ -3841,7 +3841,7 @@ body { overflow-x: hidden; }
  </div>
 </div>
 
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 8 - "What's in the Box" modal wiring for Anaheim.
  3 entries . all standard . click-to-detail pattern from the family scaffold.
@@ -4200,7 +4200,7 @@ body { overflow-x: hidden; }
  </div>
 </section>
 
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 9 - Anaheim Configurator engine
  6 user-pickable fields . all default-selected at page load.
@@ -5027,7 +5027,7 @@ body { overflow-x: hidden; }
 </nav>
 
 <!-- Inline carousel JS — minimal auto-rotator + click-to-jump dots -->
-<script>
+<script is:inline>
 (function() {
  var track = document.getElementById('carouselTrack');
  var dots = document.getElementById('carouselChips');
@@ -5046,7 +5046,7 @@ body { overflow-x: hidden; }
 </script>
 
 
-<script>
+<script is:inline>
 /* =============================================================================
  CFG-NAV-1 . Sticky-nav scroll-spy
  ----------------------------------------------------------------------------
@@ -5087,7 +5087,7 @@ body { overflow-x: hidden; }
 })();
 </script>
 
-<script>
+<script is:inline>
 // CFG-STATE-1 - derive ship-tier (QS / WB / MTO) from selected chip badges, render
 // canonical 3-state status panel. Self-contained module . no dependency on the
 // configurator's state object . re-derives by walking selected chips on every click.
@@ -5155,7 +5155,7 @@ body { overflow-x: hidden; }
 })();
 </script>
 
-<script>
+<script is:inline>
 /* ============================================================================
  CFG-CFG-1 row-rails sync shim . injected 2026-05-18 PM by row-rails transformer
  Self-contained . does NOT modify the per-PDP SKU engine. Hooks chip clicks +

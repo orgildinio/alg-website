@@ -4219,7 +4219,7 @@ body { overflow-x: hidden; }
 </nav>
 
 <!-- Inline carousel JS — minimal 4-slide auto-rotator + click-to-jump dots -->
-<script>
+<script is:inline>
 (function() {
  var track = document.getElementById('carouselTrack');
  var dots = document.getElementById('carouselChips');
@@ -4245,7 +4245,7 @@ body { overflow-x: hidden; }
  logic — just the visual feedback. Click the red contrⒶLS tab → restart the
  shockwave animation. Pattern lifted from Sentinel Section 5.
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  function init() {
  var tabs = document.querySelectorAll('.tac-callout-tab');
@@ -4271,7 +4271,7 @@ body { overflow-x: hidden; }
  SECTION 3 — Model Specifications: model toggle + spec table renderer
  Lumens shown are 4000K column from datasheet page 4 (highest CCT-bin output).
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  // SPEC_TABLE: 2 model classes x 3 wattage rows each.
  // Lumens / lm/W from Guardian datasheet page 4 (Performance Data table, 4000K column).
@@ -4333,7 +4333,7 @@ body { overflow-x: hidden; }
 <!-- =============================================================================
  SECTION 9 — Configurator engine: state machine + SKU builder + previews
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  // 6 required fields (model is the only no-default one). 4 optional groups.
  var REQUIRED = ['model', 'cct', 'voltage', 'finish', 'photocell', 'series'];
@@ -4564,7 +4564,7 @@ body { overflow-x: hidden; }
  SECTION 8 — Accessories: filter pills + click-to-open modal
  ACC{} keyed by data-id. Datasheet CTA shown only for entries with a `datasheet` URL.
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  // Sourced from LWPF | Guardian | Datasheet (page 3 ordering guide) +
  // Active_SKUs_WorkDrive_Links.xlsx for datasheet URLs.
@@ -4760,7 +4760,7 @@ body { overflow-x: hidden; }
 <!-- =============================================================================
  SECTION 7 — Photometrics: model × CCT toggle, swap polar plot SVG + stats
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  // Per-(model, wattage, CCT) data - uses user-provided polar plot SVGs from
  // /products/guardian/assets/photometrics// LWPF48 . 60W & 80W . 5000K only
@@ -4878,7 +4878,7 @@ body { overflow-x: hidden; }
 <!-- =============================================================================
  SECTION 3 — Dimensions zoom modal: open on zoom-btn click, close on overlay click or Esc
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  var modal = document.getElementById('dimZoomModal');
  var openBtn = document.getElementById('dimZoomBtn');
@@ -4898,7 +4898,7 @@ body { overflow-x: hidden; }
 </script>
 
 
-<script>
+<script is:inline>
 /* =============================================================================
  CFG-NAV-1 . Sticky-nav scroll-spy
  ----------------------------------------------------------------------------
@@ -4939,7 +4939,7 @@ body { overflow-x: hidden; }
 })();
 </script>
 
-<script>
+<script is:inline>
 // CFG-STATE-1 - derive ship-tier (QS / WB / MTO) from selected chip badges, render
 // canonical 3-state status panel. Self-contained module . no dependency on the
 // configurator's state object . re-derives by walking selected chips on every click.
@@ -5007,7 +5007,7 @@ body { overflow-x: hidden; }
 })();
 </script>
 
-<script>
+<script is:inline>
 /* ============================================================================
  CFG-CFG-1 row-rails sync shim . injected 2026-05-18 PM by row-rails transformer
  Self-contained . does NOT modify the per-PDP SKU engine. Hooks chip clicks +
@@ -5156,7 +5156,7 @@ body { overflow-x: hidden; }
 
 
 
-<script>
+<script is:inline>
 /* v2.8-luxo Patch A · guardian_spec_renderer.js · injected 2026-05-30 */
 /* Source: mockup_guardian_pdp_v1.html · v2.8-luxo Patch A spec-table data + renderer.
  * Drop into the guardian Astro page or extract as a shared module.

@@ -537,7 +537,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <img alt="Symmetry all 4 mount-type dimension drawings — Pole Mount · Square or Round Pole / Wall Mount · Conduit Pendant / Gooseneck Mount · Surface Mount · with measurements in mm and inches per LPTP Symmetry datasheet page 5" id="dimZoomImg" src="/products/symmetry/assets/symmetry/dimensions/symmetry-dimensions-all-mounts.png"/>
 </div>
 </div>
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 3 — Symmetry spec table model switcher.
  AUTHORITATIVE source: LPTP | Symmetry | Datasheet.pdf (Zoho WorkDrive · 9 pp).
@@ -839,7 +839,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </div>
 </div>
 </section>
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 6 — Symmetry tab switcher: 3-tab contrⒶLS layout.
  Tabs: bls · acs · silvair. Per knowledge pack §6, /MSP-ACS and /MSP-NLC
@@ -1009,7 +1009,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </div>
 </div>
 </section>
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 7 — Symmetry photometrics driver (Illuminator / Nightwatch pattern).
  2 tab groups (housing × optic) feed a 2-col plot+stats display. Each
@@ -1307,7 +1307,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </div>
 </div>
 </div>
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 8 — Symmetry "In the Box" modal wiring.
  3 entries · all standard pre-fitted · click-to-detail pattern from the
@@ -1934,7 +1934,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </div>
 </div>
 </div>
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 8b — Symmetry Accessories: filter pills + click-to-modal driver.
  18 accessories across 5 categories. Per CFG-ACC-1 modal carries 2 universal
@@ -2448,7 +2448,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </div>
 </div>
 </section>
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 9 — Symmetry Configurator state engine.
  - Required: housing · voltage · optic · finish (CCT locked at 3CS)
@@ -3230,7 +3230,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
  ============================================================================ -->
 <!-- Carousel auto-advance + dot interaction (golden baseline · matches
  Heritage / Sentinel / Illuminator) -->
-<script>
+<script is:inline>
 (function(){
  var track = document.getElementById('carouselTrack');
  var dotsEl = document.getElementById('carouselDots');
@@ -3433,7 +3433,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
  to the link whose target has the highest visibility. Sections 3-12 don't
  exist yet — observer auto-skips missing targets so the script stays
  idempotent across the section-by-section build. -->
-<script>
+<script is:inline>
 (function(){
  var nav = document.querySelector('.sticky-nav');
  if (!nav || !('IntersectionObserver' in window)) return;
@@ -3469,7 +3469,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 })();
 </script>
 
-<script>
+<script is:inline>
 /* ============================================================================
  CFG-CFG-1 · syncRowCodes + syncRalInput (cityⒶRCH migration · 2026-05-19)
  Standalone IIFE — listens on the configurator section for clicks/input
@@ -3590,7 +3590,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 
 
-<script>
+<script is:inline>
 /* ============================================================================
  CFG-CFG-1 · Stock/Stripe sync · 2026-05-19 PM (James review fix)
  Restores .cfg-chip-stock element (hidden) on every chip + mirrors class

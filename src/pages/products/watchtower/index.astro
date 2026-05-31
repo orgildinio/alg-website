@@ -4196,7 +4196,7 @@ body { overflow-x: hidden; }
 </nav>
 
 <!-- Inline carousel JS — minimal 4-slide auto-rotator + click-to-jump dots -->
-<script>
+<script is:inline>
 (function() {
  var track = document.getElementById('carouselTrack');
  var dots = document.getElementById('carouselChips');
@@ -4222,7 +4222,7 @@ body { overflow-x: hidden; }
  logic — just the visual feedback. Click the red contrⒶLS tab → restart the
  shockwave animation. Pattern lifted from Sentinel Section 5.
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  function init() {
  var tabs = document.querySelectorAll('.tac-callout-tab');
@@ -4250,7 +4250,7 @@ body { overflow-x: hidden; }
  Lumens shown are 4000K column from datasheet page 4 Performance Data table
  (highest CCT-bin output across the 3-CCTselect range).
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  // SPEC_TABLE: 2 model classes x 3 wattage rows each.
  // Lumens / lm/W from Watchtower datasheet page 4 (Performance Data, 4000K column).
@@ -4312,7 +4312,7 @@ body { overflow-x: hidden; }
 <!-- =============================================================================
  SECTION 3 — Dimensions zoom modal: open on zoom-btn click, close on overlay click or Esc
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  var modal = document.getElementById('dimZoomModal');
  var openBtn = document.getElementById('dimZoomBtn');
@@ -4337,7 +4337,7 @@ body { overflow-x: hidden; }
  file at the model's default DIP wattage (LWPC3W80 = 80W, LWPC3W120 = 120W).
  Stats values pulled from the datasheet Performance Data table (page 4).
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  // Per-(model, CCT) data - beam shape from real IES files; stats from datasheet.
  // * marks the factory-default position (max wattage of each model class).
@@ -4409,7 +4409,7 @@ body { overflow-x: hidden; }
  ACC{} keyed by data-id. 4 accessories (EM07 / EM20 / 10SP / 20SP).
  Datasheet CTA shown only for entries with a `datasheet` URL.
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  // Sourced from LWPC | Watchtower | Datasheet (page 3 ordering guide + page 4
  // compatible accessories) + Active_SKUs_WorkDrive_Links.xlsx for datasheet URLs.
@@ -4575,7 +4575,7 @@ body { overflow-x: hidden; }
  5 required fields (model, cct, voltage, finish, photocell) + 2 optional
  (em, spd). SKU pattern: LWPC{model}-3W1-U{D|B}/PS[/EM07|/EM20][/10SP|/20SP]
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  // 5 required fields. 2 optional groups.
  var REQUIRED = ['model', 'cct', 'voltage', 'finish', 'photocell'];
@@ -4794,7 +4794,7 @@ body { overflow-x: hidden; }
 </script>
 
 
-<script>
+<script is:inline>
 /* =============================================================================
  CFG-NAV-1 . Sticky-nav scroll-spy
  ----------------------------------------------------------------------------
@@ -4835,7 +4835,7 @@ body { overflow-x: hidden; }
 })();
 </script>
 
-<script>
+<script is:inline>
 // CFG-STATE-1 - derive ship-tier (QS / WB / MTO) from selected chip badges, render
 // canonical 3-state status panel. Self-contained module . no dependency on the
 // configurator's state object . re-derives by walking selected chips on every click.
@@ -4903,7 +4903,7 @@ body { overflow-x: hidden; }
 })();
 </script>
 
-<script>
+<script is:inline>
 /* ============================================================================
  CFG-CFG-1 row-rails sync shim . injected 2026-05-18 PM by row-rails transformer
  Self-contained . does NOT modify the per-PDP SKU engine. Hooks chip clicks +
@@ -5052,7 +5052,7 @@ body { overflow-x: hidden; }
 
 
 
-<script>
+<script is:inline>
 /* v2.8-luxo Patch A · watchtower_spec_renderer.js · injected 2026-05-30 */
 /* Source: mockup_watchtower_pdp_v1.html · v2.8-luxo Patch A spec-table data + renderer.
  * Drop into the watchtower Astro page or extract as a shared module.

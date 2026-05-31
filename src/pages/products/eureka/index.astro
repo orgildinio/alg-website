@@ -3784,7 +3784,7 @@ body { overflow-x: hidden; }
      Single-row-per-SKU compact format: WATTselect steps consolidated into one cell separated by " | " with the MAX
      position marked ★ (factory default out of carton). 4FT has 4 SKUs (40W and 46W standard chassis +
      135W and 250W high-bay chassis). All lengths offer 3-CCTselect (3500/4000/5000K). All 120-277V. -->
-<script>
+<script is:inline>
 (function() {
   var THREE_CCT = '3500 / 4000 / 5000K';
   var UT_VOLT   = '120-277V';
@@ -3952,7 +3952,7 @@ body { overflow-x: hidden; }
      chips (NN · TAG); caption is two-line (eyebrow numero + tag, then narrative title). Per CFG-MOTION-2
      the MP4s contain NO baked-in text — all overlays (tag + title + eyebrow + counter) are HTML/CSS layers
      rendered over the <video> element. Progress bar syncs to video.currentTime · auto-advances on ended. -->
-<script>
+<script is:inline>
 (function(){
   // 2 clips · AI-generated 2026-05-26 from Canva Magic Media (16:9 source, cropped to 21:9 in post).
   // Tag + title strings are the HTML overlay — they live on top of the MP4, never inside it.
@@ -4400,7 +4400,7 @@ body { overflow-x: hidden; }
      IES files parsed at /eureka/ies/EUREKA-II/ via /eureka/parse_ies.py (2026-05-26).
      Polar SVGs rendered via /eureka/render_polar_svg.py → /assets/polar/eureka-polar-{"{"}N{"}"}ft.svg.
      Per length: { lumens, peak_cd, beam_angle, lm/W, watts } all parsed directly from the IES file. -->
-<script>
+<script is:inline>
 (function(){
   // Authoritative values from IES parse 2026-05-26 (EUREKA-II 5000K bundle):
   var ies = {
@@ -4824,7 +4824,7 @@ body { overflow-x: hidden; }
 </section>
 
 <!-- Section 8 accessories — Eureka filter pill driver -->
-<script>
+<script is:inline>
 (function(){
   var pills = document.querySelectorAll('.acc-pill');
   var cards = document.querySelectorAll('#accGrid .acc-card');
@@ -5893,7 +5893,7 @@ body { overflow-x: hidden; }
 </div>
 
 
-<script>
+<script is:inline>
 // Hero carousel — CFG-HERO-2 · length-chip selector (planoⒶRCH canonical, Spectra-I 2026-05-22).
 // Dot-nav replaced with length chips (2FT / 4FT / 8FT / HIGH-BAY). Selector swapped from
 // #carouselDots > span to #carouselChips > button. Default opens on slide 1 (= 4FT, most-spec'd).
@@ -6463,7 +6463,7 @@ body { overflow-x: hidden; }
 </script>
 
 
-<script>
+<script is:inline>
 /* =============================================================================
    CFG-NAV-1 · Sticky-nav scroll-spy
    ----------------------------------------------------------------------------

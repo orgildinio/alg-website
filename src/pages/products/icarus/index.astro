@@ -3795,7 +3795,7 @@ body { overflow-x: hidden; }
 <!-- Section 2 spec-table populator + dimension swap (Icarus · 3 wattage classes × 3-WATTSELECT × 4-CCT)
      Datasheet page 2 model-specifications table is canonical. Default WATTSELECT (★) is the MAX position
      out of carton; mid-position is the BEST efficacy (150 lm/W) — surface in §4 Highlights as "sweet-spot install setting." -->
-<script>
+<script is:inline>
 (function() {
   var FOUR_CCT = '3000K · 3500K · 4000K · 5000K';
   var UT_VOLT  = '120-277V';
@@ -3940,7 +3940,7 @@ body { overflow-x: hidden; }
      (eyebrow numero + tag, then narrative title). Each clip is 9s exact,
      so we sync the progress bar to video.currentTime and auto-advance on
      video.ended (cleaner than a wallclock ticker for video-driven progress). -->
-<script>
+<script is:inline>
 (function(){
   // Icarus promo video pending — splices will populate /videos/icarus-motion-NN-{slug}.mp4
   // when the master ships. Carousel structure scaffolded here for the same drop-in pattern
@@ -4303,7 +4303,7 @@ body { overflow-x: hidden; }
 <!-- Section 6 photometrics — Icarus 3-class IES-rendered polar driver (2026-05-27).
      Backing data: parsed from icarus/ies/LRHB3W{class}-S4-I3U-5000K.ies via parse_ies.py.
      Values below are IES-measured (peak cd / lumens / W / lm/W / beam-angle deg) — NOT estimates. -->
-<script>
+<script is:inline>
 (function(){
   // 3 wattage classes × max WATTSELECT @ 5000K · all measured @ LM-79 2024.
   var ies = {
@@ -4932,7 +4932,7 @@ body { overflow-x: hidden; }
 </section>
 
 <!-- Section 8 accessories — Icarus filter pill driver -->
-<script>
+<script is:inline>
 (function(){
   var pills = document.querySelectorAll('.acc-pill');
   var cards = document.querySelectorAll('#accGrid .acc-card');
@@ -5934,7 +5934,7 @@ body { overflow-x: hidden; }
 </div>
 
 
-<script>
+<script is:inline>
 // Carousel autoplay + chip selector (CFG-HERO-2 canonical pattern).
 // Count is read from actual DOM so adding/removing slides doesn't drift the modulo math.
 // Binds BOTH legacy carouselDots (if present) AND canonical carouselChips (CFG-HERO-2).
@@ -6505,7 +6505,7 @@ body { overflow-x: hidden; }
 </script>
 
 
-<script>
+<script is:inline>
 /* =============================================================================
    CFG-NAV-1 · Sticky-nav scroll-spy
    ----------------------------------------------------------------------------

@@ -4410,7 +4410,7 @@ body { overflow-x: hidden; }
 </nav>
 
 <!-- Inline carousel JS — minimal 4-slide auto-rotator + click-to-jump dots -->
-<script>
+<script is:inline>
 (function() {
  var track = document.getElementById('carouselTrack');
  var dots = document.getElementById('carouselChips');
@@ -4435,7 +4435,7 @@ body { overflow-x: hidden; }
  (section will be added when we build Section 6). Handler initializes lazily
  and no-ops if the markup isn't present yet.
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  function init() {
  var tabs = document.querySelectorAll('.tac-callout-tab');
@@ -4458,7 +4458,7 @@ body { overflow-x: hidden; }
  Lumens / efficacy from datasheet page 4 Performance Data (4000K column).
  Each row = one model class at MAX wattage; 4-WATTselect tunes 100/80/60/40%.
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  // SPEC_TABLE: 2 series x N model rows each.
  // Datasheet page 2 + page 4 Performance Data table (4000K column).
@@ -4530,7 +4530,7 @@ body { overflow-x: hidden; }
 <!-- =============================================================================
  SECTION 3 — Dimensions zoom modal: open on zoom-btn click, close on overlay click or Esc
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  var modal = document.getElementById('dimZoomModal');
  var openBtn = document.getElementById('dimZoomBtn');
@@ -4557,7 +4557,7 @@ body { overflow-x: hidden; }
  The "compare distributions" strip below the main plot shows the 4 BA shapes
  side-by-side at the current model + LV + CCT — the key designer affordance.
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
 
  /* ============== NW-I data (existing) ============== */
@@ -4884,7 +4884,7 @@ body { overflow-x: hidden; }
  SECTION 8 — Accessories: filter pills + click-to-open modal
  ACC{} keyed by data-id. Just 2 entries (EM20 + PSB) for Nightwatch.
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  // Sourced from LWPC | Nightwatch | Datasheet (page 3 ordering guide + page 5 EM matrix).
  var ACC = {
@@ -5017,7 +5017,7 @@ body { overflow-x: hidden; }
  distribution segment (S3N = blank, S3N2 = "BA" appended to finish).
  SKU pattern: LWPC{model}-{series}-U{D|B}[/BA][/PSB][/EM20]
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  var REQUIRED = ['series', 'model', 'voltage', 'finish', 'photocell'];
  var OPTIONAL = ['em'];
@@ -5252,7 +5252,7 @@ body { overflow-x: hidden; }
 </script>
 
 
-<script>
+<script is:inline>
 /* =============================================================================
  CFG-NAV-1 . Sticky-nav scroll-spy
  ----------------------------------------------------------------------------
@@ -5293,7 +5293,7 @@ body { overflow-x: hidden; }
 })();
 </script>
 
-<script>
+<script is:inline>
 // CFG-STATE-1 - derive ship-tier (QS / WB / MTO) from selected chip badges, render
 // canonical 3-state status panel. Self-contained module . no dependency on the
 // configurator's state object . re-derives by walking selected chips on every click.
@@ -5361,7 +5361,7 @@ body { overflow-x: hidden; }
 })();
 </script>
 
-<script>
+<script is:inline>
 /* ============================================================================
  CFG-CFG-1 row-rails sync shim . injected 2026-05-18 PM by row-rails transformer
  Self-contained . does NOT modify the per-PDP SKU engine. Hooks chip clicks +
@@ -5510,7 +5510,7 @@ body { overflow-x: hidden; }
 
 
 
-<script>
+<script is:inline>
 /* v2.8-luxo Patch A · nightwatch_spec_renderer.js · injected 2026-05-30 */
 /* Source: mockup_nightwatch_pdp_v1.html · v2.8-luxo Patch A spec-table data + renderer.
  * Drop into the nightwatch Astro page or extract as a shared module.

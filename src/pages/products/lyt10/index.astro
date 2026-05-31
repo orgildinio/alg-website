@@ -1261,7 +1261,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </div>
 <div class="zoom-modal-hint">Click anywhere or press ESC to close</div>
 </div>
-<script>
+<script is:inline>
 // Carousel autoplay — count is read from actual DOM so adding/removing slides
 // doesn't drift the modulo math.
 (function() {
@@ -2361,7 +2361,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   }
 })();
 </script>
-<script>
+<script is:inline>
 /* =============================================================================
    CFG-NAV-1 · Sticky-nav scroll-spy
    ----------------------------------------------------------------------------
@@ -2402,7 +2402,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 })();
 </script>
 
-<script>
+<script is:inline>
 /* ============================================================================
    CFG-CFG-1 · syncRowCodes + syncRalInput (cityⒶRCH migration · 2026-05-19)
    Standalone IIFE — listens on the configurator section for clicks/input
@@ -2523,7 +2523,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 
 
-<script>
+<script is:inline>
 /* ============================================================================
    CFG-CFG-1 · Stock/Stripe sync · 2026-05-19 PM (James review fix)
    Restores .cfg-chip-stock element (hidden) on every chip + mirrors class

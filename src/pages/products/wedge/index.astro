@@ -3012,7 +3012,7 @@ body { overflow-x: hidden; }
  </div>
 </div>
 
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 3 - Spec table model switcher.
  Wedge has 2 discrete model SKUs (LWPE10, LWPE20). Each tab swaps the
@@ -3259,7 +3259,7 @@ body { overflow-x: hidden; }
 
 </section>
 
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 6 - Tab switcher: swap the callout body copy and sensor caption
  based on the active platform (photocell . em). Reuses the .is-rippling
@@ -3488,7 +3488,7 @@ body { overflow-x: hidden; }
  </div>
 </div>
 
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 8 - "What's in the Box" modal wiring for Wedge.
  3 entries . all standard . click-to-detail pattern from the family scaffold.
@@ -3807,7 +3807,7 @@ body { overflow-x: hidden; }
  </div>
 </section>
 
-<script>
+<script is:inline>
 /* =============================================================================
  SECTION 9 - Wedge Configurator engine
  2 user choices (Model, Finish) . 4 auto-locked (Series, Voltage, /PS, /EM)
@@ -4568,7 +4568,7 @@ body { overflow-x: hidden; }
 </nav>
 
 <!-- Inline carousel JS — minimal 4-slide auto-rotator + click-to-jump dots -->
-<script>
+<script is:inline>
 (function() {
  var track = document.getElementById('carouselTrack');
  var dots = document.getElementById('carouselChips');
@@ -4591,7 +4591,7 @@ body { overflow-x: hidden; }
  SECTION 6 — contrⒶLS · click ripple/shockwave handler (lazy init).
  Markup will arrive when Section 6 is built; this handler is harmless until then.
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  function init() {
  var tabs = document.querySelectorAll('.tac-callout-tab');
@@ -4612,7 +4612,7 @@ body { overflow-x: hidden; }
 <!-- =============================================================================
  SECTION 3 — Dimensions zoom modal: open on zoom-btn click, close on overlay click or Esc
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  var modal = document.getElementById('dimZoomModal');
  var openBtn = document.getElementById('dimZoomBtn');
@@ -4635,7 +4635,7 @@ body { overflow-x: hidden; }
  since beam shape is CCT-invariant. Lumens, efficacy, and peak intensity
  update per the datasheet model-spec table at 20W max.
  ============================================================================= -->
-<script>
+<script is:inline>
 (function() {
  // Per-CCT data at 20W max - all from the datasheet model-spec table.
  // Peak intensity is linear-scaled from the 3000K IES (1,212 cd at 2,450 lm)
@@ -4691,7 +4691,7 @@ body { overflow-x: hidden; }
 </script>
 
 
-<script>
+<script is:inline>
 /* =============================================================================
  CFG-NAV-1 . Sticky-nav scroll-spy
  ----------------------------------------------------------------------------
@@ -4732,7 +4732,7 @@ body { overflow-x: hidden; }
 })();
 </script>
 
-<script>
+<script is:inline>
 // CFG-STATE-1 - derive ship-tier (QS / WB / MTO) from selected chip badges, render
 // canonical 3-state status panel. Self-contained module . no dependency on the
 // configurator's state object . re-derives by walking selected chips on every click.
@@ -4800,7 +4800,7 @@ body { overflow-x: hidden; }
 })();
 </script>
 
-<script>
+<script is:inline>
 /* ============================================================================
  CFG-CFG-1 row-rails sync shim . injected 2026-05-18 PM by row-rails transformer
  Self-contained . does NOT modify the per-PDP SKU engine. Hooks chip clicks +
