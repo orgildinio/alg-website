@@ -29,11 +29,11 @@ const heroSlides = [
     name: 'Illuminator',
     gradClass: 'grad-slide0',
     seriesNameColor: '#a8c8e8', // C1: stadium blue-white — matches sports lighting field bg (kept for fallback)
-    // D (v2.5.5): multi-color gradient sampled from hero-illuminator-stadium.jpg
+    // D (v2.5.5): multi-color gradient sampled from hero-illuminator-stadium.webp
     // Hues: cool slate sky → bright stadium-light white → warm amber spill → lit-field green
     seriesNameGradient: 'linear-gradient(95deg, #7b9ec8 0%, #c8dff0 28%, #f5f0e8 55%, #d4e8a0 80%, #a8c870 100%)',
     desc: 'Precision sports lighter. Up to 116,000 lumens. 150 lm/W. DLC Premium listed for broadcast-grade venues.',
-    lineDrawing: '/images/heroes/line-drawings/line-illuminator.png',
+    lineDrawing: '/images/heroes/line-drawings/line-illuminator.webp',
     specUrl: 'https://workdrive.archipelagolighting.com/external/f85531794c0da1dc848e3037781aa1c19322c21c93a074d4d85c74792b5f83ba',
     learnUrl: '/products/illuminator/',
     stats: [
@@ -51,11 +51,11 @@ const heroSlides = [
     name: 'Titan',
     gradClass: 'grad-slide1',
     seriesNameColor: '#f0c070', // C1: warm amber — matches warehouse/industrial warm tone (kept for fallback)
-    // D (v2.5.5): multi-color gradient sampled from hero-warehouse-highbay.jpg
+    // D (v2.5.5): multi-color gradient sampled from hero-warehouse-highbay.webp
     // Hues: steel blue-grey ceiling → warm industrial amber → orange forklift accent
     seriesNameGradient: 'linear-gradient(95deg, #98b0c8 0%, #c8b890 35%, #f0c070 65%, #e87830 100%)',
     desc: 'Linear high-bay for warehouses and industrial interiors. Up to 155W. 3-step WATTselect (85/130/155W). DLC Premium, built-in 6kVA surge.',
-    lineDrawing: '/images/heroes/line-drawings/line-titan.png',
+    lineDrawing: '/images/heroes/line-drawings/line-titan.webp',
     specUrl: null,
     learnUrl: null,
     stats: [
@@ -73,11 +73,11 @@ const heroSlides = [
     name: 'Liberty',
     gradClass: 'grad-slide2',
     seriesNameColor: '#c9a876', // C1: warm amber-gold — matches outdoor area lighting dusk hue (kept for fallback)
-    // D (v2.5.5): multi-color gradient sampled from hero-outdoor-area.jpg
+    // D (v2.5.5): multi-color gradient sampled from hero-outdoor-area.webp
     // Hues: warm sunset orange → rose-mauve horizon → deep sky blue → cool steel blue
     seriesNameGradient: 'linear-gradient(95deg, #f0a050 0%, #e87880 28%, #9878c0 55%, #6a8cb2 80%, #4890d0 100%)',
     desc: null,
-    lineDrawing: '/images/heroes/line-drawings/line-liberty.png',
+    lineDrawing: '/images/heroes/line-drawings/line-liberty.webp',
     specUrl: null,
     learnUrl: null,
     stats: [
@@ -95,11 +95,11 @@ const heroSlides = [
     name: null,
     gradClass: 'grad-slide3',
     seriesNameColor: '#e8d8b0', // C1: warm office white — matches back-lit panel warm CCT (kept for fallback)
-    // D (v2.5.5): multi-color gradient sampled from hero-commercial-office.jpg
+    // D (v2.5.5): multi-color gradient sampled from hero-commercial-office.webp
     // Hues: warm walnut amber → cool grey-blue glass → soft tungsten cream
     seriesNameGradient: 'linear-gradient(95deg, #c89060 0%, #d0b890 30%, #a8b8c8 60%, #e8d8b0 100%)',
     desc: 'Back-lit panel for offices, classrooms, and commercial interiors. Up to 5×5 WATTselect/CCTselect matrix. 1×4 · 2×2 · 2×4.',
-    lineDrawing: '/images/heroes/line-drawings/line-panel.png',
+    lineDrawing: '/images/heroes/line-drawings/line-panel.webp',
     specUrl: null,
     learnUrl: null,
     stats: [
@@ -770,10 +770,10 @@ const verticals = [
   }
   .hero-image.active { opacity: 1; }
   /* No dark overlay on image — clean image fill, bottom-only gradient for text legibility */
-  .img-illuminator { background: url('/images/heroes/hero-illuminator-stadium.jpg') center/cover no-repeat; }
-  .img-titan       { background: url('/images/heroes/hero-warehouse-highbay.jpg') center/cover no-repeat; }
-  .img-outdoor     { background: url('/images/heroes/hero-outdoor-area.jpg') center/cover no-repeat; }
-  .img-proarch     { background: url('/images/heroes/hero-commercial-office.jpg') center/cover no-repeat; }
+  .img-illuminator { background: url('/images/heroes/hero-illuminator-stadium.webp') center/cover no-repeat; }
+  .img-titan       { background: url('/images/heroes/hero-warehouse-highbay.webp') center/cover no-repeat; }
+  .img-outdoor     { background: url('/images/heroes/hero-outdoor-area.webp') center/cover no-repeat; }
+  .img-proarch     { background: url('/images/heroes/hero-commercial-office.webp') center/cover no-repeat; }
   /* Fix 1: Hero left-panel image overlay — darker than rev9 attempt */
   .hero-image-stage { position: relative; }
   .hero-image-stage::after {
@@ -1847,14 +1847,14 @@ const verticals = [
     background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.3) 35%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.95) 100%);
   }
   .installed-tile:hover { transform: scale(1.02); z-index: 2; }
-  .installed-tile.t1 { background: url('/images/verticals/vertical-warehouse.jpg') center/cover no-repeat; }
-  .installed-tile.t2 { background: url('/images/verticals/vertical-manufacturing.jpg') center/cover no-repeat; }
-  .installed-tile.t3 { background: url('/images/verticals/vertical-coldstorage.jpg') center/cover no-repeat; }
-  .installed-tile.t4 { background: url('/images/verticals/vertical-datacenter.jpg') center/cover no-repeat; }
-  .installed-tile.t5 { background: url('/images/verticals/vertical-healthcare.jpg') center/cover no-repeat; }
-  .installed-tile.t6 { background: url('/images/verticals/vertical-education.jpg') center/cover no-repeat; }
-  .installed-tile.t7 { background: url('/images/verticals/vertical-hospitality.jpg') center/cover no-repeat; }
-  .installed-tile.t8 { background: url('/images/verticals/vertical-government.jpg') center/cover no-repeat; }
+  .installed-tile.t1 { background: url('/images/verticals/vertical-warehouse.webp') center/cover no-repeat; }
+  .installed-tile.t2 { background: url('/images/verticals/vertical-manufacturing.webp') center/cover no-repeat; }
+  .installed-tile.t3 { background: url('/images/verticals/vertical-coldstorage.webp') center/cover no-repeat; }
+  .installed-tile.t4 { background: url('/images/verticals/vertical-datacenter.webp') center/cover no-repeat; }
+  .installed-tile.t5 { background: url('/images/verticals/vertical-healthcare.webp') center/cover no-repeat; }
+  .installed-tile.t6 { background: url('/images/verticals/vertical-education.webp') center/cover no-repeat; }
+  .installed-tile.t7 { background: url('/images/verticals/vertical-hospitality.webp') center/cover no-repeat; }
+  .installed-tile.t8 { background: url('/images/verticals/vertical-government.webp') center/cover no-repeat; }
   .installed-tile.placeholder { background: linear-gradient(135deg, #1a1d28 0%, #0c0d12 100%); }
   .installed-label {
     position: absolute;

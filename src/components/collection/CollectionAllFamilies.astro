@@ -17,7 +17,7 @@ export interface Props {
 const { collectionSlug, familiesHeadline, familiesSubhead } = Astro.props;
 
 const colData = skuIndex.collections[collectionSlug as keyof typeof skuIndex.collections];
-const families = colData?.families ?? [];
+const families = (colData?.families ?? []).filter((f: any) => f.pdp_ready !== false);
 const skus = colData?.skus ?? [];
 
 // Compute facet options from data
