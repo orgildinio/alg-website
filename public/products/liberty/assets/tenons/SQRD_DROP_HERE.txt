@@ -1,0 +1,25 @@
+SQRD photos pending — drop the 3 source PNGs/JPGs here:
+================================================================
+
+The 3 SQRD photos you've pasted inline twice still aren't reaching
+my workspace sandbox — Cowork's inline-paste pipeline shows them in
+chat but doesn't write them to disk.
+
+Save them at THESE EXACT paths and I'll do the rest (background
+removal + .webp conversion + verify rendered):
+
+  /PM/v2_mockups/luxoARCH/assets/liberty/tenons/
+
+    1. SQRD-3SQR.png        (Image #1 · single round-to-round adapter)
+    2. SQRD-4SQ-5SQ.png     (Image #2 · shared 4-Sq + 5-Sq adapter)
+    3. SQRD-SQ.png          (Image #3 · wall-bracket style square adapter)
+
+OR if you've already saved them somewhere with different filenames,
+drop a list of the actual filenames and I'll rename + process.
+
+Once landed, I'll:
+  - Run gentle 3% corner-floodfill (preserves bolts + set-screws · same
+    technique used on the other 10 tenon photos)
+  - Save as .webp at the canonical path (SQRD-3SQR.webp etc.)
+  - Verify rendering in §8 Accessories cards + §9 Configurator select
+    + Page 3 of the Submittal PDF
