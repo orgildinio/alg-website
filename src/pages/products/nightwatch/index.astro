@@ -5509,5 +5509,80 @@ body { overflow-x: hidden; }
 </script>
 
 
+
+<script>
+/* v2.8-luxo Patch A · nightwatch_spec_renderer.js · injected 2026-05-30 */
+/* Source: mockup_nightwatch_pdp_v1.html · v2.8-luxo Patch A spec-table data + renderer.
+ * Drop into the nightwatch Astro page or extract as a shared module.
+ * Wires the `tbody#specTableBody` of the corresponding <table class="spec-table"> to housing/watt tab switches.
+ */
+
+(function() {
+ // SPEC_TABLE: 2 series × N model rows each.
+ // Datasheet page 2 + page 4 Performance Data table (4000K column).
+ // ★ marks the factory-default DIP wattage position (100% of max for each model).
+ var SPEC_TABLE = {
+ // Nightwatch-I · S3N series · Type-I fixed forward throw · 4 models
+ 's3n': [
+ { model: 'LWPC38', watt: '38W ★', lumens: '6,000 lm', lpw: '158 lm/W', dist: 'Type-I (fixed)', def: false, range: '17 / 23 / 31 / 38W' },
+ { model: 'LWPC65', watt: '65W ★', lumens: '10,000 lm', lpw: '154 lm/W', dist: 'Type-I (fixed)', def: false, range: '24 / 35 / 50 / 65W' },
+ { model: 'LWPC100', watt: '100W ★', lumens: '15,500 lm', lpw: '155 lm/W', dist: 'Type-I (fixed)', def: false, range: '43 / 62 / 85 / 100W' },
+ { model: 'LWPC135', watt: '135W ★', lumens: '20,000 lm', lpw: '148 lm/W', dist: 'Type-I (fixed)', def: true, range: '54 / 80 / 110 / 135W' }
+ ],
+ // Nightwatch-II · S3N2 series · beamⒶDJUST Type-I/II/III/IV · 3 models
+ 's3n2': [
+ { model: 'LWPC30', watt: '30W ★', lumens: '4,400 lm', lpw: '147 lm/W', dist: 'beamⒶDJUST · Type-I/II/III/IV', def: false, range: '12 / 18 / 24 / 30W' },
+ { model: 'LWPC60', watt: '60W ★', lumens: '8,400 lm', lpw: '140 lm/W', dist: 'beamⒶDJUST · Type-I/II/III/IV', def: false, range: '24 / 36 / 48 / 60W' },
+ { model: 'LWPC100', watt: '100W ★', lumens: '15,500 lm', lpw: '155 lm/W', dist: 'beamⒶDJUST · Type-I/II/III/IV', def: true, range: '40 / 60 / 80 / 100W' }
+ ]
+ };
+
+ function init() {
+ var tabs = document.querySelectorAll('.spec-watt-tab');
+ var body = document.getElementById('specTableBody');
+ if (!tabs.length || !body) return;
+
+ function render(series) {
+ var rows = SPEC_TABLE[series] || [];
+ body.innerHTML = rows.map(function(r) {
+ // Render Ⓐ inline so it picks up the brand styling
+ var distHtml = r.dist.replace(/Ⓐ/g, '<span class="aa">Ⓐ</span>');
+ return '<tr' + (r.def ? ' class="is-default"' : '') + '>' +
+ '<td><strong>' + r.model + '</strong>' +
+ '<div style="font-size:11px;color:var(--text-muted);margin-top:2px;font-family:\'JetBrains Mono\',monospace;letter-spacing:0.04em;">' + r.range + '</div></td>' +
+ '<td>' + r.watt + '</td>' +
+ '<td>' + r.lumens + '</td>' +
+ '<td>' + r.lpw + '</td>' +
+ '<td>' + distHtml + '</td>' +
+ '</tr>';
+ }).join('');
+ // 2026-05-18: toggle the matching dim SVG (s3n / s3n2 mapping).
+ document.querySelectorAll('.spec-dim-svg[data-dim-group]').forEach(function(img) {
+ img.classList.toggle('is-active', img.dataset.dimGroup === series);
+ });
+ }
+
+ tabs.forEach(function(t) {
+ t.addEventListener('click', function() {
+ tabs.forEach(function(x) {
+ x.classList.remove('active');
+ x.setAttribute('aria-selected', 'false');
+ });
+ t.classList.add('active');
+ t.setAttribute('aria-selected', 'true');
+ render(t.dataset.series);
+ });
+ });
+
+ // Initial render — Nightwatch-I S3N (default-active tab)
+ var active = document.querySelector('.spec-watt-tab.active');
+ render(active ? active.dataset.series : 's3n');
+ }
+
+ if (document.readyState === 'loading') {
+ document.addEventListener('DOMContentLoaded', init);
+ } else { init(); }
+})();
+</script>
 </BaseLayout>
 

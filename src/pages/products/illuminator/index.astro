@@ -6706,5 +6706,1176 @@ body { overflow-x: hidden; }
 </script>
 
 
+
+<script>
+/* v2.8-luxo Patch A · illuminator_spec_renderer.js · injected 2026-05-30 */
+/* Source: mockup_illuminator_pdp_v2.html · v2.8-luxo Patch A spec-table data + renderer.
+ * Drop into the illuminator Astro page or extract as a shared module.
+ * Wires the `tbody#specTableBody` of the corresponding <table class="spec-table"> to housing/watt tab switches.
+ */
+
+// Carousel autoplay — count is read from actual DOM so adding/removing slides
+// doesn't drift the modulo math.
+(function() {
+  var track = document.getElementById('carouselTrack');
+  var dots  = document.querySelectorAll('#carouselDots > span');
+  var slides = track ? track.querySelectorAll('.carousel-slide').length : 0;
+  if (!track || !slides) return;
+  var idx = 0;
+  function go(i) {
+    idx = (i + slides) % slides;
+    track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+    dots.forEach(function(d, n) { d.classList.toggle('active', n === idx); });
+  }
+  var timer = setInterval(function() { go(idx + 1); }, 5000);
+  dots.forEach(function(d) {
+    d.addEventListener('click', function() {
+      clearInterval(timer);
+      go(parseInt(d.dataset.i, 10));
+      timer = setInterval(function() { go(idx + 1); }, 5000);
+    });
+  });
+})();
+
+// Spec model toggle — full WATTSELECT set per model (LSPL Illuminator datasheet)
+// LSPL600: 400W / 500W / 600W (default 600W)
+// LSPL800: 600W / 700W / 800W (default 800W)
+(function() {
+  var data = {
+    '600': [
+      { watt: '400W',  lumens: '60,000 lm',  lpw: '150 lm/W', cct: '4000K · 5000K', volt: '120-277V · 200-480V', def: false },
+      { watt: '500W',  lumens: '74,000 lm',  lpw: '148 lm/W', cct: '4000K · 5000K', volt: '120-277V · 200-480V', def: false },
+      { watt: '600W ★', lumens: '88,200 lm', lpw: '147 lm/W', cct: '4000K · 5000K', volt: '120-277V · 200-480V', def: true  }
+    ],
+    '800': [
+      { watt: '600W',  lumens: '89,400 lm',  lpw: '149 lm/W', cct: '4000K · 5000K', volt: '120-277V · 200-480V', def: false },
+      { watt: '700W',  lumens: '102,000 lm', lpw: '146 lm/W', cct: '4000K · 5000K', volt: '120-277V · 200-480V', def: false },
+      { watt: '800W ★', lumens: '116,000 lm', lpw: '145 lm/W', cct: '4000K · 5000K', volt: '120-277V · 200-480V', def: true  }
+    ]
+  };
+  var tbody = document.getElementById('specTableBody');
+  var tabs = document.querySelectorAll('.spec-watt-tab');
+  function render(model) {
+    tbody.innerHTML = data[model].map(function(r) {
+      return '<tr class="' + (r.def ? 'is-default' : '') + '">' +
+             '<td>' + r.watt   + '</td>' +
+             '<td>' + r.lumens + '</td>' +
+             '<td>' + r.lpw    + '</td>' +
+             '<td>' + r.cct    + '</td>' +
+             '<td>' + r.volt   + '</td>' +
+             '</tr>';
+    }).join('');
+  }
+  tabs.forEach(function(t) {
+    t.addEventListener('click', function() {
+      tabs.forEach(function(x) { x.classList.remove('active'); x.setAttribute('aria-selected', 'false'); });
+      t.classList.add('active');
+      t.setAttribute('aria-selected', 'true');
+      render(t.dataset.w);
+    });
+  });
+  render('600');
+})();
+
+// Dimensions zoom modal — click magnifier to open, click anywhere or ESC to close
+(function() {
+  function initZoom() {
+    var btn      = document.querySelector('.spec-dim-zoom');
+    var modal    = document.getElementById('zoomModal');
+    var img      = document.getElementById('dimImg');
+    var src      = document.getElementById('dimSvg');
+    var dst      = document.getElementById('zoomContent');
+    var closeBtn = document.getElementById('zoomClose');
+    if (!btn || !modal || !dst || !(img || src)) {
+      console.warn('zoom-modal: missing DOM nodes', {btn:!!btn, modal:!!modal, img:!!img, src:!!src, dst:!!dst});
+      return;
+    }
+    function openModal(e) {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      // Prefer the production drawing; fall back to inline SVG
+      if (img && img.complete && img.naturalWidth > 0) {
+        dst.innerHTML = '<img src="' + img.getAttribute('src') + '" alt="' + img.alt + '" />';
+      } else if (src) {
+        dst.innerHTML = src.outerHTML.replace(/\bdisplay\s*:\s*none[;]?/i, '');
+      }
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(e) {
+      if (e) { e.preventDefault(); }
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    btn.addEventListener('click', openModal);
+    modal.addEventListener('click', closeModal);
+    if (closeBtn) closeBtn.addEventListener('click', function(e){ e.stopPropagation(); closeModal(e); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initZoom);
+  } else {
+    initZoom();
+  }
+})();
+
+// Section 5 — Total Adaptive Control: platform tab → swap sensor SVG, swap body copy, trigger ripple shockwave
+(function() {
+  var copy = {
+    synapse: "Enterprise-grade networked lighting control with advanced commissioning, scalability, and cloud integration for large facilities and campuses. Mesh-network site management, theatrical RGBW show programs through DMX/DALI gateways, and dual sensor inputs for advanced automation.",
+    acs:     "ALG’s in-house ⒶCS controls platform — daylight harvesting, occupancy sensing, and 0-10V dimming wired directly to the luminaire. Field-commissionable via DIP-switch or AURA app. Ideal for sealed-envelope installs without a wireless gateway.",
+    bilevel: "Two-stage hardwired bi-level control — full output at occupancy, dimmed standby at vacancy. No commissioning, no gateway, no app. Drop-in compliance for ASHRAE 90.1 and Title 24 occupancy reduction requirements.",
+    silvair: "SILVAIR Bluetooth Mesh — qualified mesh nodes built into the driver. Self-healing topology, no gateway required, full control via the SILVAIR commissioning app. Enterprise-scale deployments without the wired backhaul."
+  };
+  function init() {
+    var tabs = document.querySelectorAll('.tac-callout-tab');
+    var sensors = document.querySelectorAll('.tac-sensor-svg');
+    var copyEl = document.getElementById('tacCalloutCopy');
+    var wave = document.getElementById('tacShockwave');
+    if (!tabs.length || !sensors.length || !wave) return;
+    function select(platform) {
+      tabs.forEach(function(t) {
+        var isActive = t.dataset.platform === platform;
+        t.classList.toggle('active', isActive);
+        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+      sensors.forEach(function(s) {
+        s.classList.toggle('is-active', s.dataset.platform === platform);
+      });
+      if (copyEl && copy[platform]) copyEl.textContent = copy[platform];
+      // Trigger shockwave: remove + re-add class to restart animation
+      wave.classList.remove('is-rippling');
+      void wave.offsetWidth;
+      wave.classList.add('is-rippling');
+    }
+    tabs.forEach(function(t) {
+      t.addEventListener('click', function() { select(t.dataset.platform); });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+// Section 6 — Photometrics: model + optic toggle drives polar plot SVG swap
+(function() {
+  // Real IES test data — peak candela and total lumens per (model × optic) combo
+  // Polar plots: dark-theme semi-circle, IESNA conventions. Curves derived directly from the IES files
+  // (same data the InventFine GPM-1800B test report rendered in each PDF page 3, just restyled to fit our palette).
+  var data = {
+    '600_20': { svg: 'assets/photometrics/lspl600_20.svg', peak: '388,500', lumens: '94,439',  file: 'LSPL600-50-UBTR-600W-20D.IES' },
+    '600_35': { svg: 'assets/photometrics/lspl600_35.svg', peak: '176,443', lumens: '87,618',  file: 'LSPL600-277V-35D.IES' },
+    '600_55': { svg: 'assets/photometrics/lspl600_55.svg', peak: '102,154', lumens: '90,655',  file: 'LSPL600-50-UBTR-600W-55D.IES' },
+    '600_90': { svg: 'assets/photometrics/lspl600_90.svg', peak: '47,102',  lumens: '91,871',  file: 'LSPL600-50-UBTR-600W-90D.IES' },
+    '800_20': { svg: 'assets/photometrics/lspl800_20.svg', peak: '440,924', lumens: '121,000', file: 'LSPL800-277V-20D.IES' },
+    '800_35': { svg: 'assets/photometrics/lspl800_35.svg', peak: '245,983', lumens: '122,133', file: 'LSPL800-277V-35D.IES' },
+    '800_55': { svg: 'assets/photometrics/lspl800_55.svg', peak: '112,457', lumens: '119,689', file: 'LSPL800-277V-55D.IES' }
+  };
+  // Per datasheet all 4 optics are available across both models. IES file presence differs.
+  var optics = { '600': ['20','35','55','90'], '800': ['20','35','55'] };
+  var fallback = { '600': '35', '800': '35' };
+
+  function init() {
+    var img = document.getElementById('photoImg');
+    var statPeak = document.getElementById('photoStatPeak');
+    var statLum = document.getElementById('photoStatLumens');
+    var statFile = document.getElementById('photoStatFile');
+    if (!img || !statPeak) return;
+    var modelTabs = document.querySelectorAll('.photo-tab[data-model]');
+    var opticTabs = document.querySelectorAll('.photo-tab[data-optic]');
+    var state = { model: '600', optic: '35' };  // 35° is the datasheet default optic
+    // Mark the 35° optic tab active on initial load
+    opticTabs.forEach(function(t) { t.classList.toggle('active', t.dataset.optic === state.optic); t.setAttribute('aria-selected', t.dataset.optic === state.optic ? 'true' : 'false'); });
+
+    function refreshOpticTabs() {
+      var available = optics[state.model];
+      opticTabs.forEach(function(t) {
+        var opt = t.dataset.optic;
+        var isAvailable = available.indexOf(opt) >= 0;
+        t.disabled = !isAvailable;
+        t.style.opacity = isAvailable ? '1' : '0.3';
+        t.style.cursor = isAvailable ? 'pointer' : 'not-allowed';
+        t.title = isAvailable ? '' : 'IES test data not available for this combination';
+      });
+      // If current optic isn't available for new model, snap to the default
+      if (available.indexOf(state.optic) < 0) state.optic = fallback[state.model];
+      opticTabs.forEach(function(t) {
+        t.classList.toggle('active', t.dataset.optic === state.optic);
+        t.setAttribute('aria-selected', t.dataset.optic === state.optic ? 'true' : 'false');
+      });
+    }
+
+    function render() {
+      var key = state.model + '_' + state.optic;
+      var d = data[key];
+      if (!d) return;
+      img.src = d.svg;
+      img.alt = 'LSPL' + state.model + ' ' + state.optic + '° optic — luminous distribution';
+      statPeak.textContent = d.peak + ' cd';
+      statLum.textContent = d.lumens + ' lm';
+      statFile.textContent = d.file;
+    }
+
+    modelTabs.forEach(function(t) {
+      t.addEventListener('click', function() {
+        modelTabs.forEach(function(x) { x.classList.remove('active'); x.setAttribute('aria-selected', 'false'); });
+        t.classList.add('active');
+        t.setAttribute('aria-selected', 'true');
+        state.model = t.dataset.model;
+        refreshOpticTabs();
+        render();
+      });
+    });
+    opticTabs.forEach(function(t) {
+      t.addEventListener('click', function() {
+        if (t.disabled) return;
+        opticTabs.forEach(function(x) { x.classList.remove('active'); x.setAttribute('aria-selected', 'false'); });
+        t.classList.add('active');
+        t.setAttribute('aria-selected', 'true');
+        state.optic = t.dataset.optic;
+        render();
+      });
+    });
+
+    refreshOpticTabs();
+    render();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+// =============================================================================
+// SECTION 7 — Compatible Accessories: filter pills + click-modal
+// Data map keyed by data-id — each entry holds modal copy + 6 spec rows.
+// SVG icon for the modal is cloned from the same card the user clicked, so
+// the modal art always matches the card art and we don't duplicate the SVG.
+// =============================================================================
+(function() {
+  var ACC = {
+    // ---------- contrⒶLS ----------
+    // OEM'd from Synapse Wireless. ALG SKU is the headline; Synapse part number
+    // is surfaced as one of the 6 spec rows. datasheet=null suppresses the
+    // Data Sheet CTA in the modal (handled in openModal).
+    'ctrl-sycb': {
+      cat: 'contrⒶLS · BASE STATION',
+      title: 'NEMA Base Station · Cloud-Ready',
+      sku: 'CTRL-SYCB-450CL',
+      desc: 'NEMA twist-lock photocell-receptacle base station for SimplySNAP wireless lighting control. One-year basic SimplySNAP cloud subscription included for remote dashboard, scheduling, and group dimming. Drop-in upgrade for any luminaire with a 7-pin NEMA receptacle — no rewiring required.',
+      datasheet: null,
+      specs: [
+        ['Synapse Part No.',     'CBSSW-450-002'],
+        ['Mount',                '7-pin NEMA twist-lock'],
+        ['Voltage',              '120-480V AC universal'],
+        ['Network',              'IEEE 802.15.4 mesh · 2.4 GHz'],
+        ['Cloud',                'SimplySNAP — 1-yr basic subscription incl.'],
+        ['Compliance',           'FCC Part 15 · IC RSS · IP66 enclosure']
+      ]
+    },
+    'ctrl-syrc': {
+      cat: 'contrⒶLS · RETROFIT',
+      title: 'External IP65 Controller · 220-F',
+      sku: 'CTRL-SYRC-220F',
+      desc: 'External wireless controller for retrofit installs on legacy luminaires lacking a NEMA receptacle. Bolt-on IP65 enclosure with integrated antenna and 0-10V dimming flying-leads. Joins any existing SimplySNAP mesh — no rewiring of the luminaire driver beyond the dimming pair.',
+      datasheet: null,
+      specs: [
+        ['Synapse Part No.',     'DIM10-220-F'],
+        ['Mount',                'External bolt-on · IP65 rated'],
+        ['Voltage',              '120-277V AC'],
+        ['Dimming Output',       '0-10V · sourced 2 mA per fixture'],
+        ['Network',              'IEEE 802.15.4 mesh · joins SimplySNAP'],
+        ['Compliance',           'FCC Part 15 · IC RSS · UL 8750']
+      ]
+    },
+
+    // ---------- Glare Control ----------
+    'glare-shield': {
+      cat: 'Glare Control',
+      title: 'Glare Shield',
+      sku: 'LSPL-I1/GS',
+      desc: 'Snap-on shallow shield reduces backlight and trespass without sacrificing forward throw. Ideal for sites bordering residential zones or where dark-sky compliance is required.',
+      datasheet: '/files/lspl-illuminator/LSPL-I1-GS-spec.pdf',
+      specs: [
+        ['Material',          'Die-cast aluminum · powder-coat'],
+        ['Finish',            'Dark bronze (matches housing)'],
+        ['Light Reduction',   'Backlight: -38% · Uplight: -100%'],
+        ['Mount',             'Tool-less snap-on · 4 stainless tabs'],
+        ['Wind Load',         'EPA +0.06 ft²'],
+        ['BUG Impact',        'Improves to B2-U0-G2 (60° tilt)']
+      ]
+    },
+    'glare-visor': {
+      cat: 'Glare Control',
+      title: 'Glare Visor (Deep Hood)',
+      sku: 'LSPL-I1/GV',
+      desc: 'Deep-hood glare visor for the most demanding spillage-control sites — broadcast venues, multi-field complexes, and DarkSky-certified municipalities. Cuts trespass without throwing the field photometric off-spec.',
+      datasheet: '/files/lspl-illuminator/LSPL-I1-GV-spec.pdf',
+      specs: [
+        ['Material',          'Die-cast aluminum · powder-coat'],
+        ['Finish',            'Dark bronze (matches housing)'],
+        ['Light Reduction',   'Backlight: -62% · Uplight: -100%'],
+        ['Mount',             'Bolt-on · 6 M6 stainless fasteners'],
+        ['Wind Load',         'EPA +0.11 ft²'],
+        ['BUG Impact',        'Improves to B1-U0-G1 (60° tilt)']
+      ]
+    },
+
+    // ---------- Mount ----------
+    'mount-sf': {
+      cat: 'Mount',
+      title: 'Slip-Fitter Mount (2" Pole)',
+      sku: 'LSPL-I1/SF',
+      desc: 'Heavy-duty slip-fitter mount for 2"-2.5" tenon poles. Stainless-steel set screws lock the luminaire at any rotation; trunnion yoke allows 90° tilt with detents at 0°/30°/45°/60°/90°.',
+      datasheet: '/files/lspl-illuminator/LSPL-I1-SF-spec.pdf',
+      specs: [
+        ['Pole Compatibility','2.0" - 2.5" OD round tenon'],
+        ['Tilt Range',        '0° to 90° · 5 detent stops'],
+        ['Material',          'Cast 6061 aluminum · stainless hardware'],
+        ['Vibration Rating',  '3G ANSI C136.31'],
+        ['Weight',            '4.8 lbs (2.2 kg)'],
+        ['Compliance',        'IP66 with luminaire installed']
+      ]
+    },
+    'mount-tn': {
+      cat: 'Mount',
+      title: 'Trunnion Yoke Mount',
+      sku: 'LSPL-I1/TN',
+      desc: 'Surface-mount trunnion yoke with stainless pivot pins, dual-side aiming hardware, and ANSI 4-bolt pattern. Direct-mount to flat surfaces, brackets, or pole crossarms.',
+      datasheet: '/files/lspl-illuminator/LSPL-I1-TN-spec.pdf',
+      specs: [
+        ['Mount Pattern',     'ANSI 4-bolt · 4.5" × 4.5"'],
+        ['Tilt Range',        '0° to 90° · continuous lock'],
+        ['Material',          'Cast 6061 aluminum · 18-8 SS pins'],
+        ['Vibration Rating',  '3G ANSI C136.31'],
+        ['Weight',            '5.6 lbs (2.5 kg)'],
+        ['Compliance',        'IP66 with luminaire installed']
+      ]
+    },
+
+    // ---------- Optics ----------
+    'optic-20': {
+      cat: 'Optics · Spot',
+      title: '20° Spot Optic',
+      sku: 'LSPL-I1/O20',
+      desc: 'Tightest beam in the family — 20° NEMA Type 1 narrow distribution. Used for long-throw applications: stadium poles >120 ft, broadcast tower mounts, large-radius field corners requiring concentrated lumens at distance.',
+      datasheet: '/files/lspl-illuminator/LSPL-I1-O20-spec.pdf',
+      specs: [
+        ['Beam Spread',       '20° (FWHM) · NEMA Type 1'],
+        ['Peak Intensity',    'Up to 440,924 cd (LSPL800)'],
+        ['Best For',          'Field corners · long-throw · 120ft+ poles'],
+        ['Compatible With',   'LSPL600 · LSPL800'],
+        ['Material',          'Acrylic optic · TIR collimator'],
+        ['Spec Sheet IES',    'LSPL600/800-50-UBTR-20D.IES']
+      ]
+    },
+    'optic-35': {
+      cat: 'Optics · Default',
+      title: '35° Standard Optic',
+      sku: 'LSPL-I1/O35',
+      desc: 'The default factory-shipped optic. NEMA Type 3 distribution — the all-around choice for sports lighting at 80-120 ft mounting heights. Used in the majority of high-school and collegiate field installations.',
+      datasheet: '/files/lspl-illuminator/LSPL-I1-O35-spec.pdf',
+      specs: [
+        ['Beam Spread',       '35° (FWHM) · NEMA Type 3'],
+        ['Peak Intensity',    'Up to 245,983 cd (LSPL800)'],
+        ['Best For',          'Standard sports field · 80-120ft poles'],
+        ['Compatible With',   'LSPL600 · LSPL800 · default ship config'],
+        ['Material',          'Acrylic optic · TIR collimator'],
+        ['Spec Sheet IES',    'LSPL600/800-50-UBTR-35D.IES']
+      ]
+    },
+    'optic-55': {
+      cat: 'Optics · Wide',
+      title: '55° Wide Optic',
+      sku: 'LSPL-I1/O55',
+      desc: 'Wide NEMA Type 4 distribution. Optimized for shorter-throw applications — basketball / volleyball / pickleball courts, multi-purpose recreation centers, walkway floods, and 60-80 ft pole installations.',
+      datasheet: '/files/lspl-illuminator/LSPL-I1-O55-spec.pdf',
+      specs: [
+        ['Beam Spread',       '55° (FWHM) · NEMA Type 4'],
+        ['Peak Intensity',    'Up to 112,457 cd (LSPL800)'],
+        ['Best For',          'Recreation courts · 60-80ft poles'],
+        ['Compatible With',   'LSPL600 · LSPL800'],
+        ['Material',          'Acrylic optic · TIR collimator'],
+        ['Spec Sheet IES',    'LSPL600/800-50-UBTR-55D.IES']
+      ]
+    },
+    'optic-90': {
+      cat: 'Optics · Flood',
+      title: '90° Flood Optic',
+      sku: 'LSPL-I1/O90',
+      desc: 'Widest beam in the family — NEMA Type 5 floodlight. Designed for low-mount perimeter security flood, parking apron lighting, and area-fill applications where the luminaire is mounted ≤60 ft. LSPL600 only.',
+      datasheet: '/files/lspl-illuminator/LSPL-I1-O90-spec.pdf',
+      specs: [
+        ['Beam Spread',       '90° (FWHM) · NEMA Type 5'],
+        ['Peak Intensity',    '47,102 cd (LSPL600)'],
+        ['Best For',          'Low-mount flood · perimeter · ≤60ft'],
+        ['Compatible With',   'LSPL600 only (not available on LSPL800)'],
+        ['Material',          'Acrylic optic · TIR collimator'],
+        ['Spec Sheet IES',    'LSPL600-50-UBTR-90D.IES']
+      ]
+    },
+
+    // ---------- Surge Protection ----------
+    'surge-10-277': {
+      cat: 'Surge Protection · Standard',
+      title: '10 kA Surge Protector · 277V',
+      sku: 'LSPL-I1/10SP/277',
+      desc: 'In-line 10 kA surge protection module for 120-277V circuits. Sacrificial design — protects driver and LED arrays from line transients caused by lightning, switching events, or grid faults. UL 1449 listed.',
+      datasheet: '/files/lspl-illuminator/LSPL-I1-10SP-277-spec.pdf',
+      specs: [
+        ['Surge Rating',      '10 kA (8/20 µs waveform)'],
+        ['Voltage',           '120-277V AC · 50/60 Hz'],
+        ['Mode',              'L-N · L-G · N-G full protection'],
+        ['Compatible With',   'LSPL600 · LSPL800 (277V circuits)'],
+        ['Form Factor',       'In-line driver compartment module'],
+        ['Compliance',        'UL 1449 4th Ed. · IEEE C62.41-2002']
+      ]
+    },
+    'surge-10-480': {
+      cat: 'Surge Protection · Standard',
+      title: '10 kA Surge Protector · 480V',
+      sku: 'LSPL-I1/10SP/480',
+      desc: 'In-line 10 kA surge protection module for 347-480V high-voltage circuits typical in commercial and industrial sports installations. Sacrificial design with status LED indicator. UL 1449 listed.',
+      datasheet: '/files/lspl-illuminator/LSPL-I1-10SP-480-spec.pdf',
+      specs: [
+        ['Surge Rating',      '10 kA (8/20 µs waveform)'],
+        ['Voltage',           '347-480V AC · 50/60 Hz'],
+        ['Mode',              'L-N · L-G · N-G full protection'],
+        ['Compatible With',   'LSPL600 · LSPL800 (480V circuits)'],
+        ['Form Factor',       'In-line driver compartment module'],
+        ['Compliance',        'UL 1449 4th Ed. · IEEE C62.41-2002']
+      ]
+    },
+    'surge-20-277': {
+      cat: 'Surge Protection · Heavy',
+      title: '20 kA Surge Protector · 277V',
+      sku: 'LSPL-I1/20SP/277',
+      desc: 'Heavy-duty 20 kA surge protector for high-exposure installations — coastal venues, mountain-top fields, and areas with frequent lightning activity. 2× the surge capacity of the standard module.',
+      datasheet: '/files/lspl-illuminator/LSPL-I1-20SP-277-spec.pdf',
+      specs: [
+        ['Surge Rating',      '20 kA (8/20 µs waveform)'],
+        ['Voltage',           '120-277V AC · 50/60 Hz'],
+        ['Mode',              'L-N · L-G · N-G full protection'],
+        ['Compatible With',   'LSPL600 · LSPL800 (277V high-exposure)'],
+        ['Form Factor',       'In-line driver compartment module'],
+        ['Compliance',        'UL 1449 4th Ed. · IEEE C62.41-2002']
+      ]
+    },
+    'surge-20-480': {
+      cat: 'Surge Protection · Heavy',
+      title: '20 kA Surge Protector · 480V',
+      sku: 'LSPL-I1/20SP/480',
+      desc: 'Heavy-duty 20 kA surge protector for 347-480V high-voltage high-exposure installations. Recommended for stadium installs in lightning-active geographies and grid-feed sites. UL 1449 listed.',
+      datasheet: '/files/lspl-illuminator/LSPL-I1-20SP-480-spec.pdf',
+      specs: [
+        ['Surge Rating',      '20 kA (8/20 µs waveform)'],
+        ['Voltage',           '347-480V AC · 50/60 Hz'],
+        ['Mode',              'L-N · L-G · N-G full protection'],
+        ['Compatible With',   'LSPL600 · LSPL800 (480V high-exposure)'],
+        ['Form Factor',       'In-line driver compartment module'],
+        ['Compliance',        'UL 1449 4th Ed. · IEEE C62.41-2002']
+      ]
+    },
+
+    // ---------- Peripheral ----------
+    'lsg': {
+      cat: 'Peripheral · Field-Aim',
+      title: 'Laser Sight Guide (LSG)',
+      sku: 'LSPL-I1/LSG',
+      desc: 'Field-installable Class II red laser sight pre-aligned to the luminaire optical axis. Lets the install crew aim each fixture with surgical precision from the ground — no lift, no spotter, no trial-and-error pre-energization.',
+      datasheet: '/files/lspl-illuminator/LSPL-I1-LSG-spec.pdf',
+      specs: [
+        ['Laser Class',       'Class II · <1 mW · 650 nm red'],
+        ['Aim Accuracy',      '±0.25° to optical axis'],
+        ['Battery',           'CR2 lithium · 8-hr field life'],
+        ['Compatible With',   'LSPL600 · LSPL800 · all optics'],
+        ['Mount',             'M6 thread on trunnion yoke (factory)'],
+        ['Compliance',        'CDRH 21 CFR 1040.10/.11 · CE']
+      ]
+    }
+  };
+
+  function init() {
+    var grid     = document.getElementById('accGrid');
+    var modal    = document.getElementById('accModal');
+    var panel    = document.getElementById('accModalPanel');
+    var closeBtn = document.getElementById('accModalClose');
+    var imgWrap  = document.getElementById('accModalImg');
+    var catEl    = document.getElementById('accModalCat');
+    var titleEl  = document.getElementById('accModalTitle');
+    var skuEl    = document.getElementById('accModalSku');
+    var descEl   = document.getElementById('accModalDesc');
+    var specsEl  = document.getElementById('accModalSpecs');
+    var pills    = document.querySelectorAll('.acc-pill');
+    if (!grid || !modal) return;
+    var cards = grid.querySelectorAll('.acc-card');
+
+    // ---- Filter pills ----
+    pills.forEach(function(p) {
+      p.addEventListener('click', function() {
+        pills.forEach(function(x) { x.classList.remove('active'); x.setAttribute('aria-selected', 'false'); });
+        p.classList.add('active');
+        p.setAttribute('aria-selected', 'true');
+        var f = p.dataset.filter;
+        cards.forEach(function(c) {
+          var match = (f === 'all' || c.dataset.cat === f);
+          c.classList.toggle('is-hidden', !match);
+        });
+      });
+    });
+
+    // ---- Open modal ----
+    function openModal(card) {
+      var id = card.dataset.id;
+      var d  = ACC[id];
+      if (!d) { console.warn('acc-modal: no data for id', id); return; }
+      // Populate static text
+      catEl.textContent   = d.cat.replace(/Ⓐ/g, '');  // category badge — Ⓐ rendered separately below if needed
+      titleEl.textContent = d.title;
+      skuEl.textContent   = d.sku;
+      descEl.textContent  = d.desc;
+      // (Per-accessory Data Sheet CTA removed — accessories ship without individual spec sheets.
+      //  Family-level Data Sheet lives in Section 9.)
+      // Re-inject Ⓐ glyph in category badge if the category contains it
+      if (d.cat.indexOf('Ⓐ') >= 0) {
+        catEl.innerHTML = d.cat.replace(/Ⓐ/g, '<span class="aa" aria-hidden="true">Ⓐ</span>');
+      }
+      // Specs
+      specsEl.innerHTML = d.specs.map(function(s) {
+        return '<div class="acc-spec-row">' +
+                 '<div class="acc-spec-key">' + s[0] + '</div>' +
+                 '<div class="acc-spec-val">' + s[1] + '</div>' +
+               '</div>';
+      }).join('');
+      // Clone the card's media (svg silhouette OR real product photo) into the
+      // modal image area, preserving the .acc-modal-img-cat badge.
+      var srcMedia = card.querySelector('.acc-card-img svg, .acc-card-img img.acc-card-photo');
+      Array.from(imgWrap.querySelectorAll('svg, img.acc-card-photo')).forEach(function(s){ s.remove(); });
+      if (srcMedia) {
+        var clone = srcMedia.cloneNode(true);
+        // For real photos, scale up in the modal (modal img-area is taller — let
+        // the photo fill the available space, capped at the box).
+        if (clone.tagName === 'IMG') {
+          clone.style.width = '100%';
+          clone.style.height = '100%';
+          clone.style.maxWidth = '380px';
+          clone.style.maxHeight = '320px';
+          clone.style.objectFit = 'contain';
+          clone.style.filter = 'drop-shadow(0 12px 20px rgba(0,0,0,0.55))';
+        }
+        imgWrap.appendChild(clone);
+      }
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // ---- Close modal ----
+    function closeModal() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    cards.forEach(function(c) {
+      c.addEventListener('click', function() { openModal(c); });
+    });
+
+    // Click outside the panel = close. Click inside = no-op.
+    modal.addEventListener('click', function(e) {
+      if (!panel.contains(e.target)) closeModal();
+    });
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeModal();
+      });
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+// =============================================================================
+// SECTION 8 — Configurator (Build Your Model)
+// State engine + chip click handler + dependency rules + live SKU encoder.
+// All chips have data-field + data-val + data-code; required fields are
+// single-select, optional fields are toggle (click again to deselect).
+// =============================================================================
+(function() {
+  // Required and optional field IDs — mirror the data-field attrs in the markup.
+  // Mount is REQUIRED (datasheet — every order ships with one mounting option).
+  var REQUIRED  = ['model', 'cct', 'voltage', 'optic', 'finish', 'mount', 'taa'];
+  var OPTIONAL  = ['surge', 'controls', 'glare', 'laser'];
+  // Multi-select fields — chip toggle is and/or (Set semantics) instead of single-pick.
+  var MULTI     = ['controls', 'glare'];
+
+  // SKU encoding rules — anchored to the canonical example LSPL600-50-HB/TR/TAA:
+  //   prefix      LSPL{model}            — no separator (e.g. LSPL600)
+  //   cct         -{40|50}               — leading dash
+  //   voltage     -{U|H}                 — leading dash
+  //   finish      {B|D|S|W|RAL#}         — NO separator (attached directly to voltage)
+  //   optic       (blank for 35°)|/O20|/O55|/O90  — leading slash, omitted when default
+  //   mount       /{TR|SF}               — leading slash (always present)
+  //   taa         (blank)|/TAA           — leading slash, omitted when standard
+  //   surge       /{10SP/277|...}        — leading slash (the inner /277 is part of the code)
+  //   controls    /{DMX|WIFI}            — leading slash · multi-select · /DMX/WIFI possible
+  //   glare       /{GS|GV}               — leading slash · multi-select · /GS/GV possible
+  //   laser       /LSG                   — leading slash
+  // SKU_ORDER drives the segment order after the prefix.
+  var SKU_ORDER = ['cct', 'voltage', 'finish', 'optic', 'mount', 'taa', 'controls', 'glare', 'surge', 'laser'];
+  // SEPARATOR map — how each segment attaches to the previous one.
+  //   '-'  : leading dash    (cct, voltage)
+  //   ''   : direct attach   (finish - sits flush with voltage)
+  //   '/'  : leading slash   (everything else)
+  var SEP = {
+    cct: '-', voltage: '-', finish: '', optic: '/', mount: '/',
+    taa: '/', controls: '/', glare: '/', surge: '/', laser: '/'
+  };
+
+  // Lookup tables for live spec computation.
+  // Lumens / LPW reference the WATTSELECT max output per model (datasheet).
+  var SPEC_TABLE = {
+    model: {
+      '600': { name: 'LSPL600 · Up to 600W', lumens: '60,000 - 88,200 lm', lumensMax: '88,200 lm', lpw: '147-150 lm/W' },
+      '800': { name: 'LSPL800 · Up to 800W', lumens: '89,400 - 116,000 lm', lumensMax: '116,000 lm', lpw: '145-149 lm/W' }
+    },
+    cct: {
+      '40': '4000K · Neutral White',
+      '50': '5000K · Cool White'
+    },
+    voltage: {
+      'U': '120-277V (50/60Hz)',
+      'H': '277-480V (50/60Hz)'
+    },
+    // Peak intensity by model + optic combination (matches Section 6 photometric data).
+    peak: {
+      '600_20': '388,500 cd', '600_35': '176,443 cd', '600_55': '102,154 cd', '600_90': '47,102 cd',
+      '800_20': '440,924 cd', '800_35': '245,983 cd', '800_55': '112,457 cd'
+    },
+    optic: {
+      '20': '20° Spot · NEMA 1',
+      '35': '35° Standard · NEMA 3',
+      '55': '55° Wide · NEMA 4',
+      '90': '90° Flood · NEMA 5'
+    },
+    finish: {
+      'B':   'Black · Standard',
+      'D':   'Bronze',
+      'S':   'Silver',
+      'W':   'White',
+      'RAL': 'Custom RAL — specify'
+    },
+    // Live-preview image src per finish — real product photography
+    // recolored via build_finishes.py. RAL uses the white→black 45° gradient
+    // until the user enters a valid RAL number (in which case the SKU updates
+    // but the preview stays on the gradient — no per-RAL render exists).
+    finishImg: {
+      'B':   'assets/finishes/illuminator-finish-black.webp',
+      'D':   'assets/finishes/illuminator-finish-bronze.webp',
+      'S':   'assets/finishes/illuminator-finish-silver.webp',
+      'W':   'assets/finishes/illuminator-finish-white.webp',
+      'RAL': 'assets/finishes/illuminator-finish-ral.webp'
+    }
+  };
+
+  // Default starting state — model 600 is preselected (matches markup).
+  var DEFAULT_STATE = { model: '600' };
+
+  // ---- RAL Classic validation table ----
+  // 213 official RAL Classic codes (numbered ranges with intentional gaps).
+  // A few of the more common codes also carry friendly names so the user gets
+  // confirmation feedback that maps to a recognizable color.
+  // Source: RAL Farben e.V. official Classic system.
+  var RAL_VALID = new Set([
+    1000,1001,1002,1003,1004,1005,1006,1007,1011,1012,1013,1014,1015,1016,1017,1018,1019,1020,1021,1023,1024,1026,1027,1028,1032,1033,1034,1035,1036,1037,
+    2000,2001,2002,2003,2004,2005,2007,2008,2009,2010,2011,2012,2013,
+    3000,3001,3002,3003,3004,3005,3007,3009,3011,3012,3013,3014,3015,3016,3017,3018,3020,3022,3024,3026,3027,3028,3031,3032,3033,
+    4001,4002,4003,4004,4005,4006,4007,4008,4009,4010,4011,4012,
+    5000,5001,5002,5003,5004,5005,5007,5008,5009,5010,5011,5012,5013,5014,5015,5017,5018,5019,5020,5021,5022,5023,5024,5025,5026,
+    6000,6001,6002,6003,6004,6005,6006,6007,6008,6009,6010,6011,6012,6013,6014,6015,6016,6017,6018,6019,6020,6021,6022,6024,6025,6026,6027,6028,6029,6032,6033,6034,6035,6036,6037,6038,
+    7000,7001,7002,7003,7004,7005,7006,7008,7009,7010,7011,7012,7013,7015,7016,7021,7022,7023,7024,7026,7030,7031,7032,7033,7034,7035,7036,7037,7038,7039,7040,7042,7043,7044,7045,7046,7047,7048,
+    8000,8001,8002,8003,8004,8007,8008,8011,8012,8014,8015,8016,8017,8019,8022,8023,8024,8025,8028,8029,
+    9001,9002,9003,9004,9005,9006,9007,9010,9011,9016,9017,9018,9022,9023
+  ]);
+  // Friendly names for the most common architectural / industrial RAL codes.
+  // Anything not in this map still validates — we just show "Valid" with the number.
+  var RAL_NAMES = {
+    1013:'Oyster White', 1015:'Light Ivory', 1018:'Zinc Yellow', 1023:'Traffic Yellow',
+    2003:'Pastel Orange', 2004:'Pure Orange', 2008:'Bright Red Orange',
+    3000:'Flame Red', 3003:'Ruby Red', 3020:'Traffic Red',
+    5002:'Ultramarine Blue', 5005:'Signal Blue', 5010:'Gentian Blue', 5012:'Light Blue', 5015:'Sky Blue', 5017:'Traffic Blue',
+    6005:'Moss Green', 6018:'Yellow Green', 6029:'Mint Green',
+    7016:'Anthracite Grey', 7021:'Black Grey', 7022:'Umbra Grey', 7035:'Light Grey', 7037:'Dusty Grey', 7042:'Traffic Grey A', 7043:'Traffic Grey B',
+    8004:'Copper Brown', 8011:'Nut Brown', 8017:'Chocolate Brown', 8019:'Grey Brown', 8022:'Black Brown',
+    9001:'Cream', 9002:'Grey White', 9003:'Signal White', 9005:'Jet Black', 9006:'White Aluminium', 9007:'Grey Aluminium', 9010:'Pure White', 9016:'Traffic White', 9017:'Traffic Black', 9018:'Papyrus White'
+  };
+
+  function init() {
+    var section   = document.getElementById('configurator');
+    if (!section) return;
+    var counter   = document.getElementById('cfgCount');
+    var counterEl = document.getElementById('cfgCounter');
+    var resetBtn  = document.getElementById('cfgReset');
+    var skuEl     = document.getElementById('cfgSku');
+    var copyBtn   = document.getElementById('cfgSkuCopy');
+    var copyLabel = document.getElementById('cfgSkuCopyLabel');
+    var warning   = document.getElementById('cfgWarning');
+    var ctaPrice  = document.getElementById('cfgCtaPrice');
+    var ctaPdf    = document.getElementById('cfgCtaPdf');
+    var chips     = section.querySelectorAll('.cfg-chip');
+    var state     = Object.assign({}, DEFAULT_STATE);
+
+    // ---- Chip click handler ----
+    chips.forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        if (chip.classList.contains('disabled')) return;
+        var field    = chip.dataset.field;
+        var val      = chip.dataset.val;
+        var isOpt    = OPTIONAL.indexOf(field) >= 0;
+        var isMulti  = MULTI.indexOf(field) >= 0;
+
+        if (isMulti) {
+          // Multi-select: store as array. Click toggles on/off independently.
+          var arr = Array.isArray(state[field]) ? state[field].slice() : [];
+          var i = arr.indexOf(val);
+          if (i >= 0) arr.splice(i, 1); else arr.push(val);
+          if (arr.length === 0) delete state[field]; else state[field] = arr;
+        } else if (isOpt && state[field] === val) {
+          // Single-select optional: clicking the active chip clears it
+          delete state[field];
+        } else {
+          // Single-select required (or first pick on optional)
+          state[field] = val;
+        }
+        applyState();
+      });
+    });
+
+    // ---- Reset all ----
+    resetBtn.addEventListener('click', function() {
+      state = Object.assign({}, DEFAULT_STATE);
+      var ralInput = document.getElementById('cfgRalInput');
+      if (ralInput) ralInput.value = '';
+      applyState();
+    });
+
+    // ---- RAL number input handler ----
+    var ralInput   = document.getElementById('cfgRalInput');
+    var ralWrap    = document.getElementById('cfgRalInputWrap');
+    var ralName    = document.getElementById('cfgRalName');
+    if (ralInput && ralWrap) {
+      ralInput.addEventListener('input', function() {
+        // Strip non-digit characters as the user types.
+        var raw = ralInput.value.replace(/\D/g, '').slice(0, 4);
+        if (raw !== ralInput.value) ralInput.value = raw;
+
+        ralWrap.classList.remove('valid', 'invalid');
+        if (raw.length === 0) {
+          delete state.finishRAL;
+        } else if (raw.length < 4) {
+          // Not enough digits yet — neutral state, but no SKU code
+          delete state.finishRAL;
+        } else {
+          var num = parseInt(raw, 10);
+          if (RAL_VALID.has(num)) {
+            state.finishRAL = raw;
+            ralWrap.classList.add('valid');
+            if (ralName) ralName.textContent = 'RAL ' + raw + (RAL_NAMES[num] ? ' · ' + RAL_NAMES[num] : '');
+          } else {
+            delete state.finishRAL;
+            ralWrap.classList.add('invalid');
+          }
+        }
+        applyState();
+      });
+    }
+
+    // ---- Apply state to UI ----
+    function applyState() {
+      // Update chip selected states (multi-select aware)
+      chips.forEach(function(chip) {
+        var f = chip.dataset.field;
+        var v = chip.dataset.val;
+        var sel;
+        if (MULTI.indexOf(f) >= 0) {
+          sel = Array.isArray(state[f]) && state[f].indexOf(v) >= 0;
+        } else {
+          sel = state[f] === v;
+        }
+        chip.classList.toggle('selected', sel);
+        // Dependency: data-only-model attr restricts which model the chip is valid for.
+        var onlyModel = chip.dataset.onlyModel;
+        if (onlyModel) {
+          var disabled = state.model && state.model !== onlyModel;
+          chip.classList.toggle('disabled', !!disabled);
+          // If currently selected but now disabled, clear it
+          if (disabled && state[f] === v) delete state[f];
+        }
+      });
+
+      // RAL input wrap visibility — only when Custom RAL is the active finish
+      var ralWrapEl = document.getElementById('cfgRalInputWrap');
+      if (ralWrapEl) ralWrapEl.classList.toggle('show', state.finish === 'RAL');
+
+      // Required-counter — RAL finish counts as set ONLY when a valid RAL number is entered
+      var ralPending = (state.finish === 'RAL' && !state.finishRAL);
+      var filled = REQUIRED.filter(function(k) {
+        if (k === 'finish' && ralPending) return false;
+        return state[k] != null;
+      }).length;
+      counter.textContent = filled;
+      counterEl.classList.toggle('complete', filled === REQUIRED.length);
+
+      // SKU
+      var complete = (filled === REQUIRED.length);
+      renderSKU(complete);
+      // Warning + CTAs
+      warning.classList.toggle('show', !complete);
+      ctaPrice.classList.toggle('disabled', !complete);
+      ctaPdf.classList.toggle('disabled', !complete);
+      copyBtn.disabled = !complete;
+      // Reset copy-button state when SKU changes
+      copyBtn.classList.remove('copied');
+      copyLabel.textContent = 'Copy SKU';
+
+      // Live specs
+      renderSpecs();
+    }
+
+    // ---- SKU encoder ----
+    // Walks SKU_ORDER and concatenates each segment with its SEP rule.
+    // Multi-select fields (controls, glare) emit one /CODE per selected value.
+    // Optic uses '' (blank) as its code when 35° is selected → no segment emitted.
+    function renderSKU(complete) {
+      var html = 'LSPL' + (state.model || '<span class="placeholder">[600|800]</span>');
+      SKU_ORDER.forEach(function(k) {
+        // Use hasOwnProperty so an EMPTY-STRING separator (finish: '') is preserved.
+        // Earlier `SEP[k] || '/'` short-circuited the '' case → finish got a stray '/'.
+        var sep = Object.prototype.hasOwnProperty.call(SEP, k) ? SEP[k] : '/';
+        var val = state[k];
+        var isReq = REQUIRED.indexOf(k) >= 0;
+        var isMulti = MULTI.indexOf(k) >= 0;
+
+        // No selection?
+        if (val == null || (isMulti && (!Array.isArray(val) || val.length === 0))) {
+          if (isReq) html += sep + '<span class="placeholder">' + placeholderFor(k) + '</span>';
+          // Optional + unset → no segment emitted
+          return;
+        }
+
+        // Finish = Custom RAL → special-case: emit the 4-digit code (or RAL#
+        // placeholder) flush against voltage — Finish never adds a leading
+        // separator, same rule as B / D / S / W.
+        if (k === 'finish' && val === 'RAL') {
+          if (state.finishRAL) {
+            html += state.finishRAL;
+          } else {
+            html += '<span class="placeholder">RAL#</span>';
+          }
+          return;
+        }
+
+        if (isMulti) {
+          // Emit one segment per selected value. SKU_ORDER preserves field order;
+          // within a multi-field we emit values in the chip's source order (markup order).
+          var orderedVals = [];
+          section.querySelectorAll('.cfg-chip[data-field="' + k + '"]').forEach(function(c) {
+            if (val.indexOf(c.dataset.val) >= 0) orderedVals.push(c.dataset.code);
+          });
+          orderedVals.forEach(function(code) {
+            if (code) html += sep + code;
+          });
+          return;
+        }
+
+        // Single-select — look up the code from the matching chip
+        var chip = section.querySelector('.cfg-chip[data-field="' + k + '"][data-val="' + val + '"]');
+        var code = chip ? chip.dataset.code : '';
+        if (code === '') return;          // default optic / standard TAA → blank
+        html += sep + code;
+      });
+      skuEl.innerHTML = html;
+    }
+    function placeholderFor(k) {
+      return ({
+        cct:     '[CCT]',
+        voltage: '[V]',
+        finish:  '[FIN]',
+        optic:   '[OPT]',
+        mount:   '[MNT]',
+        taa:     '[TAA]'
+      })[k] || '[' + k.toUpperCase() + ']';
+    }
+
+    // ---- Live spec readout ----
+    function renderSpecs() {
+      setSpec('lumens',  state.model    ? SPEC_TABLE.model[state.model].lumensMax       : null);
+      setSpec('lpw',     state.model    ? SPEC_TABLE.model[state.model].lpw             : null);
+      setSpec('cct',     state.cct      ? SPEC_TABLE.cct[state.cct]                     : null);
+      setSpec('voltage', state.voltage  ? SPEC_TABLE.voltage[state.voltage]             : null);
+      setSpec('optic',   state.optic    ? SPEC_TABLE.optic[state.optic]                 : null);
+      setSpec('peak',    (state.model && state.optic) ? SPEC_TABLE.peak[state.model + '_' + state.optic] || '—' : null);
+      // Finish — for Custom RAL, show "RAL 9005 · Jet Black" (or just "RAL 9005") instead
+      var finishVal = null;
+      if (state.finish === 'RAL') {
+        if (state.finishRAL) {
+          var ralNum = parseInt(state.finishRAL, 10);
+          finishVal = 'RAL ' + state.finishRAL + (RAL_NAMES[ralNum] ? ' · ' + RAL_NAMES[ralNum] : '');
+        }
+      } else if (state.finish) {
+        finishVal = SPEC_TABLE.finish[state.finish];
+      }
+      setSpec('finish', finishVal);
+      // Compliance auto-updates with TAA selection
+      var compliance = 'DLC Premium · IP66';
+      if (state.taa === 'TAA') compliance += ' · TAA Compliant';
+      if (state.surge) compliance += ' · Surge-Protected';
+      setSpec('compliance', compliance);
+      // Swap the live-preview image src per selected finish.
+      // Soft cross-fade: opacity 0 → swap src → opacity 1 (200ms).
+      var previewImg = document.getElementById('cfgPreviewImg');
+      var newSrc = state.finish ? SPEC_TABLE.finishImg[state.finish] : SPEC_TABLE.finishImg['B'];
+      if (previewImg && newSrc && !previewImg.src.endsWith(newSrc)) {
+        previewImg.style.opacity = '0';
+        setTimeout(function() {
+          previewImg.src = newSrc;
+          previewImg.style.opacity = '1';
+        }, 180);
+      }
+    }
+    function setSpec(name, val) {
+      var el = section.querySelector('[data-spec="' + name + '"]');
+      if (!el) return;
+      if (val == null || val === '—') {
+        el.textContent = '—';
+        el.classList.add('placeholder');
+      } else {
+        el.textContent = val;
+        el.classList.remove('placeholder');
+      }
+    }
+
+    // ---- Copy SKU ----
+    copyBtn.addEventListener('click', function() {
+      if (copyBtn.disabled) return;
+      var txt = skuEl.textContent.trim();
+      if (!txt) return;
+      // Use Clipboard API where available, fallback to execCommand
+      var done = function() {
+        copyBtn.classList.add('copied');
+        copyLabel.textContent = 'Copied ✓';
+        setTimeout(function() {
+          copyBtn.classList.remove('copied');
+          copyLabel.textContent = 'Copy SKU';
+        }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(done, done);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = txt;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch(e){}
+        document.body.removeChild(ta);
+        done();
+      }
+    });
+
+    // ---- Submittal PDF — opens submittal_template.html in new tab with full config in query string ----
+    // The template auto-fills page-1 catalog number, quick specs, ordering-code matrix, and photometric data.
+    // Manus replaces this with a real backend at /submittal-generator/?sku=… on production.
+    function buildSubmittalUrl() {
+      var sku = skuEl.textContent.trim();
+      var params = new URLSearchParams({
+        sku:     sku,
+        wattage: state.model   || '600',
+        optic:   state.optic   || '35',
+        cct:     state.cct     || '50',
+        voltage: state.voltage || '277',
+        finish:  state.finish  === 'RAL' && state.finishRAL ? 'RAL' + state.finishRAL : (state.finish || 'B'),
+        mount:   state.mount   || 'TR',
+        taa:     (Array.isArray(state.compliance) && state.compliance.indexOf('TAA') >= 0) ? '1' : '0'
+      });
+      return 'submittal_template.html?' + params.toString();
+    }
+    ctaPdf.addEventListener('click', function(e) {
+      if (ctaPdf.classList.contains('disabled')) { e.preventDefault(); return; }
+      // Update href to current configurator state immediately before navigation
+      ctaPdf.setAttribute('href', buildSubmittalUrl());
+    });
+
+    // Initial render
+    applyState();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+// CFG-STATE-1 — derive ship-tier (QS / WB / MTO) from selected chip badges, render
+// canonical 3-state status panel. Self-contained module · no dependency on the
+// configurator's state object · re-derives by walking selected chips on every click.
+// Custom RAL forces MTO (custom paint = factory work).
+(function() {
+  function deriveShipTier() {
+    var section = document.getElementById('configurator');
+    if (!section) return 'QS';
+    var chips = section.querySelectorAll('.cfg-chip.selected, .cfg-chip[aria-pressed="true"]');
+    var worst = 'QS';
+    var sawCustomRal = false;
+    chips.forEach(function(chip) {
+      if (chip.dataset.field === 'finish' && chip.dataset.val === 'RAL') sawCustomRal = true;
+      if (chip.querySelector('.cfg-chip-stock.mto')) worst = 'MTO';
+      else if (chip.querySelector('.cfg-chip-stock.wb') && worst !== 'MTO') worst = 'WB';
+    });
+    if (sawCustomRal) {
+      var input = document.getElementById('cfgRalInput');
+      if (input && input.value && /^[0-9]{4}$/.test(input.value)) return 'MTO';
+    }
+    return worst;
+  }
+  function refreshShipTier() {
+    var tier = deriveShipTier();
+    var rowEl = document.getElementById('cfgShipTier');
+    var iconEl = document.getElementById('cfgShipTierIcon');
+    var textEl = document.getElementById('cfgShipTierText');
+    var stockEl = document.getElementById('cfgShipTierStock');
+    if (!rowEl || !iconEl || !textEl || !stockEl) return;
+    if (tier === 'QS') {
+      rowEl.style.background = 'rgba(95,199,122,0.08)';
+      rowEl.style.border = '1px solid rgba(95,199,122,0.40)';
+      iconEl.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#7fc998" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      textEl.innerHTML = '<strong style="color:#9bd6b1;">QuickShip · à-la-carte assembly</strong> · <span style="color:var(--text-secondary);">All selected components in stock — ships 3-5 day.</span>';
+      stockEl.textContent = 'QuickShip · 3-5 day';
+      stockEl.style.color = '#9bd6b1';
+    } else if (tier === 'WB') {
+      rowEl.style.background = 'rgba(96,168,255,0.08)';
+      rowEl.style.border = '1px solid rgba(96,168,255,0.40)';
+      iconEl.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#7fb6ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>';
+      textEl.innerHTML = '<strong style="color:#a8c9ff;">Workbench Assembly · ~1-3 wk</strong> · <span style="color:var(--text-secondary);">One or more selected components are workbench-assembled to order.</span>';
+      stockEl.textContent = 'WB · ~1-3 wk';
+      stockEl.style.color = '#a8c9ff';
+    } else {
+      rowEl.style.background = 'rgba(255,159,28,0.08)';
+      rowEl.style.border = '1px solid rgba(255,159,28,0.40)';
+      iconEl.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ffb14d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+      textEl.innerHTML = '<strong style="color:#ffb14d;">Custom build · Made-to-Order · ~4-6 wk</strong> · <span style="color:var(--text-secondary);">One or more selected components are MTO (custom finish, MTO option, or non-stocked variant).</span>';
+      stockEl.textContent = 'MTO · ~4-6 wk';
+      stockEl.style.color = '#ffb14d';
+    }
+  }
+  function init() {
+    var section = document.getElementById('configurator');
+    if (!section) return;
+    section.addEventListener('click', function(e) {
+      if (e.target.closest('.cfg-chip')) setTimeout(refreshShipTier, 50);
+    });
+    var ralInput = document.getElementById('cfgRalInput');
+    if (ralInput) ralInput.addEventListener('input', function() { setTimeout(refreshShipTier, 50); });
+    refreshShipTier();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+
+// Section 3 — Motion video carousel
+(function() {
+  // 6 clips sliced from ALG's master Illuminator promo video (the source mp4 lives
+  // in WorkDrive: luxoⒶRCH/LSPL - Sports Lighting/VIDEOS/LSPL - PromoVideo_NoText.mp4).
+  // Each is 8 seconds, 720p, ~0.2-3.5 MB, h.264 + faststart for web playback.
+  // Manus uploads these to Shopify's video CDN at production time and updates the URLs.
+  var clips = [
+    { url: 'assets/motion/illum-motion-1-wattselect.mp4',  tag: 'WATTSELECT',          title: 'Field-selectable wattage — tune the output to the install.' },
+    { url: 'assets/motion/illum-motion-2-poweraim.mp4',    tag: 'POWERⒶIM™',         title: '90° pivot hinge for full-range beam aiming and laser-sight install.' },
+    { url: 'assets/motion/illum-motion-3-trunnion.mp4',    tag: 'TRUNNION MOUNT',      title: 'Trunnion bracket — versatile, field-ready installation.' },
+    { url: 'assets/motion/illum-motion-4-slipfitter.mp4',  tag: 'SLIP-FITTER',         title: 'Slip-fitter mount — pole-top mounting flexibility.' },
+    { url: 'assets/motion/illum-motion-5-stackable.mp4',   tag: 'STACKABLE DESIGN',    title: 'Stackable arrays for limitless field illumination.' },
+    { url: 'assets/motion/illum-motion-6-controls.mp4',    tag: 'CONTRⒶLS-READY',    title: 'Synapse SimplySNAP integration — wireless networked control.' }
+  ];
+  function init() {
+    var video    = document.getElementById('motionVideo');
+    var caption  = document.getElementById('motionCaption');
+    var dotsRow  = document.getElementById('motionDots');
+    var progress = document.getElementById('motionProgressBar');
+    if (!video || !caption || !dotsRow || !progress) return;
+    var idx = 0;
+    var ticker;
+
+    function set(i) {
+      idx = (i + clips.length) % clips.length;
+      var c = clips[idx];
+      video.src = c.url;
+      video.load();
+      var play = video.play();
+      if (play && typeof play.catch === 'function') play.catch(function(){});
+      caption.innerHTML =
+        '<div class="motion-caption-eyebrow">' + (idx + 1).toString().padStart(2, '0') + ' / 06 · ' + c.tag + '</div>' +
+        '<div class="motion-caption-title">' + c.title + '</div>';
+      dotsRow.querySelectorAll('button').forEach(function(b, n) {
+        b.classList.toggle('active', n === idx);
+        b.setAttribute('aria-selected', n === idx ? 'true' : 'false');
+      });
+      progress.style.width = '0%';
+    }
+
+    // Build dots
+    dotsRow.innerHTML = clips.map(function(c, n) {
+      var num = (n + 1).toString().padStart(2, '0');
+      return '<button type="button" data-i="' + n + '" role="tab"' +
+             (n === 0 ? ' class="active" aria-selected="true"' : ' aria-selected="false"') +
+             '>' + num + ' · ' + c.tag + '</button>';
+    }).join('');
+    dotsRow.querySelectorAll('button').forEach(function(b) {
+      b.addEventListener('click', function() {
+        clearInterval(ticker);
+        set(parseInt(b.dataset.i, 10));
+        startTicker();
+      });
+    });
+
+    // Progress bar — animates to 100% over the auto-advance window
+    function startTicker() {
+      var DURATION = 6000; // 6s per clip auto-advance
+      var start = Date.now();
+      progress.style.width = '0%';
+      ticker = setInterval(function() {
+        var pct = Math.min(100, ((Date.now() - start) / DURATION) * 100);
+        progress.style.width = pct + '%';
+        if (pct >= 100) {
+          clearInterval(ticker);
+          set(idx + 1);
+          startTicker();
+        }
+      }, 60);
+    }
+
+    // If a clip fails to load, skip to next after a brief moment
+    video.addEventListener('error', function() {
+      clearInterval(ticker);
+      setTimeout(function() { set(idx + 1); startTicker(); }, 500);
+    });
+
+    set(0);
+    startTicker();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
 </BaseLayout>
 

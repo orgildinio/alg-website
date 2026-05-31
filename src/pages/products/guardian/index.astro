@@ -5155,5 +5155,238 @@ body { overflow-x: hidden; }
 </script>
 
 
+
+<script>
+/* v2.8-luxo Patch A · guardian_spec_renderer.js · injected 2026-05-30 */
+/* Source: mockup_guardian_pdp_v1.html · v2.8-luxo Patch A spec-table data + renderer.
+ * Drop into the guardian Astro page or extract as a shared module.
+ * Wires the `tbody#specTableBody` of the corresponding <table class="spec-table"> to housing/watt tab switches.
+ */
+
+(function() {
+ // 6 required fields (model is the only no-default one). 4 optional groups.
+ var REQUIRED = ['model', 'cct', 'voltage', 'finish', 'photocell', 'series'];
+ var OPTIONAL = ['em', 'spd', 'dss', 'wg'];
+ // SKU build order:
+ // prefix LWPF{model} — no separator, e.g. LWPF48 / LWPF812
+ // cct -3CS — fixed: all 3 CCTs ship via DIP
+ // voltage -U — leading dash
+ // series G — direct attach to voltage (UG)
+ // finish /D | /B — leading slash
+ // photocell /PS — leading slash (always present)
+ // em /EM07 | /EM20 — optional
+ // spd /10SP | /20SP — optional
+ // dss /DSS — optional
+ // wg /WG — optional
+ var SKU_ORDER = ['cct', 'voltage', 'series', 'finish', 'photocell', 'em', 'spd', 'dss', 'wg'];
+ var SEP = {
+ cct: '-', voltage: '-', series: '', finish: '/', photocell: '/',
+ em: '/', spd: '/', dss: '/', wg: '/'
+ };
+
+ // Per-(model) lumens / efficacy / wattage range — datasheet page 2 + page 4 (4000K column)
+ var SPEC_TABLE = {
+ model: {
+ '48': { name: 'LWPF48 · 40 / 60 / 80W', lumensMax: '11,200 lm', lpw: '140 lm/W',
+ wattRange: '40 / 60 / 80W (DIP)' },
+ '812': { name: 'LWPF812 · 80 / 100 / 120W', lumensMax: '16,680 lm', lpw: '139 lm/W',
+ wattRange: '80 / 100 / 120W (DIP)' }
+ },
+ cct: { '30': '3000K', '40': '4000K', '50': '5000K' },
+ voltage: { 'U': '120-277V Universal' },
+ finish: { 'D': 'Dark Bronze', 'B': 'Black (MTO)' },
+ finishImg: {
+ 'D': 'assets/guardian/finishes/dark-bronze.webp',
+ 'B': 'assets/guardian/finishes/black.webp'
+ },
+ // Peak intensity by model — pulled from polar-plot data
+ peak: { '48': '1,935 cd', '812': '2,880 cd' }
+ };
+
+ function init() {
+ var section = document.getElementById('configurator');
+ if (!section) return;
+
+ // State — model + cct + finish + voltage + photocell + series + optional add-ons
+ var state = {
+ model: null, cct: '50', voltage: 'U',
+ finish: 'D', photocell: 'PS', series: 'G',
+ em: null, spd: null, dss: null, wg: null
+ };
+
+ var skuEl = document.getElementById('cfgSku');
+ var copyBtn = document.getElementById('cfgSkuCopy');
+ var copyLabel = document.getElementById('cfgSkuCopyLabel');
+ var counterEl = document.getElementById('cfgCounter');
+ var counterCnt = document.getElementById('cfgCounterCount');
+ var resetBtn = document.getElementById('cfgReset');
+ var warnEl = document.getElementById('cfgIncompleteWarning');
+ var ctaPrice = document.getElementById('cfgCtaPricing');
+ var ctaPdf = document.getElementById('cfgCtaPdf');
+ var previewImg = document.getElementById('cfgPreviewImg');
+
+ function setSpec(name, val) {
+ var el = section.querySelector('[data-spec="' + name + '"]');
+ if (!el) return;
+ if (val == null || val === '—') {
+ el.textContent = '—';
+ el.classList.add('placeholder');
+ } else {
+ el.textContent = val;
+ el.classList.remove('placeholder');
+ }
+ }
+
+ function buildSku() {
+ if (!state.model) return null;
+ var parts = ['LWPF' + state.model];
+ SKU_ORDER.forEach(function(k) {
+ var v = state[k];
+ if (!v) return;
+ var chip = section.querySelector('.cfg-chip[data-field="' + k + '"][data-val="' + v + '"]');
+ var code = chip ? chip.dataset.code : v;
+ if (!code) return;
+ parts.push(SEP[k] + code);
+ });
+ return parts.join('');
+ }
+
+ function applyState() {
+ // Update chip selection visuals
+ section.querySelectorAll('.cfg-chip').forEach(function(c) {
+ var f = c.dataset.field, v = c.dataset.val;
+ if (state[f] === v) c.classList.add('selected');
+ else if (!c.classList.contains('locked')) c.classList.remove('selected');
+ });
+
+ // Counter (model + cct + voltage + finish + photocell + series → all selected = 6)
+ var have = REQUIRED.filter(function(k) { return state[k]; }).length;
+ counterCnt.textContent = have;
+ counterEl.classList.toggle('complete', have === REQUIRED.length);
+
+ // Resolved SKU
+ var sku = buildSku();
+ if (sku) {
+ skuEl.innerHTML = sku;
+ skuEl.classList.remove('placeholder');
+ } else {
+ skuEl.innerHTML = '<span class="placeholder">LWPF[48|812]-3CS-UG/[D|B]/PS[/EM07|/EM20][/10SP|/20SP][/DSS][/WG]</span>';
+ }
+ copyBtn.disabled = !sku;
+
+ // Specs
+ if (state.model) {
+ var m = SPEC_TABLE.model[state.model];
+ setSpec('lumens', m.lumensMax);
+ setSpec('lpw', m.lpw);
+ setSpec('wattRange', m.wattRange);
+ setSpec('peak', SPEC_TABLE.peak[state.model]);
+ } else {
+ ['lumens','lpw','wattRange','peak'].forEach(function(k) { setSpec(k, null); });
+ }
+ setSpec('cct', state.cct ? SPEC_TABLE.cct[state.cct] : null);
+ setSpec('voltage', state.voltage ? SPEC_TABLE.voltage[state.voltage] : null);
+ setSpec('finish', state.finish ? SPEC_TABLE.finish[state.finish] : null);
+
+ // Compliance — augments with optional adds
+ var compliance = 'DLC · UL · RoHS · IP65 · 3G ANSI C136.31';
+ if (state.em) compliance += ' · EM Backup';
+ if (state.spd) compliance += ' · Surge-Protected';
+ if (state.dss) compliance += ' · IDA DarkSky';
+ setSpec('compliance', compliance);
+
+ // CTA states + warning
+ var complete = (have === REQUIRED.length);
+ ctaPrice.classList.toggle('disabled', !complete);
+ ctaPdf.classList.toggle('disabled', !complete);
+ warnEl.classList.toggle('show', !complete);
+
+ // Preview image swap (cross-fade)
+ var newSrc = state.finish ? SPEC_TABLE.finishImg[state.finish] : SPEC_TABLE.finishImg['D'];
+ if (previewImg && newSrc && !previewImg.src.endsWith(newSrc)) {
+ previewImg.style.opacity = '0';
+ setTimeout(function() {
+ previewImg.src = newSrc;
+ previewImg.style.opacity = '1';
+ }, 180);
+ }
+ }
+
+ // Wire up chip clicks (single-select per field; toggle for optional)
+ section.querySelectorAll('.cfg-chip').forEach(function(chip) {
+ if (chip.classList.contains('locked')) return;
+ chip.addEventListener('click', function() {
+ var f = chip.dataset.field, v = chip.dataset.val;
+ if (OPTIONAL.indexOf(f) >= 0) {
+ // Toggle: click selected to de-select; otherwise pick this one (single-select within group)
+ state[f] = (state[f] === v) ? null : v;
+ } else {
+ state[f] = v;
+ }
+ applyState();
+ });
+ });
+
+ // Reset
+ resetBtn.addEventListener('click', function() {
+ state = {
+ model: null, cct: '50', voltage: 'U',
+ finish: 'D', photocell: 'PS', series: 'G',
+ em: null, spd: null, dss: null, wg: null
+ };
+ applyState();
+ });
+
+ // Copy SKU
+ copyBtn.addEventListener('click', function() {
+ var sku = buildSku();
+ if (!sku) return;
+ try {
+ navigator.clipboard.writeText(sku);
+ copyBtn.classList.add('copied');
+ copyLabel.textContent = 'Copied!';
+ setTimeout(function() {
+ copyBtn.classList.remove('copied');
+ copyLabel.textContent = 'Copy SKU';
+ }, 1400);
+ } catch (e) {}
+ });
+
+ // ---- Submittal PDF — opens submittal_template.html in new tab with full config in query string ----
+ // Template auto-fills page-1 catalog number, quick specs, ordering matrix, photometric data.
+ // Manus replaces this with a real backend at /submittal-generator/?product=guardian&sku=… on production.
+ function buildSubmittalUrl() {
+ var sku = buildSku() || 'LWPF812-3CS-UG/D/PS';
+ var params = new URLSearchParams({
+ product: 'guardian',
+ sku: sku,
+ wattage: state.model || '812',
+ cct: state.cct || '50',
+ voltage: state.voltage || 'U',
+ finish: state.finish || 'D',
+ photocell: state.photocell || 'PS',
+ series: state.series || 'G',
+ em: state.em || '',
+ spd: state.spd || '',
+ dss: state.dss || '',
+ wg: state.wg || ''
+ });
+ return 'submittal_template.html?' + params.toString();
+ }
+ ctaPdf.addEventListener('click', function(e) {
+ if (ctaPdf.classList.contains('disabled')) { e.preventDefault(); return; }
+ // Update href to current configurator state immediately before navigation
+ ctaPdf.setAttribute('href', buildSubmittalUrl());
+ });
+
+ // Initial render
+ applyState();
+ }
+
+ if (document.readyState === 'loading') {
+ document.addEventListener('DOMContentLoaded', init);
+ } else { init(); }
+})();
+</script>
 </BaseLayout>
 

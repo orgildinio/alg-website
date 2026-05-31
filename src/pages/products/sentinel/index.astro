@@ -6451,5 +6451,959 @@ body { overflow-x: hidden; }
 </script>
 
 
+
+<script>
+/* v2.8-luxo Patch A · sentinel_spec_renderer.js · injected 2026-05-30 */
+/* Source: mockup_sentinel_pdp_v1.html · v2.8-luxo Patch A spec-table data + renderer.
+ * Drop into the sentinel Astro page or extract as a shared module.
+ * Wires the `tbody#specTableBody` of the corresponding <table class="spec-table"> to housing/watt tab switches.
+ */
+
+// Carousel autoplay — count is read from actual DOM so adding/removing slides
+// doesn't drift the modulo math.
+(function() {
+  var track = document.getElementById('carouselTrack');
+  var dots  = document.querySelectorAll('#carouselChips > button');
+  var slides = track ? track.querySelectorAll('.carousel-slide').length : 0;
+  if (!track || !slides) return;
+  var idx = 0;
+  function go(i) {
+    idx = (i + slides) % slides;
+    track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+    dots.forEach(function(d, n) { d.classList.toggle('active', n === idx); });
+  }
+  var timer = setInterval(function() { go(idx + 1); }, 5000);
+  dots.forEach(function(d) {
+    d.addEventListener('click', function() {
+      clearInterval(timer);
+      go(parseInt(d.dataset.i, 10));
+      timer = setInterval(function() { go(idx + 1); }, 5000);
+    });
+  });
+})();
+
+// Spec model toggle — full WATTSELECT × CCTSELECT matrix per model (LWPF Sentinel datasheet)
+// LWPF3W40:  20W / 30W / 40W   (default 40W) — CCT 3500K · 4000K · 5000K via DIP
+// LWPF3W80:  40W / 60W / 80W   (default 80W) — same 3 CCTs
+// LWPF3W120: 80W / 100W / 120W (default 120W) — same 3 CCTs
+(function() {
+  var data = {
+    '40': [
+      { watt: '20W',   lumens: '2,800 lm',   lpw: '140 lm/W', cct: '3500K · 4000K · 5000K', volt: '120-277V Universal', def: false },
+      { watt: '30W',   lumens: '4,200 lm',   lpw: '140 lm/W', cct: '3500K · 4000K · 5000K', volt: '120-277V Universal', def: false },
+      { watt: '40W ★', lumens: '5,500 lm',   lpw: '137 lm/W', cct: '3500K · 4000K · 5000K', volt: '120-277V Universal', def: true  }
+    ],
+    '80': [
+      { watt: '40W',   lumens: '5,800 lm',   lpw: '145 lm/W', cct: '3500K · 4000K · 5000K', volt: '120-277V Universal', def: false },
+      { watt: '60W',   lumens: '8,700 lm',   lpw: '145 lm/W', cct: '3500K · 4000K · 5000K', volt: '120-277V Universal', def: false },
+      { watt: '80W ★', lumens: '11,250 lm',  lpw: '140 lm/W', cct: '3500K · 4000K · 5000K', volt: '120-277V Universal', def: true  }
+    ],
+    '120': [
+      { watt: '80W',    lumens: '11,500 lm', lpw: '144 lm/W', cct: '3500K · 4000K · 5000K', volt: '120-277V Universal', def: false },
+      { watt: '100W',   lumens: '14,400 lm', lpw: '144 lm/W', cct: '3500K · 4000K · 5000K', volt: '120-277V Universal', def: false },
+      { watt: '120W ★', lumens: '16,500 lm', lpw: '139 lm/W', cct: '3500K · 4000K · 5000K', volt: '120-277V Universal', def: true  }
+    ]
+  };
+  var tbody = document.getElementById('specTableBody');
+  var tabs = document.querySelectorAll('.spec-watt-tab');
+  function render(model) {
+    tbody.innerHTML = data[model].map(function(r) {
+      return '<tr class="' + (r.def ? 'is-default' : '') + '">' +
+             '<td>' + r.watt   + '</td>' +
+             '<td>' + r.lumens + '</td>' +
+             '<td>' + r.lpw    + '</td>' +
+             '<td>' + r.cct    + '</td>' +
+             '<td>' + r.volt   + '</td>' +
+             '</tr>';
+    }).join('');
+  }
+  tabs.forEach(function(t) {
+    t.addEventListener('click', function() {
+      tabs.forEach(function(x) { x.classList.remove('active'); x.setAttribute('aria-selected', 'false'); });
+      t.classList.add('active');
+      t.setAttribute('aria-selected', 'true');
+      render(t.dataset.w);
+    });
+  });
+  render('80');
+})();
+
+// Dimensions zoom modal — click magnifier to open, click anywhere or ESC to close
+(function() {
+  function initZoom() {
+    var btn      = document.querySelector('.spec-dim-zoom');
+    var modal    = document.getElementById('zoomModal');
+    var img      = document.getElementById('dimImg');
+    var src      = document.getElementById('dimSvg');
+    var dst      = document.getElementById('zoomContent');
+    var closeBtn = document.getElementById('zoomClose');
+    if (!btn || !modal || !dst || !(img || src)) {
+      console.warn('zoom-modal: missing DOM nodes', {btn:!!btn, modal:!!modal, img:!!img, src:!!src, dst:!!dst});
+      return;
+    }
+    function openModal(e) {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      // Prefer the production drawing; fall back to inline SVG
+      if (img && img.complete && img.naturalWidth > 0) {
+        dst.innerHTML = '<img src="' + img.getAttribute('src') + '" alt="' + img.alt + '" />';
+      } else if (src) {
+        dst.innerHTML = src.outerHTML.replace(/\bdisplay\s*:\s*none[;]?/i, '');
+      }
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(e) {
+      if (e) { e.preventDefault(); }
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    btn.addEventListener('click', openModal);
+    modal.addEventListener('click', closeModal);
+    if (closeBtn) closeBtn.addEventListener('click', function(e){ e.stopPropagation(); closeModal(e); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initZoom);
+  } else {
+    initZoom();
+  }
+})();
+
+// Section 5 — Total Adaptive Control: platform tab → swap sensor SVG, swap body copy, trigger ripple shockwave
+(function() {
+  var copy = {
+    synapse: "Bi-Level pairs the integrated photocell with a passive-infrared motion sensor. At dusk, the fixture brightens to full output. With no occupancy detected, it dims to 30%. Motion triggers full output for the configured hold time, then steps back down. Standalone — no commissioning, no network, no central panel.",
+    acs:     "ALG’s in-house ⒶCS controls platform — daylight harvesting, occupancy sensing, and 0-10V dimming wired directly to the luminaire. Field-commissionable via DIP-switch or AURA app. Ideal for sealed-envelope installs without a wireless gateway.",
+    bilevel: "Two-stage hardwired bi-level control — full output at occupancy, dimmed standby at vacancy. No commissioning, no gateway, no app. Drop-in compliance for ASHRAE 90.1 and Title 24 occupancy reduction requirements.",
+    silvair: "SILVAIR Bluetooth Mesh — qualified mesh nodes built into the driver. Self-healing topology, no gateway required, full control via the SILVAIR commissioning app. Enterprise-scale deployments without the wired backhaul."
+  };
+  function init() {
+    var tabs = document.querySelectorAll('.tac-callout-tab');
+    var sensors = document.querySelectorAll('.tac-sensor-svg');
+    var copyEl = document.getElementById('tacCalloutCopy');
+    var wave = document.getElementById('tacShockwave');
+    if (!tabs.length || !sensors.length || !wave) return;
+    function select(platform) {
+      tabs.forEach(function(t) {
+        var isActive = t.dataset.platform === platform;
+        t.classList.toggle('active', isActive);
+        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+      sensors.forEach(function(s) {
+        s.classList.toggle('is-active', s.dataset.platform === platform);
+      });
+      if (copyEl && copy[platform]) copyEl.textContent = copy[platform];
+      // Trigger shockwave: remove + re-add class to restart animation
+      wave.classList.remove('is-rippling');
+      void wave.offsetWidth;
+      wave.classList.add('is-rippling');
+    }
+    tabs.forEach(function(t) {
+      t.addEventListener('click', function() { select(t.dataset.platform); });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+// Section 6 — Photometrics: model + optic toggle drives polar plot SVG swap
+(function() {
+  // Real IES test data — peak candela and total lumens per (model × optic) combo
+  // Polar plots: dark-theme semi-circle, IESNA conventions. Curves derived directly from the IES files
+  // (same data the InventFine GPM-1800B test report rendered in each PDF page 3, just restyled to fit our palette).
+  var data = {
+    // Sentinel: wattage class × CCT — 9 polar plots from actual IES files
+    '40_35':  { svg: 'assets/sentinel/photometrics/sentinel_40w_35k.svg',  peak: '935',   lumens: '5,440',  file: 'LWPF3W40-3S1-UDPS-35K_IESNA2002.IES' },
+    '40_40':  { svg: 'assets/sentinel/photometrics/sentinel_40w_40k.svg',  peak: '1,060', lumens: '5,500',  file: 'LWPF3W40-3S1-UDPS-40K_IESNA2002.IES' },
+    '40_50':  { svg: 'assets/sentinel/photometrics/sentinel_40w_50k.svg',  peak: '1,193', lumens: '5,694',  file: 'LWPF3W40-3S1-UDPS-50K_IESNA2002.IES' },
+    '80_35':  { svg: 'assets/sentinel/photometrics/sentinel_80w_35k.svg',  peak: '2,003', lumens: '11,120', file: 'LWPF3W80-3S1-UDPS-35K_IESNA2002.IES' },
+    '80_40':  { svg: 'assets/sentinel/photometrics/sentinel_80w_40k.svg',  peak: '2,259', lumens: '11,250', file: 'LWPF3W80-3S1-UDPS-40K_IESNA2002.IES' },
+    '80_50':  { svg: 'assets/sentinel/photometrics/sentinel_80w_50k.svg',  peak: '2,286', lumens: '11,728', file: 'LWPF3W80-3S1-UDPS-50K_IESNA2002.IES' },
+    '120_35': { svg: 'assets/sentinel/photometrics/sentinel_120w_35k.svg', peak: '3,061', lumens: '16,560', file: 'LWPF3W120-3S1-UDPS-35K_IESNA2002.IES' },
+    '120_40': { svg: 'assets/sentinel/photometrics/sentinel_120w_40k.svg', peak: '3,284', lumens: '16,500', file: 'LWPF3W120-3S1-UDPS-40K_IESNA2002.IES' },
+    '120_50': { svg: 'assets/sentinel/photometrics/sentinel_120w_50k.svg', peak: '3,218', lumens: '17,259', file: 'LWPF3W120-3S1-UDPS-50K_IESNA2002.IES' }
+  };
+  // Sentinel datasheet: all three CCTs (35 / 40 / 50) ship in every model — DIP-selectable.
+  // Map keys are wattage classes; values are the CCT options exposed in the Section 6 tabs.
+  var optics = { '40': ['35','40','50'], '80': ['35','40','50'], '120': ['35','40','50'] };
+  var fallback = { '40': '35', '80': '35', '120': '35' };
+
+  function init() {
+    var img = document.getElementById('photoImg');
+    var statPeak = document.getElementById('photoStatPeak');
+    var statLum = document.getElementById('photoStatLumens');
+    var statFile = document.getElementById('photoStatFile');
+    if (!img || !statPeak) return;
+    var modelTabs = document.querySelectorAll('.photo-tab[data-model]');
+    var cctTabs = document.querySelectorAll('.photo-tab[data-cct]');
+    var state = { model: '80', cct: '40' };  // 35° is the datasheet default optic
+    // Mark the 35° optic tab active on initial load
+    cctTabs.forEach(function(t) { t.classList.toggle('active', t.dataset.cct === state.cct); t.setAttribute('aria-selected', t.dataset.cct === state.cct ? 'true' : 'false'); });
+
+    function refreshOpticTabs() {
+      var available = optics[state.model];
+      cctTabs.forEach(function(t) {
+        var opt = t.dataset.cct;
+        var isAvailable = available.indexOf(opt) >= 0;
+        t.disabled = !isAvailable;
+        t.style.opacity = isAvailable ? '1' : '0.3';
+        t.style.cursor = isAvailable ? 'pointer' : 'not-allowed';
+        t.title = isAvailable ? '' : 'IES test data not available for this combination';
+      });
+      // If current optic isn't available for new model, snap to the default
+      if (true /* all CCTs available */) state.cct = fallback[state.model];
+      cctTabs.forEach(function(t) {
+        t.classList.toggle('active', t.dataset.cct === state.cct);
+        t.setAttribute('aria-selected', t.dataset.cct === state.cct ? 'true' : 'false');
+      });
+    }
+
+    function render() {
+      var key = state.model + '_' + state.cct;
+      var d = data[key];
+      if (!d) return;
+      img.src = d.svg;
+      img.alt = 'LWPF3W' + state.model + ' · ' + state.cct + '00K — semi-cutoff distribution';
+      statPeak.textContent = d.peak + ' cd';
+      statLum.textContent = d.lumens + ' lm';
+      statFile.textContent = d.file;
+    }
+
+    modelTabs.forEach(function(t) {
+      t.addEventListener('click', function() {
+        modelTabs.forEach(function(x) { x.classList.remove('active'); x.setAttribute('aria-selected', 'false'); });
+        t.classList.add('active');
+        t.setAttribute('aria-selected', 'true');
+        state.model = t.dataset.model;
+        refreshOpticTabs();
+        render();
+      });
+    });
+    cctTabs.forEach(function(t) {
+      t.addEventListener('click', function() {
+        if (t.disabled) return;
+        cctTabs.forEach(function(x) { x.classList.remove('active'); x.setAttribute('aria-selected', 'false'); });
+        t.classList.add('active');
+        t.setAttribute('aria-selected', 'true');
+        state.cct = t.dataset.cct;
+        render();
+      });
+    });
+
+    refreshOpticTabs();
+    render();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+// =============================================================================
+// SECTION 7 — Compatible Accessories: filter pills + click-modal
+// Data map keyed by data-id — each entry holds modal copy + 6 spec rows.
+// SVG icon for the modal is cloned from the same card the user clicked, so
+// the modal art always matches the card art and we don't duplicate the SVG.
+// =============================================================================
+(function() {
+  // Sourced exclusively from LWPF Sentinel datasheet, page 2 "Accessories" table.
+  // Only four real ALG SKUs are documented — EM07 / EM20 / 10SP-277 / 20SP-277.
+  var ACC = {
+    'em07': {
+      cat: 'Egress · EM Backup',
+      title: '7W Battery Backup Unit',
+      sku: 'EM07',
+      model: 'EM07-CMB/260DC/AG',
+      datasheet: 'https://workdrive.archipelagolighting.com/external/13443f33e2ada0655aaa0cb4cc6f53ed101b62677ba5a712252365f41be5bd5f',
+      desc: 'Factory-install constⒶNT emergency battery backup. Pre-installed and factory-tested for plug-and-play deployment. On AC loss, drives the Sentinel fixture at 7W for 90 minutes — meeting NFPA 101 / NEC 700 egress requirements. ⒶrticGuard rated for cold-weather operation.',
+      specs: [
+        ['Model', 'EM07-CMB/260DC/AG'],
+        ['Backup Power', '7W · 90-minute runtime'],
+        ['Input Voltage', '100–347 Vac'],
+        ['Output Voltage', '150–260 Vdc'],
+        ['ⒶrticGuard', 'Yes (cold-weather rated)'],
+        ['Compatibility', 'LWPF3W40 (recommended)']
+      ]
+    },
+    'em20': {
+      cat: 'Egress · EM Backup',
+      title: '20W Battery Backup Unit',
+      sku: 'EM20',
+      model: 'EM20-CMB/260DC',
+      datasheet: 'https://workdrive.archipelagolighting.com/external/573a3cdd91ff3c195961fbd86fc2697bc43247bd3f990a786bbd3b85420441d2',
+      desc: 'Factory-install constⒶNT emergency battery backup, higher capacity for the larger Sentinel models. Pre-installed and factory-tested. Drives full-output egress operation for 90 minutes on AC loss. Same single-SKU model as EM07 — no separate luminaire.',
+      specs: [
+        ['Model', 'EM20-CMB/260DC'],
+        ['Backup Power', '20W · 90-minute runtime'],
+        ['Input Voltage', '100–347 Vac'],
+        ['Output Voltage', '90–260 Vdc'],
+        ['ⒶrticGuard', 'No'],
+        ['Compatibility', 'LWPF3W80 / LWPF3W120']
+      ]
+    },
+    'sp10': {
+      cat: 'Surge Protection',
+      title: '10kVa Surge Protection Device',
+      sku: '10SP-277',
+      desc: 'Line-side surge protection device. Diverts 10kA / 10kV transient surges to ground before they reach the driver. Specify on installations with overhead utility feeds, lightning-prone climates, or any project where unplanned downtime is unacceptable. 277V variant — pairs with Sentinel\'s 120–277V universal driver.',
+      specs: [
+        ['Rating', '10kVa · 10kA peak / 10kV peak'],
+        ['Voltage', '277V AC line-side'],
+        ['Response', '< 1 ns clamping'],
+        ['Mounting', 'Inline · driver-side wiring'],
+        ['Indicator', 'Status LED — replace when amber'],
+        ['Compatibility', 'All LWPF3W40 / 80 / 120 SKUs']
+      ]
+    },
+    'sp20': {
+      cat: 'Surge Protection',
+      title: '20kVa Surge Protection Device',
+      sku: '20SP-277',
+      desc: 'Heavy-duty surge protection device for high-exposure installations — top-of-pole runs, exposed perimeter walls, or lightning-zone facilities. Doubles the energy-handling capacity of the 10SP-277 for projects where the upgrade is cheap insurance against driver failure.',
+      specs: [
+        ['Rating', '20kVa · 20kA peak / 20kV peak'],
+        ['Voltage', '277V AC line-side'],
+        ['Response', '< 1 ns clamping'],
+        ['Mounting', 'Inline · driver-side wiring'],
+        ['Indicator', 'Status LED — replace when amber'],
+        ['Compatibility', 'All LWPF3W40 / 80 / 120 SKUs']
+      ]
+    }
+  };
+
+  function init() {
+    var grid     = document.getElementById('accGrid');
+    var modal    = document.getElementById('accModal');
+    var panel    = document.getElementById('accModalPanel');
+    var closeBtn = document.getElementById('accModalClose');
+    var imgWrap  = document.getElementById('accModalImg');
+    var catEl    = document.getElementById('accModalCat');
+    var titleEl  = document.getElementById('accModalTitle');
+    var skuEl    = document.getElementById('accModalSku');
+    var descEl   = document.getElementById('accModalDesc');
+    var specsEl  = document.getElementById('accModalSpecs');
+    var dsLink   = document.getElementById('accModalDatasheet');
+    var pills    = document.querySelectorAll('.acc-pill');
+    if (!grid || !modal) return;
+    var cards = grid.querySelectorAll('.acc-card');
+
+    // ---- Filter pills ----
+    pills.forEach(function(p) {
+      p.addEventListener('click', function() {
+        pills.forEach(function(x) { x.classList.remove('active'); x.setAttribute('aria-selected', 'false'); });
+        p.classList.add('active');
+        p.setAttribute('aria-selected', 'true');
+        var f = p.dataset.filter;
+        cards.forEach(function(c) {
+          var match = (f === 'all' || c.dataset.cat === f);
+          c.classList.toggle('is-hidden', !match);
+        });
+      });
+    });
+
+    // ---- Open modal ----
+    function openModal(card) {
+      var id = card.dataset.id;
+      var d  = ACC[id];
+      if (!d) { console.warn('acc-modal: no data for id', id); return; }
+      // Populate static text
+      catEl.textContent   = d.cat.replace(/Ⓐ/g, '');  // category badge — Ⓐ rendered separately below if needed
+      titleEl.textContent = d.title;
+      // SKU line shows ordering code + (if available) the full model number on a 2nd line
+      skuEl.innerHTML     = d.sku + (d.model ? '<div style="font-size:11px;color:var(--text-muted);font-weight:400;margin-top:2px;">' + d.model + '</div>' : '');
+      descEl.textContent  = d.desc;
+      // Conditionally show the Datasheet CTA — only entries with a datasheet URL get it.
+      if (dsLink) {
+        if (d.datasheet) {
+          dsLink.href = d.datasheet;
+          dsLink.style.display = '';
+        } else {
+          dsLink.style.display = 'none';
+          dsLink.removeAttribute('href');
+        }
+      }
+      // Re-inject Ⓐ glyph in category badge if the category contains it
+      if (d.cat.indexOf('Ⓐ') >= 0) {
+        catEl.innerHTML = d.cat.replace(/Ⓐ/g, '<span class="aa" aria-hidden="true">Ⓐ</span>');
+      }
+      // Specs
+      specsEl.innerHTML = d.specs.map(function(s) {
+        return '<div class="acc-spec-row">' +
+                 '<div class="acc-spec-key">' + s[0] + '</div>' +
+                 '<div class="acc-spec-val">' + s[1] + '</div>' +
+               '</div>';
+      }).join('');
+      // Clone the card's media (svg silhouette OR real product photo) into the
+      // modal image area, preserving the .acc-modal-img-cat badge.
+      var srcMedia = card.querySelector('.acc-card-img svg, .acc-card-img img.acc-card-photo');
+      Array.from(imgWrap.querySelectorAll('svg, img.acc-card-photo')).forEach(function(s){ s.remove(); });
+      if (srcMedia) {
+        var clone = srcMedia.cloneNode(true);
+        // For real photos, scale up in the modal (modal img-area is taller — let
+        // the photo fill the available space, capped at the box).
+        if (clone.tagName === 'IMG') {
+          clone.style.width = '100%';
+          clone.style.height = '100%';
+          clone.style.maxWidth = '380px';
+          clone.style.maxHeight = '320px';
+          clone.style.objectFit = 'contain';
+          clone.style.filter = 'drop-shadow(0 12px 20px rgba(0,0,0,0.55))';
+        }
+        imgWrap.appendChild(clone);
+      }
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // ---- Close modal ----
+    function closeModal() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    cards.forEach(function(c) {
+      c.addEventListener('click', function() { openModal(c); });
+    });
+
+    // Click outside the panel = close. Click inside = no-op.
+    modal.addEventListener('click', function(e) {
+      if (!panel.contains(e.target)) closeModal();
+    });
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeModal();
+      });
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+// =============================================================================
+// SECTION 8 — Configurator (Build Your Model)
+// State engine + chip click handler + dependency rules + live SKU encoder.
+// All chips have data-field + data-val + data-code; required fields are
+// single-select, optional fields are toggle (click again to deselect).
+// =============================================================================
+(function() {
+  // Required and optional field IDs — mirror the data-field attrs in the markup.
+  // Sentinel datasheet has no TAA option — TAA field has been removed from the configurator.
+  var REQUIRED  = ['model', 'cct', 'voltage', 'finish', 'photocell', 'mount'];
+  var OPTIONAL  = ['em', 'spd'];
+  // Multi-select fields — chip toggle is and/or (Set semantics) instead of single-pick.
+  var MULTI     = [];
+
+  // SKU encoding rules — anchored to the canonical Sentinel example LWPF3W120-3S1-UD/PS:
+  //   prefix      LWPF3W{model}          — no separator (e.g. LWPF3W120)
+  //   cct         -3S1                   — fixed: all three CCTs ship via DIP switch
+  //   voltage     -U                     — leading dash (single value: U for 120-277V)
+  //   finish      {D|B}                  — NO separator (attached directly to voltage)
+  //   photocell   /PS                    — leading slash (single value: PS = Photocell Standard)
+  //   mount       (blank)                — wall-mount only, integral, no segment
+  //   em          (blank)|/EM07|/EM20    — optional emergency backup
+  //   spd         (blank)|/10SP|/20SP    — optional surge protection
+  // SKU_ORDER drives the segment order after the prefix.
+  var SKU_ORDER = ['cct', 'voltage', 'finish', 'photocell', 'mount', 'em', 'spd'];
+  // SEPARATOR map — how each segment attaches to the previous one.
+  var SEP = {
+    cct: '-', voltage: '-', finish: '', photocell: '/', mount: '', em: '/', spd: '/'
+  };
+
+  // Lookup tables for live spec computation.
+  // Lumens / LPW reference the WATTSELECT max output per model (datasheet).
+  var SPEC_TABLE = {
+    model: {
+      '40':  { name: 'LWPF3W40 · Up to 40W',   lumens: '3,800 - 5,500 lm',   lumensMax: '5,500 lm',  lpw: '137 lm/W' },
+      '80':  { name: 'LWPF3W80 · Up to 80W',   lumens: '5,800 - 11,250 lm',  lumensMax: '11,250 lm', lpw: '140 lm/W' },
+      '120': { name: 'LWPF3W120 · Up to 120W', lumens: '11,500 - 16,500 lm', lumensMax: '16,500 lm', lpw: '139 lm/W' }
+    },
+    cct: {
+      '35': '3500K · Warm White',
+      '40': '4000K · Neutral White',
+      '50': '5000K · Cool White'
+    },
+    voltage: {
+      'U': '120-277V (50/60Hz)',
+      'H': '277-480V (50/60Hz)'
+    },
+    // Peak intensity by model + CCT combination (matches Section 6 photometric data).
+    peak: {
+      '40_35':  '935 cd',   '40_40':  '1,060 cd', '40_50':  '1,193 cd',
+      '80_35':  '2,003 cd', '80_40':  '2,259 cd', '80_50':  '2,286 cd',
+      '120_35': '3,061 cd', '120_40': '3,284 cd', '120_50': '3,218 cd'
+    },
+    // Sentinel ships with a single semi-cutoff distribution. Map preserved for the
+    // Section 6 photometric toggle, but every entry resolves to the same string.
+    optic: {
+      'semi': 'Semi-Cutoff · Forward Throw'
+    },
+    // Datasheet finish set: Dark Bronze (standard) and Black (made-to-order).
+    finish: {
+      'D': 'Dark Bronze · Standard',
+      'B': 'Black · Made-to-Order'
+    },
+    // Live-preview image src per finish — finish-specific renders, transparent bg.
+    // Dark Bronze = SENTINEL-01 (lit cool, grey-bronze housing).
+    // Black       = SENTINEL-02 copy (lit warm, black housing).
+    finishImg: {
+      'D': 'assets/sentinel/finishes/dark-bronze.webp',
+      'B': 'assets/sentinel/finishes/black.webp'
+    }
+  };
+
+  // Default starting state — model 600 is preselected (matches markup).
+  var DEFAULT_STATE = { model: '600' };
+
+  // ---- RAL Classic validation table ----
+  // 213 official RAL Classic codes (numbered ranges with intentional gaps).
+  // A few of the more common codes also carry friendly names so the user gets
+  // confirmation feedback that maps to a recognizable color.
+  // Source: RAL Farben e.V. official Classic system.
+  var RAL_VALID = new Set([
+    1000,1001,1002,1003,1004,1005,1006,1007,1011,1012,1013,1014,1015,1016,1017,1018,1019,1020,1021,1023,1024,1026,1027,1028,1032,1033,1034,1035,1036,1037,
+    2000,2001,2002,2003,2004,2005,2007,2008,2009,2010,2011,2012,2013,
+    3000,3001,3002,3003,3004,3005,3007,3009,3011,3012,3013,3014,3015,3016,3017,3018,3020,3022,3024,3026,3027,3028,3031,3032,3033,
+    4001,4002,4003,4004,4005,4006,4007,4008,4009,4010,4011,4012,
+    5000,5001,5002,5003,5004,5005,5007,5008,5009,5010,5011,5012,5013,5014,5015,5017,5018,5019,5020,5021,5022,5023,5024,5025,5026,
+    6000,6001,6002,6003,6004,6005,6006,6007,6008,6009,6010,6011,6012,6013,6014,6015,6016,6017,6018,6019,6020,6021,6022,6024,6025,6026,6027,6028,6029,6032,6033,6034,6035,6036,6037,6038,
+    7000,7001,7002,7003,7004,7005,7006,7008,7009,7010,7011,7012,7013,7015,7016,7021,7022,7023,7024,7026,7030,7031,7032,7033,7034,7035,7036,7037,7038,7039,7040,7042,7043,7044,7045,7046,7047,7048,
+    8000,8001,8002,8003,8004,8007,8008,8011,8012,8014,8015,8016,8017,8019,8022,8023,8024,8025,8028,8029,
+    9001,9002,9003,9004,9005,9006,9007,9010,9011,9016,9017,9018,9022,9023
+  ]);
+  // Friendly names for the most common architectural / industrial RAL codes.
+  // Anything not in this map still validates — we just show "Valid" with the number.
+  var RAL_NAMES = {
+    1013:'Oyster White', 1015:'Light Ivory', 1018:'Zinc Yellow', 1023:'Traffic Yellow',
+    2003:'Pastel Orange', 2004:'Pure Orange', 2008:'Bright Red Orange',
+    3000:'Flame Red', 3003:'Ruby Red', 3020:'Traffic Red',
+    5002:'Ultramarine Blue', 5005:'Signal Blue', 5010:'Gentian Blue', 5012:'Light Blue', 5015:'Sky Blue', 5017:'Traffic Blue',
+    6005:'Moss Green', 6018:'Yellow Green', 6029:'Mint Green',
+    7016:'Anthracite Grey', 7021:'Black Grey', 7022:'Umbra Grey', 7035:'Light Grey', 7037:'Dusty Grey', 7042:'Traffic Grey A', 7043:'Traffic Grey B',
+    8004:'Copper Brown', 8011:'Nut Brown', 8017:'Chocolate Brown', 8019:'Grey Brown', 8022:'Black Brown',
+    9001:'Cream', 9002:'Grey White', 9003:'Signal White', 9005:'Jet Black', 9006:'White Aluminium', 9007:'Grey Aluminium', 9010:'Pure White', 9016:'Traffic White', 9017:'Traffic Black', 9018:'Papyrus White'
+  };
+
+  function init() {
+    var section   = document.getElementById('configurator');
+    if (!section) return;
+    var counter   = document.getElementById('cfgCount');
+    var counterEl = document.getElementById('cfgCounter');
+    var resetBtn  = document.getElementById('cfgReset');
+    var skuEl     = document.getElementById('cfgSku');
+    var copyBtn   = document.getElementById('cfgSkuCopy');
+    var copyLabel = document.getElementById('cfgSkuCopyLabel');
+    var warning   = document.getElementById('cfgWarning');
+    var ctaPrice  = document.getElementById('cfgCtaPrice');
+    var ctaPdf    = document.getElementById('cfgCtaPdf');
+    var chips     = section.querySelectorAll('.cfg-chip');
+    var state     = Object.assign({}, DEFAULT_STATE);
+
+    // ---- Chip click handler ----
+    chips.forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        if (chip.classList.contains('disabled')) return;
+        var field    = chip.dataset.field;
+        var val      = chip.dataset.val;
+        var isOpt    = OPTIONAL.indexOf(field) >= 0;
+        var isMulti  = MULTI.indexOf(field) >= 0;
+
+        if (isMulti) {
+          // Multi-select: store as array. Click toggles on/off independently.
+          var arr = Array.isArray(state[field]) ? state[field].slice() : [];
+          var i = arr.indexOf(val);
+          if (i >= 0) arr.splice(i, 1); else arr.push(val);
+          if (arr.length === 0) delete state[field]; else state[field] = arr;
+        } else if (isOpt && state[field] === val) {
+          // Single-select optional: clicking the active chip clears it
+          delete state[field];
+        } else {
+          // Single-select required (or first pick on optional)
+          state[field] = val;
+        }
+        applyState();
+      });
+    });
+
+    // ---- Reset all ----
+    resetBtn.addEventListener('click', function() {
+      state = Object.assign({}, DEFAULT_STATE);
+      var ralInput = document.getElementById('cfgRalInput');
+      if (ralInput) ralInput.value = '';
+      applyState();
+    });
+
+    // ---- RAL number input handler ----
+    var ralInput   = document.getElementById('cfgRalInput');
+    var ralWrap    = document.getElementById('cfgRalInputWrap');
+    var ralName    = document.getElementById('cfgRalName');
+    if (ralInput && ralWrap) {
+      ralInput.addEventListener('input', function() {
+        // Strip non-digit characters as the user types.
+        var raw = ralInput.value.replace(/\D/g, '').slice(0, 4);
+        if (raw !== ralInput.value) ralInput.value = raw;
+
+        ralWrap.classList.remove('valid', 'invalid');
+        if (raw.length === 0) {
+          delete state.finishRAL;
+        } else if (raw.length < 4) {
+          // Not enough digits yet — neutral state, but no SKU code
+          delete state.finishRAL;
+        } else {
+          var num = parseInt(raw, 10);
+          if (RAL_VALID.has(num)) {
+            state.finishRAL = raw;
+            ralWrap.classList.add('valid');
+            if (ralName) ralName.textContent = 'RAL ' + raw + (RAL_NAMES[num] ? ' · ' + RAL_NAMES[num] : '');
+          } else {
+            delete state.finishRAL;
+            ralWrap.classList.add('invalid');
+          }
+        }
+        applyState();
+      });
+    }
+
+    // ---- Apply state to UI ----
+    function applyState() {
+      // Update chip selected states (multi-select aware)
+      chips.forEach(function(chip) {
+        var f = chip.dataset.field;
+        var v = chip.dataset.val;
+        var sel;
+        if (MULTI.indexOf(f) >= 0) {
+          sel = Array.isArray(state[f]) && state[f].indexOf(v) >= 0;
+        } else {
+          sel = state[f] === v;
+        }
+        chip.classList.toggle('selected', sel);
+        // Dependency: data-only-model attr restricts which model the chip is valid for.
+        var onlyModel = chip.dataset.onlyModel;
+        if (onlyModel) {
+          var disabled = state.model && state.model !== onlyModel;
+          chip.classList.toggle('disabled', !!disabled);
+          // If currently selected but now disabled, clear it
+          if (disabled && state[f] === v) delete state[f];
+        }
+      });
+
+      // RAL input wrap visibility — only when Custom RAL is the active finish
+      var ralWrapEl = document.getElementById('cfgRalInputWrap');
+      if (ralWrapEl) ralWrapEl.classList.toggle('show', state.finish === 'RAL');
+
+      // Required-counter — RAL finish counts as set ONLY when a valid RAL number is entered
+      var ralPending = (state.finish === 'RAL' && !state.finishRAL);
+      var filled = REQUIRED.filter(function(k) {
+        if (k === 'finish' && ralPending) return false;
+        return state[k] != null;
+      }).length;
+      counter.textContent = filled;
+      counterEl.classList.toggle('complete', filled === REQUIRED.length);
+
+      // SKU
+      var complete = (filled === REQUIRED.length);
+      renderSKU(complete);
+      // Warning + CTAs
+      warning.classList.toggle('show', !complete);
+      ctaPrice.classList.toggle('disabled', !complete);
+      ctaPdf.classList.toggle('disabled', !complete);
+      copyBtn.disabled = !complete;
+      // Reset copy-button state when SKU changes
+      copyBtn.classList.remove('copied');
+      copyLabel.textContent = 'Copy SKU';
+
+      // Live specs
+      renderSpecs();
+    }
+
+    // ---- SKU encoder ----
+    // Walks SKU_ORDER and concatenates each segment with its SEP rule.
+    // Multi-select fields (controls, glare) emit one /CODE per selected value.
+    // Optic uses '' (blank) as its code when 35° is selected → no segment emitted.
+    function renderSKU(complete) {
+      var html = 'LWPF3W' + (state.model || '<span class="placeholder">[40|80|120]</span>');
+      SKU_ORDER.forEach(function(k) {
+        // Use hasOwnProperty so an EMPTY-STRING separator (finish: '') is preserved.
+        // Earlier `SEP[k] || '/'` short-circuited the '' case → finish got a stray '/'.
+        var sep = Object.prototype.hasOwnProperty.call(SEP, k) ? SEP[k] : '/';
+        var val = state[k];
+        var isReq = REQUIRED.indexOf(k) >= 0;
+        var isMulti = MULTI.indexOf(k) >= 0;
+
+        // No selection?
+        if (val == null || (isMulti && (!Array.isArray(val) || val.length === 0))) {
+          if (isReq) html += sep + '<span class="placeholder">' + placeholderFor(k) + '</span>';
+          // Optional + unset → no segment emitted
+          return;
+        }
+
+        // Finish = Custom RAL → special-case: emit the 4-digit code (or RAL#
+        // placeholder) flush against voltage — Finish never adds a leading
+        // separator, same rule as B / D / S / W.
+        if (k === 'finish' && val === 'RAL') {
+          if (state.finishRAL) {
+            html += state.finishRAL;
+          } else {
+            html += '<span class="placeholder">RAL#</span>';
+          }
+          return;
+        }
+
+        if (isMulti) {
+          // Emit one segment per selected value. SKU_ORDER preserves field order;
+          // within a multi-field we emit values in the chip's source order (markup order).
+          var orderedVals = [];
+          section.querySelectorAll('.cfg-chip[data-field="' + k + '"]').forEach(function(c) {
+            if (val.indexOf(c.dataset.val) >= 0) orderedVals.push(c.dataset.code);
+          });
+          orderedVals.forEach(function(code) {
+            if (code) html += sep + code;
+          });
+          return;
+        }
+
+        // Single-select — look up the code from the matching chip
+        var chip = section.querySelector('.cfg-chip[data-field="' + k + '"][data-val="' + val + '"]');
+        var code = chip ? chip.dataset.code : '';
+        if (code === '') return;          // default optic / standard TAA → blank
+        html += sep + code;
+      });
+      skuEl.innerHTML = html;
+    }
+    function placeholderFor(k) {
+      return ({
+        cct:       '[CCT]',
+        voltage:   '[V]',
+        finish:    '[FIN]',
+        photocell: '[PS]',
+        mount:     '[MNT]',
+        em:        '[EM]',
+        spd:       '[SPD]'
+      })[k] || '[' + k.toUpperCase() + ']';
+    }
+
+    // ---- Live spec readout ----
+    function renderSpecs() {
+      setSpec('lumens',  state.model    ? SPEC_TABLE.model[state.model].lumensMax       : null);
+      setSpec('lpw',     state.model    ? SPEC_TABLE.model[state.model].lpw             : null);
+      setSpec('cct',     state.cct      ? SPEC_TABLE.cct[state.cct]                     : null);
+      setSpec('voltage', state.voltage  ? SPEC_TABLE.voltage[state.voltage]             : null);
+      setSpec('optic',   state.cct    ? SPEC_TABLE.optic[state.cct]                 : null);
+      setSpec('peak',    (state.model && state.cct) ? SPEC_TABLE.peak[state.model + '_' + state.cct] || '—' : null);
+      // Finish — for Custom RAL, show "RAL 9005 · Jet Black" (or just "RAL 9005") instead
+      var finishVal = null;
+      if (state.finish === 'RAL') {
+        if (state.finishRAL) {
+          var ralNum = parseInt(state.finishRAL, 10);
+          finishVal = 'RAL ' + state.finishRAL + (RAL_NAMES[ralNum] ? ' · ' + RAL_NAMES[ralNum] : '');
+        }
+      } else if (state.finish) {
+        finishVal = SPEC_TABLE.finish[state.finish];
+      }
+      setSpec('finish', finishVal);
+      // Compliance auto-updates with surge / EM selections
+      var compliance = 'DLC · UL · RoHS · IP65 Wet Loc.';
+      if (state.spd) compliance += ' · Surge-Protected';
+      if (state.em)  compliance += ' · EM Backup';
+      setSpec('compliance', compliance);
+      // Swap the live-preview image src per selected finish.
+      // Soft cross-fade: opacity 0 → swap src → opacity 1 (200ms).
+      var previewImg = document.getElementById('cfgPreviewImg');
+      var newSrc = state.finish ? SPEC_TABLE.finishImg[state.finish] : SPEC_TABLE.finishImg['B'];
+      if (previewImg && newSrc && !previewImg.src.endsWith(newSrc)) {
+        previewImg.style.opacity = '0';
+        setTimeout(function() {
+          previewImg.src = newSrc;
+          previewImg.style.opacity = '1';
+        }, 180);
+      }
+    }
+    function setSpec(name, val) {
+      var el = section.querySelector('[data-spec="' + name + '"]');
+      if (!el) return;
+      if (val == null || val === '—') {
+        el.textContent = '—';
+        el.classList.add('placeholder');
+      } else {
+        el.textContent = val;
+        el.classList.remove('placeholder');
+      }
+    }
+
+    // ---- Copy SKU ----
+    copyBtn.addEventListener('click', function() {
+      if (copyBtn.disabled) return;
+      var txt = skuEl.textContent.trim();
+      if (!txt) return;
+      // Use Clipboard API where available, fallback to execCommand
+      var done = function() {
+        copyBtn.classList.add('copied');
+        copyLabel.textContent = 'Copied ✓';
+        setTimeout(function() {
+          copyBtn.classList.remove('copied');
+          copyLabel.textContent = 'Copy SKU';
+        }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(done, done);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = txt;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch(e){}
+        document.body.removeChild(ta);
+        done();
+      }
+    });
+
+    // ---- Submittal PDF — opens submittal_template.html in new tab with full config in query string ----
+    // The template auto-fills page-1 catalog number, quick specs, ordering-code matrix, and photometric data.
+    // Manus replaces this with a real backend at /submittal-generator/?sku=… on production.
+    function buildSubmittalUrl() {
+      var sku = skuEl.textContent.trim();
+      var params = new URLSearchParams({
+        product:   'sentinel',
+        sku:       sku,
+        wattage:   state.model     || '120',
+        cct:       state.cct       || '50',
+        voltage:   state.voltage   || 'U',
+        finish:    state.finish    || 'D',
+        photocell: state.photocell || 'PS',
+        mount:     state.mount     || 'WALL',
+        em:        state.em        || '',
+        spd:       state.spd       || ''
+      });
+      return 'submittal_template.html?' + params.toString();
+    }
+    ctaPdf.addEventListener('click', function(e) {
+      if (ctaPdf.classList.contains('disabled')) { e.preventDefault(); return; }
+      // Update href to current configurator state immediately before navigation
+      ctaPdf.setAttribute('href', buildSubmittalUrl());
+    });
+
+    // Initial render
+    applyState();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+// Section 3 — Motion video carousel
+(function() {
+  // 6 clips sliced from ALG's master LWPF (Sentinel) promo video (the source mp4 lives
+  // in WorkDrive: luxoⒶRCH/LWPF/VIDEO/LWPF - PromoVideo.mp4).
+  // Each is 8 seconds, 720p, ~0.2-3.5 MB, h.264 + faststart for web playback.
+  // Manus uploads these to Shopify's video CDN at production time and updates the URLs.
+  var clips = [
+    { url: 'assets/sentinel/motion/sentinel-motion-1-wattselect.mp4',  tag: 'WATTSELECT',     title: 'Three-position DIP switch · 40 / 80 / 120W field-selectable per model.' },
+    { url: 'assets/sentinel/motion/sentinel-motion-2-cctselect.mp4',    tag: 'CCTSELECT',      title: 'Three-position DIP · 3500K / 4000K / 5000K field-selectable per fixture.' },
+    { url: 'assets/sentinel/motion/sentinel-motion-3-photocell.mp4',    tag: 'PHOTOCELL',      title: 'Integrated dusk-to-dawn photocell standard on every fixture.' },
+    { url: 'assets/sentinel/motion/sentinel-motion-4-bilevel.mp4',      tag: 'BI-LEVEL READY', title: 'Optional motion + photocell sensor for security-grade automation.' },
+    { url: 'assets/sentinel/motion/sentinel-motion-5-emergency.mp4',    tag: 'EM BACKUP',      title: 'Optional 8W emergency backup module for code-required egress.' },
+    { url: 'assets/sentinel/motion/sentinel-motion-6-mounting.mp4',     tag: 'WALL MOUNT',     title: 'Surface wall mount with integrated junction-box adapter — IK10 vandal-rated.' }
+  ];
+  function init() {
+    var video    = document.getElementById('motionVideo');
+    var caption  = document.getElementById('motionCaption');
+    var dotsRow  = document.getElementById('motionDots');
+    var progress = document.getElementById('motionProgressBar');
+    if (!video || !caption || !dotsRow || !progress) return;
+    var idx = 0;
+    var ticker;
+
+    function set(i) {
+      idx = (i + clips.length) % clips.length;
+      var c = clips[idx];
+      video.src = c.url;
+      video.load();
+      var play = video.play();
+      if (play && typeof play.catch === 'function') play.catch(function(){});
+      caption.innerHTML =
+        '<div class="motion-caption-eyebrow">' + (idx + 1).toString().padStart(2, '0') + ' / 06 · ' + c.tag + '</div>' +
+        '<div class="motion-caption-title">' + c.title + '</div>';
+      dotsRow.querySelectorAll('button').forEach(function(b, n) {
+        b.classList.toggle('active', n === idx);
+        b.setAttribute('aria-selected', n === idx ? 'true' : 'false');
+      });
+      progress.style.width = '0%';
+    }
+
+    // Build dots
+    dotsRow.innerHTML = clips.map(function(c, n) {
+      var num = (n + 1).toString().padStart(2, '0');
+      return '<button type="button" data-i="' + n + '" role="tab"' +
+             (n === 0 ? ' class="active" aria-selected="true"' : ' aria-selected="false"') +
+             '>' + num + ' · ' + c.tag + '</button>';
+    }).join('');
+    dotsRow.querySelectorAll('button').forEach(function(b) {
+      b.addEventListener('click', function() {
+        clearInterval(ticker);
+        set(parseInt(b.dataset.i, 10));
+        startTicker();
+      });
+    });
+
+    // Progress bar — animates to 100% over the auto-advance window
+    function startTicker() {
+      var DURATION = 6000; // 6s per clip auto-advance
+      var start = Date.now();
+      progress.style.width = '0%';
+      ticker = setInterval(function() {
+        var pct = Math.min(100, ((Date.now() - start) / DURATION) * 100);
+        progress.style.width = pct + '%';
+        if (pct >= 100) {
+          clearInterval(ticker);
+          set(idx + 1);
+          startTicker();
+        }
+      }, 60);
+    }
+
+    // If a clip fails to load, skip to next after a brief moment.
+    // Circuit-breaker: after consecutive failures = clips.length, stop trying
+    // (every clip 404'd · prevents a 500ms-cadence infinite loop in dev preview
+    // where the per-clip mp4 files aren't published yet).
+    var failCount = 0;
+    video.addEventListener('error', function() {
+      clearInterval(ticker);
+      failCount++;
+      if (failCount >= clips.length) {
+        caption.innerHTML =
+          '<div class="motion-caption-eyebrow">VIDEO UNAVAILABLE</div>' +
+          '<div class="motion-caption-title">Promo clips are not yet published. Check back after launch.</div>';
+        progress.style.width = '0%';
+        return;
+      }
+      setTimeout(function() { set(idx + 1); startTicker(); }, 500);
+    });
+    // Reset the fail counter whenever a clip successfully starts playing.
+    video.addEventListener('playing', function() { failCount = 0; });
+
+    set(0);
+    startTicker();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
 </BaseLayout>
 
