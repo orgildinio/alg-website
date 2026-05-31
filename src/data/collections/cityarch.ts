@@ -13,7 +13,7 @@ const cityarchData = {
   parentVertical: 'Outdoor',
   parentSubVertical: 'Municipal',
   name: 'cityⒶRCH',
-  titleAscii: 'CITYARCH',
+  titleAscii: 'CITYⒶRCH',
   headlineLine: 'city<span class="aa">Ⓐ</span>RCH',
   description: 'Street and roadway luminaires for municipal and utility applications. 7 active families, 63 active SKUs across 6 applications.',
   pillRow: ['DLC PREMIUM', 'TAA AVAILABLE', '5 US WAREHOUSES', '3-DAY DELIVERY', '6 APPLICATIONS'],
