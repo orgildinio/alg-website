@@ -204,6 +204,7 @@ const skusJson = JSON.stringify(skus);
         <div class="fam-grid" id="famGrid">
           {families.map(fam => {
             const famSkus = skus.filter(s => s.family === fam.family);
+            const famTierClass = fam.display_echelon ? `tier-${fam.display_echelon.replace('+','-plus').toLowerCase()}` : '';
             return (
               <div
                 class="fam-card"
@@ -211,7 +212,7 @@ const skusJson = JSON.stringify(skus);
                 data-sub={fam.sub_category}
                 data-echelon={fam.display_echelon}
                 data-maxwatt={fam.max_wattage}
-                data-skus={JSON.stringify(famSkus)}
+                data-tier={famTierClass}
                 href={(fam as any).pdpUrl ?? `/collections/${collectionSlug}/${fam.family.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')}`}
               >
                 <div class="fc-top">
@@ -235,6 +236,7 @@ const skusJson = JSON.stringify(skus);
                   </div>
                   <a href={(fam as any).pdpUrl ?? `/collections/${collectionSlug}/${fam.family.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')}`} class="fc-view">VIEW →</a>
                 </div>
+                <script type="application/json" class="fc-skus-data" set:text={JSON.stringify(famSkus)}></script>
               </div>
             );
           })}
@@ -273,7 +275,10 @@ const skusJson = JSON.stringify(skus);
     };
 
     function getCardSkus(card) {
-      try { return JSON.parse(card.dataset.skus || '[]'); } catch { return []; }
+      try {
+        const el = card.querySelector('script[type="application/json"].fc-skus-data');
+        return JSON.parse(el ? el.textContent : (card.dataset.skus || '[]'));
+      } catch { return []; }
     }
 
     function familyMatches(card) {
