@@ -1,0 +1,233 @@
+---
+/**
+ * LRHB · Icarus — Submittal Sheet
+ * Route: /products/icarus/submittal/
+ *
+ * Standalone print-optimized page. No site header/footer.
+ * URL params auto-populate the submittal fields.
+ * Foundation: canonical_submittal_template per CFG-SUB-1/2/3/4.
+ */
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LRHB · Icarus — Submittal Sheet</title>
+<style>
+  @page { size: letter portrait; margin: 0.5in 0.6in; }
+  @media print { .no-print { display: none !important; } body { background: white !important; } .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; } .page:last-of-type { page-break-after: auto; } }
+  :root { --brand-red: #F32740; --ink: #0E0E10; --ink-2: #2A2A2D; --muted: #6B6B70; --rule: #D8D6D2; --rule-strong: #A6A4A0; --tint: #F6F4F0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; font-family: 'Lato', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif; color: var(--ink); font-size: 9.5pt; line-height: 1.4; background: #E8E6E2; }
+  body { padding: 24px 12px; overflow-x: hidden; }
+  img { max-width: 100%; height: auto; }
+  .page { width: 8.5in; min-height: 11in; margin: 0 auto 24px; padding: 0.55in 0.65in; background: white; box-shadow: 0 6px 28px rgba(0,0,0,0.08); position: relative; }
+  h1, h2 { font-family: 'Lato', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+  .submittal-head { display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 2px solid var(--ink); padding-bottom: 8px; margin-bottom: 14px; }
+  .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+  .submittal-head .brand-mark { width: 28px; height: 28px; background: var(--brand-red); display: inline-block; }
+  .submittal-head .brand-name { font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; }
+  .submittal-head .brand-sub { font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted); text-transform: uppercase; }
+  .submittal-head .catalog-block { text-align: right; }
+  .submittal-head .catalog-eyebrow { font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted); text-transform: uppercase; margin-bottom: 2px; }
+  .submittal-head .catalog-number { font-size: 12pt; font-weight: 700; font-family: 'JetBrains Mono', monospace; border: 1.5px solid var(--ink); padding: 4px 10px; display: inline-block; letter-spacing: 0.5pt; }
+  .project-info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--rule-strong); margin-bottom: 14px; }
+  .pi-cell { padding: 6px 9px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); min-height: 38px; }
+  .pi-cell:nth-child(3n) { border-right: none; } .pi-cell:nth-child(n+4) { border-bottom: none; }
+  .pi-label { font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+  .pi-value { border-bottom: 1px dotted var(--rule-strong); min-height: 14px; }
+  .product-title { margin: 14px 0; }
+  .product-title h1 { font-size: 22pt; }
+  .product-title .tagline { font-size: 10pt; color: var(--ink-2); margin-top: 4px; }
+  .at-a-glance { display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; margin-bottom: 12px; }
+  .hero-img { background: var(--tint); border: 1px solid var(--rule); aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hero-img img { width: 100%; height: 100%; object-fit: contain; }
+  .qs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .qs-cell { border: 1px solid var(--rule-strong); padding: 8px 10px; min-height: 56px; }
+  .qs-label { font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted); text-transform: uppercase; margin-bottom: 3px; }
+  .qs-value { font-size: 14pt; font-weight: 700; line-height: 1.05; }
+  .qs-unit { font-size: 8pt; font-weight: 400; color: var(--muted); margin-left: 2px; }
+  .feature-band { background: var(--ink); color: white; padding: 8px 14px; display: flex; gap: 18px; align-items: center; margin-bottom: 12px; }
+  .feature-band .fb-pill { background: var(--brand-red); color: white; font-size: 7pt; font-weight: 700; letter-spacing: 1.2pt; padding: 3px 7px; text-transform: uppercase; }
+  .feature-band .fb-features { font-size: 9pt; }
+  .approval-block { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-top: 12px; }
+  .approval-cell { border: 1px solid var(--rule-strong); padding: 8px 12px; min-height: 48px; }
+  .approval-label { font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+  .approval-line { border-bottom: 1px solid var(--rule-strong); min-height: 20px; }
+  .tier-badge { display: inline-block; background: var(--brand-red); color: white; font-size: 7pt; font-weight: 700; letter-spacing: 1.5pt; padding: 3px 8px; text-transform: uppercase; margin-top: 8px; }
+  .page-foot { display: flex; justify-content: space-between; font-size: 7.5pt; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 6px; margin-top: 16px; }
+  .section-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1.5px solid var(--ink); padding-bottom: 4px; margin: 18px 0 10px; }
+  .section-head h2 { font-size: 13pt; }
+  .section-eyebrow { font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted); text-transform: uppercase; }
+  .spec-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  .spec-table td { padding: 4px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .spec-table .spec-attr { color: var(--muted); width: 32%; font-weight: 600; }
+  .spec-table .spec-section-head td { background: var(--tint); font-weight: 700; font-size: 8pt; letter-spacing: 0.8pt; text-transform: uppercase; color: var(--ink-2); padding: 5px 8px; }
+  .dim-placeholder { border: 1px dashed var(--rule-strong); background: var(--tint); padding: 40px; text-align: center; color: var(--muted); font-size: 9pt; margin: 12px 0; }
+  .polar-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px; }
+  .polar-img-box { background: var(--tint); border: 1px solid var(--rule); aspect-ratio: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .polar-img-box img { width: 100%; height: 100%; object-fit: contain; }
+  .polar-data-table td { padding: 5px 8px; border-bottom: 1px solid var(--rule); font-size: 8.5pt; }
+  .polar-data-table .pd-label { color: var(--muted); font-weight: 600; width: 50%; }
+  .certs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .cert-badge { border: 1px solid var(--rule-strong); font-size: 7.5pt; font-weight: 700; padding: 4px 8px; letter-spacing: 0.5pt; text-transform: uppercase; }
+  .cert-badge.brand { background: var(--ink); color: white; border-color: var(--ink); }
+  .controls { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; background: var(--tint); border-bottom: 1px solid var(--rule); padding: 10px 16px; }
+  .controls .ctrl-label { font-size: 9pt; font-weight: 600; color: var(--muted); letter-spacing: 0.5pt; text-transform: uppercase; }
+  .controls .ctrl-value { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11pt; }
+  .controls button { background: var(--brand-red); color: white; border: none; padding: 8px 16px; font-family: inherit; font-weight: 700; font-size: 9pt; letter-spacing: 0.5pt; text-transform: uppercase; cursor: pointer; margin-left: auto; }
+</style>
+</head>
+<body>
+<div class="controls no-print">
+  <div><div class="ctrl-label">Configured SKU</div><div class="ctrl-value" id="liveSku">LRHB3W240-S4-I3U-W</div></div>
+  <div><div class="ctrl-label">Generated</div><div class="ctrl-value" id="liveDate" style="font-size:9pt;font-weight:400;">—</div></div>
+  <button onclick="window.print()">Save as PDF →</button>
+</div>
+<!-- PAGE 1 -->
+<div class="page" id="page-1">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block"><div class="catalog-eyebrow">Catalog Number</div><div class="catalog-number" id="catNum" contenteditable="true" spellcheck="false">LRHB3W240-S4-I3U-W</div></div>
+  </div>
+  <div class="project-info">
+    <div class="pi-cell"><div class="pi-label">Project</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Type</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Catalog #</div><div class="pi-value" id="piCatNum"></div></div>
+    <div class="pi-cell"><div class="pi-label">Prepared By</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Notes</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Date</div><div class="pi-value"></div></div>
+  </div>
+  <div class="product-title">
+    <h1>LRHB Icarus</h1>
+    <div class="tagline">Round UFO high-bay · 150W / 240W / 300W · 3-WATTSELECT × 4-CCTSELECT · 168.94 lm/W peak · IP65 · DLC Premium · TAA-compliant Mexico-built</div>
+  </div>
+  <div class="at-a-glance">
+    <div class="hero-img">
+      <img src="/products/icarus/icarus/photos/LRHB3W150-S4-I3UBTAA_3_nobg.png" alt="LRHB Icarus round high-bay" onerror="this.onerror=null;this.style.display='none';" />
+    </div>
+    <div class="qs-grid">
+      <div class="qs-cell"><div class="qs-label">Lumens</div><div class="qs-value" id="qsLumens">36,170<span class="qs-unit">lm</span></div></div>
+      <div class="qs-cell"><div class="qs-label">Wattage</div><div class="qs-value" id="qsWatts">240<span class="qs-unit">W</span></div></div>
+      <div class="qs-cell"><div class="qs-label">Voltage</div><div class="qs-value" id="qsVoltage">120-277<span class="qs-unit">V</span></div></div>
+      <div class="qs-cell"><div class="qs-label">CCT</div><div class="qs-value" id="qsCct">5000<span class="qs-unit">K</span></div></div>
+      <div class="qs-cell"><div class="qs-label">CRI</div><div class="qs-value">≥ 80</div></div>
+      <div class="qs-cell"><div class="qs-label">IP Rating</div><div class="qs-value">IP65</div></div>
+    </div>
+  </div>
+  <div class="feature-band">
+    <span class="fb-pill">ECO</span>
+    <div class="fb-features"><strong>3-WATTSELECT × 4-CCTSELECT</strong> · IP65 Wet · 6 kVA surge · contrⒶLS-Ready · TAA-compliant · <strong>5-yr / 50,000-hr L70</strong> · DLC Premium</div>
+  </div>
+  <div class="approval-block">
+    <div class="approval-cell"><div class="approval-label">Engineer of Record</div><div class="approval-line"></div></div>
+    <div class="approval-cell"><div class="approval-label">Approval Stamp</div><div class="approval-line"></div></div>
+  </div>
+  <div style="margin-top:10px;"><span class="tier-badge">ECO · 5-Year / 50,000-Hr Warranty</span></div>
+  <div class="page-foot">
+    <div>archipelagolighting.com · LRHB Icarus submittal · Specifications subject to change</div>
+    <div>Rev. <span id="revDate">2026-05</span> · Page 1 of 3</div>
+  </div>
+</div>
+<!-- PAGE 2 — SPECIFICATIONS -->
+<div class="page" id="page-2">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block"><div class="catalog-eyebrow">Catalog Number</div><div class="catalog-number" id="catNum2" contenteditable="true" spellcheck="false">LRHB3W240-S4-I3U-W</div></div>
+  </div>
+  <div class="section-head"><h2>Specifications</h2><div class="section-eyebrow">LRHB Icarus — Specifications</div></div>
+  <table class="spec-table">
+    <tbody>
+      <tr class="spec-section-head"><td colspan="2">Construction</td></tr>
+      <tr><td class="spec-attr">Housing</td><td class="spec-val">Die-cast aluminum · powder coat finish · 3G vibration-rated</td></tr>
+      <tr><td class="spec-attr">Lens</td><td class="spec-val">Tempered glass · IK08 impact-rated</td></tr>
+      <tr><td class="spec-attr">Ingress</td><td class="spec-val">IP65 · UL Wet Location rated</td></tr>
+      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">−40°F to +113°F (−40°C to +45°C) ambient</td></tr>
+      <tr class="spec-section-head"><td colspan="2">LED &amp; Optics</td></tr>
+      <tr><td class="spec-attr">LED Source</td><td class="spec-val">High-efficacy packaged LEDs · 50,000-hr L70 lumen maintenance</td></tr>
+      <tr><td class="spec-attr">CCT Options</td><td class="spec-val">3000K · 3500K · 4000K · 5000K (4-CCTSELECT dip-switch)</td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val">≥ 80 typical</td></tr>
+      <tr><td class="spec-attr">Efficacy</td><td class="spec-val">Up to 168.94 lm/W peak</td></tr>
+      <tr><td class="spec-attr">Lumen Output</td><td class="spec-val">150W: 22,461 lm · 240W: 36,170 lm · 300W: 46,871 lm</td></tr>
+      <tr class="spec-section-head"><td colspan="2">Driver &amp; Electrical</td></tr>
+      <tr><td class="spec-attr">Voltage</td><td class="spec-val">120-277V universal standard</td></tr>
+      <tr><td class="spec-attr">WATTSELECT™</td><td class="spec-val">3-position DIP switch · 150W / 240W / 300W field-selectable</td></tr>
+      <tr><td class="spec-attr">Power Factor</td><td class="spec-val">≥ 0.95 at full load</td></tr>
+      <tr><td class="spec-attr">Surge Protection</td><td class="spec-val">6 kVA dual-mode</td></tr>
+      <tr><td class="spec-attr">Dimming</td><td class="spec-val">0-10V standard</td></tr>
+      <tr class="spec-section-head"><td colspan="2">Controls &amp; Accessories</td></tr>
+      <tr><td class="spec-attr">Sensor Ready</td><td class="spec-val">contrⒶLS-Ready · MSM-SDI/3 bi-level sensor compatible</td></tr>
+      <tr><td class="spec-attr">Emergency</td><td class="spec-val">EM08 / EM20 battery backup optional</td></tr>
+      <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
+      <tr><td class="spec-attr">Standards</td><td class="spec-val">UL 1598 · cUL · DLC Premium QPL Listed · FCC Title 47 Part 15B · RoHS</td></tr>
+      <tr><td class="spec-attr">TAA</td><td class="spec-val">TAA-compliant Mexico-built · /TAA suffix SKUs available</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val">5-year limited (luminaire) · ECO tier</td></tr>
+    </tbody>
+  </table>
+  <div class="page-foot">
+    <div>archipelagolighting.com · LRHB Icarus submittal · Specifications subject to change</div>
+    <div>Rev. <span id="revDate2">2026-05</span> · Page 2 of 3</div>
+  </div>
+</div>
+<!-- PAGE 3 — DIMENSIONS & PHOTOMETRICS -->
+<div class="page" id="page-3">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block"><div class="catalog-eyebrow">Catalog Number</div><div class="catalog-number" id="catNum3" contenteditable="true" spellcheck="false">LRHB3W240-S4-I3U-W</div></div>
+  </div>
+  <div class="section-head"><h2>Dimensions &amp; Photometrics</h2><div class="section-eyebrow">LRHB Icarus — Dimensions &amp; Photometrics</div></div>
+  <div class="dim-placeholder"><!-- Dimension drawing TBD --><div style="font-size:8pt;color:var(--muted);">Dimension drawing · LRHB Icarus · Round UFO high-bay<br/>Reference TBD — contact ALG for CAD files</div></div>
+  <div class="polar-wrap">
+    <div class="polar-img-box">
+      <img id="photoPolarImg" src="/products/icarus/assets/polar/icarus-polar-150-class.svg" alt="Icarus polar plot" onerror="this.style.display='none';this.parentElement.innerHTML+='<div style=\'color:#999;font-size:8pt;text-align:center;\'>Polar plot TBD</div>';" />
+    </div>
+    <div>
+      <div class="section-eyebrow" id="photoEyebrow" style="margin-bottom:8px;">Photometric Data</div>
+      <table class="polar-data-table" style="width:100%;"><tbody>
+        <tr><td class="pd-label">Peak Intensity</td><td id="photoPeak">—</td></tr>
+        <tr><td class="pd-label">Total Lumens</td><td id="photoLumens">—</td></tr>
+        <tr><td class="pd-label">Beam Angle</td><td id="photoBeam">90°</td></tr>
+        <tr><td class="pd-label">IES File</td><td id="photoIesFile">—</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+  <div class="certs">
+    <span class="cert-badge">UL 1598</span>
+    <span class="cert-badge">cUL</span>
+    <span class="cert-badge brand">DLC Premium</span>
+    <span class="cert-badge">IP65</span>
+    <span class="cert-badge">FCC 47 / 15B</span>
+    <span class="cert-badge">RoHS</span>
+    <span class="cert-badge">TAA</span>
+  </div>
+  <div class="page-foot">
+    <div>archipelagolighting.com · LRHB Icarus submittal · Specifications subject to change</div>
+    <div>Rev. <span id="revDate3">2026-05</span> · Page 3 of 3</div>
+  </div>
+</div>
+<script>
+(function() {
+  var params   = new URLSearchParams(window.location.search);
+  var sku      = params.get('sku')      || 'LRHB3W240-S4-I3U-W';
+  var wattage  = params.get('wattage')  || '240';
+  var cct      = params.get('cct')      || '5000';
+  var lumensMap = { '150': '22,461', '240': '36,170', '300': '46,871' };
+  var polarMap  = { '150': 'icarus-polar-150-class.svg', '240': 'icarus-polar-240-class.svg', '300': 'icarus-polar-300-class.svg' };
+
+  document.querySelectorAll('#catNum, #catNum2, #catNum3, #liveSku').forEach(function(el) { el.textContent = sku; });
+  document.getElementById('piCatNum').textContent = sku;
+  document.getElementById('qsLumens').innerHTML = (lumensMap[wattage] || '36,170') + '<span class="qs-unit">lm</span>';
+  document.getElementById('qsWatts').innerHTML  = wattage + '<span class="qs-unit">W</span>';
+  document.getElementById('qsCct').innerHTML    = cct + '<span class="qs-unit">K</span>';
+  document.getElementById('photoEyebrow').textContent = wattage + 'W · ' + cct + 'K · 90° optic';
+  document.getElementById('photoPolarImg').src = '/products/icarus/assets/polar/' + (polarMap[wattage] || 'icarus-polar-240-class.svg') + '?v=2026-05-27-T1';
+
+  var d = new Date();
+  document.getElementById('liveDate').textContent = d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+  var rev = d.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit' }).replace('/', '-');
+  ['revDate','revDate2','revDate3'].forEach(function(id) { document.getElementById(id).textContent = rev; });
+})();
+</script>
+</body>
+</html>
