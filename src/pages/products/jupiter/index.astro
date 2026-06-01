@@ -3602,12 +3602,12 @@ body { overflow-x: hidden; }
              until the per-wattage-class PNGs land. Chip labels call out the wattage class shown. -->
         <div class="carousel-track" id="carouselTrack">
           <div class="carousel-slide">
-            <img src="jupiter/photos/JUPITER_200W_1.jpg" alt="LRHB Jupiter · 200W class · view 1" loading="eager"
+            <img src="jupiter/photos/JUPITER_200W_1_nobg.png" alt="LRHB Jupiter · 200W class · view 1" loading="eager"
                  onerror="this.onerror=null; this.src='/products/jupiter/assets/hero/fam-jupiter-020.webp';"
                  style="width:100%; height:100%; object-fit:contain; display:block;" />
           </div>
           <div class="carousel-slide">
-            <img src="jupiter/photos/JUPITER_200W_9.jpg" alt="LRHB Jupiter · 200W class · view 9" loading="lazy"
+            <img src="jupiter/photos/JUPITER_200W_9_nobg.png" alt="LRHB Jupiter · 200W class · view 9" loading="lazy"
                  onerror="this.onerror=null; this.src='/products/jupiter/assets/hero/fam-jupiter-040.webp';"
                  style="width:100%; height:100%; object-fit:contain; display:block;" />
           </div>
@@ -6563,9 +6563,9 @@ body { overflow-x: hidden; }
       var fin = state.finish || 'W';
       // Per-class hero photo · maps wattage class to confirmed WorkDrive filename
       var photoMap = {
-        '150': 'jupiter/photos/JUPITER_200W_1.jpg',   // 150-class uses 200W lib (closest available)
-        '240': 'jupiter/photos/JUPITER_200W_9.jpg',   // 240-class · angle 9
-        '300': 'jupiter/photos/JUPITER_200W_1.jpg',   // 300-class uses 200W lib (closest available)
+        '150': 'jupiter/photos/JUPITER_200W_1_nobg.png',   // 150-class uses 200W lib (closest available)
+        '240': 'jupiter/photos/JUPITER_200W_9_nobg.png',   // 240-class · angle 9
+        '300': 'jupiter/photos/JUPITER_200W_1_nobg.png',   // 300-class uses 200W lib (closest available)
         '400': 'jupiter/photos/JUPITER_400W_1.png'    // 400-class · 400W lib · angle 1
       };
       var primary = photoMap[w] || photoMap['240'];
