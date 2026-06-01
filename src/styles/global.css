@@ -664,3 +664,36 @@ body.multifamily-pdp h1,
 body.multifamily-pdp h2 {
   font-family: Lato, system-ui, sans-serif !important;
 }
+
+/* CFG-MOBILE-1 global · 2026-06-01 · Fluid .collection-grid on all category landings
+   Applies to: /collections/indoor/ /outdoor/ /residential/ /lamps/ /safety-controls/
+   Overrides any page-scoped fixed-column rule via cascade order. */
+.collection-grid {
+  grid-template-columns: 1fr 1fr !important;
+}
+.collection-grid > * {
+  min-width: 0;
+}
+.collection-grid .coll-card {
+  min-width: 0;
+  overflow: hidden;
+}
+.collection-grid .coll-stats {
+  overflow: hidden;
+}
+.collection-grid .coll-stat-cell {
+  min-width: 0;
+  overflow: hidden;
+}
+.collection-grid .coll-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.collection-grid .family-block {
+  overflow-x: auto;
+}
+@media (max-width: 1100px) {
+  .collection-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

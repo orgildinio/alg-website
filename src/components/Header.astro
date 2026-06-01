@@ -185,7 +185,7 @@ import SearchModal from './SearchModal.astro';
           <div class="mm-main-group-label">By tech capability</div>
           <a href="/collections/safety-controls" class="mm-main-item" data-main="controls">Safety &amp; Controls<span class="mm-main-sub">const<span class="aa">Ⓐ</span>NT · contr<span class="aa">Ⓐ</span>LS</span></a>
           <div class="mm-main-divider"></div>
-          <a href="#" class="mm-main-item" data-main="openbox">Warehouse Deals<span class="mm-main-sub">Last-run inventory</span></a>
+          <a href="/collections/warehouse-deals/" class="mm-main-item" data-main="openbox">Warehouse Deals<span class="mm-cs-chip">COMING SOON</span><span class="mm-main-sub">Last-run inventory</span></a>
           <div class="mm-main-divider"></div>
           <div class="mm-main-group-label">Purchase tools</div>
           <a href="/find-a-rep/" class="mm-main-item">Where to Buy</a>
@@ -916,6 +916,8 @@ data-preview="/mm-previews/warehouse-deals.webp"
   .mm-main-item.active .mm-main-sub,
   .mm-main-item:hover .mm-main-sub{color:rgba(255,255,255,0.85);}
   .mm-main-divider{height:1px;background:rgba(255,255,255,0.08);margin:8px 14px;}
+  .mm-cs-chip{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(243,39,64,.75);border-radius:2px;padding:2px 5px;margin-left:7px;vertical-align:middle;line-height:1.4;}
+  .mm-main-item.active .mm-cs-chip,.mm-main-item:hover .mm-cs-chip{background:rgba(255,255,255,.25);color:#fff;}
   .mm-main-group-label{
     font-family:'JetBrains Mono',monospace;font-size:8px;
     color:rgba(255,255,255,0.35);letter-spacing:0.2em;

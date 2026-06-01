@@ -1,0 +1,94 @@
+---
+/**
+ * collections/warehouse-deals/index.astro
+ * Warehouse Deals — Coming Soon placeholder
+ * PATCH B · 2026-06-01
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Warehouse Deals · Coming Soon · Archipelago Lighting Group"
+  description="Last-run inventory and clearance pricing are getting their own home here. Check back soon."
+  bodyClass="warehouse-deals-soon"
+>
+<style>
+:root{
+  --wd-brand:#F32740; --wd-brand-dark:#C8132E;
+  --wd-ink:#1A1D23; --wd-ink2:#3A3E47; --wd-ink3:#6B7280; --wd-line:#E2E0DB;
+  --wd-sans:'Lato',var(--font-body,system-ui),-apple-system,sans-serif;
+  --wd-mono:'JetBrains Mono',var(--font-mono,ui-monospace),monospace;
+}
+.warehouse-deals-soon h1,
+.warehouse-deals-soon h2 { font-family: var(--wd-sans) !important; }
+.cs-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(64px, 12vh, 140px) clamp(24px, 5vw, 40px);
+  text-align: center;
+}
+.cs-eyebrow {
+  font: 700 11.5px var(--wd-mono);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--wd-brand);
+  margin: 0 0 22px;
+}
+.cs-badge {
+  display: inline-block;
+  font: 700 11px var(--wd-mono);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--wd-brand);
+  padding: 7px 14px;
+  border-radius: 2px;
+  margin: 0 0 26px;
+}
+.cs-h1 {
+  font: 900 clamp(44px, 7vw, 84px) var(--wd-sans);
+  letter-spacing: -.03em;
+  line-height: 1;
+  margin: 0 0 22px;
+}
+.cs-lede {
+  font: 400 clamp(15px, 1.6vw, 18px)/1.6 var(--wd-sans);
+  color: var(--wd-ink2);
+  max-width: 520px;
+  margin: 0 auto 38px;
+}
+.cs-ctas {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.cs-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font: 700 12px var(--wd-mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 14px 22px;
+  transition: .16s;
+}
+.cs-cta.primary { background: var(--wd-brand); color: #fff; }
+.cs-cta.primary:hover { background: var(--wd-brand-dark); }
+.cs-cta.ghost { border: 1px solid var(--wd-line); color: var(--wd-ink); }
+.cs-cta.ghost:hover { border-color: var(--wd-brand); color: var(--wd-brand); }
+.cs-rule { width: 48px; height: 3px; background: var(--wd-brand); margin: 0 auto 30px; }
+</style>
+
+<main class="cs-wrap">
+  <div class="cs-rule"></div>
+  <p class="cs-eyebrow">Products · Warehouse Deals</p>
+  <span class="cs-badge">Coming Soon</span>
+  <h1 class="cs-h1">Warehouse Deals are on&nbsp;the&nbsp;way.</h1>
+  <p class="cs-lede">Last-run inventory and clearance pricing are getting their own home here. We're still building it out — check back soon, or browse the full catalog in the meantime.</p>
+  <div class="cs-ctas">
+    <a class="cs-cta primary" href="/collections/indoor/">Browse Products <span>→</span></a>
+    <a class="cs-cta ghost" href="/pages/where-to-buy">Where to Buy</a>
+  </div>
+</main>
+</BaseLayout>
