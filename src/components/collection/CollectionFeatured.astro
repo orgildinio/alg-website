@@ -41,7 +41,7 @@ const { collectionName, collectionSlug, featured, featuredHeadline } = Astro.pro
             )}
           </div>
           <!-- Image area -->
-          <div class="feat-img" style={f.cardImage ? `background-image: url(${f.cardImage})` : undefined}>
+          <div class="feat-img">
             {f.lineDrawing
               ? <img src={f.lineDrawing} alt={`${f.family} line drawing`} loading="lazy" />
               : f.cardImage
