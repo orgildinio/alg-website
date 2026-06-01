@@ -82,8 +82,10 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .code-chip--controls { border-color: rgba(14,53,53,.8); background: rgba(14,53,53,.3); }
   .code-chip--both { border-color: #F5C24A; }
 
-  /* Collection grid */
+  /* Collection grid — CFG-MOBILE-1: fluid equal columns, no fixed-width overflow */
   .collection-grid { padding: 40px 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .collection-grid > * { min-width: 0; }
+  @media (max-width: 1100px) { .collection-grid { grid-template-columns: 1fr; } }
   .coll-card { display: block; text-decoration: none; color: inherit; }
   .coll-card-header { background: var(--color-ink); color: #fff; padding: 32px 36px 28px; position: relative; transition: background .25s ease; }
   .coll-card-header--teal { background: #0E3535; }
@@ -100,7 +102,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .coll-stat-v { font-size: 18px; font-weight: 700; line-height: 1.05; color: var(--color-ink); white-space: nowrap; }
   .coll-stat-k { margin-top: 6px; font-family: var(--font-mono); font-size: 9.5px; color: var(--color-ink-mute); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   /* Family rows */
-  .family-block { background: #fff; padding: 24px 36px 20px; border: 1px solid var(--color-border); border-top: none; }
+  .family-block { background: #fff; padding: 24px 36px 20px; border: 1px solid var(--color-border); border-top: none; overflow-x: auto; }
   .cat-bar { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 6px; border-bottom: 2px solid var(--color-ink); }
   .cat-bar-title { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--color-ink); }
   .cat-bar-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-mute); }
@@ -109,7 +111,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .family-thumb svg { width: 100%; height: 100%; }
   .family-code { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; color: var(--color-alg-red); }
   .family-name { font-size: 13.5px; font-weight: 600; margin-top: 2px; color: var(--color-ink); }
-  .family-spec { font-family: var(--font-mono); font-size: 11px; color: var(--color-ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .family-spec { font-family: var(--font-mono); font-size: 11px; color: var(--color-ink-soft); white-space: normal; overflow-wrap: break-word; }
   .badge-active { display: inline-block; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 2px 8px; background: #0FAE7C; color: #fff; white-space: nowrap; }
   .coll-cta { background: var(--color-alg-red); color: #fff; padding: 20px 36px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; transition: background .15s ease; }
   .coll-cta--teal { background: #0E3535; }
