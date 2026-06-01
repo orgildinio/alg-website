@@ -35194,7 +35194,7 @@ function BoardHub({ tweaks = {} }) {
             <span className="alg-sku" style={{ fontSize: 22, color: darkHero ? 'rgba(255,255,255,.7)' : 'var(--ink3)' }}>{P.sku}</span>
           </div>
           <h1 style={{ marginTop: 8, fontSize: 38, fontWeight: 700, letterSpacing: '-.02em', lineHeight: 1.15, maxWidth: 720 }}>
-            {lead[storyAngle].line}
+            CRC6-EM24/JBS/B
           </h1>
 
           {/* Inline mini-stats */}
@@ -35216,7 +35216,7 @@ function BoardHub({ tweaks = {} }) {
           {/* CTAs */}
           <div style={{ display: 'flex', gap: 10, marginTop: 24, flexWrap: 'wrap' }}>
             <a className="alg-btn brand" href="#order">ADD TO QUOTE</a>
-            <a className="alg-btn" href="#" style={{ background: 'transparent', borderColor: darkHero ? 'rgba(255,255,255,.45)' : 'var(--ink)', color: darkHero ? '#fff' : 'var(--ink)' }}>Download Specs</a>
+            <a className="alg-btn" href="https://workdrive.archipelagolighting.com/external/3dd6549ebcbb0c5117af917febece94ff98112e74498c89ba946e0f4a04422a2" target="_blank" rel="noopener" style={{ background: 'transparent', borderColor: darkHero ? 'rgba(255,255,255,.45)' : 'var(--ink)', color: darkHero ? '#fff' : 'var(--ink)' }}>Download Specs</a>
           </div>
         </div>
 
@@ -35265,9 +35265,8 @@ function BoardHub({ tweaks = {} }) {
           <div style={{ padding: '28px 24px 0', borderTop: '1px solid var(--c2)', marginTop: 28 }}>
             <div className="alg-eyebrow">DOWNLOADS</div>
             <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 6, fontFamily: 'var(--font-mono)', fontSize: 11 }}>
-              {['Spec sheet (PDF)','Submittal package','Installation guide'].map((l, i) => (
-                <a key={i} href="#" style={{ color: 'var(--ink2)', textDecoration: 'none' }}>↓ {l}</a>
-              ))}
+              <a href="https://workdrive.archipelagolighting.com/external/3dd6549ebcbb0c5117af917febece94ff98112e74498c89ba946e0f4a04422a2" target="_blank" rel="noopener" style={{ color: 'var(--ink2)', textDecoration: 'none' }}>↓ Spec sheet (PDF)</a>
+              <a href="https://workdrive.archipelagolighting.com/external/86740c090286c9835782d67df41e23817bf673ecbc02cd83cf95db38663b1ad9" target="_blank" rel="noopener" style={{ color: 'var(--ink2)', textDecoration: 'none' }}>↓ Product Guide</a>
             </div>
           </div>
         </nav>
@@ -35633,18 +35632,16 @@ function BoardHub({ tweaks = {} }) {
             </div>
           </Section>
 
-          <Section id="family" eyebrow="12 · MID-POWER FAMILY" title="constⒶNT mid-power siblings.">
+                    <Section id="family" eyebrow="12 · QUICK-INSTALL FAMILY" title="constⒶNT quick-install siblings.">
             <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--ink2)', maxWidth: 720, marginBottom: 24 }}>
-              The EM20-HMB/135AC is one of six mid-power (15&ndash;25W) drivers in the constⒶNT line. Each sibling targets a different fixture compatibility envelope — DC vs AC output, low-voltage vs high-voltage range, /AG cold-pack and /CL networked-test adder availability. Match the driver to the host fixture's emergency-mode lumen requirement.
+              The CRC6-EM24/JBS/B is one of four quick-install J-Box drivers in the constⒶNT line. Each targets a different mount style and fixture family. Match the driver to the host fixture’s emergency-mode lumen requirement.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
               {[
-                { sku: 'EM15-HMB/170DC',    w: '15W', out: '170 V DC',      compat: 'All fixtures',                  adder: '—',           href: '/collections/constant/em15-hmb-170dc/' },
-                { sku: 'EM15-PMB/120AC',    w: '15W', out: '120 V AC',      compat: 'All fixtures',                  adder: '/CL ready',        href: '/collections/constant/em15-pmb-120ac/' },
-                { sku: 'EM20-CMB/150DC',    w: '20W', out: '60–150 V DC',  compat: 'lamparⒶRCH · luxoⒶRCH',  adder: '/AG ready',        href: '/collections/constant/em20-cmb-150dc/' },
-                { sku: 'EM20-CMB/260DC',    w: '20W', out: '90–260 V DC',  compat: 'lamparⒶRCH · luxoⒶRCH',  adder: '/AG ready · cold-storage hero', href: '/collections/constant/em20-cmb-260dc/' },
-                { sku: 'EM20-HMB/135AC',    w: '20W', out: '135 V AC',      compat: 'tubulⒶRCH',                 adder: '—',           href: null, current: true },
-                { sku: 'EM25-PMB/120AC',    w: '25W', out: '120 V AC',      compat: 'All fixtures',                  adder: '/CL ready',        href: '/collections/constant/em25-pmb-120ac/' },
+                { sku: 'EM20-CMB/150DC',    w: '20W', out: '60–150 V DC',      compat: 'lamparⒶRCH · luxoⒶRCH',                  adder: '/AG ready',           href: 'https://workdrive.archipelagolighting.com/external/ce26bb7d97e602dbc80d514056a1b7b72fab26b9009bbdf20ae1446e54e5f612' },
+                { sku: 'CRCU-EM24/JBM',    w: '24W', out: '190 V DC',      compat: 'Universal J-Box mount',                  adder: '—',           href: 'https://workdrive.archipelagolighting.com/external/4297171c1b76995abb1685105739668ec4b9fc3163b432ed8b36a29b248aca82' },
+                { sku: 'CRC6-EM24/JBS/B',    w: '24W', out: '190 V DC',      compat: 'luxoⒶRCH · black',                  adder: '—',           href: null, current: true },
+                { sku: 'CRC6-EM24/JBS/W',    w: '24W', out: '190 V DC',      compat: 'luxoⒶRCH · white',                  adder: '—',           href: 'https://workdrive.archipelagolighting.com/external/66987eb437c1d3bf4177d339f0a2e68961f9447685a9042516c0f80a0b7f90b2' },
               ].map((s, i) => (
                 <div key={i} className="alg-card" style={{ padding: '18px 20px', background: s.current ? 'var(--c1)' : '#fff', border: s.current ? '2px solid var(--brand)' : '1px solid var(--c3)', position: 'relative' }}>
                   {s.current && (
@@ -35658,20 +35655,15 @@ function BoardHub({ tweaks = {} }) {
                     <span style={{ color: 'var(--ink3)' }}>ADDER</span><span style={{ fontWeight: 600 }}>{s.adder}</span>
                   </div>
                   {!s.current && (
-                    <a className="alg-btn sm ghost" href={s.href} style={{ marginTop: 14, display: 'inline-block' }}>VIEW DATASHEET →</a>
+                    <a className="alg-btn sm ghost" href={s.href} target="_blank" rel="noopener" style={{ marginTop: 14, display: 'inline-block' }}>VIEW DATASHEET →</a>
                   )}
                 </div>
               ))}
             </div>
             <p style={{ marginTop: 24, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink3)', lineHeight: 1.6 }}>
-              For the full constⒶNT driver line including low-power (5–9W) and high-power (30–60W) tiers, see the 2026 constⒶNT Product Guide pages 2–4.
+              For the full constⒶNT driver line, see the <a href="https://workdrive.archipelagolighting.com/external/86740c090286c9835782d67df41e23817bf673ecbc02cd83cf95db38663b1ad9" target="_blank" rel="noopener" style={{ color: 'var(--ink2)' }}>constⒶNT Product Guide</a>.
             </p>
           </Section>
-
-          <div style={{ padding: '20px 48px', borderTop: '1px solid var(--c3)', display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink3)', textTransform: 'uppercase', letterSpacing: '.12em' }}>
-            <span>© 2026 ARCHIPELAGO LIGHTING GROUP</span>
-            <span>const<span className="ag-a">Ⓐ</span>NT · {P.sku} · REV 2026.05</span>
-          </div>
         </div>
       </div>
     </div>
