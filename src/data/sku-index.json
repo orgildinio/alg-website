@@ -6124,31 +6124,11 @@
           "card_image": "/products/trackstar/assets/hero/fam-trackstar.webp"
         },
         {
-          "family": "proⒶRCH-T1",
+          "family": "proⒶRCH-T",
           "sub_category": "Troffer",
           "display_echelon": "ECO",
           "max_wattage": 44,
           "sku_count": 13,
-          "dlc": true,
-          "ccts": [
-            "3500K",
-            "4000K",
-            "5000K"
-          ],
-          "voltages": [
-            "120 - 277V"
-          ],
-          "mount_types": [],
-          "taa": true,
-          "pdpUrl": "/products/proarch-t/",
-          "card_image": "/products/proarch-t/assets/hero/fam-proarch-t.webp"
-        },
-        {
-          "family": "proⒶRCH-T2",
-          "sub_category": "Troffer",
-          "display_echelon": "ECO",
-          "max_wattage": 50,
-          "sku_count": 2,
           "dlc": true,
           "ccts": [
             "3500K",

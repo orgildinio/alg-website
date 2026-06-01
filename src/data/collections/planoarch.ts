@@ -10,9 +10,9 @@ const planoarchData = {
   parentVertical: 'Indoor',
   parentSubVertical: 'Commercial',
   name: 'planoⒶRCH',
-  titleAscii: 'planoARCH',
+  titleAscii: 'planoⒶRCH',
   headlineLine: 'plano<span class="aa">Ⓐ</span>RCH',
-  description: 'Commercial indoor lighting for offices, retail, and healthcare. 14 active families, 118 active SKUs.',
+  description: 'Commercial indoor lighting for offices, retail, and healthcare. 13 active families, 118 active SKUs.',
   pillRow: ['DLC PREMIUM', 'TAA AVAILABLE', '5 US WAREHOUSES', '3-DAY DELIVERY', '9 APPLICATIONS'],
   statStrip: [
     { value: '14',  label: 'Fixture Families' },
@@ -131,7 +131,7 @@ const planoarchData = {
     },
   ],
   featuredHeadline: 'Four flagship families from the planoⒶRCH collection.',
-  familiesHeadline: '14 families. One indoor portfolio.',
+  familiesHeadline: '13 families. One indoor portfolio.',
   familiesSubhead: 'Filter by application, echelon, wattage, CCT, and more.',
   legacy: {
     headline: 'Discontinued families.',
