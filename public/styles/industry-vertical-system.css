@@ -926,3 +926,7 @@ main[data-vertical] h3 { font-family: var(--font-body) !important; }
 
 /* ALG canon: Ⓐ glyph = brand-red span (brand-mark rule). Per-vertical accents SANCTIONED (CFG-VERT-1); brand red wins on CTAs/activation. */
 .aa{ color: var(--brand-red); font-style: normal; }
+
+/* CFG-SHIELD-1: cap the section placeholder icon — was rendering at 766×766 uncapped */
+.shield-chip { display: flex; align-items: center; justify-content: center; }
+.shield-chip svg { width: auto; height: 64px; max-width: 100%; }
