@@ -1,103 +1,407 @@
 ---
 /**
- * verticals/hospitality/index.astro
- * Industry Vertical: Hospitality — STUB (Phase B content pending)
+ * solutions/hospitality/index.astro
+ * Industry Vertical: Hospitality Lighting Solutions
  *
- * Vertical accent: warm gold · hsl(38 92% 50%)
- * Content: TBD — needs ALG_Hospitality_Solutions.html port
+ * Phase B: Full content port from industry-vertical-hospitality.html
+ * Design system: /styles/industry-vertical-system.css (shared, loaded via slot="head")
+ * Glow blob: inlined from glow-blob.js
+ *
+ * CFG-VERT-1: main[data-vertical="hospitality"] preserved for per-vertical accent
+ * CFG-CHROME-1: BaseLayout provides header/mega-menu/footer
+ * CFG-COWORK-15: system CSS loaded as real stylesheet, not inlined/stripped
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 ---
 <BaseLayout
-  title="Hospitality Lighting Solutions · ALG"
-  description="Warm, atmosphere-defining LED systems for lobbies, guestrooms, corridors, and F&B spaces. 2200K-3000K, phase-dim, décor-grade."
+  title="Hospitality Lighting Solutions — Archipelago Lighting Group"
+  description="Hotels, restaurants, and hospitality venues with warm-dimming and controls. Décor-grade finishes with 2700K–3000K warm CCT and phase-cut compatibility."
   bodyClass="page-vertical-hospitality"
 >
-<style>
-  .vert-page {
-    --brand-red:       var(--color-alg-red, #F32740);
-    --brand-red-dark:  var(--color-alg-red-dark, #C41E32);
-    --brand-red-hsl:   353 80% 55%;
-    --bg-page:         #1c2025;
-    --bg-card:         #2a2e34;
-    --bg-spec:         #22262b;
-    --bg-deepest:      #15181c;
-    --text-primary:    #ECEDEF;
-    --text-secondary:  #A8AEB7;
-    --text-muted:      #6E7682;
-    --line:            rgba(255,255,255,0.08);
-    --line-medium:     rgba(255,255,255,0.14);
-    --line-strong:     rgba(255,255,255,0.22);
-    --font-body:       var(--font-sans, 'Lato', system-ui, sans-serif);
-    --font-mono:       'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
-    --radius:          4px;
-    --radius-lg:       8px;
-    --container:       1280px;
-    /* Vertical accent — hospitality (warm gold) */
-    --vert-accent:      38 92% 50%;
-    background: var(--bg-page);
-    color: var(--text-primary);
-    font-family: var(--font-body);
-    font-size: 16px;
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-  }
-  .breadcrumb-band { padding: 10px 32px; border-bottom: 1px solid var(--line); background: var(--bg-deepest); font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted); display: flex; align-items: center; }
-  .breadcrumb-band a { color: inherit; text-decoration: none; }
-  .breadcrumb-band a:hover { color: var(--text-primary); }
-  .bc-sep { margin: 0 10px; }
-  .bc-current { color: var(--text-primary); font-weight: 700; }
-  .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 32px; }
-  .hero { padding: 80px 0 72px; background: var(--bg-deepest); border-bottom: 1px solid var(--line); }
-  .hero__eyebrow { display: block; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: hsl(var(--vert-accent)); margin-bottom: 16px; }
-  .hero__title { font-size: 52px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.08; color: var(--text-primary); margin: 0 0 20px; }
-  @media (max-width: 760px) { .hero__title { font-size: 34px; } }
-  .hero__deck { font-size: 17px; color: var(--text-secondary); line-height: 1.6; margin: 0 0 32px; max-width: 560px; }
-  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 22px; border-radius: var(--radius); font-family: var(--font-body); font-size: 14px; font-weight: 700; text-decoration: none; transition: background .15s, border-color .15s; }
-  .btn--primary { background: var(--brand-red); color: #fff; border: 2px solid var(--brand-red); }
-  .btn--primary:hover { background: var(--brand-red-dark); border-color: var(--brand-red-dark); }
-  .btn--ghost {
-    background: transparent;
-    color: var(--text-primary);
-    border: 2px solid var(--line-strong);
-  }
-  .btn--ghost:hover { border-color: var(--text-secondary); }
-  .stub-section { padding: 72px 0; border-bottom: 1px solid var(--line); }
-  .stub-placeholder { background: var(--bg-card); border: 1px dashed hsl(var(--vert-accent) / 40%); border-radius: var(--radius-lg); padding: 48px; text-align: center; }
-  .stub-placeholder__label { font-family: var(--font-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: hsl(var(--vert-accent)); margin-bottom: 12px; }
-  .stub-placeholder__title { font-size: 20px; font-weight: 700; color: var(--text-primary); margin: 0 0 8px; }
-  .stub-placeholder__note { font-size: 14px; color: var(--text-muted); }
-</style>
+  <link rel="stylesheet" href="/styles/industry-vertical-system.css" slot="head" />
 
-<div class="vert-page">
-  <nav class="breadcrumb-band" aria-label="Breadcrumb">
-    <div class="container" style="display:flex;align-items:center;padding-top:0;padding-bottom:0;">
-      <a href="/">Home</a><span class="bc-sep">›</span>
-      <a href="/solutions">Solutions</a><span class="bc-sep">›</span>
-      <span class="bc-current">Hospitality</span>
-    </div>
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">HOME</a>
+    <span class="bc-sep">›</span>
+    <a href="/solutions/">SOLUTIONS</a>
+    <span class="bc-sep">›</span>
+    <span class="bc-current">Hospitality</span>
   </nav>
 
-  <main data-vertical="hospitality">
-    <section class="hero">
-      <div class="container">
-        <span class="hero__eyebrow">Vertical Solutions · Hospitality</span>
-        <h1 class="hero__title">Hospitality Lighting Solutions</h1>
-        <p class="hero__deck">Warm, atmosphere-defining LED systems for lobbies, guestrooms, corridors, and F&amp;B spaces. 2200K–3000K, phase-dim, décor-grade. Full content coming in Phase B.</p>
-        <div class="hero__cta-row" style="display:flex;gap:12px;flex-wrap:wrap;">
-          <a href="mailto:sales@archipelagolighting.com?subject=Photometric%20request" class="btn btn--primary">Request a Photometric <span class="arrow">→</span></a>
-          <a href="/spec-packs/ALG_Hospitality_Lighting.pdf" class="btn btn--ghost" target="_blank" rel="noopener" download>Download Spec Pack <span class="arrow">→</span></a>
-        </div>
-      </div>
-    </section>
-    <section class="stub-section"><div class="container"><div class="stub-placeholder"><div class="stub-placeholder__label">Section: Hero Stats</div><div class="stub-placeholder__title">2200K-3000K · Phase-Dim · Décor-Grade</div><div class="stub-placeholder__note">TBD — needs content from ALG_Hospitality_Solutions.html</div></div></div></section>
-    <section class="stub-section"><div class="container"><div class="stub-placeholder"><div class="stub-placeholder__label">Section: Lighting by Zone</div><div class="stub-placeholder__title">Lobby · Guestroom · Corridor · F&amp;B/Exterior</div><div class="stub-placeholder__note">TBD — needs content from ALG_Hospitality_Solutions.html</div></div></div></section>
-    <section class="stub-section"><div class="container"><div class="stub-placeholder"><div class="stub-placeholder__label">Section: Product Selection Matrix</div><div class="stub-placeholder__title">Product Matrix</div><div class="stub-placeholder__note">TBD — needs content from ALG_Hospitality_Solutions.html</div></div></div></section>
-    <section class="stub-section"><div class="container"><div class="stub-placeholder"><div class="stub-placeholder__label">Section: Key Technologies</div><div class="stub-placeholder__title">Warm Dimming · NOSTALGIC · Phase-Dim</div><div class="stub-placeholder__note">TBD — needs content from ALG_Hospitality_Solutions.html</div></div></div></section>
-    <section class="stub-section"><div class="container"><div class="stub-placeholder"><div class="stub-placeholder__label">Section: Application Spotlight</div><div class="stub-placeholder__title">Full-Service Hotel · Boutique · Resort</div><div class="stub-placeholder__note">TBD — needs content from ALG_Hospitality_Solutions.html</div></div></div></section>
-    <section class="stub-section"><div class="container"><div class="stub-placeholder"><div class="stub-placeholder__label">Section: Value Proposition</div><div class="stub-placeholder__title">Guest Experience · Energy Savings · Brand Consistency</div><div class="stub-placeholder__note">TBD — needs content from ALG_Hospitality_Solutions.html</div></div></div></section>
-    <section class="stub-section"><div class="container"><div class="stub-placeholder"><div class="stub-placeholder__label">Section: Procurement Story</div><div class="stub-placeholder__title">One PO. One Warranty. One Contact.</div><div class="stub-placeholder__note">TBD — needs content from ALG_Hospitality_Solutions.html</div></div></div></section>
-    <section class="stub-section" style="border-bottom:none;"><div class="container"><div class="stub-placeholder"><div class="stub-placeholder__label">Section: ALG Advantage / Closing CTA</div><div class="stub-placeholder__title">Why Specifiers Choose ALG</div><div class="stub-placeholder__note">TBD — needs content from ALG_Hospitality_Solutions.html</div></div></div></section>
-  </main>
+
+ CANONICAL ALG MOCKUP - Industry-vertical solutions page - 2026-06-01
+     Conformed from Claude Design Phase-A to ALG canon: CONTENT-ONLY (CFG-CHROME-1: promo-bar + site-header + site-footer stripped; Astro owns the shell);
+     the glyph uses <span class="aa"> (brand-mark rule); per-vertical accents SANCTIONED (CFG-VERT-1, red wins on CTAs/activation);
+     Lato + JetBrains Mono + #F32740 base (Phase-A industry-vertical-system.css, locked). Content preserved from Claude Design. 
+<div aria-hidden="true" class="glow-orb"></div>
+<main data-vertical="hospitality">
+<!-- 1. HERO -->
+<section class="hero" data-screen-label="Hero">
+<div class="container">
+<div class="hero__grid">
+<div>
+<span class="hero__eyebrow">Vertical Solutions · Hospitality &amp; Entertainment</span>
+<h1 class="hero__title">Illuminate the Guest Experience</h1>
+<p class="hero__deck">From grand lobby to guest room, restaurant to rooftop — Archipelago Lighting delivers ambiance, efficiency, and brand-defining illumination for every hospitality environment.</p>
+<div class="hero__cta-row">
+<a class="btn btn--primary" href="mailto:sales@archipelagolighting.com?subject=Lighting%20Inquiry%20%E2%80%94%20Hospitality%20Solutions&amp;body=Hi%20ALG%20Sales%2C%0A%0AI%27m%20interested%20in%20lighting%20for%20a%20Hospitality%20project%20and%20would%20like%20to%20discuss%20layout%2C%20specifications%2C%20and%20pricing.%0A%0AProject%20details%3A%0A-%20Facility%20/%20location%3A%0A-%20Approx.%20square%20footage%3A%0A-%20Mounting%20height%20/%20ceiling%20type%3A%0A-%20Target%20timeline%3A%0A%0AThank%20you.">Contact Sales <span class="arrow">→</span></a>
+<a target="_blank" rel="noopener" class="btn btn--ghost" href="https://workdrive.archipelagolighting.com/external/049e5590d9b085d0b7ca91c0948882749a649c6403248df6f3499b2d700a6029">Download Spec Pack</a>
 </div>
+</div>
+<aside aria-label="Key specs" class="info-card">
+<div class="info-card__label">By the Numbers</div>
+<div class="stat">
+<div class="stat__value">13.9%</div>
+<div class="stat__label">CAGR growth across the hospitality lighting market</div>
+</div>
+<div class="stat">
+<div class="stat__value">40–65%</div>
+<div class="stat__label">Energy savings vs. legacy lighting</div>
+</div>
+<div class="stat">
+<div class="stat__value">CRI 80+</div>
+<div class="stat__label">Color quality · 50,000 hr rated life</div>
+</div>
+</aside>
+</div>
+</div>
+</section>
+<!-- 2. ZONES -->
+<section class="section" data-screen-label="Zones">
+<div class="container">
+<span class="eyebrow">Hospitality Zone Lighting Map</span>
+<h2 class="section-title section-title--underline">Every guest touchpoint</h2>
+<p class="section-deck">Purpose-built solutions for every guest touchpoint — from front-of-house ambiance to back-of-house durability.</p>
+<div class="zones">
+<article class="zone-card" data-zone="1">
+<div class="zone-card__num">Zone 01</div>
+<h3 class="zone-card__title">Lobby &amp; Reception</h3>
+<div class="zone-card__product">NOSTALGIC + plano<span class="aa">Ⓐ</span>RCH</div>
+<p class="zone-card__desc">First impressions demand warmth and elegance. NOSTALGIC Edison-style decorative lamps create inviting ambiance while plano<span class="aa">Ⓐ</span>RCH back-lit panels provide clean, even illumination for check-in areas.</p>
+</article>
+<article class="zone-card" data-zone="2">
+<div class="zone-card__num">Zone 02</div>
+<h3 class="zone-card__title">Guest Rooms &amp; Suites</h3>
+<div class="zone-card__product">NOSTALGIC + tubul<span class="aa">Ⓐ</span>RCH</div>
+<p class="zone-card__desc">Warm-dimming NOSTALGIC lamps for bedside and vanity lighting. tubul<span class="aa">Ⓐ</span>RCH LED tubes for closet and bath fixtures. 2200K–2700K color temps create the cozy atmosphere guests expect.</p>
+</article>
+<article class="zone-card" data-zone="3">
+<div class="zone-card__num">Zone 03</div>
+<h3 class="zone-card__title">Restaurants &amp; Bars</h3>
+<div class="zone-card__product">NOSTALGIC VINTAGE + Dimming</div>
+<p class="zone-card__desc">NOSTALGIC VINTAGE lamps deliver high-CRI warm glow for food presentation and ambiance. Dimmable options let operators set the mood from brunch to evening service.</p>
+</article>
+<article class="zone-card" data-zone="4">
+<div class="zone-card__num">Zone 04</div>
+<h3 class="zone-card__title">Corridors &amp; Common Areas</h3>
+<div class="zone-card__product">select<span class="aa">Ⓐ</span>RCH + sensorBLE</div>
+<p class="zone-card__desc">select<span class="aa">Ⓐ</span>RCH wraps and strips with sensorBLE occupancy sensing reduce corridor energy use by up to 70%. Flicker-free output for 24/7 comfort in hallways and stairwells.</p>
+</article>
+<article class="zone-card" data-zone="1">
+<div class="zone-card__num">Zone 05</div>
+<h3 class="zone-card__title">Meeting &amp; Event Spaces</h3>
+<div class="zone-card__product">plano<span class="aa">Ⓐ</span>RCH + 0–10V</div>
+<p class="zone-card__desc">plano<span class="aa">Ⓐ</span>RCH troffers and back-lit panels with 0–10V dimming adapt from bright conference setups to dramatic ballroom lighting. DLC-listed qualified for utility rebates.</p>
+</article>
+<article class="zone-card" data-zone="2">
+<div class="zone-card__num">Zone 06</div>
+<h3 class="zone-card__title">Exterior &amp; Landscape</h3>
+<div class="zone-card__product">city<span class="aa">Ⓐ</span>RCH + luxo<span class="aa">Ⓐ</span>RCH</div>
+<p class="zone-card__desc">city<span class="aa">Ⓐ</span>RCH area lights for parking, luxo<span class="aa">Ⓐ</span>RCH wall packs and flood lights for building perimeter. Dark-sky compliant options protect the night experience. DampGuard for coastal properties.</p>
+</article>
+</div>
+</div>
+</section>
+<!-- 3. MATRIX -->
+<section class="section" data-screen-label="Matrix">
+<div class="container">
+<span class="eyebrow">Product Selection Matrix — Hospitality</span>
+<h2 class="section-title section-title--underline">Complete fixture portfolio by zone</h2>
+<p class="section-deck">Complete fixture portfolio mapped to hospitality zones — decorative through functional, front-of-house through exterior.</p>
+<div class="matrix-wrap">
+<div class="matrix-scroll">
+<table class="matrix">
+<thead>
+<tr>
+<th>Product Family</th>
+<th>Series</th>
+<th>Wattage</th>
+<th>Lumens / Output</th>
+<th>CCT Options</th>
+<th>Key Features</th>
+<th>Zone</th>
+</tr>
+</thead>
+<tbody>
+<tr><td class="product-name">NOSTALGIC Edison</td><td class="mono">Décor</td><td class="mono">4–8W</td><td class="mono">250–800 lm</td><td class="mono">2200/2700K</td><td>Warm dimming, filament-style, high CRI, E26 base</td><td><span class="zone-chip zone-chip--1">Lobby</span></td></tr>
+<tr><td class="product-name">NOSTALGIC Globe</td><td class="mono">Décor</td><td class="mono">4–8W</td><td class="mono">250–800 lm</td><td class="mono">2200/2700K</td><td>G25/G40 shapes, dimmable, pendant compatible</td><td><span class="zone-chip zone-chip--3">Restaurant</span></td></tr>
+<tr><td class="product-name">VINTAGE Tubular</td><td class="mono">Décor</td><td class="mono">4–6W</td><td class="mono">200–400 lm</td><td class="mono">2200K</td><td>T10/T14 shapes, amber glass, oversized filament</td><td><span class="zone-chip zone-chip--3">Restaurant</span></td></tr>
+<tr><td class="product-name">Back-Lit Panel</td><td class="mono">plano<span class="aa">Ⓐ</span>RCH</td><td class="mono">25–50W</td><td class="mono">3,000–6,500 lm</td><td class="mono">35/40/50K</td><td>Flicker-free, CRI 80+, control-ready, EB option</td><td><span class="zone-chip zone-chip--1">Meeting</span></td></tr>
+<tr><td class="product-name">Troffer 2x2 / 2x4</td><td class="mono">plano<span class="aa">Ⓐ</span>RCH</td><td class="mono">25–50W</td><td class="mono">3,000–6,500 lm</td><td class="mono">35/40/50K</td><td>DLC-listed, 0–10V dimming, watt/CCT selectable</td><td><span class="zone-chip zone-chip--1">Meeting</span></td></tr>
+<tr><td class="product-name">LED Tubes T8</td><td class="mono">tubul<span class="aa">Ⓐ</span>RCH</td><td class="mono">12–18W</td><td class="mono">1,600–2,200 lm</td><td class="mono">35/40/50K</td><td>Type A, B, or A+B retrofit, universal voltage</td><td><span class="zone-chip zone-chip--2">Guest Room</span></td></tr>
+<tr><td class="product-name">Strip / Wrap</td><td class="mono">select<span class="aa">Ⓐ</span>RCH</td><td class="mono">18–45W</td><td class="mono">2,200–5,400 lm</td><td class="mono">35/40/50K</td><td>Surface/suspended mount, sensorBLE compatible</td><td><span class="zone-chip zone-chip--4">Corridor</span></td></tr>
+<tr><td class="product-name">Vapor Tight</td><td class="mono">LV3P Series</td><td class="mono">25–80W</td><td class="mono">3,500–10,800 lm</td><td class="mono">35/40/50K</td><td>IP66, DampGuard, linkable, impact resistant</td><td><span class="zone-chip zone-chip--4">BOH</span></td></tr>
+<tr><td class="product-name">Wall Pack</td><td class="mono">luxo<span class="aa">Ⓐ</span>RCH</td><td class="mono">20–80W</td><td class="mono">2,400–10,000 lm</td><td class="mono">30/40/50K</td><td>Full-cutoff, DampGuard, photocell, dark-sky</td><td><span class="zone-chip zone-chip--2">Exterior</span></td></tr>
+<tr><td class="product-name">Area Light</td><td class="mono">city<span class="aa">Ⓐ</span>RCH</td><td class="mono">70–300W</td><td class="mono">9,000–42,000 lm</td><td class="mono">40/50K</td><td>Dark-sky compliant, surge protected, high output</td><td><span class="zone-chip zone-chip--2">Exterior</span></td></tr>
+<tr><td class="product-name">Flood Light</td><td class="mono">luxo<span class="aa">Ⓐ</span>RCH</td><td class="mono">30–150W</td><td class="mono">3,600–20,000 lm</td><td class="mono">40/50K</td><td>Adjustable knuckle, IP65, architectural accent</td><td><span class="zone-chip zone-chip--2">Exterior</span></td></tr>
+<tr><td class="product-name">Canopy</td><td class="mono">luxo<span class="aa">Ⓐ</span>RCH</td><td class="mono">30–75W</td><td class="mono">3,600–9,500 lm</td><td class="mono">40/50K</td><td>Surface mount, weather sealed, porte-cochère ready</td><td><span class="zone-chip zone-chip--2">Exterior</span></td></tr>
+<tr><td class="product-name">Emergency / Exit</td><td class="mono">SPECIALTY</td><td class="mono">2–5W</td><td class="mono">UL 924</td><td class="mono">Varies</td><td>90-min backup, self-test, code compliant</td><td><span class="zone-chip zone-chip--1">All Zones</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. KEY TECH (Why ALG for Hospitality) -->
+<section class="section" data-screen-label="Tech">
+<div class="container">
+<span class="eyebrow">Why ALG for Hospitality</span>
+<h2 class="section-title section-title--underline">Decorative and functional, one source</h2>
+<p class="section-deck">Decorative and functional lighting from a single manufacturer — the built-in technologies behind ambiance with efficiency.</p>
+<div class="tech-grid">
+<div class="tech-badge">
+<div class="tech-badge__icon">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z"></path></svg>
+</div>
+<h3 class="tech-badge__title">NOSTALGIC &amp; VINTAGE</h3>
+<p class="tech-badge__desc">Edison, globe, and tubular decorative lamps with warm 2200K dimming — ambiance without compromise on efficiency.</p>
+</div>
+<div class="tech-badge">
+<div class="tech-badge__icon">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="2" width="16" x="4" y="3"></rect><path d="M9 7h6M12 7v6"></path><circle cx="12" cy="16" fill="currentColor" r="1.5"></circle></svg>
+</div>
+<h3 class="tech-badge__title">Full Dimming Control</h3>
+<p class="tech-badge__desc">0–10V and phase dimming across the portfolio. Set the mood from bright breakfast service to intimate evening dining.</p>
+</div>
+<div class="tech-badge">
+<div class="tech-badge__icon">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" fill="currentColor" r="1.5"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path></svg>
+</div>
+<h3 class="tech-badge__title">sensorBLE</h3>
+<p class="tech-badge__desc">Wireless occupancy and daylight sensing in corridors, stairwells, and BOH areas — cut energy without disturbing guests.</p>
+</div>
+<div class="tech-badge">
+<div class="tech-badge__icon">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-4-3-6l-4-5-4 5c-2 2-3 4-3 6a7 7 0 0 0 7 7Z"></path></svg>
+</div>
+<h3 class="tech-badge__title">DampGuard</h3>
+<p class="tech-badge__desc">Moisture and salt-air resistance for coastal resorts, pool areas, and outdoor terraces. IP66-rated where it matters.</p>
+</div>
+<div class="tech-badge">
+<div class="tech-badge__icon">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-.5 0-1-.1-1.5A6 6 0 0 1 12 3Z"></path></svg>
+</div>
+<h3 class="tech-badge__title">Dark-Sky Compliant</h3>
+<p class="tech-badge__desc">Full-cutoff exterior fixtures meet IDA dark-sky guidelines — protect the night experience for resort and boutique properties.</p>
+</div>
+<div class="tech-badge">
+<div class="tech-badge__icon">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-8l1-8z"></path></svg>
+</div>
+<h3 class="tech-badge__title">DLC-listed &amp; Rebates</h3>
+<p class="tech-badge__desc">Maximize utility incentives with DLC-listed qualified troffers, panels, and high bays to offset retrofit investment.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. APPLICATION SPOTLIGHT -->
+<section class="section" data-screen-label="Spotlight">
+<div class="container">
+<span class="eyebrow">Application Spotlight</span>
+<h2 class="section-title section-title--underline">Tailored to every sub-segment</h2>
+<p class="section-deck">Tailored lighting strategies for hospitality sub-segments.</p>
+<div class="spotlight-grid">
+<article class="spotlight-card">
+<div class="spotlight-card__media" data-caption="Placeholder · Image TBD">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"></path><path d="M9 9h.01M15 9h.01M9 13h.01M15 13h.01M9 17h6"></path></svg>
+</div>
+<div class="spotlight-card__body">
+<h3 class="spotlight-card__title">Hotels &amp; Resorts</h3>
+<p class="spotlight-card__desc">Full-property solutions from lobby chandeliers (NOSTALGIC) to parking lot (city<span class="aa">Ⓐ</span>RCH). Guest room retrofits with tubul<span class="aa">Ⓐ</span>RCH T8 tubes save 60%+ per room per year while warm CCTs maintain brand standards.</p>
+<div class="spotlight-card__meta">Lobby → Parking · Full property</div>
+</div>
+</article>
+<article class="spotlight-card">
+<div class="spotlight-card__media" data-caption="Placeholder · Image TBD">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24"><path d="M6 3v6a3 3 0 0 0 6 0V3M9 9v12M18 3c-1.5 1-2 3-2 6s.5 4 2 5v7"></path></svg>
+</div>
+<div class="spotlight-card__body">
+<h3 class="spotlight-card__title">Restaurants &amp; Bars</h3>
+<p class="spotlight-card__desc">VINTAGE decorative lamps deliver the exposed-filament aesthetic that modern dining demands. 2200K amber warmth, high CRI for true food colors, and smooth dimming curves for every service period.</p>
+<div class="spotlight-card__meta">VINTAGE · 2200K · High CRI</div>
+</div>
+</article>
+<article class="spotlight-card">
+<div class="spotlight-card__media" data-caption="Placeholder · Image TBD">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+</div>
+<div class="spotlight-card__body">
+<h3 class="spotlight-card__title">Entertainment &amp; Events</h3>
+<p class="spotlight-card__desc">Convention halls and ballrooms use plano<span class="aa">Ⓐ</span>RCH troffers with 0–10V dimming for flexible configuration. Emergency egress fixtures ensure code compliance for high-occupancy venues.</p>
+<div class="spotlight-card__meta">plano<span class="aa">Ⓐ</span>RCH · 0–10V · UL 924</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- 6. VALUE PROP (ROI) -->
+<section class="section" data-screen-label="Value">
+<div class="container">
+<div class="value-banner">
+<div>
+<span class="eyebrow">Hospitality ROI Snapshot</span>
+<h2 class="value-banner__title">Ambiance + Efficiency</h2>
+<p class="value-banner__body">Archipelago Lighting is the only manufacturer offering a complete decorative-to-industrial hospitality portfolio — one source for NOSTALGIC ambiance, functional illumination, exterior security, and smart controls. The result is brand-defining light that pays for itself.</p>
+</div>
+<div class="value-banner__metrics">
+<div class="value-metric">
+<div class="value-metric__num">40–65%</div>
+<div class="value-metric__label">Energy reduction</div>
+</div>
+<div class="value-metric">
+<div class="value-metric__num">$0.45</div>
+<div class="value-metric__label">Avg $/sq ft savings</div>
+</div>
+<div class="value-metric">
+<div class="value-metric__num">12–18 mo</div>
+<div class="value-metric__label">Typical payback · 50K hr, zero lamp changes</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. PROCUREMENT -->
+<section class="section" data-screen-label="Procurement">
+<div class="container">
+<span class="eyebrow">Simplify Procurement</span>
+<h2 class="section-title section-title--underline">One PO. One warranty. One contact.</h2>
+<div class="procurement-grid procurement-grid--flow">
+<div class="proc-step">
+<span class="proc-step__big">01</span>
+<div class="proc-step__icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"></path><rect height="4" rx="1" width="8" x="8" y="2"></rect><path d="M8 12h6M8 16h4"></path></svg></div>
+<span class="proc-step__num">Step 01 · Scope</span>
+<h3 class="proc-step__title">Send the property scope</h3>
+<p class="proc-step__desc">Brand standards, room keys, and zone mix — takeoff back in 48 hours.</p>
+</div>
+<div class="proc-step">
+<span class="proc-step__big">02</span>
+<div class="proc-step__icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path><path d="m9 15 2 2 4-4"></path></svg></div>
+<span class="proc-step__num">Step 02 · Spec</span>
+<h3 class="proc-step__title">Lock the package</h3>
+<p class="proc-step__desc">Decorative NOSTALGIC through functional SKUs matched to brand spec.</p>
+</div>
+<div class="proc-step">
+<span class="proc-step__big">03</span>
+<div class="proc-step__icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M1 6h13v9H1zM14 9h4l3 3v3h-7"></path><circle cx="5.5" cy="18" r="1.6"></circle><circle cx="17.5" cy="18" r="1.6"></circle></svg></div>
+<span class="proc-step__num">Step 03 · Ship</span>
+<h3 class="proc-step__title">Order direct from ALG</h3>
+<p class="proc-step__desc">Quick Ship for staged, multi-property rollouts on one warranty.</p>
+</div>
+</div>
+<div class="proc-foot">
+<span class="proc-foot__icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg></span>
+<span class="proc-foot__text"><strong>Brand-standard &amp; PIP/renovation</strong> spec packages supported — lobby to parking, one source.</span>
+</div>
+</div>
+</section>
+<!-- 8. ALG ADVANTAGE / CLOSING CTA -->
+<section class="section" data-screen-label="Closing">
+<div class="container">
+<span class="eyebrow">The ALG Advantage — Ambiance + Efficiency</span>
+<h2 class="section-title section-title--underline">Why operators choose ALG</h2>
+<div class="advantage-strip">
+<div class="advantage-pillar">
+<div class="advantage-pillar__num">1</div>
+<div class="advantage-pillar__label">Decorative-to-Industrial</div>
+<div class="advantage-pillar__desc">The only manufacturer offering a complete decorative-to-industrial hospitality portfolio under one brand.</div>
+</div>
+<div class="advantage-pillar">
+<div class="advantage-pillar__num">2200K</div>
+<div class="advantage-pillar__label">NOSTALGIC Ambiance</div>
+<div class="advantage-pillar__desc">Edison, globe, and tubular warm-dimming decorative lamps that set brand-defining mood.</div>
+</div>
+<div class="advantage-pillar">
+<div class="advantage-pillar__num">70%</div>
+<div class="advantage-pillar__label">Corridor Savings</div>
+<div class="advantage-pillar__desc">select<span class="aa">Ⓐ</span>RCH + sensorBLE cut corridor and BOH energy use without disturbing guests.</div>
+</div>
+<div class="advantage-pillar">
+<div class="advantage-pillar__num">IP66</div>
+<div class="advantage-pillar__label">Coastal-Ready</div>
+<div class="advantage-pillar__desc">DampGuard and dark-sky exterior fixtures for resorts, pool decks, and coastal properties.</div>
+</div>
+</div>
+<div class="closing-cta">
+<div>
+<h3 class="closing-cta__title">Specifying a property or renovation?</h3>
+<p class="closing-cta__deck">Request the hospitality portfolio. We'll match decorative ambiance to functional illumination, zone by zone.</p>
+</div>
+<div class="closing-cta__buttons">
+<a class="btn btn--primary" href="mailto:sales@archipelagolighting.com?subject=Lighting%20Inquiry%20%E2%80%94%20Hospitality%20Solutions&amp;body=Hi%20ALG%20Sales%2C%0A%0AI%27m%20interested%20in%20lighting%20for%20a%20Hospitality%20project%20and%20would%20like%20to%20discuss%20layout%2C%20specifications%2C%20and%20pricing.%0A%0AProject%20details%3A%0A-%20Facility%20/%20location%3A%0A-%20Approx.%20square%20footage%3A%0A-%20Mounting%20height%20/%20ceiling%20type%3A%0A-%20Target%20timeline%3A%0A%0AThank%20you.">Contact Sales <span class="arrow">→</span></a>
+<a class="btn btn--ghost" href="mailto:sales@archipelagolighting.com?subject=Lighting%20Inquiry%20%E2%80%94%20Hospitality%20Solutions&amp;body=Hi%20ALG%20Sales%2C%0A%0AI%27m%20interested%20in%20lighting%20for%20a%20Hospitality%20project%20and%20would%20like%20to%20discuss%20layout%2C%20specifications%2C%20and%20pricing.%0A%0AProject%20details%3A%0A-%20Facility%20/%20location%3A%0A-%20Approx.%20square%20footage%3A%0A-%20Mounting%20height%20/%20ceiling%20type%3A%0A-%20Target%20timeline%3A%0A%0AThank%20you.">Contact Sales</a>
+</div>
+</div>
+</div>
+</section>
+</main>
+
+
+  <script is:inline>
+/* ============================================================
+   GLOW ORB — per-vertical accent blob that slowly follows scroll
+   Sits behind all content (z-index 0). Opaque cards + text render
+   on top, so the glow only colors the exposed background surface.
+   Accent hue is copied from the active vertical's --vert-accent
+   by glow-blob.js at load.
+   ============================================================ */
+(function () {
+  function init() {
+    var orb = document.querySelector('.glow-orb');
+    var main = document.querySelector('main[data-vertical]');
+    if (!orb || !main) return;
+
+    // Inherit the vertical accent hue (defined on main[data-vertical])
+    var accent = getComputedStyle(main).getPropertyValue('--vert-accent').trim();
+    if (accent) orb.style.setProperty('--vert-accent', accent);
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var curX = window.innerWidth * 0.72;
+    var curY = window.innerHeight * 0.28;
+
+    function targets() {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var f = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      // vertical: trails from near-top to near-bottom of the viewport
+      var ty = window.innerHeight * (0.12 + 0.72 * f);
+      // horizontal: gentle organic sweep across the page
+      var tx = window.innerWidth * (0.72 - 0.46 * Math.sin(f * Math.PI));
+      return { tx: tx, ty: ty };
+    }
+
+    if (reduce) {
+      var t = targets();
+      orb.style.transform = 'translate(' + t.tx + 'px,' + t.ty + 'px) translate(-50%,-50%)';
+      return;
+    }
+
+    function tick() {
+      var t = targets();
+      // slow lerp — the blob lags well behind the scroll position
+      curX += (t.tx - curX) * 0.04;
+      curY += (t.ty - curY) * 0.04;
+      orb.style.transform = 'translate(' + curX + 'px,' + curY + 'px) translate(-50%,-50%)';
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+  </script>
 </BaseLayout>
