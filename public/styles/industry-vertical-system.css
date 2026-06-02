@@ -312,6 +312,7 @@ main { position: relative; z-index: 1; }
   background: hsl(var(--vert-accent));
 }
 .hero__title {
+  font-family: var(--font-body) !important; /* CFG-TYPE-1: pin Lato; block Shopify Cormorant cascade on h1 */
   font-size: 56px;
   font-weight: 900;
   letter-spacing: -0.02em;
@@ -320,6 +321,10 @@ main { position: relative; z-index: 1; }
   margin: 0 0 24px;
   text-wrap: balance;
 }
+/* CFG-TYPE-1 guard: no Cormorant anywhere in a vertical page's headings */
+main[data-vertical] h1,
+main[data-vertical] h2,
+main[data-vertical] h3 { font-family: var(--font-body) !important; }
 .hero__deck {
   font-size: 19px;
   color: var(--text-secondary);
