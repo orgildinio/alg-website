@@ -1,0 +1,474 @@
+---
+/**
+ * products/index.astro — Products Landing v2 ("Folio")
+ * Route: /products/
+ *
+ * CFG-CHROME-1: body content only — header/mega-menu/footer owned by BaseLayout.
+ * CFG-TYPE-1:   Lato self-hosted in global.css; body.products-folio h1/h2/h3 pinned below.
+ * CFG-MOBILE-1: overflow-x:hidden on body; no fixed-width wrappers.
+ * CFG-TITLE:    "Products · Archipelago Lighting Group" (plain ASCII).
+ * DATA NOTE:    CATS / COVERAGE / TECH data objects are PLACEHOLDER pending real catalog data.
+ *               DO NOT MERGE to main until James supplies real Active_SKUs data.
+ *
+ * Source: mockup_products_landing_v2.html · 2026-06-01
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Products · Archipelago Lighting Group"
+  description="Four categories, seven collections, one spec-grade portfolio. Find the exact fixture with the coverage matrix and Quick Spec."
+  bodyClass="products-folio"
+>
+<style>
+/* CFG-TYPE-1 — pin Lato on this page; prevent Cormorant cascade override */
+body.products-folio h1,
+body.products-folio h2,
+body.products-folio h3 { font-family:'Lato',system-ui,-apple-system,sans-serif !important; }
+
+:root{
+  --brand:#F32740; --brand-dark:#C8132E; --grn:#0FAE7C;
+  --sans:'Lato',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --accent:351 90% 55%;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body.products-folio{margin:0; font-family:var(--sans); background:#FBFAF8; color:#1A1D23; overflow-x:hidden; -webkit-font-smoothing:antialiased;}
+body.products-folio h1,body.products-folio h2,body.products-folio h3,
+.ed-nm,.ro-skus,.ro-title,.dp-rec,.dp-skus b,.band h2,.tb-codes-h,.tb-cap-nm,.cov-tab-a,.stage .ed-body h2{font-family:var(--sans)!important;}
+img{max-width:100%;}
+.aa{color:var(--brand); font-style:normal;}
+
+.zone-light{--surface:#FBFAF8; --surface-2:#FFFFFF; --surface-3:#F5F4F1; --line:#E2E0DB; --txt:#1A1D23; --txt-dim:#3A3E47; --txt-mute:#6B7280;}
+.zone-dark{--surface:#0B0D11; --surface-2:#14181F; --surface-3:#1C2128; --line:#262B33; --txt:#EDEFF2; --txt-dim:#B7BCC4; --txt-mute:#7A808B;
+  --frame-grad:radial-gradient(60% 65% at 78% 22%, hsl(var(--accent)/.20) 0%, transparent 52%), radial-gradient(140% 100% at 62% 30%, #232A37 0%, #14181F 50%, #0A0C10 100%);}
+
+.glow-orb{position:fixed; top:0; left:0; width:60vw; height:60vw; max-width:760px; max-height:760px; border-radius:50%;
+  background:radial-gradient(circle,hsl(var(--accent)/.15) 0%,hsl(var(--accent)/.06) 40%,transparent 70%);
+  filter:blur(54px); pointer-events:none; z-index:0; transition:transform .9s cubic-bezier(.2,.7,.2,1);
+  transform:translate(46vw,30vh) translate(-50%,-50%);}
+@media print{.glow-orb{display:none!important;}}
+@media (prefers-reduced-motion: reduce){.glow-orb{transition:none;}}
+
+.alg-eye{font:700 11.5px var(--mono); letter-spacing:.18em; text-transform:uppercase; color:var(--brand); margin:0;}
+.crumbs{position:relative; z-index:2; font:600 11px var(--mono); letter-spacing:.14em; text-transform:uppercase; color:#6B7280;
+  padding:16px clamp(22px,3vw,56px); border-bottom:1px solid #E2E0DB; background:#FBFAF8;}
+.crumbs b{color:#1A1D23;}
+
+/* ===== Directory split ===== */
+.split{display:grid; grid-template-columns:340px minmax(0,1fr); position:relative; z-index:1;}
+.rail{padding:clamp(24px,2vw,40px) clamp(22px,1.8vw,34px); display:flex; flex-direction:column; border-right:1px solid var(--line); min-width:0;}
+.rail .sub{font:400 12.5px/1.5 var(--sans); color:var(--txt-mute); margin:10px 0 22px;}
+.ed-list{list-style:none; margin:0; padding:0; flex:1;}
+.ed-row{display:flex; align-items:center; gap:13px; padding:12px 0; cursor:pointer; border-bottom:1px solid var(--line); position:relative; outline:none;}
+.ed-no{font:400 11px var(--mono); color:var(--txt-mute); width:26px; transition:color .2s;}
+.ed-main{display:flex; flex-direction:column; gap:3px; min-width:0;}
+.ed-nm{font:700 16px var(--sans); letter-spacing:-.01em; color:var(--txt-mute); transition:color .22s, transform .22s; transform-origin:left;}
+.ed-fam{font:500 11px var(--mono); letter-spacing:.03em; color:var(--txt-mute); transition:color .22s;}
+.ed-go{margin-left:auto; opacity:0; color:var(--brand); font:400 14px var(--mono); transform:translateX(-8px); transition:.2s;}
+.ed-row::after{content:""; position:absolute; left:0; bottom:-1px; height:2px; width:0; background:var(--brand); transition:width .35s cubic-bezier(.2,.7,.2,1);}
+.ed-row.active .ed-no{color:var(--brand);}
+.ed-row.active .ed-nm{color:var(--txt); transform:translateX(5px);}
+.ed-row.active .ed-fam{color:var(--brand); transform:translateX(5px);}
+.ed-row.active .ed-go{opacity:1; transform:translateX(0);}
+.ed-row.active::after{width:100%;}
+.rail-foot{font:600 11px var(--mono); letter-spacing:.05em; color:#9A9288; padding-top:16px;}
+
+.stage{position:relative; min-height:560px; overflow:hidden; min-width:0;}
+.stage .flabel{position:absolute; top:clamp(26px,2.4vw,42px); right:clamp(30px,3vw,56px); z-index:4; font:700 11px var(--mono); letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.42);}
+.ed-preview{position:absolute; inset:0;}
+.ed-frame{position:absolute; inset:0; opacity:0; transition:opacity .45s ease; display:flex; flex-direction:column; justify-content:flex-end; text-decoration:none; color:inherit; background:var(--frame-grad);}
+.ed-frame::before{content:""; position:absolute; inset:0; opacity:.35; background:repeating-linear-gradient(135deg, rgba(127,127,127,.10) 0 2px, transparent 2px 18px); pointer-events:none;}
+.ed-frame.show{opacity:1;}
+.ed-abbr{position:absolute; top:7%; right:7%; font:900 clamp(96px,15vw,220px) var(--sans); color:hsl(var(--accent)/.10); letter-spacing:-.04em; line-height:.8;}
+.ed-meta{position:absolute; top:clamp(40px,3.6vw,64px); left:clamp(40px,4vw,80px); font:700 11.5px var(--mono); letter-spacing:.16em; text-transform:uppercase; color:var(--brand); display:flex; align-items:center; gap:10px; z-index:2;}
+.ed-dot{width:7px; height:7px; border-radius:50%; background:var(--brand);}
+.ed-body{padding:0 clamp(40px,4vw,80px) clamp(48px,4.5vw,76px); position:relative; z-index:2;}
+.ed-body h2{font:900 clamp(34px,4.4vw,60px) var(--sans); letter-spacing:-.03em; margin:0 0 14px; line-height:1; color:var(--txt);}
+.ed-famrow{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 18px;}
+.ed-fchip{font:700 11px var(--mono); letter-spacing:.03em; color:#EDEFF2; border:1px solid var(--line); padding:5px 10px; white-space:nowrap;}
+.ed-body p{font:400 16px/1.6 var(--sans); color:var(--txt-dim); max-width:540px; margin:0 0 24px;}
+.ed-view{display:inline-flex; align-items:center; gap:9px; font:700 12px var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--txt); border:1px solid var(--line); padding:13px 20px; transition:.18s;}
+.ed-view:hover{background:var(--brand); border-color:var(--brand); color:#fff;}
+.ed-arr{transition:transform .18s;} .ed-view:hover .ed-arr{transform:translateX(4px);}
+
+/* ===== Coverage band ===== */
+.band{position:relative; z-index:1; border-top:1px solid #E4E2DD; padding:clamp(40px,4vw,68px) clamp(22px,4vw,72px) clamp(56px,5vw,84px);}
+.band h2{font:900 clamp(30px,3.4vw,44px) var(--sans); letter-spacing:-.03em; margin:8px 0 8px;}
+.band .lede{font:400 15px/1.6 var(--sans); color:#3A3E47; max-width:620px; margin:0 0 26px;}
+.cov-tabs{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:26px;}
+.cov-tab{display:flex; flex-direction:column; gap:3px; text-align:left; background:#fff; border:1px solid var(--line); border-top:3px solid transparent; padding:14px 16px; cursor:pointer; transition:.15s; min-width:0;}
+.cov-tab:hover{border-color:var(--brand);}
+.cov-tab.on{border-top-color:var(--brand); box-shadow:0 4px 16px rgba(0,0,0,.06);}
+.cov-tab-a{font:900 24px var(--sans); letter-spacing:-.02em; color:#1A1D23; line-height:1;}
+.cov-tab.on .cov-tab-a{color:var(--brand);}
+.cov-tab-n{font:700 13px var(--sans); color:#1A1D23; margin-top:4px;}
+.cov-tab-tag{font:500 10px var(--mono); letter-spacing:.04em; text-transform:uppercase; color:#6B7280;}
+.cov-tab-k{font:600 10px var(--mono); letter-spacing:.06em; color:#9A9288; margin-top:2px;}
+.sec-head{display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; padding-bottom:13px; border-bottom:2px solid #1A1D23; margin-bottom:28px;}
+.sec-head .l{font:700 13px var(--mono); letter-spacing:.16em; text-transform:uppercase; color:#1A1D23;}
+.sec-head .c{font:400 12px var(--mono); letter-spacing:.06em; color:#6B7280;}
+.sec-head .r{margin-left:auto; font:400 12px var(--mono); color:#6B7280; max-width:360px; text-align:right;}
+.coverage{display:grid; grid-template-columns:4fr minmax(248px,1fr); gap:28px; align-items:stretch;}
+.mx-module{display:grid; grid-template-columns:minmax(0,1fr) 248px; border:1px solid var(--line); border-top:3px solid var(--brand); background:#fff; min-width:0; height:100%; align-content:stretch;}
+.mx-scroll{overflow-x:auto; min-width:0;}
+.mx-grid{display:grid;}
+.mx-ch{font:700 10px var(--mono); letter-spacing:.04em; color:#6B7280; padding:13px 4px 11px; text-align:center; border-bottom:2px solid #1A1D23; transition:color .15s;}
+.mx-ch.corner{text-align:left; padding-left:16px; letter-spacing:.16em; text-transform:uppercase; color:#1A1D23;}
+.mx-rh{font:600 13px var(--sans); padding:0 14px; display:flex; align-items:center; border-bottom:1px solid var(--line); min-height:44px; color:#1A1D23;}
+.mx-cell{display:flex; align-items:center; justify-content:center; border-bottom:1px solid var(--line); border-left:1px solid var(--line); min-height:44px; cursor:pointer; transition:background .1s;}
+.mx-dot{width:13px; height:13px; border-radius:50%; transition:transform .12s;}
+.mx-dot.p2{background:var(--brand);}
+.mx-dot.p1{width:9px; height:9px; background:transparent; border:2px solid var(--brand);}
+.mx-dot.p0{width:4px; height:4px; background:var(--line);}
+.mx-cell.hl{background:hsl(var(--accent)/.06);}
+.mx-cell.cross{background:hsl(var(--accent)/.14);}
+.mx-cell.lock{background:hsl(var(--accent)/.20); box-shadow:inset 0 0 0 2px var(--brand);}
+.mx-rh.hl,.mx-ch.hl{color:var(--brand);}
+.mx-cell:hover .mx-dot.p2,.mx-cell:hover .mx-dot.p1{transform:scale(1.35);}
+.mx-readout{border-left:1px solid var(--line); background:#F5F4F1; padding:22px; min-width:0;}
+.ro-tag{font:500 10.5px var(--mono); letter-spacing:.16em; text-transform:uppercase; color:#6B7280;}
+.ro-title{font:700 20px var(--sans); letter-spacing:-.01em; margin:8px 0 2px; min-height:26px; color:#1A1D23;}
+.ro-x{font:500 13px var(--mono); color:var(--brand); margin:0 0 16px;}
+.ro-fit{display:flex; align-items:center; gap:9px; font:500 12px var(--mono); color:#3A3E47; margin:8px 0;}
+.ro-d{width:11px; height:11px; border-radius:50%; background:var(--line);}
+.ro-d.f2{background:var(--brand);} .ro-d.f1{background:transparent; border:2px solid var(--brand);} .ro-d.f0{background:var(--line);}
+.ro-skus{font:900 30px var(--sans); letter-spacing:-.02em; margin:14px 0 2px; color:#1A1D23;}
+.ro-sl{font:400 11px var(--mono); letter-spacing:.06em; text-transform:uppercase; color:#6B7280;}
+.ro-cta{display:inline-flex; gap:8px; align-items:center; margin-top:18px; font:700 12px var(--mono); letter-spacing:.1em; text-transform:uppercase; color:#fff; background:var(--brand); padding:12px 16px; text-decoration:none; transition:background .15s;}
+.ro-cta:hover{background:var(--brand-dark);}
+.ro-hint{font:400 11.5px/1.6 var(--mono); color:#6B7280; margin-top:8px;}
+
+.dp-rail{border:1px solid var(--line); border-top:3px solid var(--brand); background:#fff; padding:20px 18px; min-width:0; height:100%;}
+.dp-head{font:700 11px var(--mono); letter-spacing:.16em; text-transform:uppercase; color:var(--brand); margin:0 0 4px;}
+.dp-title{font:700 17px var(--sans); letter-spacing:-.01em; margin:0 0 18px; color:#1A1D23;}
+.dp-dots{list-style:none; margin:0 0 18px; padding:0; display:flex; flex-direction:column;}
+.dp-dots li{display:flex; align-items:center; gap:10px; padding:5px 0; position:relative;}
+.dp-n{width:26px; height:26px; border:2px solid var(--line); color:#6B7280; font:700 13px var(--mono); display:flex; align-items:center; justify-content:center; flex-shrink:0; background:#fff; position:relative; z-index:1; transition:all .2s;}
+.dp-dots li:not(:last-child) .dp-n::after{content:""; position:absolute; left:50%; top:100%; transform:translateX(-50%); width:2px; height:12px; background:var(--line);}
+.dp-l{font:600 11px var(--mono); letter-spacing:.06em; text-transform:uppercase; color:#6B7280; transition:color .2s;}
+.dp-dots li.on .dp-n{background:var(--brand); border-color:var(--brand); color:#fff;}
+.dp-dots li.on .dp-l{color:#1A1D23;}
+.dp-dots li.done .dp-n{border-color:var(--brand); color:var(--brand);}
+.dp-dots li.done .dp-n::after{background:var(--brand);}
+.dp-q{font:900 16px var(--sans); letter-spacing:-.01em; margin:0 0 12px; color:#1A1D23;}
+.dp-opts{display:flex; flex-direction:column; gap:7px;}
+.dp-opt{display:block; width:100%; text-align:left; border:1px solid var(--line); border-left:3px solid transparent; background:#F5F4F1; color:#1A1D23; padding:10px 12px; font:700 13px var(--sans); cursor:pointer; transition:all .14s;}
+.dp-opt small{display:block; margin-top:3px; font:500 10px var(--mono); color:#6B7280; letter-spacing:.02em;}
+.dp-opt .nm{white-space:nowrap;}
+.dp-opt:hover{border-color:var(--brand); border-left-color:var(--brand); transform:translateX(2px);}
+.dp-crumbs{display:flex; flex-direction:column; gap:6px; margin-bottom:14px;}
+.dp-crumb{font:500 10.5px var(--mono); letter-spacing:.03em; color:#3A3E47; background:#F5F4F1; border:1px solid var(--line); border-left:3px solid var(--brand); padding:6px 9px;}
+.dp-back{background:none; border:none; color:#6B7280; font:600 11px var(--mono); letter-spacing:.08em; text-transform:uppercase; cursor:pointer; padding:12px 0 0;}
+.dp-back:hover{color:#1A1D23;}
+.dp-rec-tag{font:700 10.5px var(--mono); letter-spacing:.16em; text-transform:uppercase; color:var(--grn);}
+.dp-rec{font:900 24px var(--sans); letter-spacing:-.02em; margin:7px 0 12px; line-height:1.05; color:#1A1D23;}
+.dp-skus{display:flex; align-items:baseline; gap:8px; margin-bottom:12px;}
+.dp-skus b{font:900 30px var(--sans); letter-spacing:-.02em; color:var(--brand);}
+.dp-skus span{font:400 10px var(--mono); letter-spacing:.1em; text-transform:uppercase; color:#6B7280;}
+.dp-why{font:400 12px/1.6 var(--sans); color:#3A3E47; margin:0 0 16px;}
+.dp-cta{display:flex; align-items:center; justify-content:center; gap:6px; width:100%; font:700 11.5px var(--mono); letter-spacing:.08em; text-transform:uppercase; color:#fff; background:var(--brand); padding:12px; text-decoration:none; margin-bottom:8px; transition:background .15s;}
+.dp-cta:hover{background:var(--brand-dark);}
+.dp-restart{background:none; border:none; color:#6B7280; font:500 11px var(--mono); letter-spacing:.04em; cursor:pointer; padding:10px 0 0; display:block;}
+.dp-restart:hover{color:var(--brand);}
+
+/* ===== Safety & Controls tech band ===== */
+.tband{position:relative; z-index:1; border-top:1px solid #E4E2DD; padding:clamp(34px,3.4vw,58px) clamp(22px,4vw,72px) clamp(48px,5vw,80px);}
+.tb-toggle{display:flex; align-items:center; gap:12px; width:100%; text-align:left; background:#fff; border:1px solid var(--line); border-left:3px solid var(--brand); padding:16px 18px; cursor:pointer;}
+.tb-toggle[aria-expanded="true"]{margin-bottom:22px;}
+.tb-tdot{width:9px; height:9px; border-radius:50%; background:var(--brand); flex-shrink:0;}
+.tb-tlabel{font:700 13px var(--mono); letter-spacing:.14em; text-transform:uppercase; color:#1A1D23;}
+.tb-tsub{font:500 12px var(--mono); color:#6B7280; letter-spacing:.02em; min-width:0;}
+.tb-tchev{margin-left:auto; color:var(--brand); font-size:13px;}
+.tb-codes{background:var(--surface); padding:clamp(20px,2vw,30px); border:1px solid #14181F; margin-bottom:20px;}
+.tb-codes-h{font:900 clamp(18px,2vw,24px) var(--sans); color:#EDEFF2; margin:0 0 16px; letter-spacing:-.02em;}
+.tb-chips{display:flex; flex-wrap:wrap; gap:9px;}
+.tb-chip{display:flex; flex-direction:column; gap:3px; text-decoration:none; background:#1C2128; border:1px solid #262B33; border-left:3px solid var(--brand); padding:9px 12px; min-width:0; transition:.15s;}
+.tb-chip:hover{background:#222b36; transform:translateX(2px);}
+.tb-chip b{font:700 12px var(--mono); letter-spacing:.05em; color:#EDEFF2;}
+.tb-chip span{font:500 9.5px var(--mono); letter-spacing:.03em; text-transform:uppercase; color:#7A808B;}
+.tb-caps{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+.tb-cap{display:block; text-decoration:none; background:#fff; border:1px solid var(--line); border-top:3px solid var(--brand); padding:22px; transition:box-shadow .15s; min-width:0;}
+.tb-cap:hover{box-shadow:0 6px 24px rgba(0,0,0,.07);}
+.tb-cap-h{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;}
+.tb-cap-nm{font:900 22px var(--sans); letter-spacing:-.02em; color:#1A1D23;}
+.tb-cap-tier{font:700 10px var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--brand);}
+.tb-cap-tag{font:600 11px var(--mono); letter-spacing:.04em; color:#6B7280; margin:8px 0 12px;}
+.tb-cap-b{font:400 13px/1.6 var(--sans); color:#3A3E47; margin:0 0 16px;}
+.tb-stats{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;}
+.tb-stat b{display:block; font:900 16px var(--sans); color:#1A1D23; letter-spacing:-.01em;}
+.tb-stat span{font:500 9px var(--mono); letter-spacing:.04em; text-transform:uppercase; color:#6B7280;}
+.tb-cap-go{font:700 12px var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--brand);}
+.tb-chip{cursor:pointer; font-family:inherit; text-align:left;}
+.tb-chip.on{border-color:var(--brand); background:#222b36;}
+.tb-cap{transition:box-shadow .18s, opacity .18s, filter .18s, transform .18s;}
+.tb-cap.hit{box-shadow:0 0 0 2px var(--brand), 0 10px 30px rgba(243,39,64,.14); transform:translateY(-2px);}
+.tb-cap.dim{opacity:.32; filter:saturate(.5);}
+.tb-readout{display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-top:14px; padding:12px 14px; border:1px solid #262B33; border-left:3px solid var(--brand); background:#14181F; min-height:50px;}
+.tb-ro-code{font:700 12px var(--mono); color:#EDEFF2; white-space:nowrap;}
+.tb-ro-req{font:400 12.5px/1.5 var(--sans); color:#B7BCC4; flex:1; min-width:180px;}
+.tb-readout.empty .tb-ro-req{color:#7A808B;}
+.tb-ro-to{font:700 10.5px var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--brand); white-space:nowrap;}
+.tb-ro-clear{background:none; border:none; color:#7A808B; font:600 10.5px var(--mono); letter-spacing:.08em; text-transform:uppercase; cursor:pointer;}
+.tb-ro-clear:hover{color:#EDEFF2;}
+
+/* ===== responsive (CFG-MOBILE-1) ===== */
+@media(max-width:1100px){
+  .coverage{grid-template-columns:1fr;}
+  .mx-module{grid-template-columns:1fr;}
+  .mx-readout{border-left:none; border-top:1px solid var(--line);}
+}
+@media(max-width:900px){
+  .split{grid-template-columns:1fr;}
+  .rail{border-right:none; border-bottom:1px solid var(--line);}
+  .stage{min-height:60vh;}
+  .cov-tabs{grid-template-columns:1fr 1fr;}
+  .tb-caps{grid-template-columns:1fr;}
+}
+@media(max-width:560px){ .cov-tabs{grid-template-columns:1fr;} }
+</style>
+
+<div class="glow-orb" aria-hidden="true"></div>
+
+<!-- header + mega-menu are the Astro layout's (CFG-CHROME-1). Page content begins here. -->
+<nav class="crumbs" aria-label="Breadcrumb">HOME › <b>PRODUCTS</b></nav>
+
+<div class="split">
+  <section class="rail zone-light">
+    <p class="alg-eye">Products · Directory</p>
+    <p class="sub">Four categories, seven collections, one spec-grade portfolio. Hover to feature.</p>
+    <ul class="ed-list" id="ed-list"></ul>
+    <div class="rail-foot">Click a row to browse →</div>
+  </section>
+  <section class="stage zone-dark">
+    <div class="flabel">Featured Category</div>
+    <div class="ed-preview" id="ed-preview"></div>
+  </section>
+</div>
+
+<section class="band zone-light">
+  <p class="alg-eye">Products · Coverage</p>
+  <h2>Find the exact fixture.</h2>
+  <p class="lede">The whole catalog as a spec sheet — by category. Pick a category, then cross-reference any form factor against any family, echelon tier or capability, or let the Quick Spec walk you to a recommendation.</p>
+  <div class="cov-tabs" id="cov-tabs"></div>
+  <div class="sec-head"><span class="l">Form Factor × Family</span><span class="c" id="cov-count">—</span>
+    <span class="r">Hover a cell for availability &amp; SKU count; click to open filtered.</span></div>
+  <div class="coverage">
+    <div class="mx-module">
+      <div class="mx-scroll"><div class="mx-grid" id="mx-grid"></div></div>
+      <div class="mx-readout" id="mx-readout"></div>
+    </div>
+    <aside class="dp-rail">
+      <p class="dp-head">Decision Path</p>
+      <h3 class="dp-title">Quick Spec</h3>
+      <div id="dp-pane"></div>
+    </aside>
+  </div>
+</section>
+
+<section class="tband zone-light"><div id="tech-band"></div></section>
+
+<script>
+(function(){
+const BASE="https://staging.archipelagolighting.com";
+function aa(){return '<span class="aa">Ⓐ</span>';}
+function A(pre,post){return pre+aa()+post;}
+function strip(s){return s.replace(/<[^>]+>/g,'');}
+const FITNAME=["Not offered","Optional / limited","Available"];
+
+/* ---- directory taxonomy ---- */
+const CATS=[
+ {n:"Indoor",s:"indoor",a:"IN",fam:[A("plano","RCH"),A("lampar","RCH")],tag:"Commercial · Industrial",
+  b:"Recessed downlights, back-lit panels, architectural linear, troffers and high bays for offices, warehouses, retail, education and healthcare interiors."},
+ {n:"Outdoor",s:"outdoor",a:"OUT",fam:[A("luxo","RCH"),A("city","RCH")],tag:"Site · Area · Roadway",
+  b:"Area, flood, wall-pack and roadway luminaires for parking, building exteriors, campuses and municipal corridors. Dark-sky and BUG-rated optics."},
+ {n:"Residential",s:"residential",a:"RES",fam:["Consumer",A("multi-f","MILY")],tag:"Consumer · Multi-Family",
+  b:"Decorative and recessed fixtures for single-family and multi-family dwellings. Energy-Star and JA8 options for code-driven residential builds."},
+ {n:"Lamps",s:"lamps",a:"LMP",fam:["Decor","Linear","Utility"],tag:"Decor · Linear · Utility",
+  b:"Replacement and retrofit lamps — decorative filament, linear tubes and utility A-line. Plug-and-play and ballast-bypass across common bases."}
+];
+
+/* ---- full-portfolio coverage model (all 4 categories) ---- */
+const COVERAGE={
+ indoor:{n:"Indoor",a:"IN",tag:"Commercial · Industrial",
+  note:"Read across a form factor for every family and tier it ships in, or down a column for everything a family carries.",
+  cols:[{n:A("plano","RCH"),c:"PLN",s:"commercial-planoarch"},{n:A("lampar","RCH"),c:"LAM",s:"industrial-lampararch"},{n:"ECO",c:"ECO",s:"eco"},{n:"PRO",c:"PRO",s:"pro"},{n:"PRO+",c:"PRO+",s:"pro-plus"},{n:A("const","NT"),c:"cNT",s:"constant"},{n:A("contr","LS"),c:"cLS",s:"controls"}],
+  rows:[{n:"Architectural Linear",c:"A.LIN",s:"architectural-linear",k:11},{n:"Downlight",c:"DL",s:"downlight",k:41},{n:"Panel",c:"PNL",s:"panel",k:19},{n:"Retrofit Panel",c:"R.PNL",s:"retrofit-panel",k:6},{n:"Retrofit Troffer",c:"R.TRF",s:"retrofit-troffer",k:6},{n:"Stairwell & Passageway",c:"STR",s:"stair-passageway",k:4},{n:"Track Light",c:"TRK",s:"track-light",k:4},{n:"Troffer",c:"TRF",s:"troffer",k:21},{n:"Wraparound",c:"WRP",s:"wraparound",k:4}],
+  fit:[[2,1,1,2,2,1,2],[2,0,2,2,2,1,2],[2,0,2,2,2,1,2],[2,0,2,1,0,0,1],[2,0,2,1,0,0,1],[1,2,1,2,1,2,1],[2,0,1,2,1,0,1],[2,0,2,2,2,1,2],[1,2,2,1,0,1,1]]},
+ outdoor:{n:"Outdoor",a:"OUT",tag:"Site · Area · Roadway",
+  note:"luxoⒶRCH carries architectural site & area; cityⒶRCH carries roadway & municipal. Most outdoor optics are dark-sky / BUG-rated.",
+  cols:[{n:A("luxo","RCH"),c:"LUX",s:"luxoarch"},{n:A("city","RCH"),c:"CTY",s:"cityarch"},{n:"ECO",c:"ECO",s:"eco"},{n:"PRO",c:"PRO",s:"pro"},{n:"PRO+",c:"PRO+",s:"pro-plus"},{n:A("const","NT"),c:"cNT",s:"constant"},{n:A("contr","LS"),c:"cLS",s:"controls"}],
+  rows:[{n:"Area / Site",c:"ARA",s:"area-site",k:28},{n:"Flood",c:"FLD",s:"flood",k:14},{n:"Wall Pack",c:"WPK",s:"wall-pack",k:16},{n:"Roadway",c:"RDW",s:"roadway",k:9},{n:"Canopy / Garage",c:"CNP",s:"canopy-garage",k:11},{n:"Bollard",c:"BOL",s:"bollard",k:5},{n:"Dusk-to-Dawn",c:"DTD",s:"dusk-to-dawn",k:7}],
+  fit:[[2,1,1,2,2,0,2],[2,1,2,2,1,0,1],[2,1,2,2,1,1,2],[0,2,1,2,1,0,2],[2,1,2,2,1,1,2],[2,0,1,2,1,0,1],[1,2,2,1,0,0,2]]},
+ residential:{n:"Residential",a:"RES",tag:"Consumer · Multi-Family",
+  note:"JA8 marks Title 24 / Energy-Star residential compliance. contrⒶLS here means consumer smart-home dimming & app control.",
+  cols:[{n:"Consumer",c:"CON",s:"consumer"},{n:A("multi-f","MILY"),c:"MFM",s:"multi-family"},{n:"ECO",c:"ECO",s:"eco"},{n:"PRO",c:"PRO",s:"pro"},{n:"JA8",c:"JA8",s:"ja8"},{n:A("contr","LS"),c:"cLS",s:"controls"}],
+  rows:[{n:"Recessed Downlight",c:"RDL",s:"recessed-downlight",k:18},{n:"Surface Mount",c:"SFM",s:"surface-mount",k:12},{n:"Vanity / Decorative",c:"VAN",s:"vanity-decorative",k:9},{n:"Under-Cabinet",c:"UCB",s:"under-cabinet",k:6},{n:"Ceiling Fan Light",c:"CFN",s:"ceiling-fan",k:4},{n:"Outdoor / Porch",c:"POR",s:"outdoor-porch",k:8}],
+  fit:[[2,2,2,2,2,1],[2,2,2,1,2,1],[2,1,2,1,1,0],[2,1,2,1,0,1],[2,0,2,1,1,0],[2,1,2,1,1,1]]},
+ lamps:{n:"Lamps",a:"LMP",tag:"Decor · Linear · Utility",
+  note:"Type B = direct-wire / ballast-bypass. Plug-and-play (Type A) lamps run on the existing ballast across common bases.",
+  cols:[{n:"Decor",c:"DEC",s:"decor"},{n:"Linear",c:"LIN",s:"linear"},{n:"Utility",c:"UTL",s:"utility"},{n:"ECO",c:"ECO",s:"eco"},{n:"PRO",c:"PRO",s:"pro"},{n:"Type B",c:"TYB",s:"type-b"}],
+  rows:[{n:"A-Line (A19/A21)",c:"A19",s:"a-line",k:14},{n:"BR / PAR",c:"PAR",s:"br-par",k:11},{n:"Filament Decorative",c:"FIL",s:"filament-decorative",k:9},{n:"Linear Tube (T8/T5)",c:"TUB",s:"linear-tube",k:8},{n:"HID Replacement",c:"HID",s:"hid-replacement",k:3},{n:"Specialty",c:"SPC",s:"specialty",k:2}],
+  fit:[[1,0,2,2,2,1],[1,0,2,2,2,1],[2,0,1,2,1,0],[0,2,1,2,2,2],[0,1,2,1,2,2],[1,1,1,2,1,1]]}
+};
+Object.values(COVERAGE).forEach(c=>{c.total=c.rows.reduce((a,r)=>a+r.k,0);});
+const COV_ORDER=["indoor","outdoor","residential","lamps"];
+
+const TECH=[
+ {n:A("const","NT"),plain:"constⒶNT",s:"constant",tier:"Safety",tag:"Emergency · Egress · Exit · Battery Backup",
+  b:"Life-safety, always-on. UL 924 emergency luminaires, exit signs, battery-backup modules and central battery systems for code-required egress, stairwells, corridors and assembly spaces.",
+  stats:[["5 Forms","EXIT · EML · EBB · BUG-EYE · CBS"],["90 Minutes","UL 924 DISCHARGE STANDARD"],["Self-Test","STANDARD ON PRO &amp; PRO+"],["7 Yrs","STANDARD WARRANTY"]],
+  codes:[["UL 924","EMERGENCY LUMINAIRES &amp; EXIT SIGNS"],["NFPA 101","LIFE SAFETY CODE · EGRESS"],["NFPA 110","EMERGENCY POWER · CBS"],["OSHA 1910.37","MEANS OF EGRESS · WORKPLACES"],["IBC §1008","MEANS OF EGRESS ILLUMINATION"]]},
+ {n:A("contr","LS"),plain:"contrⒶLS",s:"controls",tier:"Controls",tag:"Sensors · Dimming · Network · "+aa()+"CS by ALG App",
+  b:"Networked control. Occupancy and daylight sensors, 0–10V dimming modules, wireless mesh nodes and the "+aa()+"CS by ALG App gateway — for Title 24, ASHRAE 90.1 and IECC C405 compliance.",
+  stats:[["5 Forms","SENSOR · DIM · NET · WIRELESS · RELAY"],["Title 24","PART 6 · §140.6 · §141.0"],[aa()+"CS by ALG","BLUETOOTH MESH · 250 NODES"],["BACnet","BMS INTEGRATION · PRO+"]],
+  codes:[["TITLE 24 P6","CA ENERGY CODE · CONTROLS"],["ASHRAE 90.1","AUTO SHUT-OFF · DAYLIGHT"],["IECC C405","LIGHTING CONTROLS · INTERIOR"],["DLC NLC5","NETWORKED LIGHTING CONTROLS V5"],["JLAB","JOINT CODES · COMBINED SYSTEMS"]]}
+];
+
+/* ---- Directory → dark feature stage ---- */
+function buildDirectory(listEl,previewEl){
+  listEl.innerHTML='';previewEl.innerHTML='';
+  CATS.forEach((v,i)=>{
+    const li=document.createElement('li');
+    li.className='ed-row'+(i===0?' active':'');li.dataset.i=i;li.tabIndex=0;
+    li.innerHTML='<span class="ed-no">0'+(i+1)+'</span><span class="ed-main"><span class="ed-nm">'+v.n+'</span><span class="ed-fam">'+v.fam.join(' · ')+'</span></span><span class="ed-go">→</span>';
+    li.addEventListener('mouseenter',()=>activate(i));
+    li.addEventListener('focus',()=>activate(i));
+    li.addEventListener('click',()=>activate(i));
+    listEl.appendChild(li);
+    const f=document.createElement('a');
+    f.className='ed-frame'+(i===0?' show':'');f.dataset.i=i;f.href=BASE+'/collections/'+v.s+'/';
+    f.innerHTML='<div class="ed-abbr">'+v.a+'</div><div class="ed-meta"><span class="ed-dot"></span>Category · '+v.tag+'</div>'+
+      '<div class="ed-body"><h2>'+v.n+'</h2><div class="ed-famrow">'+v.fam.map(x=>'<span class="ed-fchip">'+x+'</span>').join('')+'</div>'+
+      '<p>'+v.b+'</p><span class="ed-view">Browse '+v.n+'<span class="ed-arr">→</span></span></div>';
+    previewEl.appendChild(f);
+  });
+  function activate(i){
+    listEl.querySelectorAll('.ed-row').forEach(r=>r.classList.toggle('active',+r.dataset.i===i));
+    previewEl.querySelectorAll('.ed-frame').forEach(f=>f.classList.toggle('show',+f.dataset.i===i));
+  }
+}
+
+/* ---- category-aware Quick Spec (form factor → family/tier → result) ---- */
+function buildQuickSpec(paneEl,cat,matrix,catKey){
+  const rows=cat.rows,cols=cat.cols,fit=cat.fit;
+  let st={step:0,row:null,col:null};
+  function dots(){return '<ol class="dp-dots">'+['Form','Family','Result'].map((l,i)=>'<li class="'+(i===st.step?'on':'')+' '+(i<st.step?'done':'')+'"><span class="dp-n">'+(i+1)+'</span><span class="dp-l">'+l+'</span></li>').join('')+'</ol>';}
+  function crumbs(){let h='';if(st.row!=null)h+='<span class="dp-crumb">'+rows[st.row].n+'</span>';if(st.col!=null)h+='<span class="dp-crumb">'+cols[st.col].n+'</span>';return h?'<div class="dp-crumbs">'+h+'</div>':'';}
+  function render(){
+    let inner='';
+    if(st.step===0){inner='<div class="dp-q">Which form factor?</div><div class="dp-opts">'+rows.map((r,i)=>'<button class="dp-opt" data-r="'+i+'">'+r.n+'<small>'+r.k+' SKUs</small></button>').join('')+'</div>';}
+    else if(st.step===1){inner=crumbs()+'<div class="dp-q">Which family or tier?</div><div class="dp-opts">'+cols.map((c,i)=>'<button class="dp-opt" data-c="'+i+'">'+c.n+'</button>').join('')+'</div><button class="dp-back">← Back</button>';}
+    else{
+      const r=st.row;let c=st.col;let note='';
+      if(!fit[r][c]){let best=-1;for(let j=0;j<cols.length;j++){if(fit[r][j]===2){best=j;break;}}if(best<0)for(let j=0;j<cols.length;j++){if(fit[r][j]===1){best=j;break;}}
+        if(best>=0){note=strip(cols[c].n)+' isn\'t offered for '+rows[r].n+'; nearest available is '+strip(cols[best].n)+'. ';c=best;}}
+      const fv=fit[r][c];
+      if(matrix&&matrix.focusCell)matrix.focusCell(r,c);
+      inner=crumbs()+'<div class="dp-rec-tag">Recommended</div><h3 class="dp-rec">'+rows[r].n+'</h3><div class="dp-skus"><b>'+rows[r].k+'</b><span>SKUs available</span></div><p class="dp-why">'+note+rows[r].n+' in the '+cols[c].n+' column — '+FITNAME[fv].toLowerCase()+'.</p><a class="dp-cta" href="'+BASE+'/collections/'+catKey+'/?application='+rows[r].s+'&family='+cols[c].s+'">Browse '+rows[r].n+' →</a><button class="dp-restart">↻ Start over</button>';
+    }
+    paneEl.innerHTML=dots()+'<div class="dp-pane">'+inner+'</div>';
+    paneEl.querySelectorAll('.dp-opt[data-r]').forEach(b=>b.onclick=()=>{st.row=+b.dataset.r;st.step=1;render();});
+    paneEl.querySelectorAll('.dp-opt[data-c]').forEach(b=>b.onclick=()=>{st.col=+b.dataset.c;st.step=2;render();});
+    const back=paneEl.querySelector('.dp-back');if(back)back.onclick=()=>{st.step=0;render();};
+    const rs=paneEl.querySelector('.dp-restart');if(rs)rs.onclick=()=>{st={step:0,row:null,col:null};if(matrix&&matrix.unlock)matrix.unlock();render();};
+  }
+  render();
+}
+
+/* ---- category-aware coverage engine: render(catKey) ---- */
+function renderCoverage(catKey){
+  const cat=COVERAGE[catKey],cols=cat.cols,rows=cat.rows,fit=cat.fit;
+  document.querySelectorAll('.cov-tab').forEach(t=>t.classList.toggle('on',t.dataset.k===catKey));
+  document.getElementById('cov-count').textContent=rows.length+' × '+cols.length+' · '+cat.total+' SKUs';
+  const grid=document.getElementById('mx-grid'),ro=document.getElementById('mx-readout');
+  grid.style.gridTemplateColumns='200px repeat('+cols.length+',minmax(60px,1fr))';
+  grid.style.minWidth=(200+cols.length*72)+'px';
+  let html='<div class="mx-ch corner">Form \\ Family</div>';
+  cols.forEach((a,c)=>html+='<div class="mx-ch" data-c="'+c+'" title="'+strip(a.n)+'">'+a.c+'</div>');
+  rows.forEach((v,r)=>{html+='<div class="mx-rh" data-r="'+r+'">'+v.n+'</div>';cols.forEach((a,c)=>{const f=fit[r][c];html+='<div class="mx-cell" data-r="'+r+'" data-c="'+c+'"><span class="mx-dot p'+f+'"></span></div>';});});
+  grid.innerHTML=html;
+  ro.innerHTML='<div class="ro-tag" data-role="tag">Hover a cell</div><h3 class="ro-title" data-role="title">Select a pairing</h3><p class="ro-x" data-role="x">—</p><div class="ro-fit" data-role="fit"><span class="ro-d"></span><span>—</span></div><div class="ro-skus" data-role="skus">—</div><div class="ro-sl">SKUs in family</div><a class="ro-cta" data-role="cta" href="#" style="display:none;">Browse →</a><p class="ro-hint" data-role="hint">'+cat.note+'</p>';
+  const $=s=>ro.querySelector('[data-role="'+s+'"]');
+  function clearHL(){grid.querySelectorAll('.hl,.cross,.lock').forEach(e=>e.classList.remove('hl','cross','lock'));}
+  function focusCell(r,c,opts){opts=opts||{};clearHL();
+    grid.querySelectorAll('.mx-cell[data-r="'+r+'"]').forEach(e=>e.classList.add('hl'));
+    grid.querySelectorAll('.mx-cell[data-c="'+c+'"]').forEach(e=>e.classList.add('hl'));
+    grid.querySelector('.mx-rh[data-r="'+r+'"]').classList.add('hl');
+    grid.querySelector('.mx-ch[data-c="'+c+'"]').classList.add('hl');
+    const cell=grid.querySelector('.mx-cell[data-r="'+r+'"][data-c="'+c+'"]');
+    if(cell){cell.classList.add('cross');if(opts.lock)cell.classList.add('lock');}
+    const f=fit[r][c],row=rows[r],col=cols[c];
+    $('tag').innerHTML=(opts.lock?'Selected · ':'')+col.n;
+    $('title').textContent=row.n;$('x').innerHTML='× '+col.n;
+    $('fit').innerHTML='<span class="ro-d f'+f+'"></span><span>'+FITNAME[f]+'</span>';
+    $('skus').textContent=f?row.k:'0';
+    const cta=$('cta');if(f){cta.style.display='inline-flex';cta.href=BASE+'/collections/'+catKey+'/?application='+row.s+'&family='+col.s;}else cta.style.display='none';
+    $('hint').style.display='none';
+    if(opts.lock&&cell)cell.scrollIntoView({block:'nearest',inline:'nearest'});
+  }
+  let locked=false;
+  grid.querySelectorAll('.mx-cell').forEach(cell=>{const r=+cell.dataset.r,c=+cell.dataset.c;
+    cell.addEventListener('mouseenter',()=>{if(!locked)focusCell(r,c);});
+    cell.addEventListener('click',()=>{if(!fit[r][c])return; if(locked&&cell.classList.contains('lock')){locked=false;clearHL();focusCell(r,c);} else {locked=true;focusCell(r,c,{lock:true});}});});
+  grid.addEventListener('mouseleave',()=>{if(!locked)clearHL();});
+  const handle={focusCell:(r,c)=>{locked=true;focusCell(r,c,{lock:true});},unlock:()=>{locked=false;clearHL();}};
+  buildQuickSpec(document.getElementById('dp-pane'),cat,handle,catKey);
+  try{localStorage.setItem('alg-products-cov-tab',catKey);}catch(e){}
+}
+
+function buildTabs(){
+  const tabsEl=document.getElementById('cov-tabs');
+  tabsEl.innerHTML=COV_ORDER.map(k=>{const c=COVERAGE[k];return '<button class="cov-tab" data-k="'+k+'"><span class="cov-tab-a">'+c.a+'</span><span class="cov-tab-n">'+c.n+'</span><span class="cov-tab-tag">'+c.tag+'</span><span class="cov-tab-k">'+c.total+' SKUs</span></button>';}).join('');
+  tabsEl.querySelectorAll('.cov-tab').forEach(t=>t.onclick=()=>renderCoverage(t.dataset.k));
+  let initial='indoor';try{const s=localStorage.getItem('alg-products-cov-tab');if(s&&COVERAGE[s])initial=s;}catch(e){}
+  renderCoverage(initial);
+}
+
+/* ---- toggleable Safety & Controls tech band ---- */
+function buildTechBand(el){
+  const codes=[].concat(TECH[0].codes.map(c=>[c[0],c[1],'constant']),TECH[1].codes.map(c=>[c[0],c[1],c[0]==='JLAB'?'both':'controls']));
+  const KEY='alg-products-techband-open';
+  let open=true;try{open=localStorage.getItem(KEY)!=='0';}catch(e){}
+  let active=null;
+  function arrow(to){return to==='both'?'BOTH':(to==='constant'?A("const","NT"):A("contr","LS"));}
+  function readout(){
+    if(active===null) return '<div class="tb-readout empty"><span class="tb-ro-req">Pick a code above — we highlight the platform that satisfies it and route you to it.</span></div>';
+    var c=codes[active], to=c[2]==='both'?TECH[0].plain+' + '+TECH[1].plain:(c[2]==='constant'?TECH[0].plain:TECH[1].plain);
+    return '<div class="tb-readout"><span class="tb-ro-code">'+c[0]+'</span><span class="tb-ro-req">'+strip(c[1])+'</span><span class="tb-ro-to">→ '+to+'</span><button class="tb-ro-clear" type="button">Clear</button></div>';
+  }
+  function paintPlats(to){el.querySelectorAll('.tb-cap').forEach(function(p){var hit=to&&(to==='both'||p.dataset.k===to);p.classList.toggle('hit',!!to&&hit);p.classList.toggle('dim',!!to&&!hit);});}
+  function render(){
+    el.innerHTML='<button class="tb-toggle" aria-expanded="'+open+'"><span class="tb-tdot"></span><span class="tb-tlabel">Safety &amp; Controls layer</span><span class="tb-tsub">'+A("const","NT")+' · '+A("contr","LS")+' · code cross-reference</span><span class="tb-tchev">'+(open?'▾':'▸')+'</span></button>'+
+      '<div class="tb-body"'+(open?'':' hidden')+'><div class="tb-codes zone-dark"><h3 class="tb-codes-h">Which code is driving the spec?</h3><div class="tb-chips">'+
+      codes.map(function(c,i){return '<button type="button" class="tb-chip '+c[2]+(i===active?' on':'')+'" data-i="'+i+'" data-to="'+c[2]+'"><b>'+c[0]+'</b><span>'+c[1]+' → '+arrow(c[2])+'</span></button>';}).join('')+'</div>'+readout()+'</div>'+
+      '<div class="tb-caps">'+TECH.map(function(t){return '<a class="tb-cap" data-k="'+t.s+'" href="'+BASE+'/collections/'+t.s+'/"><div class="tb-cap-h"><span class="tb-cap-nm">'+t.n+'</span><span class="tb-cap-tier">'+t.tier+'</span></div><p class="tb-cap-tag">'+t.tag+'</p><p class="tb-cap-b">'+t.b+'</p><div class="tb-stats">'+t.stats.map(function(s){return '<div class="tb-stat"><b>'+s[0]+'</b><span>'+s[1]+'</span></div>';}).join('')+'</div><span class="tb-cap-go">View '+t.plain+' →</span></a>';}).join('')+'</div></div>';
+    el.querySelector('.tb-toggle').onclick=function(){open=!open;try{localStorage.setItem(KEY,open?'1':'0');}catch(e){}render();};
+    el.querySelectorAll('.tb-chip').forEach(function(b){
+      b.addEventListener('mouseenter',function(){if(active===null)paintPlats(b.dataset.to);});
+      b.addEventListener('mouseleave',function(){if(active===null)paintPlats(null);});
+      b.addEventListener('click',function(){active=+b.dataset.i;render();});
+    });
+    var clr=el.querySelector('.tb-ro-clear');if(clr)clr.onclick=function(){active=null;render();};
+    if(active!==null)paintPlats(codes[active][2]);
+  }
+  render();
+}
+
+buildDirectory(document.getElementById('ed-list'),document.getElementById('ed-preview'));
+buildTabs();
+buildTechBand(document.getElementById('tech-band'));
+
+/* ambient glow follows scroll · respects reduced-motion */
+(function(){
+  const orb=document.querySelector('.glow-orb');if(!orb)return;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let curX=innerWidth*0.5,curY=innerHeight*0.4;
+  function target(){const max=document.documentElement.scrollHeight-innerHeight;const f=max>0?Math.min(1,Math.max(0,scrollY/max)):0;
+    return {tx:innerWidth*(0.46-0.30*Math.sin(f*Math.PI)),ty:innerHeight*(0.30+0.66*f)};}
+  function tick(){const t=target();curX+=(t.tx-curX)*0.04;curY+=(t.ty-curY)*0.04;orb.style.transform='translate('+curX+'px,'+curY+'px) translate(-50%,-50%)';requestAnimationFrame(tick);}
+  if(reduce){const t=target();orb.style.transform='translate('+t.tx+'px,'+t.ty+'px) translate(-50%,-50%)';}else requestAnimationFrame(tick);
+})();
+})();
+</script>
+</BaseLayout>
