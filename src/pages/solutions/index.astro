@@ -1,0 +1,393 @@
+---
+/**
+ * solutions/index.astro — Solutions Landing v2 ("Site & Shell")
+ * Route: /solutions/
+ *
+ * CFG-CHROME-1: body content only — header/mega-menu/footer owned by BaseLayout.
+ * CFG-TYPE-1:   Lato self-hosted in global.css; heading font pinned via is:global rule.
+ * CFG-MOBILE-1: overflow-x:hidden on body; no fixed-width wrappers.
+ * DATA NOTE:    VERTS / APPS / FIT data are PLACEHOLDER — DO NOT MERGE to main
+ *               until James supplies real Active_SKUs data and signs off on design.
+ *
+ * Source: mockup_solutions_landing_v2.html · 2026-06-01 (CSS-port-fix re-deploy)
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Solutions · Archipelago Lighting Group"
+  description="Eight industries, indoor and outdoor. Find the right fixture for any vertical with the coverage matrix and Quick Spec."
+  bodyClass="solutions-siteandshell"
+>
+<style is:global>
+
+:root{
+  --brand:#F32740; --brand-dark:#C8132E; --grn:#0FAE7C;
+  --sans:'Lato',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --accent:351 90% 55%;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; font-family:var(--sans); background:#FBFAF8; color:#1A1D23; overflow-x:hidden; -webkit-font-smoothing:antialiased;}
+h1,h2,h3,.ed-nm,.ro-skus,.ro-title,.dp-rec,.dp-skus b,.band h2,.ed-dname,.stage .ed-body h2{font-family:var(--sans)!important;}
+img{max-width:100%;}
+.aa{color:var(--brand); font-style:normal;}
+
+.zone-light{--surface:#FBFAF8; --surface-2:#FFFFFF; --surface-3:#F5F4F1; --line:#E2E0DB; --txt:#1A1D23; --txt-dim:#3A3E47; --txt-mute:#6B7280;}
+.zone-dark{--surface:#0B0D11; --surface-2:#14181F; --surface-3:#1C2128; --line:#262B33; --txt:#EDEFF2; --txt-dim:#B7BCC4; --txt-mute:#7A808B;
+  --frame-grad:radial-gradient(60% 65% at 30% 22%, hsl(var(--accent)/.20) 0%, transparent 52%), radial-gradient(140% 100% at 38% 30%, #232A37 0%, #14181F 50%, #0A0C10 100%);}
+
+.glow-orb{position:fixed; top:0; left:0; width:60vw; height:60vw; max-width:760px; max-height:760px; border-radius:50%;
+  background:radial-gradient(circle,hsl(var(--accent)/.15) 0%,hsl(var(--accent)/.06) 40%,transparent 70%);
+  filter:blur(54px); pointer-events:none; z-index:0; transition:transform .9s cubic-bezier(.2,.7,.2,1);
+  transform:translate(40vw,30vh) translate(-50%,-50%);}
+@media print{.glow-orb{display:none!important;}}
+@media (prefers-reduced-motion: reduce){.glow-orb{transition:none;}}
+
+.alg-eye{font:700 11.5px var(--mono); letter-spacing:.18em; text-transform:uppercase; color:var(--brand); margin:0;}
+.crumbs{position:relative; z-index:2; font:600 11px var(--mono); letter-spacing:.14em; text-transform:uppercase; color:#6B7280;
+  padding:16px clamp(22px,3vw,56px); border-bottom:1px solid #E2E0DB; background:#FBFAF8;}
+.crumbs b{color:#1A1D23;}
+
+/* ===== Hero split — dominant dark stage (left) + directory rail (right) ===== */
+.split{display:grid; grid-template-columns:minmax(0,1fr) 360px; position:relative; z-index:1;}
+.rail{padding:clamp(24px,2vw,40px) clamp(22px,1.8vw,34px); display:flex; flex-direction:column; border-left:1px solid var(--line); min-width:0; order:2;}
+.rail .sub{font:400 12.5px/1.5 var(--sans); color:var(--txt-mute); margin:10px 0 22px;}
+.ed-list{list-style:none; margin:0; padding:0; flex:1;}
+.ed-row{display:flex; align-items:center; gap:13px; padding:10px 0; cursor:pointer; border-bottom:1px solid var(--line); position:relative; outline:none;}
+.ed-no{font:400 11px var(--mono); color:var(--txt-mute); width:26px; transition:color .2s;}
+.ed-nm{font:700 15px var(--sans); letter-spacing:-.01em; color:var(--txt-mute); transition:color .22s, transform .22s; transform-origin:left;}
+.ed-go{margin-left:auto; opacity:0; color:var(--brand); font:400 14px var(--mono); transform:translateX(-8px); transition:.2s;}
+.ed-row::after{content:""; position:absolute; left:0; bottom:-1px; height:2px; width:0; background:var(--brand); transition:width .35s cubic-bezier(.2,.7,.2,1);}
+.ed-row.active .ed-no{color:var(--brand);}
+.ed-row.active .ed-nm{color:var(--txt); transform:translateX(5px);}
+.ed-row.active .ed-go{opacity:1; transform:translateX(0);}
+.ed-row.active::after{width:100%;}
+.rail-foot{font:600 11px var(--mono); letter-spacing:.05em; color:#9A9288; padding-top:16px;}
+
+.stage{position:relative; min-height:600px; overflow:hidden; min-width:0; order:1;}
+.stage .flabel{position:absolute; top:clamp(26px,2.4vw,42px); right:clamp(30px,3vw,56px); z-index:4; font:700 11px var(--mono); letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.42);}
+.ed-preview{position:absolute; inset:0;}
+.ed-frame{position:absolute; inset:0; opacity:0; transition:opacity .45s ease; display:flex; flex-direction:column; justify-content:flex-end; text-decoration:none; color:inherit; background:var(--frame-grad);}
+.ed-frame::before{content:""; position:absolute; inset:0; opacity:.35; background:repeating-linear-gradient(135deg, rgba(127,127,127,.10) 0 2px, transparent 2px 18px); pointer-events:none;}
+.ed-frame.show{opacity:1;}
+.ed-abbr{position:absolute; top:6%; right:6%; font:900 clamp(110px,16vw,240px) var(--sans); color:hsl(var(--accent)/.10); letter-spacing:-.04em; line-height:.8;}
+.ed-meta{position:absolute; top:clamp(40px,3.6vw,64px); left:clamp(40px,4vw,80px); font:700 11.5px var(--mono); letter-spacing:.16em; text-transform:uppercase; color:var(--brand); display:flex; align-items:center; gap:10px; z-index:2;}
+.ed-dot{width:7px; height:7px; border-radius:50%; background:var(--brand);}
+.ed-body{padding:0 clamp(40px,4vw,80px) clamp(44px,4vw,68px); position:relative; z-index:2;}
+.ed-body h2{font:900 clamp(34px,4.4vw,58px) var(--sans); letter-spacing:-.03em; margin:0 0 12px; line-height:1; color:var(--txt);}
+.ed-body p{font:400 15px/1.55 var(--sans); color:var(--txt-dim); max-width:540px; margin:0 0 20px;}
+.ed-dcards{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:0 0 22px; max-width:560px;}
+.ed-dcard{display:flex; flex-direction:column; gap:4px; background:rgba(255,255,255,.04); border:1px solid var(--line); border-left:3px solid var(--brand); padding:12px 14px; min-width:0;}
+.ed-dlabel{font:700 9.5px var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--brand);}
+.ed-dname{font:700 15px var(--sans); color:var(--txt); letter-spacing:-.01em;}
+.ed-dcode{font:500 10px var(--mono); letter-spacing:.04em; color:var(--txt-mute);}
+.ed-view{display:inline-flex; align-items:center; gap:9px; font:700 12px var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--txt); border:1px solid var(--line); padding:13px 20px; transition:.18s;}
+.ed-view:hover{background:var(--brand); border-color:var(--brand); color:#fff;}
+.ed-arr{transition:transform .18s;} .ed-view:hover .ed-arr{transform:translateX(4px);}
+
+/* ===== Coverage band ===== */
+.band{position:relative; z-index:1; border-top:1px solid #E4E2DD; padding:clamp(40px,4vw,68px) clamp(22px,4vw,72px) clamp(56px,5vw,84px);}
+.band h2{font:900 clamp(30px,3.4vw,44px) var(--sans); letter-spacing:-.03em; margin:8px 0 8px;}
+.band .lede{font:400 15px/1.6 var(--sans); color:#3A3E47; max-width:600px; margin:0 0 22px;}
+.dom-toggle{display:inline-flex; border:1px solid var(--line); background:#fff; margin:0 0 24px;}
+.dom-seg{font:700 11px var(--mono); letter-spacing:.1em; text-transform:uppercase; color:#6B7280; background:none; border:none; padding:11px 20px; cursor:pointer; transition:.15s;}
+.dom-seg+.dom-seg{border-left:1px solid var(--line);}
+.dom-seg.on{background:var(--brand); color:#fff;}
+.sec-head{display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; padding-bottom:13px; border-bottom:2px solid #1A1D23; margin-bottom:28px;}
+.sec-head .l{font:700 13px var(--mono); letter-spacing:.16em; text-transform:uppercase; color:#1A1D23;}
+.sec-head .c{font:400 12px var(--mono); letter-spacing:.06em; color:#6B7280;}
+.sec-head .r{margin-left:auto; font:400 12px var(--mono); color:#6B7280; max-width:360px; text-align:right;}
+.coverage{display:grid; grid-template-columns:4fr minmax(248px,1fr); gap:28px; align-items:stretch;}
+.mx-module{display:grid; grid-template-columns:minmax(0,1fr) 248px; border:1px solid var(--line); border-top:3px solid var(--brand); background:#fff; min-width:0; align-content:stretch;}
+.mx-scroll{overflow-x:auto; min-width:0;}
+.mx-grid{display:grid;}
+.mx-ch{font:700 10px var(--mono); letter-spacing:.04em; color:#6B7280; padding:13px 2px 11px; text-align:center; border-bottom:2px solid #1A1D23; transition:color .15s;}
+.mx-ch.corner{text-align:left; padding-left:16px; letter-spacing:.16em; text-transform:uppercase; color:#1A1D23;}
+.mx-rh{font:600 13px var(--sans); padding:0 14px; display:flex; align-items:center; border-bottom:1px solid var(--line); min-height:44px; color:#1A1D23;}
+.mx-cell{display:flex; align-items:center; justify-content:center; border-bottom:1px solid var(--line); border-left:1px solid var(--line); min-height:44px; cursor:pointer; transition:background .1s;}
+.mx-dot{width:13px; height:13px; border-radius:50%; transition:transform .12s;}
+.mx-dot.p2{background:var(--brand);}
+.mx-dot.p1{width:9px; height:9px; background:transparent; border:2px solid var(--brand);}
+.mx-dot.p0{width:4px; height:4px; background:var(--line);}
+.mx-cell.hl{background:hsl(var(--accent)/.06);}
+.mx-cell.cross{background:hsl(var(--accent)/.14);}
+.mx-cell.lock{background:hsl(var(--accent)/.20); box-shadow:inset 0 0 0 2px var(--brand);}
+.mx-rh.hl,.mx-ch.hl{color:var(--brand);}
+.mx-cell:hover .mx-dot.p2,.mx-cell:hover .mx-dot.p1{transform:scale(1.35);}
+.mx-readout{border-left:1px solid var(--line); background:#F5F4F1; padding:22px; min-width:0;}
+.ro-tag{font:500 10.5px var(--mono); letter-spacing:.16em; text-transform:uppercase; color:#6B7280;}
+.ro-title{font:700 20px var(--sans); letter-spacing:-.01em; margin:8px 0 2px; min-height:26px; color:#1A1D23;}
+.ro-x{font:500 13px var(--mono); color:var(--brand); margin:0 0 16px;}
+.ro-fit{display:flex; align-items:center; gap:9px; font:500 12px var(--mono); color:#3A3E47; margin:8px 0;}
+.ro-d{width:11px; height:11px; border-radius:50%; background:var(--line);}
+.ro-d.f2{background:var(--brand);} .ro-d.f1{background:transparent; border:2px solid var(--brand);} .ro-d.f0{background:var(--line);}
+.ro-skus{font:900 30px var(--sans); letter-spacing:-.02em; margin:14px 0 2px; color:#1A1D23;}
+.ro-sl{font:400 11px var(--mono); letter-spacing:.06em; text-transform:uppercase; color:#6B7280;}
+.ro-cta{display:inline-flex; gap:8px; align-items:center; margin-top:18px; font:700 12px var(--mono); letter-spacing:.1em; text-transform:uppercase; color:#fff; background:var(--brand); padding:12px 16px; text-decoration:none; transition:background .15s;}
+.ro-cta:hover{background:var(--brand-dark);}
+.ro-hint{font:400 11.5px/1.6 var(--mono); color:#6B7280; margin-top:8px;}
+
+.dp-rail{border:1px solid var(--line); border-top:3px solid var(--brand); background:#fff; padding:20px 18px; min-width:0;}
+.dp-head{font:700 11px var(--mono); letter-spacing:.16em; text-transform:uppercase; color:var(--brand); margin:0 0 4px;}
+.dp-title{font:700 17px var(--sans); letter-spacing:-.01em; margin:0 0 18px; color:#1A1D23;}
+.dp-dots{list-style:none; margin:0 0 18px; padding:0; display:flex; flex-direction:column;}
+.dp-dots li{display:flex; align-items:center; gap:10px; padding:5px 0; position:relative;}
+.dp-n{width:26px; height:26px; border:2px solid var(--line); color:#6B7280; font:700 13px var(--mono); display:flex; align-items:center; justify-content:center; flex-shrink:0; background:#fff; position:relative; z-index:1; transition:all .2s;}
+.dp-dots li:not(:last-child) .dp-n::after{content:""; position:absolute; left:50%; top:100%; transform:translateX(-50%); width:2px; height:12px; background:var(--line);}
+.dp-l{font:600 11px var(--mono); letter-spacing:.06em; text-transform:uppercase; color:#6B7280; transition:color .2s;}
+.dp-dots li.on .dp-n{background:var(--brand); border-color:var(--brand); color:#fff;}
+.dp-dots li.on .dp-l{color:#1A1D23;}
+.dp-dots li.done .dp-n{border-color:var(--brand); color:var(--brand);}
+.dp-dots li.done .dp-n::after{background:var(--brand);}
+.dp-q{font:900 16px var(--sans); letter-spacing:-.01em; margin:0 0 12px; color:#1A1D23;}
+.dp-opts{display:flex; flex-direction:column; gap:7px;}
+.dp-opt{display:flex; flex-direction:column; gap:2px; width:100%; text-align:left; border:1px solid var(--line); border-left:3px solid transparent; background:#F5F4F1; color:#1A1D23; padding:10px 12px; font:700 13px var(--sans); cursor:pointer; transition:all .14s;}
+.dp-opt small{font:500 10px var(--mono); color:#6B7280; letter-spacing:.02em;}
+.dp-opt:hover{border-color:var(--brand); border-left-color:var(--brand); transform:translateX(2px);}
+.dp-crumbs{display:flex; flex-direction:column; gap:6px; margin-bottom:14px;}
+.dp-crumb{font:500 10.5px var(--mono); letter-spacing:.03em; color:#3A3E47; background:#F5F4F1; border:1px solid var(--line); border-left:3px solid var(--brand); padding:6px 9px;}
+.dp-back{background:none; border:none; color:#6B7280; font:600 11px var(--mono); letter-spacing:.08em; text-transform:uppercase; cursor:pointer; padding:12px 0 0;}
+.dp-back:hover{color:#1A1D23;}
+.dp-rec-tag{font:700 10.5px var(--mono); letter-spacing:.16em; text-transform:uppercase; color:var(--grn);}
+.dp-rec{font:900 24px var(--sans); letter-spacing:-.02em; margin:7px 0 12px; line-height:1.05; color:#1A1D23;}
+.dp-skus{display:flex; align-items:baseline; gap:8px; margin-bottom:12px;}
+.dp-skus b{font:900 30px var(--sans); letter-spacing:-.02em; color:var(--brand);}
+.dp-skus span{font:400 10px var(--mono); letter-spacing:.1em; text-transform:uppercase; color:#6B7280;}
+.dp-why{font:400 12px/1.6 var(--sans); color:#3A3E47; margin:0 0 16px;}
+.dp-cta{display:flex; align-items:center; justify-content:center; gap:6px; width:100%; font:700 11.5px var(--mono); letter-spacing:.08em; text-transform:uppercase; color:#fff; background:var(--brand); padding:12px; text-decoration:none; margin-bottom:8px; transition:background .15s;}
+.dp-cta:hover{background:var(--brand-dark);}
+.dp-cta.alt{background:transparent; color:#1A1D23; border:1px solid var(--line);}
+.dp-cta.alt:hover{border-color:var(--brand);}
+.dp-restart{background:none; border:none; color:#6B7280; font:500 11px var(--mono); letter-spacing:.04em; cursor:pointer; padding:10px 0 0; display:block;}
+.dp-restart:hover{color:var(--brand);}
+
+/* ===== responsive (CFG-MOBILE-1) ===== */
+@media(max-width:1024px){
+  .coverage{grid-template-columns:1fr;}
+  .mx-module{grid-template-columns:1fr;}
+  .mx-readout{border-left:none; border-top:1px solid var(--line);}
+}
+@media(max-width:900px){
+  .split{grid-template-columns:1fr;}
+  .rail{border-left:none; border-top:1px solid var(--line); order:2;}
+  .stage{min-height:62vh; order:1;}
+}
+@media(max-width:560px){ .ed-dcards{grid-template-columns:1fr;} }
+
+</style>
+
+<div class="glow-orb" aria-hidden="true"></div>
+
+<!-- header + mega-menu are the Astro layout's (CFG-CHROME-1). Page content begins here. -->
+<nav class="crumbs" aria-label="Breadcrumb">HOME › <b>SOLUTIONS</b></nav>
+
+<div class="split">
+  <section class="stage zone-dark">
+    <div class="flabel">Featured · Indoor + Outdoor</div>
+    <div class="ed-preview" id="ed-preview"></div>
+  </section>
+  <section class="rail zone-light">
+    <p class="alg-eye">Solutions · By Industry</p>
+    <p class="sub">Eight industries, indoor and outdoor. Hover to feature the paired families.</p>
+    <ul class="ed-list" id="ed-list"></ul>
+    <div class="rail-foot">Click a row to open →</div>
+  </section>
+</div>
+
+<section class="band zone-light">
+  <p class="alg-eye">Solutions · Coverage</p>
+  <h2>Find the exact fixture.</h2>
+  <p class="lede">The full portfolio as a spec sheet. Toggle Indoor or Outdoor to swap the form-factor columns, cross-reference any vertical, or let the Quick Spec walk you to a recommendation.</p>
+  <div class="dom-toggle" id="dom-toggle"><button class="dom-seg on" data-d="indoor">Indoor · C&amp;I</button><button class="dom-seg" data-d="outdoor">Outdoor · Site</button></div>
+  <div class="sec-head"><span class="l">Vertical × Form Factor</span><span class="c" id="cov-count">—</span>
+    <span class="r">Hover a cell for fit &amp; SKU count; click to open filtered.</span></div>
+  <div class="coverage">
+    <div class="mx-module">
+      <div class="mx-scroll"><div class="mx-grid" id="mx-grid"></div></div>
+      <div class="mx-readout" id="mx-readout"></div>
+    </div>
+    <aside class="dp-rail">
+      <p class="dp-head">Decision Path</p>
+      <h3 class="dp-title">Quick Spec</h3>
+      <div id="dp-pane"></div>
+    </aside>
+  </div>
+</section>
+
+<script>
+(function(){
+const BASE="https://staging.archipelagolighting.com";
+const FITNAME=["Not rated","Secondary fit","Primary fit"];
+
+const VERTS=[
+ {n:"Cold Storage & Grocery",s:"cold-storage-grocery",a:"CS",tag:"Cold Chain",b:"Freezer, cooler and grocery cold-chain fixtures rated for low-temperature starts down to −40°F. IP65 sealed optics, moisture-resistant gaskets."},
+ {n:"Data Center",s:"data-center",a:"DC",tag:"White Space",b:"Low-glare troffers and continuous linear runs with DALI addressability for hot-aisle / cold-aisle containment and 24/7 operation."},
+ {n:"Education",s:"education",a:"ED",tag:"K-12 · Higher-Ed",b:"JA8-compliant panels and tunable-white controls for classrooms, gyms and corridors. Title 24 ready, 7-year warranty."},
+ {n:"Government & Military",s:"government-military",a:"GM",tag:"Federal",b:"TAA- and BAA-compliant, GSA-schedule fixtures for federal, base and municipal projects. Fully domestic supply chain."},
+ {n:"Healthcare",s:"healthcare",a:"HC",tag:"Patient Care",b:"Tunable-white patient-room and surgical-grade luminaires with sealed, cleanable optics for infection-control environments."},
+ {n:"Hospitality",s:"hospitality",a:"HS",tag:"Guest Experience",b:"Warm-dim and phase-cut décor lighting for lobbies, corridors and guest rooms. 2200K–3000K warm-dim down to 1%."},
+ {n:"Industrial & Manufacturing",s:"industrial-manufacturing",a:"IM",tag:"Plant Floor",b:"Washdown, hazloc and strip fixtures built for wet, dusty and high-abuse plant-floor environments. IP66 / IK10 rated."},
+ {n:"Warehouse & Logistics",s:"warehouse-logistics",a:"WL",tag:"High Bay",b:"Round and linear high bays with integral occupancy sensors and EM battery backup for 20–40 ft racking and DC aisles."}
+];
+const APPS=[
+ {n:"Architectural Linear",c:"A.LIN",s:"architectural-linear",k:11},{n:"Downlight",c:"DL",s:"downlight",k:41},
+ {n:"Panel",c:"PNL",s:"panel",k:19},{n:"Retrofit Panel",c:"R.PNL",s:"retrofit-panel",k:6},
+ {n:"Retrofit Troffer",c:"R.TRF",s:"retrofit-troffer",k:6},{n:"Track Light",c:"TRK",s:"track-light",k:4},
+ {n:"Troffer",c:"TRF",s:"troffer",k:21},{n:"Wraparound",c:"WRP",s:"wraparound",k:4},
+ {n:"Stairwell",c:"STR",s:"stair-passageway",k:4}];
+const FIT=[
+ [1,1,1,0,0,0,1,2,1],[2,1,2,1,1,0,2,1,0],[1,2,2,2,2,0,2,1,1],[1,2,2,1,1,0,2,1,2],
+ [1,2,2,2,2,1,2,1,1],[2,2,1,0,0,2,1,0,1],[2,1,0,0,0,0,1,2,2],[2,1,0,0,0,0,0,1,2]];
+const APP={alin:APPS[0],dl:APPS[1],pnl:APPS[2],rpnl:APPS[3],rtrf:APPS[4],trk:APPS[5],trf:APPS[6],wrp:APPS[7],str:APPS[8]};
+const CONDS=[
+ {id:"open",t:"Open / exposed ceiling",d:"No grid · 14 ft+",prim:"alin",alt:"wrp"},
+ {id:"grid",t:"Grid / drop ceiling",d:"2×2 · 2×4 modules",prim:"trf",alt:"pnl"},
+ {id:"relamp",t:"Re-lamp existing housing",d:"Retrofit · keep frame",prim:"rtrf",alt:"rpnl"},
+ {id:"accent",t:"Accent & display",d:"Merchandising · focal",prim:"trk",alt:"dl"},
+ {id:"util",t:"Corridor, stair & utility",d:"Back-of-house · egress",prim:"str",alt:"wrp"}];
+const PANEL_VERTS=["data-center","education","government-military","healthcare"];
+
+const OUT_APPS=[
+ {n:"Area / Site",c:"AREA",s:"area-site",k:18},{n:"Wall Pack",c:"WP",s:"wall-pack",k:14},
+ {n:"Flood",c:"FLD",s:"flood",k:12},{n:"Canopy",c:"CNP",s:"canopy",k:7},
+ {n:"Bollard",c:"BOL",s:"bollard",k:5},{n:"Garage / Structure",c:"GAR",s:"parking-garage",k:9},
+ {n:"Roadway",c:"RDWY",s:"roadway",k:6},{n:"Security · D2D",c:"SEC",s:"security",k:8}];
+const OUT_FIT=[
+ [2,2,1,1,0,0,0,1],[1,2,2,0,1,1,1,2],[2,2,1,1,2,1,1,1],[2,2,2,1,1,1,2,2],
+ [2,1,1,2,2,2,1,1],[1,1,2,2,2,1,1,1],[2,2,2,1,0,1,1,2],[2,2,2,1,0,1,1,2]];
+const OUT_CONDS=[
+ {id:"lot",t:"Parking lot / open site",d:"Pole-mount · area",prim:0,alt:2},
+ {id:"perimeter",t:"Building perimeter / wall",d:"Wall-mount · entry",prim:1,alt:7},
+ {id:"facade",t:"Façade & yard floodlighting",d:"Aimed · accent",prim:2,alt:0},
+ {id:"covered",t:"Covered drive / canopy",d:"Soffit · drive-thru",prim:3,alt:1},
+ {id:"path",t:"Pathway & landscape",d:"Low-level · campus",prim:4,alt:0},
+ {id:"deck",t:"Parking structure",d:"Deck · low-profile",prim:5,alt:1}];
+
+const DOMAINS={indoor:{apps:APPS,fit:FIT,seg:"INDOOR · C&I"},outdoor:{apps:OUT_APPS,fit:OUT_FIT,seg:"OUTDOOR · SITE"}};
+function primIdx(row){let s=row.indexOf(2);if(s<0)s=row.indexOf(1);return s<0?0:s;}
+
+/* ---- dual-feature directory ---- */
+function buildDirectoryDual(listEl,previewEl){
+  listEl.innerHTML='';previewEl.innerHTML='';
+  VERTS.forEach((v,i)=>{
+    const li=document.createElement('li');
+    li.className='ed-row'+(i===0?' active':'');li.dataset.i=i;li.tabIndex=0;
+    li.innerHTML='<span class="ed-no">0'+(i+1)+'</span><span class="ed-nm">'+v.n+'</span><span class="ed-go">→</span>';
+    li.addEventListener('mouseenter',()=>activate(i));
+    li.addEventListener('focus',()=>activate(i));
+    li.addEventListener('click',()=>activate(i));
+    listEl.appendChild(li);
+    const inApp=APPS[primIdx(FIT[i])],outApp=OUT_APPS[primIdx(OUT_FIT[i])];
+    const f=document.createElement('a');
+    f.className='ed-frame'+(i===0?' show':'');f.dataset.i=i;f.href=BASE+'/solutions/'+v.s+'/';
+    f.innerHTML='<div class="ed-abbr">'+v.a+'</div><div class="ed-meta"><span class="ed-dot"></span>Vertical · '+v.tag+'</div>'+
+      '<div class="ed-body"><h2>'+v.n+'</h2><p>'+v.b+'</p>'+
+      '<div class="ed-dcards">'+
+        '<div class="ed-dcard"><span class="ed-dlabel">Indoor · C&amp;I</span><span class="ed-dname">'+inApp.n+'</span><span class="ed-dcode">'+inApp.c+' · '+inApp.k+' SKUs</span></div>'+
+        '<div class="ed-dcard"><span class="ed-dlabel">Outdoor · Site</span><span class="ed-dname">'+outApp.n+'</span><span class="ed-dcode">'+outApp.c+' · '+outApp.k+' SKUs</span></div>'+
+      '</div>'+
+      '<span class="ed-view">View all '+v.n.split(' ')[0]+' solutions<span class="ed-arr">→</span></span></div>';
+    previewEl.appendChild(f);
+  });
+  function activate(i){
+    listEl.querySelectorAll('.ed-row').forEach(r=>r.classList.toggle('active',+r.dataset.i===i));
+    previewEl.querySelectorAll('.ed-frame').forEach(f=>f.classList.toggle('show',+f.dataset.i===i));
+  }
+}
+
+/* ---- coverage matrix with Indoor/Outdoor domain toggle ---- */
+function buildToggleMatrix(gridEl,readoutEl,toggleEl){
+  let domain='indoor',locked=false;
+  function paintToggle(){toggleEl.querySelectorAll('.dom-seg').forEach(b=>b.classList.toggle('on',b.dataset.d===domain));}
+  function build(){
+    const D=DOMAINS[domain],apps=D.apps,fit=D.fit;
+    document.getElementById('cov-count').textContent=VERTS.length+' × '+apps.length+' · '+D.seg;
+    gridEl.style.gridTemplateColumns='190px repeat('+apps.length+',minmax(58px,1fr))';
+    gridEl.style.minWidth=(190+apps.length*64)+'px';
+    let html='<div class="mx-ch corner">Vertical \\ Form</div>';
+    apps.forEach((a,c)=>html+='<div class="mx-ch" data-c="'+c+'" title="'+a.n+'">'+a.c+'</div>');
+    VERTS.forEach((v,r)=>{html+='<div class="mx-rh" data-r="'+r+'">'+v.n+'</div>';apps.forEach((a,c)=>{const f=fit[r][c];html+='<div class="mx-cell" data-r="'+r+'" data-c="'+c+'"><span class="mx-dot p'+f+'"></span></div>';});});
+    gridEl.innerHTML=html;
+    readoutEl.innerHTML='<div class="ro-tag" data-role="tag">'+D.seg+'</div><h3 class="ro-title" data-role="title">Select a pairing</h3><p class="ro-x" data-role="x">—</p><div class="ro-fit" data-role="fit"><span class="ro-d"></span><span>—</span></div><div class="ro-skus" data-role="skus">—</div><div class="ro-sl">SKUs in family</div><a class="ro-cta" data-role="cta" href="#" style="display:none;">View Solutions →</a><p class="ro-hint" data-role="hint">Read down a vertical for everything rated for that environment, or across a row for where one form factor ships. Toggle Indoor / Outdoor to swap the column set.</p>';
+    wire(apps,fit);
+  }
+  function wire(apps,fit){
+    const $=s=>readoutEl.querySelector('[data-role="'+s+'"]');
+    function clearHL(){gridEl.querySelectorAll('.hl,.cross,.lock').forEach(e=>e.classList.remove('hl','cross','lock'));}
+    function focus(r,c,opts){opts=opts||{};clearHL();
+      gridEl.querySelectorAll('.mx-cell[data-r="'+r+'"]').forEach(e=>e.classList.add('hl'));
+      gridEl.querySelectorAll('.mx-cell[data-c="'+c+'"]').forEach(e=>e.classList.add('hl'));
+      gridEl.querySelector('.mx-rh[data-r="'+r+'"]').classList.add('hl');
+      gridEl.querySelector('.mx-ch[data-c="'+c+'"]').classList.add('hl');
+      const cell=gridEl.querySelector('.mx-cell[data-r="'+r+'"][data-c="'+c+'"]');
+      if(cell){cell.classList.add('cross');if(opts.lock)cell.classList.add('lock');}
+      const fv=fit[r][c],v=VERTS[r],a=apps[c];
+      $('tag').textContent=(opts.lock?'Selected · ':'')+a.c+' · '+v.n.split(' ')[0];
+      $('title').textContent=a.n;$('x').textContent='× '+v.n;
+      $('fit').innerHTML='<span class="ro-d f'+fv+'"></span><span>'+FITNAME[fv]+'</span>';
+      $('skus').textContent=fv?a.k:'0';
+      const cta=$('cta');if(fv){cta.style.display='inline-flex';cta.href=BASE+'/solutions/'+v.s+'/?environment='+domain+'&application='+a.s;}else cta.style.display='none';
+      $('hint').style.display='none';
+      if(opts.lock&&cell)cell.scrollIntoView({block:'nearest',inline:'nearest'});
+    }
+    gridEl.querySelectorAll('.mx-cell').forEach(cell=>{const r=+cell.dataset.r,c=+cell.dataset.c;
+      cell.addEventListener('mouseenter',()=>{if(!locked)focus(r,c);});
+      cell.addEventListener('click',()=>{if(!fit[r][c])return; if(locked&&cell.classList.contains('lock')){locked=false;clearHL();focus(r,c);} else {locked=true;focus(r,c,{lock:true});}});});
+    gridEl.addEventListener('mouseleave',()=>{if(!locked)clearHL();});
+    gridEl._focus=focus;gridEl._clear=clearHL;
+  }
+  toggleEl.querySelectorAll('.dom-seg').forEach(b=>b.onclick=()=>{domain=b.dataset.d;locked=false;paintToggle();build();});
+  paintToggle();build();
+  return {
+    focusCell:(dom,r,c)=>{if(dom&&dom!==domain){domain=dom;paintToggle();build();}locked=true;gridEl._focus(r,c,{lock:true});},
+    unlock:()=>{locked=false;gridEl._clear();},
+    getDomain:()=>domain
+  };
+}
+
+/* ---- environment-first Quick Spec ---- */
+function buildDecisionEnv(paneEl,matrix){
+  let st={step:0,env:null,vert:null,cond:null};
+  const labels=['Environment','Vertical','Condition','Result'];
+  function dots(){return '<ol class="dp-dots">'+labels.map((l,i)=>'<li class="'+(i===st.step?'on':'')+' '+(i<st.step?'done':'')+'"><span class="dp-n">'+(i+1)+'</span><span class="dp-l">'+l+'</span></li>').join('')+'</ol>';}
+  function crumbs(){let h='';if(st.env)h+='<span class="dp-crumb">'+(st.env==='indoor'?'Indoor · C&I':'Outdoor · Site')+'</span>';if(st.vert!=null)h+='<span class="dp-crumb">'+VERTS[st.vert].n+'</span>';if(st.cond){const cs=(st.env==='indoor'?CONDS:OUT_CONDS).find(x=>x.id===st.cond);if(cs)h+='<span class="dp-crumb">'+cs.t+'</span>';}return h?'<div class="dp-crumbs">'+h+'</div>':'';}
+  function render(){
+    let inner='';
+    if(st.step===0){inner='<div class="dp-q">Indoor or outdoor?</div><div class="dp-opts"><button class="dp-opt" data-e="indoor">Indoor · C&amp;I<small>Commercial &amp; industrial interiors</small></button><button class="dp-opt" data-e="outdoor">Outdoor · Site<small>Site, area, façade &amp; roadway</small></button></div>';}
+    else if(st.step===1){inner=crumbs()+'<div class="dp-q">Where is the job?</div><div class="dp-opts">'+VERTS.map((v,i)=>'<button class="dp-opt" data-i="'+i+'">'+v.n+'</button>').join('')+'</div><button class="dp-back">← Back</button>';}
+    else if(st.step===2){const conds=st.env==='indoor'?CONDS:OUT_CONDS;inner=crumbs()+'<div class="dp-q">'+(st.env==='indoor'?'Ceiling condition?':'Mounting context?')+'</div><div class="dp-opts">'+conds.map(c=>'<button class="dp-opt" data-c="'+c.id+'">'+c.t+'<small>'+c.d+'</small></button>').join('')+'</div><button class="dp-back">← Back</button>';}
+    else{
+      const v=VERTS[st.vert];let prim,alt,col;
+      if(st.env==='indoor'){const c=CONDS.find(x=>x.id===st.cond);let pk=c.prim,ak=c.alt;if(st.cond==='grid'&&PANEL_VERTS.includes(v.s)){pk='pnl';ak='trf';}prim=APP[pk];alt=APP[ak];col=APPS.indexOf(prim);}
+      else{const c=OUT_CONDS.find(x=>x.id===st.cond);prim=OUT_APPS[c.prim];alt=OUT_APPS[c.alt];col=c.prim;}
+      if(matrix&&matrix.focusCell)matrix.focusCell(st.env,st.vert,col);
+      inner=crumbs()+'<div class="dp-rec-tag">Recommended</div><h3 class="dp-rec">'+prim.n+'</h3><div class="dp-skus"><b>'+prim.k+'</b><span>SKUs available</span></div><p class="dp-why">Rated for '+v.n.split(' ')[0]+' '+(st.env==='indoor'?'interiors':'site')+'. Alternate: '+alt.n+'.</p><a class="dp-cta" href="'+BASE+'/solutions/'+v.s+'/?environment='+st.env+'&application='+prim.s+'">View '+prim.n+' →</a><a class="dp-cta alt" href="'+BASE+'/collections/'+st.env+'/?application='+prim.s+'">All '+prim.n+'</a><button class="dp-restart">↻ Start over</button>';
+    }
+    paneEl.innerHTML=dots()+'<div class="dp-pane">'+inner+'</div>';
+    paneEl.querySelectorAll('.dp-opt[data-e]').forEach(b=>b.onclick=()=>{st.env=b.dataset.e;st.step=1;render();});
+    paneEl.querySelectorAll('.dp-opt[data-i]').forEach(b=>b.onclick=()=>{st.vert=+b.dataset.i;st.step=2;render();});
+    paneEl.querySelectorAll('.dp-opt[data-c]').forEach(b=>b.onclick=()=>{st.cond=b.dataset.c;st.step=3;render();});
+    paneEl.querySelectorAll('.dp-back').forEach(bk=>bk.onclick=()=>{st.step=Math.max(0,st.step-1);render();});
+    const rs=paneEl.querySelector('.dp-restart');if(rs)rs.onclick=()=>{st={step:0,env:null,vert:null,cond:null};if(matrix&&matrix.unlock)matrix.unlock();render();};
+  }
+  render();
+}
+
+buildDirectoryDual(document.getElementById('ed-list'),document.getElementById('ed-preview'));
+const mx=buildToggleMatrix(document.getElementById('mx-grid'),document.getElementById('mx-readout'),document.getElementById('dom-toggle'));
+buildDecisionEnv(document.getElementById('dp-pane'),mx);
+
+/* ambient glow follows scroll · respects reduced-motion */
+(function(){
+  const orb=document.querySelector('.glow-orb');if(!orb)return;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let curX=innerWidth*0.4,curY=innerHeight*0.4;
+  function target(){const max=document.documentElement.scrollHeight-innerHeight;const f=max>0?Math.min(1,Math.max(0,scrollY/max)):0;
+    return {tx:innerWidth*(0.40-0.22*Math.sin(f*Math.PI)),ty:innerHeight*(0.30+0.66*f)};}
+  function tick(){const t=target();curX+=(t.tx-curX)*0.04;curY+=(t.ty-curY)*0.04;orb.style.transform='translate('+curX+'px,'+curY+'px) translate(-50%,-50%)';requestAnimationFrame(tick);}
+  if(reduce){const t=target();orb.style.transform='translate('+t.tx+'px,'+t.ty+'px) translate(-50%,-50%)';}else requestAnimationFrame(tick);
+})();
+})();
+</script>
+</BaseLayout>
