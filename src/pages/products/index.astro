@@ -4,13 +4,12 @@
  * Route: /products/
  *
  * CFG-CHROME-1: body content only — header/mega-menu/footer owned by BaseLayout.
- * CFG-TYPE-1:   Lato self-hosted in global.css; body.products-folio h1/h2/h3 pinned below.
+ * CFG-TYPE-1:   Lato self-hosted in global.css; heading font pinned via is:global rule.
  * CFG-MOBILE-1: overflow-x:hidden on body; no fixed-width wrappers.
- * CFG-TITLE:    "Products · Archipelago Lighting Group" (plain ASCII).
- * DATA NOTE:    CATS / COVERAGE / TECH data objects are PLACEHOLDER pending real catalog data.
- *               DO NOT MERGE to main until James supplies real Active_SKUs data.
+ * DATA NOTE:    CATS / COVERAGE / TECH data are PLACEHOLDER — DO NOT MERGE to main
+ *               until James supplies real Active_SKUs data and signs off on design.
  *
- * Source: mockup_products_landing_v2.html · 2026-06-01
+ * Source: mockup_products_landing_v2.html · 2026-06-01 (CSS-port-fix re-deploy)
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
@@ -19,11 +18,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   description="Four categories, seven collections, one spec-grade portfolio. Find the exact fixture with the coverage matrix and Quick Spec."
   bodyClass="products-folio"
 >
-<style>
-/* CFG-TYPE-1 — pin Lato on this page; prevent Cormorant cascade override */
-body.products-folio h1,
-body.products-folio h2,
-body.products-folio h3 { font-family:'Lato',system-ui,-apple-system,sans-serif !important; }
+<style is:global>
 
 :root{
   --brand:#F32740; --brand-dark:#C8132E; --grn:#0FAE7C;
@@ -33,9 +28,8 @@ body.products-folio h3 { font-family:'Lato',system-ui,-apple-system,sans-serif !
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body.products-folio{margin:0; font-family:var(--sans); background:#FBFAF8; color:#1A1D23; overflow-x:hidden; -webkit-font-smoothing:antialiased;}
-body.products-folio h1,body.products-folio h2,body.products-folio h3,
-.ed-nm,.ro-skus,.ro-title,.dp-rec,.dp-skus b,.band h2,.tb-codes-h,.tb-cap-nm,.cov-tab-a,.stage .ed-body h2{font-family:var(--sans)!important;}
+body{margin:0; font-family:var(--sans); background:#FBFAF8; color:#1A1D23; overflow-x:hidden; -webkit-font-smoothing:antialiased;}
+h1,h2,h3,.ed-nm,.ro-skus,.ro-title,.dp-rec,.dp-skus b,.band h2,.tb-codes-h,.tb-cap-nm,.cov-tab-a,.stage .ed-body h2{font-family:var(--sans)!important;}
 img{max-width:100%;}
 .aa{color:var(--brand); font-style:normal;}
 
@@ -199,6 +193,7 @@ img{max-width:100%;}
 .tb-stat b{display:block; font:900 16px var(--sans); color:#1A1D23; letter-spacing:-.01em;}
 .tb-stat span{font:500 9px var(--mono); letter-spacing:.04em; text-transform:uppercase; color:#6B7280;}
 .tb-cap-go{font:700 12px var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--brand);}
+/* code-finder selector behavior (no dead-end nav) */
 .tb-chip{cursor:pointer; font-family:inherit; text-align:left;}
 .tb-chip.on{border-color:var(--brand); background:#222b36;}
 .tb-cap{transition:box-shadow .18s, opacity .18s, filter .18s, transform .18s;}
@@ -226,6 +221,7 @@ img{max-width:100%;}
   .tb-caps{grid-template-columns:1fr;}
 }
 @media(max-width:560px){ .cov-tabs{grid-template-columns:1fr;} }
+
 </style>
 
 <div class="glow-orb" aria-hidden="true"></div>
@@ -362,7 +358,7 @@ function buildQuickSpec(paneEl,cat,matrix,catKey){
     else{
       const r=st.row;let c=st.col;let note='';
       if(!fit[r][c]){let best=-1;for(let j=0;j<cols.length;j++){if(fit[r][j]===2){best=j;break;}}if(best<0)for(let j=0;j<cols.length;j++){if(fit[r][j]===1){best=j;break;}}
-        if(best>=0){note=strip(cols[c].n)+' isn\'t offered for '+rows[r].n+'; nearest available is '+strip(cols[best].n)+'. ';c=best;}}
+        if(best>=0){note=strip(cols[c].n)+' isn’t offered for '+rows[r].n+'; nearest available is '+strip(cols[best].n)+'. ';c=best;}}
       const fv=fit[r][c];
       if(matrix&&matrix.focusCell)matrix.focusCell(r,c);
       inner=crumbs()+'<div class="dp-rec-tag">Recommended</div><h3 class="dp-rec">'+rows[r].n+'</h3><div class="dp-skus"><b>'+rows[r].k+'</b><span>SKUs available</span></div><p class="dp-why">'+note+rows[r].n+' in the '+cols[c].n+' column — '+FITNAME[fv].toLowerCase()+'.</p><a class="dp-cta" href="'+BASE+'/collections/'+catKey+'/?application='+rows[r].s+'&family='+cols[c].s+'">Browse '+rows[r].n+' →</a><button class="dp-restart">↻ Start over</button>';
@@ -427,6 +423,7 @@ function buildTabs(){
 
 /* ---- toggleable Safety & Controls tech band ---- */
 function buildTechBand(el){
+  // [label, desc, platform] — JLAB maps to BOTH halves
   const codes=[].concat(TECH[0].codes.map(c=>[c[0],c[1],'constant']),TECH[1].codes.map(c=>[c[0],c[1],c[0]==='JLAB'?'both':'controls']));
   const KEY='alg-products-techband-open';
   let open=true;try{open=localStorage.getItem(KEY)!=='0';}catch(e){}
