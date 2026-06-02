@@ -765,6 +765,23 @@ body { overflow-x: hidden; }
     el.textContent = skuLive;
   });
   document.getElementById('piCatNum').textContent = skuLive;
+  // --- CFG-SUB-1: Catalog-number edit sync ---
+  (function() {
+    var catFields = ['catNum', 'catNum2', 'catNum3', 'catNum4', 'liveSku', 'piCatNum'];
+    function syncCatalogNumber(newVal) {
+      catFields.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = newVal;
+      });
+    }
+    catFields.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('input', function() {
+        syncCatalogNumber(this.textContent.trim());
+      });
+    });
+  })();
 
   // --- AUTOFILL QUICK SPECS ---
   // lumens lookup table from Section 6 photometric data
