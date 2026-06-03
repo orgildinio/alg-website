@@ -355,6 +355,7 @@ body {
 .ps-label { color: #888; font-size: 8pt; }
 .ps-val { font-weight: 600; }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 
@@ -368,7 +369,7 @@ body {
     <div class="ctrl-label">Generated</div>
     <div class="ctrl-value" id="liveDate" style="font-size:9pt; font-weight:400;">—</div>
   </div>
-  <button class="btn-print" onclick="window.print()">SAVE AS PDF →</button>
+  <button class="btn-print" onclick="generatePDF()">SAVE AS PDF →</button>
 </div>
 
 <!-- ============================================================ -->
@@ -699,6 +700,22 @@ body {
   document.getElementById('revDate').textContent = revStr;
   document.getElementById('revDate2').textContent = revStr;
 })();
+
+function generatePDF() {
+  var btn = document.querySelector('.btn-print');
+  if (btn) { btn.textContent = 'Generating…'; btn.disabled = true; }
+  var element = document.body;
+  var opt = {
+    margin: 0,
+    filename: 'ALG-RADIATOR-Submittal.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, logging: false },
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+  };
+  html2pdf().set(opt).from(element).save().then(function() {
+    if (btn) { btn.textContent = 'SAVE AS PDF →'; btn.disabled = false; }
+  });
+}
 </script>
 </body>
 </html>
