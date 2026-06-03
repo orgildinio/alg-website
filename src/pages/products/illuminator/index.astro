@@ -3663,36 +3663,19 @@ body { overflow-x: hidden; }
       <!-- CFG-PATCH-D · Compliance row — 4-badge grouped column matching Liberty pattern -->
       <div class="hero-compliance" aria-label="Certifications">
         <div class="cb">
-          <svg class="cb-img" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="UL Listed">
-            <circle cx="30" cy="30" r="22" stroke-width="1.8"/>
-            <text x="30" y="28" text-anchor="middle" fill="#F32740" font-size="11" font-family="Inter, sans-serif" font-weight="700" letter-spacing="0.4">UL</text>
-            <text x="30" y="40" text-anchor="middle" fill="currentColor" font-size="5.5" font-family="Inter, sans-serif" letter-spacing="0.4">LISTED</text>
-          </svg>
+          <img class="cb-img" src="/assets/certs/ul-listed.svg" alt="UL Listed" width="60" height="60">
           <div class="cb-label">UL Listed</div>
         </div>
         <div class="cb">
-          <svg class="cb-img" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DLC Listed">
-            <circle cx="30" cy="30" r="22" stroke-width="1.8"/>
-            <text x="30" y="26" text-anchor="middle" fill="#F32740" font-size="9" font-family="Inter, sans-serif" font-weight="700" letter-spacing="0.5">DLC</text>
-            <text x="30" y="38" text-anchor="middle" fill="currentColor" font-size="6" font-family="Inter, sans-serif" letter-spacing="0.4">LISTED</text>
-            <line x1="14" y1="44" x2="46" y2="44" stroke="#F32740" stroke-width="1.5"/>
-          </svg>
+          <img class="cb-img" src="/assets/certs/dlc-listed.svg" alt="DLC Listed" width="60" height="60">
           <div class="cb-label">DLC Listed</div>
         </div>
         <div class="cb">
-          <svg class="cb-img" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RoHS Compliant">
-            <circle cx="30" cy="30" r="22" stroke-width="1.8"/>
-            <path d="M22 30 L28 36 L40 24" stroke="#F32740" stroke-width="2.4"/>
-            <text x="30" y="50" text-anchor="middle" fill="currentColor" font-size="6.5" font-family="Inter, sans-serif" font-weight="700" letter-spacing="0.6">RoHS</text>
-          </svg>
+          <img class="cb-img" src="/assets/certs/rohs.svg" alt="RoHS" width="60" height="60">
           <div class="cb-label">RoHS</div>
         </div>
         <div class="cb">
-          <svg class="cb-img" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Suitable for Wet Location">
-            <path d="M30 12 Q18 28 18 38 a12 12 0 0 0 24 0 Q42 28 30 12 Z" stroke="#F32740" stroke-width="2"/>
-            <path d="M27 36 Q27 40 30 40" stroke="currentColor" stroke-width="1.4" fill="none"/>
-            <text x="30" y="55" text-anchor="middle" fill="currentColor" font-size="5.5" font-family="Inter, sans-serif" font-weight="700" letter-spacing="0.6">WET LOC</text>
-          </svg>
+          <img class="cb-img" src="/assets/certs/wet-location.svg" alt="Wet Location" width="60" height="60">
           <div class="cb-label">Wet Location</div>
         </div>
       </div>
@@ -3773,25 +3756,21 @@ body { overflow-x: hidden; }
 
     <div class="compliance-badges" aria-label="Certifications">
       <div class="cb">
-  <img class="cb-cert-img" src="/products/illuminator/assets/certs/dlc.svg" alt="Listed" height="36" data-cert="listed">
-  <div class="cb-label">Listed</div>
-</div>
-      <div class="cb">
-        
-        <div class="cb-label">Listed</div>
+        <img class="cb-img" src="/assets/certs/ul-listed.svg" alt="UL Listed" width="60" height="60">
+        <div class="cb-label">UL Listed</div>
       </div>
       <div class="cb">
-  <img class="cb-cert-img" src="/products/illuminator/assets/certs/rohs.svg" alt="RoHS" height="36" data-cert="rohs">
-  <div class="cb-label">RoHS</div>
-</div>
+        <img class="cb-img" src="/assets/certs/dlc-listed.svg" alt="DLC Listed" width="60" height="60">
+        <div class="cb-label">DLC Listed</div>
+      </div>
       <div class="cb">
-  <img class="cb-cert-img" src="/products/illuminator/assets/certs/dlc.svg" alt="DLC Premium" height="36" data-cert="premium">
-  <div class="cb-label">Premium</div>
-</div>
+        <img class="cb-img" src="/assets/certs/rohs.svg" alt="RoHS" width="60" height="60">
+        <div class="cb-label">RoHS</div>
+      </div>
       <div class="cb">
-  <img class="cb-cert-img" src="/products/illuminator/assets/certs/wet-location.svg" alt="Wet Location" height="36" data-cert="wet-loc">
-  <div class="cb-label">Wet Loc</div>
-</div>
+        <img class="cb-img" src="/assets/certs/wet-location.svg" alt="Wet Location" width="60" height="60">
+        <div class="cb-label">Wet Location</div>
+      </div>
     </div>
 
   </div>
@@ -4242,7 +4221,7 @@ body { overflow-x: hidden; }
         <div class="tac-callout-body" id="tacCalloutBody">
           <!-- Platform-specific copy. Default = Synapse. Updated by JS on tab click. -->
           <p id="tacCalloutCopy">Enterprise-grade networked lighting control with advanced commissioning, scalability, and cloud integration for large facilities and campuses. Mesh-network site management, theatrical RGBW show programs through DMX/DALI gateways, and dual sensor inputs for advanced automation.</p>
-          <a href="/products/controls/" class="tac-callout-link">
+          <a href="/collections/controls/" class="tac-callout-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <path d="M2 8a15 15 0 0 1 20 0"/>
               <path d="M5 12a10 10 0 0 1 14 0"/>
@@ -5050,7 +5029,7 @@ body { overflow-x: hidden; }
          Beacon (PRO+) — mega-venue / pro-tier highest output -->
     <div class="lspl-family-grid">
 
-      <a href="/products/lspl-radiator/" class="family-card">
+      <a href="/products/radiator/" class="family-card">
         <div class="family-card-img">
           <span class="family-card-tag">LSPL · REC-FIELD</span>
           <img class="family-card-photo"
@@ -5096,7 +5075,7 @@ body { overflow-x: hidden; }
         </div>
       </div>
 
-      <a href="/products/lspl-beacon/" class="family-card">
+      <a href="#" class="family-card" data-pending-pdp="lspl-beacon" aria-disabled="true" style="pointer-events:none;opacity:0.6;">
         <div class="family-card-img">
           <span class="family-card-tag">LSPL · MEGA-VENUE</span>
           <img class="family-card-photo"
@@ -5149,7 +5128,7 @@ body { overflow-x: hidden; }
 
     <div class="closing-family-grid">
 
-      <a href="/products/lptp-symmetry-post-top/" class="family-card">
+      <a href="/products/symmetry/" class="family-card">
         <div class="family-card-img">
           <span class="family-card-tag">CITY<span class="aa" aria-hidden="true" style="background-color:#ffffff;">Ⓐ</span>RCH</span>
           <img class="family-card-photo"
@@ -5206,7 +5185,7 @@ body { overflow-x: hidden; }
         </div>
       </a>
 
-      <a href="/products/nebula-ii/" class="family-card">
+      <a href="#" data-pending-pdp="nebula-ii" aria-disabled="true" style="pointer-events:none;opacity:0.6;" class="family-card">
         <div class="family-card-img">
           <span class="family-card-tag">MULTI-F<span class="aa" aria-hidden="true" style="background-color:#ffffff;">Ⓐ</span>MILY</span>
           <img class="family-card-photo"
