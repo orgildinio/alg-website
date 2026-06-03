@@ -152,8 +152,24 @@ document.addEventListener('DOMContentLoaded', async function() {
     // createElement so they execute, awaiting onload for src scripts to
     // preserve ordering (React before ReactDOM before Babel before text/babel).
     const doc = new DOMParser().parseFromString(template, 'text/html');
-    document.documentElement.replaceWith(doc.documentElement);
-    const dead = Array.from(document.scripts);
+    // CFG-CHROME-ASTRO: If running inside the Astro site wrapper, render into the
+    // host container instead of replacing the entire document. This preserves the
+    // canonical site header and footer injected by BaseLayout.
+    const astroHost = document.getElementById('contrals-pdp-host');
+    if (astroHost) {
+      // Astro mode: inject head styles/links into current <head>, then replace host content
+      const headEls = Array.from(doc.head.children).filter(function(el) {
+        return el.tagName === 'STYLE' || (el.tagName === 'LINK' && el.rel === 'stylesheet');
+      });
+      for (var _i = 0; _i < headEls.length; _i++) {
+        document.head.appendChild(headEls[_i].cloneNode(true));
+      }
+      astroHost.innerHTML = doc.body.innerHTML;
+    } else {
+      // Standalone mode: replace the entire document (original behavior)
+      document.documentElement.replaceWith(doc.documentElement);
+    }
+    const dead = Array.from(astroHost ? astroHost.querySelectorAll('script') : document.scripts);
     for (const old of dead) {
       const s = document.createElement('script');
       for (const a of old.attributes) s.setAttribute(a.name, a.value);

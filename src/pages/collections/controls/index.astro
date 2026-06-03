@@ -4,17 +4,32 @@
  * Route: /collections/controls/
  *
  * CFG-CHROME-1: BaseLayout injects site header + footer.
- * CFG-CHROME-4: Scroll-hide mega-menu — attached to window scroll
- *               (the iframe scrolls internally; parent page does not scroll).
- * CFG-TYPE-1: Lato pinned in parent page scope.
- * §D.1: 4-segment canonical breadcrumb injected before the iframe.
+ * CFG-CHROME-ASTRO: Bundle loader patched to check for #contrals-pdp-host.
+ *   When found, renders into the host div instead of replacing document.documentElement.
+ *   This preserves the canonical site header and footer.
+ * CFG-TYPE-1: Lato + JetBrains Mono pinned.
+ * §D.1: 4-segment canonical breadcrumb injected before the host div.
  *
  * Architecture: The contrⒶLS React bundle uses document.documentElement.replaceWith()
- * which would destroy the Astro header/footer if injected inline. Instead, the bundle
- * is served as a standalone page at /collections/controls/app/ and embedded in an
- * <iframe> so the replaceWith() only affects the iframe's document.
+ * in standalone mode. When #contrals-pdp-host is present (Astro mode), it renders
+ * into that div instead. The bundle is injected inline via Fragment set:html.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
+// Read the bundle HTML and extract only the body content (the loader + data scripts)
+// The bundle's <head> styles/meta are handled by BaseLayout; we only need the <body>
+const bundlePath = join(process.cwd(), 'src/data/controls/controls-bundle.html');
+const bundleHtml = readFileSync(bundlePath, 'utf-8');
+
+// Extract body content from the bundle
+const bodyMatch = bundleHtml.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+const bundleBodyContent = bodyMatch ? bodyMatch[1] : '';
+
+// Extract head styles from the bundle (for injection into BaseLayout head slot)
+const headStyleMatches = bundleHtml.match(/<style[\s\S]*?<\/style>/gi) || [];
+const bundleHeadStyles = headStyleMatches.join('\n');
 ---
 <BaseLayout
   title="contrⒶLS · Three Protocol Tiers — Archipelago Lighting Group"
@@ -22,51 +37,41 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   bodyClass="contrals-page-body"
 >
   <Fragment slot="head">
-  <style>
-    /* §D.1 breadcrumb-band — contrⒶLS */
-    .breadcrumb-band {
-      padding: 10px 32px;
-      font-family: 'JetBrains Mono', monospace !important;
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      font-weight: 500;
-      text-transform: uppercase;
-      color: #666;
-      background: var(--bg2, #f5f5f3);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .breadcrumb-band a { color: #666; text-decoration: none; }
-    .breadcrumb-band a:hover { color: var(--color-alg-red, #F32740); }
-    .bc-sep { color: #c8ccd3; }
-    .bc-current { color: #000; font-weight: 600; }
-    .bc-current .aa { color: var(--color-alg-red, #F32740); }
-    .aa { color: var(--color-alg-red, #F32740); }
-    /* contrⒶLS iframe container — fills remaining viewport height */
-    .contrals-iframe-wrap {
-      width: 100%;
-      /* Subtract header (~72px) + breadcrumb (~40px) */
-      height: calc(100vh - 112px);
-      min-height: 600px;
-      overflow: hidden;
-      display: block;
-      border: none;
-    }
-    .contrals-iframe-wrap iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-    /* Ensure the body/main don't add extra scroll */
-    .contrals-page-body main {
-      overflow: hidden;
-    }
-  </style>
+    <!-- Bundle head styles injected for React app CSS -->
+    <Fragment set:html={bundleHeadStyles} />
+    <style>
+      /* §D.1 breadcrumb-band — contrⒶLS */
+      .breadcrumb-band {
+        padding: 10px 32px;
+        font-family: 'JetBrains Mono', monospace !important;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        font-weight: 500;
+        text-transform: uppercase;
+        color: #666;
+        background: var(--bg2, #f5f5f3);
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .breadcrumb-band a { color: #666; text-decoration: none; }
+      .breadcrumb-band a:hover { color: var(--color-alg-red, #F32740); }
+      .bc-sep { color: #c8ccd3; }
+      .bc-current { color: #000; font-weight: 600; }
+      .bc-current .aa { color: var(--color-alg-red, #F32740); }
+      .aa { color: var(--color-alg-red, #F32740); }
+      /* contrⒶLS host container */
+      #contrals-pdp-host {
+        width: 100%;
+        min-height: calc(100vh - 112px);
+        position: relative;
+        overflow: hidden;
+      }
+    </style>
   </Fragment>
+
   <!-- §D.1 · 4-segment canonical breadcrumb -->
   <div class="breadcrumb-band">
     <a href="/">HOME</a>
@@ -77,78 +82,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <span class="bc-sep">›</span>
     <span class="bc-current">CONTR<span class="aa">Ⓐ</span>LS</span>
   </div>
-  <!-- contrⒶLS React app — served as standalone page in iframe to prevent
-       document.documentElement.replaceWith() from destroying the Astro chrome -->
-  <div class="contrals-iframe-wrap">
-    <iframe
-      src="/collections/controls/app/"
-      title="contrⒶLS — Occupancy &amp; Networked Controls"
-      loading="eager"
-      allow="same-origin"
-    ></iframe>
+
+  <!-- contrⒶLS React app host — bundle loader renders into this div (Astro mode)
+       The patched loader checks for #contrals-pdp-host and renders here instead
+       of replacing document.documentElement. -->
+  <div id="contrals-pdp-host">
+    <!-- Bundle body content: splash screen, loader script, manifest, template -->
+    <Fragment set:html={bundleBodyContent} />
   </div>
-  <!-- CFG-CHROME-4 · scroll-hide mega-menu
-       The parent page doesn't scroll (iframe fills viewport).
-       Listen on the iframe's scroll container via postMessage or
-       use a MutationObserver on the iframe's contentDocument. -->
-  <script is:inline>
-    (function () {
-      const header = document.getElementById('site-header');
-      if (!header) return;
-      header.style.transition = 'transform 0.25s ease-out';
-      let lastY = 0;
-      let hidden = false;
-
-      function onScroll(y) {
-        const delta = y - lastY;
-        if (y <= 0) {
-          header.style.transform = 'translateY(0)';
-          hidden = false;
-        } else if (delta > 5 && !hidden) {
-          header.style.transform = 'translateY(-100%)';
-          hidden = true;
-        } else if (delta < -5 && hidden) {
-          header.style.transform = 'translateY(0)';
-          hidden = false;
-        }
-        lastY = y;
-      }
-
-      // Attempt to attach to iframe's scroll container once it loads
-      function attachToIframe() {
-        const iframe = document.querySelector('.contrals-iframe-wrap iframe');
-        if (!iframe) return;
-        try {
-          const iDoc = iframe.contentDocument || iframe.contentWindow?.document;
-          if (!iDoc) return;
-          // The iframe's scroll container — try #root, body, or documentElement
-          const scrollEl = iDoc.querySelector('#root') || iDoc.body || iDoc.documentElement;
-          const style = iDoc.defaultView?.getComputedStyle(scrollEl);
-          const isScrollable = style && (
-            style.overflow === 'auto' || style.overflow === 'scroll' ||
-            style.overflowY === 'auto' || style.overflowY === 'scroll'
-          );
-          const target = isScrollable ? scrollEl : (iDoc.defaultView || window);
-          target.addEventListener('scroll', function () {
-            const y = target === iDoc.defaultView ? iDoc.defaultView.scrollY : target.scrollTop;
-            onScroll(y);
-          }, { passive: true });
-        } catch (e) {
-          // Cross-origin or not ready — fall back to window scroll
-          window.addEventListener('scroll', function () { onScroll(window.scrollY); }, { passive: true });
-        }
-      }
-
-      // Wait for iframe to load, then attach
-      window.addEventListener('DOMContentLoaded', function () {
-        const iframe = document.querySelector('.contrals-iframe-wrap iframe');
-        if (iframe) {
-          iframe.addEventListener('load', function () {
-            // Give the React app a moment to render and set up its scroll container
-            setTimeout(attachToIframe, 3000);
-          });
-        }
-      });
-    })();
-  </script>
 </BaseLayout>
