@@ -601,28 +601,6 @@ body {
   z-index: 1;
 }
 
-/* Top page chrome */
-.alg-pagebar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 32px;
-  border-bottom: 1px solid var(--c3);
-  background: #fff;
-}
-.alg-pagebar .logo-wrap img { height: 28px; display: block; }
-.alg-pagebar nav { display: flex; gap: 28px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: var(--tracking-label); color: var(--ink2); }
-.alg-pagebar nav a { color: inherit; text-decoration: none; }
-.alg-pagebar nav a.active { color: var(--brand); }
-.alg-pagebar .crumb {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--ink3);
-}
-.alg-pagebar .crumb b { color: var(--ink); font-weight: 600; }
-
 /* Section heading kit */
 .alg-h-sec {
   display: flex;
@@ -774,7 +752,7 @@ body {
 </style>
 <style>
   body { background: #fff; }
-  #root { width: 1320px; margin: 0 auto; }
+  #root { width: 100%; max-width: none; padding-inline: clamp(24px,5vw,64px); box-sizing: border-box; }
 </style>
 <script>
 /**
@@ -34214,27 +34192,7 @@ function AcsName({ inverted = false }) {
   );
 }
 
-// ─── Page chrome ────────────────────────────────────────
-function PageBar({ active = 'products', sku }) {
-  return (
-    <div className="alg-pagebar">
-      <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
-        <div className="logo-wrap"><img src={ALG_LOGO_URL} alt="Archipelago Lighting Group"/></div>
-        <div className="crumb">
-          Indoor C&amp;I · Emergency · <b>const<span className="ag-a">Ⓐ</span>NT</b> · {sku}
-        </div>
-      </div>
-      <nav>
-        <a href="#" className={active === 'products' ? 'active' : ''}>Products</a>
-        <a href="#">Specifications</a>
-        <a href="#">Rebates</a>
-        <a href="#">Find a Distributor</a>
-        <a href="#">Resources</a>
-        <a href="#">Contact</a>
-      </nav>
-    </div>
-  );
-}
+
 
 // ─── Section heading ────────────────────────────────────
 function SecHead({ eyebrow, title, lede, align = 'left', tone = 'light' }) {
@@ -35041,7 +34999,7 @@ function WiringJBox({ w, width, height, tone }) {
 // Make available globally to all other scripts
 Object.assign(window, {
   ALG_LOGO_URL, FamilyName, AcsName,
-  PageBar, SecHead, PhotoSlot, SpecTable, HeadlineStats,
+  SecHead, PhotoSlot, SpecTable, HeadlineStats,
   ComplianceRow, StateDiagram, StateIcon, RuntimeCurve, WiringDiagram,
   WiringAcOut, WiringDcUniversal, WiringDcClass2, WiringJBox,
   FeatureBadges, LedArrayIcon,
@@ -35231,7 +35189,6 @@ function BoardHub({ tweaks = {} }) {
 
   return (
     <div className="alg-board">
-      <PageBar sku={P.sku}/>
       {heroNode}
 
       {/* Sticky 2-col body */}
