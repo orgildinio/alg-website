@@ -244,7 +244,7 @@ img{max-width:100%;}
 
 <section class="band zone-light">
   <p class="alg-eye">Products · Coverage</p>
-  <h2>Find the exact fixture.</h2>
+  <h1>Find the exact fixture.</h1>
   <p class="lede">The whole catalog as a spec sheet — by category. Pick a category, then cross-reference any form factor against any family, echelon tier or capability, or let the Quick Spec walk you to a recommendation.</p>
   <div class="cov-tabs" id="cov-tabs"></div>
   <div class="sec-head"><span class="l">Form Factor × Family</span><span class="c" id="cov-count">—</span>
@@ -278,9 +278,9 @@ const CATS=[
   b:"Recessed downlights, back-lit panels, architectural linear, troffers and high bays for offices, warehouses, retail, education and healthcare interiors."},
  {n:"Outdoor",s:"outdoor",a:"OUT",fam:[A("luxo","RCH"),A("city","RCH")],tag:"Site · Area · Roadway",
   b:"Area, flood, wall-pack and roadway luminaires for parking, building exteriors, campuses and municipal corridors. Dark-sky and BUG-rated optics."},
- {n:"Residential",s:"residential",a:"RES",fam:["Consumer",A("multi-f","MILY")],tag:"Consumer · Multi-Family",
+ {n:"Residential",s:"residential",a:"RES",fam:[A("multi-f","MILY")],tag:"Consumer · Multi-Family",
   b:"Decorative and recessed fixtures for single-family and multi-family dwellings. Energy-Star and JA8 options for code-driven residential builds."},
- {n:"Lamps",s:"lamps",a:"LMP",fam:["Decor","Linear","Utility"],tag:"Decor · Linear · Utility",
+ {n:"Lamps",s:"lamps",a:"LMP",fam:["Linear Tube",A("tubul","RCH")],tag:"Decor · Linear · Utility",
   b:"Replacement and retrofit lamps — decorative filament, linear tubes and utility A-line. Plug-and-play and ballast-bypass across common bases."}
 ];
 
@@ -289,23 +289,83 @@ const COVERAGE={
  indoor:{n:"Indoor",a:"IN",tag:"Commercial · Industrial",
   note:"Read across a form factor for every family and tier it ships in, or down a column for everything a family carries.",
   cols:[{n:A("plano","RCH"),c:"PLN",s:"commercial-planoarch"},{n:A("lampar","RCH"),c:"LAM",s:"industrial-lampararch"},{n:"ECO",c:"ECO",s:"eco"},{n:"PRO",c:"PRO",s:"pro"},{n:"PRO+",c:"PRO+",s:"pro-plus"},{n:A("const","NT"),c:"cNT",s:"constant"},{n:A("contr","LS"),c:"cLS",s:"controls"}],
-  rows:[{n:"Architectural Linear",c:"A.LIN",s:"architectural-linear",k:11},{n:"Downlight",c:"DL",s:"downlight",k:41},{n:"Panel",c:"PNL",s:"panel",k:19},{n:"Retrofit Panel",c:"R.PNL",s:"retrofit-panel",k:6},{n:"Retrofit Troffer",c:"R.TRF",s:"retrofit-troffer",k:6},{n:"Stairwell & Passageway",c:"STR",s:"stair-passageway",k:4},{n:"Track Light",c:"TRK",s:"track-light",k:4},{n:"Troffer",c:"TRF",s:"troffer",k:21},{n:"Wraparound",c:"WRP",s:"wraparound",k:4}],
-  fit:[[2,1,1,2,2,1,2],[2,0,2,2,2,1,2],[2,0,2,2,2,1,2],[2,0,2,1,0,0,1],[2,0,2,1,0,0,1],[1,2,1,2,1,2,1],[2,0,1,2,1,0,1],[2,0,2,2,2,1,2],[1,2,2,1,0,1,1]]},
+  rows:[
+   {n:"Linear / Vapor-Tight",c:"LIN",s:"vapor-tight",k:48},
+   {n:"Back-Lit Panel",c:"PNL",s:"panel",k:46},
+   {n:"Architectural Linear",c:"A.LIN",s:"architectural-linear",k:44},
+   {n:"Round High-Bay",c:"R.HB",s:"round-high-bay",k:39},
+   {n:"Downlight",c:"DL",s:"downlight",k:38},
+   {n:"Linear High-Bay",c:"L.HB",s:"linear-high-bay",k:30},
+   {n:"Troffer",c:"TRF",s:"troffer",k:23},
+   {n:"Retrofit Panel",c:"R.PNL",s:"retrofit-panel",k:15},
+   {n:"Retrofit Troffer",c:"R.TRF",s:"retrofit-troffer",k:12},
+   {n:"Strip Retrofit",c:"S.RTF",s:"retrofit-linear-strip",k:4},
+   {n:"Wraparound",c:"WRP",s:"wraparound",k:3}],
+  fit:[
+   [0,2,2,0,2,1,2],
+   [2,0,2,2,2,1,2],
+   [2,0,2,0,2,1,2],
+   [0,2,2,2,1,1,2],
+   [2,0,1,1,2,1,2],
+   [0,2,2,2,0,1,2],
+   [2,0,1,2,1,1,2],
+   [2,0,0,2,0,1,1],
+   [2,0,0,2,0,1,1],
+   [0,2,1,1,0,0,1],
+   [2,0,1,1,0,1,1]]},
  outdoor:{n:"Outdoor",a:"OUT",tag:"Site · Area · Roadway",
   note:"luxoⒶRCH carries architectural site & area; cityⒶRCH carries roadway & municipal. Most outdoor optics are dark-sky / BUG-rated.",
   cols:[{n:A("luxo","RCH"),c:"LUX",s:"luxoarch"},{n:A("city","RCH"),c:"CTY",s:"cityarch"},{n:"ECO",c:"ECO",s:"eco"},{n:"PRO",c:"PRO",s:"pro"},{n:"PRO+",c:"PRO+",s:"pro-plus"},{n:A("const","NT"),c:"cNT",s:"constant"},{n:A("contr","LS"),c:"cLS",s:"controls"}],
-  rows:[{n:"Area / Site",c:"ARA",s:"area-site",k:28},{n:"Flood",c:"FLD",s:"flood",k:14},{n:"Wall Pack",c:"WPK",s:"wall-pack",k:16},{n:"Roadway",c:"RDW",s:"roadway",k:9},{n:"Canopy / Garage",c:"CNP",s:"canopy-garage",k:11},{n:"Bollard",c:"BOL",s:"bollard",k:5},{n:"Dusk-to-Dawn",c:"DTD",s:"dusk-to-dawn",k:7}],
-  fit:[[2,1,1,2,2,0,2],[2,1,2,2,1,0,1],[2,1,2,2,1,1,2],[0,2,1,2,1,0,2],[2,1,2,2,1,1,2],[2,0,1,2,1,0,1],[1,2,2,1,0,0,2]]},
+  rows:[
+   {n:"Area / Shoebox",c:"ARA",s:"area-light",k:36},
+   {n:"Post-Top",c:"PTP",s:"post-top",k:30},
+   {n:"Flood / Sports",c:"SPL",s:"sports-lighting",k:27},
+   {n:"Wall Pack",c:"WPK",s:"wall-pack-architectural",k:22},
+   {n:"Flood",c:"FLD",s:"flood-light",k:22},
+   {n:"Roadway",c:"RDW",s:"roadway",k:21},
+   {n:"String / Specialty",c:"STR",s:"string-light",k:19},
+   {n:"High-Mast",c:"HMF",s:"high-mast",k:10},
+   {n:"Bollard",c:"BOL",s:"bollard",k:6},
+   {n:"Canopy / Garage",c:"CNP",s:"canopy",k:6},
+   {n:"Wall Sconce",c:"WSC",s:"cylinder",k:4},
+   {n:"Traffic",c:"TRC",s:"traffic-control-lamps",k:3}],
+  fit:[
+   [2,0,1,2,2,1,2],
+   [0,2,1,2,0,0,2],
+   [2,0,0,2,1,0,1],
+   [2,0,2,1,0,1,2],
+   [2,0,1,0,2,0,1],
+   [0,2,0,2,0,0,2],
+   [2,0,2,0,0,0,1],
+   [0,2,0,0,2,0,2],
+   [0,2,0,1,0,0,1],
+   [2,0,1,1,0,1,2],
+   [2,0,0,1,0,1,1],
+   [0,2,0,1,0,0,1]]},
  residential:{n:"Residential",a:"RES",tag:"Consumer · Multi-Family",
   note:"JA8 marks Title 24 / Energy-Star residential compliance. contrⒶLS here means consumer smart-home dimming & app control.",
   cols:[{n:"Consumer",c:"CON",s:"consumer"},{n:A("multi-f","MILY"),c:"MFM",s:"multi-family"},{n:"ECO",c:"ECO",s:"eco"},{n:"PRO",c:"PRO",s:"pro"},{n:"JA8",c:"JA8",s:"ja8"},{n:A("contr","LS"),c:"cLS",s:"controls"}],
-  rows:[{n:"Recessed Downlight",c:"RDL",s:"recessed-downlight",k:18},{n:"Surface Mount",c:"SFM",s:"surface-mount",k:12},{n:"Vanity / Decorative",c:"VAN",s:"vanity-decorative",k:9},{n:"Under-Cabinet",c:"UCB",s:"under-cabinet",k:6},{n:"Ceiling Fan Light",c:"CFN",s:"ceiling-fan",k:4},{n:"Outdoor / Porch",c:"POR",s:"outdoor-porch",k:8}],
-  fit:[[2,2,2,2,2,1],[2,2,2,1,2,1],[2,1,2,1,1,0],[2,1,2,1,0,1],[2,0,2,1,1,0],[2,1,2,1,1,1]]},
- lamps:{n:"Lamps",a:"LMP",tag:"Decor · Linear · Utility",
-  note:"Type B = direct-wire / ballast-bypass. Plug-and-play (Type A) lamps run on the existing ballast across common bases.",
+  rows:[
+   {n:"Recessed Downlight",c:"RDL",s:"recessed-downlights",k:75},
+   {n:"Decorative / Vanity",c:"VAN",s:"vanity-decorative",k:15},
+   {n:"Flush / Surface Mount",c:"SFM",s:"surface-mount",k:8},
+   {n:"Sconce / Wall",c:"SCN",s:"sconce-wall",k:1}],
+  fit:[
+   [1,2,2,2,2,1],
+   [1,2,2,0,1,1],
+   [1,2,0,2,2,1],
+   [1,2,1,0,1,1]]},
+ lamps:{n:"Lamps",a:"LMP",tag:"Linear · Utility",
+  note:"Type B = direct-wire / ballast-bypass; Type A runs on the existing ballast. ALG lamp stock is predominantly linear T8.",
   cols:[{n:"Decor",c:"DEC",s:"decor"},{n:"Linear",c:"LIN",s:"linear"},{n:"Utility",c:"UTL",s:"utility"},{n:"ECO",c:"ECO",s:"eco"},{n:"PRO",c:"PRO",s:"pro"},{n:"Type B",c:"TYB",s:"type-b"}],
-  rows:[{n:"A-Line (A19/A21)",c:"A19",s:"a-line",k:14},{n:"BR / PAR",c:"PAR",s:"br-par",k:11},{n:"Filament Decorative",c:"FIL",s:"filament-decorative",k:9},{n:"Linear Tube (T8/T5)",c:"TUB",s:"linear-tube",k:8},{n:"HID Replacement",c:"HID",s:"hid-replacement",k:3},{n:"Specialty",c:"SPC",s:"specialty",k:2}],
-  fit:[[1,0,2,2,2,1],[1,0,2,2,2,1],[2,0,1,2,1,0],[0,2,1,2,2,2],[0,1,2,1,2,2],[1,1,1,2,1,1]]}
+  rows:[
+   {n:"Linear Tube (T8)",c:"TUB",s:"linear-tube",k:132},
+   {n:"PL Lamp",c:"PL",s:"pl-lamp",k:6},
+   {n:"Biax Lamp",c:"BX",s:"biax-lamp",k:3}],
+  fit:[
+   [0,2,1,2,1,2],
+   [0,1,2,1,1,1],
+   [0,1,2,1,0,1]]}
 };
 Object.values(COVERAGE).forEach(c=>{c.total=c.rows.reduce((a,r)=>a+r.k,0);});
 const COV_ORDER=["indoor","outdoor","residential","lamps"];

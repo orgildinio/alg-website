@@ -197,7 +197,7 @@ img{max-width:100%;}
 
 <section class="band zone-light">
   <p class="alg-eye">Solutions · Coverage</p>
-  <h2>Find the exact fixture.</h2>
+  <h1>Find the exact fixture.</h1>
   <p class="lede">The full portfolio as a spec sheet. Toggle Indoor or Outdoor to swap the form-factor columns, cross-reference any vertical, or let the Quick Spec walk you to a recommendation.</p>
   <div class="dom-toggle" id="dom-toggle"><button class="dom-seg on" data-d="indoor">Indoor · C&amp;I</button><button class="dom-seg" data-d="outdoor">Outdoor · Site</button></div>
   <div class="sec-head"><span class="l">Vertical × Form Factor</span><span class="c" id="cov-count">—</span>
@@ -231,14 +231,25 @@ const VERTS=[
  {n:"Warehouse & Logistics",s:"warehouse-logistics",a:"WL",tag:"High Bay",b:"Round and linear high bays with integral occupancy sensors and EM battery backup for 20–40 ft racking and DC aisles."}
 ];
 const APPS=[
- {n:"Architectural Linear",c:"A.LIN",s:"architectural-linear",k:11},{n:"Downlight",c:"DL",s:"downlight",k:41},
- {n:"Panel",c:"PNL",s:"panel",k:19},{n:"Retrofit Panel",c:"R.PNL",s:"retrofit-panel",k:6},
- {n:"Retrofit Troffer",c:"R.TRF",s:"retrofit-troffer",k:6},{n:"Track Light",c:"TRK",s:"track-light",k:4},
- {n:"Troffer",c:"TRF",s:"troffer",k:21},{n:"Wraparound",c:"WRP",s:"wraparound",k:4},
- {n:"Stairwell",c:"STR",s:"stair-passageway",k:4}];
+ {n:"Architectural Linear",c:"A.LIN",s:"architectural-linear",k:44},
+ {n:"Downlight",c:"DL",s:"downlight",k:38},
+ {n:"Panel",c:"PNL",s:"panel",k:46},
+ {n:"Retrofit Panel",c:"R.PNL",s:"retrofit-panel",k:15},
+ {n:"Retrofit Troffer",c:"R.TRF",s:"retrofit-troffer",k:12},
+ {n:"Track Light",c:"TRK",s:"track-light",k:1},
+ {n:"Troffer",c:"TRF",s:"troffer",k:23},
+ {n:"Wraparound",c:"WRP",s:"wraparound",k:3},
+ {n:"Stairwell",c:"STR",s:"stair-passageway",k:4},
+ {n:"High-Bay",c:"HB",s:"round-high-bay",k:69}];
 const FIT=[
- [1,1,1,0,0,0,1,2,1],[2,1,2,1,1,0,2,1,0],[1,2,2,2,2,0,2,1,1],[1,2,2,1,1,0,2,1,2],
- [1,2,2,2,2,1,2,1,1],[2,2,1,0,0,2,1,0,1],[2,1,0,0,0,0,1,2,2],[2,1,0,0,0,0,0,1,2]];
+ [1,1,1,0,0,0,1,2,1,2],
+ [2,1,2,1,1,0,2,1,0,0],
+ [1,2,2,2,2,0,2,1,1,1],
+ [1,2,2,1,1,0,2,1,2,1],
+ [1,2,2,2,2,1,2,1,1,0],
+ [2,2,1,0,0,2,1,0,1,0],
+ [2,1,0,0,0,0,1,2,2,2],
+ [2,1,0,0,0,0,0,1,2,2]];
 const APP={alin:APPS[0],dl:APPS[1],pnl:APPS[2],rpnl:APPS[3],rtrf:APPS[4],trk:APPS[5],trf:APPS[6],wrp:APPS[7],str:APPS[8]};
 const CONDS=[
  {id:"open",t:"Open / exposed ceiling",d:"No grid · 14 ft+",prim:"alin",alt:"wrp"},
@@ -247,15 +258,26 @@ const CONDS=[
  {id:"accent",t:"Accent & display",d:"Merchandising · focal",prim:"trk",alt:"dl"},
  {id:"util",t:"Corridor, stair & utility",d:"Back-of-house · egress",prim:"str",alt:"wrp"}];
 const PANEL_VERTS=["data-center","education","government-military","healthcare"];
-
 const OUT_APPS=[
- {n:"Area / Site",c:"AREA",s:"area-site",k:18},{n:"Wall Pack",c:"WP",s:"wall-pack",k:14},
- {n:"Flood",c:"FLD",s:"flood",k:12},{n:"Canopy",c:"CNP",s:"canopy",k:7},
- {n:"Bollard",c:"BOL",s:"bollard",k:5},{n:"Garage / Structure",c:"GAR",s:"parking-garage",k:9},
- {n:"Roadway",c:"RDWY",s:"roadway",k:6},{n:"Security · D2D",c:"SEC",s:"security",k:8}];
+ {n:"Area / Site",c:"AREA",s:"area-light",k:36},
+ {n:"Wall Pack",c:"WP",s:"wall-pack-architectural",k:22},
+ {n:"Flood",c:"FLD",s:"flood-light",k:22},
+ {n:"Canopy",c:"CNP",s:"canopy",k:6},
+ {n:"Bollard",c:"BOL",s:"bollard",k:6},
+ {n:"Garage / Structure",c:"GAR",s:"parking-garage",k:6},
+ {n:"Roadway",c:"RDWY",s:"roadway",k:21},
+ {n:"Security · D2D",c:"SEC",s:"security",k:8},
+ {n:"Post-Top",c:"PTP",s:"post-top",k:30},
+ {n:"High-Mast",c:"HM",s:"high-mast",k:10}];
 const OUT_FIT=[
- [2,2,1,1,0,0,0,1],[1,2,2,0,1,1,1,2],[2,2,1,1,2,1,1,1],[2,2,2,1,1,1,2,2],
- [2,1,1,2,2,2,1,1],[1,1,2,2,2,1,1,1],[2,2,2,1,0,1,1,2],[2,2,2,1,0,1,1,2]];
+ [2,2,1,1,0,0,0,1,0,1],
+ [1,2,2,0,1,1,1,2,0,1],
+ [2,2,1,1,2,1,1,1,2,1],
+ [2,2,2,1,1,1,2,2,2,2],
+ [2,1,1,2,2,2,1,1,1,0],
+ [1,1,2,2,2,1,1,1,2,0],
+ [2,2,2,1,0,1,1,2,0,2],
+ [2,2,2,1,0,1,1,2,0,2]];
 const OUT_CONDS=[
  {id:"lot",t:"Parking lot / open site",d:"Pole-mount · area",prim:0,alt:2},
  {id:"perimeter",t:"Building perimeter / wall",d:"Wall-mount · entry",prim:1,alt:7},
