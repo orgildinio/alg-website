@@ -88,9 +88,9 @@ const fontPreconnects = [...headContent.matchAll(/<link[^>]*rel="preconnect"[^>]
     .contrals-pdp-host [style*="font-mono"] {
       font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace !important;
     }
-    /* Override Sora from the bundled app */
+    /* Override Sora from the bundled app — wildcard !important defeats inline style */
     .contrals-pdp-host * {
-      font-family: inherit;
+      font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
     }
   </style>
   </Fragment>
