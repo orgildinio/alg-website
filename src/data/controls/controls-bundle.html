@@ -174,7 +174,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     // canonical site header and footer injected by BaseLayout.
     const astroHost = document.getElementById('contrals-pdp-host');
     if (astroHost) {
-      // Astro mode: inject head styles/links into current <head>, then replace host content
+      // Astro mode: inject head styles/links + scripts into current document,
+      // then replace host body content. This preserves the canonical site
+      // header and footer while loading all React/Babel/component dependencies.
       const headEls = Array.from(doc.head.children).filter(function(el) {
         return el.tagName === 'STYLE' || (el.tagName === 'LINK' && el.rel === 'stylesheet');
       });
@@ -182,6 +184,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         document.head.appendChild(headEls[_i].cloneNode(true));
       }
       astroHost.innerHTML = doc.body.innerHTML;
+      // Collect all scripts: head scripts first (React, ReactDOM, Babel, components),
+      // then body scripts (App entry point). Order matters for dependency loading.
+      const headScripts = Array.from(doc.head.querySelectorAll('script'));
+      const bodyScripts = Array.from(astroHost.querySelectorAll('script'));
+      // Inject head scripts into the host div so they're included in dead[] below
+      for (var _j = 0; _j < headScripts.length; _j++) {
+        astroHost.appendChild(headScripts[_j]);
+      }
     } else {
       // Standalone mode: replace the entire document (original behavior)
       document.documentElement.replaceWith(doc.documentElement);
