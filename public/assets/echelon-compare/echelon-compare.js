@@ -31,9 +31,12 @@
           return '<span class="ec-chip'+(j===idx?' on':'')+'" data-tier="'+t+'" data-idx="'+j+'">'+aa(fm.fam)+'</span>';
         }).join('') + '</div>';
       }
+      /* CFG-SSOT-1: heroImage and pdpUrl come from the registry via the data file */
+      var heroHtml = v.heroImage ? '<div class="ec-hero"><img src="'+v.heroImage+'" alt="'+aa(v.fam)+'" loading="lazy" /></div>' : '';
+      var nameHtml = v.pdpUrl ? '<a class="ec-name" href="'+v.pdpUrl+'">'+aa(v.fam)+'</a>' : '<div class="ec-name">'+aa(v.fam)+'</div>';
       parts.push('<div class="ec-tcard t-'+cls(t)+'" style="--ec-tc:var('+(TC[cls(t)]||'--ec-red')+')"><div class="ec-accent"></div><div class="ec-in">'
         + '<div class="ec-top">'+tierBadge(t)+'<span class="ec-grade">'+(GRADE[t]||'')+'</span></div>'
-        + chips + '<div class="ec-name">'+aa(v.fam)+'</div><div class="ec-spec">'
+        + heroHtml + chips + nameHtml + '<div class="ec-spec">'
         + '<div class="s"><span class="sk">Efficacy</span><span class="sv">'+aa(v.eff)+'</span></div>'
         + '<div class="s"><span class="sk">Max output</span><span class="sv">'+aa(v.max)+'</span></div>'
         + '<div class="s"><span class="sk">Controls</span><span class="sv">'+aa(v.ctrl)+'</span></div>'

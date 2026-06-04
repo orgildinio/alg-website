@@ -4119,7 +4119,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/anaheim/",
-          "card_image": "/images/family-cards/luxoarch/anaheim.png"
+          "card_image": "/images/family-cards/luxoarch/anaheim.png",
+          "slug": "anaheim",
+          "heroImage": "/products/anaheim/assets/hero/anaheim-hero-1.webp",
+          "tierKey": "Anaheim-I"
         },
         {
           "family": "Atlanta",
@@ -4139,7 +4142,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/atlanta/",
-          "card_image": "/images/family-cards/luxoarch/atlanta.png"
+          "card_image": "/images/family-cards/luxoarch/atlanta.png",
+          "slug": "atlanta",
+          "heroImage": "/products/atlanta/assets/hero/atlanta-hero-1.webp",
+          "tierKey": "Atlanta-I"
         },
         {
           "family": "Aura",
@@ -4159,7 +4165,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/aura/",
-          "card_image": "/images/family-cards/luxoarch/aura.png"
+          "card_image": "/images/family-cards/luxoarch/aura.png",
+          "slug": "aura",
+          "heroImage": "/products/aura/assets/hero/aura-hero-1.webp",
+          "tierKey": "Aura-I"
         },
         {
           "family": "Beacon",
@@ -4177,7 +4186,8 @@
           "mount_types": [],
           "taa": true,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Beacon"
         },
         {
           "family": "Canadarm",
@@ -4195,7 +4205,9 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Canadarm",
+          "heroImage": "/images/family-cards/luxoarch/canadarm.png"
         },
         {
           "family": "Everest",
@@ -4220,7 +4232,10 @@
           ],
           "taa": false,
           "pdpUrl": "/products/everest/",
-          "card_image": "/images/family-cards/luxoarch/everest.png"
+          "card_image": "/images/family-cards/luxoarch/everest.png",
+          "slug": "everest",
+          "heroImage": "/products/everest/assets/hero/everest-hero-1.webp",
+          "tierKey": "Everest-I"
         },
         {
           "family": "Guardian",
@@ -4240,7 +4255,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/guardian/",
-          "card_image": "/images/family-cards/luxoarch/guardian.png"
+          "card_image": "/images/family-cards/luxoarch/guardian.png",
+          "slug": "guardian",
+          "heroImage": "/products/guardian/assets/hero/guardian-hero-1.webp",
+          "tierKey": "Guardian-I"
         },
         {
           "family": "Heritage",
@@ -4266,7 +4284,10 @@
           ],
           "taa": false,
           "pdpUrl": "/products/heritage/",
-          "card_image": "/images/family-cards/luxoarch/heritage.png"
+          "card_image": "/images/family-cards/luxoarch/heritage.png",
+          "slug": "heritage",
+          "heroImage": "/products/heritage/assets/hero/heritage-hero-1.webp",
+          "tierKey": "Heritage-I"
         },
         {
           "family": "Illuminator",
@@ -4288,7 +4309,10 @@
           ],
           "taa": true,
           "pdpUrl": "/products/illuminator/",
-          "card_image": "/images/family-cards/luxoarch/illuminator.png"
+          "card_image": "/images/family-cards/luxoarch/illuminator.png",
+          "slug": "illuminator",
+          "heroImage": "/products/illuminator/assets/hero/illuminator-hero-1.webp",
+          "tierKey": "Illuminator-I"
         },
         {
           "family": "LSL Series",
@@ -4308,7 +4332,9 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": "/images/family-cards/luxoarch/lsl-series.png"
+          "card_image": "/images/family-cards/luxoarch/lsl-series.png",
+          "heroImage": "/images/family-cards/luxoarch/lsl-series.png",
+          "tierKey": "LSL Series"
         },
         {
           "family": "Liberty",
@@ -4334,7 +4360,10 @@
           ],
           "taa": true,
           "pdpUrl": "/products/liberty/",
-          "card_image": "/images/family-cards/luxoarch/liberty.png"
+          "card_image": "/images/family-cards/luxoarch/liberty.png",
+          "slug": "liberty",
+          "heroImage": "/products/liberty/assets/hero/liberty-hero-1.webp",
+          "tierKey": "Liberty-I"
         },
         {
           "family": "Navigator",
@@ -4354,7 +4383,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/navigator/",
-          "card_image": "/images/family-cards/luxoarch/navigator.png"
+          "card_image": "/images/family-cards/luxoarch/navigator.png",
+          "slug": "navigator",
+          "heroImage": "/products/navigator/assets/hero/navigator-hero-1.webp",
+          "tierKey": "Navigator-I"
         },
         {
           "family": "Nightwatch",
@@ -4374,7 +4406,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/nightwatch/",
-          "card_image": "/images/family-cards/luxoarch/nightwatch.png"
+          "card_image": "/images/family-cards/luxoarch/nightwatch.png",
+          "slug": "nightwatch",
+          "heroImage": "/products/nightwatch/assets/hero/nightwatch-hero-1.webp",
+          "tierKey": "Nightwatch-I"
         },
         {
           "family": "Pathfinder",
@@ -4394,7 +4429,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/pathfinder/",
-          "card_image": "/images/family-cards/luxoarch/pathfinder.png"
+          "card_image": "/images/family-cards/luxoarch/pathfinder.png",
+          "slug": "pathfinder",
+          "heroImage": "/products/pathfinder/assets/hero/pathfinder-hero-1.webp",
+          "tierKey": "Pathfinder-I"
         },
         {
           "family": "Plymouth",
@@ -4408,7 +4446,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Plymouth"
         },
         {
           "family": "Radiator",
@@ -4431,7 +4470,10 @@
           "mount_types": [],
           "taa": true,
           "pdpUrl": "/products/radiator/",
-          "card_image": null
+          "card_image": null,
+          "slug": "radiator",
+          "heroImage": "/images/family-cards/luxoarch/radiator-iii.png",
+          "tierKey": "Radiator-III"
         },
         {
           "family": "Ramparts",
@@ -4451,11 +4493,14 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/ramparts/",
-          "card_image": "/images/family-cards/luxoarch/ramparts.png"
+          "card_image": "/images/family-cards/luxoarch/ramparts.png",
+          "slug": "ramparts",
+          "heroImage": "/products/ramparts/assets/hero/ramparts-hero-1.webp",
+          "tierKey": "Ramparts-I"
         },
         {
           "family": "Rosetta",
-          "sub_category": "",
+          "sub_category": "Area Shoebox",
           "display_echelon": "PRO+",
           "max_wattage": 0,
           "sku_count": 8,
@@ -4472,7 +4517,9 @@
           "mount_types": [],
           "taa": true,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Rosetta-III",
+          "heroImage": "/products/liberty/assets/hero/fam-rosetta-iii.webp"
         },
         {
           "family": "Sentinel",
@@ -4492,7 +4539,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/sentinel/",
-          "card_image": "/images/family-cards/luxoarch/sentinel.png"
+          "card_image": "/images/family-cards/luxoarch/sentinel.png",
+          "slug": "sentinel",
+          "heroImage": "/products/sentinel/assets/hero/sentinel-hero-1.webp",
+          "tierKey": "Sentinel-I"
         },
         {
           "family": "Shield",
@@ -4512,7 +4562,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": null
+          "card_image": null,
+          "tierKey": "Shield"
         },
         {
           "family": "Tenon Adaptors",
@@ -4526,7 +4577,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Tenon Adaptors"
         },
         {
           "family": "Watchtower",
@@ -4546,7 +4598,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/watchtower/",
-          "card_image": "/images/family-cards/luxoarch/watchtower.png"
+          "card_image": "/images/family-cards/luxoarch/watchtower.png",
+          "slug": "watchtower",
+          "heroImage": "/products/watchtower/assets/hero/watchtower-hero-1.webp",
+          "tierKey": "Watchtower-I"
         },
         {
           "family": "Wedge",
@@ -4566,7 +4621,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/wedge/",
-          "card_image": null
+          "card_image": null,
+          "slug": "wedge",
+          "heroImage": "/products/wedge/assets/hero/wedge-hero-1.webp",
+          "tierKey": "Wedge-I"
         },
         {
           "family": "Zion",
@@ -4587,7 +4645,9 @@
           "mount_types": [],
           "taa": true,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Zion-II",
+          "heroImage": "/images/family-cards/luxoarch/everest.png"
         }
       ]
     },
@@ -8766,7 +8826,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/astra/",
-          "card_image": "/products/astra/assets/hero/fam-astra-1.webp"
+          "card_image": "/products/astra/assets/hero/fam-astra-1.webp",
+          "slug": "astra",
+          "heroImage": "/products/astra/assets/hero/astra-finish-white.webp",
+          "tierKey": "Astra"
         },
         {
           "family": "Brooklyn",
@@ -8786,7 +8849,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Brooklyn"
         },
         {
           "family": "CCTselect",
@@ -8806,7 +8870,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "CCTselect"
         },
         {
           "family": "Lara",
@@ -8828,7 +8893,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/lara/",
-          "card_image": "/products/lara/assets/hero/lara-4ft-white.webp"
+          "card_image": "/products/lara/assets/hero/lara-4ft-white.webp",
+          "slug": "lara",
+          "heroImage": "/products/lara/assets/hero/lara-2ft.webp",
+          "tierKey": "Lara"
         },
         {
           "family": "Luna",
@@ -8850,7 +8918,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/luna/",
-          "card_image": "/products/luna/assets/hero/luna-hero-1.webp"
+          "card_image": "/products/luna/assets/hero/luna-hero-1.webp",
+          "slug": "luna",
+          "heroImage": "/products/luna/assets/hero/luna-pendant-diffuser.webp",
+          "tierKey": "Luna"
         },
         {
           "family": "Luxmark",
@@ -8871,7 +8942,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/luxmark/",
-          "card_image": "/products/luxmark/assets/hero/fam-luxmark.webp"
+          "card_image": "/products/luxmark/assets/hero/fam-luxmark.webp",
+          "slug": "luxmark",
+          "heroImage": "/products/luxmark/assets/hero/LPVT24-3550CS/LPVT24-3550CS-FRONT.png",
+          "tierKey": "Luxmark"
         },
         {
           "family": "Solstice",
@@ -8893,7 +8967,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/solstice/",
-          "card_image": "/products/solstice/assets/hero/fam-solstice.webp"
+          "card_image": "/products/solstice/assets/hero/fam-solstice.webp",
+          "slug": "solstice",
+          "heroImage": "/products/solstice/assets/hero/solstice-aperture-4.webp",
+          "tierKey": "Solstice"
         },
         {
           "family": "Solstice SafeZone",
@@ -8915,7 +8992,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/solstice-safezone/",
-          "card_image": "/products/solstice-safezone/assets/hero/fam-safezone.webp"
+          "card_image": "/products/solstice-safezone/assets/hero/fam-safezone.webp",
+          "slug": "solstice-safezone",
+          "heroImage": "/products/solstice-safezone/assets/hero/safezone-aperture-4.webp",
+          "tierKey": "Solstice SafeZone"
         },
         {
           "family": "Spectra",
@@ -8935,7 +9015,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/spectra/",
-          "card_image": "/products/spectra/assets/hero/spectra-default.webp"
+          "card_image": "/products/spectra/assets/hero/spectra-default.webp",
+          "slug": "spectra",
+          "heroImage": "/products/spectra/assets/hero/spectra-aperture-4.webp",
+          "tierKey": "Spectra"
         },
         {
           "family": "Stellar",
@@ -8957,7 +9040,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Stellar"
         },
         {
           "family": "Trackstar",
@@ -8979,7 +9063,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/trackstar/",
-          "card_image": "/products/trackstar/assets/hero/fam-trackstar.webp"
+          "card_image": "/products/trackstar/assets/hero/fam-trackstar.webp",
+          "slug": "trackstar",
+          "heroImage": "/products/trackstar/assets/hero/1.png",
+          "tierKey": "Trackstar"
         },
         {
           "family": "Waymark",
@@ -9000,7 +9087,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/waymark/",
-          "card_image": "/products/waymark/assets/hero/fam-waymark.webp"
+          "card_image": "/products/waymark/assets/hero/fam-waymark.webp",
+          "slug": "waymark",
+          "heroImage": "/products/waymark/assets/hero/LWRL2-2035CS/LWRL2-2035CS-FRONT.png",
+          "tierKey": "Waymark"
         },
         {
           "family": "proⒶRCH",
@@ -9027,7 +9117,10 @@
           ],
           "taa": false,
           "pdpUrl": "/products/proarch/",
-          "card_image": "/products/proarch/assets/hero/proarch-hero-1.webp"
+          "card_image": "/products/proarch/assets/hero/proarch-hero-1.webp",
+          "slug": "proarch",
+          "heroImage": "/products/proarch/assets/hero/proarch-hero-1.webp",
+          "tierKey": "proⒶRCH"
         },
         {
           "family": "quinceⒶRCH",
@@ -9047,7 +9140,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "quinceⒶRCH"
         },
         {
           "family": "retroⒶRCH-P1",
@@ -9067,7 +9161,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/retroarch-p1/",
-          "card_image": "/products/retroarch-p1/assets/hero/fam-retroarch-p1.webp"
+          "card_image": "/products/retroarch-p1/assets/hero/fam-retroarch-p1.webp",
+          "slug": "retroarch-p1",
+          "heroImage": "/products/retroarch-p1/assets/hero/lblr24-hero-2.webp",
+          "tierKey": "retroⒶRCH-P1"
         },
         {
           "family": "retroⒶRCH",
@@ -9087,7 +9184,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "retroⒶRCH"
         },
         {
           "family": "selectⒶRCH",
@@ -9108,7 +9206,8 @@
           "mount_types": [],
           "taa": true,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "selectⒶRCH"
         },
         {
           "family": "staticⒶRCH",
@@ -9126,7 +9225,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "staticⒶRCH"
         },
         {
           "family": "ventiⒶRCH",
@@ -9147,7 +9247,34 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "ventiⒶRCH"
+        },
+        {
+          "family": "proⒶRCH-T",
+          "slug": "proarch-t",
+          "pdpUrl": "/products/proarch-t/",
+          "heroImage": "/products/proarch-t/assets/hero/lpvt24-hero-2.webp",
+          "tierKey": "proⒶRCH-T",
+          "echelon": "ECO",
+          "application": [
+            "troffer"
+          ],
+          "sub_category": "",
+          "display_echelon": "ECO"
+        },
+        {
+          "family": "retroⒶRCH-T1",
+          "slug": "retroarch-t1",
+          "pdpUrl": "/products/retroarch-t1/",
+          "heroImage": "/products/retroarch-t1/assets/hero/lpvr24-hero-2.webp",
+          "tierKey": "retroⒶRCH-T1",
+          "echelon": "ECO",
+          "application": [
+            "retrofit-troffer"
+          ],
+          "sub_category": "",
+          "display_echelon": "ECO"
         }
       ]
     },
@@ -10847,11 +10974,14 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/lrdw-abbey-roadway/",
-          "card_image": "/products/lrdw-abbey-roadway/assets/abbey/abbey-hero-1.webp"
+          "card_image": "/products/lrdw-abbey-roadway/assets/abbey/abbey-hero-1.webp",
+          "slug": "lrdw-abbey-roadway",
+          "heroImage": "/products/lrdw-abbey-roadway/assets/abbey/hero/abbey-1-silver-front.png",
+          "tierKey": "Abbey-I"
         },
         {
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "ECO",
           "max_wattage": 0,
           "sku_count": 23,
@@ -10861,11 +10991,12 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Alpine"
         },
         {
           "family": "Centurion",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "ECO",
           "max_wattage": 0,
           "sku_count": 1,
@@ -10875,11 +11006,12 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Centurion"
         },
         {
           "family": "Hyperion",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "ECO",
           "max_wattage": 0,
           "sku_count": 1,
@@ -10889,7 +11021,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Hyperion"
         },
         {
           "family": "LPAR Series",
@@ -10908,7 +11041,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/lpar-traffic-par38/",
-          "card_image": "/products/lpar-traffic-par38/assets/lpar/lpar-hero-1.png"
+          "card_image": "/products/lpar-traffic-par38/assets/lpar/lpar-hero-1.png",
+          "slug": "lpar-traffic-par38",
+          "heroImage": "/products/lpar-traffic-par38/assets/lpar/lpar-hero-1.png",
+          "tierKey": "LPAR Series"
         },
         {
           "family": "LY-T10",
@@ -10927,7 +11063,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/ly-t10-slimline-sign-lamp/",
-          "card_image": "/products/ly-t10-slimline-sign-lamp/assets/lyt10/lyt10-hero-1.png"
+          "card_image": "/products/ly-t10-slimline-sign-lamp/assets/lyt10/lyt10-hero-1.png",
+          "slug": "ly-t10-slimline-sign-lamp",
+          "heroImage": "/products/ly-t10-slimline-sign-lamp/assets/lyt10/lyt10-hero-1.png",
+          "tierKey": "LY-T10"
         },
         {
           "family": "OmniMax",
@@ -10946,11 +11085,14 @@
           "mount_types": [],
           "taa": true,
           "pdpUrl": "/products/lhmf-omnimax-high-mast/",
-          "card_image": "/products/lhmf-omnimax-high-mast/assets/omnimax/hero/omnimax-hero-1.webp"
+          "card_image": "/products/lhmf-omnimax-high-mast/assets/omnimax/hero/omnimax-hero-1.webp",
+          "slug": "lhmf-omnimax-high-mast",
+          "heroImage": "/products/lhmf-omnimax-high-mast/assets/omnimax/hero/omnimax-hero-1.webp",
+          "tierKey": "OmniMax-I"
         },
         {
           "family": "Redwood",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "ECO",
           "max_wattage": 0,
           "sku_count": 4,
@@ -10960,7 +11102,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Redwood"
         },
         {
           "family": "Sentry",
@@ -10980,11 +11123,14 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/lbol-sentry-bollard/",
-          "card_image": "/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp"
+          "card_image": "/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp",
+          "slug": "lbol-sentry-bollard",
+          "heroImage": "/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp",
+          "tierKey": "Sentry-I"
         },
         {
           "family": "Sequoia",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "ECO",
           "max_wattage": 0,
           "sku_count": 7,
@@ -10994,7 +11140,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Sequoia"
         },
         {
           "family": "Symmetry",
@@ -11017,7 +11164,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/lptp-symmetry-post-top/",
-          "card_image": "/products/lptp-symmetry-post-top/assets/symmetry/hero/symmetry-1-front-round.png"
+          "card_image": "/products/lptp-symmetry-post-top/assets/symmetry/hero/symmetry-1-front-round.png",
+          "slug": "lptp-symmetry-post-top",
+          "heroImage": "/products/lptp-symmetry-post-top/assets/symmetry/hero/symmetry-1-front-round.png",
+          "tierKey": "Symmetry-I"
         },
         {
           "family": "Unity",
@@ -11037,7 +11187,28 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/lptp-unity-post-top/",
-          "card_image": "/products/lptp-unity-post-top/assets/unity/unity-hero-1.webp"
+          "card_image": "/products/lptp-unity-post-top/assets/unity/unity-hero-1.webp",
+          "slug": "lptp-unity-post-top",
+          "heroImage": "/products/lptp-unity-post-top/assets/unity/unity-hero-1.webp",
+          "tierKey": "Unity-I"
+        },
+        {
+          "family": "Morphos",
+          "tierKey": "Morphos-I",
+          "heroImage": "/images/family-cards/luxoarch/sentry.png",
+          "pdpUrl": "",
+          "slug": "",
+          "sub_category": "",
+          "display_echelon": "ECO"
+        },
+        {
+          "family": "Traffic Control",
+          "tierKey": "Traffic Control",
+          "heroImage": "/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp",
+          "pdpUrl": "",
+          "slug": "",
+          "sub_category": "",
+          "display_echelon": "ECO"
         }
       ]
     },
@@ -14309,7 +14480,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Apollo"
         },
         {
           "family": "Atlas",
@@ -14329,7 +14501,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Atlas"
         },
         {
           "family": "Eureka",
@@ -14348,8 +14521,11 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "",
-          "card_image": ""
+          "pdpUrl": "/products/eureka/",
+          "card_image": "",
+          "tierKey": "Eureka-I",
+          "heroImage": "/products/eureka/eureka/photos/LV3P-1_nobg.png",
+          "slug": "eureka"
         },
         {
           "family": "Hallmark",
@@ -14370,7 +14546,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/hallmark/",
-          "card_image": "/images/families/fam-hallmark.webp"
+          "card_image": "/images/families/fam-hallmark.webp",
+          "slug": "hallmark",
+          "heroImage": "/products/hallmark/hallmark/photos/Hallmark-White-Round_nobg.png",
+          "tierKey": "Hallmark"
         },
         {
           "family": "Icarus",
@@ -14393,7 +14572,10 @@
           ],
           "taa": true,
           "pdpUrl": "/products/icarus/",
-          "card_image": "/products/icarus/assets/hero/fam-icarus.webp"
+          "card_image": "/products/icarus/assets/hero/fam-icarus.webp",
+          "slug": "icarus",
+          "heroImage": "/products/icarus/icarus/photos/LRHB3W150-S4-I3UBTAA_3_nobg.png",
+          "tierKey": "Icarus"
         },
         {
           "family": "Juno",
@@ -14414,7 +14596,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Juno"
         },
         {
           "family": "Jupiter",
@@ -14437,7 +14620,10 @@
           ],
           "taa": true,
           "pdpUrl": "/products/jupiter/",
-          "card_image": "/products/jupiter/assets/hero/fam-jupiter-020.webp"
+          "card_image": "/products/jupiter/assets/hero/fam-jupiter-020.webp",
+          "slug": "jupiter",
+          "heroImage": "/products/jupiter/jupiter/photos/JUPITER_200W_1_nobg.png",
+          "tierKey": "Jupiter"
         },
         {
           "family": "Millennium",
@@ -14457,7 +14643,8 @@
           "mount_types": [],
           "taa": true,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Millennium"
         },
         {
           "family": "Nexus",
@@ -14477,7 +14664,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Nexus"
         },
         {
           "family": "Tiny",
@@ -14496,7 +14684,10 @@
           "mount_types": [],
           "taa": true,
           "pdpUrl": "/products/tiny/",
-          "card_image": "/products/tiny/assets/hero/fam-tiny.webp"
+          "card_image": "/products/tiny/assets/hero/fam-tiny.webp",
+          "slug": "tiny",
+          "heroImage": "/products/tiny/tiny/photos/LLHB-1.2FT-150W-1_nobg.webp",
+          "tierKey": "Tiny"
         },
         {
           "family": "Titan",
@@ -14516,7 +14707,10 @@
           "mount_types": [],
           "taa": true,
           "pdpUrl": "/products/titan/",
-          "card_image": "/products/titan/assets/hero/fam-titan-01.webp"
+          "card_image": "/products/titan/assets/hero/fam-titan-01.webp",
+          "slug": "titan",
+          "heroImage": "/products/titan/titan/photos/TITAN-85-155W-1_nobg.png",
+          "tierKey": "Titan"
         },
         {
           "family": "Universal",
@@ -14530,7 +14724,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Universal"
         },
         {
           "family": "Vanguard",
@@ -14550,7 +14745,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Vanguard"
         },
         {
           "family": "retroⒶRCH-L1",
@@ -14570,7 +14766,19 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/retroarch-l1/",
-          "card_image": "/products/retroarch-l1/assets/hero/fam-retroarch-l1.webp"
+          "card_image": "/products/retroarch-l1/assets/hero/fam-retroarch-l1.webp",
+          "slug": "retroarch-l1",
+          "heroImage": "/products/retroarch-l1/retroarch-l1/photos/LLSRXX-4-PS3-002_No_BG_1_0001.png",
+          "tierKey": "retroⒶRCH-L1"
+        },
+        {
+          "family": "Eureka (ECO)",
+          "tierKey": "Eureka-II",
+          "heroImage": "/products/eureka/eureka/photos/LV3P-2FT_nobg.png",
+          "pdpUrl": "/products/eureka/",
+          "slug": "eureka",
+          "sub_category": "",
+          "display_echelon": "ECO"
         }
       ]
     },
@@ -17305,7 +17513,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Clarity"
         },
         {
           "family": "Crescent",
@@ -17326,8 +17535,12 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "",
-          "card_image": ""
+          "pdpUrl": "/products/multi-family/crescent/",
+          "card_image": "",
+          "tierKey": "Crescent",
+          "slug": "crescent",
+          "heroImage": "/products/multi-family/crescent/assets/photos/crescent/13in/Eclipse-II-13in-White-1.png",
+          "echelon": "PRO"
         },
         {
           "family": "Eclipse",
@@ -17348,8 +17561,12 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "",
-          "card_image": ""
+          "pdpUrl": "/products/multi-family/eclipse-ii/",
+          "card_image": "",
+          "tierKey": "Eclipse-II",
+          "slug": "eclipse-ii",
+          "heroImage": "/products/multi-family/eclipse-ii/assets/photos/eclipse-ii/13in/Eclipse-II-13in-White-1.png",
+          "echelon": "PRO"
         },
         {
           "family": "Gehry",
@@ -17363,7 +17580,10 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "/products/multi-family/gehry/",
-          "card_image": "/products/multi-family/card-images/gehry-card.png"
+          "card_image": "/products/multi-family/card-images/gehry-card.png",
+          "slug": "gehry",
+          "heroImage": "/products/multi-family/gehry/assets/gehry/gehry-hero-1.png",
+          "tierKey": "Gehry"
         },
         {
           "family": "Lunar Eclipse",
@@ -17387,7 +17607,10 @@
           ],
           "taa": false,
           "pdpUrl": "/products/multi-family/lunar-eclipse/",
-          "card_image": "/products/multi-family/card-images/lunar-eclipse-card.png"
+          "card_image": "/products/multi-family/card-images/lunar-eclipse-card.png",
+          "slug": "lunar-eclipse",
+          "heroImage": "/products/multi-family/lunar-eclipse/assets/photos/lunar-eclipse/13in/Eclipse-II-13in-White-1.png",
+          "tierKey": "Lunar Eclipse"
         },
         {
           "family": "Nebula",
@@ -17408,8 +17631,12 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "",
-          "card_image": ""
+          "pdpUrl": "/products/multi-family/nebula-ii/",
+          "card_image": "",
+          "tierKey": "Nebula-II",
+          "slug": "nebula-ii",
+          "heroImage": "/products/multi-family/nebula-ii/assets/photos/hero/6in/Nebula-II-6in-1.png",
+          "echelon": "ECO"
         },
         {
           "family": "Orbit",
@@ -17430,8 +17657,12 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "",
-          "card_image": ""
+          "pdpUrl": "/products/multi-family/orbit-i/",
+          "card_image": "",
+          "tierKey": "Orbit-I",
+          "slug": "orbit-i",
+          "heroImage": "/products/multi-family/orbit-i/assets/photos/orbit/6in/LDGR615-1.png",
+          "echelon": "PRO"
         },
         {
           "family": "Radius SafeZone",
@@ -17455,7 +17686,10 @@
           ],
           "taa": false,
           "pdpUrl": "/products/multi-family/radius-safezone/",
-          "card_image": "/products/multi-family/card-images/radius-safezone-fire-card.png"
+          "card_image": "/products/multi-family/card-images/radius-safezone-fire-card.png",
+          "slug": "radius-safezone",
+          "heroImage": "/products/multi-family/radius-safezone/assets/radius-safezone/radius-safezone-6in-hero-1.png",
+          "tierKey": "Radius SafeZone"
         },
         {
           "family": "Radius",
@@ -17476,8 +17710,12 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "",
-          "card_image": ""
+          "pdpUrl": "/products/multi-family/radius-ii/",
+          "card_image": "",
+          "tierKey": "Radius-II",
+          "slug": "radius-ii",
+          "heroImage": "/products/multi-family/radius-ii/assets/radius-ii/radius-ii-6in-hero-1.png",
+          "echelon": "PRO"
         },
         {
           "family": "Radius-II SafeZone",
@@ -17499,7 +17737,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Radius-II SafeZone"
         },
         {
           "family": "RingMaster",
@@ -17521,7 +17760,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "RingMaster"
         },
         {
           "family": "Wally",
@@ -17543,7 +17783,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "Wally"
         },
         {
           "family": "eCrescent",
@@ -17567,7 +17808,10 @@
           ],
           "taa": false,
           "pdpUrl": "/products/multi-family/ecrescent/",
-          "card_image": "/products/multi-family/card-images/ecrescent-card.png"
+          "card_image": "/products/multi-family/card-images/ecrescent-card.png",
+          "slug": "ecrescent",
+          "heroImage": "/products/multi-family/ecrescent/assets/ecrescent/ecrescent-6in-hero-1.png",
+          "tierKey": "eCrescent"
         }
       ]
     },
@@ -19721,7 +19965,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "t8"
         },
         {
           "family": "pl",
@@ -19734,7 +19979,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "pl"
         },
         {
           "family": "pll",
@@ -19747,7 +19993,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "pll"
         },
         {
           "family": "u6",
@@ -19760,7 +20007,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "u6"
         },
         {
           "family": "t5-cs-u5",
@@ -19773,7 +20021,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "t5-cs-u5"
         },
         {
           "family": "t5-cs-de5",
@@ -19786,7 +20035,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "t5-cs-de5"
         },
         {
           "family": "t5-he-u5",
@@ -19799,7 +20049,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "t5-he-u5"
         },
         {
           "family": "t5-he-k5",
@@ -19812,7 +20063,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "t5-he-k5"
         },
         {
           "family": "t5-ho-u5",
@@ -19825,7 +20077,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "t5-ho-u5"
         },
         {
           "family": "t5-ho-k5",
@@ -19838,7 +20091,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "t5-ho-k5"
         },
         {
           "family": "t5-ho-de5",
@@ -19851,7 +20105,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "t5-ho-de5"
         }
       ]
     },
@@ -20695,7 +20950,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "victorian"
         },
         {
           "family": "tubular",
@@ -20708,7 +20964,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "tubular"
         },
         {
           "family": "edison",
@@ -20721,7 +20978,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "edison"
         },
         {
           "family": "radio",
@@ -20734,7 +20992,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "radio"
         },
         {
           "family": "globe",
@@ -20747,7 +21006,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "globe"
         },
         {
           "family": "candelabra",
@@ -20760,7 +21020,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "candelabra"
         }
       ]
     },
@@ -22984,7 +23245,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "s14"
         },
         {
           "family": "g25",
@@ -22997,7 +23259,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "g25"
         },
         {
           "family": "g16-5",
@@ -23010,7 +23273,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "g16-5"
         },
         {
           "family": "ca10",
@@ -23023,7 +23287,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "ca10"
         },
         {
           "family": "b10",
@@ -23036,7 +23301,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "b10"
         },
         {
           "family": "a15",
@@ -23049,7 +23315,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "a15"
         },
         {
           "family": "a19",
@@ -23062,7 +23329,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "a19"
         }
       ]
     },
@@ -23351,7 +23619,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": true
+          "comingSoon": true,
+          "tierKey": "br-lamp"
         },
         {
           "family": "a-lamp",
@@ -23364,7 +23633,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": true
+          "comingSoon": true,
+          "tierKey": "a-lamp"
         },
         {
           "family": "husk-hid",
@@ -23377,7 +23647,8 @@
           "voltages": [],
           "mount_types": [],
           "taa": false,
-          "comingSoon": false
+          "comingSoon": false,
+          "tierKey": "husk-hid"
         }
       ]
     },
@@ -23404,7 +23675,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "UL A+B"
         },
         {
           "family": "UL-A",
@@ -23425,7 +23697,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "UL-A"
         },
         {
           "family": "UL-B",
@@ -23448,7 +23721,8 @@
           "mount_types": [],
           "taa": false,
           "pdpUrl": "",
-          "card_image": ""
+          "card_image": "",
+          "tierKey": "UL-B"
         }
       ],
       "skus": [

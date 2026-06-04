@@ -224,8 +224,9 @@ const skusJson = JSON.stringify(skus);
                   )}
                 </div>
                 <div class="fc-img">
-                  {(fam as any).card_image
-                    ? <img src={(fam as any).card_image} alt={fam.family} class="fc-product-img" loading="lazy" />
+                  {/* CFG-SSOT-1: heroImage (registry first-hero) is the canonical card image */}
+                  {((fam as any).heroImage || (fam as any).card_image)
+                    ? <img src={(fam as any).heroImage ?? (fam as any).card_image} alt={fam.family} class="fc-product-img" loading="lazy" />
                     : <span class="fc-watermark" set:html={wrapAa((fam as any).display_name ?? fam.family)}></span>
                   }
                 </div>

@@ -21,6 +21,19 @@
  *           Mobile: hamburger toggles .mobile-drawer.open, accordion via data-expand.
  */
 import SearchModal from './SearchModal.astro';
+import skuIndex from '../data/sku-index.json';
+
+// CFG-SSOT-1: Build TIER_IMGS and TIER_URLS from registry
+const _tierImgs: Record<string, string> = {};
+const _tierUrls: Record<string, string> = {};
+for (const coll of Object.values(skuIndex.collections) as any[]) {
+  for (const fam of (coll.families ?? [])) {
+    if (fam.tierKey && fam.heroImage) _tierImgs[fam.tierKey] = fam.heroImage;
+    if (fam.tierKey && fam.pdpUrl)   _tierUrls[fam.tierKey] = fam.pdpUrl;
+  }
+}
+const REGISTRY_TIER_IMGS = JSON.stringify(_tierImgs);
+const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
 ---
 <!-- UTILITY BAR -->
 <div class="utility-bar">
@@ -431,7 +444,7 @@ data-preview="/mm-previews/warehouse-deals.webp"
         <div class="mm-col mm-col-preview">
           <div class="mm-preview">
             <div class="preview-img-wrap">
-              <img src="/mm-previews/planoarch.webp" alt="Products preview" id="mmPreviewImg">
+              <img src="/products/proarch/assets/hero/proarch-hero-1.webp" alt="Products preview" id="mmPreviewImg">
             </div>
             <div class="preview-label" id="mmPreviewLabel">Indoor · Commercial</div>
             <div class="preview-name" id="mmPreviewName">Commercial | plano<span class="aa">Ⓐ</span>RCH</div>
@@ -440,17 +453,17 @@ data-preview="/mm-previews/warehouse-deals.webp"
             <!-- Tier-preview sandbox (ECO / PRO / PRO+) -->
             <div class="tier-strip hidden" id="mmTierStrip">
               <div class="tier-card t-eco">
-                <img src="/mm-previews/indoor-plano.webp" alt="ECO tier" id="tierImgEco" loading="lazy">
+                <img src="/products/proarch/assets/hero/proarch-hero-1.webp" alt="ECO tier" id="tierImgEco" loading="lazy">
                 <div class="tier-label">ECO</div>
                 <div class="tier-sku" id="tierSkuEco">—</div>
               </div>
               <div class="tier-card t-pro">
-                <img src="/mm-previews/indoor-plano.webp" alt="PRO tier" id="tierImgPro" loading="lazy">
+                <img src="/products/proarch/assets/hero/proarch-hero-1.webp" alt="PRO tier" id="tierImgPro" loading="lazy">
                 <div class="tier-label">PRO</div>
                 <div class="tier-sku" id="tierSkuPro">—</div>
               </div>
               <div class="tier-card t-proplus">
-                <img src="/mm-previews/indoor-plano.webp" alt="PRO+ tier" id="tierImgProplus" loading="lazy">
+                <img src="/products/proarch/assets/hero/proarch-hero-1.webp" alt="PRO+ tier" id="tierImgProplus" loading="lazy">
                 <div class="tier-label">PRO+</div>
                 <div class="tier-sku" id="tierSkuProplus">—</div>
               </div>
@@ -1271,7 +1284,7 @@ data-preview="/mm-previews/warehouse-deals.webp"
   }
 </style>
 
-<script>
+<script define:vars={{REGISTRY_TIER_IMGS, REGISTRY_TIER_URLS}}>
 (function(){
   const HOVER_DELAY_MS = 368;
 
@@ -1345,96 +1358,17 @@ data-preview="/mm-previews/warehouse-deals.webp"
     }
 
     const FAMILY_HERO = {
-      'indoor-plano':   '/mm-previews/tier-hero-plano.webp',
-      'indoor-lampar':  '/mm-previews/tier-hero-lampar.webp',
-      'outdoor-luxo':   '/mm-previews/tier-hero-luxo.webp',
-      'outdoor-city':   '/mm-previews/tier-hero-city.webp',
+      /* CFG-SSOT-1: category fallback heroes — used when no specific tier product is hovered */
+      'indoor-plano':   '/products/proarch/assets/hero/proarch-hero-1.webp',
+      'indoor-lampar':  '/products/titan/titan/photos/TITAN-85-155W-1_nobg.png',
+      'outdoor-luxo':   '/products/liberty/assets/hero/liberty-hero-1.webp',
+      'outdoor-city':   '/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp',
       'lamps-tubul':    '/mm-previews/tier-hero-tubul.webp',
     };
-    /* Per-product page URLs — keyed by data-tier-* value (only products with pages) */
-    const TIER_URLS = {
-      'Heritage-I':    '/products/heritage/',
-      'Liberty-I':     '/products/liberty/',
-      'Pathfinder-I':  '/products/pathfinder/',
-      'Navigator-I':   '/products/navigator/',
-      'Everest-I':     '/products/everest/',
-      'Anaheim-I':     '/products/anaheim/',
-      'Atlanta-I':     '/products/atlanta/',
-      'Guardian-I':    '/products/guardian/',
-      'Sentinel-I':    '/products/sentinel/',
-      'Ramparts-I':    '/products/ramparts/',
-      'Wedge-I':       '/products/wedge/',
-      'Watchtower-I':  '/products/watchtower/',
-      'Nightwatch-I':  '/products/nightwatch/',
-      'Illuminator-I': '/products/illuminator/',
-      'Aura-I':        '/products/aura/',
-      /* multi-fⒶMILY families */
-      'Gehry':           '/products/multi-family/gehry/',
-      'Nebula-II':       '/products/multi-family/nebula-ii/',
-      'Orbit-I':         '/products/multi-family/orbit-i/',
-      'Radius-II':       '/products/multi-family/radius-ii/',
-      'Radius SafeZone': '/products/multi-family/radius-safezone/',
-      'eCrescent':       '/products/multi-family/ecrescent/',
-      'Eclipse-II':      '/products/multi-family/eclipse-ii/',
-      'Lunar Eclipse':   '/products/multi-family/lunar-eclipse/',
-      /* planoⒶRCH families */
-      'Lara':              '/products/lara/',
-      'Luna':              '/products/luna/',
-      'Solstice':          '/products/solstice/',
-      'Solstice SafeZone': '/products/solstice-safezone/',
-      'Astra':             '/products/astra/',
-      'Spectra':           '/products/spectra/',
-      'retroⒶRCH-P1':     '/products/retroarch-p1/',
-      'retroⒶRCH-T1':     '/products/retroarch-t1/',
-      'Trackstar':         '/products/trackstar/',
-      'proⒶRCH-T':        '/products/proarch-t/',
-      'proⒶRCH':          '/products/proarch/',
-      'Luxmark':           '/products/luxmark/',
-      'Waymark':           '/products/waymark/',
-    };
-    /* Per-product images for tier cards — keyed by data-tier-* value */
-    const TIER_IMGS = {
-      'Heritage-I':    '/images/family-cards/luxoarch/heritage.png',
-      'Liberty-I':     '/images/family-cards/luxoarch/liberty.png',
-      'Rosetta-III':   '/products/liberty/assets/hero/fam-rosetta-iii.webp',
-      'Pathfinder-I':  '/images/family-cards/luxoarch/pathfinder.png',
-      'Navigator-I':   '/images/family-cards/luxoarch/navigator.png',
-      'Everest-I':     '/images/family-cards/luxoarch/everest.png',
-      'Zion-II':       '/images/family-cards/luxoarch/everest.png',
-      'Anaheim-I':     '/images/family-cards/luxoarch/anaheim.png',
-      'Atlanta-I':     '/images/family-cards/luxoarch/atlanta.png',
-      'Guardian-I':    '/images/family-cards/luxoarch/guardian.png',
-      'Sentinel-I':    '/images/family-cards/luxoarch/sentinel.png',
-      'Ramparts-I':    '/images/family-cards/luxoarch/ramparts.png',
-      'Wedge-I':       '/images/family-cards/luxoarch/wedge-i.png',
-      'Watchtower-I':  '/images/family-cards/luxoarch/watchtower.png',
-      'Nightwatch-I':  '/images/family-cards/luxoarch/nightwatch.png',
-      'Illuminator-I': '/images/family-cards/luxoarch/illuminator.png',
-      'Canadarm':      '/images/family-cards/luxoarch/canadarm.png',
-      /* multi-fⒶMILY families */
-      'Gehry':           '/products/multi-family/card-images/gehry-card.png',
-      'Nebula-II':       '/products/multi-family/card-images/nebula-ii-card.png',
-      'Orbit-I':         '/products/multi-family/card-images/orbit-i-card.png',
-      'Radius-II':       '/products/multi-family/card-images/radius-ii-card.png',
-      'Radius SafeZone': '/products/multi-family/card-images/radius-safezone-card.png',
-      'eCrescent':       '/products/multi-family/card-images/ecrescent-card.png',
-      'Eclipse-II':      '/products/multi-family/card-images/eclipse-ii-card.png',
-      'Lunar Eclipse':   '/products/multi-family/card-images/lunar-eclipse-card.png',
-      /* planoⒶRCH families */
-      'Lara':              '/products/lara/assets/hero/lara-4ft-white.webp',
-      'Luna':              '/products/luna/assets/hero/luna-hero-1.webp',
-      'Solstice':          '/products/solstice/assets/hero/fam-solstice.webp',
-      'Solstice SafeZone': '/products/solstice-safezone/assets/hero/fam-safezone.webp',
-      'Astra':             '/products/astra/assets/hero/fam-astra-1.webp',
-      'Spectra':           '/products/spectra/assets/hero/spectra-default.webp',
-      'retroⒶRCH-P1':     '/products/retroarch-p1/assets/hero/fam-retroarch-p1.webp',
-      'retroⒶRCH-T1':     '/products/retroarch-p1/assets/hero/fam-retroarch-t1.webp',
-      'Trackstar':         '/products/trackstar/assets/hero/fam-trackstar.webp',
-      'proⒶRCH-T':        '/products/proarch-t/assets/hero/fam-proarch-t.webp',
-      'proⒶRCH':          '/products/proarch/assets/hero/proarch-hero-1.webp',
-      'Luxmark':           '/products/luxmark/assets/hero/fam-luxmark.webp',
-      'Waymark':           '/products/waymark/assets/hero/fam-waymark.webp',
-    };
+    /* Per-product page URLs — CFG-SSOT-1: generated from registry */
+    const TIER_URLS = JSON.parse(REGISTRY_TIER_URLS);
+    /* Per-product images for tier cards — CFG-SSOT-1: generated from registry */
+    const TIER_IMGS = JSON.parse(REGISTRY_TIER_IMGS);
 
     window._algSwapApp = function(appEl){ swapAppPreview(appEl); };
     function swapAppPreview(appEl){
@@ -1450,7 +1384,7 @@ data-preview="/mm-previews/warehouse-deals.webp"
         const eco  = appEl.dataset.tierEco     || '';
         const pro  = appEl.dataset.tierPro     || '';
         const plus = appEl.dataset.tierProplus || '';
-        const fallback = heroSrc || '/mm-previews/tier-hero-luxo.webp';
+        const fallback = heroSrc || '/products/liberty/assets/hero/liberty-hero-1.webp';
         document.getElementById('tierImgEco').src     = (eco  && TIER_IMGS[eco])  ? TIER_IMGS[eco]  : fallback;
         document.getElementById('tierImgPro').src     = (pro  && TIER_IMGS[pro])  ? TIER_IMGS[pro]  : fallback;
         document.getElementById('tierImgProplus').src = (plus && TIER_IMGS[plus]) ? TIER_IMGS[plus] : fallback;

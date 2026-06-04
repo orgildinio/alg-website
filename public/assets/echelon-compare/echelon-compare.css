@@ -57,3 +57,8 @@
 .echelon-compare .ec-aa{color:var(--ec-red)}
 @media print{.echelon-compare .ec-toggle{display:none}.echelon-compare .ec-body[hidden]{display:block!important}}
 @media (max-width:960px){.echelon-compare .ec-tcards{flex-direction:column}.echelon-compare .ec-conn{width:auto;padding:8px 0;transform:rotate(90deg)}}
+/* CFG-SSOT-1: product hero image in tier cards */
+.echelon-compare .ec-hero{height:100px;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:8px}
+.echelon-compare .ec-hero img{max-height:90px;max-width:90%;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
+.echelon-compare a.ec-name{color:inherit;text-decoration:none}
+.echelon-compare a.ec-name:hover{text-decoration:underline;color:var(--ec-red)}
