@@ -91,6 +91,9 @@ const ECHELON_DATA_FILE: Record<string, string> = {
   planoarch:   'planoarch.js',
 };
 const echelonDataFile = ECHELON_DATA_FILE[c.slug] ?? null;
+const echelonScripts = echelonDataFile
+  ? `<script src="/assets/echelon-compare/data/${echelonDataFile}"></script><script src="/assets/echelon-compare/echelon-compare.js"></script>`
+  : null;
 
 const anchorSections = [
   { id: 'hero',        label: 'Overview'    },
@@ -169,10 +172,7 @@ const anchorSections = [
 
   <!-- Sticky anchor nav -->
   <CollectionAnchorNav sections={anchorSections} />
-  {echelonDataFile && (
-    <Fragment slot="body-end">
-      <script src={`/assets/echelon-compare/data/${echelonDataFile}`} is:inline></script>
-      <script src="/assets/echelon-compare/echelon-compare.js" is:inline></script>
-    </Fragment>
+  {echelonScripts && (
+    <Fragment slot="body-end" set:html={echelonScripts} />
   )}
 </BaseLayout>

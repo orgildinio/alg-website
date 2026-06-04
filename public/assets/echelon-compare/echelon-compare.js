@@ -1,7 +1,7 @@
 /* ── ALG Echelon Comparison — portable component ──
    Reads window.ECHELON_COMPARE_DATA (per-collection, keyed by live data-app slug).
    Hooks the existing ALL FAMILIES filter (.app-tile[aria-pressed]) and mounts the
-   comparison block right AFTER #search-results, only when exactly ONE application is filtered.
+   comparison block right AFTER #fam-results, only when exactly ONE application is filtered.
    Self-contained; no dependency on the page's own render() internals. */
 (function () {
   var DATA = window.ECHELON_COMPARE_DATA;

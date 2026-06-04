@@ -14,6 +14,7 @@ const anchorSections = [
   { id: 'sec-pll', label: 'Long-Pin PLL' },
   { id: 'sec-u6',  label: 'U-Bend U6' },
 ];
+const echelonScripts = '<script src="/assets/echelon-compare/data/tubularch.js"></script><script src="/assets/echelon-compare/echelon-compare.js"></script>';
 ---
 <BaseLayout
   title="tubulⒶRCH — Linear LED Retrofit | Archipelago Lighting Group"
@@ -461,8 +462,5 @@ const anchorSections = [
     (e as HTMLElement).textContent = String(new Date().getFullYear());
   });
 </script>
-<Fragment slot="body-end">
-  <script src="/assets/echelon-compare/data/tubularch.js"></script>
-  <script src="/assets/echelon-compare/echelon-compare.js"></script>
-</Fragment>
+<Fragment slot="body-end" set:html={echelonScripts} />
 </BaseLayout>
