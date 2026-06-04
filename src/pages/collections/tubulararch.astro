@@ -20,6 +20,9 @@ const anchorSections = [
   description="Five families covering every fluorescent retrofit job — T5, T8, PL, PLL, U-bend. UL-certified, DLC-listed, structured spec data and verified compatibility."
   bodyClass="page-tubulararch-collection"
 >
+<Fragment slot="head">
+  <link rel="stylesheet" href="/assets/echelon-compare/echelon-compare.css" />
+</Fragment>
 <style>
   :root {
     --ta-accent: #F32740;
@@ -458,4 +461,8 @@ const anchorSections = [
     (e as HTMLElement).textContent = String(new Date().getFullYear());
   });
 </script>
+<Fragment slot="body-end">
+  <script src="/assets/echelon-compare/data/tubularch.js"></script>
+  <script src="/assets/echelon-compare/echelon-compare.js"></script>
+</Fragment>
 </BaseLayout>

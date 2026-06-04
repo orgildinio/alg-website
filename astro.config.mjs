@@ -58,6 +58,9 @@ export default defineConfig({
   integrations: [pagefindIntegration()],
   // Compression handled by Cloudflare CDN — no in-build minification quirks
   vite: {
+    server: {
+      allowedHosts: true,
+    },
     preview: {
       allowedHosts: true,
     },

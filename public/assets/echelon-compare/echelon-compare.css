@@ -1,0 +1,59 @@
+/* ── ALG Echelon Comparison — portable block (scoped under .echelon-compare) ──
+   Mounts after #search-results on a collection page. Canonical ALG tokens, self-contained. */
+.echelon-compare{
+  --ec-red:#F32740; --ec-ink1:#1A1D23; --ec-ink2:#3A3E47; --ec-ink3:#6B7280;
+  --ec-n1:#F5F4F1; --ec-n2:#EEEDF0; --ec-n3:#DCDEE2;
+  --ec-eco:#0FAE7C; --ec-pro:#2A6FDB; --ec-pp:#F32740; --ec-pp-tint:rgba(243,39,64,.05);
+  --ec-font:'Lato',-apple-system,BlinkMacSystemFont,sans-serif;
+  --ec-mono:'JetBrains Mono',ui-monospace,monospace;
+  font-family:var(--ec-font); color:var(--ec-ink1); margin-top:30px;
+}
+.echelon-compare *{box-sizing:border-box}
+.echelon-compare .ec-hr{height:2px;background:var(--ec-ink1);margin:0 0 24px}
+.echelon-compare .ec-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--ec-n2);border-left:4px solid var(--ec-red);padding:16px 22px}
+.echelon-compare .ec-bar .ec-title{font-size:18px;font-weight:900;letter-spacing:-.01em;color:var(--ec-ink1)}
+.echelon-compare .ec-bar .ec-sub{font-family:var(--ec-mono);font-size:12px;letter-spacing:.04em;color:var(--ec-ink3);margin-left:10px}
+.echelon-compare .ec-toggle{font-family:var(--ec-mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ec-red);background:none;border:none;cursor:pointer;white-space:nowrap}
+.echelon-compare .ec-body{padding-top:28px}
+.echelon-compare .ec-body[hidden]{display:none}
+.echelon-compare .ec-tcards{display:flex;align-items:stretch}
+.echelon-compare .ec-tcard{flex:1;min-width:0;border:1px solid var(--ec-n3);display:flex;flex-direction:column;background:#fff}
+.echelon-compare .ec-accent{height:4px}
+.echelon-compare .ec-tcard.t-ECO .ec-accent,.echelon-compare .ec-tcard.t-A .ec-accent{background:var(--ec-eco)}
+.echelon-compare .ec-tcard.t-PRO .ec-accent,.echelon-compare .ec-tcard.t-B .ec-accent{background:var(--ec-pro)}
+.echelon-compare .ec-tcard.t-PROplus .ec-accent,.echelon-compare .ec-tcard.t-AB .ec-accent{background:var(--ec-pp)}
+.echelon-compare .ec-in{padding:20px;display:flex;flex-direction:column;height:100%}
+.echelon-compare .ec-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+.echelon-compare .ec-grade{font-family:var(--ec-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ec-ink3)}
+.echelon-compare .ec-chips{display:flex;gap:5px;flex-wrap:wrap;margin:12px 0 0}
+.echelon-compare .ec-chip{font-family:var(--ec-mono);font-size:10px;font-weight:700;letter-spacing:.03em;padding:3px 9px;border:1px solid var(--ec-n3);border-radius:2px;cursor:pointer;color:var(--ec-ink3);background:#fff}
+.echelon-compare .ec-chip.on{background:var(--ec-tc);border-color:var(--ec-tc);color:#fff}
+.echelon-compare .ec-name{font-size:24px;font-weight:900;letter-spacing:-.01em;margin:10px 0 18px}
+.echelon-compare .ec-spec{display:flex;flex-direction:column;gap:14px}
+.echelon-compare .ec-spec .s{display:flex;flex-direction:column;gap:2px}
+.echelon-compare .ec-spec .sk{font-size:11px;color:var(--ec-ink3)}
+.echelon-compare .ec-spec .sv{font-family:var(--ec-mono);font-size:13.5px;font-weight:700;color:var(--ec-ink1);line-height:1.35}
+.echelon-compare .ec-conn{display:flex;align-items:center;justify-content:center;font-family:var(--ec-mono);font-size:15px;font-weight:700;color:var(--ec-ink3);width:54px;flex:none;align-self:center}
+.echelon-compare .ec-tbadge{font-family:var(--ec-mono);font-size:10px;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:2px;display:inline-block;color:#fff}
+.echelon-compare .tb-ECO,.echelon-compare .tb-A{background:var(--ec-eco)}
+.echelon-compare .tb-PRO,.echelon-compare .tb-B{background:var(--ec-pro)}
+.echelon-compare .tb-PROplus,.echelon-compare .tb-AB{background:var(--ec-pp)}
+.echelon-compare .ec-twrap{border-left:4px solid var(--ec-red);margin-top:34px}
+.echelon-compare table.ec-table{border-collapse:collapse;width:100%;table-layout:fixed;font-size:13px;border:1px solid var(--ec-n3);border-left:none}
+.echelon-compare .ec-table th,.echelon-compare .ec-table td{border-bottom:1px solid var(--ec-n3);padding:14px 18px;text-align:left;vertical-align:top}
+.echelon-compare .ec-table thead th{background:var(--ec-n1);vertical-align:middle}
+.echelon-compare .ec-table .th-title{font-family:var(--ec-mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ec-red)}
+.echelon-compare .ec-table .rk{font-family:var(--ec-mono);font-size:11.5px;letter-spacing:.02em;color:var(--ec-ink3)}
+.echelon-compare .ec-table td.val{font-family:var(--ec-mono);font-size:12.5px;line-height:1.45;color:var(--ec-ink2);overflow-wrap:break-word}
+.echelon-compare .ec-table td.val.changed{font-weight:700;color:var(--ec-ink1);background:var(--ec-pp-tint)}
+.echelon-compare .ec-table td.arrow{padding:0;text-align:center;vertical-align:middle}
+.echelon-compare .ec-table td.arrow span{font-family:var(--ec-mono);font-size:15px;font-weight:700}
+.echelon-compare .arr-up{color:var(--ec-red)} .echelon-compare .arr-hold{color:var(--ec-n3)}
+.echelon-compare .th-tier .ec-tbadge{padding:3px 9px}
+.echelon-compare .ec-note{border:1px solid var(--ec-n3);background:var(--ec-n1);border-left:4px solid var(--ec-n3);padding:20px 24px;margin-top:8px}
+.echelon-compare .ec-note .nt{font-family:var(--ec-mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ec-ink2);margin-bottom:8px}
+.echelon-compare .ec-note p{font-size:14px;color:var(--ec-ink2);max-width:660px}
+.echelon-compare .ec-flag{margin-top:18px;font-family:var(--ec-mono);font-size:11px;color:var(--ec-ink3);border-left:2px solid var(--ec-red);padding:8px 0 8px 12px;background:var(--ec-n1)}
+.echelon-compare .ec-aa{color:var(--ec-red)}
+@media print{.echelon-compare .ec-toggle{display:none}.echelon-compare .ec-body[hidden]{display:block!important}}
+@media (max-width:960px){.echelon-compare .ec-tcards{flex-direction:column}.echelon-compare .ec-conn{width:auto;padding:8px 0;transform:rotate(90deg)}}
