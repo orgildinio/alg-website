@@ -131,7 +131,7 @@ const planoarchData = {
     },
   ],
   featuredHeadline: 'Four flagship families from the planoⒶRCH collection.',
-  familiesHeadline: '19 families. One indoor portfolio.',
+  familiesHeadline: '13 families. One indoor portfolio.',
   familiesSubhead: 'Filter by application, echelon, wattage, CCT, and more.',
   legacy: {
     headline: 'Discontinued families.',
