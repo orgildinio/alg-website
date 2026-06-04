@@ -62,12 +62,12 @@ const bundleHeadStyles = headStyleMatches.join('\n');
       .bc-current { color: #000; font-weight: 600; }
       .bc-current .aa { color: var(--color-alg-red, #F32740); }
       .aa { color: var(--color-alg-red, #F32740); }
-      /* contrⒶLS host container */
+      /* contrⒶLS host container — CFG-CLIP-FIX: overflow visible so content past 1vh renders */
       #contrals-pdp-host {
         width: 100%;
         min-height: calc(100vh - 112px);
         position: relative;
-        overflow: hidden;
+        overflow: visible;
       }
     </style>
   </Fragment>
@@ -91,10 +91,14 @@ const bundleHeadStyles = headStyleMatches.join('\n');
     <Fragment set:html={bundleBodyContent} />
   </div>
 <style is:global>
-  /* CFG-EYEBROW-1 · tighten Ⓐ glyph in heavy-tracked .marker eyebrows only
-     The circled-Ⓐ (U+24B6) is wide; at letter-spacing ≈0.18em it picks up ~8.9px gap
-     on each side. Negative margin compensates to ~2px, matching letter rhythm.
-     is:global required — .marker is rendered by the React bundle, not Astro-scoped. */
+  /* CFG-EYEBROW-1 · tighten Ⓐ glyph in heavy-tracked .marker eyebrows only */
   .marker .aa { letter-spacing: 0 !important; margin: 0 -0.9em !important; }
+  /* CFG-CLIP-FIX · standalone-mockup scaffold leaks — stop vertical clip
+     The React bundle mounts into #root; the scaffold may set height:100vh on it
+     (confirmed live: computed height 986px = 1 viewport, content 7,754px).
+     Force height:auto so #root grows with its content. */
+  #root { min-height: 100vh; height: auto !important; }
+  /* Belt-and-suspenders: also ensure the Astro host wrapper never clips */
+  #contrals-pdp-host { overflow: visible !important; }
 </style>
 </BaseLayout>
