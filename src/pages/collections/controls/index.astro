@@ -62,6 +62,10 @@ const bundleHeadStyles = headStyleMatches.join('\n');
       .bc-current { color: #000; font-weight: 600; }
       .bc-current .aa { color: var(--color-alg-red, #F32740); }
       .aa { color: var(--color-alg-red, #F32740); }
+      /* CFG-EYEBROW-1 · tighten Ⓐ glyph in heavy-tracked .marker eyebrows only
+         The circled-Ⓐ (U+24B6) is wide; at letter-spacing ≈0.18em it picks up ~8.9px gap
+         on each side. Negative margin compensates to ~2px, matching letter rhythm. */
+      .marker .aa { letter-spacing: 0; margin: 0 -0.6em; }
       /* contrⒶLS host container */
       #contrals-pdp-host {
         width: 100%;
