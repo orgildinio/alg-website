@@ -299,7 +299,8 @@ main { position: relative; z-index: 1; }
 .hero__eyebrow {
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
+  word-spacing: -0.28em;
   text-transform: uppercase;
   color: hsl(var(--vert-accent));
   font-weight: 600;
