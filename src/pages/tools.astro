@@ -1,0 +1,239 @@
+---
+/**
+ * tools.astro
+ *
+ * Tools hub page — distinct destination for the TOOLS top-nav item (BATCH B §2).
+ * Replaces the /support/ fallback so TOOLS and SUPPORT no longer share the same URL.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Tools — Archipelago Lighting Group"
+  description="Find a rep, find a distributor, request a layout, and access photometric resources. ALG tools for buyers and specifiers."
+  bodyClass="page-tools"
+>
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb-band">
+    <a href="/">Home</a>
+    <span class="bc-sep">›</span>
+    Tools
+  </div>
+
+  <!-- PAGE HERO -->
+  <section class="tools-hero">
+    <div class="tools-hero-inner">
+      <div class="tools-eyebrow">Resources</div>
+      <h1 class="tools-h1">Tools</h1>
+      <p class="tools-sub">Everything you need to find local support, spec a project, or get a layout — in one place.</p>
+    </div>
+  </section>
+
+  <!-- TOOLS GRID -->
+  <section class="tools-grid-section">
+    <div class="tools-grid-inner">
+      <!-- For Buyers -->
+      <div class="tools-group">
+        <div class="tools-group-label">For Buyers</div>
+        <div class="tools-cards">
+          <a href="/find-a-rep/" class="tool-card">
+            <div class="tool-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="tool-card-body">
+              <div class="tool-card-title">Find a Rep</div>
+              <div class="tool-card-desc">Locate your local ALG sales rep for specification support, pricing, and project tracking.</div>
+              <span class="tool-card-cta">Search map →</span>
+            </div>
+          </a>
+          <a href="/find-a-distributor/" class="tool-card">
+            <div class="tool-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="tool-card-body">
+              <div class="tool-card-title">Find a Distributor</div>
+              <div class="tool-card-desc">Find the nearest stocking distributor or ALG warehouse. 29 distributor locations + 16 warehouses.</div>
+              <span class="tool-card-cta">Search map →</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- For Specifiers -->
+      <div class="tools-group">
+        <div class="tools-group-label">For Specifiers</div>
+        <div class="tools-cards">
+          <a href="mailto:sales@archipelagolighting.com?subject=Layout%20request" class="tool-card">
+            <div class="tool-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <div class="tool-card-body">
+              <div class="tool-card-title">Layout &amp; Design Request</div>
+              <div class="tool-card-desc">Submit a layout request and our team will provide a complimentary photometric layout within 48 hours.</div>
+              <span class="tool-card-cta">Request layout →</span>
+            </div>
+          </a>
+          <a href="/support/library" class="tool-card">
+            <div class="tool-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <div class="tool-card-body">
+              <div class="tool-card-title">LM-79 Photometric Library</div>
+              <div class="tool-card-desc">Download IES files, photometric data, and LM-79 test reports for all ALG product families.</div>
+              <span class="tool-card-cta">Open library →</span>
+            </div>
+          </a>
+          <a href="/support/rebate-center" class="tool-card">
+            <div class="tool-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div class="tool-card-body">
+              <div class="tool-card-title">Rebate Center</div>
+              <div class="tool-card-desc">Search utility rebate programs by ZIP and product family. Most projects qualify for 15–40% cost offset.</div>
+              <span class="tool-card-cta">Search rebates →</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ── Breadcrumb ─────────────────────────────────────────────────── */
+  .breadcrumb-band {
+    padding: 10px 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #666;
+    background: #f5f5f3;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .breadcrumb-band a { color: #666; text-decoration: none; }
+  .breadcrumb-band a:hover { color: #F32740; }
+  .bc-sep { color: #c8ccd3; }
+
+  /* ── Hero ───────────────────────────────────────────────────────── */
+  .tools-hero {
+    background: #1a1f2e;
+    color: #fff;
+    padding: 64px 32px 56px;
+  }
+  .tools-hero-inner { max-width: 1280px; margin: 0 auto; }
+  .tools-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: #F32740;
+    margin-bottom: 16px;
+  }
+  .tools-h1 {
+    font-family: 'Lato', system-ui, sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: #fff;
+    margin: 0 0 20px;
+  }
+  .tools-sub {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.70);
+    max-width: 580px;
+    margin: 0;
+  }
+
+  /* ── Tools grid ─────────────────────────────────────────────────── */
+  .tools-grid-section {
+    background: #fff;
+    padding: 64px 32px 80px;
+  }
+  .tools-grid-inner { max-width: 1280px; margin: 0 auto; }
+  .tools-group { margin-bottom: 56px; }
+  .tools-group:last-child { margin-bottom: 0; }
+  .tools-group-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #F32740;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .tools-group-label::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 2px;
+    background: #F32740;
+  }
+  .tools-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .tool-card {
+    display: flex;
+    gap: 18px;
+    padding: 24px;
+    background: #f9f9f8;
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .tool-card:hover {
+    border-color: #F32740;
+    box-shadow: 0 2px 12px rgba(243,39,64,0.08);
+  }
+  .tool-card-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #F32740;
+  }
+  .tool-card-icon svg { width: 24px; height: 24px; }
+  .tool-card-body { min-width: 0; }
+  .tool-card-title {
+    font-family: 'Lato', system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 6px;
+  }
+  .tool-card-desc {
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #555;
+    margin-bottom: 12px;
+  }
+  .tool-card-cta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #F32740;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .tools-hero { padding: 40px 20px 36px; }
+    .tools-grid-section { padding: 48px 20px 64px; }
+    .tools-cards { grid-template-columns: 1fr; }
+  }
+</style>

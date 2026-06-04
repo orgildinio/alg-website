@@ -1,0 +1,795 @@
+---
+/**
+ * find-a-rep.astro
+ *
+ * Find a Rep — full-page locator with Leaflet map, ZIP/city/state search
+ * that filters markers AND zooms the map (BATCH B §1).
+ *
+ * Data: /data/local_support.json (sales_reps + distributors + warehouses)
+ * Map: Leaflet 1.9.4 (same as homepage locator)
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Find a Rep — Archipelago Lighting Group"
+  description="Find your local ALG sales rep, stocking distributor, or nearest warehouse. Search by ZIP, city, or state."
+  bodyClass="page-find-a-rep"
+>
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb-band">
+    <a href="/">Home</a>
+    <span class="bc-sep">›</span>
+    Find a Rep
+  </div>
+
+  <!-- PAGE HERO -->
+  <section class="finder-hero">
+    <div class="finder-hero-inner">
+      <div class="finder-eyebrow">Local Support</div>
+      <h1 class="finder-h1">Find a Sales Rep</h1>
+      <p class="finder-sub">Your local ALG sales rep handles specification support, pricing, project tracking, and submittal assistance. Search by ZIP, city, or state to find the rep covering your area.</p>
+    </div>
+  </section>
+
+  <!-- LOCATOR MAP SECTION -->
+  <section class="locator-section" aria-labelledby="loc-heading">
+    <div class="locator-inner">
+      <div class="locator-toolbar">
+        <div class="loc-filter-group">
+          <span class="loc-filter-label">Show:</span>
+          <span class="loc-pill active" data-filter="all">All</span>
+          <span class="loc-pill" data-filter="rep">
+            <span class="kind-dot rep"></span>Sales Reps
+          </span>
+          <span class="loc-pill" data-filter="dist">
+            <span class="kind-dot dist"></span>Distributors
+          </span>
+          <span class="loc-pill" data-filter="warehouse">
+            <span class="kind-dot wh"></span>Warehouses
+          </span>
+        </div>
+        <div class="loc-search-group">
+          <input type="text" class="loc-search-input" placeholder="ZIP, city, or state" aria-label="Search by ZIP, city, or state" />
+          <button class="loc-search-btn">Find Nearest</button>
+        </div>
+      </div>
+      <div class="locator-map-wrap">
+        <div id="algLocatorMap" class="locator-map" aria-label="ALG sales rep, distributor, and warehouse locations" role="application"></div>
+        <div class="loc-sidebar right-rail">
+          <div class="loc-legend map-key">
+            <h4>Map key</h4>
+            <div class="legend-row">
+              <span class="legend-dot"><span class="dot-vis" style="background:#f0a932;"></span>Sales Rep</span>
+              <span class="legend-count">28 active reps</span>
+            </div>
+            <div class="legend-row">
+              <span class="legend-dot"><span class="dot-vis" style="background:#0FAE7C;"></span>Stocking Distributor</span>
+              <span class="legend-count">29 locations</span>
+            </div>
+            <div class="legend-row">
+              <span class="legend-dot"><span class="dot-vis" style="background:#F32740;"></span>ALG Warehouse</span>
+              <span class="legend-count">16 locations</span>
+            </div>
+          </div>
+          <div class="loc-results in-view-panel">
+            <h4 id="loc-results-header" class="loc-results-header in-view-header">IN THIS VIEW</h4>
+            <div class="iv-sort-row" id="iv-sort-row">
+              <span class="iv-sort-label">Sort:</span>
+              <button class="iv-sort-btn iv-sort-btn--active" data-sort="nearest">Nearest</button>
+              <button class="iv-sort-btn" data-sort="az">A–Z</button>
+              <button class="iv-sort-btn" data-sort="type">Type</button>
+            </div>
+            <ul id="loc-results-list" class="loc-results-list in-view-list"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="locator-ctas">
+        <a href="/find-a-distributor/" class="cta-secondary on-dark">Find a Distributor</a>
+        <a href="/distributor" class="cta-secondary on-dark">Become a Distributor</a>
+        <a href="/careers/sales-rep" class="cta-secondary on-dark">Apply as Sales Rep</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT STRIP -->
+  <section class="contact-strip">
+    <div class="contact-strip-inner">
+      <div class="contact-block">
+        <div class="contact-eyebrow">Direct contact</div>
+        <h2 class="contact-h2">Can't find a rep in your area?</h2>
+        <p class="contact-body">Our inside sales team covers all territories directly. Reach out and we'll connect you with the right contact.</p>
+        <a href="mailto:sales@archipelagolighting.com?subject=Rep%20inquiry" class="cta-primary">Email Sales Team</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ── Breadcrumb ─────────────────────────────────────────────────── */
+  .breadcrumb-band {
+    padding: 10px 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #666;
+    background: #f5f5f3;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .breadcrumb-band a { color: #666; text-decoration: none; }
+  .breadcrumb-band a:hover { color: #F32740; }
+  .bc-sep { color: #c8ccd3; }
+
+  /* ── Page hero ──────────────────────────────────────────────────── */
+  .finder-hero {
+    background: #1a1f2e;
+    color: #fff;
+    padding: 64px 32px 56px;
+  }
+  .finder-hero-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .finder-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: #F32740;
+    margin-bottom: 16px;
+  }
+  .finder-h1 {
+    font-family: 'Lato', system-ui, sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: #fff;
+    margin: 0 0 20px;
+  }
+  .finder-sub {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.70);
+    max-width: 680px;
+    margin: 0;
+  }
+
+  /* ── Locator section ────────────────────────────────────────────── */
+  .locator-section {
+    background: #0c0d12;
+    color: #fff;
+    padding: 48px 32px 64px;
+  }
+  .locator-inner { max-width: 1440px; margin: 0 auto; }
+  .locator-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .loc-filter-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .loc-filter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    font-weight: 600;
+  }
+  .loc-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .loc-pill.active { background: #F32740; color: #fff; border-color: #F32740; }
+  .loc-pill:hover:not(.active) { background: rgba(255,255,255,0.1); color: #fff; }
+  .kind-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .kind-dot.wh { background: #F32740; }
+  .kind-dot.rep { background: #FFC107; }
+  .kind-dot.dist { background: #10B981; }
+  .loc-search-group { display: flex; gap: 8px; }
+  .loc-search-input {
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    outline: none;
+    width: 220px;
+  }
+  .loc-search-input::placeholder { color: rgba(255,255,255,0.35); }
+  .loc-search-btn {
+    padding: 8px 18px;
+    background: #F32740;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .loc-search-btn:hover { background: #c91f30; }
+  .locator-map-wrap {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    grid-template-rows: 600px;
+    gap: 24px;
+    margin-bottom: 28px;
+    align-items: stretch;
+  }
+  .locator-map {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.02);
+  }
+  .locator-map :global(.leaflet-container) {
+    border-radius: 12px;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+  .loc-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .loc-legend, .loc-results {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 12px;
+    padding: 20px 22px;
+    overflow: hidden;
+  }
+  .loc-results { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; }
+  .loc-legend h4, .loc-results h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .in-view-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #F32740;
+    margin-bottom: 12px;
+  }
+  .legend-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .legend-row:last-child { border-bottom: none; }
+  .legend-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+  }
+  .dot-vis {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .legend-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.05em;
+  }
+  .iv-sort-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 0 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+    margin-bottom: 8px;
+  }
+  .iv-sort-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+  .iv-sort-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.82);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .iv-sort-btn:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.30); }
+  .iv-sort-btn--active { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.30); color: #fff; }
+  .loc-results-list {
+    list-style: none;
+    margin: 0; padding: 0;
+    flex: 1 1 0;
+    overflow-y: auto;
+    min-height: 0;
+  }
+  .loc-results-list::-webkit-scrollbar { width: 4px; }
+  .loc-results-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.20); border-radius: 2px; }
+  .iv-row {
+    list-style: none;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .iv-row:last-child { border-bottom: none; }
+  .iv-row:hover { background: rgba(255,255,255,0.035); }
+  .iv-row-main {
+    display: grid;
+    grid-template-columns: 1fr 64px;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .iv-name {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+  .iv-distance {
+    display: inline-block;
+    min-width: 56px;
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: #F32740;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .iv-row-sub {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    line-height: 1.35;
+    color: rgba(255,255,255,0.62);
+  }
+  .iv-citystate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .iv-sep { color: rgba(255,255,255,0.30); flex-shrink: 0; }
+  .iv-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.82);
+  }
+  .iv-chip-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .iv-row--warehouse   .iv-chip-dot { background: #F32740; }
+  .iv-row--rep         .iv-chip-dot { background: #FFB300; }
+  .iv-row--distributor .iv-chip-dot { background: #22C55E; }
+  .iv-empty {
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.55);
+    padding: 16px 0;
+  }
+  .iv-marker-hovered {
+    filter: drop-shadow(0 0 6px currentColor);
+    animation: iv-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes iv-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.85; transform: scale(1.15); }
+  }
+  .locator-ctas {
+    display: flex;
+    gap: 14px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .cta-secondary.on-dark {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 22px;
+    border: 1px solid rgba(255,255,255,0.30);
+    color: rgba(255,255,255,0.85);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .cta-secondary.on-dark:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.55); }
+
+  /* ── Contact strip ──────────────────────────────────────────────── */
+  .contact-strip {
+    background: #f5f5f3;
+    padding: 64px 32px;
+  }
+  .contact-strip-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .contact-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #F32740;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .contact-eyebrow::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 2px;
+    background: #F32740;
+  }
+  .contact-h2 {
+    font-family: 'Lato', system-ui, sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #111;
+    margin: 0 0 16px;
+  }
+  .contact-body {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    max-width: 520px;
+    margin: 0 0 28px;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .locator-map-wrap {
+      grid-template-columns: 1fr;
+      grid-template-rows: 400px auto;
+    }
+    .right-rail { height: auto; }
+    .loc-results-list { overflow-y: visible; }
+    .finder-hero { padding: 40px 20px 36px; }
+    .locator-section { padding: 32px 20px 48px; }
+    .contact-strip { padding: 48px 20px; }
+  }
+  @media (max-width: 480px) {
+    .loc-search-input { width: 160px; }
+  }
+</style>
+
+<script>
+// Leaflet map — /data/local_support.json (sales_reps + distributors + warehouses)
+// BATCH B §1: search filters markers AND zooms/recenters map
+(function () {
+  // Load Leaflet CSS
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+  link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
+  link.crossOrigin = '';
+  document.head.appendChild(link);
+
+  const mapEl = document.getElementById('algLocatorMap');
+  if (!mapEl) return;
+
+  const script = document.createElement('script');
+  script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+  script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+  script.crossOrigin = '';
+  script.onload = async function () {
+    const L = window.L;
+    const map = L.map('algLocatorMap', { zoomControl: true, scrollWheelZoom: false }).setView([37.5, -96], 4);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19,
+    }).addTo(map);
+
+    // Marker icon factories
+    function makeIcon(color, shadow) {
+      return L.divIcon({
+        className: '',
+        html: '<div style="width:12px;height:12px;background:' + color + ';border-radius:50%;border:2px solid #fff;box-shadow:0 0 8px ' + shadow + ';"></div>',
+        iconSize: [12, 12],
+        iconAnchor: [6, 6],
+        popupAnchor: [0, -8],
+      });
+    }
+    const iconWh   = makeIcon('#F32740', 'rgba(243,39,64,0.6)');
+    const iconRep  = makeIcon('#f0a932', 'rgba(240,169,50,0.5)');
+    const iconDist = makeIcon('#0FAE7C', 'rgba(15,174,124,0.5)');
+
+    // Title-case utilities
+    function toTitleCase(s) {
+      if (!s) return s;
+      const upperRatio = (s.match(/[A-Z]/g) || []).length / Math.max(1, (s.match(/[A-Za-z]/g) || []).length);
+      if (upperRatio < 0.7) return s;
+      return s.toLowerCase().replace(/\b([a-z])(\w*)/g, (m, first, rest) => first.toUpperCase() + rest);
+    }
+    function titleCaseCityState(s) {
+      if (!s) return s;
+      const idx = s.lastIndexOf(',');
+      if (idx === -1) return toTitleCase(s);
+      const city  = s.slice(0, idx);
+      const state = s.slice(idx + 1).trim().toUpperCase();
+      return `${toTitleCase(city)}, ${state}`;
+    }
+    function formatDistance(mi) {
+      if (mi == null || isNaN(mi)) return '— mi';
+      if (mi < 0.5) return 'On-site';
+      if (mi < 10)  return mi.toFixed(1) + ' mi';
+      return Math.round(mi) + ' mi';
+    }
+    function labelFor(type) {
+      return { warehouse: 'ALG Warehouse', rep: 'Sales Rep', dist: 'Stocking Distributor', distributor: 'Stocking Distributor' }[type] || '';
+    }
+    function popup(rec, kind) {
+      const displayName = toTitleCase(rec.name);
+      const loc = [rec.city, rec.state].filter(Boolean).join(', ');
+      const displayLoc = titleCaseCityState(loc);
+      let html = '<div class="iv-popup">';
+      html += '<div class="iv-popup-name">' + displayName + '</div>';
+      if (displayLoc) html += '<div class="iv-popup-sub">' + displayLoc + (labelFor(kind) ? ' · ' + labelFor(kind) : '') + '</div>';
+      if (rec.phone) html += '<div class="iv-popup-row"><a href="tel:' + rec.phone.replace(/[^+\d]/g,'') + '">' + rec.phone + '</a></div>';
+      if (rec.website) {
+        const url = rec.website.startsWith('http') ? rec.website : 'https://' + rec.website;
+        html += '<div class="iv-popup-row"><a href="' + url + '" target="_blank" rel="noopener">Website ↗</a></div>';
+      }
+      html += '</div>';
+      return html;
+    }
+
+    // Layer groups for filter pills
+    const layers = { warehouse: L.layerGroup(), rep: L.layerGroup(), dist: L.layerGroup() };
+    const allPins = [];
+    const markerByPinId = new Map();
+
+    // Load data
+    try {
+      const res = await fetch('/data/local_support.json');
+      const data = await res.json();
+      data.warehouses.forEach(r => {
+        if (r.lat && r.lon) {
+          const m = L.marker([r.lat, r.lon], { icon: iconWh }).bindPopup(popup(r,'warehouse')).addTo(layers.warehouse);
+          if (r.id) markerByPinId.set(String(r.id), m);
+          allPins.push({ ...r, type: 'warehouse', lat: r.lat, lng: r.lon });
+        }
+      });
+      data.sales_reps.forEach(r => {
+        if (r.lat && r.lon) {
+          const m = L.marker([r.lat, r.lon], { icon: iconRep }).bindPopup(popup(r,'rep')).addTo(layers.rep);
+          if (r.id) markerByPinId.set(String(r.id), m);
+          allPins.push({ ...r, type: 'rep', lat: r.lat, lng: r.lon });
+        }
+      });
+      data.distributors.forEach(r => {
+        if (r.lat && r.lon) {
+          const m = L.marker([r.lat, r.lon], { icon: iconDist }).bindPopup(popup(r,'dist')).addTo(layers.dist);
+          if (r.id) markerByPinId.set(String(r.id), m);
+          allPins.push({ ...r, type: 'dist', lat: r.lat, lng: r.lon });
+        }
+      });
+    } catch(e) { console.error('ALG locator: failed to load data', e); }
+
+    // Add all layers by default
+    Object.values(layers).forEach(lg => lg.addTo(map));
+
+    // IN THIS VIEW list
+    const listEl   = document.getElementById('loc-results-list');
+    const headerEl = document.getElementById('loc-results-header');
+    let zipMode = false;
+
+    const sorters = {
+      nearest: (a, b) => a.distanceMi - b.distanceMi,
+      az:      (a, b) => (a.name || '').localeCompare(b.name || '', 'en'),
+      type:    (a, b) => {
+        const order = { warehouse: 0, rep: 1, dist: 2, distributor: 2 };
+        return (order[a.type] - order[b.type]) || (a.distanceMi - b.distanceMi);
+      }
+    };
+    let currentSort = 'nearest';
+    let currentInViewRows = [];
+
+    function renderList(entries, header) {
+      if (headerEl) headerEl.textContent = header || 'IN THIS VIEW';
+      if (!listEl) return;
+      if (entries.length === 0) {
+        listEl.innerHTML = '<li class="iv-empty">No reps, distributors, or warehouses in this view. Zoom out to see coverage.</li>';
+        return;
+      }
+      const typeClass = { warehouse: 'warehouse', rep: 'rep', dist: 'distributor' };
+      const chipLabel = { warehouse: 'Warehouse', rep: 'Sales Rep', dist: 'Stocking Distributor', distributor: 'Stocking Distributor' };
+      listEl.innerHTML = entries.map(p => {
+        const distStr = formatDistance(p.distanceMi);
+        const rawCity = p.city || '';
+        const rawState = p.state || '';
+        const cityState = titleCaseCityState([rawCity, rawState].filter(Boolean).join(', '));
+        const displayName = toTitleCase(p.name || cityState);
+        const tc = typeClass[p.type] || p.type;
+        const chip = chipLabel[p.type] || '';
+        const pinId = p.id ? String(p.id) : '';
+        return '<li class="iv-row iv-row--' + tc + '" data-pin-id="' + pinId + '">' +
+          '<div class="iv-row-main">' +
+            '<span class="iv-name">' + displayName + '</span>' +
+            '<span class="iv-distance">' + distStr + '</span>' +
+          '</div>' +
+          '<div class="iv-row-sub">' +
+            '<span class="iv-chip iv-chip--' + tc + '">' +
+              '<span class="iv-chip-dot" aria-hidden="true"></span>' +
+              '<span class="iv-chip-label">' + chip + '</span>' +
+            '</span>' +
+            '<span class="iv-sep">·</span>' +
+            '<span class="iv-citystate">' + cityState + '</span>' +
+          '</div>' +
+        '</li>';
+      }).join('');
+    }
+
+    // Sort toggle
+    const sortRowEl = document.getElementById('iv-sort-row');
+    if (sortRowEl) {
+      sortRowEl.addEventListener('click', (e) => {
+        const btn = e.target.closest('.iv-sort-btn');
+        if (!btn) return;
+        currentSort = btn.dataset.sort;
+        sortRowEl.querySelectorAll('.iv-sort-btn').forEach(b => b.classList.toggle('iv-sort-btn--active', b === btn));
+        const sorted = [...currentInViewRows].sort(sorters[currentSort]);
+        renderList(sorted, headerEl ? headerEl.textContent : 'IN THIS VIEW');
+      });
+    }
+
+    function updateInViewList() {
+      if (zipMode) return;
+      const bounds = map.getBounds();
+      const center = map.getCenter();
+      currentInViewRows = allPins
+        .filter(p => bounds.contains(L.latLng(p.lat, p.lng)))
+        .map(p => ({ ...p, distanceMi: center.distanceTo(L.latLng(p.lat, p.lng)) / 1609.344 }))
+        .sort((a, b) => a.distanceMi - b.distanceMi)
+        .slice(0, 8);
+      const sorted = [...currentInViewRows].sort(sorters[currentSort]);
+      renderList(sorted, 'IN THIS VIEW');
+    }
+
+    map.on('moveend', () => {
+      zipMode = false;
+      updateInViewList();
+    });
+    updateInViewList();
+    setTimeout(() => map.invalidateSize(), 0);
+
+    // ZIP / city / state search — Nominatim geocode → fly to location + filter list
+    const searchInput = document.querySelector('.loc-search-input');
+    const searchBtn   = document.querySelector('.loc-search-btn');
+    async function doSearch() {
+      const q = (searchInput ? searchInput.value.trim() : '');
+      if (!q) return;
+      try {
+        const r = await fetch('https://nominatim.openstreetmap.org/search?format=json&countrycodes=us&limit=1&q=' + encodeURIComponent(q), { headers: { 'Accept-Language': 'en' } });
+        const results = await r.json();
+        if (!results.length) { if (headerEl) headerEl.textContent = 'NOT FOUND'; return; }
+        const { lat, lon } = results[0];
+        // Zoom map to searched location (BATCH B §1 requirement)
+        map.setView([+lat, +lon], 8);
+        // ZIP mode: show 8 nearest to searched point
+        zipMode = true;
+        const center = L.latLng(+lat, +lon);
+        currentInViewRows = allPins
+          .map(p => ({ ...p, distanceMi: center.distanceTo(L.latLng(p.lat, p.lng)) / 1609.344 }))
+          .sort((a, b) => a.distanceMi - b.distanceMi)
+          .slice(0, 8);
+        const sorted = [...currentInViewRows].sort(sorters[currentSort]);
+        renderList(sorted, 'NEAREST TO ' + q.toUpperCase());
+      } catch(e) { console.error('ALG locator search error', e); }
+    }
+    if (searchBtn) searchBtn.addEventListener('click', doSearch);
+    if (searchInput) searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
+    // Filter pills
+    document.querySelectorAll('.loc-pill[data-filter]').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.loc-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        const f = pill.dataset.filter;
+        if (f === 'all') { Object.values(layers).forEach(lg => { if (!map.hasLayer(lg)) lg.addTo(map); }); }
+        else { Object.entries(layers).forEach(([k,lg]) => { if (k === f) { if (!map.hasLayer(lg)) lg.addTo(map); } else { if (map.hasLayer(lg)) map.removeLayer(lg); } }); }
+      });
+    });
+
+    // Click/hover row → fly to pin + open popup
+    if (listEl) {
+      listEl.addEventListener('mouseover', (e) => {
+        const row = e.target.closest('.iv-row');
+        if (!row) return;
+        const marker = markerByPinId.get(row.dataset.pinId);
+        if (marker) marker.getElement()?.classList.add('iv-marker-hovered');
+      });
+      listEl.addEventListener('mouseout', (e) => {
+        const row = e.target.closest('.iv-row');
+        if (!row) return;
+        const marker = markerByPinId.get(row.dataset.pinId);
+        if (marker) marker.getElement()?.classList.remove('iv-marker-hovered');
+      });
+      listEl.addEventListener('click', (e) => {
+        const row = e.target.closest('.iv-row');
+        if (!row) return;
+        const marker = markerByPinId.get(row.dataset.pinId);
+        if (!marker) return;
+        map.flyTo(marker.getLatLng(), Math.max(map.getZoom(), 9), { duration: 0.6 });
+        marker.openPopup();
+      });
+    }
+  };
+  document.head.appendChild(script);
+})();
+</script>

@@ -125,13 +125,7 @@ const verticalSlug  = parentVertical.toLowerCase();
     max-width: 920px;
     margin-bottom: 32px;
   }
-  /* B2 v2.5.5: force single-line at desktop ≥ 1024px */
-  @media (min-width: 1024px) {
-    .hero-desc {
-      white-space: nowrap;
-      overflow: visible;
-    }
-  }
+  /* BATCH B §4: removed white-space:nowrap at desktop — caused horizontal overflow on long descriptions */
   .hero-pills {
     display: flex;
     flex-wrap: wrap;
