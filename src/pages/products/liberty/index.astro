@@ -6173,7 +6173,7 @@ body { overflow-x: hidden; }
  </button>
  </div>
  <div class="drill-modal-body">
- <img id="drillModalImg" src="" alt="" />
+ <img id="drillModalImg" src="" alt="" style="display:none;" />
  </div>
  <div class="drill-modal-foot">
  <span>All dimensions in mm with [inch] equivalent · centerlines + callouts in ⒶLG red · refer to LSBX Heritage Install Guide for fastener spec.</span>
@@ -6199,6 +6199,7 @@ body { overflow-x: hidden; }
  var drillClose = document.getElementById('drillModalClose');
 
  function openDrill(url, letter, title, source) {
+ drillImg.style.display = '';
  drillImg.src = url;
  drillImg.alt = title + ' drill pattern . full view';
  drillTitle.textContent = title + ' . Drill Pattern';
@@ -6211,7 +6212,7 @@ body { overflow-x: hidden; }
  drillModal.classList.remove('open');
  document.body.style.overflow = '';
  // Defer src clear so the close animation doesn't show a broken image.
- setTimeout(function() { drillImg.src = ''; }, 200);
+ setTimeout(function() { drillImg.src = ''; drillImg.style.display = 'none'; }, 200);
  }
 
  // Expose globally so the inline onclick on the X button can call it

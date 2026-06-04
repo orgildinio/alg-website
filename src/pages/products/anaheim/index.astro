@@ -2612,7 +2612,7 @@ body { overflow-x: hidden; }
  The /PA photocell is OPTIONAL on Anaheim (standard ships built-in standard);
  framed in the configurator as a $15-add, NOT surfaced as a hero feature.
  SKU pattern: LWPA{12|27|40|67|80}{|-S3N}-{UNV|HV}{|/PA}
- Tier: ECO — adjustable HID-replacement entry tier; replaces 100W to 800W MH.
+ Tier: ECO — adjustable HID-replacement entry tier; replaces 100W to 320W MH (LWPA80 max).
  ============================================================================ -->
 <section class="hero">
  <div class="hero-grid">
@@ -2624,13 +2624,13 @@ body { overflow-x: hidden; }
  </h1>
  <h2>The wall pack you aim.</h2>
  <p class="hero-desc">
- For perimeter walls, loading bays, parking edges, and stairway towers — jobs where the J-box stays put and the light has to point somewhere else. Five wattages — <strong>12 / 27 / 40 / 67 / 80W</strong>, plus field-set multi-wattage S3N variants — drop in for <strong>100W–800W metal halide</strong>. The head pivots <strong>0°–90°</strong> on a <strong>protractor-marked side hinge</strong>, locked by a single screw. Aim once. Walk away. <strong>−40°F to +130°F</strong>, <strong>ANSI C136.31 3G vibration-rated</strong>, IP65, <strong>7-year warranty</strong> against the industry's 5. 120-277V line-wide; 347-480V on LWPA40/67/80. 1-10V dimming standard. Optional <code>/PA</code> photocell.
+ For perimeter walls, loading bays, parking edges, and stairway towers — jobs where the J-box stays put and the light has to point somewhere else. Five wattages — <strong>12 / 27 / 40 / 67 / 80W</strong>, plus field-set multi-wattage S3N variants — drop in for <strong>100W–320W metal halide</strong> (LWPA12/27 → 100W · LWPA40 → 175W · LWPA67 → 250W · LWPA80 → 320W MH). The head pivots <strong>0°–90°</strong> on a <strong>protractor-marked side hinge</strong>, locked by a single screw. Aim once. Walk away. <strong>−40°F to +130°F</strong>, <strong>ANSI C136.31 3G vibration-rated</strong>, IP65, <strong>7-year warranty</strong> against the industry's 5. 120-277V line-wide; 347-480V on LWPA40/67/80. 1-10V dimming standard. Optional <code>/PA</code> photocell.
  </p>
 
  <div class="hero-stats">
  <span><strong>Wattage:</strong> 12 / 27 / 40 / 67 / 80W</span>
  <span><strong>Lumens:</strong> 1,560 – 10,500 lm</span>
- <span><strong>HID Replacement:</strong> 100W – 800W MH</span>
+ <span><strong>HID Replacement:</strong> 100W – 320W MH (per model)</span>
  </div>
 
  <div class="ideal-card">
@@ -2835,17 +2835,19 @@ body { overflow-x: hidden; }
     </div>
  </div>
 
- <!-- Compliance row — production CDN logos.
- Anaheim ships with 3 confirmed certs at v1: cULus, RoHS, Wet Location.
- DLC LISTING IS NOT YET CONFIRMED PER THE COMPETITIVE BRIEF — flagged
- as an open engineering ask. The DLC badge is INTENTIONALLY OMITTED from
- this v1 mockup; reinstate when QPL listing is confirmed for each LWPA
- SKU. Brief estimates a 15–40% rebate-eligibility gap if DLC is missing,
- so this is high-priority follow-up, not just a copy decision. -->
+ <!-- Compliance row — CFG-CERT-1 · UL · DLC · FCC · RoHS · Wet Location (5 badges) -->
  <div class="hero-compliance" aria-label="Certifications">
  <div class="cb">
  <img class="cb-img" src="/assets/certs/ul-listed.svg" alt="cULus" width="60" height="60">
  <div class="cb-label">cULus</div>
+ </div>
+ <div class="cb">
+ <img class="cb-img" src="/assets/certs/dlc-listed.svg" alt="DLC Listed" width="60" height="60">
+ <div class="cb-label">DLC Listed</div>
+ </div>
+ <div class="cb">
+ <img class="cb-img" src="/assets/certs/fcc.svg" alt="FCC" width="60" height="60">
+ <div class="cb-label">FCC</div>
  </div>
  <div class="cb">
  <img class="cb-img" src="/assets/certs/rohs.svg" alt="RoHS" width="60" height="60">
@@ -2855,12 +2857,6 @@ body { overflow-x: hidden; }
  <img class="cb-img" src="/assets/certs/wet-location.svg" alt="Wet Location" width="60" height="60">
  <div class="cb-label">Wet Location</div>
  </div>
- <!-- DLC badge omitted v1 — QPL listing TBC per competitive brief.
- <div class="cb">
- <img src="/assets/certs/dlc-listed.svg" alt="DLC Listed" />
- <div class="cb-label">DLC Listed</div>
- </div>
- -->
  </div>
  </div>
  </div>
@@ -3193,7 +3189,7 @@ body { overflow-x: hidden; }
  — material for loading docks, transit-adjacent, bay-door impact).
  4. 7-year warranty + 75,000-hr L70 (industry baseline at this tier is 5
  years; "warranty backed by lifespan testing" pair-framing per brief).
- 5. HID retrofit chart (100W to 800W MH replacement; Buyers want swap the existing fixture. surface the chart as the
+ 5. HID retrofit chart (100W to 320W MH replacement; Buyers want swap the existing fixture. surface the chart as the
  spec hook, NOT bury it in the ordering guide).
  PLACEHOLDER ASSETS: tiles cycle through the 5 staged Dark Bronze hero
  photos (anaheim-hero-1..5). Asset team replaces at production with: tilt-
@@ -3262,8 +3258,8 @@ body { overflow-x: hidden; }
  </div>
  <div class="hf-tile-overlay">
  <div class="hf-tile-tag">HID Retrofit</div>
- <h3>100W to 800W MH. By the chart.</h3>
- <p>Buyers want swap the existing fixture. and Anaheim's 5-tier discrete-wattage lineup maps to specific metal halide wattages on a single chart: <strong>LWPA12 / 27 → 100W MH · LWPA40 → 175W MH · LWPA67 → 250W MH · LWPA80 → 320W MH</strong>, with the line topping out at the 800W MH retrofit lane. No translation tables, no asterisks, no "consult engineering." See the configurator below — pick the legacy MH wattage you're replacing and it walks you to the SKU.</p>
+ <h3>100W to 320W MH. By the chart.</h3>
+ <p>Anaheim's 5-tier discrete-wattage lineup maps to specific metal halide wattages on a single chart: <strong>LWPA12 / 27 → 100W MH · LWPA40 → 175W MH · LWPA67 → 250W MH · LWPA80 → 320W MH</strong>. No translation tables, no asterisks, no "consult engineering." See the configurator below — pick the legacy MH wattage you're replacing and it walks you to the SKU.</p>
  </div>
  </div>
  </div>
@@ -4612,7 +4608,7 @@ body { overflow-x: hidden; }
  </div>
  <div class="family-card-title">Anaheim</div>
  <div class="family-card-desc">
- Adjustable-tilt wall pack — <strong>0° to 90° continuous</strong> on a protractor-marked side hinge, locked by a single screw. 4 wattage tiers (27 / 40 / 67 / 80W) plus 2 multi-watt S3N variants replacing 100W to 800W metal halide HID. <strong>−40°F to +130°F</strong> · <strong>3G vibration</strong> · ANSI C136.31-rated. The product on this page.
+ Adjustable-tilt wall pack — <strong>0° to 90° continuous</strong> on a protractor-marked side hinge, locked by a single screw. 4 wattage tiers (27 / 40 / 67 / 80W) plus 2 multi-watt S3N variants replacing 100W to 320W metal halide HID (LWPA12/27 → 100W · LWPA40 → 175W · LWPA67 → 250W · LWPA80 → 320W MH). <strong>−40°F to +130°F</strong> · <strong>3G vibration</strong> · ANSI C136.31-rated. The product on this page.
  </div>
  <div class="family-card-stats">3,600–10,500 lm · 27 / 40 / 67 / 80W · 130–133 lm/W · /PS optional</div>
  <span class="family-card-cta">Currently viewing</span>
@@ -4868,7 +4864,7 @@ body { overflow-x: hidden; }
  <div class="pillar-eyebrow">Great Rebates &amp; Code Savings</div>
  <h3 class="pillar-title">Stack the rebates — straight off the HID chart.</h3>
  <p class="pillar-body">
- <strong>HID retrofit chart</strong> maps each LWPA SKU to its metal halide wattage (LWPA40 → 175W MH · LWPA80 → 320W MH · line tops at 800W MH) — utility rebate programs read straight off the chart. <strong>1-10V dim driver</strong> ships standard, qualifying for energy-code dimming credits. <em>DLC Premium QPL listing TBC at v1 — confirm with rep desk for per-SKU rebate eligibility.</em>
+ <strong>HID retrofit chart</strong> maps each LWPA SKU to its metal halide wattage (LWPA12/27 → 100W MH · LWPA40 → 175W MH · LWPA67 → 250W MH · LWPA80 → 320W MH) — utility rebate programs read straight off the chart. <strong>1-10V dim driver</strong> ships standard, qualifying for energy-code dimming credits. <em>DLC Premium QPL listing TBC at v1 — confirm with rep desk for per-SKU rebate eligibility.</em>
  </p>
  <div class="pillar-stats">
  <div class="pillar-stat">
