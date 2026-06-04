@@ -11,8 +11,8 @@ const lampararchData = {
   name: 'lamparⒶRCH',
   titleAscii: 'LAMPARⒶRCH',
   headlineLine: 'lampar<span class="aa">Ⓐ</span>RCH',
-  description: 'Linear high-bay, low-bay, vapor-tight, and linear strip — DLC Premium-listed across the catalog, project-specified for warehouse, manufacturing, and distribution-center installs where lumen efficiency and 80,000+ hours of L80 matter. lampar<span class="aa">Ⓐ</span>RCH is the ALG line that ships when the photometric layout is the conversation.',
-  pillRow: ['DLC PREMIUM', 'HIGH LUMEN EFFICIENCY', 'LONG PHOTOMETRIC THROW', 'PROJECT-SPECIFIED', '80,000-HR L80'],
+  description: 'Linear high-bay, low-bay, vapor-tight, and linear strip — DLC-listed across the catalog, project-specified for warehouse, manufacturing, and distribution-center installs where lumen efficiency and 80,000+ hours of L80 matter. lampar<span class="aa">Ⓐ</span>RCH is the ALG line that ships when the photometric layout is the conversation.',
+  pillRow: ['DLC-LISTED', 'HIGH LUMEN EFFICIENCY', 'LONG PHOTOMETRIC THROW', 'PROJECT-SPECIFIED', '80,000-HR L80'],
   statStrip: [
     { value: '88.5k',label: 'up to lm' },
     { value: '150', label: 'lm/W' },
@@ -21,9 +21,9 @@ const lampararchData = {
   ],
   redBanner: [
     { value: '10',  label: 'Families'     },
-    { value: '104', label: 'Active SKUs'  },
+    { value: '230', label: 'Active SKUs'  },
     { value: '6',   label: 'Applications' },
-    { value: 'DLC', label: 'Premium'      },
+    { value: 'DLC', label: 'Listed'    },
     { value: 'TAA', label: 'Available'    },
     { value: '5 US',label: 'Warehouses'   },
   ],
@@ -113,7 +113,7 @@ const lampararchData = {
   ],
   featuredHeadline: 'Four flagship families from the lamparⒶRCH collection.',
   familiesHeadline: 'The PRO line that earns the warehouse.',
-  familiesSubhead: 'Linear high-bay, low-bay, vapor-tight, and linear strip — DLC Premium-listed across the catalog, project-specified for warehouse, manufacturing, and distribution-center installs.',
+  familiesSubhead: 'Linear high-bay, low-bay, vapor-tight, and linear strip — DLC-listed across the catalog, project-specified for warehouse, manufacturing, and distribution-center installs.',
   legacy: {
     headline: 'Discontinued families.',
     body: 'Some earlier LAMPARARCH families have been discontinued. Industrial linear high-bay and low-bay luminaires. Replacement recommendations are available — contact your rep or distributor for guidance.',

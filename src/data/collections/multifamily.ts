@@ -3,7 +3,7 @@
  * Static data for the multi-fⒶMILY collection page.
  * Typed against CollectionPageLayout.astro Props['collection'].
  *
- * §A1 canonical: 8 families · 59 SKUs · 4 applications.
+ * §A1 canonical: 13 families · 167 SKUs · 4 applications.
  * Wally removed. Crescent removed. Radius-II kept (Recessed Downlights).
  * Gehry echelon: PRO. Orbit renamed to Orbit-I.
  * C5: Featured heading corrected to "Three flagship families".
@@ -25,10 +25,10 @@ const multifamilyData = {
     { value: 'JA8',  label: 'Title 24' },
     { value: '48-hr',label: 'Layouts' },
   ],
-  // C1: Updated to 8 families · 59 SKUs · 4 applications (Wally removed, new taxonomy)
+  // C1: Updated to 13 families · 167 SKUs · 4 applications (Wally removed, new taxonomy)
   redBanner: [
     { value: '8',   label: 'Families'     },
-    { value: '59',  label: 'Active SKUs'  },
+    { value: '167', label: 'Active SKUs'  },
     { value: '4',   label: 'Applications' },
     { value: 'DLC', label: 'Premium'      },
     { value: 'TAA', label: 'Available'    },
@@ -101,7 +101,7 @@ const multifamilyData = {
     },
   ],
   featuredHeadline: 'Three flagship families from the multi-fAMILY collection.',
-  familiesHeadline: 'Eight families from the multi-fAMILY collection.',
+  familiesHeadline: 'Thirteen families from the multi-fAMILY collection.',
   familiesSubhead: 'Multifamily, garden-style, and mid-rise developments need lighting that works on a per-door budget — and still passes the code inspector on the first walk-through.',
   legacy: {
     headline: 'Discontinued families.',

@@ -121,14 +121,14 @@ const diffSignals = [
 ];
 
 const verticals = [
-  { cls: 't1', vert: 'Warehouse & Logistics',      place: '3PL facility · OH',      hasImg: true },
-  { cls: 't2', vert: 'Industrial & Manufacturing', place: 'Auto plant · TX',         hasImg: true },
-  { cls: 't3', vert: 'Cold Storage & Grocery',     place: 'Freezer DC · CA',         hasImg: true },
-  { cls: 't4', vert: 'Data Centers',               place: 'Hyperscale · VA',          hasImg: true },
-  { cls: 't5', vert: 'Healthcare',                 place: 'Outpatient · IL',          hasImg: true },
-  { cls: 't6', vert: 'Education',                  place: 'K-12 retrofit · NJ',       hasImg: true },
-  { cls: 't7', vert: 'Hospitality',                place: 'Hotel reno · MA',           hasImg: true },
-  { cls: 't8', vert: 'Government & Military',      place: 'Federal logistics · GA',    hasImg: true },
+  { cls: 't1', vert: 'Warehouse & Logistics',      place: '3PL facility · OH',      hasImg: true, slug: 'warehouse-logistics' },
+  { cls: 't2', vert: 'Industrial & Manufacturing', place: 'Auto plant · TX',         hasImg: true, slug: 'industrial-manufacturing' },
+  { cls: 't3', vert: 'Cold Storage & Grocery',     place: 'Freezer DC · CA',         hasImg: true, slug: 'cold-storage-grocery' },
+  { cls: 't4', vert: 'Data Centers',               place: 'Hyperscale · VA',          hasImg: true, slug: 'data-center' },
+  { cls: 't5', vert: 'Healthcare',                 place: 'Outpatient · IL',          hasImg: true, slug: 'healthcare' },
+  { cls: 't6', vert: 'Education',                  place: 'K-12 retrofit · NJ',       hasImg: true, slug: 'education' },
+  { cls: 't7', vert: 'Hospitality',                place: 'Hotel reno · MA',           hasImg: true, slug: 'hospitality' },
+  { cls: 't8', vert: 'Government & Military',      place: 'Federal logistics · GA',    hasImg: true, slug: 'government-military' },
 ];
 ---
 <BaseLayout
@@ -613,13 +613,12 @@ const verticals = [
       <p class="sec-sub" style="max-width:none">From cold storage to data centers—real installations with performance you can spec and support.</p>
       <div class="installed-grid">
         {verticals.map(v => (
-          <div class={`installed-tile ${v.cls}${!v.hasImg ? ' placeholder' : ''}`}>
+          <a href={`/solutions/${v.slug}/`} class={`installed-tile ${v.cls}${!v.hasImg ? ' placeholder' : ''}`} aria-label={`${v.vert} solutions`}>
             <div class="installed-label">
               <div class="il-vert">{v.vert}</div>
               <div class="il-place">{v.place}</div>
-
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </div>
@@ -1832,6 +1831,8 @@ const verticals = [
     overflow: hidden;
   }
   .installed-tile {
+    display: block;
+    text-decoration: none;
     position: relative;
     aspect-ratio: 4/3;
     background: var(--dark2);

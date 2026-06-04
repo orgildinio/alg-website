@@ -333,6 +333,16 @@ main[data-vertical] h3 { font-family: var(--font-body) !important; }
   line-height: 1.55;
 }
 .hero__cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+/* CFG-GHOST-1: white ghost button — visible on dark hero background */
+.hero__cta-row .btn--ghost {
+  color: #fff;
+  border-color: #fff;
+  background: transparent;
+}
+.hero__cta-row .btn--ghost:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: #fff;
+}
 
 .info-card {
   background: var(--bg-card);
