@@ -615,8 +615,8 @@ body {
 
   <div class="photo-grid">
     <div class="polar-plot">
-      <img id="photoPolarImg" src="" alt="Polar plot"
-           onerror="this.style.display='none'; this.parentElement.innerHTML+='<div style=\'color:#999;font-size:8pt;text-align:center;padding:20px;\'>Polar plot unavailable</div>';" />
+      <img id="photoPolarImg" src="/products/radiator/assets/polar/radiator-polar-placeholder.svg" alt="Radiator LSPL photometric distribution — NEMA 3 forward-throw polar plot"
+           onerror="this.style.display='none'; this.parentElement.innerHTML+='<div style=\'color:#999;font-size:8pt;text-align:center;padding:20px;\'>Polar plot unavailable — IES bundle extraction pending</div>';" />
     </div>
     <div class="photo-stats">
       <div class="ps-row"><span class="ps-label">Lumens</span><span class="ps-val" id="photoLumens">170,400 lm</span></div>
@@ -687,6 +687,8 @@ body {
     document.getElementById('photoEyebrow').textContent = 'Default optic · ' + hl.watts_max + 'W · ' + (cct === '30' ? '3000K' : cct === '40' ? '4000K' : '5000K');
     document.getElementById('photoIesFile').textContent = 'LSPL' + hl.watts_max + '-' + (cct === '30' ? '3000K' : cct === '40' ? '4000K' : '5000K') + '.IES';
   }
+  // Polar plot — only placeholder available until IES bundle extraction
+  document.getElementById('photoPolarImg').src = '/products/radiator/assets/polar/radiator-polar-placeholder.svg';
 
   // --- CCT / VOLTAGE ---
   document.getElementById('qsCct').innerHTML = (cct === '30' ? '3000' : cct === '40' ? '4000' : '5000') + '<span class="qs-unit">K</span>';

@@ -177,7 +177,7 @@
   <div class="dim-placeholder"><div style="font-size:8pt;color:var(--muted);">Dimension drawing · LLSR retroⒶRCH-L1 · 4FT / 8FT variants<br/>Reference TBD — contact ALG for CAD files</div></div>
   <div class="polar-wrap">
     <div class="polar-img-box">
-      <img id="photoPolarImg" src="/products/retroarch-l1/assets/polar/retroarch-l1-polar-4ft.svg" alt="retroⒶRCH-L1 polar plot" onerror="this.style.display='none';this.parentElement.innerHTML+='<div style=\'color:#999;font-size:8pt;text-align:center;\'>Polar plot TBD</div>';" />
+      <img id="photoPolarImg" src="/products/retroarch-l1/retroarch-l1/photometrics/polar_ps3_5000.svg" alt="retroⒶRCH-L1 polar plot" onerror="this.style.display='none';this.parentElement.innerHTML+='<div style=\'color:#999;font-size:8pt;text-align:center;\'>Polar plot TBD</div>';" />
     </div>
     <div>
       <div class="section-eyebrow" id="photoEyebrow" style="margin-bottom:8px;">Photometric Data</div>
@@ -216,7 +216,8 @@
   document.getElementById('qsWatts').innerHTML  = watt + '<span class="qs-unit">W</span>';
   document.getElementById('qsCct').innerHTML    = cct + '<span class="qs-unit">K</span>';
   document.getElementById('photoEyebrow').textContent = length + 'FT · ' + mode.toUpperCase() + ' · ' + watt + 'W · ' + cct + 'K';
-  document.getElementById('photoPolarImg').src = '/products/retroarch-l1/assets/polar/retroarch-l1-polar-' + length + 'ft.svg';
+  var polarSeries = (mode === 'bundle') ? 'es3' : 'ps3';
+  document.getElementById('photoPolarImg').src = '/products/retroarch-l1/retroarch-l1/photometrics/polar_' + polarSeries + '_' + cct + '.svg';
 
   var d = new Date();
   document.getElementById('liveDate').textContent = d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });

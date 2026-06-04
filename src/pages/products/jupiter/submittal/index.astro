@@ -179,7 +179,7 @@
   <div class="dim-placeholder"><div style="font-size:8pt;color:var(--muted);">Dimension drawing · LRHB Jupiter · Round UFO high-bay<br/>Reference TBD — contact ALG for CAD files</div></div>
   <div class="polar-wrap">
     <div class="polar-img-box">
-      <img id="photoPolarImg" src="/products/jupiter/assets/polar/jupiter-polar-240w.svg" alt="Jupiter polar plot" onerror="this.style.display='none';this.parentElement.innerHTML+='<div style=\'color:#999;font-size:8pt;text-align:center;\'>Polar plot TBD</div>';" />
+      <img id="photoPolarImg" src="/products/jupiter/assets/polar/jupiter-polar-240-class.svg" alt="Jupiter polar plot" onerror="this.style.display='none';this.parentElement.innerHTML+='<div style=\'color:#999;font-size:8pt;text-align:center;\'>Polar plot TBD</div>';" />
     </div>
     <div>
       <div class="section-eyebrow" id="photoEyebrow" style="margin-bottom:8px;">Photometric Data</div>
@@ -220,7 +220,7 @@
   var cctDisplay = cct === '3CS' ? '3000-5000' : (cct === '50C' ? '5000' : (cct === '40C' ? '4000' : cct));
   document.getElementById('qsCct').innerHTML    = cctDisplay + '<span class="qs-unit">K</span>';
   document.getElementById('photoEyebrow').textContent = wattage + 'W · CCT: ' + cct + ' · 90° optic';
-  document.getElementById('photoPolarImg').src = '/products/jupiter/assets/polar/jupiter-polar-' + wattage + 'w.svg';
+  document.getElementById('photoPolarImg').src = '/products/jupiter/assets/polar/jupiter-polar-' + wattage + '-class.svg';
 
   var d = new Date();
   document.getElementById('liveDate').textContent = d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });

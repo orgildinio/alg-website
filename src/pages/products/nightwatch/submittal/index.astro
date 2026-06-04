@@ -640,9 +640,23 @@ body {
 
   <div class="section-eyebrow" id="photoEyebrow">Default optic · 135W · 4000K</div>
 
-  <div class="photo-grid">
+    <div class="section-head"><h2>Dimensions &amp; Mounting</h2><div class="section-eyebrow">LWPC Nightwatch — Dimension drawing</div></div>
+  <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:16px;margin-bottom:16px;">
+    <div style="background:var(--tint);border:1px solid var(--rule);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:14px;aspect-ratio:4/3;">
+      <div style="font-size:7pt;letter-spacing:1.2pt;color:var(--muted);text-transform:uppercase;padding:0 0 4px;">Dimension drawing (in)</div>
+      <img src="/products/nightwatch/assets/dimensions/Nightwatch-Dimensions-01.svg"
+           alt="LWPC Nightwatch dimension drawing"
+           style="width:100%;height:100%;object-fit:contain;"
+           onerror="this.style.display='none';this.parentElement.innerHTML+='<div style=\'color:#999;font-size:8pt;text-align:center;padding:20px;\'>Dimension drawing · contact ALG for CAD files</div>';" />
+    </div>
+    <div style="font-size:8.5pt;color:var(--muted);padding-top:8px;">
+      <p style="margin:0 0 8px;">Refer to dimension drawing for exact housing dimensions, mounting hole patterns, and clearance requirements.</p>
+      <p style="margin:0;">Contact ALG for DWG/DXF CAD files.</p>
+    </div>
+  </div>
+<div class="photo-grid">
     <div class="polar-plot">
-      <img id="photoPolarImg" src="" alt="Polar plot"
+      <img id="photoPolarImg" src="/products/nightwatch/assets/nightwatch/photometrics/nightwatch_LWPC38_40k.svg" alt="Polar plot"
            onerror="this.style.display='none'; this.parentElement.innerHTML+='<div style=\'color:#999;font-size:8pt;text-align:center;padding:20px;\'>Polar plot unavailable</div>';" />
     </div>
     <div class="photo-stats">
@@ -726,6 +740,12 @@ body {
     document.getElementById('photoLumens').textContent = hl.lumens + ' lm';
     document.getElementById('photoEyebrow').textContent = 'Default optic · ' + hl.watts_max + 'W · ' + (cct === '30' ? '3000K' : cct === '40' ? '4000K' : '5000K');
     document.getElementById('photoIesFile').textContent = 'LWPC' + hl.watts_max + '-' + (cct === '30' ? '3000K' : cct === '40' ? '4000K' : '5000K') + '.IES';
+
+    // Set photometric polar plot
+    var nw_watts = hl ? hl.watts_max : watts;
+    var nw_housing = (parseInt(nw_watts) <= 38) ? 'LWPC38' : 'LWPC65';
+    var nw_cct = (cct === '30') ? '30k' : (cct === '40') ? '40k' : '50k';
+    document.getElementById('photoPolarImg').src = '/products/nightwatch/assets/nightwatch/photometrics/nightwatch_' + nw_housing + '_' + nw_cct + '.svg';
   }
 
   // --- CCT / VOLTAGE ---

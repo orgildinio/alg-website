@@ -449,7 +449,7 @@
       <!-- Real Orbit-I hero image. Production overrides this src to the
            Shopify CDN. mix-blend-mode: multiply preserves the white finish
            against the warm-paper hero panel. -->
-      <img id="heroImg" src="/products/multi-family/orbit-i/assets/photos/orbit/4in/LDGR410-1.png"
+      <img id="heroImg" src="/products/multi-family/orbit-i/assets/finishes/orbit-finish-white.webp"
            alt="LDGR Orbit-I downlight — front 3/4 angle" />
     </div>
     <div class="qs-grid">
@@ -878,10 +878,10 @@
 
   // --- AUTOFILL HERO IMAGE per finish ---
   var heroSrc = {
-    'W':  'assets/finishes/nebula-ii-finish-white.webp',
-    'BK': 'assets/finishes/nebula-ii-finish-black.webp',
-    'BZ': 'assets/finishes/nebula-ii-finish-bronze.webp'
-  }[finish] || 'assets/finishes/nebula-ii-finish-white.webp';
+    'W':  '/products/multi-family/orbit-i/assets/finishes/orbit-finish-white.webp',
+    'BK': '/products/multi-family/orbit-i/assets/finishes/orbit-finish-white.webp',
+    'BZ': '/products/multi-family/orbit-i/assets/finishes/orbit-finish-white.webp'
+  }[finish] || '/products/multi-family/orbit-i/assets/finishes/orbit-finish-white.webp';
   document.getElementById('heroImg').src = heroSrc;
   // Issue 6 — photometric polar plot: swap per size (no CCT split for ECO tier)
   var polarImg = document.getElementById('polarImg');

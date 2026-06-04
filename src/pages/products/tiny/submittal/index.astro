@@ -221,7 +221,7 @@
   <div class="section-head" style="margin-top:16px;"><h2>Photometric Data</h2><div class="section-eyebrow" id="photoEyebrow">LLHB150 · 5000K · 90×90° wide-beam</div></div>
   <div class="photo-grid">
     <div class="photo-polar">
-      <img id="photoPolarImg" src="/products/tiny/tiny/photometrics/polar_150_ut.svg?v=2026-05-27"
+      <img id="photoPolarImg" src="/products/tiny/tiny/photometrics/polar_085_ut.svg?v=2026-05-27"
            alt="LLHB Tiny polar candela distribution"
            onerror="this.style.display='none';this.parentElement.innerHTML+='<div style=\'color:#999;font-size:8pt;text-align:center;\'>Polar plot — contact ALG for IES bundle</div>';" />
     </div>
@@ -274,8 +274,8 @@
   // Photometric data per model (from Tiny PDP + LM-79 IES bundle 2026-05-27)
   var photoData = {
     '085': { lumens: '11,985 lm', peak: '5,229 cd', eff: '141 lm/W', polar: 'polar_085_ut', ies: 'LLHB150-UT50.ies (shared optic · scaled @ 85W)' },
-    '150': { lumens: '20,186 lm', peak: '9,494 cd',  eff: '138 lm/W', polar: 'polar_150_ut', ies: 'LLHB150-UT50.ies' },
-    '220': { lumens: '31,894 lm', peak: '14,739 cd', eff: '147 lm/W', polar: 'polar_220_ut', ies: 'LLHB220-UT50.ies' }
+    '150': { lumens: '20,186 lm', peak: '9,494 cd',  eff: '138 lm/W', polar: 'polar_085_ut', ies: 'LLHB150-UT50.ies' },
+    '220': { lumens: '31,894 lm', peak: '14,739 cd', eff: '147 lm/W', polar: 'polar_085_ut', ies: 'LLHB220-UT50.ies' }
   };
   var pd = photoData[model] || photoData['150'];
 

@@ -178,7 +178,7 @@
   <div class="dim-placeholder"><div style="font-size:8pt;color:var(--muted);">Dimension drawing · LLHB Titan · 85-155W / 215-320W housing classes<br/>Reference TBD — contact ALG for CAD files</div></div>
   <div class="polar-wrap">
     <div class="polar-img-box">
-      <img id="photoPolarImg" src="/products/titan/assets/polar/titan-polar-155w.svg" alt="Titan polar plot" onerror="this.style.display='none';this.parentElement.innerHTML+='<div style=\'color:#999;font-size:8pt;text-align:center;\'>Polar plot TBD</div>';" />
+      <img id="photoPolarImg" src="/products/titan/assets/photometrics/polar_155_5000.svg" alt="Titan polar plot" onerror="this.style.display='none';this.parentElement.innerHTML+='<div style=\'color:#999;font-size:8pt;text-align:center;\'>Polar plot TBD</div>';" />
     </div>
     <div>
       <div class="section-eyebrow" id="photoEyebrow" style="margin-bottom:8px;">Photometric Data</div>
@@ -217,7 +217,7 @@
   document.getElementById('qsWatts').innerHTML  = wattage + '<span class="qs-unit">W</span>';
   document.getElementById('qsVoltage').innerHTML = (voltage === 'HT' ? '347-480' : '120-277') + '<span class="qs-unit">V</span>';
   document.getElementById('photoEyebrow').textContent = wattage + 'W · ' + voltage + ' · ' + optic;
-  document.getElementById('photoPolarImg').src = '/products/titan/assets/polar/titan-polar-' + wattage + 'w.svg';
+  document.getElementById('photoPolarImg').src = '/products/titan/assets/photometrics/polar_' + wattage + '_' + cct + '.svg';
 
   var d = new Date();
   document.getElementById('liveDate').textContent = d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
