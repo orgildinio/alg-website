@@ -3590,10 +3590,20 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
           <img src="/assets/certs/ul-listed.svg" alt="UL / cUL Listed" class="cb-img" />
           <div class="cb-label">UL Listed</div>
         </div>
-        <!-- Compliance row — kept lean per James 2026-05-08: UL Listed + Title 24/JA8 + IC Rated.
-             cULus / ETL Listed / Air-Tight removed (still surfaced via amplifier feature chips
-             + submittal Page 2/4 cert stack). Title 24/JA8 brought back 2026-05-08 because it's
-             the California-spec credential the spec sheet leads with. -->
+        <!-- ETL Listed — canonical badge (restored per cert-row SVG conversion) -->
+        <div class="cb">
+          <img src="/assets/certs/etl-listed.svg" alt="ETL Listed" class="cb-img" />
+          <div class="cb-label">ETL Listed</div>
+        </div>
+        <!-- Damp Location — canonical badge -->
+        <div class="cb">
+          <img src="/assets/certs/damp-location.svg" alt="Suitable for Damp Locations" class="cb-img" />
+          <div class="cb-label">Damp Location</div>
+        </div>
+        <!-- Compliance row — UL + ETL + Damp + Title 24/JA8 + IC Rated.
+             Air-Tight removed (still surfaced via amplifier feature chips + submittal cert stack).
+             ⚠️ FLAG FOR JAMES: ic-rated.svg + title24-ja8.svg + air-tight.svg not yet supplied —
+             Title24/JA8 and IC Rated rendered as inline SVGs in matching visual style. -->
         <!-- Title 24 — California Title 24 Part 6 + JA8 compliant for /T24 SKU -->
         <div class="cb">
           <svg class="cb-img" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="California Title 24 + JA8-2022-E compliant (/T24 SKU)">
