@@ -568,7 +568,12 @@
 
   var params  = new URLSearchParams(window.location.search);
   var skuQ    = params.get('sku')      || '';
-  var form    = params.get('form')     || '24';
+  // CFG-PROBE-3: derive form-factor from SKU string (LBLP14/22/24) when ?form= is absent
+  var formFromSku = (function() {
+    var m = skuQ.match(/LBLP(14|22|24)/i);
+    return m ? m[1] : null;
+  })();
+  var form    = params.get('form') || formFromSku || '24';
   var series  = params.get('series')   || 'MXP3';
   var wattage = params.get('wattage')  || '';
   var cct     = params.get('cct')      || '5000';
@@ -624,7 +629,11 @@
   var es = document.getElementById('specsEyebrow');
   if (es) es.innerHTML = sku + ' \u00B7 ' + FORM_LABEL[form] + ' back-lit flat panel \u00B7 ' + SERIES_LABEL[series].name;
 
-  // Page 3 dimension active label
+  // Page 3 dimensions: show ONLY the configured form factor's drawing
+  ['14','22','24'].forEach(function(f) {
+    var dv = document.getElementById('dimView' + f);
+    if (dv) dv.style.display = (f === form) ? '' : 'none';
+  });
   document.querySelectorAll('[id^="dimLabel"]').forEach(function(l) { l.classList.remove('is-active'); });
   var dl = document.getElementById('dimLabel' + form);
   if (dl) dl.classList.add('is-active');
@@ -652,6 +661,14 @@
   if (variant.indexOf('SR') >= 0) { var rsr = document.getElementById('rowSr'); if (rsr) rsr.classList.add('active-row'); }
   if (hasWLock) { var rw = document.getElementById('rowWlock'); if (rw) rw.classList.add('active-row'); }
   if (hasCLock) { var rc = document.getElementById('rowClock'); if (rc) rc.classList.add('active-row'); }
+
+  // Page 1 hero image: key off form factor (LBLP14→hero-3, LBLP22→hero-2, LBLP24→hero-1)
+  var HERO_MAP = { '14': 'proarch-hero-3.webp', '22': 'proarch-hero-2.webp', '24': 'proarch-hero-1.webp' };
+  var heroImgEl = document.getElementById('heroImg');
+  if (heroImgEl) {
+    heroImgEl.src = '/products/proarch/assets/hero/' + (HERO_MAP[form] || 'proarch-hero-1.webp');
+    heroImgEl.alt = 'LBLP' + form + ' proⒶRCH ' + (FORM_LABEL[form] || form) + ' back-lit LED flat panel';
+  }
 
   // Page 4 photometric data
   var photoKey = series + '_' + form;
