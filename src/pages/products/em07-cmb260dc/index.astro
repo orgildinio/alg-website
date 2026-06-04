@@ -41,7 +41,7 @@ const fontPreconnects = [...headContent.matchAll(/<link[^>]*rel="preconnect"[^>]
     <Fragment set:html={fontLinks} />
     <Fragment set:html={styleBlocks} />
     <Fragment set:html={scriptBlocks} />
-  <style>
+  <style is:global>
     /* §D.1 breadcrumb-band — constⒶNT EM-driver PDPs */
     .breadcrumb-band {
       padding: 10px 32px;

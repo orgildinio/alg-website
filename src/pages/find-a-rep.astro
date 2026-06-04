@@ -622,21 +622,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         if (r.lat && r.lon) {
           const m = L.marker([r.lat, r.lon], { icon: iconWh }).bindPopup(popup(r,'warehouse')).addTo(layers.warehouse);
           if (r.id) markerByPinId.set(String(r.id), m);
-          allPins.push({ ...r, type: 'warehouse', lat: r.lat, lng: r.lon });
+          allPins.push({ ...r, type: 'warehouse', lat: r.lat, lng: r.lon, _marker: m });
         }
       });
       data.sales_reps.forEach(r => {
         if (r.lat && r.lon) {
           const m = L.marker([r.lat, r.lon], { icon: iconRep }).bindPopup(popup(r,'rep')).addTo(layers.rep);
           if (r.id) markerByPinId.set(String(r.id), m);
-          allPins.push({ ...r, type: 'rep', lat: r.lat, lng: r.lon });
+          allPins.push({ ...r, type: 'rep', lat: r.lat, lng: r.lon, _marker: m });
         }
       });
       data.distributors.forEach(r => {
         if (r.lat && r.lon) {
           const m = L.marker([r.lat, r.lon], { icon: iconDist }).bindPopup(popup(r,'dist')).addTo(layers.dist);
           if (r.id) markerByPinId.set(String(r.id), m);
-          allPins.push({ ...r, type: 'dist', lat: r.lat, lng: r.lon });
+          allPins.push({ ...r, type: 'dist', lat: r.lat, lng: r.lon, _marker: m });
         }
       });
     } catch(e) { console.error('ALG locator: failed to load data', e); }
@@ -722,6 +722,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
 
     map.on('moveend', () => {
+      // Restore all markers when user pans (clears search filter)
+      if (zipMode) {
+        allPins.forEach(p => {
+          if (p._marker) {
+            const el = p._marker.getElement();
+            if (el) el.style.display = '';
+          }
+        });
+      }
       zipMode = false;
       updateInViewList();
     });
@@ -739,11 +748,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         const results = await r.json();
         if (!results.length) { if (headerEl) headerEl.textContent = 'NOT FOUND'; return; }
         const { lat, lon } = results[0];
-        // Zoom map to searched location (BATCH B §1 requirement)
+        // Zoom map to searched location
         map.setView([+lat, +lon], 8);
-        // ZIP mode: show 8 nearest to searched point
+        // ZIP mode: show 8 nearest to searched point in sidebar
         zipMode = true;
         const center = L.latLng(+lat, +lon);
+        const RADIUS_MI = 150;
+        const RADIUS_M  = RADIUS_MI * 1609.344;
+        // Filter map markers: show only pins within 150 mi of search point
+        allPins.forEach(p => {
+          if (!p._marker) return;
+          const distM = center.distanceTo(L.latLng(p.lat, p.lng));
+          const el = p._marker.getElement();
+          if (el) el.style.display = distM <= RADIUS_M ? '' : 'none';
+        });
         currentInViewRows = allPins
           .map(p => ({ ...p, distanceMi: center.distanceTo(L.latLng(p.lat, p.lng)) / 1609.344 }))
           .sort((a, b) => a.distanceMi - b.distanceMi)

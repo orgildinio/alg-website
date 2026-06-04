@@ -239,7 +239,7 @@ const skusJson = JSON.stringify(skus);
                   </div>
                   <a href={(fam as any).pdpUrl ?? `/collections/${collectionSlug}/${fam.family.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')}`} class="fc-view">VIEW →</a>
                 </div>
-                <script type="application/json" class="fc-skus-data" set:text={JSON.stringify(famSkus)}></script>
+                <script type="application/json" class="fc-skus-data" set:html={JSON.stringify(famSkus)}></script>
               </div>
             );
           })}
@@ -280,7 +280,7 @@ const skusJson = JSON.stringify(skus);
     function getCardSkus(card) {
       try {
         const el = card.querySelector('script[type="application/json"].fc-skus-data');
-        return JSON.parse(el ? el.textContent : (card.dataset.skus || '[]'));
+        return JSON.parse(el ? (el.textContent || el.innerHTML) : (card.dataset.skus || '[]'));
       } catch { return []; }
     }
 
