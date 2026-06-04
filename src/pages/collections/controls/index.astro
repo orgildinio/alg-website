@@ -95,6 +95,6 @@ const bundleHeadStyles = headStyleMatches.join('\n');
      The circled-Ⓐ (U+24B6) is wide; at letter-spacing ≈0.18em it picks up ~8.9px gap
      on each side. Negative margin compensates to ~2px, matching letter rhythm.
      is:global required — .marker is rendered by the React bundle, not Astro-scoped. */
-  .marker .aa { letter-spacing: 0; margin: 0 -0.6em; }
+  .marker .aa { letter-spacing: 0 !important; margin: 0 -0.9em !important; }
 </style>
 </BaseLayout>

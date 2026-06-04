@@ -362,7 +362,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     /* CFG-EYEBROW-1 · tighten Ⓐ glyph in heavy-tracked .marker eyebrows only
        The circled-Ⓐ (U+24B6) is wide; at letter-spacing ≈0.18em it picks up ~8.9px gap
        on each side. Negative margin compensates to ~2px, matching letter rhythm. */
-    .marker .aa { letter-spacing: 0; margin: 0 -0.6em; }
+    .marker .aa { letter-spacing: 0 !important; margin: 0 -0.9em !important; }
   </style>
   <style>
     /* §C.3 · Lato pin — defeat Shopify/Cormorant cascade */
