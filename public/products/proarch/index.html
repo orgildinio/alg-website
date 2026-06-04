@@ -6020,7 +6020,7 @@ body { overflow-x: hidden; }
  ]
  }
  };
- var state = { series: 'MXP3', form: '14' };
+ var state = { series: 'MXP3', form: '14', wattage: '40', cct: '5000' };
  var tbody = document.getElementById('specTableBody');
  var tabs = document.querySelectorAll('.spec-watt-tab');
  // Per-form-factor dimension SVG · 1x4 / 2x2 / 2x4
@@ -6964,7 +6964,7 @@ body { overflow-x: hidden; }
  // pick Series first (33MXP2 or 55MXP3), which unlocks Form Factor, which unlocks
  // WATTselect, which unlocks CCTselect, which unlocks Variant + the Optional column.
  // Mirrors Nightwatch/Radiator gating · matches James's 2026-05-04 PM directive.
- var DEFAULT_STATE = {};
+ var DEFAULT_STATE = { form: '14', series: 'MXP3', wattage: '40', cct: '5000' };
 
  // ---- RAL Classic validation table ----
  // 213 official RAL Classic codes (numbered ranges with intentional gaps).

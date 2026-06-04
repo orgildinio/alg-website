@@ -6518,7 +6518,7 @@ body { overflow-x: hidden; }
 
     var sizeTabs = document.querySelectorAll('.photo-tab[data-size]');
     var cctTabs  = document.querySelectorAll('.photo-tab[data-cct]');
-    var state = { size: 'lcdl6', watt: '22', cct: '5000' };  // LCDL6 ★ + 22W ★ + 5000K ★ canonical defaults
+    var state = { size: 'lcdl6', watt: '22', cct: '5000', trim: 'DT' };  // LCDL6 ★ + 22W ★ + 5000K ★ canonical defaults
 
     function renderWattChips() {
       var tiers = WATT_TIERS[state.size] || [];

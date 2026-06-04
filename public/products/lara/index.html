@@ -5802,7 +5802,7 @@ body { overflow-x: hidden; }
     if (!img || !statPeak || !wattRow) return;
     var lengthTabs = document.querySelectorAll('.photo-tab[data-length]');
     var cctTabs    = document.querySelectorAll('.photo-tab[data-cct]');
-    var state = { length: 'luxa8', watt: '80', cct: '5000' };  // datasheet default ★
+    var state = { length: 'luxa8', watt: '80', cct: '5000', finish: 'D' };  // datasheet default ★
 
     function rebuildWattTabs() {
       var watts = WATTS[state.length];
