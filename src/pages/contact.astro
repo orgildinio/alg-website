@@ -710,6 +710,26 @@ import ContentShell from '../layouts/ContentShell.astro';
     margin-right: 6px;
   }
 
+  /* ── §01 field framing override (beats global border reset) ──────────── */
+  form.alg-form .alg-input,
+  form.alg-form .alg-textarea,
+  form.alg-form .alg-select {
+    border: 1px solid #C7CCD3 !important;
+    background: #F5F4F1 !important;
+    color: var(--ink) !important;
+  }
+  form.alg-form .alg-input::placeholder,
+  form.alg-form .alg-textarea::placeholder { color: var(--ink3) !important; }
+  form.alg-form .alg-input:focus,
+  form.alg-form .alg-textarea:focus,
+  form.alg-form .alg-select:focus {
+    border-color: var(--ink) !important;
+    background: #fff !important;
+  }
+  form.alg-form .alg-chips { border: 1px solid #C7CCD3 !important; }
+  form.alg-form .alg-chip { border-right: 1px solid #C7CCD3 !important; }
+  form.alg-form .alg-chip:last-child { border-right: 0 !important; }
+
   /* ── Submit (verbatim from mockup) ─────────────────────────────────────── */
   .alg-submit {
     display: inline-flex;
