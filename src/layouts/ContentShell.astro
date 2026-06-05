@@ -1,0 +1,95 @@
+---
+/**
+ * ContentShell.astro — Canonical shared content shell for standalone marketing/support pages.
+ *
+ * Consumers: Contact · About · Library · Returns (and any future standalone page)
+ *
+ * Responsibilities:
+ *   - Locks the canonical ALG horizontal margin ONCE via --pad-x
+ *   - Content column caps at 1320px; minimum gutter 56px; scales symmetrically
+ *   - Owns the .alg-section padding rhythm so consumers don't redeclare it
+ *   - Provides Lato + JetBrains Mono type tokens (supplements global.css)
+ *   - Wraps BaseLayout with the correct title/description/bodyClass
+ *
+ * Usage:
+ *   <ContentShell title="Page Title" description="..." bodyClass="page-contact">
+ *     <section class="alg-section"> ... </section>
+ *   </ContentShell>
+ *
+ * Shell file: src/layouts/ContentShell.astro
+ * Reuse this exact import path in About, Library, Returns.
+ */
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  bodyClass?: string;
+  hideFooterCta?: boolean;
+}
+
+const {
+  title,
+  description,
+  bodyClass = '',
+  hideFooterCta = false,
+} = Astro.props;
+---
+
+<BaseLayout {title} {description} {bodyClass} {hideFooterCta}>
+  <slot name="head" slot="head" />
+  <slot />
+  <slot name="body-end" slot="body-end" />
+</BaseLayout>
+
+<style is:global>
+  /*
+   * ── ALG CONTENT SHELL ──────────────────────────────────────────────────────
+   * Canonical horizontal margin for all standalone content pages.
+   * --pad-x: symmetric gutter; content caps at 1320px; minimum 56px each side.
+   * DO NOT override --pad-x per-page — this is the single source of truth.
+   */
+  :root {
+    --pad-x: calc(0.5 * max(56px, calc((100vw - 1320px) / 2)));
+    --shell-max: 1320px;
+  }
+
+  /* Section wrapper — apply to every top-level section on content pages */
+  .alg-section {
+    padding-left: var(--pad-x);
+    padding-right: var(--pad-x);
+  }
+
+  /* Vertical rhythm defaults for content sections */
+  .alg-section--lg {
+    padding-top: 96px;
+    padding-bottom: 96px;
+  }
+  .alg-section--md {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+  .alg-section--sm {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  /* Type tokens — Lato + JetBrains Mono only on content pages */
+  .shell-body,
+  .shell-body h1,
+  .shell-body h2,
+  .shell-body h3,
+  .shell-body h4,
+  .shell-body p,
+  .shell-body label,
+  .shell-body button,
+  .shell-body input,
+  .shell-body textarea,
+  .shell-body select {
+    font-family: 'Lato', system-ui, sans-serif;
+  }
+  .shell-mono,
+  .shell-body .mono {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+  }
+</style>

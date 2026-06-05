@@ -1,0 +1,888 @@
+---
+/**
+ * contact.astro — Contact Us · Field Desk
+ * Route: /contact
+ * Shell: ContentShell.astro (src/layouts/ContentShell.astro)
+ * Chrome: canonical BaseLayout (Header + MegaMenu + Footer)
+ * Design ref: ALG-Contact-v1.html
+ */
+import ContentShell from '../layouts/ContentShell.astro';
+---
+
+<ContentShell
+  title="Contact Us — Archipelago Lighting Group"
+  description="Reach the ALG spec desk, sales team, warranty department, or find your local rep. Direct lines, direct form — no nav required."
+  bodyClass="page-contact shell-body"
+  hideFooterCta={true}
+>
+
+<!-- ── GLOW ORB (scroll-trailing, scoped to this page) ────────────────── -->
+<div class="glow-orb" id="glow-orb" aria-hidden="true"></div>
+
+<!-- ── HERO ────────────────────────────────────────────────────────────── -->
+<section class="alg-section contact-hero">
+  <div class="contact-hero__inner">
+    <div class="contact-hero__left">
+      <span class="contact-eyebrow mono">CONTACT · FIELD DESK · 2026</span>
+      <h1 class="contact-h1">The whole desk,<br><span class="aa">on one page.</span></h1>
+      <p class="contact-lede">Built for the contractor at 6 AM with a takeoff due. Quote desk, spec engineer, warranty, rep finder — direct dial, direct form, no nav. ALG runs the line out of Montclair, CA.</p>
+    </div>
+  </div>
+  <!-- Stats bar -->
+  <div class="contact-stats">
+    <div class="contact-stat">
+      <span class="contact-stat__val">&lt; 4 hr</span>
+      <span class="contact-stat__label mono">QUOTE TURNAROUND</span>
+    </div>
+    <div class="contact-stat">
+      <span class="contact-stat__val">5–7 days</span>
+      <span class="contact-stat__label mono">PRO SHIP TIME</span>
+    </div>
+    <div class="contact-stat">
+      <span class="contact-stat__val">7 yr</span>
+      <span class="contact-stat__label mono">PRO WARRANTY</span>
+    </div>
+    <div class="contact-stat">
+      <span class="contact-stat__val">48 hr</span>
+      <span class="contact-stat__label mono">RMA AUTHORIZATION</span>
+    </div>
+    <div class="contact-stat contact-stat--phone">
+      <span class="contact-stat__val">(866) 912-3220</span>
+      <span class="contact-stat__label mono">MAIN · MON-FRI PT</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── THREE-COLUMN BODY ────────────────────────────────────────────────── -->
+<section class="alg-section contact-body alg-section--lg">
+  <div class="contact-cols">
+
+    <!-- COL 1: SEND A MESSAGE (form) -->
+    <div class="contact-col contact-col--form">
+      <span class="contact-col__num mono">01</span>
+      <h2 class="contact-col__title">SEND A MESSAGE</h2>
+      <p class="contact-col__meta mono">Routed by topic</p>
+
+      <!-- Route chips -->
+      <div class="contact-chips" id="contact-chips" role="group" aria-label="Message topic">
+        <button class="contact-chip active" data-route="quote" data-to="sales@archipelagolighting.com" data-subject="Contact · Quote" type="button">
+          <span class="contact-chip__num mono">01</span>QUOTE
+        </button>
+        <button class="contact-chip" data-route="spec" data-to="sales@archipelagolighting.com" data-subject="Contact · Spec" type="button">
+          <span class="contact-chip__num mono">02</span>SPEC
+        </button>
+        <button class="contact-chip" data-route="distributor" data-to="sales@archipelagolighting.com" data-subject="Contact · Distributor" type="button">
+          <span class="contact-chip__num mono">03</span>DISTRIBUTOR
+        </button>
+        <button class="contact-chip" data-route="warranty" data-to="warranty@archipelagolighting.com" data-subject="Contact · Warranty" type="button">
+          <span class="contact-chip__num mono">04</span>WARRANTY
+        </button>
+        <button class="contact-chip" data-route="press" data-to="sales@archipelagolighting.com" data-subject="[PRESS] Contact" type="button">
+          <span class="contact-chip__num mono">05</span>PRESS
+        </button>
+      </div>
+
+      <!-- Contact form -->
+      <form class="contact-form" id="contact-form" novalidate>
+        <div class="contact-form__row contact-form__row--2">
+          <div class="contact-form__field">
+            <label class="contact-form__label mono" for="cf-name">NAME <span class="req">*</span></label>
+            <input class="contact-form__input" id="cf-name" name="name" type="text" placeholder="Jordan Reyes" autocomplete="name" required />
+          </div>
+          <div class="contact-form__field">
+            <label class="contact-form__label mono" for="cf-company">COMPANY <span class="req">*</span></label>
+            <input class="contact-form__input" id="cf-company" name="company" type="text" placeholder="Firm / Company" autocomplete="organization" required />
+          </div>
+        </div>
+        <div class="contact-form__row contact-form__row--2">
+          <div class="contact-form__field">
+            <label class="contact-form__label mono" for="cf-email">EMAIL <span class="req">*</span></label>
+            <input class="contact-form__input" id="cf-email" name="email" type="email" placeholder="jordan@firm.com" autocomplete="email" required />
+          </div>
+          <div class="contact-form__field">
+            <label class="contact-form__label mono" for="cf-phone">PHONE</label>
+            <input class="contact-form__input" id="cf-phone" name="phone" type="tel" placeholder="(866) 912-3220" autocomplete="tel" />
+          </div>
+        </div>
+        <div class="contact-form__row contact-form__row--2">
+          <div class="contact-form__field">
+            <label class="contact-form__label mono" for="cf-project">PROJECT</label>
+            <input class="contact-form__input" id="cf-project" name="project" type="text" placeholder="Riverside DC Phase II" />
+          </div>
+          <div class="contact-form__field">
+            <label class="contact-form__label mono" for="cf-stage">STAGE</label>
+            <select class="contact-form__input contact-form__select" id="cf-stage" name="stage">
+              <option value="">Select…</option>
+              <option value="Bidding now">Bidding now</option>
+              <option value="Design phase">Design phase</option>
+              <option value="Schematic">Schematic</option>
+              <option value="Installed">Installed</option>
+            </select>
+          </div>
+        </div>
+        <div class="contact-form__field">
+          <label class="contact-form__label mono" for="cf-message">MESSAGE</label>
+          <textarea class="contact-form__input contact-form__textarea" id="cf-message" name="message" rows="5" placeholder="Paste BOM or describe scope. Quantity helps."></textarea>
+        </div>
+        <button class="contact-form__submit" type="submit">SEND TO ALG →</button>
+      </form>
+    </div>
+
+    <!-- COL 2: FIND YOUR REP -->
+    <div class="contact-col contact-col--rep">
+      <span class="contact-col__num mono">02</span>
+      <h2 class="contact-col__title">FIND YOUR REP</h2>
+      <p class="contact-col__meta mono">By region · 5 territories</p>
+      <p class="contact-rep__intro">Click a territory. ALG runs five super-regions; your project ZIP routes here.</p>
+
+      <!-- Territory map (SVG) -->
+      <div class="contact-map" id="contact-map" role="img" aria-label="ALG territory map — 5 regions">
+        <svg viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg" class="contact-map__svg">
+          <!-- WEST -->
+          <g class="map-region" data-region="WEST" tabindex="0" role="button" aria-label="West territory">
+            <rect x="10" y="30" width="130" height="200" rx="4" class="map-region__bg"/>
+            <text x="75" y="135" class="map-region__label" text-anchor="middle">WEST</text>
+          </g>
+          <!-- MTN -->
+          <g class="map-region" data-region="MTN" tabindex="0" role="button" aria-label="Mountain territory">
+            <rect x="148" y="30" width="80" height="160" rx="4" class="map-region__bg"/>
+            <text x="188" y="115" class="map-region__label" text-anchor="middle">MTN</text>
+          </g>
+          <!-- CENTRAL -->
+          <g class="map-region" data-region="CENTRAL" tabindex="0" role="button" aria-label="Central territory">
+            <rect x="236" y="30" width="90" height="200" rx="4" class="map-region__bg"/>
+            <text x="281" y="135" class="map-region__label" text-anchor="middle">CENTRAL</text>
+          </g>
+          <!-- SOUTH -->
+          <g class="map-region" data-region="SOUTH" tabindex="0" role="button" aria-label="South territory">
+            <rect x="148" y="198" width="178" height="60" rx="4" class="map-region__bg"/>
+            <text x="237" y="233" class="map-region__label" text-anchor="middle">SOUTH</text>
+          </g>
+          <!-- EAST -->
+          <g class="map-region" data-region="EAST" tabindex="0" role="button" aria-label="East territory">
+            <rect x="334" y="30" width="156" height="228" rx="4" class="map-region__bg"/>
+            <text x="412" y="148" class="map-region__label" text-anchor="middle">EAST</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Rep CTA — no invented rep data per CFG: never invent -->
+      <div class="contact-rep__cta">
+        <p class="contact-rep__note">Select a territory above, or use the full rep finder to search by ZIP code and product line.</p>
+        <a class="contact-rep__link" href="/find-a-rep/">Find your rep →</a>
+      </div>
+    </div>
+
+    <!-- COL 3: DIRECT LINES -->
+    <div class="contact-col contact-col--lines">
+      <span class="contact-col__num mono">03</span>
+      <h2 class="contact-col__title">DIRECT LINES</h2>
+      <p class="contact-col__meta mono">Mon–Fri · PT</p>
+
+      <!-- Spec desk card -->
+      <div class="contact-lines-card">
+        <div class="contact-lines-card__header mono">SPEC DESK MAIN</div>
+        <a class="contact-lines-card__phone" href="tel:+18669123220">(866) 912-3220</a>
+        <div class="contact-lines-card__hours mono">MON-FRI · 7:00–17:00 PT</div>
+      </div>
+
+      <!-- Email lines -->
+      <div class="contact-lines-list">
+        <div class="contact-lines-item">
+          <span class="contact-lines-item__label mono">SALES</span>
+          <a class="contact-lines-item__val" href="mailto:sales@archipelagolighting.com">sales@archipelagolighting.com</a>
+        </div>
+        <div class="contact-lines-item">
+          <span class="contact-lines-item__label mono">SPEC</span>
+          <a class="contact-lines-item__val" href="mailto:spec@archipelagolighting.com">spec@archipelagolighting.com</a>
+        </div>
+        <div class="contact-lines-item">
+          <span class="contact-lines-item__label mono">WARRANTY</span>
+          <a class="contact-lines-item__val" href="mailto:warranty@archipelagolighting.com">warranty@archipelagolighting.com</a>
+        </div>
+        <div class="contact-lines-item">
+          <span class="contact-lines-item__label mono">PRESS</span>
+          <a class="contact-lines-item__val" href="mailto:press@archipelagolighting.com">press@archipelagolighting.com</a>
+        </div>
+      </div>
+
+      <!-- Quick links -->
+      <div class="contact-qlinks">
+        <a class="contact-qlink" href="/support/library/">
+          <span class="contact-qlink__label">IES files BY SKU · VERSIONED</span>
+          <span class="contact-qlink__arrow mono">→</span>
+        </a>
+        <a class="contact-qlink" href="/support/library/">
+          <span class="contact-qlink__label">Cut sheets ECO / PRO / PRO+</span>
+          <span class="contact-qlink__arrow mono">→</span>
+        </a>
+        <a class="contact-qlink" href="mailto:warranty@archipelagolighting.com?subject=Warranty%20Claim">
+          <span class="contact-qlink__label">Warranty claim · email warranty@</span>
+          <span class="contact-qlink__arrow mono">→</span>
+        </a>
+        <a class="contact-qlink" href="/support/returns">
+          <span class="contact-qlink__label">Returns · RMA 48-HR AUTH</span>
+          <span class="contact-qlink__arrow mono">→</span>
+        </a>
+        <a class="contact-qlink" href="/support/library/">
+          <span class="contact-qlink__label">Stocking SKUs 2026 CATALOG</span>
+          <span class="contact-qlink__arrow mono">→</span>
+        </a>
+      </div>
+
+      <!-- HQ address -->
+      <div class="contact-address">
+        <div class="contact-address__label mono">HQ · MONTCLAIR CA</div>
+        <address class="contact-address__val">
+          4615 State Street<br>
+          Montclair, CA 91763
+        </address>
+        <div class="contact-address__label mono" style="margin-top:12px">PRODUCTION · RIVERSIDE CA</div>
+        <address class="contact-address__val">
+          9345 Sycamore Canyon Blvd<br>
+          Riverside, CA 92508
+        </address>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FAQ ──────────────────────────────────────────────────────────────── -->
+<section class="alg-section contact-faq alg-section--lg">
+  <div class="contact-faq__inner">
+    <div class="contact-faq__left">
+      <span class="contact-eyebrow mono">04 · FIELD FAQ</span>
+      <h2 class="contact-faq__h2">Asked at the<br>spec desk daily.</h2>
+      <p class="contact-faq__lede">Lead times, samples, IES, warranty, the <span class="aa">Ⓐ</span>CS by ALG App — the short answers, written by people who pick up the phone.</p>
+    </div>
+    <div class="contact-faq__right">
+      <div class="contact-faq__list" id="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-item__q" aria-expanded="true" type="button">
+            <span class="faq-item__num mono">01</span>
+            What's the typical lead time on a PRO-tier high bay?
+            <span class="faq-item__icon" aria-hidden="true">−</span>
+          </button>
+          <div class="faq-item__a" hidden>
+            <p>PRO-tier RHB, LHB, and STR families ship in 5–7 business days from Riverside, CA on quantities under 500. Anything larger or non-stock CCT/optic combinations runs 3–4 weeks. Get a firm date by sending the SKU plus quantity to your territory manager — they confirm against current production.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__q" aria-expanded="false" type="button">
+            <span class="faq-item__num mono">02</span>
+            Can I order samples before specifying?
+            <span class="faq-item__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-item__a" hidden>
+            <p>Yes. Email <a href="mailto:sales@archipelagolighting.com?subject=Sample%20request">sales@archipelagolighting.com</a> with the SKU, CCT, and wattage. Standard samples ship within 2 business days. Loaner photometric kits for large projects are available through your rep.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__q" aria-expanded="false" type="button">
+            <span class="faq-item__num mono">03</span>
+            How do I file a warranty claim?
+            <span class="faq-item__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-item__a" hidden>
+            <!-- C1 delta: ECO 5yr · PRO 7yr · PRO+ 10yr (CFG-WARR-1) -->
+            <p>ECO fixtures carry a 5-year warranty, PRO 7-year, and PRO+ 10-year (unless otherwise stated). Email <a href="mailto:warranty@archipelagolighting.com?subject=Warranty%20Claim">warranty@archipelagolighting.com</a> with the original PO, job name, install date, and failed SKU and we'll process the claim.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__q" aria-expanded="false" type="button">
+            <span class="faq-item__num mono">04</span>
+            Do you publish IES files and spec sheets?
+            <span class="faq-item__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-item__a" hidden>
+            <p>Yes — versioned IES files and cut sheets for every SKU are in the <a href="/support/library/">Spec Library</a>. Files are organized by family and tier (ECO / PRO / PRO+). If a file is missing, email <a href="mailto:spec@archipelagolighting.com">spec@archipelagolighting.com</a> with the SKU.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__q" aria-expanded="false" type="button">
+            <span class="faq-item__num mono">05</span>
+            Is the <span class="aa">Ⓐ</span>CS by ALG App required for PRO+ fixtures?
+            <span class="faq-item__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-item__a" hidden>
+            <p>The <span class="aa">Ⓐ</span>CS App is required for commissioning PRO+ fixtures with sensorBLE or Silvair mesh controls. Standard 0–10V dimming on PRO+ operates without the app. Refer to the fixture's install guide for the commissioning checklist.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__q" aria-expanded="false" type="button">
+            <span class="faq-item__num mono">06</span>
+            Where can I find a local distributor?
+            <span class="faq-item__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-item__a" hidden>
+            <p>Use the <a href="/find-a-rep/">rep finder</a> to locate your territory manager, or visit <a href="/find-a-distributor/">Find a Distributor</a> to search stocking distributors by state. For national accounts, contact <a href="mailto:sales@archipelagolighting.com">sales@archipelagolighting.com</a> directly.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+</ContentShell>
+
+<!-- ── STYLES ────────────────────────────────────────────────────────────── -->
+<style>
+  /* ── Page-level tokens ─────────────────────────────────────────────────── */
+  .page-contact {
+    --bg-page:    #1a1d23;
+    --bg-card:    #22262b;
+    --bg-card-2:  #2a2e34;
+    --text-pri:   #ecedef;
+    --text-sec:   #a8aeb7;
+    --text-muted: #6e7682;
+    --red:        #F32740;
+    --red-press:  #C8132E;
+    --border:     rgba(255,255,255,0.08);
+    background: var(--bg-page);
+    color: var(--text-pri);
+  }
+
+  /* ── Shared utilities ──────────────────────────────────────────────────── */
+  .page-contact .aa { color: var(--red); font-style: normal; }
+  .page-contact .mono { font-family: 'JetBrains Mono', 'Courier New', monospace; }
+  .page-contact .req { color: var(--red); }
+
+  /* ── Glow orb ──────────────────────────────────────────────────────────── */
+  .glow-orb {
+    position: fixed;
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(243,39,64,0.18) 0%, rgba(243,39,64,0.06) 45%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    transition: left 0.6s ease-out, top 0.6s ease-out;
+    will-change: left, top;
+    left: 50%;
+    top: 50%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .glow-orb { display: none; }
+  }
+  @media print {
+    .glow-orb { display: none; }
+  }
+
+  /* ── Hero ──────────────────────────────────────────────────────────────── */
+  .contact-hero {
+    padding-top: 80px;
+    padding-bottom: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .contact-hero__inner {
+    max-width: var(--shell-max, 1320px);
+    margin: 0 auto;
+  }
+  .contact-eyebrow {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  .contact-h1 {
+    font-family: 'Lato', system-ui, sans-serif;
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--text-pri);
+    margin-bottom: 28px;
+  }
+  .contact-lede {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text-sec);
+    max-width: 560px;
+    margin-bottom: 0;
+  }
+
+  /* Stats bar */
+  .contact-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-top: 56px;
+    border-top: 1px solid var(--border);
+  }
+  .contact-stat {
+    flex: 1 1 160px;
+    padding: 24px 28px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .contact-stat:last-child { border-right: none; }
+  .contact-stat__val {
+    font-family: 'Lato', system-ui, sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--text-pri);
+    letter-spacing: -0.02em;
+  }
+  .contact-stat--phone .contact-stat__val { font-size: 22px; }
+  .contact-stat__label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── Three-column body ─────────────────────────────────────────────────── */
+  .contact-body { position: relative; z-index: 1; }
+  .contact-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 48px;
+    max-width: var(--shell-max, 1320px);
+    margin: 0 auto;
+  }
+  .contact-col__num {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--red);
+    margin-bottom: 6px;
+  }
+  .contact-col__title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-pri);
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .contact-col__meta {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 24px;
+  }
+
+  /* ── Form ──────────────────────────────────────────────────────────────── */
+  /* Route chips */
+  .contact-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+  .contact-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-sec);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .contact-chip:hover {
+    background: var(--bg-card-2);
+    border-color: rgba(255,255,255,0.18);
+    color: var(--text-pri);
+  }
+  .contact-chip.active {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+  }
+  .contact-chip__num {
+    font-size: 9px;
+    opacity: 0.7;
+  }
+
+  /* Form fields */
+  .contact-form { display: flex; flex-direction: column; gap: 14px; }
+  .contact-form__row { display: flex; gap: 14px; }
+  .contact-form__row--2 > * { flex: 1; }
+  .contact-form__field { display: flex; flex-direction: column; gap: 6px; }
+  .contact-form__label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .contact-form__input {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-pri);
+    font-family: 'Lato', system-ui, sans-serif;
+    font-size: 14px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.15s;
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .contact-form__input::placeholder { color: var(--text-muted); }
+  .contact-form__input:focus { border-color: var(--red); }
+  .contact-form__select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236e7682' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
+  .contact-form__textarea { resize: vertical; min-height: 120px; }
+  .contact-form__submit {
+    align-self: flex-start;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-top: 4px;
+  }
+  .contact-form__submit:hover { background: var(--red-press); }
+  .contact-form__submit:active { background: #a01025; }
+
+  /* ── Rep map ───────────────────────────────────────────────────────────── */
+  .contact-rep__intro {
+    font-size: 14px;
+    color: var(--text-sec);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .contact-map { margin-bottom: 20px; }
+  .contact-map__svg { width: 100%; height: auto; display: block; }
+  .map-region__bg {
+    fill: var(--bg-card);
+    stroke: var(--border);
+    stroke-width: 1;
+    transition: fill 0.15s;
+  }
+  .map-region:hover .map-region__bg,
+  .map-region:focus .map-region__bg {
+    fill: rgba(243,39,64,0.15);
+    stroke: var(--red);
+    outline: none;
+  }
+  .map-region__label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    fill: var(--text-sec);
+    letter-spacing: 0.06em;
+    pointer-events: none;
+  }
+  .contact-rep__cta { margin-top: 8px; }
+  .contact-rep__note {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .contact-rep__link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--red);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(243,39,64,0.3);
+    padding-bottom: 2px;
+    transition: border-color 0.15s;
+  }
+  .contact-rep__link:hover { border-color: var(--red); }
+
+  /* ── Direct lines ──────────────────────────────────────────────────────── */
+  .contact-lines-card {
+    background: var(--bg-card);
+    border-left: 3px solid var(--red);
+    padding: 20px 20px 20px 18px;
+    margin-bottom: 24px;
+  }
+  .contact-lines-card__header {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .contact-lines-card__phone {
+    display: block;
+    font-family: 'Lato', system-ui, sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--text-pri);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+  .contact-lines-card__phone:hover { color: var(--red); }
+  .contact-lines-card__hours {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .contact-lines-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+  .contact-lines-item { display: flex; flex-direction: column; gap: 3px; }
+  .contact-lines-item__label {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .contact-lines-item__val {
+    font-size: 13px;
+    color: var(--text-sec);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .contact-lines-item__val:hover { color: var(--red); }
+
+  .contact-qlinks { display: flex; flex-direction: column; gap: 0; margin-bottom: 28px; }
+  .contact-qlink {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    transition: color 0.15s;
+    gap: 8px;
+  }
+  .contact-qlink:first-child { border-top: 1px solid var(--border); }
+  .contact-qlink__label {
+    font-size: 13px;
+    color: var(--text-sec);
+    transition: color 0.15s;
+  }
+  .contact-qlink__arrow {
+    font-size: 12px;
+    color: var(--red);
+    flex-shrink: 0;
+  }
+  .contact-qlink:hover .contact-qlink__label { color: var(--text-pri); }
+
+  .contact-address { margin-top: 4px; }
+  .contact-address__label {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .contact-address__val {
+    font-style: normal;
+    font-size: 13px;
+    color: var(--text-sec);
+    line-height: 1.6;
+  }
+
+  /* ── FAQ ───────────────────────────────────────────────────────────────── */
+  .contact-faq { border-top: 1px solid var(--border); }
+  .contact-faq__inner {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 64px;
+    max-width: var(--shell-max, 1320px);
+    margin: 0 auto;
+    align-items: start;
+  }
+  .contact-faq__h2 {
+    font-family: 'Lato', system-ui, sans-serif;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text-pri);
+    margin: 12px 0 20px;
+  }
+  .contact-faq__lede {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-sec);
+  }
+
+  /* FAQ accordion */
+  .contact-faq__list { display: flex; flex-direction: column; }
+  .faq-item { border-bottom: 1px solid var(--border); }
+  .faq-item__q {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 20px 0;
+    text-align: left;
+    cursor: pointer;
+    color: var(--text-pri);
+    font-family: 'Lato', system-ui, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+    transition: color 0.15s;
+  }
+  .faq-item__q:hover { color: var(--red); }
+  .faq-item__num {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--red);
+    flex-shrink: 0;
+  }
+  .faq-item__icon {
+    margin-left: auto;
+    font-size: 18px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    font-style: normal;
+  }
+  .faq-item__a {
+    padding: 0 0 20px 38px;
+  }
+  .faq-item__a p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-sec);
+  }
+  .faq-item__a a {
+    color: var(--red);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(243,39,64,0.3);
+  }
+  .faq-item__a a:hover { border-color: var(--red); }
+
+  /* ── Responsive ────────────────────────────────────────────────────────── */
+  @media (max-width: 1100px) {
+    .contact-cols { grid-template-columns: 1fr 1fr; }
+    .contact-col--lines { grid-column: 1 / -1; }
+  }
+  @media (max-width: 768px) {
+    .contact-cols { grid-template-columns: 1fr; gap: 40px; }
+    .contact-col--lines { grid-column: auto; }
+    .contact-faq__inner { grid-template-columns: 1fr; gap: 32px; }
+    .contact-stats { flex-direction: column; }
+    .contact-stat { border-right: none; border-bottom: 1px solid var(--border); }
+    .contact-stat:last-child { border-bottom: none; }
+    .contact-form__row--2 { flex-direction: column; }
+  }
+  @media print {
+    .glow-orb { display: none; }
+    .contact-chip { display: none; }
+  }
+</style>
+
+<!-- ── SCRIPTS ───────────────────────────────────────────────────────────── -->
+<script is:inline>
+(function () {
+  /* ── Glow orb: trail the mouse ─────────────────────────────────────── */
+  var orb = document.getElementById('glow-orb');
+  if (orb && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.addEventListener('mousemove', function (e) {
+      orb.style.left = e.clientX + 'px';
+      orb.style.top = (e.clientY + window.scrollY) + 'px';
+    }, { passive: true });
+  }
+
+  /* ── Route chips: toggle active, update form submit ────────────────── */
+  var chips = document.querySelectorAll('.contact-chip');
+  var form = document.getElementById('contact-form');
+  var activeChip = document.querySelector('.contact-chip.active');
+
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      chips.forEach(function (c) { c.classList.remove('active'); });
+      chip.classList.add('active');
+      activeChip = chip;
+    });
+  });
+
+  /* ── Form submit → mailto ───────────────────────────────────────────── */
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var chip = document.querySelector('.contact-chip.active') || chips[0];
+      var to = chip.getAttribute('data-to') || 'sales@archipelagolighting.com';
+      var baseSubject = chip.getAttribute('data-subject') || 'Contact';
+
+      var name    = (document.getElementById('cf-name')    || {}).value || '';
+      var company = (document.getElementById('cf-company') || {}).value || '';
+      var email   = (document.getElementById('cf-email')   || {}).value || '';
+      var phone   = (document.getElementById('cf-phone')   || {}).value || '';
+      var project = (document.getElementById('cf-project') || {}).value || '';
+      var stage   = (document.getElementById('cf-stage')   || {}).value || '';
+      var message = (document.getElementById('cf-message') || {}).value || '';
+
+      var subject = baseSubject + (company ? ' · ' + company : '');
+      var body = [
+        'Name: ' + name,
+        'Company: ' + company,
+        'Email: ' + email,
+        phone   ? 'Phone: ' + phone   : '',
+        project ? 'Project: ' + project : '',
+        stage   ? 'Stage: ' + stage   : '',
+        '',
+        message
+      ].filter(Boolean).join('\n');
+
+      window.location.href = 'mailto:' + to
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body='    + encodeURIComponent(body);
+    });
+  }
+
+  /* ── FAQ accordion ──────────────────────────────────────────────────── */
+  var faqList = document.getElementById('faq-list');
+  if (faqList) {
+    faqList.addEventListener('click', function (e) {
+      var btn = e.target.closest('.faq-item__q');
+      if (!btn) return;
+      var item = btn.closest('.faq-item');
+      var answer = item.querySelector('.faq-item__a');
+      var icon   = btn.querySelector('.faq-item__icon');
+      var isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      answer.hidden = isOpen;
+      icon.textContent = isOpen ? '+' : '−';
+    });
+  }
+
+  /* ── Territory map: click → open find-a-rep ────────────────────────── */
+  var mapRegions = document.querySelectorAll('.map-region');
+  mapRegions.forEach(function (region) {
+    region.addEventListener('click', function () {
+      window.location.href = '/find-a-rep/';
+    });
+    region.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.location.href = '/find-a-rep/';
+      }
+    });
+  });
+})();
+</script>
