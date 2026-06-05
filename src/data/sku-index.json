@@ -14729,7 +14729,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Apollo"
+          "tierKey": "Apollo",
+          "pdp_ready": false
         },
         {
           "family": "Atlas",
@@ -14750,7 +14751,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Atlas"
+          "tierKey": "Atlas",
+          "pdp_ready": false
         },
         {
           "family": "Eureka",
@@ -14845,7 +14847,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Juno"
+          "tierKey": "Juno",
+          "pdp_ready": false
         },
         {
           "family": "Jupiter",
@@ -14892,7 +14895,8 @@
           "taa": true,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Millennium"
+          "tierKey": "Millennium",
+          "pdp_ready": false
         },
         {
           "family": "Nexus",
@@ -14913,7 +14917,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Nexus"
+          "tierKey": "Nexus",
+          "pdp_ready": false
         },
         {
           "family": "Tiny",
@@ -14973,7 +14978,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Universal"
+          "tierKey": "Universal",
+          "pdp_ready": false
         },
         {
           "family": "Vanguard",
@@ -14994,7 +15000,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Vanguard"
+          "tierKey": "Vanguard",
+          "pdp_ready": false
         },
         {
           "family": "retro\u24b6RCH-L1",
@@ -15026,7 +15033,8 @@
           "pdpUrl": "/products/eureka/",
           "slug": "eureka",
           "sub_category": "",
-          "display_echelon": "ECO"
+          "display_echelon": "ECO",
+          "pdp_ready": false
         }
       ]
     },

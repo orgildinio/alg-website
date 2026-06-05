@@ -20,7 +20,7 @@ const lampararchData = {
     { value: '48-hr',label: 'Layouts' },
   ],
   redBanner: [
-    { value: '10',  label: 'Families'     },
+    { value: '7',   label: 'Families'     },
     { value: '230', label: 'Active SKUs'  },
     { value: '6',   label: 'Applications' },
     { value: 'DLC', label: 'Listed'    },

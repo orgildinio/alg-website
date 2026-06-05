@@ -23,6 +23,8 @@ const buildTimeRaw = import.meta.env.PUBLIC_BUILD_TIME;
 const buildTime = buildTimeRaw
   ? new Date(buildTimeRaw).toISOString().slice(0, 16) + 'Z'
   : 'local';
+// G2 PROD GATE: baked at build time — true only when CF_PAGES_BRANCH === 'main'
+const isProd = (import.meta.env.PUBLIC_IS_PROD as unknown) === true || (import.meta.env.PUBLIC_IS_PROD as unknown) === 'true';
 ---
 
 <!-- FOOTER CTA STRIP (suppressed when page has its own closing-section) -->
@@ -147,8 +149,8 @@ const buildTime = buildTimeRaw
       <span class="sub-footer-line">&copy; {year} Archipelago Lighting Group &middot; 4615 State Street, Montclair, CA 91763 &middot; USA Production: 9345 Sycamore Canyon Blvd, Riverside CA 92508 &middot; +1 (866) 912-3220 &middot; <a href="https://www.archipelagolighting.com" class="sub-footer-url">www.archipelagolighting.com</a></span>
     </div>
   </div>
-  <!-- BUILD PROVENANCE BADGE (v2.7.7) -->
-  <div class="footer-build-stamp">build {buildHash} &middot; {buildTime}</div>
+  <!-- BUILD PROVENANCE BADGE (v2.7.7) — suppressed on production (CF_PAGES_BRANCH=main) -->
+  {!isProd && <div class="footer-build-stamp">build {buildHash} &middot; {buildTime}</div>}
 </footer>
 
 <style>

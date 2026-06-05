@@ -27,6 +27,10 @@ function resolveBuildTime() {
 }
 const BUILD_HASH = resolveBuildHash();
 const BUILD_TIME = resolveBuildTime();
+// G2 PROD GATE: CF_PAGES_BRANCH is injected by Cloudflare Pages at build time.
+// 'main' = production deploy; any other branch = preview/staging.
+// Locally (no CF_PAGES_BRANCH), defaults to non-prod so the badge stays visible.
+const IS_PROD = process.env.CF_PAGES_BRANCH === 'main';
 
 // Pagefind integration: runs pagefind CLI after every static build.
 // The index lands in dist/_pagefind/ and is served as part of the static site.
@@ -80,6 +84,8 @@ export default defineConfig({
       // Bake Clarity project ID at build time from CF Pages env var PUBLIC_CLARITY_ID.
       // Set PUBLIC_CLARITY_ID in CF Pages dashboard → Settings → Environment variables.
       'import.meta.env.PUBLIC_CLARITY_ID': JSON.stringify(process.env.PUBLIC_CLARITY_ID || ''),
+      // G2: Bake prod flag — true only when CF_PAGES_BRANCH === 'main'
+      'import.meta.env.PUBLIC_IS_PROD': JSON.stringify(IS_PROD),
     },
   },
 });
