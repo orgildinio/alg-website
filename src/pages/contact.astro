@@ -89,7 +89,7 @@ import ContentShell from '../layouts/ContentShell.astro';
           Pick a topic. We route directly to the desk that owns it — no central inbox.
         </p>
 
-        <!-- Route chips -->
+        <!-- Route chips (segmented bordered control, verbatim from mockup) -->
         <div class="alg-chips" id="contact-chips" role="group" aria-label="Message topic">
           <button class="alg-chip active" data-route="quote" data-to="sales@archipelagolighting.com" data-subject="Quote Request" type="button">
             <span class="alg-chip__icon">01</span>Quote
@@ -108,7 +108,7 @@ import ContentShell from '../layouts/ContentShell.astro';
           </button>
         </div>
 
-        <!-- Form -->
+        <!-- Form (2-col grid, verbatim from mockup) -->
         <form class="alg-form" id="contact-form" novalidate style="margin-top:24px;">
           <div class="alg-row">
             <div class="alg-field">
@@ -213,44 +213,28 @@ import ContentShell from '../layouts/ContentShell.astro';
         </form>
       </div>
 
-            <!-- COL 2: FIND YOUR REP (real Leaflet locator, reps-only) -->
+      <!-- COL 2: FIND YOUR REP (Leaflet locator, light Positron, .alg-rep cards) -->
       <div class="col-map">
         <div class="alg-cat-bar">
           <div class="alg-cat-bar__label">02 · Find your rep</div>
-          <div class="alg-cat-bar__tag">28 active reps</div>
+          <div class="alg-cat-bar__tag">By region · 5 territories</div>
         </div>
         <p class="alg-body--sm" style="margin-top:18px; margin-bottom:18px;">
-          Search by ZIP, city, or state to find the rep covering your area.
+          Search by ZIP, city, or state. Your project ZIP routes to the nearest rep.
         </p>
-        <!-- Locator toolbar: search only (filter locked to reps) -->
+        <!-- Search toolbar -->
         <div class="c02-toolbar">
           <div class="loc-search-group">
             <input type="text" class="loc-search-input" id="c02-search-input" placeholder="ZIP, city, or state" aria-label="Search by ZIP, city, or state" />
             <button class="loc-search-btn" id="c02-search-btn">Find Nearest</button>
           </div>
         </div>
-        <!-- Leaflet map -->
-        <div class="c02-map-wrap">
+        <!-- Leaflet map — light Positron, framed in .alg-map panel -->
+        <div class="alg-map">
           <div id="algLocatorMapContact" class="c02-locator-map" aria-label="ALG sales rep locations" role="application"></div>
-          <div class="c02-sidebar">
-            <div class="c02-legend">
-              <div class="c02-legend-row">
-                <span class="c02-legend-dot" style="background:#f0a932;"></span>
-                <span class="c02-legend-label">Sales Rep</span>
-                <span class="c02-legend-count">28 active reps</span>
-              </div>
-            </div>
-            <div class="c02-results">
-              <h4 id="c02-results-header" class="c02-results-header">IN THIS VIEW</h4>
-              <div class="c02-sort-row" id="c02-sort-row">
-                <span class="c02-sort-label">Sort:</span>
-                <button class="c02-sort-btn c02-sort-btn--active" data-sort="nearest">Nearest</button>
-                <button class="c02-sort-btn" data-sort="az">A–Z</button>
-              </div>
-              <ul id="c02-results-list" class="c02-results-list"></ul>
-            </div>
-          </div>
         </div>
+        <!-- Rep cards rendered below the map (populated by JS from real data) -->
+        <div id="c02-rep-cards" class="c02-rep-cards" style="margin-top:16px; display:flex; flex-direction:column; gap:10px;"></div>
         <div style="margin-top:14px;">
           <a href="/find-a-rep/" class="c02-full-link">Open full rep finder →</a>
         </div>
@@ -629,7 +613,7 @@ import ContentShell from '../layouts/ContentShell.astro';
     gap: 40px;
   }
 
-  /* ── Form ──────────────────────────────────────────────────────────────── */
+  /* ── Form (verbatim from mockup) ───────────────────────────────────────── */
   .alg-form {
     display: flex;
     flex-direction: column;
@@ -680,7 +664,7 @@ import ContentShell from '../layouts/ContentShell.astro';
     gap: 14px;
   }
 
-  /* ── Route chips ───────────────────────────────────────────────────────── */
+  /* ── Route chips (verbatim from mockup) ────────────────────────────────── */
   .alg-chips {
     display: flex;
     flex-wrap: wrap;
@@ -717,7 +701,7 @@ import ContentShell from '../layouts/ContentShell.astro';
     margin-right: 6px;
   }
 
-  /* ── Submit ────────────────────────────────────────────────────────────── */
+  /* ── Submit (verbatim from mockup) ─────────────────────────────────────── */
   .alg-submit {
     display: inline-flex;
     align-items: center;
@@ -738,7 +722,7 @@ import ContentShell from '../layouts/ContentShell.astro';
   .alg-submit:hover { background: var(--brand); }
   .alg-submit__arrow { font-family: var(--font-mono); font-weight: 400; }
 
-  /* ── §02 Locator (reps-only Leaflet, dark-themed) ─────────────────────── */
+  /* ── §02 Locator: search toolbar ───────────────────────────────────────── */
   .c02-toolbar {
     display: flex;
     align-items: center;
@@ -746,169 +730,133 @@ import ContentShell from '../layouts/ContentShell.astro';
     margin-bottom: 12px;
     flex-wrap: wrap;
   }
-  .c02-map-wrap {
-    display: grid;
-    grid-template-columns: 1.6fr 1fr;
-    grid-template-rows: 420px;
-    gap: 16px;
-    background: #0c0d12;
-    border-radius: 10px;
+  .loc-search-group {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 0;
+  }
+  .loc-search-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 10px 14px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--c3);
+    border-right: 0;
+    outline: none;
+    transition: border-color .15s;
+  }
+  .loc-search-input:focus { border-color: var(--ink); }
+  .loc-search-btn {
+    padding: 10px 18px;
+    background: var(--ink);
+    color: #fff;
+    border: 1px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background .15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .loc-search-btn:hover { background: var(--brand); border-color: var(--brand); }
+
+  /* ── §02 Map panel (verbatim from mockup: light, bordered, padded) ──────── */
+  .alg-map {
+    background: var(--c1);
+    border: 1px solid var(--c3);
+    position: relative;
+    padding: 0;
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.08);
   }
   .c02-locator-map {
     width: 100%;
-    height: 100%;
+    height: 360px;
     min-height: 0;
-    background: rgba(255,255,255,0.02);
+    background: var(--c1);
+    display: block;
   }
   .c02-locator-map :global(.leaflet-container) {
     width: 100% !important;
     height: 100% !important;
     min-height: 0 !important;
-    border-radius: 0;
   }
-  .c02-sidebar {
+
+  /* ── §02 Rep cards (verbatim from mockup) ──────────────────────────────── */
+  .alg-rep {
+    background: #fff;
+    border: 1px solid var(--c3);
+    border-top: 3px solid var(--brand);
+    padding: 18px 20px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding: 16px;
-    min-height: 0;
-    overflow: hidden;
-    background: #0c0d12;
-  }
-  .c02-legend {
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.10);
-  }
-  .c02-legend-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Lato', sans-serif;
-    font-size: 13px;
-    color: rgba(255,255,255,0.75);
-  }
-  .c02-legend-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .c02-legend-label { flex: 1 1 auto; }
-  .c02-legend-count {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: rgba(255,255,255,0.45);
-  }
-  .c02-results { display: flex; flex-direction: column; gap: 8px; min-height: 0; flex: 1 1 0; overflow: hidden; }
-  .c02-results-header {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.45);
-    margin: 0;
-  }
-  .c02-sort-row {
-    display: flex;
-    align-items: center;
     gap: 6px;
-    flex-wrap: wrap;
   }
-  .c02-sort-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: rgba(255,255,255,0.35);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-  .c02-sort-btn {
-    padding: 3px 10px;
-    background: rgba(255,255,255,0.04);
-    color: rgba(255,255,255,0.55);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 3px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .c02-sort-btn--active { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.30); color: #fff; }
-  .c02-results-list {
-    list-style: none;
-    margin: 0; padding: 0;
-    flex: 1 1 0;
-    overflow-y: auto;
-    min-height: 0;
-  }
-  .c02-results-list::-webkit-scrollbar { width: 3px; }
-  .c02-results-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 2px; }
-  .c02-iv-row {
-    list-style: none;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    cursor: pointer;
-    transition: background 0.12s;
-  }
-  .c02-iv-row:last-child { border-bottom: none; }
-  .c02-iv-row:hover { background: rgba(255,255,255,0.03); }
-  .c02-iv-row-main {
-    display: grid;
-    grid-template-columns: 1fr 56px;
-    align-items: baseline;
-    gap: 8px;
-  }
-  .c02-iv-name {
-    font-family: 'Lato', sans-serif;
-    font-size: 13px;
+  .alg-rep__role {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
     font-weight: 700;
-    color: #fff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 0;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--brand);
   }
-  .c02-iv-dist {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: #F32740;
-    text-align: right;
-    white-space: nowrap;
+  .alg-rep__name {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-top: 4px;
   }
-  .c02-iv-sub {
-    font-family: 'Lato', sans-serif;
-    font-size: 11px;
-    color: rgba(255,255,255,0.50);
-    margin-top: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .alg-rep__company {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--ink2);
   }
-  .c02-iv-empty {
-    font-family: 'Lato', sans-serif;
+  .alg-rep__contact {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--ink2);
+  }
+  .alg-rep__contact a {
+    color: var(--ink2);
+    text-decoration: none;
+  }
+  .alg-rep__contact a:hover { color: var(--brand); }
+  .alg-rep__terr {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    color: var(--ink3);
+    text-transform: uppercase;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--c2);
+  }
+  .c02-rep-cards--empty {
+    font-family: var(--font-mono);
     font-size: 12px;
-    color: rgba(255,255,255,0.45);
+    color: var(--ink3);
     padding: 12px 0;
   }
   .c02-full-link {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: .08em;
     text-transform: uppercase;
     color: var(--brand);
     text-decoration: none;
   }
   .c02-full-link:hover { text-decoration: underline; }
-  @media (max-width: 768px) {
-    .c02-map-wrap {
-      grid-template-columns: 1fr;
-      grid-template-rows: 320px auto;
-    }
-    .c02-sidebar { max-height: 280px; }
-  }
 
   /* ── Card ──────────────────────────────────────────────────────────────── */
   .alg-card {
@@ -1056,6 +1004,7 @@ import ContentShell from '../layouts/ContentShell.astro';
     .alg-chip { flex: 1 1 calc(50% - 1px); }
     .alg-row { grid-template-columns: 1fr; }
     .alg-faq__a { padding-left: 32px; }
+    .c02-locator-map { height: 280px; }
   }
   @media (max-width: 480px) {
     .stats-grid { grid-template-columns: 1fr; }
@@ -1137,7 +1086,7 @@ import ContentShell from '../layouts/ContentShell.astro';
     });
   });
 
-  /* ── Form submit → mailto ────────────────────────────────────────────── */
+  /* ── Form submit → mailto (preserved verbatim) ───────────────────────── */
   var form = document.getElementById('contact-form');
   if (form) {
     form.addEventListener('submit', function(e) {
@@ -1165,7 +1114,7 @@ import ContentShell from '../layouts/ContentShell.astro';
     });
   }
 
-  /* ── §02 Leaflet locator (reps-only) ────────────────────────────────────── */
+  /* ── §02 Leaflet locator (reps-only, CARTO Positron light) ──────────────── */
   (function initContactLocator() {
     var mapEl = document.getElementById('algLocatorMapContact');
     if (!mapEl) return;
@@ -1179,7 +1128,8 @@ import ContentShell from '../layouts/ContentShell.astro';
     script.crossOrigin = '';
     script.onload = async function () {
       var map = L.map('algLocatorMapContact', { zoomControl: true, scrollWheelZoom: false }).setView([37.5, -96], 4);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      /* FIX B: CARTO Positron light tiles */
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 19,
@@ -1193,7 +1143,7 @@ import ContentShell from '../layouts/ContentShell.astro';
           popupAnchor: [0, -8],
         });
       }
-      var iconRep = makeIcon('#f0a932', 'rgba(240,169,50,0.5)');
+      var iconRep = makeIcon('#F32740', 'rgba(243,39,64,0.5)');
       function toTitleCase(s) {
         if (!s) return s;
         var upperRatio = (s.match(/[A-Z]/g) || []).length / Math.max(1, (s.match(/[A-Za-z]/g) || []).length);
@@ -1206,23 +1156,17 @@ import ContentShell from '../layouts/ContentShell.astro';
         if (idx === -1) return toTitleCase(s);
         return toTitleCase(s.slice(0, idx)) + ', ' + s.slice(idx + 1).trim().toUpperCase();
       }
-      function formatDistance(mi) {
-        if (mi == null || isNaN(mi)) return '— mi';
-        if (mi < 0.5) return 'On-site';
-        if (mi < 10) return mi.toFixed(1) + ' mi';
-        return Math.round(mi) + ' mi';
-      }
       function popup(rec) {
         var displayName = toTitleCase(rec.name);
         var loc = [rec.city, rec.state].filter(Boolean).join(', ');
         var displayLoc = titleCaseCityState(loc);
-        var html = '<div class="iv-popup">';
-        html += '<div class="iv-popup-name">' + displayName + '</div>';
-        if (displayLoc) html += '<div class="iv-popup-sub">' + displayLoc + ' · Sales Rep</div>';
-        if (rec.phone) html += '<div class="iv-popup-row"><a href="tel:' + rec.phone.replace(/[^+\d]/g,'') + '">' + rec.phone + '</a></div>';
+        var html = '<div style="font-family:\'Lato\',sans-serif;">';
+        html += '<div style="font-weight:700;font-size:13px;color:#1A1D23;">' + displayName + '</div>';
+        if (displayLoc) html += '<div style="font-size:11px;color:#6B7280;margin-top:2px;">' + displayLoc + ' · Sales Rep</div>';
+        if (rec.phone) html += '<div style="margin-top:6px;font-size:12px;"><a href="tel:' + rec.phone.replace(/[^+\d]/g,'') + '" style="color:#F32740;">' + rec.phone + '</a></div>';
         if (rec.website) {
           var url = rec.website.startsWith('http') ? rec.website : 'https://' + rec.website;
-          html += '<div class="iv-popup-row"><a href="' + url + '" target="_blank" rel="noopener">Website ↗</a></div>';
+          html += '<div style="font-size:12px;"><a href="' + url + '" target="_blank" rel="noopener" style="color:#F32740;">Website ↗</a></div>';
         }
         html += '</div>';
         return html;
@@ -1230,6 +1174,8 @@ import ContentShell from '../layouts/ContentShell.astro';
       var repLayer = L.layerGroup();
       var allReps = [];
       var markerByPinId = new Map();
+      var cardsEl = document.getElementById('c02-rep-cards');
+
       try {
         var res = await fetch('/data/local_support.json');
         var data = await res.json();
@@ -1242,68 +1188,54 @@ import ContentShell from '../layouts/ContentShell.astro';
         });
       } catch(e) { console.error('ALG contact locator: failed to load data', e); }
       repLayer.addTo(map);
-      var listEl   = document.getElementById('c02-results-list');
-      var headerEl = document.getElementById('c02-results-header');
-      var zipMode  = false;
-      var sorters  = {
-        nearest: function(a, b) { return a.distanceMi - b.distanceMi; },
-        az:      function(a, b) { return (a.name || '').localeCompare(b.name || '', 'en'); },
-      };
-      var currentSort = 'nearest';
-      var currentInViewRows = [];
-      function renderList(entries, header) {
-        if (headerEl) headerEl.textContent = header || 'IN THIS VIEW';
-        if (!listEl) return;
-        if (entries.length === 0) {
-          listEl.innerHTML = '<li class="c02-iv-empty">No reps in this view. Zoom out to see coverage.</li>';
+
+      /* Render .alg-rep cards from real data (no invented fields) */
+      function renderRepCards(entries) {
+        if (!cardsEl) return;
+        if (!entries || entries.length === 0) {
+          cardsEl.innerHTML = '<div class="c02-rep-cards--empty">No reps found near this location. Try a different ZIP or city.</div>';
           return;
         }
-        listEl.innerHTML = entries.map(function(p) {
-          var distStr = formatDistance(p.distanceMi);
+        cardsEl.innerHTML = entries.slice(0, 4).map(function(p) {
+          var displayName = toTitleCase(p.name || '');
           var cityState = titleCaseCityState([p.city || '', p.state || ''].filter(Boolean).join(', '));
-          var displayName = toTitleCase(p.name || cityState);
-          var pinId = p.id ? String(p.id) : '';
-          return '<li class="c02-iv-row" data-pin-id="' + pinId + '">'
-            + '<div class="c02-iv-row-main">'
-              + '<span class="c02-iv-name">' + displayName + '</span>'
-              + '<span class="c02-iv-dist">' + distStr + '</span>'
-            + '</div>'
-            + '<div class="c02-iv-sub">' + cityState + '</div>'
-          + '</li>';
+          var contactHtml = '';
+          if (p.phone) contactHtml += '<a href="tel:' + p.phone.replace(/[^+\d]/g,'') + '">' + p.phone + '</a>';
+          if (p.website) {
+            var url = p.website.startsWith('http') ? p.website : 'https://' + p.website;
+            contactHtml += '<a href="' + url + '" target="_blank" rel="noopener">Website ↗</a>';
+          }
+          return '<div class="alg-rep" data-pin-id="' + (p.id || '') + '" style="cursor:pointer;">'
+            + '<div class="alg-rep__role">Sales Rep</div>'
+            + '<div class="alg-rep__name">' + displayName + '</div>'
+            + (cityState ? '<div class="alg-rep__company">' + cityState + '</div>' : '')
+            + (contactHtml ? '<div class="alg-rep__contact">' + contactHtml + '</div>' : '')
+            + '</div>';
         }).join('');
-      }
-      var sortRowEl = document.getElementById('c02-sort-row');
-      if (sortRowEl) {
-        sortRowEl.addEventListener('click', function(e) {
-          var btn = e.target.closest('.c02-sort-btn');
-          if (!btn) return;
-          currentSort = btn.dataset.sort;
-          sortRowEl.querySelectorAll('.c02-sort-btn').forEach(function(b) { b.classList.toggle('c02-sort-btn--active', b === btn); });
-          renderList([].concat(currentInViewRows).sort(sorters[currentSort]), headerEl ? headerEl.textContent : 'IN THIS VIEW');
+        /* Click rep card → fly to pin */
+        cardsEl.querySelectorAll('.alg-rep[data-pin-id]').forEach(function(card) {
+          card.addEventListener('click', function() {
+            var marker = markerByPinId.get(card.dataset.pinId);
+            if (!marker) return;
+            map.flyTo(marker.getLatLng(), Math.max(map.getZoom(), 9), { duration: 0.6 });
+            marker.openPopup();
+          });
         });
       }
-      function updateInViewList() {
-        if (zipMode) return;
-        var bounds = map.getBounds();
-        var center = map.getCenter();
-        currentInViewRows = allReps
-          .filter(function(p) { return bounds.contains(L.latLng(p.lat, p.lng)); })
+
+      /* Initial render: show 4 nearest to map center */
+      function updateRepCards(centerLatLng) {
+        var center = centerLatLng || map.getCenter();
+        var sorted = allReps
           .map(function(p) { return Object.assign({}, p, { distanceMi: center.distanceTo(L.latLng(p.lat, p.lng)) / 1609.344 }); })
-          .sort(function(a, b) { return a.distanceMi - b.distanceMi; })
-          .slice(0, 8);
-        renderList([].concat(currentInViewRows).sort(sorters[currentSort]), 'IN THIS VIEW');
+          .sort(function(a, b) { return a.distanceMi - b.distanceMi; });
+        renderRepCards(sorted);
       }
-      map.on('moveend', function() {
-        if (zipMode) {
-          allReps.forEach(function(p) {
-            if (p._marker) { var el = p._marker.getElement(); if (el) el.style.display = ''; }
-          });
-        }
-        zipMode = false;
-        updateInViewList();
-      });
-      updateInViewList();
+
+      updateRepCards();
       setTimeout(function() { map.invalidateSize(); }, 0);
+
+      /* Search: geocode → fly → update cards */
       var searchInput = document.getElementById('c02-search-input');
       var searchBtn   = document.getElementById('c02-search-btn');
       async function doSearch() {
@@ -1312,42 +1244,19 @@ import ContentShell from '../layouts/ContentShell.astro';
         try {
           var r = await fetch('https://nominatim.openstreetmap.org/search?format=json&countrycodes=us&limit=1&q=' + encodeURIComponent(q), { headers: { 'Accept-Language': 'en' } });
           var results = await r.json();
-          if (!results.length) { if (headerEl) headerEl.textContent = 'NOT FOUND'; return; }
+          if (!results.length) return;
           var lat = +results[0].lat, lon = +results[0].lon;
           map.setView([lat, lon], 8);
-          zipMode = true;
-          var center = L.latLng(lat, lon);
-          var RADIUS_M = 150 * 1609.344;
-          allReps.forEach(function(p) {
-            if (!p._marker) return;
-            var distM = center.distanceTo(L.latLng(p.lat, p.lng));
-            var el = p._marker.getElement();
-            if (el) el.style.display = distM <= RADIUS_M ? '' : 'none';
-          });
-          currentInViewRows = allReps
-            .map(function(p) { return Object.assign({}, p, { distanceMi: center.distanceTo(L.latLng(p.lat, p.lng)) / 1609.344 }); })
-            .sort(function(a, b) { return a.distanceMi - b.distanceMi; })
-            .slice(0, 8);
-          renderList([].concat(currentInViewRows).sort(sorters[currentSort]), 'NEAREST TO ' + q.toUpperCase());
+          updateRepCards(L.latLng(lat, lon));
         } catch(e) { console.error('ALG contact locator search error', e); }
       }
       if (searchBtn) searchBtn.addEventListener('click', doSearch);
       if (searchInput) searchInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(); });
-      if (listEl) {
-        listEl.addEventListener('click', function(e) {
-          var row = e.target.closest('.c02-iv-row');
-          if (!row) return;
-          var marker = markerByPinId.get(row.dataset.pinId);
-          if (!marker) return;
-          map.flyTo(marker.getLatLng(), Math.max(map.getZoom(), 9), { duration: 0.6 });
-          marker.openPopup();
-        });
-      }
     };
     document.head.appendChild(script);
   })();
 
-    /* ── FAQ accordion ───────────────────────────────────────────────────── */
+  /* ── FAQ accordion ───────────────────────────────────────────────────── */
   var faqList = document.getElementById('faq-list');
   if (faqList) {
     faqList.addEventListener('click', function(e) {
