@@ -202,8 +202,7 @@ const totalFamilies = docs.length;
     </div>
   </div>
 </BaseLayout>
-
-<style>
+<style is:global>
 :root{
   --brand:#F32740;--press:#C8132E;
   --ink:#1A1D23;--ink2:#3A3E47;--ink3:#6B7280;
@@ -329,13 +328,13 @@ thead th{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing
 tbody tr{border-bottom:1px solid var(--c2)}
 tbody tr:hover{background:var(--c1)}
 tbody td{padding:12px 10px;vertical-align:top}
-.famcell{display:flex;flex-direction:column;gap:4px}
+.famcell{display:flex!important;flex-direction:column!important;gap:4px!important}
 .fam{font-size:14px;font-weight:700;color:var(--ink)}
-.fmeta{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.fmeta{display:flex!important;flex-wrap:wrap!important;gap:5px!important;align-items:center!important}
 .cchip{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.06em;background:var(--c2);color:var(--ink2);padding:2px 6px;border-radius:2px}
 .sub{font-family:var(--mono);font-size:9.5px;color:var(--ink3);text-transform:uppercase}
 .docs{display:flex;flex-wrap:wrap;gap:8px}
-.docbtn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--c3);border-left-width:3px;background:#fff;padding:8px 12px;font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink);text-decoration:none;cursor:pointer;transition:all .12s;border-radius:2px}
+.docbtn{display:inline-flex!important;align-items:center!important;gap:6px!important;border:1px solid var(--c3)!important;border-left-width:3px!important;background:#fff!important;padding:8px 12px!important;font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink);text-decoration:none;cursor:pointer;transition:all .12s;border-radius:2px}
 .docbtn .ic{font-size:13px;line-height:1}
 .docbtn:hover{background:var(--ink);color:#fff}
 .empty{font-family:var(--mono);font-size:11px;color:var(--c3)}
