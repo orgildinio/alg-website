@@ -1,938 +1,525 @@
 ---
 /**
- * support/library.astro
+ * support/library.astro  —  route: /support/library
+ * Design source: ALG-Library-MERGED-v3.html (verbatim rebuild)
+ * Data source:   src/data/library_docs.json  (105 families, 203 docs, real WorkDrive URLs)
  *
- * Library / Resources page — route: /support/library
- * Design source: Claude Design "Production Baseline" (V1 artboard)
- * Re-skinned to ALG canonical tokens per v27x_LibraryPage prompt.
- *
- * Data source: src/data/library_catalog.json (single source of truth)
- * Update path: edit WorkDrive URL Dashboard → Export JSON →
- *   node scripts/build_library_catalog.mjs → commit regenerated catalog.
- *
- * CFG-CHROME-1/2: No inlined header/footer/utility-bar.
- * BaseLayout injects the shell. This file is CONTENT-ONLY.
- *
- * Token re-skin applied (Design → ALG canonical):
- *   Font family:   Design default → var(--font-sans) = 'Lato', system-ui, sans-serif
- *   Brand red:     Design accent  → #F32740 (--color-alg-red)
- *   Warm panel bg: Design cream   → #F5EFE3 (matches .mm-col-main / "Trusted by Retail America" band)
- *   Active state:  Design green   → #2E7D32 (--color-state-active)
- *   Ink/text:      Design default → var(--color-ink) = #111111
- *   Ink-soft:      Design muted   → var(--color-ink-soft) = #444444
- *   Ink-mute:      Design caption → var(--color-ink-mute) = #6B6B6B
- *   Border:        Design divider → var(--color-border) = #E5E5E5
- *   Bg-soft:       Design panel   → var(--color-bg-soft) = #F7F7F7
- *   Bg-strong:     Design card    → var(--color-bg-strong) = #F0F0F0
- *
- * Collateral gap (§4.4): Option 1 — families with doc_count === 0 are hidden.
- *   Library = documents that exist. Doc-less families are not listed.
- *
- * Ⓐ rendering: catalog stores literal Ⓐ; renderAa() wraps it in <span class="aa">.
+ * CFG-CHROME-1/2: BaseLayout injects header/footer. Content-only.
+ * CFG-CHROME-3: No hardcoded years, no stale dates.
  */
-
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import catalogData from '../../data/library_catalog.json';
+import docsRaw from '../../data/library_docs.json';
 
-// ── Data ─────────────────────────────────────────────────────────────────────
+const docs = docsRaw as Array<{
+  docs: Record<string, string>;
+  collection: string;
+  family: string;
+  tier: string;
+  subcategory: string;
+  sku_count: number;
+}>;
 
-const catalog = catalogData.catalog;
-const slotLabels = catalogData.slot_labels;
-
-// Only families with at least one doc (§4.4 option 1)
-const rows = catalog.filter(e => e.doc_count > 0);
-
-// ── Computed filter counts (never hardcoded) ──────────────────────────────────
-
-// Doc type: families with that slot populated
-const docTypeCounts: Record<string, number> = {};
-for (const slot of Object.keys(slotLabels)) {
-  docTypeCounts[slotLabels[slot as keyof typeof slotLabels]] = rows.filter(e => slot in e.docs).length;
-}
-
-// Collection: sum of doc_count per collection
-const collectionCounts: Record<string, number> = {};
-for (const e of rows) {
-  collectionCounts[e.collection] = (collectionCounts[e.collection] || 0) + e.doc_count;
-}
-
-// Vertical: sum of doc_count per vertical
-const verticalCounts: Record<string, number> = {};
-for (const e of rows) {
-  verticalCounts[e.vertical] = (verticalCounts[e.vertical] || 0) + e.doc_count;
-}
-
-// Tier: sum of doc_count per tier (exclude empty-string tier from display)
-const tierCounts: Record<string, number> = {};
-for (const e of rows) {
-  if (e.tier) {
-    tierCounts[e.tier] = (tierCounts[e.tier] || 0) + e.doc_count;
-  }
-}
-
-// Ordered lists for filter rail
-const docTypeOrder = ['Datasheet', 'Install Guide', 'Quick Sheet', 'Sell Sheet', 'IES Bundle'];
-const collectionOrder = Object.entries(collectionCounts)
-  .sort((a, b) => b[1] - a[1])
-  .map(([k]) => k);
-const verticalOrder = ['Indoor', 'Outdoor', 'Residential'];
-const tierOrder = ['ECO', 'PRO', 'PRO+'];
-
-// Total doc count for "All" chip
-const totalDocCount = rows.reduce((sum, e) => sum + e.doc_count, 0);
-
-// ── Helpers ───────────────────────────────────────────────────────────────────
-
-/**
- * Wrap the Ⓐ glyph in <span class="aa"> for brand-red rendering.
- * Per site renderAa() convention. No naked Ⓐ in output.
- */
-function renderAa(text: string): string {
-  return text.replace(/Ⓐ/g, '<span class="aa">Ⓐ</span>');
-}
-
-// Slot display order
-const SLOT_ORDER = ['datasheet', 'install', 'quick', 'sell', 'ies'] as const;
+const totalDocs = docs.reduce((a, r) => a + Object.keys(r.docs).length, 0);
+const totalFamilies = docs.length;
 ---
 
 <BaseLayout
-  title="Document Library · Archipelago Lighting Group"
-  description="Download datasheets, install guides, quick sheets, sell sheets, and IES bundles for every ALG product family."
-  bodyClass="page-library"
+  title="Document Library — Archipelago Lighting Group"
+  description="Every spec sheet, IES file, and install guide in one place. Search by SKU, family, collection, tier, or vertical."
 >
-  <div class="lib-page">
+  <!-- breadcrumb -->
+  <div class="crumb">
+    <a href="/">Home</a> › <a href="/support/">Support</a> › <b>Documentation Library</b>
+    <span class="crumb-meta"><b id="sDocs2">{totalDocs}</b> documents · always current</span>
+  </div>
 
-    {/* ── Breadcrumb ── */}
-    <nav class="lib-breadcrumb" aria-label="Breadcrumb">
-      <div class="lib-breadcrumb-inner">
-        <a href="/">Home</a>
-        <span class="bc-sep">›</span>
-        <a href="/support">Support</a>
-        <span class="bc-sep">›</span>
-        <span class="bc-current">Document Library</span>
-      </div>
-    </nav>
+  <!-- hero -->
+  <header class="hero">
+    <div class="eyebrow">DOCUMENTATION LIBRARY</div>
+    <h1>Every spec sheet, IES file, and install guide — in one place.</h1>
+    <p class="lede">Find the document you need by SKU, collection, family, tier, or vertical. Datasheets, installation guides, IES photometric files, compliance, warranty, and <span class="aa">Ⓐ</span>CS by ALG App compatibility — all of it, indexed for the contractor on a deadline.</p>
 
-    {/* ── Hero ── */}
-    <header class="lib-hero">
-      <div class="lib-hero-inner">
-        <div class="lib-hero-meta">Support · Document Library</div>
-        <h1 class="lib-hero-h1">Document Library</h1>
-        <p class="lib-hero-deck">
-          Datasheets, install guides, quick sheets, sell sheets, and IES bundles
-          for every <Fragment set:html={renderAa('ⒶLG')} /> product family — one place, always current.
-        </p>
-        <div class="lib-hero-stats">
-          <span class="lib-hero-stat"><strong>{totalDocCount}</strong> documents</span>
-          <span class="lib-hero-stat-sep">·</span>
-          <span class="lib-hero-stat"><strong>{rows.length}</strong> product families</span>
-          <span class="lib-hero-stat-sep">·</span>
-          <span class="lib-hero-stat"><strong>{collectionOrder.length}</strong> collections</span>
-        </div>
-      </div>
-    </header>
-
-    {/* ── Popular chips ── */}
-    <div class="lib-chips-bar">
-      <div class="lib-chips-inner">
-        <span class="lib-chips-label">Quick filter:</span>
-        <button class="lib-chip lib-chip--active" data-filter-type="all" data-filter-value="all">
-          All <span class="lib-chip-count">{totalDocCount}</span>
-        </button>
-        {docTypeOrder.map(dt => (
-          <button class="lib-chip" data-filter-type="doctype" data-filter-value={dt}>
-            {dt} <span class="lib-chip-count">{docTypeCounts[dt] || 0}</span>
-          </button>
-        ))}
-      </div>
+    <div class="hsearch">
+      <select id="scope" class="hscope">
+        <option value="all">By Part Number</option>
+        <option value="family">By Family</option>
+        <option value="collection">By Collection</option>
+        <option value="fulltext">All Fields</option>
+      </select>
+      <input id="q" type="text" placeholder="Search 'Liberty' · 'Jupiter' · 'IES' · 'PRO+' · 'cold storage' …" oninput="page=1;render()" />
+      <button onclick="render()">⌕ SEARCH LIBRARY</button>
     </div>
 
-    {/* ── Featured Collection hero band ── */}
-    <div class="lib-featured-band">
-      <div class="lib-featured-inner">
-        <div class="lib-featured-eyebrow">Featured · New Arrivals</div>
-        <div class="lib-featured-title">
-          <Fragment set:html={renderAa('cityⒶRCH')} /> · <Fragment set:html={renderAa('luxoⒶRCH')} /> · <Fragment set:html={renderAa('planoⒶRCH')} />
-        </div>
-        <p class="lib-featured-sub">
-          Full collateral packages now available — datasheets, install guides, IES bundles, and quick sheets for the current commercial lineup.
-        </p>
-      </div>
+    <div class="popular">
+      <span class="pl">Popular:</span>
+      <span class="pchip" onclick="qset('Liberty')">Liberty</span>
+      <span class="pchip" onclick="qset('Jupiter')">Jupiter</span>
+      <span class="pchip" onclick="qset('Sentinel')">Sentinel</span>
+      <span class="pchip" onclick="qset('IES')">IES Bundles</span>
+      <span class="pchip" onclick="qset('PRO+')">PRO+ Tier</span>
+      <span class="pchip" onclick="qset('contr')"><span class="aa">Ⓐ</span>CS Controls</span>
     </div>
 
-    {/* ── Main 3-column layout ── */}
-    <div class="lib-body">
+    <div class="stats">
+      <span><b id="sDocs">{totalDocs}</b> documents</span>
+      <span><b id="sFam">{totalFamilies}</b> product families</span>
+      <span><b>6</b> collections</span>
+    </div>
+  </header>
 
-      {/* ── Left rail: Spec Packet + Spec Tools + Filter ── */}
-      <aside class="lib-rail" id="lib-rail">
+  <!-- featured guide ribbon -->
+  <section class="feat">
+    <div class="cover">
+      <div>
+        <div class="cw">lampar<span class="aa">Ⓐ</span>RCH</div>
+        <div class="cs">INDOOR · C&amp;I COLLECTION</div>
+      </div>
+      <div>
+        <div class="lines" style="width:70%"></div>
+        <div class="lines" style="width:50%"></div>
+      </div>
+      <div class="code">ALG-GUIDE-LMPR-V1.1</div>
+    </div>
+    <div>
+      <div class="fk">Featured · Collection Guide</div>
+      <h2>Indoor C&amp;I Product Guide</h2>
+      <div class="fcode">ALG-GUIDE-LMPR-V1.1</div>
+      <div class="fd">Full 12-slide spec arc: RHB · LHB · STR · RTK · VT — Icarus, Jupiter, Tiny, Titan, Vanguard, Hallmark, and Eureka. ECO / PRO / PRO+ tiers, with the <span class="aa">Ⓐ</span>CS by ALG App compatibility matrix and the part-number decoder.</div>
+      <div class="fstats">
+        <div><div class="k">Pages</div><div class="v">12</div></div>
+        <div><div class="k">SKUs Indexed</div><div class="v">126</div></div>
+        <div><div class="k">Revision</div><div class="v">1.1</div></div>
+        <div><div class="k">Size</div><div class="v">8.2 MB</div></div>
+      </div>
+      <div class="fcta">
+        <a class="btn red" href="https://workdrive.archipelagolighting.com/external/1540e346a0b8294e7253ea1df8a68b66307b6a1b60381c18b1463a90feb91cdb" target="_blank" rel="noopener">↓ Download Guide · PDF</a>
+        <button class="btn" onclick="document.getElementById('specpacket').scrollIntoView({behavior:'smooth'})">▦ Build Spec Packet</button>
+      </div>
+    </div>
+  </section>
 
-        {/* Spec Packet */}
-        <div class="lib-rail-card lib-rail-card--cream">
-          <div class="lib-rail-card-eyebrow">Spec Packet</div>
-          <div class="lib-rail-card-title">Full Catalog PDF</div>
-          <p class="lib-rail-card-body">Every datasheet, install guide, and IES bundle in one download. Updated quarterly.</p>
-          <a href="https://workdrive.archipelagolighting.com/external/db01406307e682a18496bacda8a07254e3e96734484ef20c08fb4fc37f2daac6" target="_blank" rel="noopener" class="lib-rail-cta">
-            Download Spec Packet
-          </a>
+  <!-- type tabs -->
+  <nav class="tabs" id="tabs"></nav>
+
+  <!-- 3-col body: left rail · results · right rail -->
+  <div class="body">
+    <!-- left: filters -->
+    <aside class="rail">
+      <div class="fhead">
+        <span>⚙ Filters · <span class="n" id="nActive">0 active</span></span>
+      </div>
+      <button class="clrall" onclick="clearAll()">Clear all filters</button>
+
+      <div class="facet">
+        <div class="fh">Product Collection</div>
+        <div class="opts" id="colFacet"></div>
+      </div>
+      <div class="facet">
+        <div class="fh">Tier</div>
+        <div class="opts" id="tierFacet"></div>
+      </div>
+      <div class="facet">
+        <div class="fh">File Type</div>
+        <div class="opts" id="typeFacet"></div>
+      </div>
+    </aside>
+
+    <!-- center: results table -->
+    <main class="results">
+      <div class="fby" id="fby"></div>
+      <div class="rhead">
+        <div class="cnt" id="showing">—</div>
+        <div>
+          <span class="cnt">Sort</span>
+          <select id="sort" onchange="render()">
+            <option value="collection">by collection</option>
+            <option value="family">A–Z family</option>
+            <option value="skus">by SKU count</option>
+          </select>
         </div>
+      </div>
+      <div class="legend" id="legend"></div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:26px"></th>
+            <th>Document Family</th>
+            <th>Documents</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="pager" id="pager"></div>
+    </main>
 
-        {/* Spec Tools */}
-        <div class="lib-rail-card">
-          <div class="lib-rail-card-eyebrow">Spec Tools</div>
-          <ul class="lib-rail-links">
-            <li><a href="/support/rebate-center">Rebate Center</a></li>
-            <li><a href="/specifier">Specifier Hub</a></li>
-            <li><a href="/contractor">Contractor Hub</a></li>
-          </ul>
+    <!-- right: spec packet + tools -->
+    <aside class="rrail" id="specpacket">
+      <div class="packet">
+        <h3>Your Spec Packet · <span id="selN">0</span></h3>
+        <p>Pick any family below to add its documents to a custom bundle — wrapped in a labeled ZIP with a cover sheet, ready to forward to your distributor or attach to a bid.</p>
+        <div id="selList"><div style="font-family:var(--mono);font-size:11px;color:#7e848d;margin-bottom:8px">Select families to build a packet.</div></div>
+        <div class="pacts">
+          <button class="red" onclick="downloadPacket()">↓ Download</button>
+          <button onclick="emailPacket()">✉ Email</button>
         </div>
+      </div>
 
-        {/* Filter rail */}
-        <div class="lib-filter" id="lib-filter">
+      <div class="tools">
+        <h4>Spec Tools</h4>
+        <a class="tool" href="/support/layout-request">
+          <span class="ti">⚡</span>
+          <span><div class="tt">Layout Designer</div><div class="td">Request a free lighting layout from ALG</div></span>
+        </a>
+        <a class="tool" href="/support/part-number-decoder">
+          <span class="ti">▦</span>
+          <span><div class="tt">Part-Number Decoder</div><div class="td">Decode any ALG SKU</div></span>
+        </a>
+        <a class="tool" href="/collections/controls/">
+          <span class="ti">◉</span>
+          <span><div class="tt">Compatibility Check</div><div class="td"><span class="aa">Ⓐ</span>CS App, dimmers, sensors</div></span>
+        </a>
+        <a class="tool" href="/support/rebate-center/">
+          <span class="ti">★</span>
+          <span><div class="tt">Rebate Finder</div><div class="td">DLC, utility, T20/24 incentives</div></span>
+        </a>
+      </div>
 
-          <div class="lib-filter-section" id="filter-doctype">
-            <button class="lib-filter-head" aria-expanded="true" aria-controls="filter-doctype-body">
-              <span>Doc Type</span>
-              <svg class="lib-filter-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg>
-            </button>
-            <ul class="lib-filter-list" id="filter-doctype-body">
-              {docTypeOrder.map(dt => (
-                <li>
-                  <label class="lib-filter-item">
-                    <input type="checkbox" class="lib-filter-cb" data-filter-type="doctype" data-filter-value={dt} />
-                    <span class="lib-filter-label">{dt}</span>
-                    <span class="lib-filter-count">{docTypeCounts[dt] || 0}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
+      <div class="needhelp">
+        <div class="nh-k">Need Help?</div>
+        <div class="nh-d">Reach an ALG spec engineer directly.</div>
+        <a class="nh-c" href="mailto:specs@archipelagolighting.com">specs@archipelagolighting.com</a>
+        <a class="nh-c" href="tel:+19096262900">+1 (909) 626-2900</a>
+      </div>
+    </aside>
+  </div>
 
-          <div class="lib-filter-section" id="filter-collection">
-            <button class="lib-filter-head" aria-expanded="true" aria-controls="filter-collection-body">
-              <span>Collection</span>
-              <svg class="lib-filter-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg>
-            </button>
-            <ul class="lib-filter-list" id="filter-collection-body">
-              {collectionOrder.map(col => (
-                <li>
-                  <label class="lib-filter-item">
-                    <input type="checkbox" class="lib-filter-cb" data-filter-type="collection" data-filter-value={col} />
-                    <span class="lib-filter-label" set:html={renderAa(col)} />
-                    <span class="lib-filter-count">{collectionCounts[col] || 0}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div class="lib-filter-section" id="filter-vertical">
-            <button class="lib-filter-head" aria-expanded="false" aria-controls="filter-vertical-body">
-              <span>Vertical</span>
-              <svg class="lib-filter-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg>
-            </button>
-            <ul class="lib-filter-list lib-filter-list--collapsed" id="filter-vertical-body">
-              {verticalOrder.filter(v => verticalCounts[v]).map(v => (
-                <li>
-                  <label class="lib-filter-item">
-                    <input type="checkbox" class="lib-filter-cb" data-filter-type="vertical" data-filter-value={v} />
-                    <span class="lib-filter-label">{v}</span>
-                    <span class="lib-filter-count">{verticalCounts[v] || 0}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div class="lib-filter-section" id="filter-tier">
-            <button class="lib-filter-head" aria-expanded="false" aria-controls="filter-tier-body">
-              <span>Tier</span>
-              <svg class="lib-filter-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg>
-            </button>
-            <ul class="lib-filter-list lib-filter-list--collapsed" id="filter-tier-body">
-              {tierOrder.filter(t => tierCounts[t]).map(t => (
-                <li>
-                  <label class="lib-filter-item">
-                    <input type="checkbox" class="lib-filter-cb" data-filter-type="tier" data-filter-value={t} />
-                    <span class="lib-filter-label">{t}</span>
-                    <span class="lib-filter-count">{tierCounts[t] || 0}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-        </div>{/* /lib-filter */}
-      </aside>
-
-      {/* ── Document table ── */}
-      <section class="lib-table-wrap" aria-label="Document table">
-        <div class="lib-table-head">
-          <div class="lib-table-count">
-            Showing <span id="lib-visible-count">{rows.length}</span> of {rows.length} families
-          </div>
-          <div class="lib-table-sort-label">Sorted by collection</div>
-        </div>
-
-        <table class="lib-table" id="lib-table">
-          <thead>
-            <tr>
-              <th class="lib-th lib-th--family">Family</th>
-              <th class="lib-th lib-th--collection">Collection</th>
-              <th class="lib-th lib-th--tier">Tier</th>
-              <th class="lib-th lib-th--skus">SKUs</th>
-              <th class="lib-th lib-th--docs">Documents</th>
-            </tr>
-          </thead>
-          <tbody id="lib-tbody">
-            {rows.map(entry => (
-              <tr
-                class="lib-row"
-                data-collection={entry.collection}
-                data-vertical={entry.vertical}
-                data-tier={entry.tier}
-                data-doctypes={Object.keys(entry.docs).map(s => slotLabels[s as keyof typeof slotLabels]).join(',')}
-              >
-                <td class="lib-td lib-td--family">
-                  <span class="lib-family-name">{entry.family}</span>
-                  {entry.application && (
-                    <span class="lib-family-app">{entry.application}</span>
-                  )}
-                </td>
-                <td class="lib-td lib-td--collection">
-                  <span set:html={renderAa(entry.collection)} />
-                </td>
-                <td class="lib-td lib-td--tier">
-                  {entry.tier ? (
-                    <span class={`lib-tier-badge lib-tier-badge--${entry.tier.toLowerCase().replace('+', 'plus')}`}>
-                      {entry.tier}
-                    </span>
-                  ) : (
-                    <span class="lib-tier-badge lib-tier-badge--none">—</span>
-                  )}
-                </td>
-                <td class="lib-td lib-td--skus">
-                  <span class="lib-sku-count">{entry.sku_count} SKUs</span>
-                </td>
-                <td class="lib-td lib-td--docs">
-                  <div class="lib-doc-links">
-                    {SLOT_ORDER.filter(slot => slot in entry.docs).map(slot => {
-                      const doc = entry.docs[slot as keyof typeof entry.docs] as { label: string; url: string };
-                      return (
-                        <a
-                          href={doc.url}
-                          target="_blank"
-                          rel="noopener"
-                          class={`lib-doc-link lib-doc-link--${slot}`}
-                          aria-label={`${entry.family} ${doc.label}`}
-                        >
-                          {doc.label}
-                        </a>
-                      );
-                    })}
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        <div class="lib-table-empty" id="lib-empty" style="display:none">
-          <p>No documents match the selected filters.</p>
-          <button class="lib-clear-btn" id="lib-clear-btn">Clear filters</button>
-        </div>
-      </section>
-
-    </div>{/* /lib-body */}
-  </div>{/* /lib-page */}
+  <!-- fixed selection bar -->
+  <div class="selbar" id="selbar">
+    <span class="n"><span id="selN2">0</span> families selected</span>
+    <div>
+      <button onclick="clearSel()">Clear</button>
+      <button class="red" onclick="downloadPacket()">↓ Download Packet</button>
+    </div>
+  </div>
 </BaseLayout>
 
 <style>
-/* ── Library page styles ─────────────────────────────────────────────────────
-   All tokens sourced from brand.css / global.css — no hardcoded values.
-   Brand red: var(--color-alg-red) = #F32740
-   Warm cream: #F5EFE3 (matches .mm-col-main)
-   Font: var(--font-sans) = 'Lato', system-ui, sans-serif
-   ─────────────────────────────────────────────────────────────────────────── */
+:root{
+  --brand:#F32740;--press:#C8132E;
+  --ink:#1A1D23;--ink2:#3A3E47;--ink3:#6B7280;
+  --c1:#F5F4F1;--c2:#EEEDF0;--c3:#DCDEE2;--cb:#C7CCD3;
+  --grn:#0FAE7C;--yel:#FDD85E;
+  --pad-x:calc(0.5*max(56px,calc((100vw - 1320px)/2)));
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --sans:'Lato',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+.aa{color:var(--brand)}
 
-.page-library {
-  background: var(--color-bg);
+/* breadcrumb */
+.crumb{
+  padding:13px var(--pad-x);
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  color:var(--ink3);border-bottom:1px solid var(--c2);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
 }
+.crumb a{color:var(--ink3);text-decoration:none}.crumb a:hover{color:var(--ink)}
+.crumb b{color:var(--ink)}
+.crumb-meta{font-family:var(--mono);font-size:11px;color:var(--ink3)}
+.crumb-meta b{color:var(--ink);font-size:14px}
 
-/* Breadcrumb */
-.lib-breadcrumb {
-  background: var(--color-bg-soft);
-  border-bottom: 1px solid var(--color-border);
-}
-.lib-breadcrumb-inner {
-  max-width: var(--container-max);
-  margin-inline: auto;
-  padding-inline: var(--container-pad);
-  padding-block: 10px;
-  font-size: 0.8125rem;
-  color: var(--color-ink-mute);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.lib-breadcrumb-inner a {
-  color: var(--color-ink-soft);
-  text-decoration: none;
-}
-.lib-breadcrumb-inner a:hover { color: var(--color-alg-red); }
-.bc-sep { color: var(--color-border-strong); }
-.bc-current { color: var(--color-ink); font-weight: 600; }
+/* hero */
+.hero{padding:30px var(--pad-x) 18px}
+.eyebrow{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand)}
+h1{font-size:48px;font-weight:900;letter-spacing:-.025em;margin:10px 0 8px;line-height:1;font-family:var(--sans)}
+.lede{font-size:15px;color:var(--ink2);max-width:680px;line-height:1.5;margin:0 0 16px}
+.stats{display:flex;gap:24px;margin-top:14px;font-family:var(--mono);font-size:13px;color:var(--ink3)}
+.stats b{color:var(--ink);font-size:17px}
 
-/* Hero */
-.lib-hero {
-  background: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
-  padding-block: clamp(32px, 5vw, 56px);
-}
-.lib-hero-inner {
-  max-width: var(--container-max);
-  margin-inline: auto;
-  padding-inline: var(--container-pad);
-}
-.lib-hero-meta {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-alg-red);
-  margin-bottom: 10px;
-}
-.lib-hero-h1 {
-  font-family: var(--font-sans);
-  font-style: normal;
-  font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--color-ink);
-  margin: 0 0 12px;
-}
-.lib-hero-deck {
-  font-size: 1rem;
-  color: var(--color-ink-soft);
-  max-width: 620px;
-  margin: 0 0 20px;
-  line-height: 1.6;
-}
-.lib-hero-stats {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.875rem;
-  color: var(--color-ink-mute);
-}
-.lib-hero-stat strong { color: var(--color-ink); font-weight: 700; }
-.lib-hero-stat-sep { color: var(--color-border-strong); }
+/* search bar */
+.hsearch{display:flex;margin-top:22px;border:1px solid var(--ink);max-width:920px}
+.hscope{border:0;border-right:1px solid var(--c3);background:var(--c1);font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:0 16px;cursor:pointer;color:var(--ink)}
+.hsearch input{flex:1;border:0;padding:16px;font-family:var(--sans);font-size:15px;outline:none;background:#fff}
+.hsearch button{border:0;background:var(--ink);color:#fff;font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:0 24px;cursor:pointer;white-space:nowrap}
+.hsearch button:hover{background:var(--brand)}
 
-/* Chips bar */
-.lib-chips-bar {
-  background: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
-  padding-block: 12px;
-}
-.lib-chips-inner {
-  max-width: var(--container-max);
-  margin-inline: auto;
-  padding-inline: var(--container-pad);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.lib-chips-label {
-  font-size: 0.8125rem;
-  color: var(--color-ink-mute);
-  font-weight: 600;
-  margin-right: 4px;
-}
-.lib-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 12px;
-  border-radius: 20px;
-  border: 1px solid var(--color-border);
-  background: var(--color-bg);
-  font-family: var(--font-sans);
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: var(--color-ink-soft);
-  cursor: pointer;
-  transition: background 120ms, border-color 120ms, color 120ms;
-}
-.lib-chip:hover {
-  border-color: var(--color-alg-red);
-  color: var(--color-alg-red);
-}
-.lib-chip--active {
-  background: var(--color-alg-red);
-  border-color: var(--color-alg-red);
-  color: #fff;
-  font-weight: 600;
-}
-.lib-chip--active:hover {
-  background: var(--color-alg-red-dark);
-  border-color: var(--color-alg-red-dark);
-  color: #fff;
-}
-.lib-chip-count {
-  font-size: 0.75rem;
-  opacity: 0.85;
-}
+/* popular chips */
+.popular{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:13px}
+.popular .pl{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.pchip{font-family:var(--mono);font-size:11.5px;border:1px solid var(--c3);padding:6px 11px;cursor:pointer;color:var(--ink2);background:#fff}
+.pchip:hover{border-color:var(--ink);color:var(--ink)}
 
-/* Featured band */
-.lib-featured-band {
-  background: #F5EFE3;
-  border-bottom: 1px solid var(--color-border);
-  padding-block: 20px;
+/* featured guide ribbon */
+.feat{
+  margin:14px var(--pad-x) 0;background:var(--ink);color:#fff;
+  display:grid;grid-template-columns:230px 1fr;gap:30px;
+  padding:26px 30px;border-top:3px solid var(--brand);
 }
-.lib-featured-inner {
-  max-width: var(--container-max);
-  margin-inline: auto;
-  padding-inline: var(--container-pad);
-}
-.lib-featured-eyebrow {
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-alg-red);
-  margin-bottom: 4px;
-}
-.lib-featured-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--color-ink);
-  margin-bottom: 4px;
-}
-.lib-featured-sub {
-  font-size: 0.875rem;
-  color: var(--color-ink-soft);
-  margin: 0;
-}
+.feat .cover{background:#fff;color:var(--ink);padding:22px 18px;display:flex;flex-direction:column;justify-content:space-between;min-height:230px}
+.feat .cover .cw{font-weight:900;font-size:22px;letter-spacing:.01em}
+.feat .cover .cs{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--ink3);margin-top:4px}
+.feat .cover .lines{height:6px;background:var(--c2);margin:5px 0}
+.feat .cover .code{font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:.06em}
+.feat .fk{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--brand);text-transform:uppercase}
+.feat h2{font-size:30px;font-weight:900;margin:4px 0 6px;letter-spacing:-.02em;font-family:var(--sans)}
+.feat .fcode{font-family:var(--mono);font-size:12px;color:#aeb4bc}
+.feat .fd{font-size:13.5px;color:#c7ccd3;line-height:1.55;margin:12px 0;max-width:620px}
+.feat .fstats{display:flex;gap:34px;margin:8px 0 16px}
+.feat .fstats .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--yel);text-transform:uppercase}
+.feat .fstats .v{font-size:22px;font-weight:900;margin-top:3px}
+.feat .fcta{display:flex;gap:10px;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px;border:1px solid #3a3e47;background:transparent;color:#fff;cursor:pointer;display:inline-flex;gap:7px;align-items:center;text-decoration:none}
+.btn.red{background:var(--brand);border-color:var(--brand)}
+.btn:hover{opacity:.85}
 
-/* Body layout */
-.lib-body {
-  max-width: var(--container-max);
-  margin-inline: auto;
-  padding-inline: var(--container-pad);
-  padding-block: 32px;
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 32px;
-  align-items: start;
+/* tabs */
+.tabs{
+  display:flex;gap:0;overflow-x:auto;
+  border-bottom:1px solid var(--c3);
+  padding:0 var(--pad-x);margin-top:18px;
 }
-@media (max-width: 900px) {
-  .lib-body {
-    grid-template-columns: 1fr;
-  }
-}
+.tab{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);padding:16px;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;background:none;border-top:0;border-left:0;border-right:0}
+.tab.on{color:var(--ink);border-bottom-color:var(--brand)}
+.tab .ct{margin-left:7px;background:var(--c2);color:var(--ink3);padding:2px 7px;border-radius:2px;font-size:10px}
+.tab.on .ct{background:#ffe3e6;color:var(--brand)}
 
-/* Rail */
-.lib-rail {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  position: sticky;
-  top: calc(var(--header-bottom, 90px) + 16px);
-}
+/* body 3-col grid */
+.body{display:grid;grid-template-columns:236px 1fr 262px;gap:0;padding:18px var(--pad-x) 0}
+.rail{padding:6px 22px 60px 0;border-right:1px solid var(--c3)}
+.rrail{padding:6px 0 60px 24px;border-left:1px solid var(--c3)}
 
-/* Rail cards */
-.lib-rail-card {
-  background: var(--color-bg-soft);
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  padding: 16px;
-}
-.lib-rail-card--cream {
-  background: #F5EFE3;
-  border-color: #e0d5c3;
-}
-.lib-rail-card-eyebrow {
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-alg-red);
-  margin-bottom: 4px;
-}
-.lib-rail-card-title {
-  font-size: 0.9375rem;
-  font-weight: 700;
-  color: var(--color-ink);
-  margin-bottom: 6px;
-}
-.lib-rail-card-body {
-  font-size: 0.8125rem;
-  color: var(--color-ink-soft);
-  margin: 0 0 12px;
-  line-height: 1.5;
-}
-.lib-rail-cta {
-  display: inline-block;
-  padding: 7px 14px;
-  background: var(--color-alg-red);
-  color: #fff;
-  border-radius: 4px;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background 120ms;
-}
-.lib-rail-cta:hover {
-  background: var(--color-alg-red-dark);
-  color: #fff;
-}
-.lib-rail-links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.lib-rail-links a {
-  font-size: 0.875rem;
-  color: var(--color-ink-soft);
-  text-decoration: none;
-  padding: 4px 0;
-  display: block;
-}
-.lib-rail-links a:hover { color: var(--color-alg-red); }
+/* filters */
+.fhead{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.fhead .n{color:var(--brand)}
+.clrall{width:100%;margin:10px 0 6px;background:var(--ink);color:#fff;border:0;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:11px;cursor:pointer}
+.facet{border-top:1px solid var(--c3);padding:12px 0}
+.fh{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);margin-bottom:8px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;cursor:pointer;gap:6px}
+.opt input{margin:0;cursor:pointer;accent-color:var(--brand)}
+.opt span:first-of-type{flex:1;display:flex;flex-direction:column;gap:1px}
+.opt .n{font-family:var(--mono);font-size:10.5px;color:var(--ink3)}
+.opt .sub{font-family:var(--mono);font-size:9.5px;color:var(--ink3);text-transform:uppercase}
 
-/* Filter */
-.lib-filter {
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  overflow: hidden;
-}
-.lib-filter-section {
-  border-bottom: 1px solid var(--color-border);
-}
-.lib-filter-section:last-child { border-bottom: none; }
-.lib-filter-head {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 14px;
-  background: var(--color-bg);
-  border: none;
-  cursor: pointer;
-  font-family: var(--font-sans);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: var(--color-ink);
-  text-align: left;
-  transition: background 120ms;
-}
-.lib-filter-head:hover { background: var(--color-bg-soft); }
-.lib-filter-chevron {
-  width: 14px;
-  height: 14px;
-  color: var(--color-ink-mute);
-  transition: transform 200ms;
-  flex-shrink: 0;
-}
-.lib-filter-head[aria-expanded="false"] .lib-filter-chevron {
-  transform: rotate(-90deg);
-}
-.lib-filter-list {
-  list-style: none;
-  padding: 6px 0;
-  margin: 0;
-  background: var(--color-bg);
-}
-.lib-filter-list--collapsed { display: none; }
-.lib-filter-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 14px;
-  cursor: pointer;
-  font-size: 0.8125rem;
-  color: var(--color-ink-soft);
-  transition: background 100ms;
-}
-.lib-filter-item:hover { background: var(--color-bg-soft); }
-.lib-filter-cb {
-  accent-color: var(--color-alg-red);
-  width: 14px;
-  height: 14px;
-  flex-shrink: 0;
-  cursor: pointer;
-}
-.lib-filter-label { flex: 1; }
-.lib-filter-count {
-  font-size: 0.75rem;
-  color: var(--color-ink-mute);
-  background: var(--color-bg-strong);
-  padding: 1px 6px;
-  border-radius: 10px;
-  min-width: 24px;
-  text-align: center;
-}
+/* tier chips */
+.tier{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:2px}
+.ECO{background:#e8f5e9;color:#2e7d32}
+.PRO{background:#e3f2fd;color:#1565c0}
+.PROp{background:#f3e5f5;color:#6a1b9a}
 
-/* Table */
-.lib-table-wrap {
-  min-width: 0;
-}
-.lib-table-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  font-size: 0.8125rem;
-  color: var(--color-ink-mute);
-}
-.lib-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.875rem;
-}
-.lib-th {
-  text-align: left;
-  padding: 8px 10px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--color-ink-mute);
-  border-bottom: 2px solid var(--color-border);
-  white-space: nowrap;
-}
-.lib-th--docs { min-width: 260px; }
-.lib-row {
-  border-bottom: 1px solid var(--color-border);
-  transition: background 100ms;
-}
-.lib-row:hover { background: var(--color-bg-soft); }
-.lib-row[data-hidden="true"] { display: none; }
-.lib-td {
-  padding: 10px 10px;
-  vertical-align: middle;
-  color: var(--color-ink);
-}
-.lib-family-name {
-  font-weight: 600;
-  display: block;
-}
-.lib-family-app {
-  font-size: 0.75rem;
-  color: var(--color-ink-mute);
-  display: block;
-  margin-top: 2px;
-}
-.lib-sku-count {
-  font-size: 0.75rem;
-  color: var(--color-ink-mute);
-  white-space: nowrap;
-}
+/* results */
+.results{padding:0 22px}
+.rhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+.cnt{font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+.rhead select{font-family:var(--mono);font-size:11.5px;border:1px solid var(--c3);background:#fff;padding:6px 10px;color:var(--ink)}
+.fby{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;align-items:center;font-family:var(--mono);font-size:11px}
+.fby .lab{color:var(--ink3);letter-spacing:.08em;text-transform:uppercase}
+.fchip{background:var(--c2);color:var(--ink2);padding:4px 9px;cursor:pointer;border-radius:2px}
+.fchip:hover{background:var(--ink);color:#fff}
+.fchip.red{background:#ffe3e6;color:var(--brand)}
 
-/* Tier badges */
-.lib-tier-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 3px;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.lib-tier-badge--eco  { background: #E8F5E9; color: #1B5E20; }
-.lib-tier-badge--pro  { background: #E3F2FD; color: #0D47A1; }
-.lib-tier-badge--proplus { background: #F3E5F5; color: #4A148C; }
-.lib-tier-badge--none { background: var(--color-bg-strong); color: var(--color-ink-mute); }
+/* legend */
+.legend{display:flex;flex-wrap:wrap;gap:13px;margin:0 0 12px;font-family:var(--mono);font-size:10.5px;color:var(--ink3)}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
 
-/* Doc links */
-.lib-doc-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-.lib-doc-link {
-  display: inline-block;
-  padding: 3px 9px;
-  border-radius: 3px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-decoration: none;
-  border: 1px solid var(--color-border);
-  color: var(--color-ink-soft);
-  background: var(--color-bg);
-  transition: background 100ms, border-color 100ms, color 100ms;
-  white-space: nowrap;
-}
-.lib-doc-link:hover {
-  background: var(--color-alg-red);
-  border-color: var(--color-alg-red);
-  color: #fff;
-}
+/* table */
+table{width:100%;border-collapse:collapse}
+thead th{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);padding:8px 10px;border-bottom:2px solid var(--c3);text-align:left}
+tbody tr{border-bottom:1px solid var(--c2)}
+tbody tr:hover{background:var(--c1)}
+tbody td{padding:12px 10px;vertical-align:top}
+.famcell{display:flex;flex-direction:column;gap:4px}
+.fam{font-size:14px;font-weight:700;color:var(--ink)}
+.fmeta{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.cchip{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.06em;background:var(--c2);color:var(--ink2);padding:2px 6px;border-radius:2px}
+.sub{font-family:var(--mono);font-size:9.5px;color:var(--ink3);text-transform:uppercase}
+.docs{display:flex;flex-wrap:wrap;gap:8px}
+.docbtn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--c3);border-left-width:3px;background:#fff;padding:8px 12px;font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink);text-decoration:none;cursor:pointer;transition:all .12s;border-radius:2px}
+.docbtn .ic{font-size:13px;line-height:1}
+.docbtn:hover{background:var(--ink);color:#fff}
+.empty{font-family:var(--mono);font-size:11px;color:var(--c3)}
 
-/* Empty state */
-.lib-table-empty {
-  padding: 48px 0;
-  text-align: center;
-  color: var(--color-ink-mute);
+/* pagination */
+.pager{display:flex;align-items:center;gap:6px;padding:18px 0 0;flex-wrap:wrap}
+.pbtn{font-family:var(--mono);font-size:12px;border:1px solid var(--c3);background:#fff;color:var(--ink2);padding:7px 11px;cursor:pointer;min-width:34px}
+.pbtn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pbtn:hover:not(.on){border-color:var(--ink)}
+.pdot{font-family:var(--mono);color:var(--ink3);padding:0 4px}
+.pper{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+
+/* right rail */
+.packet{background:var(--ink);color:#fff;padding:20px;border-top:3px solid var(--brand);margin-bottom:18px}
+.packet h3{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.06em;margin:0 0 8px}
+.packet p{font-size:12px;color:#aeb4bc;line-height:1.5;margin:0 0 14px}
+.psel{background:#22262b;padding:10px 12px;margin-bottom:8px;font-family:var(--mono);font-size:10.5px;color:#c7ccd3;display:flex;justify-content:space-between}
+.psel .x{color:var(--brand);cursor:pointer}
+.pacts{display:flex;gap:8px;margin-top:6px}
+.pacts button{flex:1;border:1px solid #3a3e47;background:transparent;color:#fff;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:11px;cursor:pointer}
+.pacts button.red{background:var(--brand);border-color:var(--brand)}
+.tools h4{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);margin:0 0 12px}
+.tool{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--c3);border-left:3px solid var(--brand);margin-bottom:10px;text-decoration:none;color:var(--ink);padding:10px 12px}
+.tool .ti{color:var(--brand);font-size:15px}
+.tool .tt{font-size:13.5px;font-weight:700}
+.tool .td{font-size:11px;color:var(--ink3);margin-top:2px}
+.needhelp{border-top:3px solid var(--brand);background:var(--c1);padding:16px 18px;margin-top:18px}
+.needhelp .nh-k{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--brand)}
+.needhelp .nh-d{font-size:13px;color:var(--ink2);margin:6px 0 10px;line-height:1.45}
+.needhelp .nh-c{display:block;font-family:var(--mono);font-size:12.5px;color:var(--ink);text-decoration:none;padding:2px 0}
+.needhelp a.nh-c:hover{color:var(--brand)}
+
+/* fixed selection bar */
+.selbar{position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:#fff;display:none;justify-content:space-between;align-items:center;padding:13px var(--pad-x);z-index:60;box-shadow:0 -4px 18px rgba(0,0,0,.2)}
+.selbar.on{display:flex}
+.selbar .n{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.selbar button{border:1px solid #444;background:transparent;color:#fff;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:9px 14px;margin-left:8px;cursor:pointer}
+.selbar button.red{background:var(--brand);border-color:var(--brand)}
+
+/* responsive */
+@media(max-width:1150px){
+  .body{grid-template-columns:1fr}
+  .rail,.rrail{border:0;padding:0 0 20px}
+  .feat{grid-template-columns:1fr}
+  h1{font-size:32px}
 }
-.lib-clear-btn {
-  margin-top: 12px;
-  padding: 8px 20px;
-  background: var(--color-alg-red);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-family: var(--font-sans);
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
+@media(max-width:640px){
+  .hsearch{flex-direction:column}
+  .hscope{border-right:0;border-bottom:1px solid var(--c3);padding:12px 16px}
+  .hsearch input{padding:14px 16px}
+  .hsearch button{padding:14px 16px}
+  h1{font-size:26px}
+  .feat{padding:18px 16px}
 }
-.lib-clear-btn:hover { background: var(--color-alg-red-dark); }
 </style>
 
-<script>
-// ── Library page filter logic ─────────────────────────────────────────────────
-// Pure client-side filtering — no server round-trip.
-// Active filters are stored in a Set per dimension; rows are shown/hidden
-// based on whether they match ALL active filter dimensions (AND logic across
-// dimensions, OR logic within a dimension).
+<script id="lib-data" type="application/json" set:html={JSON.stringify(docsRaw)}></script>
 
-(function () {
-  const tbody     = document.getElementById('lib-tbody');
-  const emptyMsg  = document.getElementById('lib-empty');
-  const countEl   = document.getElementById('lib-visible-count');
-  const clearBtn  = document.getElementById('lib-clear-btn');
-
-  if (!tbody) return;
-
-  const rows = Array.from(tbody.querySelectorAll('tr.lib-row'));
-
-  // Active filters: { doctype: Set, collection: Set, vertical: Set, tier: Set }
-  const active = {
-    doctype:    new Set(),
-    collection: new Set(),
-    vertical:   new Set(),
-    tier:       new Set(),
-  };
-
-  function applyFilters() {
-    let visible = 0;
-    for (const row of rows) {
-      const col      = row.dataset.collection || '';
-      const vert     = row.dataset.vertical   || '';
-      const tier     = row.dataset.tier       || '';
-      const doctypes = (row.dataset.doctypes  || '').split(',').filter(Boolean);
-
-      const matchDoctype    = active.doctype.size    === 0 || [...active.doctype].some(v => doctypes.includes(v));
-      const matchCollection = active.collection.size === 0 || active.collection.has(col);
-      const matchVertical   = active.vertical.size   === 0 || active.vertical.has(vert);
-      const matchTier       = active.tier.size       === 0 || active.tier.has(tier);
-
-      const show = matchDoctype && matchCollection && matchVertical && matchTier;
-      row.dataset.hidden = show ? 'false' : 'true';
-      if (show) visible++;
-    }
-    if (countEl) countEl.textContent = String(visible);
-    if (emptyMsg) emptyMsg.style.display = visible === 0 ? 'block' : 'none';
-  }
-
-  // Checkbox filters
-  document.querySelectorAll('.lib-filter-cb').forEach(cb => {
-    cb.addEventListener('change', function () {
-      const el   = this as HTMLInputElement;
-      const type = el.dataset.filterType as keyof typeof active;
-      const val  = el.dataset.filterValue || '';
-      if (el.checked) {
-        active[type].add(val);
-      } else {
-        active[type].delete(val);
-      }
-      applyFilters();
-      syncChips();
-    });
+<script is:inline>
+(function(){
+var DATA=JSON.parse(document.getElementById('lib-data').textContent);
+var TYPES=["Datasheet","Installation Guide","Quicksheet","Sell Sheet","IES Photometric"];
+var SHORT={"Datasheet":"Datasheet","Installation Guide":"Install Guide","Quicksheet":"Quick Sheet","Sell Sheet":"Sell Sheet","IES Photometric":"IES Bundle"};
+var META={
+  "Datasheet":{c:"#F32740",i:"▤"},
+  "Installation Guide":{c:"#2456C8",i:"▥"},
+  "Quicksheet":{c:"#0FAE7C",i:"⚡"},
+  "Sell Sheet":{c:"#C7821A",i:"★"},
+  "IES Photometric":{c:"#7A3FF2",i:"◎"}
+};
+var CMETA={
+  "luxoⒶRCH":"Architectural","planoⒶRCH":"Panels & Troffers",
+  "lamparⒶRCH":"Indoor C&I","cityⒶRCH":"Outdoor / Area",
+  "constⒶNT":"Drivers & Power","contrⒶLS":"Controls & ⒶCS App"
+};
+var page=1,perPage=25,fType='All',fCols=new Set(),fTiers=new Set(),fTypes=new Set(),sel=new Set();
+function tc(t){return t==='PRO+'?'PROp':t}
+function counts(){
+  var c={All:0};TYPES.forEach(function(t){c[t]=0});
+  DATA.forEach(function(r){Object.keys(r.docs).forEach(function(t){c[t]++;c.All++})});
+  return c;
+}
+function build(){
+  var c=counts();
+  document.getElementById('tabs').innerHTML=['All'].concat(TYPES).map(function(t){
+    return '<button class="tab '+(t===fType?'on':'')+'" onclick="setType(\''+t+'\')">'+(t==='All'?'All Documents':SHORT[t])+'<span class="ct">'+(c[t]||0)+'</span></button>';
+  }).join('');
+  var cols=[...new Set(DATA.map(function(r){return r.collection}))];
+  document.getElementById('colFacet').innerHTML=cols.map(function(col){
+    return '<label class="opt"><input type="checkbox" onchange="tog(fCols,\''+col+'\')"> <span>'+col.replace(/Ⓐ/g,'<span class=aa>Ⓐ</span>')+'<span class="sub">'+(CMETA[col]||'')+'</span></span> <span class="n">'+DATA.filter(function(r){return r.collection===col}).length+'</span></label>';
+  }).join('');
+  document.getElementById('tierFacet').innerHTML=['ECO','PRO','PRO+'].map(function(t){
+    return '<label class="opt"><input type="checkbox" onchange="tog(fTiers,\''+t+'\')"> <span class="tier '+tc(t)+'">'+t+'</span> <span class="n">'+DATA.filter(function(r){return r.tier===t}).length+'</span></label>';
+  }).join('');
+  document.getElementById('typeFacet').innerHTML=TYPES.map(function(t){
+    return '<label class="opt"><input type="checkbox" onchange="tog(fTypes,\''+t+'\')"> <span style="display:inline-flex;align-items:center;gap:6px"><i style="width:9px;height:9px;border-radius:2px;background:'+META[t].c+'"></i>'+SHORT[t]+'</span> <span class="n">'+c[t]+'</span></label>';
+  }).join('');
+  document.getElementById('legend').innerHTML=TYPES.map(function(t){
+    return '<span><i style="background:'+META[t].c+'"></i>'+SHORT[t]+'</span>';
+  }).join('');
+}
+function setType(t){fType=t;page=1;render()}
+function tog(s,v){s.has(v)?s.delete(v):s.add(v);page=1;render()}
+function goto(p){page=p;render()}
+function clearAll(){fType='All';fCols.clear();fTiers.clear();fTypes.clear();page=1;build();render()}
+function clearSel(){sel.clear();render()}
+function key(r){return r.collection+'|'+r.family}
+function toggleSel(k){sel.has(k)?sel.delete(k):sel.add(k);render()}
+function qset(v){document.getElementById('q').value=v;page=1;render()}
+function clr(k,v){page=1;if(k==='type0'){fType='All';build()}else{var m={col:fCols,tier:fTiers,ftype:fTypes};m[k].delete(v)}render()}
+function downloadPacket(){
+  if(!sel.size){alert('Select at least one family first.');return;}
+  var lines=['ALG Spec Packet','Generated: '+new Date().toLocaleDateString(),'','Families:'];
+  sel.forEach(function(k){
+    var r=DATA.find(function(d){return key(d)===k});
+    if(!r)return;
+    lines.push('','  '+r.family+' ('+r.collection+')');
+    Object.entries(r.docs).forEach(function(e){lines.push('    '+SHORT[e[0]]+': '+e[1])});
   });
-
-  // Chip filters
-  document.querySelectorAll('.lib-chip').forEach(chip => {
-    chip.addEventListener('click', function () {
-      const el   = this as HTMLButtonElement;
-      const type = el.dataset.filterType || '';
-      const val  = el.dataset.filterValue || '';
-
-      if (type === 'all') {
-        clearAll();
-        return;
-      }
-
-      // Toggle chip active state
-      const isActive = el.classList.contains('lib-chip--active');
-      if (isActive) {
-        el.classList.remove('lib-chip--active');
-        (active as any)[type]?.delete(val);
-      } else {
-        el.classList.add('lib-chip--active');
-        (active as any)[type]?.add(val);
-      }
-
-      // Sync corresponding checkbox
-      const cb = document.querySelector(`.lib-filter-cb[data-filter-type="${type}"][data-filter-value="${val}"]`) as HTMLInputElement | null;
-      if (cb) cb.checked = !isActive;
-
-      // Deactivate "All" chip if any filter is active
-      const allChip = document.querySelector('.lib-chip[data-filter-type="all"]');
-      if (allChip) {
-        const anyActive = Object.values(active).some(s => s.size > 0);
-        allChip.classList.toggle('lib-chip--active', !anyActive);
-      }
-
-      applyFilters();
-    });
+  var blob=new Blob([lines.join('\n')],{type:'text/plain'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='ALG-Spec-Packet.txt';
+  a.click();
+}
+function emailPacket(){
+  if(!sel.size){alert('Select at least one family first.');return;}
+  var fams=[...sel].map(function(k){return k.split('|')[1]}).join(', ');
+  window.location='mailto:specs@archipelagolighting.com?subject=Spec%20Packet%20Request&body=Please%20send%20documents%20for:%20'+encodeURIComponent(fams);
+}
+function render(){
+  var sort=document.getElementById('sort').value;
+  var qEl=document.getElementById('q');
+  var q=qEl?qEl.value.toLowerCase():'';
+  var rows=DATA.filter(function(r){
+    if(q&&!((r.family+' '+r.collection+' '+r.tier+' '+(r.subcategory||'')).toLowerCase().includes(q)))return false;
+    if(fType!=='All'&&!r.docs[fType])return false;
+    if(fTypes.size&&!TYPES.some(function(t){return fTypes.has(t)&&r.docs[t]}))return false;
+    if(fCols.size&&!fCols.has(r.collection))return false;
+    if(fTiers.size&&!fTiers.has(r.tier))return false;
+    return true;
   });
-
-  // Collapsible filter sections
-  document.querySelectorAll('.lib-filter-head').forEach(btn => {
-    btn.addEventListener('click', function () {
-      const el       = this as HTMLButtonElement;
-      const expanded = el.getAttribute('aria-expanded') === 'true';
-      el.setAttribute('aria-expanded', String(!expanded));
-      const bodyId = el.getAttribute('aria-controls');
-      if (bodyId) {
-        const body = document.getElementById(bodyId);
-        if (body) body.classList.toggle('lib-filter-list--collapsed', expanded);
-      }
-    });
-  });
-
-  function clearAll() {
-    // Reset all checkboxes
-    document.querySelectorAll('.lib-filter-cb').forEach(cb => {
-      (cb as HTMLInputElement).checked = false;
-    });
-    // Reset active sets
-    for (const key of Object.keys(active)) {
-      (active as any)[key].clear();
-    }
-    // Reset chips
-    document.querySelectorAll('.lib-chip').forEach(c => c.classList.remove('lib-chip--active'));
-    const allChip = document.querySelector('.lib-chip[data-filter-type="all"]');
-    if (allChip) allChip.classList.add('lib-chip--active');
-    applyFilters();
+  var ord=['luxoⒶRCH','planoⒶRCH','lamparⒶRCH','cityⒶRCH','constⒶNT','contrⒶLS'];
+  if(sort==='family')rows.sort(function(a,b){return a.family.localeCompare(b.family)});
+  else if(sort==='skus')rows.sort(function(a,b){return(b.sku_count||0)-(a.sku_count||0)});
+  else rows.sort(function(a,b){return ord.indexOf(a.collection)-ord.indexOf(b.collection)||a.family.localeCompare(b.family)});
+  var total=rows.length;
+  var pages=Math.max(1,Math.ceil(total/perPage));
+  if(page>pages)page=pages;
+  if(page<1)page=1;
+  var a0=(page-1)*perPage;
+  var pageRows=rows.slice(a0,a0+perPage);
+  document.getElementById('showing').textContent='Showing '+(total?a0+1:0)+'\u2013'+Math.min(a0+perPage,total)+' of '+total+' families';
+  var af=(fType!=='All'?[['type0',fType,SHORT[fType],1]]:[])
+    .concat([...fCols].map(function(c){return['col',c,c,0]}))
+    .concat([...fTiers].map(function(t){return['tier',t,t,0]}))
+    .concat([...fTypes].map(function(t){return['ftype',t,SHORT[t],0]}));
+  document.getElementById('nActive').textContent=af.length+' active';
+  document.getElementById('fby').innerHTML=af.length
+    ?'<span class="lab">Filtering by:</span>'+af.map(function(x){return'<span class="fchip '+(x[3]?'red':'')+'" onclick="clr(\''+x[0]+'\',\''+x[1]+'\')">'+x[2]+'</span>'}).join('')
+    :'';
+  document.getElementById('tbody').innerHTML=pageRows.map(function(r){
+    var k=key(r);
+    var btns=TYPES.filter(function(t){return r.docs[t]}).map(function(t){
+      return '<a class="docbtn" style="border-left-color:'+META[t].c+'" href="'+r.docs[t]+'" target="_blank" rel="noopener"><span class="ic" style="color:'+META[t].c+'">'+META[t].i+'</span>'+SHORT[t]+'</a>';
+    }).join('');
+    return '<tr><td><input type="checkbox" '+(sel.has(k)?'checked':'')+' onchange="toggleSel(\''+k+'\')"></td><td><div class="famcell"><span class="fam">'+r.family+'</span><span class="fmeta"><span class="cchip">'+r.collection.replace(/Ⓐ/g,'<span class=aa>Ⓐ</span>')+'</span>'+(r.tier?'<span class="tier '+tc(r.tier)+'">'+r.tier+'</span>':'')+'<span class="sub">'+(r.subcategory||'')+'</span>'+(r.sku_count?'<span class="sub">· '+r.sku_count+' SKUs</span>':'')+'</span></div></td><td><div class="docs">'+(btns||'<span class=empty>—</span>')+'</div></td></tr>';
+  }).join('');
+  var pg='';
+  for(var p=1;p<=pages;p++){
+    if(pages>7&&p>2&&p<pages-1&&Math.abs(p-page)>1){if(p===3)pg+='<span class="pdot">…</span>';continue;}
+    pg+='<button class="pbtn '+(p===page?'on':'')+'" onclick="goto('+p+')">'+p+'</button>';
   }
-
-  function syncChips() {
-    document.querySelectorAll('.lib-chip[data-filter-type="doctype"]').forEach(chip => {
-      const el  = chip as HTMLButtonElement;
-      const val = el.dataset.filterValue || '';
-      el.classList.toggle('lib-chip--active', active.doctype.has(val));
-    });
-    const anyActive = Object.values(active).some(s => s.size > 0);
-    const allChip = document.querySelector('.lib-chip[data-filter-type="all"]');
-    if (allChip) allChip.classList.toggle('lib-chip--active', !anyActive);
-  }
-
-  if (clearBtn) clearBtn.addEventListener('click', clearAll);
+  document.getElementById('pager').innerHTML=(pages>1?'<button class="pbtn" onclick="goto('+(page-1)+')">‹</button>'+pg+'<button class="pbtn" onclick="goto('+(page+1)+')">›</button>':'')+'<span class="pper">Per page · 25</span>';
+  document.getElementById('selbar').classList.toggle('on',sel.size>0);
+  document.getElementById('selN').textContent=sel.size;
+  document.getElementById('selN2').textContent=sel.size;
+  document.getElementById('selList').innerHTML=sel.size
+    ?[...sel].map(function(k){return'<div class="psel"><span>'+k.split('|')[1]+'</span><span class="x" onclick="toggleSel(\''+k+'\')">✕</span></div>'}).join('')
+    :'<div style="font-family:var(--mono);font-size:11px;color:#7e848d;margin-bottom:8px">Select families to build a packet.</div>';
+}
+window.setType=setType;window.tog=tog;window.goto=goto;window.clearAll=clearAll;
+window.clearSel=clearSel;window.toggleSel=toggleSel;window.qset=qset;window.clr=clr;
+window.downloadPacket=downloadPacket;window.emailPacket=emailPacket;
+build();render();
 })();
 </script>
