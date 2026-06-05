@@ -1,7 +1,7 @@
 /* ── ALG Echelon Comparison — portable component ──
    Reads window.ECHELON_COMPARE_DATA (per-collection, keyed by live data-app slug).
    Hooks the existing ALL FAMILIES filter (.app-tile[aria-pressed]) and mounts the
-   comparison block right AFTER #fam-results, only when exactly ONE application is filtered.
+   comparison block right AFTER #search-results, only when exactly ONE application is filtered.
    Self-contained; no dependency on the page's own render() internals. */
 (function () {
   var DATA = window.ECHELON_COMPARE_DATA;
@@ -31,12 +31,9 @@
           return '<span class="ec-chip'+(j===idx?' on':'')+'" data-tier="'+t+'" data-idx="'+j+'">'+aa(fm.fam)+'</span>';
         }).join('') + '</div>';
       }
-      /* CFG-SSOT-1: heroImage and pdpUrl come from the registry via the data file */
-      var heroHtml = v.heroImage ? '<div class="ec-hero"><img src="'+v.heroImage+'" alt="'+aa(v.fam)+'" loading="lazy" /></div>' : '';
-      var nameHtml = v.pdpUrl ? '<a class="ec-name" href="'+v.pdpUrl+'">'+aa(v.fam)+'</a>' : '<div class="ec-name">'+aa(v.fam)+'</div>';
       parts.push('<div class="ec-tcard t-'+cls(t)+'" style="--ec-tc:var('+(TC[cls(t)]||'--ec-red')+')"><div class="ec-accent"></div><div class="ec-in">'
         + '<div class="ec-top">'+tierBadge(t)+'<span class="ec-grade">'+(GRADE[t]||'')+'</span></div>'
-        + heroHtml + chips + nameHtml + '<div class="ec-spec">'
+        + chips + '<div class="ec-name">'+aa(v.fam)+'</div><div class="ec-spec">'
         + '<div class="s"><span class="sk">Efficacy</span><span class="sv">'+aa(v.eff)+'</span></div>'
         + '<div class="s"><span class="sk">Max output</span><span class="sv">'+aa(v.max)+'</span></div>'
         + '<div class="s"><span class="sk">Controls</span><span class="sv">'+aa(v.ctrl)+'</span></div>'
@@ -85,12 +82,24 @@
     return '<div class="ec-hr"></div>'+bar+body;
   }
 
+  function slugify(s){ return String(s).toLowerCase().trim().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
   function pressedApps(){
+    // NEW: the live collection filter is a checkbox sidebar (input[data-facet="application"]).
+    var boxes = [].slice.call(document.querySelectorAll('input[data-facet="application"]:checked'));
+    if (boxes.length){
+      var tiles = [].slice.call(document.querySelectorAll('.app-tile'));
+      return boxes.map(function(b){
+        var v = b.getAttribute('value') || b.value;             // e.g. "Architectural Linear"
+        var tile = tiles.filter(function(t){ return t.getAttribute('data-filter')===v; })[0];
+        return tile ? tile.getAttribute('data-app') : slugify(v); // -> "architectural-linear"
+      });
+    }
+    // FALLBACK: legacy app-tile buttons
     return [].slice.call(document.querySelectorAll('.app-tile[aria-pressed="true"]'))
       .map(function(b){ return b.getAttribute('data-app'); });
   }
   function mountNode(){
-    var sr = document.getElementById('fam-results'); if(!sr) return null;
+    var sr = document.getElementById('search-results'); if(!sr) return null;
     var m = document.getElementById('ec-mount');
     if(!m){ m=document.createElement('div'); m.id='ec-mount'; m.className='echelon-compare'; sr.parentNode.insertBefore(m, sr.nextSibling); }
     return m;
@@ -113,9 +122,12 @@
   });
 
   function init(){
-    if(!document.getElementById('fam-results')) return;
-    var debounce; var obs = new MutationObserver(function(){ clearTimeout(debounce); debounce=setTimeout(update, 80); });
-    obs.observe(document.body, { subtree:true, childList:true, attributes:true, attributeFilter:['aria-pressed'] });
+    if(!document.getElementById('search-results')) return;
+    var debounce; function bump(){ clearTimeout(debounce); debounce=setTimeout(update, 80); }
+    var obs = new MutationObserver(bump);
+    obs.observe(document.body, { subtree:true, childList:true, attributes:true, attributeFilter:['aria-pressed','checked','class'] });
+    // NEW: react to the checkbox filter changes
+    document.addEventListener('change', function(e){ if(e.target && e.target.matches && e.target.matches('input[data-facet="application"]')) bump(); });
     document.querySelectorAll('.app-tile').forEach(function(b){ b.addEventListener('click', function(){ setTimeout(update, 80); }); });
     update();
   }
