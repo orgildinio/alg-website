@@ -145,9 +145,9 @@ tbody td{padding:12px 10px;vertical-align:top}
 .cchip{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.06em;background:var(--c2);color:var(--ink2);padding:2px 6px;border-radius:2px}
 .sub{font-family:var(--mono);font-size:9.5px;color:var(--ink3);text-transform:uppercase}
 .docs{display:flex;flex-wrap:wrap;gap:4px 12px}
-/* FLAT document buttons — NO border, color square (.sw) left of label */
-.docbtn{display:inline-flex;align-items:center;gap:7px;border:0;background:transparent;padding:5px 9px;font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink2);text-decoration:none;cursor:pointer;border-radius:3px;transition:background .12s}
-.docbtn .sw{width:9px;height:9px;border-radius:2px;flex:none}.docbtn:hover{background:var(--c1);color:var(--ink)}.empty{font-family:var(--mono);font-size:11px;color:var(--c3)}
+/* SOLID FILLED document buttons — background = type color, white text, 1px border same color */
+.docbtn{display:inline-flex;align-items:center;gap:0;border-width:1px;border-style:solid;padding:6px 11px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;color:#fff;text-decoration:none;cursor:pointer;border-radius:2px;transition:filter .12s;white-space:nowrap}
+.docbtn:hover{filter:brightness(.88)}.empty{font-family:var(--mono);font-size:11px;color:var(--c3)}
 /* right rail */
 .packet{background:var(--ink);color:#fff;padding:20px;border-top:3px solid var(--brand);margin-bottom:18px}.packet h3{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.06em;margin:0 0 8px;font-family:'Lato',system-ui,sans-serif !important}.packet p{font-size:12px;color:#aeb4bc;line-height:1.5;margin:0 0 14px}
 .psel{background:#22262b;padding:10px 12px;margin-bottom:8px;font-family:var(--mono);font-size:10.5px;color:#c7ccd3;display:flex;justify-content:space-between}.psel .x{color:var(--brand);cursor:pointer}
@@ -294,11 +294,11 @@ function render(){
   document.getElementById('fby').innerHTML=af.length
     ?'<span class="lab">Filtering by:</span>'+af.map(function(x){return'<span class="fchip '+(x[3]?'red':'')+'" onclick="clr(\''+x[0]+'\',\''+x[1]+'\')">'+x[2]+'</span>'}).join('')
     :'';
-  /* docbtn: flat, NO border, .sw color square LEFT of label */
+  /* docbtn: SOLID FILLED — background+border = type color, white text, no .sw bullet */
   document.getElementById('tbody').innerHTML=pageRows.map(function(r){
     var k=key(r);
     var btns=TYPES.filter(function(t){return r.docs[t]}).map(function(t){
-      return '<a class="docbtn" href="'+r.docs[t]+'" target="_blank" rel="noopener"><span class="sw" style="background:'+META[t].c+'"></span>'+SHORT[t]+'</a>';
+      return '<a class="docbtn" style="background:'+META[t].c+';border-color:'+META[t].c+'" href="'+r.docs[t]+'" target="_blank" rel="noopener">'+SHORT[t]+'</a>';
     }).join('');
     return '<tr><td><input type="checkbox" '+(sel.has(k)?'checked':'')+' onchange="toggleSel(\''+k+'\')"></td><td><div class="famcell"><span class="fam">'+r.family+'</span><span class="fmeta"><span class="cchip">'+r.collection.replace(/\u24B6/g,'<span class=aa>\u24B6</span>')+'</span>'+(r.tier?'<span class="tier '+tc(r.tier)+'">'+r.tier+'</span>':'')+'<span class="sub">'+(r.subcategory||'')+'</span>'+(r.sku_count?'<span class="sub">\u00B7 '+r.sku_count+' SKUs</span>':'')+'</span></div></td><td><div class="docs">'+(btns||'<span class=empty>\u2014</span>')+'</div></td></tr>';
   }).join('');
