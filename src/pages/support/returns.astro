@@ -1,0 +1,1029 @@
+---
+// Returns & Exchanges — /support/returns
+// Visual source: ALG-Returns-v2.html (PUBLIC RMA page only — R-INTERNAL guardrail enforced)
+// R-INTERNAL: 0 Sales Returns / Severity / ISOLATED / BATCH / SYSTEMIC / triage / Zoho-console markup
+// R-WARRANTY (CFG-WARR-1): ECO 5-year · PRO 7-year · PRO+ 10-year
+// CFG-CHROME-3: 0 current year/month in body chrome
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Returns & Exchanges — Archipelago Lighting Group" description="Submit a Return Material Authorization (RMA) request. We acknowledge every claim within 24 hours and stand behind every fixture we ship.">
+
+<style>
+  /* ── Design tokens (scoped to this page) ── */
+  .rma-page {
+    --ink:  #1A1D23;
+    --ink2: #4A5568;
+    --ink3: #9CA3AF;
+    --c1:   #F5F4F1;
+    --c3:   #E2E0DB;
+    --brand: #F32740;
+    --yellow: #F59E0B;
+    --font-sans: 'Lato', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    background: #fff;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Shell margin (locked: L==R≥56px, cap 1320) ── */
+  .rma-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding-left:  calc(0.5 * max(56px, calc((100vw - 1320px) / 2)));
+    padding-right: calc(0.5 * max(56px, calc((100vw - 1320px) / 2)));
+  }
+
+  /* ── Breadcrumb ── */
+  .rma-breadcrumb {
+    padding: 20px 0 0;
+    border-bottom: 1px solid var(--c3);
+  }
+  .rma-breadcrumb__inner {
+    display: flex;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink3);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding-bottom: 16px;
+  }
+  .rma-breadcrumb a { color: var(--ink3); text-decoration: none; }
+  .rma-breadcrumb a:hover { color: var(--ink); }
+  .rma-breadcrumb__current { color: var(--ink); }
+
+  /* ── Hero ── */
+  .rma-hero {
+    padding: 64px 0 48px;
+    border-bottom: 1px solid var(--c3);
+  }
+  .rma-hero__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .rma-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 18px;
+  }
+  .rma-hero__h1 {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(36px, 4vw, 56px);
+    letter-spacing: -.02em;
+    line-height: 1.04;
+    color: var(--ink);
+    margin: 0 0 22px;
+  }
+  .rma-hero__h1 span { color: var(--brand); }
+  .rma-hero__sub {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink2);
+    margin: 0 0 36px;
+    max-width: 620px;
+  }
+  .rma-hero__ctas {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .rma-hero__stats {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .rma-stat__v {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: -.01em;
+    display: block;
+  }
+  .rma-stat__k {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ── Buttons ── */
+  .rma-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 13px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    border: 2px solid transparent;
+    transition: background 120ms, color 120ms, border-color 120ms;
+    white-space: nowrap;
+  }
+  .rma-btn--primary {
+    background: var(--brand);
+    color: #fff;
+    border-color: var(--brand);
+  }
+  .rma-btn--primary:hover { background: #d41e32; border-color: #d41e32; }
+  .rma-btn--secondary {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--c3);
+  }
+  .rma-btn--secondary:hover { border-color: var(--ink); }
+  .rma-btn--dark {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+    width: 100%;
+    justify-content: center;
+  }
+  .rma-btn--dark:hover { background: #2d3340; }
+
+  /* ── Portal card (right column of hero) ── */
+  .rma-card {
+    border: 1px solid var(--c3);
+    border-radius: 6px;
+    padding: 28px;
+  }
+  .rma-card--accent-ink { border-top: 3px solid var(--ink); }
+  .rma-card__dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--brand);
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .rma-card__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--brand);
+    display: inline;
+    vertical-align: middle;
+  }
+  .rma-card__title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -.015em;
+    color: var(--ink);
+    margin: 14px 0 10px;
+    line-height: 1.2;
+  }
+  .rma-card__body {
+    font-size: 13.5px;
+    color: var(--ink2);
+    line-height: 1.55;
+    margin-bottom: 18px;
+  }
+  .rma-card__links {
+    margin-top: 14px;
+    display: grid;
+    gap: 6px;
+  }
+  .rma-card__link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink3);
+    letter-spacing: .06em;
+    text-decoration: none;
+  }
+  .rma-card__link:hover { color: var(--ink); }
+  .rma-card__portal-url {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--c3);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--ink3);
+    letter-spacing: .06em;
+    line-height: 1.6;
+  }
+
+  /* ── Safety callout ── */
+  .rma-callout {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: var(--c1);
+    border-left: 3px solid var(--brand);
+  }
+  .rma-callout__label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 6px;
+  }
+  .rma-callout__body {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink2);
+  }
+  .rma-callout__body strong { color: var(--ink); }
+
+  /* ── Process strip ── */
+  .rma-process {
+    padding: 56px 0;
+    background: var(--c1);
+    border-bottom: 1px solid var(--c3);
+  }
+  .rma-process__title {
+    font-size: clamp(22px, 2.5vw, 30px);
+    font-weight: 800;
+    letter-spacing: -.015em;
+    color: var(--ink);
+    margin: 12px 0 36px;
+    max-width: 720px;
+  }
+  .rma-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--c3);
+    border: 1px solid var(--c3);
+  }
+  .rma-step {
+    background: #fff;
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .rma-step__num {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--brand);
+    letter-spacing: -.01em;
+  }
+  .rma-step__title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -.01em;
+  }
+  .rma-step__desc {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink2);
+  }
+
+  /* ── Policy + FAQ ── */
+  .rma-policy-faq {
+    padding: 64px 0;
+    border-bottom: 1px solid var(--c3);
+  }
+  .rma-policy-faq__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+  }
+  .rma-policy__title {
+    font-size: clamp(22px, 2.5vw, 28px);
+    font-weight: 800;
+    letter-spacing: -.015em;
+    color: var(--ink);
+    margin: 12px 0 20px;
+    line-height: 1.15;
+  }
+  .rma-policy__sub {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 4px;
+  }
+  .rma-policy__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 16px;
+  }
+  .rma-policy__item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  .rma-policy__dash {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--brand);
+    margin-top: 1px;
+  }
+  .rma-policy__item-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .rma-policy__item-desc {
+    font-size: 13px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+  .rma-faq__title {
+    font-size: clamp(22px, 2.5vw, 28px);
+    font-weight: 800;
+    letter-spacing: -.015em;
+    color: var(--ink);
+    margin: 12px 0 20px;
+    line-height: 1.15;
+  }
+  .rma-faq {
+    border-top: 1px solid var(--c3);
+  }
+  .rma-faq__item {
+    border-bottom: 1px solid var(--c3);
+  }
+  .rma-faq__q {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 18px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -.005em;
+  }
+  .rma-faq__q span:first-child { flex: 1; text-align: left; }
+  .rma-faq__toggle {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--brand);
+    font-weight: 600;
+    transition: transform 200ms ease;
+    flex-shrink: 0;
+  }
+  .rma-faq__a {
+    display: none;
+    padding-bottom: 18px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink2);
+    max-width: 620px;
+  }
+  .rma-faq__item.open .rma-faq__a { display: block; }
+  .rma-faq__item.open .rma-faq__toggle { transform: rotate(45deg); }
+
+  /* ── RMA Form section ── */
+  .rma-form-section {
+    padding: 64px 0;
+    border-bottom: 1px solid var(--c3);
+  }
+  .rma-form-section__title {
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 800;
+    letter-spacing: -.02em;
+    color: var(--ink);
+    margin: 12px 0 8px;
+  }
+  .rma-form-section__sub {
+    font-size: 15px;
+    color: var(--ink2);
+    line-height: 1.55;
+    margin-bottom: 36px;
+    max-width: 680px;
+  }
+
+  /* ── Form card ── */
+  .rma-form-card {
+    border: 1px solid var(--c3);
+    border-radius: 6px;
+    padding: 36px;
+    max-width: 860px;
+  }
+  .rma-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .rma-form-grid--full { grid-column: span 2; }
+  .rma-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .rma-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+  }
+  .rma-label span { color: var(--brand); margin-left: 2px; }
+
+  /* ── Form fields — FRAMED (real selectors + !important per CFG-FIELD-1) ── */
+  .rma-form-card input,
+  .rma-form-card textarea,
+  .rma-form-card select {
+    font-family: var(--font-sans) !important;
+    font-size: 14px !important;
+    color: var(--ink) !important;
+    background: #F5F4F1 !important;
+    border: 1px solid #C7CCD3 !important;
+    border-radius: 4px !important;
+    padding: 10px 12px !important;
+    width: 100% !important;
+    outline: none !important;
+    transition: border-color 120ms, background 120ms !important;
+    box-sizing: border-box !important;
+  }
+  .rma-form-card input:focus,
+  .rma-form-card textarea:focus,
+  .rma-form-card select:focus {
+    border-color: var(--ink) !important;
+    background: #fff !important;
+  }
+  .rma-form-card textarea {
+    resize: vertical !important;
+    min-height: 100px !important;
+  }
+
+  /* ── Proof of purchase sub-card ── */
+  .rma-po-card {
+    border: 1px solid var(--c3);
+    border-top: 3px solid var(--ink);
+    border-radius: 6px;
+    padding: 28px;
+    margin-top: 18px;
+  }
+  .rma-po-card__label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 4px;
+  }
+  .rma-po-card__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .rma-po-card__hint {
+    margin-top: 12px;
+    font-size: 12.5px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+
+  /* ── Form submit row ── */
+  .rma-form-submit {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .rma-form-note {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink3);
+    letter-spacing: .06em;
+    line-height: 1.5;
+  }
+
+  /* ── Contact section (dark) ── */
+  .rma-contact {
+    background: var(--ink);
+    color: #fff;
+    padding: 64px 0;
+  }
+  .rma-contact__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .rma-contact__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 14px;
+  }
+  .rma-contact__title {
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 800;
+    letter-spacing: -.02em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    max-width: 720px;
+  }
+  .rma-contact__sub {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255,255,255,.78);
+    max-width: 640px;
+  }
+  .rma-contact__lines {
+    display: grid;
+    gap: 18px;
+  }
+  .rma-contact__line {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 16px;
+    align-items: baseline;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+  }
+  .rma-contact__line-k {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--yellow);
+  }
+  .rma-contact__line-v {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .rma-contact__line-sub {
+    font-size: 12.5px;
+    color: rgba(255,255,255,.6);
+    margin-top: 4px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .rma-hero__grid,
+    .rma-policy-faq__grid,
+    .rma-contact__grid { grid-template-columns: 1fr; gap: 40px; }
+    .rma-steps { grid-template-columns: 1fr 1fr; }
+    .rma-form-grid { grid-template-columns: 1fr; }
+    .rma-form-grid--full { grid-column: span 1; }
+  }
+  @media (max-width: 600px) {
+    .rma-steps { grid-template-columns: 1fr; }
+    .rma-hero { padding: 40px 0 32px; }
+    .rma-form-card { padding: 24px; }
+  }
+</style>
+
+<div class="rma-page">
+
+  <!-- ── BREADCRUMB ── -->
+  <div class="rma-breadcrumb">
+    <div class="rma-inner">
+      <div class="rma-breadcrumb__inner">
+        <a href="/support/">Support</a>
+        <span>/</span>
+        <span class="rma-breadcrumb__current">Returns &amp; Exchanges</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section class="rma-hero">
+    <div class="rma-inner">
+      <div class="rma-hero__grid">
+
+        <!-- Left: headline + CTAs + stats -->
+        <div>
+          <div class="rma-eyebrow">Returns &amp; Exchanges</div>
+          <h1 class="rma-hero__h1">Something not working? <span>We'll make it right.</span></h1>
+          <p class="rma-hero__sub">Submit a Return Material Authorization (RMA) request in under 3 minutes. We acknowledge every claim within 24 hours and stand behind every fixture we ship.</p>
+          <div class="rma-hero__ctas">
+            <a href="#rma-form" class="rma-btn rma-btn--primary">Start an RMA request →</a>
+            <a href="https://accounts.archipelagolighting.com/portal/customerdashboard" target="_blank" rel="noopener" class="rma-btn rma-btn--secondary">Sign in to track existing RMA</a>
+          </div>
+          <div class="rma-hero__stats">
+            <div>
+              <span class="rma-stat__v">24h</span>
+              <span class="rma-stat__k">Acknowledgment</span>
+            </div>
+            <div>
+              <span class="rma-stat__v">30d</span>
+              <span class="rma-stat__k">Standard resolution</span>
+            </div>
+            <div>
+              <span class="rma-stat__v">100%</span>
+              <span class="rma-stat__k">Year 1–7 LaborShield</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: portal sign-in card + safety callout -->
+        <div>
+          <div class="rma-card rma-card--accent-ink">
+            <div>
+              <span class="rma-card__dot"></span>
+              <span class="rma-card__eyebrow">Existing customer</span>
+            </div>
+            <div class="rma-card__title">Track your RMAs in the Customer Portal</div>
+            <p class="rma-card__body">For privacy, RMA status is only visible to the account holder. Sign in with the email on file to see your own returns, invoices, and order history.</p>
+            <a href="https://accounts.archipelagolighting.com/portal/customerdashboard" target="_blank" rel="noopener" class="rma-btn rma-btn--dark">
+              Sign in to Customer Portal →
+            </a>
+            <div class="rma-card__links">
+              <a href="https://accounts.archipelagolighting.com/portal/request-access" target="_blank" rel="noopener" class="rma-card__link">→ Request portal access</a>
+              <a href="https://accounts.archipelagolighting.com/portal/forgot-password" target="_blank" rel="noopener" class="rma-card__link">→ Forgot password</a>
+            </div>
+            <div class="rma-card__portal-url">accounts.archipelagolighting.com/<wbr>portal/customerdashboard</div>
+          </div>
+
+          <div class="rma-callout">
+            <div class="rma-callout__label">If it's a safety issue</div>
+            <p class="rma-callout__body">Fire, smoke, melting, or anything falling from a fixture — call <strong>(866) 912-3220</strong> directly. Our Operations team takes safety claims off the queue immediately, before any form.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROCESS STRIP ── -->
+  <section class="rma-process">
+    <div class="rma-inner">
+      <div class="rma-eyebrow">What to expect</div>
+      <div class="rma-process__title">From submission to replacement, on a published clock.</div>
+      <div class="rma-steps">
+        <div class="rma-step">
+          <div class="rma-step__num">01</div>
+          <div class="rma-step__title">You submit</div>
+          <p class="rma-step__desc">Form + evidence (3 photos min.) takes ~3 minutes. We log it in ALG Records the same business day.</p>
+        </div>
+        <div class="rma-step">
+          <div class="rma-step__num">02</div>
+          <div class="rma-step__title">We review</div>
+          <p class="rma-step__desc">Claim reviewed within 1 business day per warranty policy. CS or PM owns it end-to-end.</p>
+        </div>
+        <div class="rma-step">
+          <div class="rma-step__num">03</div>
+          <div class="rma-step__title">Evidence review</div>
+          <p class="rma-step__desc">PM reviews photos. Most claims clear without physical return. RMA issued within assessment window.</p>
+        </div>
+        <div class="rma-step">
+          <div class="rma-step__num">04</div>
+          <div class="rma-step__title">Replacement ships</div>
+          <p class="rma-step__desc">3–5 business days from RMA. Cross-warehouse fulfillment absorbed by ALG.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── POLICY + FAQ ── -->
+  <section class="rma-policy-faq">
+    <div class="rma-inner">
+      <div class="rma-policy-faq__grid">
+
+        <!-- Left: what to have ready -->
+        <div>
+          <div class="rma-policy__sub">RMA Policy — Current</div>
+          <div class="rma-policy__title">What to have ready before you start</div>
+          <p style="font-size:14px;color:var(--ink2);line-height:1.6;margin:0 0 20px;">The form takes ~3 minutes if you have these in hand. We've kept it short — every field is one we genuinely need to issue the RMA. No marketing questions.</p>
+          <ul class="rma-policy__list">
+            <li class="rma-policy__item">
+              <span class="rma-policy__dash">—</span>
+              <div>
+                <div class="rma-policy__item-title">ALG PO# or Invoice#</div>
+                <div class="rma-policy__item-desc">Proof of purchase — how we verify your order and match your account.</div>
+              </div>
+            </li>
+            <li class="rma-policy__item">
+              <span class="rma-policy__dash">—</span>
+              <div>
+                <div class="rma-policy__item-title">Product SKU and date code</div>
+                <div class="rma-policy__item-desc">Date code is on the fixture label — needed to identify the lot.</div>
+              </div>
+            </li>
+            <li class="rma-policy__item">
+              <span class="rma-policy__dash">—</span>
+              <div>
+                <div class="rma-policy__item-title">3+ photos of the failure</div>
+                <div class="rma-policy__item-desc">Full view, close-up, and the product label (SKU + date code visible).</div>
+              </div>
+            </li>
+            <li class="rma-policy__item">
+              <span class="rma-policy__dash">—</span>
+              <div>
+                <div class="rma-policy__item-title">Site address and install date</div>
+                <div class="rma-policy__item-desc">We need to confirm warranty period and install conditions.</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right: FAQ -->
+        <div>
+          <div class="rma-eyebrow">Frequently asked</div>
+          <div class="rma-faq__title">Common questions from contractors and distributors</div>
+          <div class="rma-faq" id="rma-faq">
+            <div class="rma-faq__item">
+              <button class="rma-faq__q" aria-expanded="false">
+                <span>How long do I have to submit a claim?</span>
+                <span class="rma-faq__toggle">+</span>
+              </button>
+              <div class="rma-faq__a">
+                <!-- R-WARRANTY (CFG-WARR-1): ECO 5-year · PRO 7-year · PRO+ 10-year -->
+                Warranty period varies by tier: ECO 5 years, PRO 7 years, PRO+ flagship 10 years. Emergency battery: 1 year. The form will confirm coverage based on your purchase date.
+              </div>
+            </div>
+            <div class="rma-faq__item">
+              <button class="rma-faq__q" aria-expanded="false">
+                <span>Do I have to physically return the defective unit?</span>
+                <span class="rma-faq__toggle">+</span>
+              </button>
+              <div class="rma-faq__a">
+                Usually no. Our Product Management team accepts photo/video evidence for most failure modes — driver failure, visible burn marks, discoloration, housing cracks. We'll request a physical return only if hands-on inspection is needed.
+              </div>
+            </div>
+            <div class="rma-faq__item">
+              <button class="rma-faq__q" aria-expanded="false">
+                <span>Who pays freight on returns?</span>
+                <span class="rma-faq__toggle">+</span>
+              </button>
+              <div class="rma-faq__a">
+                If a physical return is requested by ALG, customer pays return freight per warranty terms. If further analysis is needed, we coordinate the logistics.
+              </div>
+            </div>
+            <div class="rma-faq__item">
+              <button class="rma-faq__q" aria-expanded="false">
+                <span>What's LaborShield?</span>
+                <span class="rma-faq__toggle">+</span>
+              </button>
+              <div class="rma-faq__a">
+                Our optional 10-year labor coverage. If you registered it at install, we cover the electrician's invoice (100% years 1–7, 75% years 8–9, 50% year 10) up to 10% of the project's product value.
+              </div>
+            </div>
+            <div class="rma-faq__item">
+              <button class="rma-faq__q" aria-expanded="false">
+                <span>How fast will I hear back?</span>
+                <span class="rma-faq__toggle">+</span>
+              </button>
+              <div class="rma-faq__a">
+                Acknowledgment within 24 hours for standard claims. Anything safety-related gets immediate routing to Operations.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RMA REQUEST FORM ── -->
+  <section class="rma-form-section" id="rma-form">
+    <div class="rma-inner">
+      <div class="rma-eyebrow">RMA Request</div>
+      <div class="rma-form-section__title">Three steps. <span style="color:var(--brand)">One form.</span></div>
+      <p class="rma-form-section__sub">Tell us what's not working. Send a few photos. We approve the RMA and ship a replacement. No phone tag, no login to submit, no runaround.</p>
+
+      <form
+        class="rma-form-card"
+        action="mailto:warranty@archipelagolighting.com"
+        method="get"
+        enctype="text/plain"
+        id="rma-request-form"
+      >
+        <!-- Step 01: Who's filing -->
+        <div class="rma-eyebrow" style="margin-bottom:20px;">Step 01 — Who's filing this claim?</div>
+        <p style="font-size:13.5px;color:var(--ink2);margin:0 0 20px;line-height:1.55;">Tell us who you are and how to reach you. We'll only contact you about this RMA.</p>
+        <div class="rma-form-grid">
+          <div class="rma-field">
+            <label class="rma-label" for="rma-company">Company name <span>*</span></label>
+            <input type="text" id="rma-company" name="Company" placeholder="Westcoast Electric Supply" required>
+          </div>
+          <div class="rma-field">
+            <label class="rma-label" for="rma-contact">Contact name <span>*</span></label>
+            <input type="text" id="rma-contact" name="Contact" placeholder="Maria Delgado" required>
+          </div>
+          <div class="rma-field">
+            <label class="rma-label" for="rma-email">Email <span>*</span></label>
+            <input type="email" id="rma-email" name="Email" placeholder="mdelgado@example.com" required>
+          </div>
+          <div class="rma-field">
+            <label class="rma-label" for="rma-phone">Phone <span>*</span></label>
+            <input type="tel" id="rma-phone" name="Phone" placeholder="(909) 555-0182" required>
+          </div>
+          <div class="rma-field rma-form-grid--full">
+            <label class="rma-label" for="rma-address">Address</label>
+            <input type="text" id="rma-address" name="Address" placeholder="1840 W Mission Blvd">
+          </div>
+          <div class="rma-field">
+            <label class="rma-label" for="rma-city">City, State, ZIP</label>
+            <input type="text" id="rma-city" name="City_State_ZIP" placeholder="Pomona, CA 91766">
+          </div>
+          <div class="rma-field">
+            <label class="rma-label" for="rma-account">ALG account # <span style="font-weight:400;opacity:.7">(optional)</span></label>
+            <input type="text" id="rma-account" name="ALG_Account" placeholder="ALG-04412" style="font-family:var(--font-mono)">
+          </div>
+          <div class="rma-field rma-form-grid--full">
+            <label class="rma-label" for="rma-rep">Sales rep / distributor <span style="font-weight:400;opacity:.7">(if known)</span></label>
+            <input type="text" id="rma-rep" name="Sales_Rep" placeholder="J. Park — Pacific Region">
+          </div>
+        </div>
+
+        <!-- Proof of purchase sub-card -->
+        <div class="rma-po-card">
+          <div class="rma-po-card__label">Proof of purchase</div>
+          <div class="rma-po-card__title">Enter the ALG PO# or Invoice# from your order <span style="color:var(--brand)">*</span></div>
+          <div class="rma-form-grid">
+            <div class="rma-field">
+              <label class="rma-label" for="rma-po">ALG PO# <span style="font-weight:400;opacity:.7">(PO-…)</span></label>
+              <input type="text" id="rma-po" name="ALG_PO" placeholder="PO-48201" style="font-family:var(--font-mono)">
+            </div>
+            <div class="rma-field">
+              <label class="rma-label" for="rma-invoice">ALG Invoice# <span style="font-weight:400;opacity:.7">(INV-…)</span></label>
+              <input type="text" id="rma-invoice" name="ALG_Invoice" placeholder="INV-YYYY-MM-NNNNN" style="font-family:var(--font-mono)">
+            </div>
+          </div>
+          <p class="rma-po-card__hint">Either one works — it's how we verify the order and match it to your account. Find it on your ALG order confirmation or invoice.</p>
+        </div>
+
+        <!-- Step 02: Products affected -->
+        <div style="margin-top:36px;">
+          <div class="rma-eyebrow" style="margin-bottom:20px;">Step 02 — Which products are affected?</div>
+          <p style="font-size:13.5px;color:var(--ink2);margin:0 0 20px;line-height:1.55;">List each SKU and its date code. Date code is printed on the fixture label — we need it to identify the production lot.</p>
+          <div class="rma-form-grid">
+            <div class="rma-field">
+              <label class="rma-label" for="rma-sku">Product SKU <span>*</span></label>
+              <input type="text" id="rma-sku" name="Product_SKU" placeholder="JUP2-150W-MV-50K-DLC" style="font-family:var(--font-mono)" required>
+            </div>
+            <div class="rma-field">
+              <label class="rma-label" for="rma-datecode">Date code <span>*</span></label>
+              <input type="text" id="rma-datecode" name="Date_Code" placeholder="2509-B" style="font-family:var(--font-mono)" required>
+            </div>
+            <div class="rma-field">
+              <label class="rma-label" for="rma-qty">Quantity affected <span>*</span></label>
+              <input type="number" id="rma-qty" name="Quantity" placeholder="12" min="1" required>
+            </div>
+            <div class="rma-field">
+              <label class="rma-label" for="rma-install-date">Install date <span>*</span></label>
+              <input type="date" id="rma-install-date" name="Install_Date" required>
+            </div>
+            <div class="rma-field rma-form-grid--full">
+              <label class="rma-label" for="rma-site">Site address <span>*</span></label>
+              <input type="text" id="rma-site" name="Site_Address" placeholder="1840 W Mission Blvd, Pomona, CA 91766" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 03: Describe the failure -->
+        <div style="margin-top:36px;">
+          <div class="rma-eyebrow" style="margin-bottom:20px;">Step 03 — Describe what went wrong</div>
+          <p style="font-size:13.5px;color:var(--ink2);margin:0 0 20px;line-height:1.55;">The more specific, the faster we can route it to the right engineer.</p>
+          <div class="rma-form-grid">
+            <div class="rma-field rma-form-grid--full">
+              <label class="rma-label" for="rma-reason">Primary reason <span>*</span></label>
+              <select id="rma-reason" name="Primary_Reason" required>
+                <option value="">Select a reason…</option>
+                <option value="driver-failure">Driver / power supply failure</option>
+                <option value="flicker">Flicker or dimming issue</option>
+                <option value="no-light">No light output</option>
+                <option value="burn-marks">Burn marks or discoloration</option>
+                <option value="housing-crack">Housing crack or physical damage</option>
+                <option value="wrong-item">Wrong item received</option>
+                <option value="missing-parts">Missing parts or accessories</option>
+                <option value="other">Other — describe below</option>
+              </select>
+            </div>
+            <div class="rma-field rma-form-grid--full">
+              <label class="rma-label" for="rma-description">Description <span>*</span></label>
+              <textarea id="rma-description" name="Description" placeholder="Describe the failure in detail — when it started, conditions, any patterns you've noticed…" required></textarea>
+            </div>
+            <div class="rma-field rma-form-grid--full">
+              <label class="rma-label" for="rma-resolution">Preferred resolution</label>
+              <select id="rma-resolution" name="Preferred_Resolution">
+                <option value="replacement">Replacement — same SKU shipped to original or alternate address</option>
+                <option value="credit">Credit — applied to next order</option>
+                <option value="refund">Refund — returned to original payment method</option>
+                <option value="laborshield">LaborShield reimbursement — include electrician invoice</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Evidence note -->
+        <div class="rma-callout" style="margin-top:28px;">
+          <div class="rma-callout__label">Evidence required</div>
+          <p class="rma-callout__body">After submitting, our team will reply within 24 hours with a secure upload link for your photos. Please have ready: <strong>full view of the fixture</strong>, <strong>close-up of the failure</strong>, and <strong>the product label</strong> (SKU + date code visible).</p>
+        </div>
+
+        <!-- Submit -->
+        <div class="rma-form-submit">
+          <button type="submit" class="rma-btn rma-btn--primary">Submit RMA Request →</button>
+          <div class="rma-form-note">
+            Opens your email client pre-filled to warranty@archipelagolighting.com<br>
+            You'll receive a confirmation and upload link within 24 hours.
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ── CONTACT STRIP (dark) ── -->
+  <section class="rma-contact">
+    <div class="rma-inner">
+      <div class="rma-contact__grid">
+        <div>
+          <div class="rma-contact__eyebrow">Talk to a human</div>
+          <div class="rma-contact__title">Need to bypass the form? Our warranty team picks up.</div>
+          <p class="rma-contact__sub">Especially for large-scale failures, life-safety fixtures, or anything that needs a phone call. We don't hide behind tickets.</p>
+        </div>
+        <div class="rma-contact__lines">
+          <div class="rma-contact__line">
+            <div class="rma-contact__line-k">Phone</div>
+            <div>
+              <div class="rma-contact__line-v">(866) 912-3220</div>
+              <div class="rma-contact__line-sub">Mon–Fri · 6 AM – 5 PM PT</div>
+            </div>
+          </div>
+          <div class="rma-contact__line">
+            <div class="rma-contact__line-k">Email</div>
+            <div>
+              <div class="rma-contact__line-v">warranty@archipelagolighting.com</div>
+              <div class="rma-contact__line-sub">Same-business-day reply</div>
+            </div>
+          </div>
+          <div class="rma-contact__line">
+            <div class="rma-contact__line-k">Mail</div>
+            <div>
+              <div class="rma-contact__line-v">4615 State Street</div>
+              <div class="rma-contact__line-sub">Montclair, CA 91763</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ── FAQ accordion JS ── -->
+<script is:inline>
+(function() {
+  var items = document.querySelectorAll('#rma-faq .rma-faq__item');
+  items.forEach(function(item) {
+    var btn = item.querySelector('.rma-faq__q');
+    btn.addEventListener('click', function() {
+      var isOpen = item.classList.contains('open');
+      // Close all
+      items.forEach(function(i) {
+        i.classList.remove('open');
+        i.querySelector('.rma-faq__q').setAttribute('aria-expanded', 'false');
+      });
+      // Toggle clicked
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // RMA form — build mailto on submit
+  var form = document.getElementById('rma-request-form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var data = new FormData(form);
+      var subject = encodeURIComponent('RMA Request · ' + (data.get('Company') || 'Unknown Company'));
+      var body = [];
+      data.forEach(function(v, k) { if (v) body.push(k + ': ' + v); });
+      var mailto = 'mailto:warranty@archipelagolighting.com?subject=' + subject + '&body=' + encodeURIComponent(body.join('\n'));
+      window.location.href = mailto;
+    });
+  }
+})();
+</script>
+
+</BaseLayout>
