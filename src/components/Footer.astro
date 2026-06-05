@@ -23,8 +23,9 @@ const buildTimeRaw = import.meta.env.PUBLIC_BUILD_TIME;
 const buildTime = buildTimeRaw
   ? new Date(buildTimeRaw).toISOString().slice(0, 16) + 'Z'
   : 'local';
-// G2 PROD GATE: baked at build time — true only when CF_PAGES_BRANCH === 'main'
-const isProd = (import.meta.env.PUBLIC_IS_PROD as unknown) === true || (import.meta.env.PUBLIC_IS_PROD as unknown) === 'true';
+// G2 PROD GATE: always render badge in HTML; client-side JS hides it on the production hostname.
+// Production: archipelagolighting.com (exact, no subdomain)
+// Staging/preview: staging.archipelagolighting.com, *.pages.dev, localhost — badge visible
 ---
 
 <!-- FOOTER CTA STRIP (suppressed when page has its own closing-section) -->
@@ -149,8 +150,18 @@ const isProd = (import.meta.env.PUBLIC_IS_PROD as unknown) === true || (import.m
       <span class="sub-footer-line">&copy; {year} Archipelago Lighting Group &middot; 4615 State Street, Montclair, CA 91763 &middot; USA Production: 9345 Sycamore Canyon Blvd, Riverside CA 92508 &middot; +1 (866) 912-3220 &middot; <a href="https://www.archipelagolighting.com" class="sub-footer-url">www.archipelagolighting.com</a></span>
     </div>
   </div>
-  <!-- BUILD PROVENANCE BADGE (v2.7.7) — suppressed on production (CF_PAGES_BRANCH=main) -->
-  {!isProd && <div class="footer-build-stamp">build {buildHash} &middot; {buildTime}</div>}
+  <!-- BUILD PROVENANCE BADGE (v2.7.7) — hidden on production via client-side hostname check -->
+  <div class="footer-build-stamp" id="footer-build-stamp">build {buildHash} &middot; {buildTime}</div>
+  <script is:inline>
+    (function(){
+      // Hide badge on the bare production domain; keep on staging.* and *.pages.dev
+      var h = location.hostname;
+      if (h === 'archipelagolighting.com' || h === 'www.archipelagolighting.com') {
+        var el = document.getElementById('footer-build-stamp');
+        if (el) el.style.display = 'none';
+      }
+    })();
+  </script>
 </footer>
 
 <style>

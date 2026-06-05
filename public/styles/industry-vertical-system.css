@@ -938,6 +938,29 @@ main[data-vertical] h3 { font-family: var(--font-body) !important; }
 /* ALG canon: Ⓐ glyph = brand-red span (brand-mark rule). Per-vertical accents SANCTIONED (CFG-VERT-1); brand red wins on CTAs/activation. */
 .aa{ color: var(--brand-red); font-style: normal; }
 
-/* CFG-SHIELD-1: cap the section placeholder icon — was rendering at 766×766 uncapped */
-.shield-chip { display: flex; align-items: center; justify-content: center; }
-.shield-chip svg { width: auto; height: 64px; max-width: 100%; }
+/* CFG-SHIELD-1 v2: .shields-bar = horizontal wrapping badge row in hero left column */
+.shields-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+  margin-top: 24px;
+}
+.shield-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-family: 'Lato', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1;
+  color: #fff;
+}
+.shield-chip svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  color: hsl(var(--vert-accent));
+  stroke: hsl(var(--vert-accent));
+}
