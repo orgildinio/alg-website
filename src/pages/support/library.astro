@@ -1,11 +1,12 @@
 ---
 /**
  * support/library.astro  —  route: /support/library
- * Design source: ALG-Library-MERGED-v3.html (verbatim rebuild)
+ * Design source: ALG-Library-MERGED-v3.html (verbatim rebuild — authoritative)
  * Data source:   src/data/library_docs.json  (105 families, 203 docs, real WorkDrive URLs)
  *
  * CFG-CHROME-1/2: BaseLayout injects header/footer. Content-only.
  * CFG-CHROME-3: No hardcoded years, no stale dates.
+ * CFG-TYPE-1: h1/h2/h3 pinned Lato !important — overrides global Cormorant.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import docsRaw from '../../data/library_docs.json';
@@ -27,267 +28,84 @@ const totalFamilies = docs.length;
   title="Document Library — Archipelago Lighting Group"
   description="Every spec sheet, IES file, and install guide in one place. Search by SKU, family, collection, tier, or vertical."
 >
-  <!-- breadcrumb -->
-  <div class="crumb">
-    <a href="/">Home</a> › <a href="/support/">Support</a> › <b>Documentation Library</b>
-    <span class="crumb-meta"><b id="sDocs2">{totalDocs}</b> documents · always current</span>
-  </div>
-
-  <!-- hero -->
-  <header class="hero">
-    <div class="eyebrow">DOCUMENTATION LIBRARY</div>
-    <h1>Every spec sheet, IES file, and install guide — in one place.</h1>
-    <p class="lede">Find the document you need by SKU, collection, family, tier, or vertical. Datasheets, installation guides, IES photometric files, compliance, warranty, and <span class="aa">Ⓐ</span>CS by ALG App compatibility — all of it, indexed for the contractor on a deadline.</p>
-
-    <div class="hsearch">
-      <select id="scope" class="hscope">
-        <option value="all">By Part Number</option>
-        <option value="family">By Family</option>
-        <option value="collection">By Collection</option>
-        <option value="fulltext">All Fields</option>
-      </select>
-      <input id="q" type="text" placeholder="Search 'Liberty' · 'Jupiter' · 'IES' · 'PRO+' · 'cold storage' …" oninput="page=1;render()" />
-      <button onclick="render()">⌕ SEARCH LIBRARY</button>
-    </div>
-
-    <div class="popular">
-      <span class="pl">Popular:</span>
-      <span class="pchip" onclick="qset('Liberty')">Liberty</span>
-      <span class="pchip" onclick="qset('Jupiter')">Jupiter</span>
-      <span class="pchip" onclick="qset('Sentinel')">Sentinel</span>
-      <span class="pchip" onclick="qset('IES')">IES Bundles</span>
-      <span class="pchip" onclick="qset('PRO+')">PRO+ Tier</span>
-      <span class="pchip" onclick="qset('contr')"><span class="aa">Ⓐ</span>CS Controls</span>
-    </div>
-
-    <div class="stats">
-      <span><b id="sDocs">{totalDocs}</b> documents</span>
-      <span><b id="sFam">{totalFamilies}</b> product families</span>
-      <span><b>6</b> collections</span>
-    </div>
-  </header>
-
-  <!-- featured guide ribbon -->
-  <section class="feat">
-    <div class="cover">
-      <div>
-        <div class="cw">lampar<span class="aa">Ⓐ</span>RCH</div>
-        <div class="cs">INDOOR · C&amp;I COLLECTION</div>
-      </div>
-      <div>
-        <div class="lines" style="width:70%"></div>
-        <div class="lines" style="width:50%"></div>
-      </div>
-      <div class="code">ALG-GUIDE-LMPR-V1.1</div>
-    </div>
-    <div>
-      <div class="fk">Featured · Collection Guide</div>
-      <h2>Indoor C&amp;I Product Guide</h2>
-      <div class="fcode">ALG-GUIDE-LMPR-V1.1</div>
-      <div class="fd">Full 12-slide spec arc: RHB · LHB · STR · RTK · VT — Icarus, Jupiter, Tiny, Titan, Vanguard, Hallmark, and Eureka. ECO / PRO / PRO+ tiers, with the <span class="aa">Ⓐ</span>CS by ALG App compatibility matrix and the part-number decoder.</div>
-      <div class="fstats">
-        <div><div class="k">Pages</div><div class="v">12</div></div>
-        <div><div class="k">SKUs Indexed</div><div class="v">126</div></div>
-        <div><div class="k">Revision</div><div class="v">1.1</div></div>
-        <div><div class="k">Size</div><div class="v">8.2 MB</div></div>
-      </div>
-      <div class="fcta">
-        <a class="btn red" href="https://workdrive.archipelagolighting.com/external/1540e346a0b8294e7253ea1df8a68b66307b6a1b60381c18b1463a90feb91cdb" target="_blank" rel="noopener">↓ Download Guide · PDF</a>
-        <button class="btn" onclick="document.getElementById('specpacket').scrollIntoView({behavior:'smooth'})">▦ Build Spec Packet</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- type tabs -->
-  <nav class="tabs" id="tabs"></nav>
-
-  <!-- 3-col body: left rail · results · right rail -->
-  <div class="body">
-    <!-- left: filters -->
-    <aside class="rail">
-      <div class="fhead">
-        <span>⚙ Filters · <span class="n" id="nActive">0 active</span></span>
-      </div>
-      <button class="clrall" onclick="clearAll()">Clear all filters</button>
-
-      <div class="facet">
-        <div class="fh">Product Collection</div>
-        <div class="opts" id="colFacet"></div>
-      </div>
-      <div class="facet">
-        <div class="fh">Tier</div>
-        <div class="opts" id="tierFacet"></div>
-      </div>
-      <div class="facet">
-        <div class="fh">File Type</div>
-        <div class="opts" id="typeFacet"></div>
-      </div>
-    </aside>
-
-    <!-- center: results table -->
-    <main class="results">
-      <div class="fby" id="fby"></div>
-      <div class="rhead">
-        <div class="cnt" id="showing">—</div>
-        <div>
-          <span class="cnt">Sort</span>
-          <select id="sort" onchange="render()">
-            <option value="collection">by collection</option>
-            <option value="family">A–Z family</option>
-            <option value="skus">by SKU count</option>
-          </select>
-        </div>
-      </div>
-      <div class="legend" id="legend"></div>
-      <table>
-        <thead>
-          <tr>
-            <th style="width:26px"></th>
-            <th>Document Family</th>
-            <th>Documents</th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
-      <div class="pager" id="pager"></div>
-    </main>
-
-    <!-- right: spec packet + tools -->
-    <aside class="rrail" id="specpacket">
-      <div class="packet">
-        <h3>Your Spec Packet · <span id="selN">0</span></h3>
-        <p>Pick any family below to add its documents to a custom bundle — wrapped in a labeled ZIP with a cover sheet, ready to forward to your distributor or attach to a bid.</p>
-        <div id="selList"><div style="font-family:var(--mono);font-size:11px;color:#7e848d;margin-bottom:8px">Select families to build a packet.</div></div>
-        <div class="pacts">
-          <button class="red" onclick="downloadPacket()">↓ Download</button>
-          <button onclick="emailPacket()">✉ Email</button>
-        </div>
-      </div>
-
-      <div class="tools">
-        <h4>Spec Tools</h4>
-        <a class="tool" href="/support/layout-request">
-          <span class="ti">⚡</span>
-          <span><div class="tt">Layout Designer</div><div class="td">Request a free lighting layout from ALG</div></span>
-        </a>
-        <a class="tool" href="/support/part-number-decoder">
-          <span class="ti">▦</span>
-          <span><div class="tt">Part-Number Decoder</div><div class="td">Decode any ALG SKU</div></span>
-        </a>
-        <a class="tool" href="/collections/controls/">
-          <span class="ti">◉</span>
-          <span><div class="tt">Compatibility Check</div><div class="td"><span class="aa">Ⓐ</span>CS App, dimmers, sensors</div></span>
-        </a>
-        <a class="tool" href="/support/rebate-center/">
-          <span class="ti">★</span>
-          <span><div class="tt">Rebate Finder</div><div class="td">DLC, utility, T20/24 incentives</div></span>
-        </a>
-      </div>
-
-      <div class="needhelp">
-        <div class="nh-k">Need Help?</div>
-        <div class="nh-d">Reach an ALG spec engineer directly.</div>
-        <a class="nh-c" href="mailto:specs@archipelagolighting.com">specs@archipelagolighting.com</a>
-        <a class="nh-c" href="tel:+19096262900">+1 (909) 626-2900</a>
-      </div>
-    </aside>
-  </div>
-
-  <!-- fixed selection bar -->
-  <div class="selbar" id="selbar">
-    <span class="n"><span id="selN2">0</span> families selected</span>
-    <div>
-      <button onclick="clearSel()">Clear</button>
-      <button class="red" onclick="downloadPacket()">↓ Download Packet</button>
-    </div>
-  </div>
+<div class="crumb" style="display:flex;justify-content:space-between"><span><a href="/">Home</a> › <a href="/support/">Support</a> › <b>Documentation Library</b></span><span><b id="sDocs2">{totalDocs}</b> documents · always current</span></div>
+<header class="hero"><div class="eyebrow">DOCUMENTATION LIBRARY</div>
+<h1>Every spec sheet, IES file, and install guide — in one place.</h1>
+<p class="lede">Find the document you need by SKU, collection, family, tier, or vertical. Datasheets, installation guides, IES photometric files, compliance, warranty, and <span class="aa">Ⓐ</span>CS by ALG App compatibility — all of it, indexed for the contractor on a deadline.</p>
+<div class="hsearch">
+<select id="scope" class="hscope"><option value="all">By Part Number</option><option value="family">By Family</option><option value="collection">By Collection</option><option>All Fields</option></select><input id="q" placeholder="Search 'Liberty' · 'Jupiter' · 'IES' · 'PRO+' · 'cold storage' …" oninput="render()"><button onclick="render()">⌕ Search Library</button></div>
+<div class="popular"><span class="pl">Popular:</span><span class="pchip" onclick="qset('Liberty')">Liberty</span><span class="pchip" onclick="qset('Jupiter')">Jupiter</span><span class="pchip" onclick="qset('Sentinel')">Sentinel</span><span class="pchip" onclick="qset('IES')">IES Bundles</span><span class="pchip" onclick="qset('PRO+')">PRO+ Tier</span><span class="pchip" onclick="qset('contr')"><span class="aa">Ⓐ</span>CS Controls</span></div>
+<div class="stats"><span><b id="sDocs">{totalDocs}</b> documents</span><span><b id="sFam">{totalFamilies}</b> product families</span><span><b>6</b> collections</span></div></header>
+<section class="feat"><div class="cover"><div><div class="cw">lampar<span class="aa">Ⓐ</span>RCH</div><div class="cs">INDOOR · C&amp;I COLLECTION</div></div><div><div class="lines" style="width:70%"></div><div class="lines" style="width:50%"></div></div><div class="code">ALG-GUIDE-LMPR-V1.1</div></div>
+<div><div class="fk">Featured · Collection Guide</div><h2>Indoor C&amp;I Product Guide</h2><div class="fcode">ALG-GUIDE-LMPR-V1.1</div>
+<div class="fd">Full 12-slide spec arc: RHB · LHB · STR · RTK · VT — Icarus, Jupiter, Tiny, Titan, Vanguard, Hallmark, and Eureka. ECO / PRO / PRO+ tiers, with the <span class="aa">Ⓐ</span>CS by ALG App compatibility matrix and the part-number decoder.</div>
+<div class="fstats"><div><div class="k">Pages</div><div class="v">12</div></div><div><div class="k">SKUs Indexed</div><div class="v">126</div></div><div><div class="k">Revision</div><div class="v">1.1</div></div><div><div class="k">Size</div><div class="v">8.2 MB</div></div></div>
+<div class="fcta"><a class="btn red" href="https://workdrive.archipelagolighting.com/external/1540e346a0b8294e7253ea1df8a68b66307b6a1b60381c18b1463a90feb91cdb" target="_blank" rel="noopener">↓ Download Guide · PDF</a><button class="btn" onclick="document.getElementById('specpacket').scrollIntoView({behavior:'smooth'})">▦ Build Spec Packet</button></div></div></section>
+<nav class="tabs" id="tabs"></nav>
+<div class="body">
+ <aside class="rail">
+  <div class="fhead"><span>⚙ Filters · <span class="n" id="nActive">0 active</span></span></div>
+  <button class="clrall" onclick="clearAll()">Clear all filters</button>
+  <div class="facet"><div class="fh">Product Collection</div><div class="opts" id="colFacet"></div></div>
+  <div class="facet"><div class="fh">Tier <span style="color:var(--ink3)">+</span></div><div class="opts" id="tierFacet"></div></div>
+  <div class="facet"><div class="fh" style="color:var(--ink3)">Product Family <span>+</span></div></div>
+  <div class="facet"><div class="fh" style="color:var(--ink3)">File Type <span>+</span></div><div class="opts" id="typeFacet"></div></div>
+ </aside>
+ <main class="results">
+  <div class="fby" id="fby"></div>
+  <div class="rhead"><div class="cnt" id="showing">—</div><div><span class="cnt">Sort </span><select id="sort" onchange="render()"><option value="collection">by collection</option><option value="family">A–Z family</option><option value="skus">by SKU count</option></select></div></div>
+  <div class="legend" id="legend"></div>
+  <table><thead><tr><th style="width:26px"></th><th>Document Family</th><th>Documents</th></tr></thead><tbody id="tbody"></tbody></table>
+  <div class="pager" id="pager"></div>
+ </main>
+ <aside class="rrail" id="specpacket">
+  <div class="packet"><h3>Your Spec Packet · <span id="selN">0</span></h3><p>Pick any family below to add its documents to a custom bundle — wrapped in a labeled ZIP with a cover sheet, ready to forward to your distributor or attach to a bid.</p><div id="selList"><div style="font-family:var(--mono);font-size:11px;color:#7e848d;margin-bottom:8px">Select families to build a packet.</div></div><div class="pacts"><button class="red" onclick="downloadPacket()">↓ Download</button><button onclick="emailPacket()">✉ Email</button></div></div>
+  <div class="tools"><h4>Spec Tools</h4>
+   <a class="tool" href="/support/layout-request"><span class="ti">⚡</span><span><div class="tt">Layout Designer</div><div class="td">Request a free lighting layout from ALG</div></span></a>
+   <a class="tool" href="/support/part-number-decoder"><span class="ti">▦</span><span><div class="tt">Part-Number Decoder</div><div class="td">Decode any ALG SKU</div></span></a>
+   <a class="tool" href="/collections/controls/"><span class="ti">◉</span><span><div class="tt">Compatibility Check</div><div class="td"><span class="aa">Ⓐ</span>CS App, dimmers, sensors</div></span></a>
+   <a class="tool" href="/support/rebate-center/"><span class="ti">★</span><span><div class="tt">Rebate Finder</div><div class="td">DLC, utility, T20/24 incentives</div></span></a></div>
+  <div class="needhelp"><div class="nh-k">Need Help?</div><div class="nh-d">Reach an ALG spec engineer directly.</div><a class="nh-c" href="mailto:specs@archipelagolighting.com">specs@archipelagolighting.com</a><a class="nh-c" href="tel:+19096262900">+1 (909) 626-2900</a></div>
+ </aside>
+</div>
+<div class="selbar" id="selbar"><span class="n"><span id="selN2">0</span> families selected</span><div><button onclick="clearSel()">Clear</button><button class="red" onclick="downloadPacket()">↓ Download Packet</button></div></div>
 </BaseLayout>
+
 <style is:global>
-:root{
-  --brand:#F32740;--press:#C8132E;
-  --ink:#1A1D23;--ink2:#3A3E47;--ink3:#6B7280;
-  --c1:#F5F4F1;--c2:#EEEDF0;--c3:#DCDEE2;--cb:#C7CCD3;
-  --grn:#0FAE7C;--yel:#FDD85E;
-  --pad-x:calc(0.5*max(56px,calc((100vw - 1320px)/2)));
-  --mono:'JetBrains Mono',ui-monospace,monospace;
-  --sans:'Lato',system-ui,sans-serif;
-}
-*{box-sizing:border-box}
-.aa{color:var(--brand)}
-
-/* breadcrumb */
-.crumb{
-  padding:13px var(--pad-x);
-  font-family:var(--mono);font-size:11px;letter-spacing:.06em;
-  color:var(--ink3);border-bottom:1px solid var(--c2);
-  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
-}
-.crumb a{color:var(--ink3);text-decoration:none}.crumb a:hover{color:var(--ink)}
-.crumb b{color:var(--ink)}
-.crumb-meta{font-family:var(--mono);font-size:11px;color:var(--ink3)}
-.crumb-meta b{color:var(--ink);font-size:14px}
-
-/* hero */
-.hero{padding:30px var(--pad-x) 18px}
-.eyebrow{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand)}
+/* ============================================================
+   ALG Document Library — verbatim from ALG-Library-MERGED-v3.html
+   CFG-TYPE-1: h1/h2/h3 pinned Lato !important
+   ============================================================ */
+:root{--brand:#F32740;--press:#C8132E;--ink:#1A1D23;--ink2:#3A3E47;--ink3:#6B7280;--c1:#F5F4F1;--c2:#EEEDF0;--c3:#DCDEE2;--cb:#C7CCD3;--grn:#0FAE7C;--yel:#FDD85E;--pad-x:calc(0.5*max(56px,calc((100vw - 1320px)/2)));--mono:'JetBrains Mono',ui-monospace,monospace;--sans:'Lato',system-ui,sans-serif}
+*{box-sizing:border-box}.aa{color:var(--brand)}
 h1,h2,h3{font-family:'Lato',system-ui,sans-serif !important}
-h1{font-size:48px;font-weight:900;letter-spacing:-.025em;margin:10px 0 8px;line-height:1;font-family:'Lato',system-ui,sans-serif !important}
-.lede{font-size:15px;color:var(--ink2);max-width:680px;line-height:1.5;margin:0 0 16px}
-.stats{display:flex;gap:24px;margin-top:14px;font-family:var(--mono);font-size:13px;color:var(--ink3)}
-.stats b{color:var(--ink);font-size:17px}
-
-/* search bar */
-.hsearch{display:flex;margin-top:22px;border:1px solid var(--ink);max-width:920px}
-.hscope{border:0;border-right:1px solid var(--c3);background:var(--c1);font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:0 16px;cursor:pointer;color:var(--ink)}
-.hsearch input{flex:1;border:0;padding:16px;font-family:var(--sans);font-size:15px;outline:none;background:#fff}
-.hsearch button{border:0;background:var(--ink);color:#fff;font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:0 24px;cursor:pointer;white-space:nowrap}
-.hsearch button:hover{background:var(--brand)}
-
-/* popular chips */
-.popular{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:13px}
-.popular .pl{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
-.pchip{font-family:var(--mono);font-size:11.5px;border:1px solid var(--c3);padding:6px 11px;cursor:pointer;color:var(--ink2);background:#fff}
-.pchip:hover{border-color:var(--ink);color:var(--ink)}
-
+.crumb{padding:13px var(--pad-x);font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink3);border-bottom:1px solid var(--c2)}.crumb b{color:var(--ink)}
+.crumb a{color:var(--ink3);text-decoration:none}.crumb a:hover{color:var(--ink)}
+.hero{padding:30px var(--pad-x) 18px}.eyebrow{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand)}
+h1{font-size:48px;font-weight:900;letter-spacing:-.025em;margin:10px 0 8px;line-height:1;font-family:'Lato',system-ui,sans-serif !important}.lede{font-size:15px;color:var(--ink2);max-width:680px;line-height:1.5}
+.stats{display:flex;gap:24px;margin-top:14px;font-family:var(--mono);font-size:13px;color:var(--ink3)}.stats b{color:var(--ink);font-size:17px}
 /* featured guide ribbon */
-.feat{
-  margin:14px var(--pad-x) 0;background:var(--ink);color:#fff;
-  display:grid;grid-template-columns:230px 1fr;gap:30px;
-  padding:26px 30px;border-top:3px solid var(--brand);
-}
+.feat{margin:14px var(--pad-x) 0;background:var(--ink);color:#fff;display:grid;grid-template-columns:230px 1fr;gap:30px;padding:26px 30px;border-top:3px solid var(--brand)}
 .feat .cover{background:#fff;color:var(--ink);padding:22px 18px;display:flex;flex-direction:column;justify-content:space-between;min-height:230px}
-.feat .cover .cw{font-weight:900;font-size:22px;letter-spacing:.01em}
-.feat .cover .cs{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--ink3);margin-top:4px}
-.feat .cover .lines{height:6px;background:var(--c2);margin:5px 0}
-.feat .cover .code{font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:.06em}
+.feat .cover .cw{font-weight:900;font-size:22px;letter-spacing:.01em}.feat .cover .cs{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--ink3);margin-top:4px}
+.feat .cover .lines{height:6px;background:var(--c2);margin:5px 0}.feat .cover .code{font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:.06em}
 .feat .fk{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--brand);text-transform:uppercase}
-.feat h2{font-size:30px;font-weight:900;margin:4px 0 6px;letter-spacing:-.02em;font-family:var(--sans)}
-.feat .fcode{font-family:var(--mono);font-size:12px;color:#aeb4bc}
+.feat h2{font-size:30px;font-weight:900;margin:4px 0 6px;letter-spacing:-.02em;font-family:'Lato',system-ui,sans-serif !important}.feat .fcode{font-family:var(--mono);font-size:12px;color:#aeb4bc}
 .feat .fd{font-size:13.5px;color:#c7ccd3;line-height:1.55;margin:12px 0;max-width:620px}
-.feat .fstats{display:flex;gap:34px;margin:8px 0 16px}
-.feat .fstats .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--yel);text-transform:uppercase}
-.feat .fstats .v{font-size:22px;font-weight:900;margin-top:3px}
+.feat .fstats{display:flex;gap:34px;margin:8px 0 16px}.feat .fstats .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--yel);text-transform:uppercase}.feat .fstats .v{font-size:22px;font-weight:900;margin-top:3px}
 .feat .fcta{display:flex;gap:10px;flex-wrap:wrap}
 .btn{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px;border:1px solid #3a3e47;background:transparent;color:#fff;cursor:pointer;display:inline-flex;gap:7px;align-items:center;text-decoration:none}
-.btn.red{background:var(--brand);border-color:var(--brand)}
-.btn:hover{opacity:.85}
-
+.btn.red{background:var(--brand);border-color:var(--brand)}.btn:hover{opacity:.85}
 /* tabs */
-.tabs{
-  display:flex;gap:0;overflow-x:auto;
-  border-bottom:1px solid var(--c3);
-  padding:0 var(--pad-x);margin-top:18px;
-}
+.tabs{display:flex;gap:0;overflow-x:auto;border-bottom:1px solid var(--c3);padding:0 var(--pad-x);margin-top:18px}
 .tab{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);padding:16px;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;background:none;border-top:0;border-left:0;border-right:0}
 .tab.on{color:var(--ink);border-bottom-color:var(--brand)}
 .tab .ct{margin-left:7px;background:var(--c2);color:var(--ink3);padding:2px 7px;border-radius:2px;font-size:10px}
 .tab.on .ct{background:#ffe3e6;color:var(--brand)}
-
 /* body 3-col grid */
 .body{display:grid;grid-template-columns:236px 1fr 262px;gap:0;padding:18px var(--pad-x) 0}
 .rail{padding:6px 22px 60px 0;border-right:1px solid var(--c3)}
 .rrail{padding:6px 0 60px 24px;border-left:1px solid var(--c3)}
-
 /* filters */
 .fhead{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 .fhead .n{color:var(--brand)}
@@ -295,18 +113,16 @@ h1{font-size:48px;font-weight:900;letter-spacing:-.025em;margin:10px 0 8px;line-
 .facet{border-top:1px solid var(--c3);padding:12px 0}
 .fh{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);margin-bottom:8px}
 .opts{display:flex;flex-direction:column;gap:6px}
-.opt{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;cursor:pointer;gap:6px}
+/* collection filter row — cname stays on one line */
+.opt{display:flex;align-items:center;gap:9px;padding:5px 0;font-size:13px;color:var(--ink2);cursor:pointer}
 .opt input{margin:0;cursor:pointer;accent-color:var(--brand)}
-.opt span:first-of-type{flex:1;display:flex;flex-direction:column;gap:1px}
+.cwrap{flex:1;min-width:0}.opt .cname{display:block;white-space:nowrap;color:var(--ink)}.opt .cname .aa{color:var(--brand)}.opt .sub{font-family:var(--mono);font-size:9.5px;color:var(--ink3);text-transform:uppercase;display:block}
 .opt .n{font-family:var(--mono);font-size:10.5px;color:var(--ink3)}
-.opt .sub{font-family:var(--mono);font-size:9.5px;color:var(--ink3);text-transform:uppercase}
-
 /* tier chips */
 .tier{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:2px}
-.ECO{background:#e8f5e9;color:#2e7d32}
-.PRO{background:#e3f2fd;color:#1565c0}
-.PROp{background:#f3e5f5;color:#6a1b9a}
-
+.ECO{background:#e8f5e9;color:#2e7d32}.PRO{background:#e3f2fd;color:#1565c0}.PROp{background:#f3e5f5;color:#6a1b9a}
+/* file-type facet — swatch LEFT of label */
+.opt--ft{display:flex;align-items:center;gap:8px}.opt--ft .sw{width:10px;height:10px;border-radius:2px;flex:none}.opt--ft .ftname{color:var(--ink);font-size:13px}.opt--ft .ftn{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-left:6px}
 /* results */
 .results{padding:0 22px}
 .rhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px}
@@ -315,80 +131,59 @@ h1{font-size:48px;font-weight:900;letter-spacing:-.025em;margin:10px 0 8px;line-
 .fby{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;align-items:center;font-family:var(--mono);font-size:11px}
 .fby .lab{color:var(--ink3);letter-spacing:.08em;text-transform:uppercase}
 .fchip{background:var(--c2);color:var(--ink2);padding:4px 9px;cursor:pointer;border-radius:2px}
-.fchip:hover{background:var(--ink);color:#fff}
-.fchip.red{background:#ffe3e6;color:var(--brand)}
-
+.fchip:hover{background:var(--ink);color:#fff}.fchip.red{background:#ffe3e6;color:var(--brand)}
 /* legend */
-.legend{display:flex;flex-wrap:wrap;gap:13px;margin:0 0 12px;font-family:var(--mono);font-size:10.5px;color:var(--ink3)}
-.legend span{display:inline-flex;align-items:center;gap:5px}
-.legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
-
+.legend{display:flex;flex-wrap:wrap;gap:13px;margin:0 0 12px;font-family:var(--mono);font-size:10.5px;color:var(--ink3)}.legend span{display:inline-flex;align-items:center;gap:5px}.legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
 /* table */
 table{width:100%;border-collapse:collapse}
 thead th{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);padding:8px 10px;border-bottom:2px solid var(--c3);text-align:left}
-tbody tr{border-bottom:1px solid var(--c2)}
-tbody tr:hover{background:var(--c1)}
+tbody tr{border-bottom:1px solid var(--c2)}tbody tr:hover{background:var(--c1)}
 tbody td{padding:12px 10px;vertical-align:top}
-.famcell{display:flex!important;flex-direction:column!important;gap:4px!important}
+.famcell{display:flex;flex-direction:column;gap:4px}
 .fam{font-size:14px;font-weight:700;color:var(--ink)}
-.fmeta{display:flex!important;flex-wrap:wrap!important;gap:5px!important;align-items:center!important}
+.fmeta{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
 .cchip{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.06em;background:var(--c2);color:var(--ink2);padding:2px 6px;border-radius:2px}
 .sub{font-family:var(--mono);font-size:9.5px;color:var(--ink3);text-transform:uppercase}
-.docs{display:flex;flex-wrap:wrap;gap:8px}
-.docbtn{display:inline-flex!important;align-items:center!important;gap:6px!important;border:1px solid var(--c3)!important;border-left-width:3px!important;background:#fff!important;padding:8px 12px!important;font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink);text-decoration:none;cursor:pointer;transition:all .12s;border-radius:2px}
-.docbtn .ic{font-size:13px;line-height:1}
-.docbtn:hover{background:var(--ink);color:#fff}
-.empty{font-family:var(--mono);font-size:11px;color:var(--c3)}
-
-/* pagination */
-.pager{display:flex;align-items:center;gap:6px;padding:18px 0 0;flex-wrap:wrap}
-.pbtn{font-family:var(--mono);font-size:12px;border:1px solid var(--c3);background:#fff;color:var(--ink2);padding:7px 11px;cursor:pointer;min-width:34px}
-.pbtn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-.pbtn:hover:not(.on){border-color:var(--ink)}
-.pdot{font-family:var(--mono);color:var(--ink3);padding:0 4px}
-.pper{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
-
+.docs{display:flex;flex-wrap:wrap;gap:4px 12px}
+/* FLAT document buttons — NO border, color square (.sw) left of label */
+.docbtn{display:inline-flex;align-items:center;gap:7px;border:0;background:transparent;padding:5px 9px;font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink2);text-decoration:none;cursor:pointer;border-radius:3px;transition:background .12s}
+.docbtn .sw{width:9px;height:9px;border-radius:2px;flex:none}.docbtn:hover{background:var(--c1);color:var(--ink)}.empty{font-family:var(--mono);font-size:11px;color:var(--c3)}
 /* right rail */
-.packet{background:var(--ink);color:#fff;padding:20px;border-top:3px solid var(--brand);margin-bottom:18px}
-.packet h3{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.06em;margin:0 0 8px}
-.packet p{font-size:12px;color:#aeb4bc;line-height:1.5;margin:0 0 14px}
-.psel{background:#22262b;padding:10px 12px;margin-bottom:8px;font-family:var(--mono);font-size:10.5px;color:#c7ccd3;display:flex;justify-content:space-between}
-.psel .x{color:var(--brand);cursor:pointer}
-.pacts{display:flex;gap:8px;margin-top:6px}
-.pacts button{flex:1;border:1px solid #3a3e47;background:transparent;color:#fff;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:11px;cursor:pointer}
-.pacts button.red{background:var(--brand);border-color:var(--brand)}
+.packet{background:var(--ink);color:#fff;padding:20px;border-top:3px solid var(--brand);margin-bottom:18px}.packet h3{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.06em;margin:0 0 8px;font-family:'Lato',system-ui,sans-serif !important}.packet p{font-size:12px;color:#aeb4bc;line-height:1.5;margin:0 0 14px}
+.psel{background:#22262b;padding:10px 12px;margin-bottom:8px;font-family:var(--mono);font-size:10.5px;color:#c7ccd3;display:flex;justify-content:space-between}.psel .x{color:var(--brand);cursor:pointer}
+.pacts{display:flex;gap:8px;margin-top:6px}.pacts button{flex:1;border:1px solid #3a3e47;background:transparent;color:#fff;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:11px;cursor:pointer}.pacts button.red{background:var(--brand);border-color:var(--brand)}
 .tools h4{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);margin:0 0 12px}
-.tool{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--c3);border-left:3px solid var(--brand);margin-bottom:10px;text-decoration:none;color:var(--ink);padding:10px 12px}
-.tool .ti{color:var(--brand);font-size:15px}
-.tool .tt{font-size:13.5px;font-weight:700}
-.tool .td{font-size:11px;color:var(--ink3);margin-top:2px}
+.tool{display:flex;gap:11px;align-items:flex-start;border-left:3px solid var(--brand);padding:10px 12px;border:1px solid var(--c3);border-left:3px solid var(--brand);margin-bottom:10px;text-decoration:none;color:var(--ink)}
+.tool .ti{color:var(--brand);font-size:15px}.tool .tt{font-size:13.5px;font-weight:700}.tool .td{font-size:11px;color:var(--ink3);margin-top:2px}
+.selbar{position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:#fff;display:none;justify-content:space-between;align-items:center;padding:13px var(--pad-x);z-index:60;box-shadow:0 -4px 18px rgba(0,0,0,.2)}.selbar.on{display:flex}.selbar .n{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}.selbar button{border:1px solid #444;background:transparent;color:#fff;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:9px 14px;margin-left:8px;cursor:pointer}.selbar button.red{background:var(--brand);border-color:var(--brand)}
+.legend{display:flex;flex-wrap:wrap;gap:13px;margin:0 0 12px;font-family:var(--mono);font-size:10.5px;color:var(--ink3)}.legend span{display:inline-flex;align-items:center;gap:5px}.legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
+@media(max-width:1150px){.body{grid-template-columns:1fr}.rail,.rrail{border:0;padding:0 0 20px}.feat{grid-template-columns:1fr}}
+.hsearch{display:flex;margin-top:22px;border:1px solid var(--ink);max-width:920px}
+.hscope{border:0;border-right:1px solid var(--c3);background:var(--c1);font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:0 16px;cursor:pointer;color:var(--ink)}
+.hsearch input{flex:1;border:0;padding:16px 16px;font-family:var(--sans);font-size:15px;outline:none}
+.hsearch button{border:0;background:var(--ink);color:#fff;font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:0 24px;cursor:pointer;white-space:nowrap}
+.hsearch button:hover{background:var(--brand)}
+.popular{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:13px}
+.popular .pl{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.pchip{font-family:var(--mono);font-size:11.5px;border:1px solid var(--c3);padding:6px 11px;cursor:pointer;color:var(--ink2)}.pchip:hover{border-color:var(--ink);color:var(--ink)}
 .needhelp{border-top:3px solid var(--brand);background:var(--c1);padding:16px 18px;margin-top:18px}
 .needhelp .nh-k{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--brand)}
 .needhelp .nh-d{font-size:13px;color:var(--ink2);margin:6px 0 10px;line-height:1.45}
-.needhelp .nh-c{display:block;font-family:var(--mono);font-size:12.5px;color:var(--ink);text-decoration:none;padding:2px 0}
-.needhelp a.nh-c:hover{color:var(--brand)}
-
-/* fixed selection bar */
-.selbar{position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:#fff;display:none;justify-content:space-between;align-items:center;padding:13px var(--pad-x);z-index:60;box-shadow:0 -4px 18px rgba(0,0,0,.2)}
-.selbar.on{display:flex}
-.selbar .n{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
-.selbar button{border:1px solid #444;background:transparent;color:#fff;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:9px 14px;margin-left:8px;cursor:pointer}
-.selbar button.red{background:var(--brand);border-color:var(--brand)}
-
-/* responsive */
-@media(max-width:1150px){
-  .body{grid-template-columns:1fr}
-  .rail,.rrail{border:0;padding:0 0 20px}
-  .feat{grid-template-columns:1fr}
-  h1{font-size:32px}
-}
+.needhelp .nh-c{display:block;font-family:var(--mono);font-size:12.5px;color:var(--ink);text-decoration:none;padding:2px 0}.needhelp a.nh-c:hover{color:var(--brand)}
+.pager{display:flex;align-items:center;gap:6px;padding:18px 0 0;flex-wrap:wrap}
+.pbtn{font-family:var(--mono);font-size:12px;border:1px solid var(--c3);background:#fff;color:var(--ink2);padding:7px 11px;cursor:pointer;min-width:34px}
+.pbtn.on{background:var(--ink);color:#fff;border-color:var(--ink)}.pbtn:hover:not(.on){border-color:var(--ink)}.pdot{font-family:var(--mono);color:var(--ink3);padding:0 4px}
+.pper{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
 @media(max-width:640px){
   .hsearch{flex-direction:column}
   .hscope{border-right:0;border-bottom:1px solid var(--c3);padding:12px 16px}
   .hsearch input{padding:14px 16px}
   .hsearch button{padding:14px 16px}
-  h1{font-size:26px}
+  h1{font-size:26px !important}
   .feat{padding:18px 16px}
+}
+@media(max-width:1150px){
+  h1{font-size:32px !important}
 }
 </style>
 
@@ -400,22 +195,22 @@ var DATA=JSON.parse(document.getElementById('lib-data').textContent);
 var TYPES=["Datasheet","Installation Guide","Quicksheet","Sell Sheet","IES Photometric"];
 var SHORT={"Datasheet":"Datasheet","Installation Guide":"Install Guide","Quicksheet":"Quick Sheet","Sell Sheet":"Sell Sheet","IES Photometric":"IES Bundle"};
 var META={
-  "Datasheet":{c:"#F32740",i:"▤"},
-  "Installation Guide":{c:"#2456C8",i:"▥"},
-  "Quicksheet":{c:"#0FAE7C",i:"⚡"},
-  "Sell Sheet":{c:"#C7821A",i:"★"},
-  "IES Photometric":{c:"#7A3FF2",i:"◎"}
+  "Datasheet":{c:"#F32740"},
+  "Installation Guide":{c:"#2456C8"},
+  "Quicksheet":{c:"#0FAE7C"},
+  "Sell Sheet":{c:"#C7821A"},
+  "IES Photometric":{c:"#7A3FF2"}
 };
 var CMETA={
-  "luxoⒶRCH":"Architectural","planoⒶRCH":"Panels & Troffers",
-  "lamparⒶRCH":"Indoor C&I","cityⒶRCH":"Outdoor / Area",
-  "constⒶNT":"Drivers & Power","contrⒶLS":"Controls & ⒶCS App"
+  "luxo\u24B6RCH":"Architectural","plano\u24B6RCH":"Panels & Troffers",
+  "lampar\u24B6RCH":"Indoor C&I","city\u24B6RCH":"Outdoor / Area",
+  "const\u24B6NT":"Drivers & Power","contr\u24B6LS":"Controls & \u24B6CS App"
 };
 var page=1,perPage=25,fType='All',fCols=new Set(),fTiers=new Set(),fTypes=new Set(),sel=new Set();
 function tc(t){return t==='PRO+'?'PROp':t}
 function counts(){
   var c={All:0};TYPES.forEach(function(t){c[t]=0});
-  DATA.forEach(function(r){Object.keys(r.docs).forEach(function(t){c[t]++;c.All++})});
+  DATA.forEach(function(r){Object.keys(r.docs).forEach(function(t){c[t]++;c.All++;})});
   return c;
 }
 function build(){
@@ -424,14 +219,16 @@ function build(){
     return '<button class="tab '+(t===fType?'on':'')+'" onclick="setType(\''+t+'\')">'+(t==='All'?'All Documents':SHORT[t])+'<span class="ct">'+(c[t]||0)+'</span></button>';
   }).join('');
   var cols=[...new Set(DATA.map(function(r){return r.collection}))];
+  /* collection facet — .cwrap + .cname (white-space:nowrap) + .sub below */
   document.getElementById('colFacet').innerHTML=cols.map(function(col){
-    return '<label class="opt"><input type="checkbox" onchange="tog(fCols,\''+col+'\')"> <span>'+col.replace(/Ⓐ/g,'<span class=aa>Ⓐ</span>')+'<span class="sub">'+(CMETA[col]||'')+'</span></span> <span class="n">'+DATA.filter(function(r){return r.collection===col}).length+'</span></label>';
+    return '<label class="opt"><input type="checkbox" onchange="tog(fCols,\''+col+'\')"><span class="cwrap"><span class="cname">'+col.replace(/\u24B6/g,'<span class=aa>\u24B6</span>')+'</span><span class="sub">'+(CMETA[col]||'')+'</span></span><span class="n">'+DATA.filter(function(r){return r.collection===col}).length+'</span></label>';
   }).join('');
   document.getElementById('tierFacet').innerHTML=['ECO','PRO','PRO+'].map(function(t){
     return '<label class="opt"><input type="checkbox" onchange="tog(fTiers,\''+t+'\')"> <span class="tier '+tc(t)+'">'+t+'</span> <span class="n">'+DATA.filter(function(r){return r.tier===t}).length+'</span></label>';
   }).join('');
+  /* file-type facet — .opt--ft: swatch LEFT of label */
   document.getElementById('typeFacet').innerHTML=TYPES.map(function(t){
-    return '<label class="opt"><input type="checkbox" onchange="tog(fTypes,\''+t+'\')"> <span style="display:inline-flex;align-items:center;gap:6px"><i style="width:9px;height:9px;border-radius:2px;background:'+META[t].c+'"></i>'+SHORT[t]+'</span> <span class="n">'+c[t]+'</span></label>';
+    return '<label class="opt opt--ft"><input type="checkbox" onchange="tog(fTypes,\''+t+'\')"><span class="sw" style="background:'+META[t].c+'"></span><span class="ftname">'+SHORT[t]+'</span><span class="ftn">'+c[t]+'</span></label>';
   }).join('');
   document.getElementById('legend').innerHTML=TYPES.map(function(t){
     return '<span><i style="background:'+META[t].c+'"></i>'+SHORT[t]+'</span>';
@@ -478,10 +275,10 @@ function render(){
     if(fTiers.size&&!fTiers.has(r.tier))return false;
     return true;
   });
-  var ord=['luxoⒶRCH','planoⒶRCH','lamparⒶRCH','cityⒶRCH','constⒶNT','contrⒶLS'];
+  var ordPlain=['luxoⒶRCH','planoⒶRCH','lamparⒶRCH','cityⒶRCH','constⒶNT','contrⒶLS'];
   if(sort==='family')rows.sort(function(a,b){return a.family.localeCompare(b.family)});
   else if(sort==='skus')rows.sort(function(a,b){return(b.sku_count||0)-(a.sku_count||0)});
-  else rows.sort(function(a,b){return ord.indexOf(a.collection)-ord.indexOf(b.collection)||a.family.localeCompare(b.family)});
+  else rows.sort(function(a,b){return ordPlain.indexOf(a.collection)-ordPlain.indexOf(b.collection)||a.family.localeCompare(b.family)});
   var total=rows.length;
   var pages=Math.max(1,Math.ceil(total/perPage));
   if(page>pages)page=pages;
@@ -497,24 +294,25 @@ function render(){
   document.getElementById('fby').innerHTML=af.length
     ?'<span class="lab">Filtering by:</span>'+af.map(function(x){return'<span class="fchip '+(x[3]?'red':'')+'" onclick="clr(\''+x[0]+'\',\''+x[1]+'\')">'+x[2]+'</span>'}).join('')
     :'';
+  /* docbtn: flat, NO border, .sw color square LEFT of label */
   document.getElementById('tbody').innerHTML=pageRows.map(function(r){
     var k=key(r);
     var btns=TYPES.filter(function(t){return r.docs[t]}).map(function(t){
-      return '<a class="docbtn" style="border-left-color:'+META[t].c+'" href="'+r.docs[t]+'" target="_blank" rel="noopener"><span class="ic" style="color:'+META[t].c+'">'+META[t].i+'</span>'+SHORT[t]+'</a>';
+      return '<a class="docbtn" href="'+r.docs[t]+'" target="_blank" rel="noopener"><span class="sw" style="background:'+META[t].c+'"></span>'+SHORT[t]+'</a>';
     }).join('');
-    return '<tr><td><input type="checkbox" '+(sel.has(k)?'checked':'')+' onchange="toggleSel(\''+k+'\')"></td><td><div class="famcell"><span class="fam">'+r.family+'</span><span class="fmeta"><span class="cchip">'+r.collection.replace(/Ⓐ/g,'<span class=aa>Ⓐ</span>')+'</span>'+(r.tier?'<span class="tier '+tc(r.tier)+'">'+r.tier+'</span>':'')+'<span class="sub">'+(r.subcategory||'')+'</span>'+(r.sku_count?'<span class="sub">· '+r.sku_count+' SKUs</span>':'')+'</span></div></td><td><div class="docs">'+(btns||'<span class=empty>—</span>')+'</div></td></tr>';
+    return '<tr><td><input type="checkbox" '+(sel.has(k)?'checked':'')+' onchange="toggleSel(\''+k+'\')"></td><td><div class="famcell"><span class="fam">'+r.family+'</span><span class="fmeta"><span class="cchip">'+r.collection.replace(/\u24B6/g,'<span class=aa>\u24B6</span>')+'</span>'+(r.tier?'<span class="tier '+tc(r.tier)+'">'+r.tier+'</span>':'')+'<span class="sub">'+(r.subcategory||'')+'</span>'+(r.sku_count?'<span class="sub">\u00B7 '+r.sku_count+' SKUs</span>':'')+'</span></div></td><td><div class="docs">'+(btns||'<span class=empty>\u2014</span>')+'</div></td></tr>';
   }).join('');
   var pg='';
   for(var p=1;p<=pages;p++){
-    if(pages>7&&p>2&&p<pages-1&&Math.abs(p-page)>1){if(p===3)pg+='<span class="pdot">…</span>';continue;}
+    if(pages>7&&p>2&&p<pages-1&&Math.abs(p-page)>1){if(p===3)pg+='<span class="pdot">\u2026</span>';continue;}
     pg+='<button class="pbtn '+(p===page?'on':'')+'" onclick="goto('+p+')">'+p+'</button>';
   }
-  document.getElementById('pager').innerHTML=(pages>1?'<button class="pbtn" onclick="goto('+(page-1)+')">‹</button>'+pg+'<button class="pbtn" onclick="goto('+(page+1)+')">›</button>':'')+'<span class="pper">Per page · 25</span>';
+  document.getElementById('pager').innerHTML=(pages>1?'<button class="pbtn" onclick="goto('+(page-1)+')">\u2039</button>'+pg+'<button class="pbtn" onclick="goto('+(page+1)+')">\u203a</button>':'')+'<span class="pper">Per page \u00B7 25</span>';
   document.getElementById('selbar').classList.toggle('on',sel.size>0);
   document.getElementById('selN').textContent=sel.size;
   document.getElementById('selN2').textContent=sel.size;
   document.getElementById('selList').innerHTML=sel.size
-    ?[...sel].map(function(k){return'<div class="psel"><span>'+k.split('|')[1]+'</span><span class="x" onclick="toggleSel(\''+k+'\')">✕</span></div>'}).join('')
+    ?[...sel].map(function(k){return'<div class="psel"><span>'+k.split('|')[1]+'</span><span class="x" onclick="toggleSel(\''+k+'\')">&#x2715;</span></div>'}).join('')
     :'<div style="font-family:var(--mono);font-size:11px;color:#7e848d;margin-bottom:8px">Select families to build a packet.</div>';
 }
 window.setType=setType;window.tog=tog;window.goto=goto;window.clearAll=clearAll;
