@@ -330,7 +330,7 @@ import ContentShell from '../layouts/ContentShell.astro';
   </section>
 
   <!-- ── SECTION 3: FAQ (--c1 background) ─────────────────────────────── -->
-  <section class="alg-section alg-section--c1" style="padding-top:64px; padding-bottom:80px;">
+  <section class="alg-section alg-section--dark" style="padding-top:64px; padding-bottom:80px;">
     <div class="faq-grid">
       <div class="faq-sticky">
         <span class="alg-eyebrow alg-eyebrow--red">04 · Field FAQ</span>
@@ -502,6 +502,15 @@ import ContentShell from '../layouts/ContentShell.astro';
     border-bottom-color: rgba(255,255,255,0.08);
   }
   .alg-section--c1 { background: var(--c1); }
+  /* ── §04 FAQ dark-canvas overrides ──────────────────────────────────────── */
+  .alg-section--dark .alg-faq { border-top: 1px solid rgba(255,255,255,.14); }
+  .alg-section--dark .alg-faq__item { border-bottom: 1px solid rgba(255,255,255,.14); }
+  .alg-section--dark .alg-faq__q { color: #fff; }
+  .alg-section--dark .alg-faq__q:hover { color: var(--brand); }
+  .alg-section--dark .alg-faq__toggle { color: rgba(255,255,255,.55); }
+  .alg-section--dark .alg-faq__a { color: rgba(255,255,255,.72); }
+  .alg-section--dark .alg-h2 { color: #fff; }
+  .alg-section--dark .alg-body { color: rgba(255,255,255,.72); }
 
   /* ── Hero grid ─────────────────────────────────────────────────────────── */
   .hero-grid {
