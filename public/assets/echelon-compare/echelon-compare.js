@@ -98,10 +98,19 @@
     return [].slice.call(document.querySelectorAll('.app-tile[aria-pressed="true"]'))
       .map(function(b){ return b.getAttribute('data-app'); });
   }
+  // The visible ALL-FAMILIES results live in #fam-layout / #famGrid / #fam-results.
+  // NOTE: #search-results is the hidden search-MODAL list (do not mount there).
+  function resultsAnchor(){
+    var ids=['fam-layout','famGrid','fam-results'];
+    for(var i=0;i<ids.length;i++){ var el=document.getElementById(ids[i]); if(el && el.offsetParent!==null) return el; }
+    var sr=document.getElementById('search-results'); // legacy fallback only if visible
+    return (sr && sr.offsetParent!==null) ? sr : null;
+  }
   function mountNode(){
-    var sr = document.getElementById('search-results'); if(!sr) return null;
+    var a = resultsAnchor(); if(!a) return null;
     var m = document.getElementById('ec-mount');
-    if(!m){ m=document.createElement('div'); m.id='ec-mount'; m.className='echelon-compare'; sr.parentNode.insertBefore(m, sr.nextSibling); }
+    if(!m){ m=document.createElement('div'); m.id='ec-mount'; m.className='echelon-compare'; }
+    if(a.nextElementSibling!==m){ a.parentNode.insertBefore(m, a.nextSibling); } // (re)anchor after the visible results
     return m;
   }
   function update(){
@@ -122,11 +131,9 @@
   });
 
   function init(){
-    if(!document.getElementById('search-results')) return;
     var debounce; function bump(){ clearTimeout(debounce); debounce=setTimeout(update, 80); }
     var obs = new MutationObserver(bump);
-    obs.observe(document.body, { subtree:true, childList:true, attributes:true, attributeFilter:['aria-pressed','checked','class'] });
-    // NEW: react to the checkbox filter changes
+    obs.observe(document.body, { subtree:true, childList:true, attributes:true, attributeFilter:['aria-pressed','checked','class','style'] });
     document.addEventListener('change', function(e){ if(e.target && e.target.matches && e.target.matches('input[data-facet="application"]')) bump(); });
     document.querySelectorAll('.app-tile').forEach(function(b){ b.addEventListener('click', function(){ setTimeout(update, 80); }); });
     update();
