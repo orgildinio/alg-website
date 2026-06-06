@@ -456,49 +456,11 @@ import ContentShell from '../layouts/ContentShell.astro';
   <div class="where-grid">
     <div class="where-map">
       <div class="where-map-label">NORTH AMERICA · OPERATIONS FOOTPRINT</div>
-      <div class="where-map-canvas">
-        <svg viewBox="0 0 600 360" class="where-svg" preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <pattern id="dotgrid" width="12" height="12" patternUnits="userSpaceOnUse">
-              <circle cx="1" cy="1" r="1" fill="#DCDEE2"/>
-            </pattern>
-          </defs>
-          <rect x="0" y="0" width="600" height="360" fill="url(#dotgrid)"/>
-          <path d="M40 140 L80 80 L160 60 L260 50 L360 60 L440 70 L520 80 L560 110 L570 160 L560 220 L530 270 L460 300 L380 310 L300 310 L220 320 L150 310 L90 280 L60 230 L40 180 Z" fill="#FFFFFF" stroke="#1A1D23" stroke-width="1.5"/>
-          <path d="M40 140 L80 80 L100 100 L110 200 L90 280 L60 230 L40 180 Z" fill="#F5F4F1" stroke="#1A1D23" stroke-width="1.5"/>
-          <!-- HQ pin — Montclair -->
-          <circle cx="85" cy="195" r="14" fill="#F32740"/>
-          <circle cx="85" cy="195" r="22" fill="none" stroke="#F32740" stroke-width="1.5" opacity=".4"/>
-          <circle cx="85" cy="195" r="30" fill="none" stroke="#F32740" stroke-width="1" opacity=".2"/>
-          <line x1="85" y1="195" x2="180" y2="195" stroke="#1A1D23" stroke-width="1"/>
-          <text x="186" y="192" style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em" fill="#1A1D23">HQ · MONTCLAIR, CA</text>
-          <text x="186" y="206" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em" fill="#6B7280">4615 STATE ST · DESIGN · SALES</text>
-          <!-- Production pin — Riverside -->
-          <rect x="95" y="210" width="14" height="14" fill="#1A1D23"/>
-          <rect x="89" y="204" width="26" height="26" fill="none" stroke="#1A1D23" stroke-width="1" opacity=".35"/>
-          <line x1="109" y1="217" x2="200" y2="245" stroke="#1A1D23" stroke-width="1"/>
-          <text x="206" y="244" style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em" fill="#1A1D23">PRODUCTION · RIVERSIDE, CA</text>
-          <text x="206" y="258" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em" fill="#6B7280">9345 SYCAMORE CANYON BLVD</text>
-          <!-- Distribution dots -->
-          <circle cx="200" cy="110" r="3" fill="#1A1D23" opacity=".5"/>
-          <circle cx="280" cy="100" r="3" fill="#1A1D23" opacity=".5"/>
-          <circle cx="360" cy="130" r="3" fill="#1A1D23" opacity=".5"/>
-          <circle cx="420" cy="170" r="3" fill="#1A1D23" opacity=".5"/>
-          <circle cx="480" cy="130" r="3" fill="#1A1D23" opacity=".5"/>
-          <circle cx="330" cy="220" r="3" fill="#1A1D23" opacity=".5"/>
-          <circle cx="280" cy="260" r="3" fill="#1A1D23" opacity=".5"/>
-          <circle cx="420" cy="250" r="3" fill="#1A1D23" opacity=".5"/>
-          <circle cx="200" cy="200" r="3" fill="#1A1D23" opacity=".5"/>
-          <circle cx="510" cy="200" r="3" fill="#1A1D23" opacity=".5"/>
-          <circle cx="380" cy="80" r="3" fill="#1A1D23" opacity=".5"/>
-          <circle cx="260" cy="180" r="3" fill="#1A1D23" opacity=".5"/>
-          <circle cx="460" cy="220" r="3" fill="#1A1D23" opacity=".5"/>
-        </svg>
-      </div>
+      <div class="where-map-canvas" id="algAboutMap" style="min-height:0;"></div>
       <div class="where-legend">
         <div class="where-legend-item"><span class="lg-dot brand"></span> HQ — Montclair, CA</div>
         <div class="where-legend-item"><span class="lg-dot ink"></span> US Production — Riverside, CA</div>
-        <div class="where-legend-item"><span class="lg-dot ink-faint"></span> Authorized distributors (sample)</div>
+        <div class="where-legend-item"><span class="lg-dot ink-faint"></span> Warehouses shown · reps/distributors on <a href="/find-a-rep/" style="color:inherit;text-decoration:underline;">Find a Rep</a></div>
       </div>
     </div>
     <div class="where-side">
@@ -631,7 +593,7 @@ import ContentShell from '../layouts/ContentShell.astro';
       </div>
     </div>
     <div class="timeline-row">
-      <div class="timeline-year">2024</div>
+      <div class="timeline-year">2014</div>
       <div class="timeline-dot"></div>
       <div class="timeline-body">
         <div class="timeline-title">Two-channel structure formalized</div>
@@ -1610,22 +1572,16 @@ a { color: inherit; text-decoration: none; }
 }
 .where-map-canvas {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 380px;
+  min-height: 0;
+  height: 380px;
+  overflow: hidden;
 }
-.where-svg { width: 100%; height: auto; max-height: 480px; }
-.where-pin-label-svg {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .14em;
-}
-.where-pin-sub-svg {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  letter-spacing: .1em;
+/* CFG-MAP-1: Leaflet container fills the canvas, no resize on drag */
+.where-map-canvas :global(.leaflet-container) {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  border-radius: 0;
 }
 .where-legend {
   display: flex;
@@ -2629,6 +2585,14 @@ a { color: inherit; text-decoration: none; }
   .channel-tabs { grid-template-columns: 1fr; }
 }
 
+/* ── HEADING FONT PIN (CFG-TYPE-1) ── */
+body.page-about h1,
+body.page-about h2,
+body.page-about h3 {
+  font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
 /* ── GUTTER FORCE (§F guarantee) ── */
 .page-about .block,
 .page-about .block-dark,
@@ -2652,3 +2616,65 @@ a { color: inherit; text-decoration: none; }
   display: block;
 }
 </style>
+
+<!-- CFG-MAP-1: Leaflet warehouse-only map for /about Operations section -->
+<script is:inline>
+(function () {
+  // Load Leaflet CSS
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+  link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
+  link.crossOrigin = '';
+  document.head.appendChild(link);
+
+  var mapEl = document.getElementById('algAboutMap');
+  if (!mapEl) return;
+
+  var script = document.createElement('script');
+  script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+  script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+  script.crossOrigin = '';
+  script.onload = async function () {
+    var L = window.L;
+    // Center on Southern California (Montclair/Riverside area), zoom 7
+    var map = L.map('algAboutMap', { zoomControl: true, scrollWheelZoom: false }).setView([34.0, -117.7], 7);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19,
+    }).addTo(map);
+
+    // Warehouse icon (brand red)
+    function makeIcon(color, shadow) {
+      return L.divIcon({
+        className: '',
+        html: '<div style="width:14px;height:14px;background:' + color + ';border-radius:50%;border:2px solid #fff;box-shadow:0 0 10px ' + shadow + ';"></div>',
+        iconSize: [14, 14],
+        iconAnchor: [7, 7],
+        popupAnchor: [0, -10],
+      });
+    }
+    var iconWh = makeIcon('#F32740', 'rgba(243,39,64,0.7)');
+
+    // ALG warehouse locations only
+    var warehouses = [
+      { name: 'ALG HQ — Montclair, CA', role: 'HQ · Design · Sales · Customer Service', addr: '4615 State Street, Montclair, CA 91763', lat: 34.0736, lon: -117.6900 },
+      { name: 'ALG US Production — Riverside, CA', role: 'US Production · Driver Assembly · Final QA · Branded Fulfillment', addr: '9345 Sycamore Canyon Blvd, Riverside, CA 92508', lat: 33.9806, lon: -117.3755 },
+    ];
+
+    warehouses.forEach(function (r) {
+      var popup = '<div style="font-family:system-ui,sans-serif;min-width:180px;">' +
+        '<div style="font-weight:700;font-size:13px;margin-bottom:4px;">' + r.name + '</div>' +
+        '<div style="font-size:12px;color:#9CA3AF;margin-bottom:4px;">' + r.role + '</div>' +
+        '<div style="font-size:11px;color:#6B7280;">' + r.addr + '</div>' +
+        '</div>';
+      L.marker([r.lat, r.lon], { icon: iconWh }).bindPopup(popup).addTo(map);
+    });
+
+    // CFG-MAP-1: invalidateSize after init so drag doesn't resize the section
+    setTimeout(function () { map.invalidateSize(); }, 0);
+  };
+  document.head.appendChild(script);
+})();
+</script>
