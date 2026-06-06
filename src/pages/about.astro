@@ -569,6 +569,14 @@ import ContentShell from '../layouts/ContentShell.astro';
       </div>
     </div>
     <div class="timeline-row">
+      <div class="timeline-year">2014</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-body">
+        <div class="timeline-title">Two-channel structure formalized</div>
+        <div class="timeline-text">Retail and C&amp;I split into independent commercial orgs. Separate price books, separate sales teams, shared engineering.</div>
+      </div>
+    </div>
+    <div class="timeline-row">
       <div class="timeline-year">2015</div>
       <div class="timeline-dot"></div>
       <div class="timeline-body">
@@ -590,14 +598,6 @@ import ContentShell from '../layouts/ContentShell.astro';
       <div class="timeline-body">
         <div class="timeline-title">contr<span class="aa">Ⓐ</span>LS launches</div>
         <div class="timeline-text">BLE-mesh networked controls platform. DLC NLC5 listed. No gateway, no cloud lock.</div>
-      </div>
-    </div>
-    <div class="timeline-row">
-      <div class="timeline-year">2014</div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-body">
-        <div class="timeline-title">Two-channel structure formalized</div>
-        <div class="timeline-text">Retail and C&amp;I split into independent commercial orgs. Separate price books, separate sales teams, shared engineering.</div>
       </div>
     </div>
     <div class="timeline-row">
@@ -2637,7 +2637,10 @@ body.page-about h3 {
   script.onload = async function () {
     var L = window.L;
     // Center on Southern California (Montclair/Riverside area), zoom 7
-    var map = L.map('algAboutMap', { zoomControl: true, scrollWheelZoom: false }).setView([34.0, -117.7], 7);
+    var montclairLatLng = [34.0736, -117.6900];
+    var riversideLatLng = [33.9806, -117.3755];
+    var map = L.map('algAboutMap', { zoomControl: true, scrollWheelZoom: false });
+    map.fitBounds([montclairLatLng, riversideLatLng], { padding: [40, 40], maxZoom: 10 });
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: 'abcd',
