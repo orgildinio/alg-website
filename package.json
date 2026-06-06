@@ -14,8 +14,7 @@
     "verify": "node scripts/verify.mjs"
   },
   "dependencies": {
-    "astro": "^4.16.0",
-    "fflate": "^0.8.3"
+    "astro": "^4.16.0"
   },
   "engines": {
     "node": ">=20.0.0"
