@@ -1436,6 +1436,26 @@ data-preview="/mm-previews/warehouse-deals.webp"
       });
     });
     productsLi.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
+
+    /* Init: seed preview from the first active cat item so first open is never stale */
+    function productsInitPreview() {
+      const firstActive = menu.querySelector('.mm-cat-item.active');
+      if (firstActive) {
+        // Direct set (no crossfade delay) so first paint is instant
+        const src = firstActive.dataset.preview;
+        if (src && previewImg.getAttribute('src') !== src) {
+          previewImg.setAttribute('src', src);
+        }
+        if (firstActive.dataset.previewLabel) previewLbl.textContent = firstActive.dataset.previewLabel;
+        if (firstActive.dataset.previewName)  previewName.innerHTML  = renderAa(firstActive.dataset.previewName);
+        if (firstActive.dataset.previewDesc)  previewDesc.textContent = firstActive.dataset.previewDesc;
+        // Preload so first hover has no flash
+        if (src) { const _img = new Image(); _img.src = src; }
+      }
+    }
+    productsLi.addEventListener('mouseenter', productsInitPreview, { once: false });
+    // Also run once at load so the static HTML default is never stale
+    productsInitPreview();
   }
 
   /* =============================================================
