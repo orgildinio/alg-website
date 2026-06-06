@@ -3,11 +3,23 @@
     "docs": {
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/1540e346a0b8294e7253ea1df8a68b66307b6a1b60381c18b1463a90feb91cdb"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Anaheim",
     "tier": "ECO",
     "subcategory": "Wall Pack",
-    "sku_count": 10
+    "sku_count": 10,
+    "skus": [
+      "LWPA27-40-UD",
+      "LWPA27-50-UD",
+      "LWPA27-50-UD-PS",
+      "LWPA40-50-UD",
+      "LWPA40-S3N-UD-PS",
+      "LWPA67-40-UD",
+      "LWPA67-50-UD",
+      "LWPA80-40-UD",
+      "LWPA80-50-UD-PS",
+      "LWPA80-S3N-UD-PS"
+    ]
   },
   {
     "docs": {
@@ -15,41 +27,66 @@
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/bc496fc9a65a57ec06d47cdac8aa7561b89125983e8673cdb61878531377e992",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/55176c38b6d795addbd8d5cb450a221a9a59ae3a4c9c1e275dd15ab128b6c022"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Atlanta",
     "tier": "PRO",
     "subcategory": "Wall Pack",
-    "sku_count": 2
+    "sku_count": 2,
+    "skus": [
+      "LWPA3W120-3A1-UD/PS",
+      "LWPA3W80-3A1-UD/PS"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/9c079b32da663fc4b24587131b6ac3dd3ace4affcf68eb2734916ac344783f7d"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Aura",
     "tier": "PRO",
     "subcategory": "Cylinder",
-    "sku_count": 4
+    "sku_count": 4,
+    "skus": [
+      "LCWS24-3CS-27VD3/A1DC/BA/DB",
+      "LCWS30-3CS-27VD4/A1DC/BA/DB",
+      "LCWS36-3CS-27VD6/A1DC/DB",
+      "LCWS45-3CS-27VR6/A1DC/BA/DB"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/97dc4cf863e7f2d3ef9f8d1af87df1ee91411ac5c526d1c854d4f3a3e03d1002"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Beacon-I",
     "tier": "PRO+",
     "subcategory": "Sports Lighting",
-    "sku_count": 7
+    "sku_count": 7,
+    "skus": [
+      "LSPL-B1/DMR",
+      "LSPL-B1/LSG",
+      "LSPL-B1/SMB",
+      "LSPL-B1/YKA",
+      "LSPL1200-57B1-48VB/TR/44/TAA",
+      "LSPL600-57B1-48VB/TR/44/TAA",
+      "LSPL850-57B1-48VB/TR/44/TAA"
+    ]
   },
   {
     "docs": {
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/9ac65cca9f9a17c8e4361b976fce8514715c39d5844a2f1a82406e5e1599abd5"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Canadarm",
     "tier": "PRO",
     "subcategory": "Dock Light",
-    "sku_count": 4
+    "sku_count": 4,
+    "skus": [
+      "LDKT-C1/ARM",
+      "LDKT-C1/WG",
+      "LDKT30",
+      "LDKT60"
+    ]
   },
   {
     "docs": {
@@ -58,11 +95,21 @@
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/fc58f92b332047232aa27959097a5048a34a573e97b12d850f0540772350f9e6",
       "Sell Sheet": "https://workdrive.archipelagolighting.com/external/7c6427652985a75423a22c63870b61b29827955c6032018f642ba8ad4e734815"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Everest",
     "tier": "ECO",
     "subcategory": "Flood Light",
-    "sku_count": 8
+    "sku_count": 8,
+    "skus": [
+      "LFLD3W150-3E1-UD/PS/SP",
+      "LFLD3W150-3E1-UD/PS/TN",
+      "LFLD3W150-3E1-UD/PS/YK",
+      "LFLD3W35-3E1-UD/PS/KN",
+      "LFLD3W35-3E1-UD/PS/YK",
+      "LFLD3W80-3E1-UD/PS/KN",
+      "LFLD3W80-3E1-UD/PS/SP",
+      "LFLD3W80-3E1-UD/PS/YK"
+    ]
   },
   {
     "docs": {
@@ -70,11 +117,21 @@
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/b6b11ef124d6c145a3ff27807392703484d9568c4466323d7ec2a93928abc043",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/d524a04b0ee82338be6be0f3875bb9a9235530ab3ec54b5fcd2ecc189d8ef33d"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Guardian",
     "tier": "ECO",
     "subcategory": "Wall Pack",
-    "sku_count": 8
+    "sku_count": 8,
+    "skus": [
+      "LWPF-G1/DSS",
+      "LWPF-G1/MP",
+      "LWPF-G1/SPR",
+      "LWPF-G1/WG",
+      "LWPF48-3CS-UG/B/PS",
+      "LWPF48-3CS-UG/D/PS",
+      "LWPF812-3CS-UG/B/PS",
+      "LWPF812-3CS-UG/D/PS"
+    ]
   },
   {
     "docs": {
@@ -84,11 +141,21 @@
       "Sell Sheet": "https://workdrive.archipelagolighting.com/external/fc29f8b4687ec75f2cf32774e7ea4e9d7c7026da96684be7f186bf04db1d310e",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/1c7a2a146dab853d04dd2db1f8d3e53ca1f85817421a602182bf7de42e7a9765"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Heritage",
     "tier": "ECO",
     "subcategory": "Area Light",
-    "sku_count": 8
+    "sku_count": 8,
+    "skus": [
+      "LSBX-H1/RS",
+      "LSBX-H1/SF",
+      "LSBX-H1/TN",
+      "LSBX-H1/UA",
+      "LSBX3W150-3H1-UD3/RB3",
+      "LSBX3W150-3H1-UD3/RB3/UA/PS/BLS",
+      "LSBX3W300-3H1-HD3/RB3",
+      "LSBX3W300-3H1-UD3/RB3"
+    ]
   },
   {
     "docs": {
@@ -97,22 +164,118 @@
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/d11b123204f57c03b3ce3bd11e5861f073e1f441d96fedbaad04f356a1e3527b",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/e31e2bef1fcfff99e66be273cb89bbf0f3908a2d38a32c17f0e2afe640b96c84"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Illuminator",
     "tier": "PRO",
     "subcategory": "Sports Lighting",
-    "sku_count": 23
+    "sku_count": 23,
+    "skus": [
+      "LSPL-I1/C/DMX",
+      "LSPL-I1/C/WIFI",
+      "LSPL-I1/GS",
+      "LSPL-I1/GV",
+      "LSPL-I1/LSG",
+      "LSPL-I1/O15",
+      "LSPL-I1/O20",
+      "LSPL-I1/O35",
+      "LSPL-I1/O55",
+      "LSPL-I1/O90",
+      "LSPL-I1/SF",
+      "LSPL-I1/TN",
+      "LSPL600-40-UB/TR",
+      "LSPL600-40-UB/TR/TAA",
+      "LSPL600-50-HB/TR",
+      "LSPL600-50-HB/TR/TAA",
+      "LSPL600-50-UB/TR",
+      "LSPL600-50-UB/TR/TAA",
+      "LSPL800-40-UB/TR/TAA",
+      "LSPL800-50-HB/TR",
+      "LSPL800-50-HB/TR/TAA",
+      "LSPL800-50-UB/TR",
+      "LSPL800-50-UB/TR/TAA"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/a95b11c6f123f5e7792a87ed7b768849d752b4ceda6b886fc51443cbadcc9085",
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/af13732337f909702d1d586dcd5700209448803a62609c38c1bb93a6674d8722"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Liberty",
     "tier": "PRO",
     "subcategory": "Area Light",
-    "sku_count": 69
+    "sku_count": 69,
+    "skus": [
+      "LSBX-L1/HVD/100",
+      "LSBX-L1/HVD/150",
+      "LSBX-L1/HVD/200",
+      "LSBX-L1/HVD/300",
+      "LSBX-L1/HVD/450",
+      "LSBX-L1/OT2/100",
+      "LSBX-L1/OT2/200",
+      "LSBX-L1/OT2/300",
+      "LSBX-L1/OT2/450",
+      "LSBX-L1/OT3/200",
+      "LSBX-L1/OT3/300",
+      "LSBX-L1/OT3/450",
+      "LSBX-L1/OT4/100",
+      "LSBX-L1/OT4/200",
+      "LSBX-L1/OT4/300",
+      "LSBX-L1/OT4/450",
+      "LSBX-L1/OT5/100",
+      "LSBX-L1/OT5/200",
+      "LSBX-L1/OT5/300",
+      "LSBX-L1/OT5/450",
+      "LSBX-L1/PCS/HM3",
+      "LSBX-L1/PCS/UM3",
+      "LSBX-L1/PCS/UM7",
+      "LSBX-L1/RS",
+      "LSBX-L1/RS/450",
+      "LSBX-L1/S100/BK",
+      "LSBX-L1/S100/DB",
+      "LSBX-L1/S200/BK",
+      "LSBX-L1/S200/DB",
+      "LSBX-L1/S300/BK",
+      "LSBX-L1/S300/DB",
+      "LSBX-L1/S450/BK",
+      "LSBX-L1/S450/DB",
+      "LSBX-L1/SF",
+      "LSBX-L1/TN",
+      "LSBX-L1/UA/BK",
+      "LSBX-L1/UA/BK/450",
+      "LSBX-L1/UA/DB",
+      "LSBX-L1/UA/DB/450",
+      "LSBX-L1/UVD/100",
+      "LSBX-L1/UVD/150",
+      "LSBX-L1/UVD/200",
+      "LSBX-L1/UVD/300",
+      "LSBX-L1/UVD/450",
+      "LSBX100-3CS-HLB",
+      "LSBX100-3CS-HLD",
+      "LSBX100-3CS-HLD/TAA",
+      "LSBX100-3CS-ULD",
+      "LSBX100-3CS-ULD/TAA",
+      "LSBX150-3CS-HLD",
+      "LSBX150-3CS-HLD/TAA",
+      "LSBX150-3CS-ULD",
+      "LSBX150-3CS-ULD/TAA",
+      "LSBX200-3CS-HLD",
+      "LSBX200-3CS-HLD/TAA",
+      "LSBX200-3CS-ULD",
+      "LSBX200-3CS-ULD/TAA",
+      "LSBX300-3CS-HLB",
+      "LSBX300-3CS-HLB/UA/OT4",
+      "LSBX300-3CS-HLD",
+      "LSBX300-3CS-HLD/TAA",
+      "LSBX300-3CS-ULB",
+      "LSBX300-3CS-ULD",
+      "LSBX300-3CS-ULD/TAA",
+      "LSBX450-3CS-HLD",
+      "LSBX450-3CS-HLD/TAA",
+      "LSBX450-3CS-ULD",
+      "LSBX450-3CS-ULD/TAA",
+      "LSBX450-3CS-ULW/UA/OT4"
+    ]
   },
   {
     "docs": {
@@ -122,11 +285,16 @@
       "Sell Sheet": "https://workdrive.archipelagolighting.com/external/92a3bfdf52d5a65781d54d78cb0a6cd238cf942e83920d01368f5fa0c63098a8",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/712f892f4d631abb028506be0e0300db2a83656159bcb5b6a6d680efd8da019c"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Navigator",
     "tier": "ECO",
     "subcategory": "Canopy",
-    "sku_count": 3
+    "sku_count": 3,
+    "skus": [
+      "LCNP3W100-3N1-UD",
+      "LCNP3W100-3N1-UD/EM08",
+      "LCNP3W40-3N1-UD"
+    ]
   },
   {
     "docs": {
@@ -135,11 +303,23 @@
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/0e69396c296230d8dc2e7a17ea682723730ffead18e297a89c73f6b22534f58e",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/4b90be99118b97eb714ef4f82410e345d1126e2aae608626aab5e1067f8076c5"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Nightwatch",
     "tier": "PRO",
     "subcategory": "Wall Pack",
-    "sku_count": 10
+    "sku_count": 10,
+    "skus": [
+      "LWPC100-S3N-UB/PSB",
+      "LWPC100-S3N-UD/PSB",
+      "LWPC100-S3N2-UDBA/PSB",
+      "LWPC30-S3N2-UDBA/PSB",
+      "LWPC30-S3N2-UDBA/PSB/EM20",
+      "LWPC38-S3N-UD/PSB",
+      "LWPC38-S3N-UD/PSB/EM08",
+      "LWPC38-S3N-UW/PSB",
+      "LWPC60-S3N2-UDBA/PSB",
+      "LWPC65-S3N-UD/PSB"
+    ]
   },
   {
     "docs": {
@@ -148,72 +328,132 @@
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/fff5cdeec8d0ae84a36cf09016beb98e67bf7c06d1548c083b01be90b3168ba8",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/cc49709b531a0d0bdf35621b05173be200dc0f923aee1e1c5d2a17575fed7eab"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Pathfinder",
     "tier": "PRO",
     "subcategory": "Canopy",
-    "sku_count": 4
+    "sku_count": 4,
+    "skus": [
+      "LCNP060-3CS/27VP1/DB",
+      "LCNP060-3CS/27VP1/DB/BLS",
+      "LCNP110-3CS/27VP1/DB"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/e7dc107cf1c6cc53a5facac9c59d344d227133a536aaf2e340ebbb70968201ce"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Plymouth-II",
     "tier": "ECO",
     "subcategory": "Area Light",
-    "sku_count": 2
+    "sku_count": 2,
+    "skus": [
+      "LSBX-A (2-Hole)",
+      "LSBX-B (2-Hole)"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/de3db03277e8f8f0702dc65086ed1fe6815d127fc0e8cab51efc2ccbe416238d"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Radiator-I",
     "tier": "PRO",
     "subcategory": "Sports Lighting",
-    "sku_count": 3
+    "sku_count": 3,
+    "skus": [
+      "LSPL-R1/TN",
+      "LSPL1200-57R1-HB/TR/020",
+      "LSPL850-57R1-HB/TR/020"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/de3db03277e8f8f0702dc65086ed1fe6815d127fc0e8cab51efc2ccbe416238d"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Radiator-II",
     "tier": "PRO",
     "subcategory": "Sports Lighting",
-    "sku_count": 27
+    "sku_count": 27,
+    "skus": [
+      "LSPL-R/NEMA4X/8",
+      "LSPL-R2/C35",
+      "LSPL-R2/D277/600",
+      "LSPL-R2/D480/600",
+      "LSPL-R2/GV1200",
+      "LSPL-R2/GV600",
+      "LSPL-R2/O20/1200",
+      "LSPL-R2/O20/600",
+      "LSPL-R2/O30/1200",
+      "LSPL-R2/O30/600",
+      "LSPL-R2/O40/1200",
+      "LSPL-R2/O40/600",
+      "LSPL-R2/O60/1200",
+      "LSPL-R2/O60/600",
+      "LSPL-R2/O80/1200",
+      "LSPL-R2/SF1200",
+      "LSPL-R2/SF600",
+      "LSPL1200-50R2-HB/TR",
+      "LSPL1200-50R2-HB/TR/TAA",
+      "LSPL1200-50R2-UB/TR",
+      "LSPL1200-50R2-UB/TR/TAA",
+      "LSPL600-40R2-HB/TR/TAA",
+      "LSPL600-40R2-UB/TR/TAA",
+      "LSPL600-50R2-HB/TR",
+      "LSPL600-50R2-HB/TR/TAA",
+      "LSPL600-50R2-UB/TR",
+      "LSPL600-50R2-UB/TR/TAA"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/de3db03277e8f8f0702dc65086ed1fe6815d127fc0e8cab51efc2ccbe416238d"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Radiator-III",
     "tier": "PRO",
     "subcategory": "Sports Lighting",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": [
+      "LSPL480-RGBR3-UB/TR/O30"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/8e2833f0d1af2eddd5a7a51cd8bd6caf69d532b564423ea1a141cbdc22d751c2",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/2dbc592a893a1bf1a7cfa7b28742c44ba694ab963e267143412cbf63c99c1927"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Ramparts",
     "tier": "ECO",
     "subcategory": "Wall Pack",
-    "sku_count": 2
+    "sku_count": 2,
+    "skus": [
+      "LWPE20-S3R-UB/PS",
+      "LWPE20-S3R-UD/PS"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/a82b70efcd1bd67332c21a6f36df651f6c428b8d04dec772ff062e0053f8e9fb"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Rosetta-III",
     "tier": "PRO+",
     "subcategory": "Area Light",
-    "sku_count": 8
+    "sku_count": 8,
+    "skus": [
+      "LSBX3W150-3CS-27VR3/3A5/D",
+      "LSBX3W150-3CS-27VR3/3A5/D/TAA",
+      "LSBX3W150-3CS-48VR3/3A5/D",
+      "LSBX3W150-3CS-48VR3/3A5/D/TAA",
+      "LSBX3W300-3CS-27VR3/3A5/D",
+      "LSBX3W300-3CS-27VR3/3A5/D/TAA",
+      "LSBX3W300-3CS-48VR3/3A5/D",
+      "LSBX3W300-3CS-48VR3/3A5/D/TAA"
+    ]
   },
   {
     "docs": {
@@ -223,11 +463,19 @@
       "Sell Sheet": "https://workdrive.archipelagolighting.com/external/df25290a8e24fc0832e37932be6c5478d882b2f8e197ffe9e81980e883cd5f9f",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/adc115e172b450c43d092eba6bcbec985233431de684ce74388d856894f8311e"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Sentinel",
     "tier": "PRO",
     "subcategory": "Wall Pack",
-    "sku_count": 6
+    "sku_count": 6,
+    "skus": [
+      "LWPF-S1/MP",
+      "LWPF3W120-3S1-UD/PS",
+      "LWPF3W120-3S1-UD/PS/EM08",
+      "LWPF3W40-3S1-UD/PS",
+      "LWPF3W80-3S1-UD/PS",
+      "LWPF3W80-3S1-UD/PS/EM08"
+    ]
   },
   {
     "docs": {
@@ -237,21 +485,35 @@
       "Sell Sheet": "https://workdrive.archipelagolighting.com/external/c768cf67413a41605a392397e51a8f6e114d0ab3f45a3161d1f18309b42ba947",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/c6535b45eb8d43e07a2ba41ad4ce54db0da7b69ae7786324a49c7d039cfa5d98"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Watchtower",
     "tier": "ECO",
     "subcategory": "Wall Pack",
-    "sku_count": 6
+    "sku_count": 6,
+    "skus": [
+      "LWPC-W1/MP",
+      "LWPC3W080-3W1-UD/PS",
+      "LWPC3W080-3W1-UD/PS/EM08",
+      "LWPC3W120-3W1-UD/PS",
+      "LWPC3W120-3W1-UD/PS/EM08",
+      "LWPC3W120-3W1-UW/PS"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/55f977853b10710b90353762527529a34e89b2b3e3b84bb68bea053d34e76074"
     },
-    "collection": "luxo\u24b6RCH",
+    "collection": "luxoⒶRCH",
     "family": "Wedge-I",
     "tier": "ECO",
     "subcategory": "Wall Pack",
-    "sku_count": 4
+    "sku_count": 4,
+    "skus": [
+      "LWPE10-S3W-UB/PS/EM",
+      "LWPE10-S3W-UD/PS/EM",
+      "LWPE20-S3W-UB/PS/EM",
+      "LWPE20-S3W-UD/PS/EM"
+    ]
   },
   {
     "docs": {
@@ -260,21 +522,86 @@
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/612be57d89278a3d092e8147bd9a2b3a1ce8792ddd2e8f1463e997e911a6195c",
       "Sell Sheet": "https://workdrive.archipelagolighting.com/external/ae5665e0d53ac6ce1ee166c1500c9ff780837a8e23dcee2e92594e61ef808249"
     },
-    "collection": "plano\u24b6RCH",
+    "collection": "planoⒶRCH",
     "family": "Astra",
     "tier": "PRO+",
     "subcategory": "Downlight",
-    "sku_count": 60
+    "sku_count": 60,
+    "skus": [
+      "LCDL-A1/DMS0815",
+      "LCDL-A1/DMS1830",
+      "LCDL-A1/DMS1830/RF10/BF",
+      "LCDL-A1/DMS1830/RF10/MW/SP",
+      "LCDL-A1/DMS1830/RF10/MW/SS",
+      "LCDL-A1/DMS1830/RF10/SP",
+      "LCDL-A1/DMS1830/RF10/SS",
+      "LCDL-A1/DMS1830/RF10/WF",
+      "LCDL-A1/DMS1830/RF4/BF",
+      "LCDL-A1/DMS1830/RF4/MW/SP",
+      "LCDL-A1/DMS1830/RF4/MW/SS",
+      "LCDL-A1/DMS1830/RF4/SP",
+      "LCDL-A1/DMS1830/RF4/SS",
+      "LCDL-A1/DMS1830/RF4/WF",
+      "LCDL-A1/DMS1830/RF6/BF",
+      "LCDL-A1/DMS1830/RF6/MW/SP",
+      "LCDL-A1/DMS1830/RF6/MW/SS",
+      "LCDL-A1/DMS1830/RF6/SP",
+      "LCDL-A1/DMS1830/RF6/SS",
+      "LCDL-A1/DMS1830/RF6/WF",
+      "LCDL-A1/DMS1830/RF8/BF",
+      "LCDL-A1/DMS1830/RF8/MW/SP",
+      "LCDL-A1/DMS1830/RF8/MW/SS",
+      "LCDL-A1/DMS1830/RF8/SP",
+      "LCDL-A1/DMS1830/RF8/SS",
+      "LCDL-A1/DMS1830/RF8/WF",
+      "LCDL-A1/DMS1830/SR4/MW/SS",
+      "LCDL-A1/DMS1830/SR6/MW/SS",
+      "LCDL-A1/DMS1830/SR8/MW/SS",
+      "LCDL-A1/DMS3050",
+      "LCDL-A1/RF10/BF",
+      "LCDL-A1/RF10/MW/SP",
+      "LCDL-A1/RF10/MW/SS",
+      "LCDL-A1/RF10/SP",
+      "LCDL-A1/RF10/SS",
+      "LCDL-A1/RF10/WF",
+      "LCDL-A1/RF4/BF",
+      "LCDL-A1/RF4/MW/SP",
+      "LCDL-A1/RF4/MW/SS",
+      "LCDL-A1/RF4/SP",
+      "LCDL-A1/RF4/SS",
+      "LCDL-A1/RF4/WF",
+      "LCDL-A1/RF6/BF",
+      "LCDL-A1/RF6/MW/SP",
+      "LCDL-A1/RF6/MW/SS",
+      "LCDL-A1/RF6/SP",
+      "LCDL-A1/RF6/SS",
+      "LCDL-A1/RF6/WF",
+      "LCDL-A1/RF8/BF",
+      "LCDL-A1/RF8/MW/SP",
+      "LCDL-A1/RF8/MW/SS",
+      "LCDL-A1/RF8/SP",
+      "LCDL-A1/RF8/SS",
+      "LCDL-A1/RF8/WF",
+      "LCDL-A1/SR4/MS/SS",
+      "LCDL-A1/SR4/MW/SS",
+      "LCDL-A1/SR6/MS/SS",
+      "LCDL-A1/SR6/MW/SS",
+      "LCDL-A1/SR8/MS/SS",
+      "LCDL-A1/SR8/MW/SS"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/1edb47e6a7295b928e63a305561952997981eae44f75701f05d84d8aa2bfe30a"
     },
-    "collection": "plano\u24b6RCH",
+    "collection": "planoⒶRCH",
     "family": "Brooklyn",
     "tier": "ECO",
     "subcategory": "Wraparound",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": [
+      "LWRP4xx-S3"
+    ]
   },
   {
     "docs": {
@@ -283,11 +610,29 @@
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/cc324f0848a53b385979472bdfdb8ce6819e2a31f9a0ffb70b3c9777cbb26e2d",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/52a870c2b796f49cd5c921dd73fd9ea055a65b58d19df7246470c522db9113ea"
     },
-    "collection": "plano\u24b6RCH",
+    "collection": "planoⒶRCH",
     "family": "Lara",
     "tier": "ECO",
     "subcategory": "Architectural Linear",
-    "sku_count": 16
+    "sku_count": 16,
+    "skus": [
+      "LUXA-LARA1/NL-LJ/W",
+      "LUXA-LARA1/NL-SLJ",
+      "LUXA-LARA1/NL-TJ/W",
+      "LUXA-LARA1/NL-XJ/W",
+      "LUXA-LARA1/NPC/B",
+      "LUXA-LARA1/NPC/W",
+      "LUXA-LARA1/PC/B",
+      "LUXA-LARA1/PC/W",
+      "LUXA-LARA1/SMC/B",
+      "LUXA-LARA1/SMC/W",
+      "LUXA2-3W20-5CSU/LARA/B",
+      "LUXA2-3W20-5CSU/LARA/W",
+      "LUXA4-3W40-5CSU/LARA/B",
+      "LUXA4-3W40-5CSU/LARA/W",
+      "LUXA8-3W80-5CSU/LARA/B",
+      "LUXA8-3W80-5CSU/LARA/W"
+    ]
   },
   {
     "docs": {
@@ -295,22 +640,76 @@
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/b69925328ed34b409dd59ad07593b52acb906ef76b5f43bf7f3bd428d3d8a807",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/323c7487bc6cfe286af8c978b7188d31f1da13ded643b8b13a19df1884dae49b"
     },
-    "collection": "plano\u24b6RCH",
+    "collection": "planoⒶRCH",
     "family": "Luna",
     "tier": "PRO+",
     "subcategory": "Architectural Linear",
-    "sku_count": 36
+    "sku_count": 36,
+    "skus": [
+      "LUXA-LUNA1/A/C05BK",
+      "LUXA-LUNA1/A/C05WH",
+      "LUXA-LUNA1/A/C12BK",
+      "LUXA-LUNA1/A/C12WH",
+      "LUXA-LUNA1/C/RBK",
+      "LUXA-LUNA1/C/RWH",
+      "LUXA-LUNA1/C/SBK",
+      "LUXA-LUNA1/C/SWH",
+      "LUXA-LUNA1/J/L-ACL",
+      "LUXA-LUNA1/J/L-LCJ",
+      "LUXA-LUNA1/J/L-SLJ",
+      "LUXA-LUNA1/J/NL-LCJ",
+      "LUXA-LUNA1/J/NL-SLJ",
+      "LUXA-LUNA1/J/NL-TJ",
+      "LUXA-LUNA1/J/NL-VJ",
+      "LUXA-LUNA1/J/NL-XJ",
+      "LUXA-LUNA1/J/NL-YJ",
+      "LUXA-LUNA1/J/NL-ZJ",
+      "LUXA-LUNA1/M/DW",
+      "LUXA-LUNA1/M/RH",
+      "LUXA-LUNA1/M/RS",
+      "LUXA-LUNA1/M/RT",
+      "LUXA-LUNA1/M/SMK",
+      "LUXA-LUNA1/M/TF",
+      "LUXA-LUNA1/M/TS",
+      "LUXA-LUNA1/M/TX",
+      "LUXA-LUNA1/O/CRL",
+      "LUXA-LUNA1/O/DRS",
+      "LUXA-LUNA1/O/LVR",
+      "LUXA-LUNA1/O/MRF",
+      "LUXA-LUNA1/O/WWS",
+      "LUXA2-3W20-3CS/27V/LUNA/80/BK/DFS",
+      "LUXA3-3W30-3CS/27V/LUNA/80/WH/DFS",
+      "LUXA4-3W40-3CS/27V/LUNA/80/BK/DFS",
+      "LUXA4-3W40-3CS/27V/LUNA/80/WH/DFS",
+      "LUXA8-3W80-3CS/27V/LUNA/80/WH/DFS"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/b60e7f8bb3aa2ca0f0f027b6c3a83b47c1fc9168d44b9fe89179099280828bee",
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/413a6f0d545644236dd22e095dadf5f66c8fea0c88c9de7bb42bc9af6e41ef5f"
     },
-    "collection": "plano\u24b6RCH",
+    "collection": "planoⒶRCH",
     "family": "Luxmark",
     "tier": "PRO+",
     "subcategory": "Troffer",
-    "sku_count": 14
+    "sku_count": 14,
+    "skus": [
+      "LPVT14-3550CS",
+      "LPVT14-3550CS/EM08",
+      "LPVT14-RFK",
+      "LPVT14-RFK/AR",
+      "LPVT22-2035CS",
+      "LPVT22-2035CS/EM08",
+      "LPVT22-RFK",
+      "LPVT22-RFK/AR",
+      "LPVT24-3550CS",
+      "LPVT24-3550CS/EM08",
+      "LPVT24-RFK",
+      "LPVT24-RFK/AR",
+      "RP-LBLP22",
+      "RP-LBLP24"
+    ]
   },
   {
     "docs": {
@@ -319,53 +718,116 @@
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/92c52037381939b7b4c49e02d8b817d809c5f896cc8660fbd0ffd2fcd58c0b52",
       "Sell Sheet": "https://workdrive.archipelagolighting.com/external/ef9487359b35fe4be33c4823c8d5b92275f395a4331ab49b2892bc9a26f68295"
     },
-    "collection": "plano\u24b6RCH",
+    "collection": "planoⒶRCH",
     "family": "Solstice",
     "tier": "ECO",
     "subcategory": "Downlight",
-    "sku_count": 37
+    "sku_count": 37,
+    "skus": [
+      "LCDL-SE/JCB",
+      "LCDL-SE/NCP",
+      "LCDL10-2238CS",
+      "LCDL10-SE/BK",
+      "LCDL10-SE/BK/WW",
+      "LCDL10-SE/BN",
+      "LCDL10-SE/BN/WW",
+      "LCDL10-SE/BR",
+      "LCDL10-SE/BR/WW",
+      "LCDL10-SE/WH/WW",
+      "LCDL4-0612CS",
+      "LCDL4-0612CS/SQ",
+      "LCDL4-SE/BK",
+      "LCDL4-SE/BK/WW",
+      "LCDL4-SE/BN",
+      "LCDL4-SE/BN/WW",
+      "LCDL4-SE/BR",
+      "LCDL4-SE/BR/WW",
+      "LCDL4-SE/WH/WW",
+      "LCDL6-1222CS",
+      "LCDL6-1222CS/SQ",
+      "LCDL6-SE/BK",
+      "LCDL6-SE/BK/WW",
+      "LCDL6-SE/BN",
+      "LCDL6-SE/BN/WW",
+      "LCDL6-SE/BR",
+      "LCDL6-SE/BR/WW",
+      "LCDL6-SE/WH/WW",
+      "LCDL8-1730CS",
+      "LCDL8-1730CSSQ",
+      "LCDL8-SE/BK",
+      "LCDL8-SE/BK/WW",
+      "LCDL8-SE/BN",
+      "LCDL8-SE/BN/WW",
+      "LCDL8-SE/BR",
+      "LCDL8-SE/BR/WW",
+      "LCDL8-SE/WH/WW"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/d39f310fe1da374e07df42bdbcd9af7d99394e6590f8ccce7d2eafdbcc7c65ab",
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/dc3018177372c8829dd6205f53f9e02bc2c554183013280829032d7aa885650d"
     },
-    "collection": "plano\u24b6RCH",
+    "collection": "planoⒶRCH",
     "family": "Solstice SafeZone",
     "tier": "PRO",
     "subcategory": "Downlight",
-    "sku_count": 4
+    "sku_count": 4,
+    "skus": [
+      "LCDL10-2635/SSZ5/RS",
+      "LCDL4-0711/SSZ5/RS",
+      "LCDL6-1119/SSZ5/RS",
+      "LCDL8-2227/SSZ5/RS"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/db29f9a7e9166225bdb27935edd5d21c5098fd5272c1e3b35731ab6f88eae3e7"
     },
-    "collection": "plano\u24b6RCH",
+    "collection": "planoⒶRCH",
     "family": "Spectra",
     "tier": "PRO+",
     "subcategory": "Downlight",
-    "sku_count": 5
+    "sku_count": 5,
+    "skus": [
+      "LCDL-S1/DMS1020",
+      "LCDL-S1/DMS2740",
+      "LCDL-S1/DMS3060",
+      "LCDL-S1/RF04/BF",
+      "LCDL-S1/RF04/WF"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/32046128704b99e8a8b07a8f0b4de848904e480bc02ca03bdb57d9f3fd4b2b78"
     },
-    "collection": "plano\u24b6RCH",
+    "collection": "planoⒶRCH",
     "family": "Trackstar",
     "tier": "ECO",
     "subcategory": "Track Light",
-    "sku_count": 3
+    "sku_count": 3,
+    "skus": [
+      "LTRK3W20-5CS/90/2050/B",
+      "LTRK3W20-5CS/90/2050/W",
+      "LTRK3W30-5CS/90/2050/B"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/95342653dadc2275c207efc757d8cf25e44b2cccbc0f6c930c36154cf9130c79",
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/ef3d004954e8757894627cc8b5ea1dc632c5543cecdea77485fc44cb467face2"
     },
-    "collection": "plano\u24b6RCH",
+    "collection": "planoⒶRCH",
     "family": "Waymark",
     "tier": "PRO",
     "subcategory": "Wraparound",
-    "sku_count": 4
+    "sku_count": 4,
+    "skus": [
+      "LWRL2-2035CS",
+      "LWRL2-2035CS/EM08",
+      "LWRL4-3550CS",
+      "LWRL4-3550CS/EM08"
+    ]
   },
   {
     "docs": {
@@ -373,11 +835,16 @@
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/9c50ddaa360257ee94a5054fcfb7a9ece26f3e0bc53105e42e467d2663435b8e",
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/8123536c3523f6fe8d448fb88db1b3c2abf00076f628c62ca6120c17fcb6f6f8"
     },
-    "collection": "plano\u24b6RCH",
-    "family": "pro\u24b6RCH-I",
+    "collection": "planoⒶRCH",
+    "family": "proⒶRCH-I",
     "tier": "PRO",
     "subcategory": "Panel",
-    "sku_count": 3
+    "sku_count": 3,
+    "skus": [
+      "LBLP14-xx-A2",
+      "LBLP22-xx-A7",
+      "LBLP24-xx-A6"
+    ]
   },
   {
     "docs": {
@@ -386,52 +853,122 @@
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/8123536c3523f6fe8d448fb88db1b3c2abf00076f628c62ca6120c17fcb6f6f8",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/502818fc833b2636b972b0a29b48e8b67a8d1d28dcb1dc717ec430e7109572da"
     },
-    "collection": "plano\u24b6RCH",
-    "family": "pro\u24b6RCH-II",
+    "collection": "planoⒶRCH",
+    "family": "proⒶRCH-II",
     "tier": "PRO",
     "subcategory": "Panel",
-    "sku_count": 18
+    "sku_count": 18,
+    "skus": [
+      "LBLP14-33MXP2",
+      "LBLP14-33MXP2/EM",
+      "LBLP14-33MXP2/SR",
+      "LBLP14-33MXP2/SR/EM",
+      "LBLP22-33MXP2",
+      "LBLP22-33MXP2/EM",
+      "LBLP22-33MXP2/SR",
+      "LBLP22-33MXP2/SR/EM",
+      "LBLP24-33MXP2",
+      "LBLP24-33MXP2/E6W3",
+      "LBLP24-33MXP2/EM",
+      "LBLP24-33MXP2/SR",
+      "LBLP24-33MXP2/SR/EM",
+      "MXP2/BEM14",
+      "MXP2/BEM22",
+      "MXP2/BEM24",
+      "MXP2/EMBX14",
+      "MXP2/EMBX22"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/fbc1f1e87c6a52e886612dd9df7d94167be246c43b186d0a41d1f797066e0e10",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/b23130b02ad7f3f8c0b28c71bad5123e7f4d076b41f9c1ec579682d41cf674c9"
     },
-    "collection": "plano\u24b6RCH",
-    "family": "pro\u24b6RCH-III",
+    "collection": "planoⒶRCH",
+    "family": "proⒶRCH-III",
     "tier": "PRO+",
     "subcategory": "Panel",
-    "sku_count": 13
+    "sku_count": 13,
+    "skus": [
+      "LBLP14-55MXP3",
+      "LBLP14-55MXP3/EM",
+      "LBLP14-55MXP3/SR",
+      "LBLP14-55MXP3/SR/EM",
+      "LBLP22-55MXP3",
+      "LBLP22-55MXP3/EM",
+      "LBLP22-55MXP3/SR",
+      "LBLP22-55MXP3/SR/EM",
+      "LBLP24-55MXP3",
+      "LBLP24-55MXP3/EM",
+      "LBLP24-55MXP3/HD",
+      "LBLP24-55MXP3/SR",
+      "LBLP24-55MXP3/SR/EM"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/0f358b2bb3966817f88e12c6734634d41303dbc2d77a0d1545f1fbd1109fd7a6"
     },
-    "collection": "plano\u24b6RCH",
-    "family": "quince\u24b6RCH",
+    "collection": "planoⒶRCH",
+    "family": "quinceⒶRCH",
     "tier": "PRO",
     "subcategory": "Panel",
-    "sku_count": 5
+    "sku_count": 5,
+    "skus": [
+      "LBLP14-Q/SPP",
+      "LBLP22-Q/SPP",
+      "LBLP22-Q53",
+      "LBLP24-Q/SPP",
+      "LBLP24-Q53"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/2e4ad4a44469f9086bda6f9e57539495239fd53dd4cd66a9efe59eab41d66bcb"
     },
-    "collection": "plano\u24b6RCH",
-    "family": "retro\u24b6RCH-P1",
+    "collection": "planoⒶRCH",
+    "family": "retroⒶRCH-P1",
     "tier": "PRO",
     "subcategory": "Retrofit Panel",
-    "sku_count": 12
+    "sku_count": 12,
+    "skus": [
+      "LBLR14-33MXP1",
+      "LBLR14-33MXP1/EM",
+      "LBLR14-33MXP1/SR",
+      "LBLR14-33MXP1/SR/EM",
+      "LBLR22-33MXP1",
+      "LBLR22-33MXP1/EM",
+      "LBLR22-33MXP1/SR",
+      "LBLR22-33MXP1/SR/EM",
+      "LBLR24-33MXP1",
+      "LBLR24-33MXP1/EM",
+      "LBLR24-33MXP1/SR",
+      "LBLR24-33MXP1/SR/EM"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/6b1d23f01d80d7437dadd722273a744e32a9686118358434997e99838e1064df"
     },
-    "collection": "plano\u24b6RCH",
-    "family": "retro\u24b6RCH-T1",
+    "collection": "planoⒶRCH",
+    "family": "retroⒶRCH-T1",
     "tier": "PRO",
     "subcategory": "Retrofit Troffer",
-    "sku_count": 12
+    "sku_count": 12,
+    "skus": [
+      "LPVR14-33MXP1",
+      "LPVR14-33MXP1/EM",
+      "LPVR14-33MXP1/SR",
+      "LPVR14-33MXP1/SR/EM",
+      "LPVR22-33MXP1",
+      "LPVR22-33MXP1/EM",
+      "LPVR22-33MXP1/SR",
+      "LPVR22-33MXP1/SR/EM",
+      "LPVR24-33MXP1",
+      "LPVR24-33MXP1/EM",
+      "LPVR24-33MXP1/SR",
+      "LPVR24-33MXP1/SR/EM"
+    ]
   },
   {
     "docs": {
@@ -439,51 +976,96 @@
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/19ed230089d4723e623794e83623f99bf0c60d041cea7dceb12c257a3bdeaa32",
       "Sell Sheet": "https://workdrive.archipelagolighting.com/external/9e891fd8f5a83974e34513f2c40a82dc59b9d00a5c10b252e693a463061a1222"
     },
-    "collection": "plano\u24b6RCH",
-    "family": "select\u24b6RCH",
+    "collection": "planoⒶRCH",
+    "family": "selectⒶRCH",
     "tier": "ECO",
     "subcategory": "Troffer",
-    "sku_count": 8
+    "sku_count": 8,
+    "skus": [
+      "LBLP14-S3",
+      "LBLP14-S3/TAA",
+      "LBLP22-S3",
+      "LBLP22-S3/TAA",
+      "LBLP24-S3",
+      "LBLP24-S3/TAA",
+      "LPNL22-25-40-A1",
+      "LPNL22-36-41-S",
+      "LPNL22-40-35-A1",
+      "LPNL24-60-50-A1",
+      "LPVT22-35-40",
+      "LPVT22-5S4",
+      "LPVT22-5S4/EM08",
+      "LPVT22-xx-S3",
+      "LPVT24-50-40",
+      "LPVT24-5S4",
+      "LPVT24-xx-S3",
+      "LPVT24-xx-S3-EM"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/4fd00eb045e2f80e75e22ff646c5bace0cc81121306368160513db5b86bb2934"
     },
-    "collection": "plano\u24b6RCH",
-    "family": "venti\u24b6RCH",
+    "collection": "planoⒶRCH",
+    "family": "ventiⒶRCH",
     "tier": "PRO+",
     "subcategory": "Panel",
-    "sku_count": 6
+    "sku_count": 6,
+    "skus": [
+      "LBLP14-V54-EM08",
+      "LBLP14-V54/SR",
+      "LBLP22-V54-EM08",
+      "LBLP22-V54/SR",
+      "LBLP24-V54-EM08",
+      "LBLP24-V54/SR"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/27e89cf44863576cb40ef3fa09ce21d6661ddfc42dc70bfda7ca246931b60718"
     },
-    "collection": "lampar\u24b6RCH",
+    "collection": "lamparⒶRCH",
     "family": "Apollo-II",
     "tier": "ECO",
     "subcategory": "High-Bay",
-    "sku_count": 7
+    "sku_count": 7,
+    "skus": [
+      "LLHB-A/JBL",
+      "LLHB-A/WG2",
+      "LLHB-A/WG4",
+      "LLHB2110-xx-U2",
+      "LLHB2130-xx-U2",
+      "LLHB2160-xx-U2",
+      "LLHB4400-xx-U2"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/d0105663a590e471bfbdbb2c935f979184091e972fad76516d98109642d230b2"
     },
-    "collection": "lampar\u24b6RCH",
+    "collection": "lamparⒶRCH",
     "family": "Atlas-I",
     "tier": "ECO",
     "subcategory": "High-Bay",
-    "sku_count": 2
+    "sku_count": 2,
+    "skus": [
+      "LRHB150-50-UDM",
+      "LRHB400-50-HDM"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/d0105663a590e471bfbdbb2c935f979184091e972fad76516d98109642d230b2"
     },
-    "collection": "lampar\u24b6RCH",
+    "collection": "lamparⒶRCH",
     "family": "Atlas-II",
     "tier": "PRO",
     "subcategory": "High-Bay",
-    "sku_count": 2
+    "sku_count": 2,
+    "skus": [
+      "LRHB3WS-UXCW/B",
+      "LRHB3WS-UXCW/W"
+    ]
   },
   {
     "docs": {
@@ -491,22 +1073,41 @@
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/5a4e605d2114f1ebd94e45d5286fbd61197c602213c865fb44b81b3c4ccf3e7a",
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/8c6f030526cc2b5737997c8a22d515098b68c92490518e8623807af898ed9343"
     },
-    "collection": "lampar\u24b6RCH",
+    "collection": "lamparⒶRCH",
     "family": "Eureka-I",
     "tier": "PRO",
     "subcategory": "Vapor-Tight",
-    "sku_count": 8
+    "sku_count": 8,
+    "skus": [
+      "LV3P-E1/AM",
+      "LV3P-E1/JBH",
+      "LV3P-E1/SM",
+      "LV3P-E1/TP",
+      "LV3P-E1/VH",
+      "LV3P4-3GTU-S3S",
+      "LV3P4-3HBP-3CS/CL",
+      "LV3P4-3HBU-3CS/CL"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/c52420238748964094ef1e3f351606e0c73cdd6f76865c36cda12e2f641b978b",
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/52c9bdf1ce1a4715015cc249751b89bdd934423735cb8956aa4f27c9af67aa22"
     },
-    "collection": "lampar\u24b6RCH",
+    "collection": "lamparⒶRCH",
     "family": "Eureka-II",
     "tier": "ECO",
     "subcategory": "Vapor-Tight",
-    "sku_count": 7
+    "sku_count": 7,
+    "skus": [
+      "LV3P-E2/JBH",
+      "LV3P2-3E20-S3P",
+      "LV3P4-3E135-S3P",
+      "LV3P4-3E250-S3P",
+      "LV3P4-3E40-S3P",
+      "LV3P4-3E46-3SP",
+      "LV3P8-3E80-S3P"
+    ]
   },
   {
     "docs": {
@@ -514,11 +1115,59 @@
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/78a4f307a29adcc911703a0b06be548032c4a626c68bc4d73b0ff8a32c4afd6f",
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/4c06a097400759e8193decaf8b63c437c0e84335f027ce1b8a3f9ae2173924c0"
     },
-    "collection": "lampar\u24b6RCH",
+    "collection": "lamparⒶRCH",
     "family": "Hallmark",
     "tier": "PRO+",
     "subcategory": "Linear Strip",
-    "sku_count": 46
+    "sku_count": 46,
+    "skus": [
+      "LLSN-H1/DCP",
+      "LLSN-H1/FL2",
+      "LLSN-H1/FL4",
+      "LLSN-H1/FL8",
+      "LLSN-H1/FR2",
+      "LLSN-H1/FR4",
+      "LLSN-H1/FR8",
+      "LLSN-H1/MAC",
+      "LLSN-H1/MJP",
+      "LLSN-H1/RL2",
+      "LLSN-H1/RL4",
+      "LLSN-H1/RL8",
+      "LLSN-H1/WL2",
+      "LLSN-H1/WL4",
+      "LLSN-H1/WL8",
+      "LLSN2-2035CS",
+      "LLSN2-2035CS/B",
+      "LLSN2-2035CS/B/FL",
+      "LLSN2-2035CS/B/FR",
+      "LLSN2-2035CS/B/RL",
+      "LLSN2-2035CS/B/WL",
+      "LLSN2-2035CS/FL",
+      "LLSN2-2035CS/FR",
+      "LLSN2-2035CS/RL",
+      "LLSN2-2035CS/WL",
+      "LLSN4-3550CS",
+      "LLSN4-3550CS/B",
+      "LLSN4-3550CS/B/FL",
+      "LLSN4-3550CS/B/FR",
+      "LLSN4-3550CS/B/RL",
+      "LLSN4-3550CS/B/WL",
+      "LLSN4-3550CS/FL",
+      "LLSN4-3550CS/FR",
+      "LLSN4-3550CS/RL",
+      "LLSN4-3550CS/WL",
+      "LLSN8-40100CS",
+      "LLSN8-40100CS/B",
+      "LLSN8-40100CS/B/FL",
+      "LLSN8-40100CS/B/FR",
+      "LLSN8-40100CS/B/RL",
+      "LLSN8-40100CS/B/WL",
+      "LLSN8-40100CS/FL",
+      "LLSN8-40100CS/FR",
+      "LLSN8-40100CS/RL",
+      "LLSN8-40100CS/WL",
+      "RP-LLSN4"
+    ]
   },
   {
     "docs": {
@@ -526,11 +1175,48 @@
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/ec4c66e6955931d8c9ddb3c8b721f0147d96f603d822bf3d2775dbdbef159f5a",
       "Sell Sheet": "https://workdrive.archipelagolighting.com/external/d3fbdd15375195673cba94d1c6ed72f4fd022c258c798f2104fe9f2bdfda3e77"
     },
-    "collection": "lampar\u24b6RCH",
+    "collection": "lamparⒶRCH",
     "family": "Icarus",
     "tier": "ECO",
     "subcategory": "High-Bay",
-    "sku_count": 28
+    "sku_count": 28,
+    "skus": [
+      "LRHB-I2/PR30",
+      "LRHB-I2/PR35",
+      "LRHB-I2/UB",
+      "LRHB-I3/AR150",
+      "LRHB-I3/AR240",
+      "LRHB-I3/AR300",
+      "LRHB-I3/MH12",
+      "LRHB-I3/MR",
+      "LRHB-I3/MSH",
+      "LRHB-I3/MYK",
+      "LRHB-I3/PD150",
+      "LRHB-I3/PD240",
+      "LRHB-I3/PD300",
+      "LRHB-I3/PR150",
+      "LRHB-I3/PR240",
+      "LRHB-I3/PR300",
+      "LRHB-I3/WG150",
+      "LRHB-I3/WG240",
+      "LRHB-I3/WG300",
+      "LRHB3W-S4-UA30R",
+      "LRHB3W-S4-UA30R/W",
+      "LRHB3W-S4-UA35R",
+      "LRHB3W-S4-UA35R/W",
+      "LRHB3W150-S4-I3U/B",
+      "LRHB3W150-S4-I3U/B/TAA",
+      "LRHB3W150-S4-I3U/W",
+      "LRHB3W150-S4-I3U/W/TAA",
+      "LRHB3W240-S4-I3U/B",
+      "LRHB3W240-S4-I3U/B/TAA",
+      "LRHB3W240-S4-I3U/W",
+      "LRHB3W240-S4-I3U/W/TAA",
+      "LRHB3W300-S4-I3U/B",
+      "LRHB3W300-S4-I3U/B/TAA",
+      "LRHB3W300-S4-I3U/W",
+      "LRHB3W300-S4-I3U/W/TAA"
+    ]
   },
   {
     "docs": {
@@ -538,33 +1224,58 @@
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/ec4c66e6955931d8c9ddb3c8b721f0147d96f603d822bf3d2775dbdbef159f5a",
       "Sell Sheet": "https://workdrive.archipelagolighting.com/external/d3fbdd15375195673cba94d1c6ed72f4fd022c258c798f2104fe9f2bdfda3e77"
     },
-    "collection": "lampar\u24b6RCH",
+    "collection": "lamparⒶRCH",
     "family": "Icarus-II",
     "tier": "ECO",
     "subcategory": "High-Bay",
-    "sku_count": 7
+    "sku_count": 7,
+    "skus": [
+      "LRHB-I2/PR30",
+      "LRHB-I2/PR35",
+      "LRHB-I2/UB",
+      "LRHB3W-S4-UA30R",
+      "LRHB3W-S4-UA30R/W",
+      "LRHB3W-S4-UA35R",
+      "LRHB3W-S4-UA35R/W"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/cc8968693812d0917176493d291eb96433b7d8031f18e54448fd237581a8d0df",
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/2cff7cff093ec3345deaef2b5f75c895f22da92bb4772148f9b1f67bfecc286e"
     },
-    "collection": "lampar\u24b6RCH",
+    "collection": "lamparⒶRCH",
     "family": "Juno-I",
     "tier": "ECO",
     "subcategory": "Linear Strip",
-    "sku_count": 3
+    "sku_count": 3,
+    "skus": [
+      "LCL4-41",
+      "LLSN40-41-4-IS",
+      "LLSN64-50-8"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/cc8968693812d0917176493d291eb96433b7d8031f18e54448fd237581a8d0df",
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/2cff7cff093ec3345deaef2b5f75c895f22da92bb4772148f9b1f67bfecc286e"
     },
-    "collection": "lampar\u24b6RCH",
+    "collection": "lamparⒶRCH",
     "family": "Juno-II",
     "tier": "ECO",
     "subcategory": "Linear Strip",
-    "sku_count": 9
+    "sku_count": 9,
+    "skus": [
+      "LLSN-JBuckle",
+      "LLSN-JPlate",
+      "LLSN-JSuspn4",
+      "LLSN10-xx-2 (S3)",
+      "LLSN24-xx-2 (S3)",
+      "LLSN24-xx-4 (S3)",
+      "LLSN40-xx-4 (S3)",
+      "LLSN40-xx-4-EM08 (S3)",
+      "LLSN40-xx-4-IS (S3)"
+    ]
   },
   {
     "docs": {
@@ -572,11 +1283,47 @@
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/1ffb29f5f404d0232a9b83ccebcc486f6c808751bfafcf8017db4636c6f903fe",
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/2b1897fd58410daa3605ef93b3787f0333da864434b42e2cb5c6f45a45a14d33"
     },
-    "collection": "lampar\u24b6RCH",
+    "collection": "lamparⒶRCH",
     "family": "Jupiter",
     "tier": "PRO",
     "subcategory": "High-Bay",
-    "sku_count": 27
+    "sku_count": 27,
+    "skus": [
+      "LRHB-J2/AR240",
+      "LRHB-J2/AR300",
+      "LRHB-J2/AR400",
+      "LRHB-J2/MH12",
+      "LRHB-J2/MSH",
+      "LRHB-J2/MYK",
+      "LRHB-J2/PD240",
+      "LRHB-J2/PD300",
+      "LRHB-J2/PD400",
+      "LRHB-J2/PR240",
+      "LRHB-J2/PR300",
+      "LRHB-J2/PR400",
+      "LRHB-J2/WG240",
+      "LRHB-J2/WG300",
+      "LRHB-J2/WG400",
+      "LRHB-JAR150",
+      "LRHB-JPD",
+      "LRHB-JPR",
+      "LRHB-JWG",
+      "LRHB100-080-U50-H",
+      "LRHB150-080-U50-H",
+      "LRHB150-3CS-UJ2",
+      "LRHB150-3CS-UJ2/TAA",
+      "LRHB200-080-U50-H",
+      "LRHB240-3CS-UJ2",
+      "LRHB240-3CS-UJ2/TAA",
+      "LRHB300-3CS-UJ2",
+      "LRHB300-3CS-UJ2/TAA",
+      "LRHB400-40C-UJ2",
+      "LRHB400-40C-UJ2/TAA",
+      "LRHB400-50C-HJ2",
+      "LRHB400-50C-HJ2/TAA",
+      "LRHB400-50C-UJ2",
+      "LRHB400-50C-UJ2/TAA"
+    ]
   },
   {
     "docs": {
@@ -584,11 +1331,20 @@
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/1ffb29f5f404d0232a9b83ccebcc486f6c808751bfafcf8017db4636c6f903fe",
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/2b1897fd58410daa3605ef93b3787f0333da864434b42e2cb5c6f45a45a14d33"
     },
-    "collection": "lampar\u24b6RCH",
+    "collection": "lamparⒶRCH",
     "family": "Jupiter-I",
     "tier": "PRO",
     "subcategory": "High-Bay",
-    "sku_count": 7
+    "sku_count": 7,
+    "skus": [
+      "LRHB-JAR150",
+      "LRHB-JPD",
+      "LRHB-JPR",
+      "LRHB-JWG",
+      "LRHB100-080-U50-H",
+      "LRHB150-080-U50-H",
+      "LRHB200-080-U50-H"
+    ]
   },
   {
     "docs": {
@@ -598,11 +1354,19 @@
       "Sell Sheet": "https://workdrive.archipelagolighting.com/external/9462c98dcb65471ba7217f521ae432bcea4f97a62d34d88394f16c25504bea11",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/36aba3d4e4f7db459c1d5f93660b9a59247853cd2ddea7508b744e0bf8b02c51"
     },
-    "collection": "lampar\u24b6RCH",
+    "collection": "lamparⒶRCH",
     "family": "Tiny",
     "tier": "ECO",
     "subcategory": "High-Bay",
-    "sku_count": 6
+    "sku_count": 6,
+    "skus": [
+      "LLHB085-UT50",
+      "LLHB150-HT50",
+      "LLHB150-UT50",
+      "LLHB220-HT50",
+      "LLHB220-UT50",
+      "LLHB220-UT50/TAA"
+    ]
   },
   {
     "docs": {
@@ -610,11 +1374,53 @@
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/f41d54dc5a946dc5190ccfe811bb6403285c3dedf41822154d06a94476b1b73a",
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/b2976e29e033a099bff5b196a74af051ed246de137878ea2a2126e0c74778548"
     },
-    "collection": "lampar\u24b6RCH",
+    "collection": "lamparⒶRCH",
     "family": "Titan",
     "tier": "PRO",
     "subcategory": "High-Bay",
-    "sku_count": 40
+    "sku_count": 40,
+    "skus": [
+      "LLHB-T2/155-O4090",
+      "LLHB-T2/155-O6565",
+      "LLHB-T2/155-O9090",
+      "LLHB-T2/320-O4090",
+      "LLHB-T2/320-O6565",
+      "LLHB-T2/320-O9090",
+      "LLHB-T2/400-O4090",
+      "LLHB-T2/400-O6565",
+      "LLHB-T2/400-O9090",
+      "LLHB-T2/BSD",
+      "LLHB-T2/HVD155",
+      "LLHB-T2/HVD320",
+      "LLHB-T2/HVD400",
+      "LLHB-T2/JBX",
+      "LLHB-T2/PDM",
+      "LLHB-T2/SFM",
+      "LLHB-T2/SPM",
+      "LLHB-T2/WG155",
+      "LLHB-T2/WG320",
+      "LLHB-T2/WG400",
+      "LLHB155-2CS-HT/O9090",
+      "LLHB155-2CS-HT/O9090/TAA",
+      "LLHB155-2CS-UT/O9090",
+      "LLHB155-2CS-UT/O9090/TAA",
+      "LLHB320-2CS-HT/O9090",
+      "LLHB320-2CS-HT/O9090/TAA",
+      "LLHB320-2CS-UT/O4090",
+      "LLHB320-2CS-UT/O6565",
+      "LLHB320-2CS-UT/O9090",
+      "LLHB320-2CS-UT/O9090/TAA",
+      "LLHB400-2CS-HT/O9090",
+      "LLHB400-2CS-HT/O9090/TAA",
+      "LLHB400-2CS-UT/O9090",
+      "LLHB400-2CS-UT/O9090/TAA",
+      "LLHB500-2CS-HT/O9090",
+      "LLHB500-2CS-HT/O9090/TAA",
+      "LLHB500-2CS-UT/O9090",
+      "LLHB500-2CS-UT/O9090/TAA",
+      "LLHB600-2CS-UT/O9090",
+      "LLHB600-2CS-UT/O9090/TAA"
+    ]
   },
   {
     "docs": {
@@ -623,11 +1429,29 @@
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/e7a87daac5b0cb9ee30bf60ca32930e3ac37d90cced84885953b9744299d65b4",
       "Sell Sheet": "https://workdrive.archipelagolighting.com/external/813c0d14eede621738fcba94e2dce7e585bf00b6b6c8ca3c86cc2d2c5c9e35a4"
     },
-    "collection": "lampar\u24b6RCH",
+    "collection": "lamparⒶRCH",
     "family": "Vanguard-I",
     "tier": "ECO",
     "subcategory": "Linear Strip",
-    "sku_count": 16
+    "sku_count": 16,
+    "skus": [
+      "LLSN-V/JBP",
+      "LLSN-V/Plate",
+      "LLSN-V/WG2",
+      "LLSN-V/WG4",
+      "LLSN-V/WG8",
+      "LLSN20-xx-2S3-H",
+      "LLSN3W-xx-2S3-H2",
+      "LLSN3W-xx-4S3-H",
+      "LLSN3W-xx-4S3-H/90",
+      "LLSN3W-xx-4S3-H2",
+      "LLSN3W-xx-4S3-H2/EM08",
+      "LLSN3W-xx-8S3-H",
+      "LLSN3W-xx-8S3-H2",
+      "LLSN3W-xx-8S3-HM",
+      "LLSN4-V/SPP",
+      "LLSN8-V/SPP"
+    ]
   },
   {
     "docs": {
@@ -636,11 +1460,24 @@
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/fed99482f6e9bd7ab42a23132eb9423effcde215355e3183e4aace2b2197fdfe",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/6cc5ccb773658836512506f5eb0011a9912fe9b6deb84498a06426d3e3d48b0a"
     },
-    "collection": "city\u24b6RCH",
+    "collection": "cityⒶRCH",
     "family": "Abbey-I",
     "tier": "PRO",
     "subcategory": "Roadway",
-    "sku_count": 11
+    "sku_count": 11,
+    "skus": [
+      "LDTD-M",
+      "LRDW-II",
+      "LRDW100-30-U3S",
+      "LRDW100-40-H3S",
+      "LRDW100-40-U3S",
+      "LRDW100-50-H3S",
+      "LRDW100-50-U3S",
+      "LRDW150-40-H3S",
+      "LRDW150-40-U3S",
+      "LRDW150-50-H3S",
+      "LRDW150-50-U3S"
+    ]
   },
   {
     "docs": {
@@ -648,31 +1485,56 @@
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/5a79a12325796c3d0cf8bfbb84ca6994c47ea4e6495fedec6996da5a5d8fdb15",
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/fed99482f6e9bd7ab42a23132eb9423effcde215355e3183e4aace2b2197fdfe"
     },
-    "collection": "city\u24b6RCH",
+    "collection": "cityⒶRCH",
     "family": "Abbey-II",
     "tier": "PRO",
     "subcategory": "Roadway",
-    "sku_count": 12
+    "sku_count": 12,
+    "skus": [
+      "LRDW100-40-27V3S-A2",
+      "LRDW100-40-48V3S-A2",
+      "LRDW100-50-27V3S-A2",
+      "LRDW100-50-48V3S-A2",
+      "LRDW200-40-27V3S-A2",
+      "LRDW200-40-48V3S-A2",
+      "LRDW200-50-27V3S-A2",
+      "LRDW200-50-48V3S-A2",
+      "LRDW300-40-27V3S-A2",
+      "LRDW300-40-48V3S-A2",
+      "LRDW300-50-27V3S-A2",
+      "LRDW300-50-48V3S-A2"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/2716170a47ea7592faba911cd7a28b29bb7b9cf3cfa22584b40ccdf4d31b4d95"
     },
-    "collection": "city\u24b6RCH",
+    "collection": "cityⒶRCH",
     "family": "LPAR Series",
     "tier": "PRO",
     "subcategory": "Traffic Control Lamp",
-    "sku_count": 3
+    "sku_count": 3,
+    "skus": [
+      "LPAR38C150030K1",
+      "LPAR38C39048K1",
+      "LPAR38C90030K1"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/7c5770050db07b17fbbe46bd6355d75c68280f5d7b2aca75f5e10f842413d429"
     },
-    "collection": "city\u24b6RCH",
+    "collection": "cityⒶRCH",
     "family": "LY-T10",
     "tier": "ECO",
     "subcategory": "Street Sign Lamp",
-    "sku_count": 4
+    "sku_count": 4,
+    "skus": [
+      "LY-T10L1200-32W",
+      "LY-T10L1800-38W-50K-A",
+      "LY-T10L2400-44W-50K-A",
+      "LY-T10L2400-44W-HO"
+    ]
   },
   {
     "docs": {
@@ -681,11 +1543,23 @@
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/041e8f6e0a6b108f0497c46d502954992f2a6cd53817e552ab97f80e457cd659",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/5123d9eb323901e9a014d87fc88e44af4f2c02452c0da6b890c28a4d5ff6a98b"
     },
-    "collection": "city\u24b6RCH",
+    "collection": "cityⒶRCH",
     "family": "OmniMax",
     "tier": "PRO+",
     "subcategory": "High Mast",
-    "sku_count": 10
+    "sku_count": 10,
+    "skus": [
+      "LHMF8W500-50HOM/B/5/RB3",
+      "LHMF8W500-50HOM/B/5/RB3/TAA",
+      "LHMF8W500-50UOM/B/5/RB3",
+      "LHMF8W500-50UOM/B/5/RB3/TAA",
+      "LHMF8W750-50HOM/B/5/RB3",
+      "LHMF8W750-50HOM/B/5/RB3/TAA",
+      "LHMF8W750-50UOM/B/5/RB3",
+      "LHMF8W750-50UOM/B/5/RB3/TAA",
+      "LHMF8W750-50UOM/S/5/RB3",
+      "LHMF8W750-50UOM/S/5/RB3/TAA"
+    ]
   },
   {
     "docs": {
@@ -694,11 +1568,33 @@
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/f42b37fabf7205ed1a4a7cab96a340ec4dd4171b2e379c6ff9a0b45ba0c137ce",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/2e271ab35b7445f3ec6ba66d5eed738fd2570f5e1c75351431c8c0812b845b19"
     },
-    "collection": "city\u24b6RCH",
+    "collection": "cityⒶRCH",
     "family": "Sentry",
     "tier": "PRO",
     "subcategory": "Bollard",
-    "sku_count": 22
+    "sku_count": 22,
+    "skus": [
+      "LBOL-S1/Anchor",
+      "LBOL-S1/DB/R/DCL",
+      "LBOL-S1/DB/R/DCT",
+      "LBOL-S1/DB/R/DFL",
+      "LBOL-S1/DB/R/DFR",
+      "LBOL-S1/DB/R/RCL",
+      "LBOL-S1/DB/R/RCT",
+      "LBOL-S1/DB/R/RFL",
+      "LBOL-S1/DB/R/RFR",
+      "LBOL-S1/DB/RP",
+      "LBOL-S1/DB/S/SCL",
+      "LBOL-S1/DB/S/SCT",
+      "LBOL-S1/DB/S/SFL",
+      "LBOL-S1/DB/S/SFR",
+      "LBOL-S1/DB/SP",
+      "LBOL-S1/RBK",
+      "LBOL24-3CS-27VS1/DB/R/DFR",
+      "LBOL24-3CS-27VS1/DB/R/RFR",
+      "LBOL24-3CS-27VS1/DB/S/CDR",
+      "LBOL26-3CS-27S1/DB/R/RCT"
+    ]
   },
   {
     "docs": {
@@ -707,11 +1603,42 @@
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/b13c6583c2484c470613e5f1506efdade4d73acab6ead838220b61ae1c8a3838",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/1a55938bcd670ee02b6a9c47a64670125d4d64b803727ba0b1ad8c10328e1b5c"
     },
-    "collection": "city\u24b6RCH",
+    "collection": "cityⒶRCH",
     "family": "Symmetry",
     "tier": "PRO",
     "subcategory": "Post Top",
-    "sku_count": 29
+    "sku_count": 29,
+    "skus": [
+      "LPTP-S/GS",
+      "LPTP090-3CS/27VS1/B/BL",
+      "LPTP090-3CS/27VS1/B/FD",
+      "LPTP090-3CS/27VS1/DB/BL",
+      "LPTP090-3CS/27VS1/DB/FD",
+      "LPTP090-3CS/48VS1/B/BL",
+      "LPTP090-3CS/48VS1/B/FD",
+      "LPTP090-3CS/48VS1/DB/BL",
+      "LPTP090-3CS/48VS1/DB/FD",
+      "LPTP130-3CS/27VS1/B/BL",
+      "LPTP130-3CS/27VS1/B/FD",
+      "LPTP130-3CS/27VS1/DB/BL",
+      "LPTP130-3CS/27VS1/DB/FD",
+      "LPTP130-3CS/48VS1/B/BL",
+      "LPTP130-3CS/48VS1/B/FD",
+      "LPTP130-3CS/48VS1/DB/BL",
+      "LPTP130-3CS/48VS1/DB/FD",
+      "LPTP160-3CS/27VS1/B/BL",
+      "LPTP160-3CS/27VS1/B/FD",
+      "LPTP160-3CS/27VS1/DB/BL",
+      "LPTP160-3CS/27VS1/DB/FD",
+      "LPTP160-3CS/48VS1/B/BL",
+      "LPTP160-3CS/48VS1/B/FD",
+      "LPTP160-3CS/48VS1/DB/BL",
+      "LPTP160-3CS/48VS1/DB/FD",
+      "LPTP4W-S3-UB",
+      "LPTP4W-S3-UD",
+      "LPTP4W-S3-UW",
+      "LPTP5W130-5CS-48VS2/3BL/DB"
+    ]
   },
   {
     "docs": {
@@ -720,431 +1647,477 @@
       "Quicksheet": "https://workdrive.archipelagolighting.com/external/45ca9a0940c6997d56e5478368222af0a38a4f86b8e51db6e6724db67963f0d9",
       "IES Photometric": "https://workdrive.archipelagolighting.com/external/c0161f092517e5cd39e5e9232410eb681412ee3664ad8e98a21ec1f3cb9962a1"
     },
-    "collection": "city\u24b6RCH",
+    "collection": "cityⒶRCH",
     "family": "Unity",
     "tier": "ECO",
     "subcategory": "Post Top",
-    "sku_count": 2
+    "sku_count": 2,
+    "skus": [
+      "LPTP3W150-US3-UB",
+      "LPTP3W75-US3-UB"
+    ]
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/746f48413b66c4deeef681d1f262872b4912395c8c30f8f3143065e33e11ceef"
     },
-    "collection": "const\u24b6NT",
+    "collection": "constⒶNT",
     "family": "LEMX-DLFWOO",
     "tier": "",
     "subcategory": "Emergency Light",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/eccf25dfc20a041d64905ef8303cc0bc41ae2a784758eb9c42286a28cd92c1b7"
     },
-    "collection": "const\u24b6NT",
+    "collection": "constⒶNT",
     "family": "LEMX-DLFxO",
     "tier": "",
     "subcategory": "Emergency Light",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/00d4aca781e014279b50a8ce4ccd9c0e256c5d3d398565efff452e579d9e8b65"
     },
-    "collection": "const\u24b6NT",
+    "collection": "constⒶNT",
     "family": "LEMX-DLFxR",
     "tier": "",
     "subcategory": "Emergency Light",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/b1fe38b47184a980dca1914048bc7afa9f475c73ca126ab6294d51ac227f9e90"
     },
-    "collection": "const\u24b6NT",
+    "collection": "constⒶNT",
     "family": "LEMX-ESGELx",
     "tier": "",
     "subcategory": "Exit Sign",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/84f38ac1a0b51f1e673292010dc4a268380033b3bf14abd6d8a4f627f0b66296"
     },
-    "collection": "const\u24b6NT",
+    "collection": "constⒶNT",
     "family": "LEMX-ESRA1",
     "tier": "",
     "subcategory": "Exit Sign",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/52118606d70b2941dc5cd660863db87c7b71840ac8f14b38e5fc198c94f8776f"
     },
-    "collection": "const\u24b6NT",
+    "collection": "constⒶNT",
     "family": "LEMX-ESxx",
     "tier": "",
     "subcategory": "Exit Sign",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/1f7507d7275f098bcf0096179eef14ecaac0a67a97c3ef645fd0e610069bac65"
     },
-    "collection": "const\u24b6NT",
+    "collection": "constⒶNT",
     "family": "LEMX-ESxxDLFR",
     "tier": "",
     "subcategory": "Exit Sign",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/583893f15282cd837bd3743c9230e9242f3852cfa4533e2bc3ef26c2904abfb8"
     },
-    "collection": "const\u24b6NT",
+    "collection": "constⒶNT",
     "family": "LEMX-ESxxT1",
     "tier": "",
     "subcategory": "Exit Sign",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/77c2103e464c16f38b1ad2b408bb14c11bfbe69f00adeff723855f66ada07e44"
     },
-    "collection": "const\u24b6NT",
+    "collection": "constⒶNT",
     "family": "LEMX-ESxxT1DLFR",
     "tier": "",
     "subcategory": "Exit Sign",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/935adb9838aa3e50e7acab31b30f2af71f93be0e1c587d14177d9fc62392539f"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "LDLL-E2/MSP/W",
     "tier": "",
     "subcategory": "Bi-Level",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/a3d229be71003f957d1f93500453a13cd8cc1b083598d251e5732ce5eba90b0e"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSM-HTI-001-BLS",
     "tier": "",
     "subcategory": "Bi-Level",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/67fcd392d0f338a8259b6b80e36ba714731afe115d314041fd534b23fd4994e9"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSM-HTI-08P1-NLC",
     "tier": "",
     "subcategory": "by SILVAIR",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/4a18e931b70594876ebcfdeff5be10f24e860b6e188ccdbd410b1fd3014afdc5"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSM-HTI-126P1-BLS",
     "tier": "",
     "subcategory": "Bi-Level",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/154b24c86a3f69ab0b9254470ea66bc24ee21bc2ec2ff1b38a4fcf1116b7e475"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSM-HTI-126P1-NLC",
     "tier": "",
     "subcategory": "by SILVAIR",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/93f6f941659e9ce2f0837aded0e4766b3ecc0b3d818416a978926723db4986f6"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSM-HTI-401-NLC",
     "tier": "",
     "subcategory": "by SILVAIR",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/4d3805f8377d069e759d4428eb21c32311cd782392301053304c7f3b783fd3a7"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSM-HTI-407-BLS",
     "tier": "",
     "subcategory": "Bi-Level",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/c12349712bcb76777c9161dd6826ecf1c4a2194017fec61ac91c6709faa88f42"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSM-HTO-07P3-BLS",
     "tier": "",
     "subcategory": "Bi-Level",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/97fa9754f1b5291df78c92d92af6f2d012b7428bd33d2412eb7b28a965fcc225"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSM-HTO-09P3-NLC",
     "tier": "",
     "subcategory": "by SILVAIR",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/cdae4766bdcacfa205d9b68c5be413127cd8e0015821d37c1fad5d56ebdb9c75"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSM-MTO/7D/BLS",
     "tier": "",
     "subcategory": "Bi-Level",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/90bac14d9d283bd59123a6325b60ef5f98aa17f52d0886909ef418d27b696485"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSM-SDI-54P1-BLS",
     "tier": "",
     "subcategory": "Bi-Level",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/922fdc332fb3d80d5e2086d64c4ad932595851b79dcfd4acce5dd600af049fdd"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSM-SDI-9-BLS",
     "tier": "",
     "subcategory": "Bi-Level",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/e39296c8f43ae9a7e6ab1ab8ea75f3cfc2703737fe82a0936953672590016744"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSM-SRI-903P1-NLC",
     "tier": "",
     "subcategory": "by SILVAIR",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/837b3c2b25ef9cc8d295d49e664ece1ec67b94bb5cf21445bb586cef9c4bafa5"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSM-SRO-903P3-NLC",
     "tier": "",
     "subcategory": "by SILVAIR",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/4b44eb505268f3f89f83f4a404b8afebdfd06968a77d41c6a6960ef843a4a506"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSP-HTI-08P1-BLS",
     "tier": "",
     "subcategory": "Bi-Level",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/793caf13c254ae6a487a5ede01a8851a7ed1f5e5fdbabba4a31ca59efd3086eb"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSP-HTI-08P1-BLS-v2",
     "tier": "",
     "subcategory": "Bi-Level",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/74fa6da5ccd5ec82e492f18d06ecf5737789a7cba355d76fee982daff2b2ff8b"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSP-HTI-08P1-NLC",
     "tier": "",
     "subcategory": "by SILVAIR",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/0def284c7cd2654f6daea530c47d98bc370de5758010f712bdbf91b543d21bc2"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSP-HTO-07P3-BLS",
     "tier": "",
     "subcategory": "Bi-Level",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/c3ee6146a7c7833dee092586c400c05d83612ded690f7518a0b386b31c7e6da2"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSP-HTO-09P3-NLC",
     "tier": "",
     "subcategory": "by SILVAIR",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/9c3500c6b49a47d556090031198baed65f7416b63005096f3bbcb4698a0701dc"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSP-HTO09P35DBLS",
     "tier": "",
     "subcategory": "Bi-Level",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/af357f28a35780775c4ffad7c359162378d6fae8eb00470bf5cf6a473d421f1d"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSP-HTO09P3BLS",
     "tier": "",
     "subcategory": "Bi-Level",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/8d1992be42d3f99817f5eda9c87b38d38f195a7e8676ee993c390c1d487c91b6"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSP-SDO-823-BLS-x",
     "tier": "",
     "subcategory": "Bi-Level",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/dc8c3fbafa8016011317e3ce8ff1994a550ccbaabb2f4be975a0d352a8319afe"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSP-SRI-903P1-NLC",
     "tier": "",
     "subcategory": "by SILVAIR",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/533787ea61f9861c2d8d68782a4afe547f8f76c3e72117468285c5616170ab9a"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSP-SRI/20CM/HD/ACS",
     "tier": "",
-    "subcategory": "by \u24b6CS",
-    "sku_count": 1
+    "subcategory": "by ⒶCS",
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/14d5354156cc8c8e57ce3f6f6bd4bac0d2c039253887b3f548566b0df9e752fb"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSP-SRI/40CM/HD/ACS",
     "tier": "",
-    "subcategory": "by \u24b6CS",
-    "sku_count": 1
+    "subcategory": "by ⒶCS",
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/874439965b9f6d9503a48a3f2c7f5c2ba7ce5d7b0c9d6a6523f897b8671fdf2f"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSP-SRI/8CM/HD/ACS",
     "tier": "",
-    "subcategory": "by \u24b6CS",
-    "sku_count": 1
+    "subcategory": "by ⒶCS",
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/25eebb2526ce91814445097c311b0e595ef74a2b8bc58612b635e16d26206819"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSP-SRI/903P1/ACS",
     "tier": "",
-    "subcategory": "by \u24b6CS",
-    "sku_count": 1
+    "subcategory": "by ⒶCS",
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/0028452967da2aaf999fd7bb802ca86f3ef304b330e82cf596f421364ef8c91b",
       "Installation Guide": "https://workdrive.archipelagolighting.com/external/cc6a96c8844d37ffb9ab7e2745c00f4a064264668dd30073ea9f1a6b912a0570"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSP-SRO-903P3-NLC",
     "tier": "",
     "subcategory": "by SILVAIR",
-    "sku_count": 1
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/e9b715eec711fd027f495f084062550f5c52f9a749bb5b2f569fa8a88f89217e"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSP-SRO/903PX/ACS",
     "tier": "",
-    "subcategory": "by \u24b6CS",
-    "sku_count": 1
+    "subcategory": "by ⒶCS",
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/ecef24eb02e41f3c26f1b21422775322254955706dbea08ff539e5ebc600e9ae"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSX-CTI/903P1/ACS",
     "tier": "",
-    "subcategory": "by \u24b6CS",
-    "sku_count": 1
+    "subcategory": "by ⒶCS",
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/816c5a4b637be162fe5e19cd81b0a17b98486098171698723fd14f52f32ee046"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSX-CTI/LV20/ACS",
     "tier": "",
-    "subcategory": "by \u24b6CS",
-    "sku_count": 1
+    "subcategory": "by ⒶCS",
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/ffb844bcefe8fa3484799589c363a209b1c7d41cb2336adbd991b3a44be6289b"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSX-CTO/903PX/ACS",
     "tier": "",
-    "subcategory": "by \u24b6CS",
-    "sku_count": 1
+    "subcategory": "by ⒶCS",
+    "sku_count": 1,
+    "skus": []
   },
   {
     "docs": {
       "Datasheet": "https://workdrive.archipelagolighting.com/external/138efa3689ca2c99a9a95d1ac84a549a2f4485c9369cc75f275def0a034339b2"
     },
-    "collection": "contr\u24b6LS",
+    "collection": "contrⒶLS",
     "family": "MSZ-KPI/50WM/ACS",
     "tier": "",
-    "subcategory": "by \u24b6CS",
-    "sku_count": 1
+    "subcategory": "by ⒶCS",
+    "sku_count": 1,
+    "skus": []
   }
 ]

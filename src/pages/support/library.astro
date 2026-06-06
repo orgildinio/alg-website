@@ -268,7 +268,7 @@ function render(){
   var qEl=document.getElementById('q');
   var q=qEl?qEl.value.toLowerCase():'';
   var rows=DATA.filter(function(r){
-    if(q&&!((r.family+' '+r.collection+' '+r.tier+' '+(r.subcategory||'')).toLowerCase().includes(q)))return false;
+    if(q&&!((r.family+' '+r.collection+' '+r.tier+' '+(r.subcategory||'')+' '+((r.skus||[]).join(' '))).toLowerCase().includes(q)))return false;
     if(fType!=='All'&&!r.docs[fType])return false;
     if(fTypes.size&&!TYPES.some(function(t){return fTypes.has(t)&&r.docs[t]}))return false;
     if(fCols.size&&!fCols.has(r.collection))return false;
