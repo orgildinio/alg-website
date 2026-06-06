@@ -1,538 +1,662 @@
 ---
-// RMA Wizard — /support/returns/wizard/
-// Visual source: ALG-RMA-Wizard.html (PUBLIC-facing 6-step form)
-// Submit: mailto: to warranty@archipelagolighting.com → redirect to /support/returns/confirmation/
+// /support/returns/wizard/ — 3-step RMA wizard (ALG-RMA-Wizard-3step.html)
+// LEGAL: No severity/routing/SLA shown to buyer — internal classifier only
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="New RMA Request — Archipelago Lighting Group" description="Submit a Return Material Authorization request in 6 steps. Photo-first process — most claims don't require you to ship the unit back.">
+
+<BaseLayout title="New RMA Request — Archipelago Lighting Group" description="Submit a Return Material Authorization request. Photo-first process — most claims don't require you to ship the unit back.">
+
 <style is:global>
+/* ============================================================
+   ALG RMA WIZARD — 3-step layout (verbatim from mockup)
+   DEAD-SPACE RULE: form fills minmax(0,1fr), rail is 332px, gap 44px
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --brand:#F32740; --brand-dark:#C8132E;
-  --ink:#1A1D23; --ink2:#3A3E47; --ink3:#6B7280;
-  --c1:#F5F4F1; --c2:#EEEDF0; --c3:#DCDEE2; --white:#fff;
-  --grn:#0FAE7C; --yellow:#FDD85E; --grey:#8A8F97;
+  --brand:#F32740;--ink:#1A1D23;--ink2:#4B5563;--ink3:#9CA3AF;
+  --c1:#F5F4F1;--c2:#ECEAE5;--c3:#D1CFC9;--c4:#B8B5AE;
+  --font-mono:'JetBrains Mono',monospace;
   --font-sans:'Lato',system-ui,-apple-system,sans-serif;
-  --font-mono:'JetBrains Mono',ui-monospace,'SF Mono',Consolas,monospace;
+  --yellow:#B07A00;--orange:#C7821A;
 }
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--white)}
-body{font-family:var(--font-sans);color:var(--ink);-webkit-font-smoothing:antialiased}
-::selection{background:var(--brand);color:#fff}
+body{font-family:var(--font-sans);color:var(--ink);background:#fff}
 a{color:inherit}
-.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
-/* ---- wizard context header (slim; global nav owns the real chrome) ---- */
-.wz-head{border-bottom:1px solid var(--c3);padding:18px 56px;display:flex;align-items:center;gap:28px}
-.wz-head img{width:132px;height:auto;display:block}
-.wz-head .div{padding-left:28px;border-left:1px solid var(--c3);margin-left:8px}
-.wz-head .ttl{font-size:16px;font-weight:700;color:var(--ink);margin-top:4px;letter-spacing:-.01em}
-.wz-head .right{margin-left:auto;display:flex;align-items:center;gap:14px}
-.wz-head .exit{background:transparent;border:none;cursor:pointer;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase;text-decoration:none}
-@media(max-width:720px){.wz-head{padding:14px 20px;gap:14px}.wz-head img{width:104px}.wz-head .div{padding-left:14px}}
-/* ---- progress bar ---- */
-.prog{padding:0 56px;border-bottom:1px solid var(--c3)}
-.prog .row{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
-.prog .st{background:transparent;border:none;cursor:default;padding:16px 12px;display:flex;gap:10px;align-items:center;border-bottom:3px solid transparent;text-align:left}
-.prog .st.done{cursor:pointer}
-.prog .st.done:hover{background:var(--c1)}
-.prog .st.active{border-bottom-color:var(--brand)}
-.prog .num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;background:var(--c2);color:var(--ink3);flex-shrink:0}
-.prog .st.done .num{background:var(--grn);color:#fff}
-.prog .st.active .num{background:var(--brand);color:#fff}
-.prog .sl{font-size:12px;font-weight:600;color:var(--ink3);line-height:1.3}
-.prog .st.active .sl{color:var(--ink)}
-@media(max-width:900px){.prog{padding:0 20px}.prog .sl{display:none}.prog .st{padding:12px 8px;justify-content:center}}
-@media(max-width:560px){.prog .row{grid-template-columns:repeat(6,1fr)}.prog .num{width:20px;height:20px;font-size:10px}}
-/* ---- main layout ---- */
-.form{display:grid;grid-template-columns:1fr 320px;gap:0;min-height:calc(100vh - 130px)}
-@media(max-width:1024px){.form{grid-template-columns:1fr}}
-/* ---- steps ---- */
-.steps{padding:48px 56px;max-width:760px}
+.wrap{max-width:1320px;margin:0 auto;padding:0 clamp(20px,4vw,56px) 80px}
+
+/* slim wizard bar */
+.wz-head{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;
+  gap:24px;padding:18px 0 20px;border-bottom:1px solid var(--c3);
+  margin-bottom:36px;
+}
+.wz-head img{height:28px;width:auto}
+.wz-head .div{display:flex;flex-direction:column;gap:2px}
+.wz-head .eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.wz-head .ttl{font-size:16px;font-weight:700;color:var(--ink)}
+.wz-head .right{text-align:right}
+.exit{font-family:var(--font-mono);font-size:11px;color:var(--ink3);text-decoration:none;letter-spacing:.08em;margin-top:4px;display:block}
+.exit:hover{color:var(--ink)}
+
+/* progress bar */
+.progress{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-bottom:40px}
+.ps{
+  display:flex;align-items:center;gap:10px;padding:14px 16px;
+  border-bottom:2px solid var(--c3);cursor:pointer;
+}
+.ps.active{border-bottom-color:var(--brand)}
+.ps.done{border-bottom-color:var(--ink2)}
+.ps-num{
+  width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:11px;font-weight:700;
+  background:var(--c2);color:var(--ink3);flex-shrink:0;
+}
+.ps.active .ps-num{background:var(--brand);color:#fff}
+.ps.done .ps-num{background:var(--ink);color:#fff}
+.ps-label{font-size:13px;font-weight:600;color:var(--ink3)}
+.ps.active .ps-label{color:var(--ink)}
+.ps.done .ps-label{color:var(--ink2)}
+
+/* DEAD-SPACE RULE: form fills minmax(0,1fr), rail is 332px, gap 44px — no extra max-width */
+.layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 332px;
+  gap:44px;
+  align-items:start;
+}
+main.form{min-width:0}
 .step{display:none}
 .step.active{display:block}
-.step h2{font-size:28px;font-weight:800;color:var(--ink);margin:8px 0 6px;letter-spacing:-.02em}
-.step .sub{font-size:15px;color:var(--ink2);margin:0 0 28px;line-height:1.6}
-.step .eyebrow.se{color:var(--brand);margin-bottom:4px}
-@media(max-width:720px){.steps{padding:32px 20px}}
-/* ---- cards ---- */
-.card{background:var(--c1);border-radius:12px;padding:24px}
-.card.lt{background:var(--white);border:1px solid var(--c3);border-radius:12px}
-.card.ink{background:var(--ink);border-radius:12px;color:var(--white)}
-.card.ink .eyebrow,.card.ink .kmono{color:rgba(255,255,255,.5)}
-.kmono{font-family:var(--font-mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:12px}
-/* ---- form fields ---- */
-.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* headings */
+.step h2{font-family:var(--font-sans);font-size:28px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px}
+.step .sub{font-size:15px;color:var(--ink2);line-height:1.6;margin-bottom:28px}
+.eyebrow.se{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);margin-bottom:8px}
+.subhead{display:flex;align-items:center;gap:12px;margin:28px 0 14px}
+.subhead .t{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.subhead::after{content:'';flex:1;height:1px;background:var(--c3)}
+
+/* cards */
+.card{background:var(--c1);border:1px solid var(--c3);border-radius:8px;padding:24px}
+.card.orange{background:#FFF8F0;border-color:#F5D9B0}
+
+/* fields */
+.field{display:block;margin-bottom:18px}
+.lab{display:block;font-size:13px;font-weight:600;color:var(--ink2);margin-bottom:6px}
+.lab .req{color:var(--brand)}
+.lab .hint{font-weight:400;color:var(--ink3);margin-left:6px}
+.in{
+  width:100%;padding:10px 14px;border:1px solid var(--c3);border-radius:6px;
+  font-family:var(--font-sans);font-size:14px;color:var(--ink);background:#fff;
+  outline:none;transition:border-color .15s;
+}
+.in:focus{border-color:var(--ink2)}
+.in.err{border-color:var(--brand)}
+.mono{font-family:var(--font-mono)!important}
+textarea.in{resize:vertical;min-height:90px}
+select.in{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239CA3AF' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+.emsg{display:none;font-size:12px;color:var(--brand);margin-top:4px}
+.field.invalid .emsg{display:block}
+.field.invalid .in{border-color:var(--brand)}
+
+/* form grids */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.fgrid.three{grid-template-columns:1fr 1fr 1fr}
 .fgrid .span2{grid-column:span 2}
-@media(max-width:600px){.fgrid{grid-template-columns:1fr}.fgrid .span2{grid-column:span 1}}
-.field{display:flex;flex-direction:column;gap:6px}
-.lab{font-size:13px;font-weight:600;color:var(--ink2)}
-.lab .hint{font-weight:400;color:var(--ink3);margin-left:6px;font-size:12px}
-.in{border:1px solid var(--c3);border-radius:8px;padding:10px 14px;font-size:14px;font-family:var(--font-sans);color:var(--ink);background:var(--white);outline:none;transition:border-color .15s}
-.in:focus{border-color:var(--brand)}
-.in.mono{font-family:var(--font-mono);font-size:13px}
-textarea.in{resize:vertical;min-height:96px}
-.req{color:var(--brand)}
-.emsg{font-size:12px;color:var(--brand);display:none}
-.field.err .emsg{display:block}
-.field.err .in{border-color:var(--brand)}
-/* ---- product lines table ---- */
-.card.lt .h{display:grid;grid-template-columns:2fr 2fr 80px 120px 40px;gap:12px;padding:12px 16px;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--c3)}
-.line-row{display:grid;grid-template-columns:2fr 2fr 80px 120px 40px;gap:12px;padding:12px 16px;align-items:center;border-bottom:1px solid var(--c2)}
-.line-row:last-child{border-bottom:none}
-.del{background:transparent;border:none;cursor:pointer;color:var(--ink3);font-size:18px;padding:4px;border-radius:4px}
-.del:hover{color:var(--brand);background:var(--c2)}
-.add{padding:12px 16px;border-top:1px solid var(--c2)}
-@media(max-width:700px){.card.lt .h{display:none}.line-row{grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto}.line-row .del{grid-column:span 2;justify-self:end}}
-/* ---- reason / action option buttons ---- */
-.optgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:600px){.optgrid{grid-template-columns:1fr}}
-.opt{background:var(--white);border:1.5px solid var(--c3);border-radius:10px;padding:14px 16px;cursor:pointer;text-align:left;display:flex;gap:12px;align-items:flex-start;transition:border-color .15s,background .15s}
-.opt:hover{border-color:var(--brand)}
-.opt.on{border-color:var(--brand);background:#FFF5F6}
-.ot{display:block;font-size:14px;font-weight:700;color:var(--ink)}
-.od{display:block;font-size:12.5px;color:var(--ink3);margin-top:3px;line-height:1.4}
-.radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--c3);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:border-color .15s}
-.opt.on .radio{border-color:var(--brand)}
-.opt.on .radio i{display:block;width:8px;height:8px;border-radius:50%;background:var(--brand)}
-.radio i{display:none}
-/* ---- evidence upload ---- */
-.evgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:600px){.evgrid{grid-template-columns:1fr}}
-.slot{border:2px dashed var(--c3);border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;position:relative}
-.slot:hover{border-color:var(--brand);background:#FFF5F6}
-.slot.filled{border-style:solid;border-color:var(--grn);background:#F0FBF7}
-.slot .icon{font-size:28px;margin-bottom:8px}
-.slot .sk{font-size:13px;font-weight:700;color:var(--ink)}
-.slot .sh{font-size:12px;color:var(--ink3);margin-top:3px}
-.slot .fn{font-size:11.5px;color:var(--grn);font-weight:600;margin-top:6px;font-family:var(--font-mono)}
-.slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-/* ---- callout ---- */
-.callout{background:var(--c1);border-left:3px solid var(--brand);border-radius:0 8px 8px 0;padding:14px 18px;margin-top:20px}
-.cl{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px}
-.cd{font-size:13px;color:var(--ink2);line-height:1.5}
-/* ---- safety hazard ---- */
-.safety{background:#FFF5F6;border:1.5px solid #FBBCC5;border-radius:10px;padding:16px;margin-top:20px}
-.safety label{display:flex;gap:14px;cursor:pointer;align-items:flex-start}
-.safety input[type=checkbox]{width:18px;height:18px;accent-color:var(--brand);flex-shrink:0;margin-top:3px}
-.safety .k{font-size:14px;font-weight:700;color:var(--ink)}
-.safety .q{font-size:13px;color:var(--ink2);margin-top:4px;line-height:1.5}
-.safety .d{font-size:12px;color:var(--ink3);margin-top:6px;line-height:1.5}
-.safety-alert{background:#FFF5F6;border:1.5px solid var(--brand);border-radius:10px;padding:16px;margin-top:16px;display:none}
-.safety-alert.show{display:block}
-.safety-alert .sa-t{font-size:14px;font-weight:700;color:var(--brand);margin-bottom:6px}
-.safety-alert .sa-b{font-size:13px;color:var(--ink2);line-height:1.5}
-/* ---- review step ---- */
-.rv-section{margin-bottom:24px}
-.rv-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
-.rv-row{display:flex;gap:8px;margin-bottom:6px;font-size:14px}
-.rv-k{color:var(--ink3);min-width:120px;flex-shrink:0}
-.rv-v{color:var(--ink);font-weight:500}
-.rv-lines{background:var(--c1);border-radius:8px;padding:12px 16px}
-.rv-line{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;font-size:13px;padding:8px 0;border-bottom:1px solid var(--c2)}
-.rv-line:last-child{border-bottom:none}
-.rv-line .rk{font-family:var(--font-mono);font-size:11px;color:var(--ink3);margin-bottom:2px}
-/* ---- signature ---- */
-.sig-wrap{margin-top:24px}
-.sig-label{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:10px}
-.sig-legal{font-size:12.5px;color:var(--ink3);line-height:1.6;margin-bottom:14px}
-.sig-legal a{color:var(--brand)}
-/* ---- nav buttons ---- */
-.nav{display:flex;gap:12px;margin-top:32px;align-items:center}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;border:none;font-family:var(--font-sans);transition:background .15s,opacity .15s}
-.btn.primary{background:var(--brand);color:#fff}
-.btn.primary:hover{background:var(--brand-dark)}
-.btn.ghost{background:transparent;border:1.5px solid var(--c3);color:var(--ink2)}
-.btn.ghost:hover{border-color:var(--ink3)}
-.btn.sm{padding:8px 16px;font-size:13px}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-/* ---- right rail ---- */
-.rail{background:var(--c1);border-left:1px solid var(--c3);padding:40px 32px;position:sticky;top:0;height:100vh;overflow-y:auto}
-.rail .blk{margin-bottom:32px}
-.rail .cls{font-size:14px;color:var(--ink2);line-height:1.6}
-.rail .lnk{display:block;font-size:13px;color:var(--brand);text-decoration:none;margin-top:8px;font-weight:600}
-.rail .lnk:hover{text-decoration:underline}
-.rail .help-box{background:var(--white);border:1px solid var(--c3);border-radius:10px;padding:16px;margin-top:24px}
-.rail .help-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px}
-.rail .help-text{font-size:13px;color:var(--ink2);line-height:1.5}
-@media(max-width:1024px){.rail{display:none}}
+@media(max-width:640px){.fgrid,.fgrid.three{grid-template-columns:1fr}.fgrid .span2{grid-column:auto}}
+
+/* product rows */
+.lt{border:1px solid var(--c3);border-radius:8px;overflow:hidden;margin-bottom:18px}
+.lt .h{background:var(--c1);display:grid;grid-template-columns:1.2fr 1.7fr .6fr .9fr 40px;gap:0;padding:8px 12px;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase}
+.lt .r{display:grid;grid-template-columns:1.2fr 1.7fr .6fr .9fr 40px;gap:0;padding:10px 12px;border-top:1px solid var(--c3);align-items:center}
+.lt .r .in{border:none;border-bottom:1px solid var(--c3);border-radius:0;padding:4px 0;font-size:13px}
+.lt .r .in:focus{border-bottom-color:var(--ink2)}
+.add-row{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);background:none;border:1px solid var(--c3);border-radius:6px;padding:7px 14px;cursor:pointer;margin-top:4px}
+.add-row:hover{background:var(--c1)}
+.del-row{background:none;border:none;cursor:pointer;color:var(--ink3);font-size:16px;padding:0;line-height:1}
+.del-row:hover{color:var(--brand)}
+
+/* evidence */
+.evgrid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+@media(max-width:520px){.evgrid{grid-template-columns:1fr}}
+.slot{
+  background:#fff;border:2px dashed var(--c3);border-radius:8px;
+  aspect-ratio:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:8px;cursor:pointer;transition:border-color .15s;
+  position:relative;overflow:hidden;
+}
+.slot:hover,.slot.drag{border-color:var(--ink2)}
+.slot.filled{border-style:solid;border-color:var(--c3)}
+.slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.slot .icon{font-size:24px;color:var(--ink3)}
+.slot .lbl{font-size:11px;color:var(--ink3);text-align:center;padding:0 8px}
+.slot .req-badge{position:absolute;top:6px;right:6px;background:var(--brand);color:#fff;font-size:9px;font-family:var(--font-mono);padding:2px 5px;border-radius:3px}
+.slot img{width:100%;height:100%;object-fit:cover}
+.slot .rm{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.5);color:#fff;border:none;border-radius:50%;width:20px;height:20px;cursor:pointer;display:none;font-size:12px;align-items:center;justify-content:center}
+.slot.filled .rm{display:flex}
+
+/* resolution actions */
+#actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px}
+@media(max-width:640px){#actions{grid-template-columns:1fr 1fr}}
+.act{
+  display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;
+  border:1px solid var(--c3);border-radius:8px;padding:14px;cursor:pointer;
+  transition:border-color .15s,background .15s;
+}
+.act:hover{border-color:var(--ink2)}
+.act.sel{border-color:var(--brand);background:#FFF5F6}
+.act-icon{font-size:20px;margin-top:2px}
+.act-name{font-size:13px;font-weight:700;color:var(--ink)}
+.act-desc{font-size:12px;color:var(--ink3);margin-top:3px;line-height:1.4}
+
+/* review recap */
+.rev{padding:20px 24px}
+.rv-row{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;padding:8px 0;border-bottom:1px solid var(--c2);font-size:13px}
+.rv-row:last-child{border-bottom:none}
+.rv-k{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);padding-top:2px}
+.rv-v{color:var(--ink);line-height:1.5}
+
+/* T&C checkbox */
+.tc{display:flex;gap:12px;align-items:flex-start;cursor:pointer;margin-top:16px}
+.tc input{margin-top:3px;flex-shrink:0;accent-color:var(--brand)}
+.tc span{font-size:12px;color:var(--ink2);line-height:1.6}
+.tc a{color:var(--brand)}
+
+/* Turnstile-style check */
+.turn{
+  display:flex;align-items:center;gap:14px;
+  border:1px solid var(--c3);border-radius:8px;padding:14px 16px;
+  cursor:pointer;background:#fff;transition:border-color .15s;
+  max-width:340px;
+}
+.turn:hover{border-color:var(--ink2)}
+.turn.verified{border-color:#0FAE7C;background:#F0FBF7}
+.box{
+  width:24px;height:24px;border:2px solid var(--c3);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:all .2s;
+}
+.turn.verified .box{background:#0FAE7C;border-color:#0FAE7C;color:#fff}
+.tl{font-size:14px;font-weight:600;color:var(--ink2)}
+.turn.verified .tl{color:#0FAE7C}
+.kmono{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px}
+
+/* nav buttons */
+.nav{display:flex;gap:12px;margin-top:32px;padding-top:24px;border-top:1px solid var(--c3)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:6px;font-family:var(--font-sans);font-weight:700;font-size:14px;cursor:pointer;border:none;transition:background .15s,opacity .15s}
+.btn.primary{background:var(--brand);color:#fff;padding:12px 28px}
+.btn.primary:hover{background:#d41f33}
+.btn.primary:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink2);padding:12px 20px;border:1px solid var(--c3)}
+.btn.ghost:hover{background:var(--c1)}
+.btn.ghost:disabled{opacity:.45;cursor:not-allowed}
+.btn.lg{font-size:15px;padding:13px 32px}
+.btn.md{font-size:13px;padding:10px 20px}
+
+/* rail */
+.rail{position:sticky;top:24px;display:flex;flex-direction:column;gap:0}
+.blk{padding:20px 22px;border:1px solid var(--c3);border-radius:8px;background:var(--c1);margin-bottom:12px}
+.blk.hr{border-top:1px solid var(--c2);margin-top:-12px}
+.cls{font-size:13px;color:var(--ink2);line-height:1.65}
+.help{font-size:13px;color:var(--ink2);line-height:1.6}
+.contact{font-size:14px;font-weight:700;color:var(--ink);line-height:1.7}
+.contact .em{font-size:12px;font-weight:400;color:var(--ink2)}
+.docs{display:flex;flex-direction:column;gap:8px}
+.docs a{font-size:13px;color:var(--ink2);text-decoration:none}
+.docs a:hover{color:var(--ink)}
+
+/* mobile: stack rail below form */
+@media(max-width:860px){
+  .layout{grid-template-columns:1fr}
+  .rail{position:static}
+  .progress{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .wz-head{grid-template-columns:auto 1fr}
+  .wz-head .right{display:none}
+  .nav{flex-direction:column}
+  .btn.lg,.btn.md{width:100%;justify-content:center}
+}
 </style>
 
-<!-- wizard context strip (global BaseLayout chrome sits above on the live build) -->
-<header class="wz-head">
-  <img src="/brand/alg-logo-color.svg" alt="Archipelago Lighting Group">
-  <div class="div">
-    <div class="eyebrow">Returns &amp; Exchanges</div>
-    <div class="ttl">New RMA Request</div>
-  </div>
-  <div class="right">
-    <div class="eyebrow" id="stepCounter">Step 01 of 06</div>
-    <a class="exit" href="/support/returns/">&#10005; Save &amp; exit</a>
-  </div>
-</header>
+<div class="wrap">
+  <header class="wz-head">
+    <img src="/brand/alg-logo-color.svg" alt="Archipelago Lighting Group">
+    <div class="div">
+      <div class="eyebrow">Returns &amp; Exchanges</div>
+      <div class="ttl">New RMA Request</div>
+    </div>
+    <div class="right">
+      <div class="eyebrow" id="stepCounter">Step 01 of 03</div>
+      <a class="exit" href="/support/returns/">&#10005; Save &amp; exit</a>
+    </div>
+  </header>
 
-<!-- progress bar -->
-<nav class="prog" aria-label="Wizard progress">
-  <div class="row" id="prog">
-    <button class="st active" data-i="1"><span class="num">01</span><span class="sl">Buyer info</span></button>
-    <button class="st" data-i="2"><span class="num">02</span><span class="sl">Products</span></button>
-    <button class="st" data-i="3"><span class="num">03</span><span class="sl">Failure</span></button>
-    <button class="st" data-i="4"><span class="num">04</span><span class="sl">Evidence</span></button>
-    <button class="st" data-i="5"><span class="num">05</span><span class="sl">Resolution</span></button>
-    <button class="st" data-i="6"><span class="num">06</span><span class="sl">Review</span></button>
+  <div class="progress">
+    <div class="ps active" data-step="1" onclick="W.goStep(1)">
+      <div class="ps-num">01</div>
+      <div class="ps-label">Your details</div>
+    </div>
+    <div class="ps" data-step="2" onclick="W.goStep(2)">
+      <div class="ps-num">02</div>
+      <div class="ps-label">What went wrong</div>
+    </div>
+    <div class="ps" data-step="3" onclick="W.goStep(3)">
+      <div class="ps-num">03</div>
+      <div class="ps-label">Resolution &amp; submit</div>
+    </div>
   </div>
-</nav>
 
-<main class="form">
-  <div class="steps">
-    <!-- STEP 1 — BUYER INFO -->
-    <section class="step active" data-step="1">
-      <div class="eyebrow se">Step 01</div>
-      <h2>Who's filing this claim?</h2>
-      <p class="sub">Use the company that purchased the product, not the installer. We'll match this to your ALG account.</p>
-      <div class="card" style="padding:28px">
+  <div class="layout">
+    <main class="form">
+
+      <!-- STEP 1 — YOUR DETAILS -->
+      <section class="step active" data-step="1">
+        <div class="eyebrow se">Step 01</div>
+        <h2>Your details</h2>
+        <p class="sub">Tell us who you are and where the products shipped.</p>
+        <div class="subhead"><span class="t">Contact</span></div>
         <div class="fgrid">
-          <label class="field" data-k="company"><span class="lab">Company name <span class="req">*</span></span><input class="in" name="company" placeholder="Pacific Electric Supply Co."></label>
-          <label class="field" data-k="contact"><span class="lab">Contact name <span class="req">*</span></span><input class="in" name="contact" placeholder="Maria Delgado"></label>
-          <label class="field" data-k="email"><span class="lab">Email <span class="req">*</span></span><input class="in" name="email" type="email" placeholder="m.delgado@pacificelectric.com"><span class="emsg">Enter a valid email</span></label>
-          <label class="field" data-k="phone"><span class="lab">Phone <span class="req">*</span></span><input class="in" name="phone" type="tel" placeholder="(909) 555-0182"><span class="emsg">Enter a phone number</span></label>
-          <label class="field span2" data-k="address"><span class="lab">Address</span><input class="in" name="address" placeholder="1840 W Mission Blvd"></label>
-          <label class="field" data-k="cityStateZip"><span class="lab">City, State, ZIP</span><input class="in" name="cityStateZip" placeholder="Pomona, CA 91766"></label>
-          <label class="field" data-k="accountNumber"><span class="lab mono">ALG account #<span class="hint">optional</span></span><input class="in mono" name="accountNumber" placeholder="ALG-04412"></label>
-          <label class="field span2" data-k="salesRep"><span class="lab">Sales rep / distributor<span class="hint">if known</span></span><input class="in" name="salesRep" placeholder="J. Park — Pacific Region"></label>
+          <label class="field" data-k="company"><span class="lab">Company name <span class="req">*</span></span><input class="in" name="company" placeholder="Acme Electric Supply"><span class="emsg">Required</span></label>
+          <label class="field" data-k="contact"><span class="lab">Contact name <span class="req">*</span></span><input class="in" name="contact" placeholder="Jane Smith"><span class="emsg">Required</span></label>
+          <label class="field" data-k="email"><span class="lab">Email <span class="req">*</span></span><input class="in" type="email" name="email" placeholder="jane@acmeelectric.com"><span class="emsg">Valid email required</span></label>
+          <label class="field" data-k="phone"><span class="lab">Phone <span class="hint">optional</span></span><input class="in" name="phone" placeholder="(555) 000-0000"></label>
         </div>
-      </div>
-      <div class="card ink" style="padding:28px;margin-top:18px">
-        <div class="kmono">Proof of purchase</div>
-        <div style="font-size:14px;font-weight:600;color:var(--white);margin-bottom:16px">Enter the ALG PO# or Invoice# from your order <span style="color:var(--brand)">*</span></div>
+        <div class="subhead"><span class="t">Order info</span></div>
         <div class="fgrid">
-          <label class="field" data-k="poRef"><span class="lab mono" style="color:rgba(255,255,255,.6)">ALG PO#<span class="hint">PO-&hellip;</span></span><input class="in mono" name="poRef" placeholder="PO-48201"></label>
-          <label class="field" data-k="invoiceRef"><span class="lab mono" style="color:rgba(255,255,255,.6)">ALG Invoice#<span class="hint">INV-&hellip;</span></span><input class="in mono" name="invoiceRef" placeholder="INV-2025-11-09214"></label>
+          <label class="field" data-k="poNumber"><span class="lab">PO / order number <span class="req">*</span></span><input class="in mono" name="poNumber" placeholder="PO-2024-00441"><span class="emsg">Required</span></label>
+          <label class="field" data-k="invoiceNumber"><span class="lab">Invoice number <span class="hint">optional</span></span><input class="in mono" name="invoiceNumber" placeholder="INV-2024-00441"></label>
+          <label class="field" data-k="purchaseDate"><span class="lab">Purchase date <span class="req">*</span></span><input class="in" type="date" name="purchaseDate"><span class="emsg">Required</span></label>
+          <label class="field" data-k="installDate"><span class="lab">Install date <span class="hint">optional</span></span><input class="in" type="date" name="installDate"></label>
+          <label class="field span2" data-k="projectName"><span class="lab">Project / site name <span class="hint">optional</span></span><input class="in" name="projectName" placeholder="Riverside Warehouse Phase 2"></label>
         </div>
-        <div style="margin-top:12px;font-size:12.5px;color:rgba(255,255,255,.5);line-height:1.5">Either one works — it's how we verify the order and match it to your account. Find it on your ALG order confirmation or invoice.</div>
-        <div class="emsg" id="popMsg" style="display:none;font-family:var(--font-mono);font-size:11px;color:var(--brand);margin-top:8px">Enter a PO# or Invoice#</div>
-      </div>
-      <div class="nav">
-        <button class="btn primary" type="button" onclick="W.next()">Continue to products &rarr;</button>
-      </div>
-    </section>
+        <div class="subhead"><span class="t">Products</span></div>
+        <div class="lt" id="productTable">
+          <div class="h"><span>SKU</span><span>Description</span><span>Qty</span><span>Install loc.</span><span></span></div>
+          <div class="r" data-row="1">
+            <input class="in mono" name="sku_1" placeholder="LBLP24-33MXP2">
+            <input class="in" name="desc_1" placeholder="Fixture description">
+            <input class="in" type="number" name="qty_1" placeholder="1" min="1" style="width:100%">
+            <input class="in" name="loc_1" placeholder="Aisle 3 Bay 7">
+            <button class="del-row" onclick="W.delRow(this)" title="Remove row">&#10005;</button>
+          </div>
+        </div>
+        <button class="add-row" onclick="W.addRow()">+ Add product row</button>
+      </section>
 
-    <!-- STEP 2 — PRODUCTS -->
-    <section class="step" data-step="2">
-      <div class="eyebrow se">Step 02</div>
-      <h2>Which products are affected?</h2>
-      <p class="sub">Add a row per SKU. Date code is printed on the fixture label — we need it to identify the production lot.</p>
-      <div class="card lt">
-        <div class="h"><div>ALG SKU</div><div>Description</div><div>QTY</div><div>Date code</div><div></div></div>
-        <div id="lines"></div>
-        <div class="add"><button class="btn ghost sm" type="button" onclick="W.addRow()">+ Add another SKU</button></div>
-      </div>
-      <div class="callout"><div class="cl">Why we ask for date codes</div><div class="cd">The date code identifies the production lot. When several units share the same SKU and lot, it helps us spot and resolve a lot-level issue quickly.</div></div>
-      <div class="nav">
-        <button class="btn ghost" type="button" onclick="W.prev()">&larr; Back</button>
-        <button class="btn primary" type="button" onclick="W.next()">Continue to failure &rarr;</button>
-      </div>
-    </section>
-
-    <!-- STEP 3 — FAILURE -->
-    <section class="step" data-step="3">
-      <div class="eyebrow se">Step 03</div>
-      <h2>Describe what went wrong</h2>
-      <p class="sub">The more specific, the faster we can route it to the right engineer.</p>
-      <div class="card" style="padding:28px">
-        <div class="field" data-k="reasons">
-          <span class="lab">Primary reason <span class="req">*</span><span class="hint">select all that apply</span></span>
-          <div class="optgrid" id="reasons"></div>
-          <span class="emsg">Select at least one</span>
-        </div>
-        <div class="field" data-k="description" style="margin-top:22px">
-          <span class="lab">Detailed description <span class="req">*</span><span class="hint">min. 12 characters</span></span>
-          <textarea class="in" name="description" rows="5" placeholder="At 11 months post-install, 8 of 32 fixtures in Aisle 4 began flickering at 50% dim. Same lot 2509-B. Replaced driver on one unit — failure recurred within 6 hours. No environmental change."></textarea>
-          <span class="emsg">Please describe the failure (min 12 characters)</span>
-        </div>
-        <div class="fgrid" style="margin-top:22px">
-          <label class="field" data-k="installDate"><span class="lab">Install date <span class="req">*</span></span><input class="in" name="installDate" type="date"><span class="emsg">Required</span></label>
-          <label class="field" data-k="siteAddress"><span class="lab">Site address<span class="hint">if different from buyer</span></span><input class="in" name="siteAddress" placeholder="Same as buyer address"></label>
-        </div>
-        <div class="safety" id="safetyBox">
-          <label>
-            <input type="checkbox" id="safetyFlag" onchange="W.recalc();W.safetyUI()">
-            <div>
-              <div class="k">Safety hazard flag</div>
-              <div class="q">Does this involve fire, smoke, melting, sparks, or anything falling from a fixture?</div>
-              <div class="d">Checking this flags your claim for priority handling, and we may contact you quickly.</div>
-            </div>
+      <!-- STEP 2 — WHAT WENT WRONG -->
+      <section class="step" data-step="2">
+        <div class="eyebrow se">Step 02</div>
+        <h2>What went wrong</h2>
+        <p class="sub">Describe the failure and upload evidence. Three photos minimum.</p>
+        <div class="subhead"><span class="t">Failure details</span></div>
+        <div class="fgrid">
+          <label class="field" data-k="failureType"><span class="lab">Failure type <span class="req">*</span></span>
+            <select class="in" name="failureType">
+              <option value="">Select a failure type</option>
+              <option>No output — fixture does not turn on</option>
+              <option>Partial output — dim or flickering</option>
+              <option>Wrong color temperature</option>
+              <option>Driver failure</option>
+              <option>Physical damage (shipping)</option>
+              <option>Physical damage (in-field)</option>
+              <option>Mounting / hardware issue</option>
+              <option>Controls / dimming issue</option>
+              <option>Other</option>
+            </select>
+            <span class="emsg">Required</span>
           </label>
+          <label class="field" data-k="failureDate"><span class="lab">Date failure noticed <span class="req">*</span></span><input class="in" type="date" name="failureDate"><span class="emsg">Required</span></label>
+          <label class="field" data-k="affectedCount"><span class="lab">Units affected <span class="req">*</span></span><input class="in" type="number" name="affectedCount" placeholder="1" min="1"><span class="emsg">Required</span></label>
+          <label class="field" data-k="totalInstalled"><span class="lab">Total installed (same SKU) <span class="hint">optional</span></span><input class="in" type="number" name="totalInstalled" placeholder="24" min="1"></label>
+          <label class="field span2" data-k="failureDesc"><span class="lab">Describe the failure <span class="req">*</span></span><textarea class="in" name="failureDesc" placeholder="What happened, when, and under what conditions?"></textarea><span class="emsg">Required</span></label>
         </div>
-        <div class="safety-alert" id="safetyAlert">
-          <div class="sa-t">&#9888; Safety concern flagged</div>
-          <div class="sa-b">If there is an immediate hazard, stop using the fixtures and call us at <strong>(866) 912-3220</strong>. We'll prioritize your claim and may reach out before you finish this form.</div>
+        <div class="subhead"><span class="t">Evidence — 3 photos required</span></div>
+        <div class="evgrid" id="evGrid">
+          <div class="slot" data-slot="1" onclick="W.triggerFile(1)">
+            <input type="file" accept="image/*" onchange="W.handleFile(1,this)">
+            <div class="req-badge">REQ</div>
+            <div class="icon">&#128247;</div>
+            <div class="lbl">Affected fixture</div>
+            <button class="rm" onclick="W.removeFile(event,1)">&#10005;</button>
+          </div>
+          <div class="slot" data-slot="2" onclick="W.triggerFile(2)">
+            <input type="file" accept="image/*" onchange="W.handleFile(2,this)">
+            <div class="req-badge">REQ</div>
+            <div class="icon">&#128247;</div>
+            <div class="lbl">Label / driver plate</div>
+            <button class="rm" onclick="W.removeFile(event,2)">&#10005;</button>
+          </div>
+          <div class="slot" data-slot="3" onclick="W.triggerFile(3)">
+            <input type="file" accept="image/*" onchange="W.handleFile(3,this)">
+            <div class="req-badge">REQ</div>
+            <div class="icon">&#128247;</div>
+            <div class="lbl">Installation context</div>
+            <button class="rm" onclick="W.removeFile(event,3)">&#10005;</button>
+          </div>
+          <div class="slot" data-slot="4" onclick="W.triggerFile(4)">
+            <input type="file" accept="image/*" onchange="W.handleFile(4,this)">
+            <div class="icon">&#128247;</div>
+            <div class="lbl">Additional (optional)</div>
+            <button class="rm" onclick="W.removeFile(event,4)">&#10005;</button>
+          </div>
         </div>
-      </div>
-      <div class="nav">
-        <button class="btn ghost" type="button" onclick="W.prev()">&larr; Back</button>
-        <button class="btn primary" type="button" onclick="W.next()">Continue to evidence &rarr;</button>
-      </div>
-    </section>
+        <div class="cls" style="font-size:13px;color:var(--ink3);margin-bottom:8px">Photos should clearly show the defect, the label/driver plate, and the install context — one photo per defective unit. If you can't get all four shots, submit what you have — we'll request the rest if needed.</div>
+        <div class="emsg" id="evMsg" style="display:none;font-family:var(--font-mono);font-size:11px;color:var(--brand);margin-top:12px">Add the three required photos to continue</div>
+      </section>
 
-    <!-- STEP 4 — EVIDENCE -->
-    <section class="step" data-step="4">
-      <div class="eyebrow se">Step 04</div>
-      <h2>Upload photos</h2>
-      <p class="sub">Clear photos speed up approval. The product label shot (SKU + date code) is the one most people forget.</p>
-      <div class="evgrid" id="evidence"></div>
-      <div class="callout" style="margin-top:20px"><div class="cl">Mobile tip</div><div class="cd">Take photos with your phone, then upload here. JPG or PNG, max 10 MB each.</div></div>
-      <div class="nav">
-        <button class="btn ghost" type="button" onclick="W.prev()">&larr; Back</button>
-        <button class="btn primary" type="button" onclick="W.next()">Continue to resolution &rarr;</button>
-      </div>
-    </section>
+      <!-- STEP 3 — RESOLUTION & SUBMIT -->
+      <section class="step" data-step="3">
+        <div class="eyebrow se">Step 03</div>
+        <h2>Make it right</h2>
+        <p class="sub">Choose how you'd like it resolved, review your claim, and sign.</p>
+        <div class="subhead"><span class="t">Resolution requested</span></div>
+        <div id="actions"></div>
+        <div class="field" data-k="action"><span class="emsg" style="margin-top:10px">Choose a resolution</span></div>
+        <div class="card" style="padding:22px;margin-top:14px">
+          <label class="field" data-k="laborShield"><span class="lab mono">LaborShield registration #<span class="hint">optional</span></span><input class="in mono" name="laborShield" placeholder="LS-2024-04412-091"></label>
+          <div style="margin-top:10px;font-size:12px;color:var(--ink3);line-height:1.55">If registered at install, the electrician's labor may be reimbursed per the LaborShield terms. See your LaborShield registration for coverage and limits.</div>
+        </div>
+        <div class="subhead"><span class="t">Review</span></div>
+        <div class="card rev" id="review"></div>
+        <div class="subhead"><span class="t">Sign &amp; submit</span></div>
+        <div class="card signwrap" style="margin-top:0">
+          <label class="field" data-k="signature"><span class="lab">Customer signature <span class="req">*</span><span class="hint">type your full name</span></span><input class="in" name="signature" placeholder="Type your full name" style="font-style:italic"><span class="emsg">Signature required</span></label>
+          <label class="tc"><input type="checkbox" id="terms"><span>I confirm the information above is accurate. I understand that replacement or a pro-rated credit for a confirmed defective product is ALG's sole and exclusive remedy; that ALG's total liability will not exceed the product's purchase price (plus any LaborShield allowance) and excludes indirect or consequential damages; that the defective unit must be returned freight prepaid within 30 days for the replacement to be credited; that removal/installation labor and access equipment are the customer's responsibility except where LaborShield applies; and that this warranty is in lieu of all other warranties, express or implied, including merchantability and fitness for a particular purpose. <a href="/documents/ALG-Limited-Product-Warranty.pdf" target="_blank" rel="noopener">Read the full Limited Warranty &#8599;</a></span></label>
+        </div>
+        <div class="card orange signwrap" style="margin-top:16px">
+          <div class="kmono">Security check</div>
+          <div style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:14px">One quick check before you send</div>
+          <div class="turn" id="turn" onclick="W.verifyTurn()"><div class="box" id="turnBox"></div><div class="tl" id="turnLabel">Verify you are human</div></div>
+          <div style="margin-top:10px;font-size:12px;color:var(--ink3);line-height:1.5;max-width:460px">No claim data leaves your browser until the check passes.</div>
+        </div>
+      </section>
 
-    <!-- STEP 5 — RESOLUTION -->
-    <section class="step" data-step="5">
-      <div class="eyebrow se">Step 05</div>
-      <h2>What outcome do you need?</h2>
-      <p class="sub">Select one. Replacement is the most common outcome for warranty claims.</p>
-      <div class="field" data-k="action">
-        <div class="optgrid" id="actions"></div>
-        <span class="emsg" style="margin-top:8px;display:none">Select a resolution type</span>
-      </div>
-      <div class="card" style="padding:20px;margin-top:20px">
-        <label class="field" data-k="laborShield">
-          <span class="lab">LaborShield&#8482; reimbursement<span class="hint">if registered</span></span>
-          <input class="in" name="laborShield" placeholder="Include electrician invoice — attach to email after submitting">
-        </label>
-      </div>
       <div class="nav">
-        <button class="btn ghost" type="button" onclick="W.prev()">&larr; Back</button>
-        <button class="btn primary" type="button" onclick="W.next()">Review &amp; submit &rarr;</button>
+        <button class="btn ghost md" id="back" onclick="W.prev()" disabled>&#8592; Back</button>
+        <button class="btn primary lg" id="next" onclick="W.next()">Continue &#8594; What went wrong</button>
       </div>
-    </section>
+    </main>
 
-    <!-- STEP 6 — REVIEW -->
-    <section class="step" data-step="6">
-      <div class="eyebrow se">Step 06</div>
-      <h2>Review &amp; submit</h2>
-      <p class="sub">Check everything below. Once you click Submit, your email client will open with a pre-filled message to our warranty team.</p>
-      <div id="review"></div>
-      <div class="sig-wrap">
-        <div class="sig-label">Your signature <span class="req">*</span></div>
-        <div class="sig-legal">By typing your name below, you confirm this claim is accurate and falls within the <a href="/documents/ALG-Limited-Product-Warranty.pdf" target="_blank" rel="noopener">ALG Limited Product Warranty</a>. LaborShield&#8482; terms apply where registered. Submitting opens your email client with a pre-filled message to our warranty team.</div>
-        <label class="field" data-k="signature">
-          <input class="in" name="signature" placeholder="Full name">
-          <span class="emsg">Signature required</span>
-        </label>
+    <aside class="rail">
+      <div class="blk">
+        <div class="eyebrow" style="margin-bottom:12px">What to expect</div>
+        <div class="cls">We aim to acknowledge every claim within about 2 business days; larger or safety-related issues are prioritized. You'll get a confirmation with your RMA number — save it to track status. Most claims are resolved from your photos.</div>
       </div>
-      <div class="nav">
-        <button class="btn ghost" type="button" onclick="W.prev()">&larr; Back</button>
-        <button class="btn primary" type="button" onclick="W.next()">Submit claim &rarr;</button>
+      <div class="blk hr">
+        <div class="eyebrow" style="margin-bottom:10px">On this step</div>
+        <div class="help" id="stepHelp"></div>
       </div>
-    </section>
+      <div class="blk hr">
+        <div class="eyebrow" style="margin-bottom:10px">Need help</div>
+        <div class="contact">(866) 912-3220<br><span class="em">warranty@archipelagolighting.com</span></div>
+      </div>
+      <div class="blk hr docs">
+        <div class="eyebrow" style="margin-bottom:4px">Reference</div>
+        <a href="/documents/ALG-Limited-Product-Warranty.pdf" target="_blank" rel="noopener">Limited Product Warranty &#8599;</a>
+        <a href="/documents/ALG-Sales-Terms-and-Conditions.pdf" target="_blank" rel="noopener">Sales Terms &amp; Conditions &#8599;</a>
+      </div>
+    </aside>
   </div>
-
-  <!-- right rail -->
-  <aside class="rail">
-    <div class="blk">
-      <div class="eyebrow" style="margin-bottom:12px">What to expect</div>
-      <div class="cls">We aim to acknowledge every claim within about 2 business days; larger or safety-related issues are prioritized. You'll get a confirmation with your RMA number — save it to check status.</div>
-    </div>
-    <div class="blk">
-      <div class="eyebrow" style="margin-bottom:12px">Need help?</div>
-      <div class="cls">Call <strong>(866) 912-3220</strong> or email <strong>warranty@archipelagolighting.com</strong>. Mon–Fri 6 AM–5 PM PT.</div>
-      <a class="lnk" href="/documents/ALG-Limited-Product-Warranty.pdf" target="_blank" rel="noopener">Limited Product Warranty &rarr;</a>
-      <a class="lnk" href="/documents/ALG-Sales-Terms-and-Conditions.pdf" target="_blank" rel="noopener">Sales Terms &amp; Conditions &rarr;</a>
-    </div>
-    <div class="help-box">
-      <div class="help-title" id="stepHelpTitle">Step tip</div>
-      <div class="help-text" id="stepHelp"></div>
-    </div>
-  </aside>
-</main>
+</div>
 
 <script is:inline>
-window.W=(function(){
-  const TOTAL=6; let step=1;
-  // ---- ships EMPTY — all fields start blank (placeholders only), NO demo prefills ----
-  const REASONS=[
-    {id:"defective",label:"Defective / not working",desc:"Failure during normal operation (driver, LED, flicker, no-start, buzz)"},
-    {id:"wrong",label:"Wrong item received",desc:"SKU shipped does not match the SKU ordered"},
-    {id:"damaged",label:"Damaged in transit",desc:"Visible damage on receipt, before installation"},
-    {id:"other",label:"Other",desc:"Describe below — we'll route appropriately"}
+(function(){
+var cur=1,totalSteps=3,turnPassed=false,rowCount=1;
+var files={};
+var ACTIONS=[
+  {id:'replace',icon:'&#128260;',name:'Replacement unit',desc:'Ship a replacement for the defective fixture(s).'},
+  {id:'credit',icon:'&#128179;',name:'Pro-rated credit',desc:'Credit toward a future order based on remaining warranty life.'},
+  {id:'repair',icon:'&#128295;',name:'Factory repair',desc:'Return for factory inspection and repair where feasible.'},
+  {id:'other',icon:'&#128172;',name:'Other / discuss',desc:'Not sure — let\'s talk through the options.'},
+];
+var STEP_HELP=[
+  '',
+  'Fill in your contact info, order details, and the products you\'re claiming. Every field marked * is required to continue.',
+  'Select the failure type, describe what happened, and upload at least 3 photos. Clear photos speed up approval.',
+  'Pick a resolution, review your claim summary, sign, and pass the security check to submit.',
+];
+
+function classify(d){
+  var n=parseInt(d.affectedCount)||1,t=parseInt(d.totalInstalled)||n;
+  var ratio=n/t;
+  var ft=(d.failureType||'').toLowerCase();
+  var safety=ft.includes('physical damage')||ft.includes('driver');
+  if(safety&&n>=3) return 'SYSTEMIC';
+  if(ratio>=0.3||n>=10) return 'SYSTEMIC';
+  if(ratio>=0.1||n>=3) return 'BATCH';
+  return 'ISOLATED';
+}
+
+function genRMA(){
+  var now=new Date();
+  var yy=String(now.getFullYear()).slice(2);
+  var seq=String(Math.floor(Math.random()*90000)+10000);
+  return 'RMA-'+yy+'-'+seq;
+}
+
+function collect(){
+  var d={};
+  document.querySelectorAll('.form input,.form select,.form textarea').forEach(function(el){
+    if(el.name) d[el.name]=el.value;
+  });
+  return d;
+}
+
+function validateStep(step){
+  var ok=true;
+  var section=document.querySelector('.step[data-step="'+step+'"]');
+  if(!section) return true;
+  section.querySelectorAll('.field[data-k]').forEach(function(f){
+    var k=f.dataset.k;
+    var inp=f.querySelector('.in');
+    if(!inp) return;
+    var req=f.querySelector('.req');
+    if(!req) return;
+    f.classList.remove('invalid');
+    if(!inp.value.trim()){
+      f.classList.add('invalid');
+      ok=false;
+    }
+    if(k==='email'&&inp.value&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value)){
+      f.classList.add('invalid');
+      ok=false;
+    }
+  });
+  if(step===2){
+    var ev=document.getElementById('evMsg');
+    var filled=Object.keys(files).filter(function(k){return parseInt(k)<=3&&files[k]}).length;
+    if(filled<3){ev.style.display='block';ok=false;}
+    else{ev.style.display='none';}
+  }
+  if(step===3){
+    var actionField=document.querySelector('.field[data-k="action"]');
+    if(!document.querySelector('.act.sel')){actionField.classList.add('invalid');ok=false;}
+    else{actionField.classList.remove('invalid');}
+    if(!turnPassed) ok=false;
+  }
+  return ok;
+}
+
+function showStep(n){
+  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active')});
+  document.querySelector('.step[data-step="'+n+'"]').classList.add('active');
+  document.querySelectorAll('.ps').forEach(function(p){
+    var sn=parseInt(p.dataset.step);
+    p.classList.remove('active','done');
+    if(sn===n) p.classList.add('active');
+    if(sn<n) p.classList.add('done');
+  });
+  document.getElementById('stepCounter').textContent='Step 0'+n+' of 03';
+  document.getElementById('stepHelp').textContent=STEP_HELP[n];
+  var back=document.getElementById('back');
+  var next=document.getElementById('next');
+  back.disabled=(n===1);
+  if(n<totalSteps){
+    var labels=['','Continue \u2192 What went wrong','Continue \u2192 Resolution & submit'];
+    next.textContent=labels[n]||'Continue';
+    next.onclick=function(){W.next()};
+    next.disabled=false;
+  } else {
+    next.textContent='Submit RMA \u2192';
+    next.onclick=function(){W.submit()};
+    next.disabled=false;
+  }
+  cur=n;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+window.W={};
+W.addRow=function(){
+  rowCount++;
+  var table=document.getElementById('productTable');
+  var row=document.createElement('div');
+  row.className='r';row.dataset.row=rowCount;
+  row.innerHTML='<input class="in mono" name="sku_'+rowCount+'" placeholder="LBLP24-33MXP2">'+
+    '<input class="in" name="desc_'+rowCount+'" placeholder="Fixture description">'+
+    '<input class="in" type="number" name="qty_'+rowCount+'" placeholder="1" min="1" style="width:100%">'+
+    '<input class="in" name="loc_'+rowCount+'" placeholder="Aisle 3 Bay 7">'+
+    '<button class="del-row" onclick="W.delRow(this)" title="Remove row">\u2715</button>';
+  table.appendChild(row);
+};
+W.delRow=function(btn){
+  var row=btn.closest('.r');
+  if(document.querySelectorAll('#productTable .r').length>1) row.remove();
+};
+W.triggerFile=function(n){
+  var slot=document.querySelector('.slot[data-slot="'+n+'"]');
+  if(slot) slot.querySelector('input[type=file]').click();
+};
+W.handleFile=function(n,inp){
+  if(!inp.files[0]) return;
+  files[n]=inp.files[0];
+  var slot=document.querySelector('.slot[data-slot="'+n+'"]');
+  var reader=new FileReader();
+  reader.onload=function(e){
+    slot.classList.add('filled');
+    var img=slot.querySelector('img')||document.createElement('img');
+    img.src=e.target.result;
+    slot.insertBefore(img,slot.querySelector('.rm'));
+    slot.querySelector('.icon').style.display='none';
+    slot.querySelector('.lbl').style.display='none';
+  };
+  reader.readAsDataURL(inp.files[0]);
+};
+W.removeFile=function(ev,n){
+  ev.stopPropagation();
+  files[n]=null;
+  var slot=document.querySelector('.slot[data-slot="'+n+'"]');
+  slot.classList.remove('filled');
+  var img=slot.querySelector('img');
+  if(img) img.remove();
+  slot.querySelector('.icon').style.display='';
+  slot.querySelector('.lbl').style.display='';
+  slot.querySelector('input[type=file]').value='';
+};
+
+function buildActions(){
+  var el=document.getElementById('actions');
+  el.innerHTML='';
+  ACTIONS.forEach(function(a){
+    var div=document.createElement('div');
+    div.className='act';div.dataset.id=a.id;
+    div.innerHTML='<div class="act-icon">'+a.icon+'</div><div><div class="act-name">'+a.name+'</div><div class="act-desc">'+a.desc+'</div></div>';
+    div.onclick=function(){
+      document.querySelectorAll('.act').forEach(function(x){x.classList.remove('sel')});
+      div.classList.add('sel');
+    };
+    el.appendChild(div);
+  });
+}
+
+function buildReview(){
+  var d=collect();
+  var selAct=document.querySelector('.act.sel');
+  var actName=selAct?selAct.querySelector('.act-name').textContent:'\u2014';
+  var rows=[];
+  document.querySelectorAll('#productTable .r').forEach(function(r){
+    var sku=r.querySelector('[name^=sku]');
+    var qty=r.querySelector('[name^=qty]');
+    if(sku&&sku.value) rows.push((qty&&qty.value?qty.value+'\u00d7 ':'')+sku.value);
+  });
+  var photoCount=Object.keys(files).filter(function(k){return files[k]}).length;
+  var items=[
+    ['Company',d.company||'\u2014'],['Contact',d.contact||'\u2014'],['Email',d.email||'\u2014'],
+    ['PO / Order',d.poNumber||'\u2014'],['Purchase date',d.purchaseDate||'\u2014'],
+    ['Products',rows.join(', ')||'\u2014'],
+    ['Failure type',d.failureType||'\u2014'],['Units affected',d.affectedCount||'\u2014'],
+    ['Failure description',d.failureDesc||'\u2014'],
+    ['Photos attached',photoCount+' file(s)'],
+    ['Resolution',actName],
   ];
-  const ACTIONS=[
-    {id:"replacement",label:"Replacement",desc:"Same SKU shipped to original or alternate address. Most common."},
-    {id:"credit",label:"Account credit",desc:"Credit memo applied to your ALG account. Expires 1 year from issuance."},
-    {id:"refund",label:"Refund",desc:"Original payment method. Subject to ALG approval — see Sales T&C."}
-  ];
-  const SLOTS=[
-    {id:"full",label:"Full product view",hint:"Whole fixture showing failure point",req:true},
-    {id:"closeup",label:"Close-up of failure",hint:"Burn, crack, melted area, etc.",req:true},
-    {id:"label",label:"Product label",hint:"SKU + date code must be legible",req:true},
-    {id:"install",label:"Installation context",hint:"Wider shot of mounting/wiring",req:false}
-  ];
-  const HELP=[
-    "Use the company that purchased the product, not the installer. Enter your ALG PO# or Invoice# as proof of purchase — it's how we verify the order.",
-    "Date code is printed on the small sticker on the fixture housing. Format: YYMM-letter (e.g. 2509-B).",
-    "Describe what the failure looks like and when it started. Specifics like \"flickering at 50% dim\" route to the right engineer faster than \"not working.\"",
-    "Mobile users: take photos with your phone, then upload here. The label shot is the one most people forget.",
-    "Replacement is the most common outcome. Credit and refund options are subject to your warranty terms.",
-    "Once submitted, we send a copy to your email. Save the RMA # — it's how you'll check status."
-  ];
-  const ROUTE={ISOLATED:"Customer Service",BATCH:"Product Management + Quality",SYSTEMIC:"Operations"};
-  let reasons=new Set();
-  let action="";
-  let evidence={};
-  let lines=[{sku:"",description:"",qty:1,dateCode:""}];
-  let turnOk=false;
-  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-  const v=n=>{const e=document.querySelector('[name='+n+']');return e?e.value.trim():''};
-  // ---- severity classifier (SOP §4) ----
-  // INTERNAL routing only — drives the emailed warranty-team payload. NOT shown to the buyer (legal review H1/H2).
-  const RANK={ISOLATED:0,BATCH:1,SYSTEMIC:2};
-  const up=(cur,to)=>RANK[to]>RANK[cur]?to:cur;
-  function claimHistory(){try{return JSON.parse(localStorage.getItem('alg_rma_history')||'[]');}catch(e){return[];}}
-  function classify(){
-    const reasonsOut=[]; let sev="ISOLATED";
-    const totalQty=lines.reduce((a,l)=>a+(parseInt(l.qty,10)||0),0);
-    const uniqSkus=new Set(lines.map(l=>l.sku).filter(Boolean).map(s=>s.toUpperCase()));
-    const uniqDates=new Set(lines.map(l=>l.dateCode).filter(Boolean).map(s=>s.toUpperCase()));
-    const site=v('siteAddress');
-    const lifeSafety=lines.some(l=>/CONST|CRC/i.test(l.sku||''));
-    if(uniqSkus.size===1&&uniqDates.size===1&&totalQty>=5){sev=up(sev,"BATCH");reasonsOut.push(totalQty+" units · same SKU + date-code lot");}
-    if(site&&totalQty>=5){sev=up(sev,"BATCH");reasonsOut.push(totalQty+" units at one site");}
-    if(lifeSafety){sev=up(sev,"BATCH");reasonsOut.push("Life-safety SKU (constARCH EM / CRC) — egress-path implications");}
-    if(uniqSkus.size>=2&&totalQty>=5){sev=up(sev,"SYSTEMIC");reasonsOut.push("Multiple SKUs affected — possible systemic issue");}
-    const safetyKw=['fire','smoke','melt','spark','fall','fell','drop','arc','burn','char'];
-    const desc=(v('description')||'').toLowerCase();
-    const hit=safetyKw.find(k=>desc.includes(k));
-    if($('#safetyFlag').checked||hit){sev=up(sev,"SYSTEMIC");reasonsOut.push($('#safetyFlag').checked?"Safety hazard reported by buyer":'Safety keyword: "'+hit+'"');}
-    const H=claimHistory();
-    const repeatLot=H.some(h=>h.keys&&lines.some(l=>h.keys.includes(l.sku+'|'+l.dateCode))&&h.buyer===v('company'));
-    const repeatOtherParty=H.some(h=>h.keys&&lines.some(l=>h.keys.includes(l.sku+'|'+l.dateCode))&&h.buyer!==v('company'));
-    if(repeatLot){sev=up(sev,"BATCH");reasonsOut.push("Repeat claim on same SKU + lot — auto-escalated");}
-    if(repeatOtherParty){sev=up(sev,"SYSTEMIC");reasonsOut.push("Same SKU + lot reported by multiple buyers/sites");}
-    const keys=lines.map(l=>l.sku+'|'+l.dateCode).filter(k=>k!=='|');
-    return{sev,reasons:reasonsOut,keys,buyer:v('company'),site};
-  }
-  function recalc(){ /* classifier is internal-only now (legal: severity not shown to the buyer). Retained for the emailed routing payload. */ }
-  function safetyUI(){
-    const on=$('#safetyFlag')&&$('#safetyFlag').checked;
-    const el=$('#safetyAlert');
-    if(el){on?el.classList.add('show'):el.classList.remove('show');}
-  }
-  function renderLines(){
-    $('#lines').innerHTML=lines.map((l,i)=>'<div class="line-row"><input class="in mono" placeholder="LBLP24-33MXP2" value="'+esc(l.sku)+'" oninput="W.updLine('+i+',\'sku\',this.value)"><input class="in" placeholder="Slim Bay, 33W" value="'+esc(l.description)+'" oninput="W.updLine('+i+',\'description\',this.value)"><input class="in" type="number" min="1" value="'+l.qty+'" oninput="W.updLine('+i+',\'qty\',this.value)"><input class="in mono" placeholder="2509-B" value="'+esc(l.dateCode)+'" oninput="W.updLine('+i+',\'dateCode\',this.value)"><button class="del" type="button" onclick="W.delRow('+i+')" title="Remove">&times;</button></div>').join('');
-  }
-  function renderReasons(){
-    $('#reasons').innerHTML=REASONS.map(r=>'<button type="button" class="opt'+(reasons.has(r.id)?' on':'')+'" data-id="'+r.id+'"><span class="radio"><i></i></span><span><span class="ot">'+r.label+'</span><span class="od">'+r.desc+'</span></span></button>').join('');
-    $$('#reasons .opt').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.id;reasons.has(id)?reasons.delete(id):reasons.add(id);renderReasons();}));
-  }
-  function renderActions(){
-    $('#actions').innerHTML=ACTIONS.map(a=>'<button type="button" class="opt act'+(action===a.id?' on':'')+'" data-id="'+a.id+'"><span class="radio"><i></i></span><span><span class="ot">'+a.label+'</span><span class="od">'+a.desc+'</span></span></button>').join('');
-    $$('#actions .act').forEach(b=>b.addEventListener('click',()=>{action=b.dataset.id;$$('#actions .act').forEach(x=>x.classList.remove('on'));b.classList.add('on');}));
-  }
-  function renderEvidence(){
-    $('#evidence').innerHTML=SLOTS.map(s=>'<div class="slot'+(evidence[s.id]?' filled':'')+'" id="slot-'+s.id+'"><div class="icon">'+(evidence[s.id]?'&#10003;':'&#128247;')+'</div><div class="sk">'+s.label+(s.req?' <span style="color:var(--brand)">*</span>':'')+'</div><div class="sh">'+s.hint+'</div>'+(evidence[s.id]?'<div class="fn">'+esc(evidence[s.id].name)+'</div>':'')+'<input type="file" accept="image/*,.pdf" onchange="W.clearSlot(\''+s.id+'\',this)"></div>').join('');
-  }
-  function renderReview(){
-    const totalQty=lines.reduce((a,l)=>a+(parseInt(l.qty,10)||0),0);
-    const actLabel=(ACTIONS.find(a=>a.id===action)||{}).label||'—';
-    $('#review').innerHTML='<div class="rv-section"><div class="rv-label">Buyer</div><div class="rv-row"><span class="rv-k">Company</span><span class="rv-v">'+esc(v('company'))+'</span></div><div class="rv-row"><span class="rv-k">Contact</span><span class="rv-v">'+esc(v('contact'))+'</span></div><div class="rv-row"><span class="rv-k">Email</span><span class="rv-v">'+esc(v('email'))+'</span></div><div class="rv-row"><span class="rv-k">Phone</span><span class="rv-v">'+esc(v('phone'))+'</span></div><div class="rv-row"><span class="rv-k">PO / Invoice</span><span class="rv-v">'+(esc(v('poRef'))||esc(v('invoiceRef'))||'—')+'</span></div></div><div class="rv-section"><div class="rv-label">Products ('+totalQty+' units)</div><div class="rv-lines">'+lines.map(l=>'<div class="rv-line"><div><div class="rk">SKU</div>'+esc(l.sku||'—')+'</div><div><div class="rk">QTY</div>'+l.qty+'</div><div><div class="rk">Lot</div>'+esc(l.dateCode||'—')+'</div></div>').join('')+'</div></div><div class="rv-section"><div class="rv-label">Failure</div><div class="rv-row"><span class="rv-k">Reasons</span><span class="rv-v">'+([...reasons].join(', ')||'—')+'</span></div><div class="rv-row"><span class="rv-k">Install date</span><span class="rv-v">'+esc(v('installDate'))+'</span></div><div class="rv-row"><span class="rv-k">Description</span><span class="rv-v" style="white-space:pre-wrap">'+esc(v('description'))+'</span></div></div><div class="rv-section"><div class="rv-label">Resolution</div><div class="rv-row"><span class="rv-k">Outcome</span><span class="rv-v">'+actLabel+'</span></div><div class="rv-row"><span class="rv-k">Evidence</span><span class="rv-v">'+Object.keys(evidence).length+' photo(s)</span></div></div>';
-  }
-  function validate(s){
-    let ok=true;
-    if(s===1){
-      ['company','contact','email','phone'].forEach(k=>{const f=document.querySelector('[data-k='+k+']');if(f){const bad=!v(k);f.classList.toggle('err',bad);if(bad)ok=false;}});
-      const hasPop=v('poRef')||v('invoiceRef');
-      const pm=$('#popMsg');if(pm){pm.style.display=hasPop?'none':'block';}
-      if(!hasPop)ok=false;
-    }
-    if(s===2){
-      const bad=lines.every(l=>!l.sku);
-      if(bad){ok=false;alert('Add at least one SKU.');}
-    }
-    if(s===3){
-      const rf=document.querySelector('[data-k=reasons]');
-      const bad=reasons.size===0;if(rf){rf.classList.toggle('err',bad);if(bad)ok=false;}
-      const df=document.querySelector('[data-k=description]');
-      const dbad=(v('description')||'').length<12;if(df){df.classList.toggle('err',dbad);if(dbad)ok=false;}
-      const idf=document.querySelector('[data-k=installDate]');
-      const ibad=!v('installDate');if(idf){idf.classList.toggle('err',ibad);if(ibad)ok=false;}
-    }
-    if(s===4){
-      const reqSlots=SLOTS.filter(sl=>sl.req);
-      const missing=reqSlots.filter(sl=>!evidence[sl.id]);
-      if(missing.length){ok=false;alert('Please upload: '+missing.map(sl=>sl.label).join(', '));}
-    }
-    if(s===5){
-      const af=document.querySelector('[data-k=action]');
-      const bad=!action;if(af){const em=af.querySelector('.emsg');if(em)em.style.display=bad?'block':'none';if(bad)ok=false;}
-    }
-    if(s===6){
-      const sf=document.querySelector('[data-k=signature]');
-      const bad=!v('signature');if(sf){sf.classList.toggle('err',bad);if(bad)ok=false;}
-    }
-    return ok;
-  }
-  function show(n){
-    step=n;
-    $$('.step').forEach(s=>s.classList.toggle('active',+s.dataset.step===n));
-    $$('#prog .st').forEach((s,i)=>{s.classList.toggle('active',i+1===n);s.classList.toggle('done',i+1<n);});
-    const counter=$('#stepCounter');if(counter)counter.textContent='Step '+String(n).padStart(2,'0')+' of '+String(TOTAL).padStart(2,'0');
-    const help=$('#stepHelp');if(help)help.textContent=HELP[n-1]||'';
-    if(n===2)renderLines();
-    if(n===3)renderReasons();
-    if(n===4)renderEvidence();
-    if(n===5)renderActions();
-    if(n===6)renderReview();
-    window.scrollTo({top:0,behavior:'smooth'});
-  }
-  function jump(n){if(n<step)show(n);}
-  function next(){if(!validate(step)){return;}if(step===TOTAL){submit();return;}show(step+1);}
-  function prev(){if(step>1)show(step-1);}
-  // ---- submit — email warranty desk + route to confirmation ----
-  const NOTIFY={ISOLATED:"—",BATCH:"Operations within 24h",SYSTEMIC:"Operations + Legal (immediate)"};
-  function submit(){
-    const c=classify();
-    const rma='RMA-26-0'+(1184+Math.floor(Math.random()*99));
-    const totalQty=lines.reduce((a,l)=>a+(parseInt(l.qty,10)||0),0);
-    const productLabel=(lines[0].sku||'—')+' · qty '+totalQty+(lines.length>1?' (+'+(lines.length-1)+' more)':'');
-    const actLabel=(ACTIONS.find(a=>a.id===action)||{}).label||'Replacement';
-    const now=new Date(),pad=n=>String(n).padStart(2,'0');
-    const receivedISO=now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'T'+pad(now.getHours())+':'+pad(now.getMinutes())+':00';
-    const body=['NEW RMA REQUEST — '+rma,'severity (auto): '+c.sev+'  ·  route: '+ROUTE[c.sev],'',
-      'BUYER','company: '+v('company'),'contact: '+v('contact'),'email: '+v('email'),'phone: '+v('phone'),
-      'account: '+(v('accountNumber')||'—')+'   rep: '+(v('salesRep')||'—'),'po/inv: '+(v('poRef')||v('invoiceRef')||'—'),'',
-      'PRODUCTS',lines.map(l=>'· '+l.sku+' | qty '+l.qty+' | lot '+l.dateCode).join('\n'),'',
-      'FAILURE','reasons: '+[...reasons].join(', '),'install: '+v('installDate')+'   site: '+(v('siteAddress')||'—'),
-      'description: '+v('description'),'safety_flag: '+($('#safetyFlag').checked?'YES':'no'),'',
-      'ACTION REQUESTED: '+actLabel,'laborShield: '+(v('laborShield')||'—'),
-      'evidence: '+Object.keys(evidence).length+' files (attach to this email)','signed: '+v('signature')].join('\n');
-    const mailto='mailto:warranty@archipelagolighting.com?subject='+encodeURIComponent('['+c.sev+'] RMA '+rma+' — '+(v('company')||''))+'&body='+encodeURIComponent(body);
-    // Confirmation payload = customer-facing receipt only.
-    // Internal verdict (severity/route/notify) stays in the emailed warranty-team copy — never handed to the client page.
-    const payload={rma:rma,
-      email:v('email'),contact:v('contact'),phone:v('phone'),company:v('company'),account:v('accountNumber')||'—',
-      poRef:v('poRef')||v('invoiceRef')||'—',productLabel:productLabel,action:action,actionLabel:actLabel,
-      lines:lines.map(l=>({sku:l.sku||'—',qty:l.qty||0,dateCode:l.dateCode||'—'})),
-      evidenceCount:Object.keys(evidence).length,receivedISO:receivedISO};
-    try{sessionStorage.setItem('alg_rma',JSON.stringify(payload));}catch(e){}
-    try{var H=claimHistory();H.push({keys:c.keys,buyer:c.buyer,site:c.site,rma:rma,ts:Date.now()});localStorage.setItem('alg_rma_history',JSON.stringify(H.slice(-50)));}catch(e){}
-    window.location.href=mailto;
-    setTimeout(()=>{window.location.href='/support/returns/confirmation/?rma='+rma;},400);
-  }
-  function esc(s){return String(s==null?'':s).replace(/"/g,'&quot;').replace(/</g,'&lt;');}
-  function updLine(i,k,val){lines[i][k]=val;}
-  function addRow(){lines.push({sku:'',description:'',qty:1,dateCode:''});renderLines();}
-  function delRow(i){if(lines.length>1){lines.splice(i,1);renderLines();}}
-  function clearSlot(id,input){if(input.files&&input.files[0]){evidence[id]={name:input.files[0].name};}else{delete evidence[id];}renderEvidence();}
-  function verifyTurn(){turnOk=true;}
-  function init(){
-    renderLines();renderReasons();renderActions();renderEvidence();
-    $$('input[name],textarea[name]').forEach(e=>e.addEventListener('input',recalc));
-    $$('#prog .st').forEach(s=>s.addEventListener('click',()=>jump(+s.dataset.i)));
-    safetyUI();recalc();$('#stepHelp').textContent=HELP[0];
-  }
-  return {next,prev,jump,addRow,delRow,clearSlot,recalc,safetyUI,verifyTurn,updLine,init};
+  var rev=document.getElementById('review');
+  rev.innerHTML=items.map(function(r){
+    return '<div class="rv-row"><div class="rv-k">'+r[0]+'</div><div class="rv-v">'+r[1]+'</div></div>';
+  }).join('');
+}
+
+W.verifyTurn=function(){
+  var turn=document.getElementById('turn');
+  var box=document.getElementById('turnBox');
+  var lbl=document.getElementById('turnLabel');
+  if(turnPassed) return;
+  box.innerHTML='\u2713';box.style.fontSize='14px';
+  lbl.textContent='Verified';
+  turn.classList.add('verified');
+  turnPassed=true;
+};
+
+W.next=function(){
+  if(!validateStep(cur)) return;
+  if(cur===2) buildReview();
+  if(cur<totalSteps) showStep(cur+1);
+};
+W.prev=function(){if(cur>1) showStep(cur-1);};
+W.goStep=function(n){if(n<cur) showStep(n);};
+
+W.submit=function(){
+  if(!validateStep(3)) return;
+  var d=collect();
+  var selAct=document.querySelector('.act.sel');
+  var actName=selAct?selAct.querySelector('.act-name').textContent:'\u2014';
+  var severity=classify(d);
+  var rma=genRMA();
+  var rows=[];
+  document.querySelectorAll('#productTable .r').forEach(function(r){
+    var sku=r.querySelector('[name^=sku]');
+    var qty=r.querySelector('[name^=qty]');
+    if(sku&&sku.value) rows.push((qty&&qty.value?qty.value+'\u00d7 ':'')+sku.value);
+  });
+  var body=[
+    'RMA: '+rma,
+    '--- CONTACT ---',
+    'Company: '+d.company,'Contact: '+d.contact,'Email: '+d.email,'Phone: '+(d.phone||'\u2014'),
+    '--- ORDER ---',
+    'PO: '+d.poNumber,'Invoice: '+(d.invoiceNumber||'\u2014'),
+    'Purchase date: '+d.purchaseDate,'Install date: '+(d.installDate||'\u2014'),
+    'Project: '+(d.projectName||'\u2014'),
+    '--- PRODUCTS ---',rows.join('\n'),
+    '--- FAILURE ---',
+    'Type: '+d.failureType,'Date noticed: '+d.failureDate,
+    'Units affected: '+d.affectedCount,'Total installed: '+(d.totalInstalled||'\u2014'),
+    'Description: '+d.failureDesc,
+    '--- RESOLUTION ---','Requested: '+actName,'LaborShield: '+(d.laborShield||'\u2014'),
+    '--- INTERNAL ---','Severity: '+severity,
+    '--- SIGNATURE ---','Signed: '+d.signature,
+  ].join('\n');
+  sessionStorage.setItem('alg_rma',JSON.stringify({rma:rma,company:d.company,email:d.email,action:actName}));
+  var mailto='mailto:warranty@archipelagolighting.com'
+    +'?subject='+encodeURIComponent('[RMA] '+rma+' \u2014 '+d.company)
+    +'&body='+encodeURIComponent(body);
+  window.location.href=mailto;
+  setTimeout(function(){
+    window.location.href='/support/returns/confirmation/?rma='+encodeURIComponent(rma);
+  },1500);
+};
+
+buildActions();
+showStep(1);
 })();
-document.addEventListener('DOMContentLoaded',window.W.init);
 </script>
+
 </BaseLayout>
