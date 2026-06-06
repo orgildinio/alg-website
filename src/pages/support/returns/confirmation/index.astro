@@ -1,0 +1,191 @@
+---
+// RMA Confirmation — /support/returns/confirmation/
+// Visual source: ALG-RMA-Confirmation.html
+// Reads sessionStorage alg_rma (set by wizard) + ?rma= query param
+// LEGAL: No severity/routing/SLA shown to buyer — internal verdict stays in the emailed warranty-team copy only
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Claim Received — Archipelago Lighting Group" description="Your RMA request has been received. We'll follow up by email with next steps.">
+<style is:global>
+:root{
+  --brand:#F32740;--brand-dark:#C8132E;
+  --ink:#1A1D23;--ink2:#3A3E47;--ink3:#6B7280;
+  --c1:#F5F4F1;--c2:#EEEDF0;--c3:#DCDEE2;--white:#fff;
+  --grn:#0FAE7C;--yellow:#FDD85E;
+  --font-sans:'Lato',system-ui,-apple-system,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,'SF Mono',Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--white)}
+body{font-family:var(--font-sans);color:var(--ink);-webkit-font-smoothing:antialiased}
+::selection{background:var(--brand);color:#fff}
+.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
+/* ---- split layout ---- */
+.split{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 60px)}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+/* ---- left: customer receipt ---- */
+.cust{padding:64px 56px;max-width:640px}
+.cust .logo{width:132px;height:auto;display:block;margin-bottom:48px}
+.rcv{display:flex;align-items:center;gap:16px;margin-bottom:32px}
+.tick{width:44px;height:44px;border-radius:50%;background:var(--grn);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;flex-shrink:0}
+.ek{font-family:var(--font-mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:4px}
+.rma{font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--ink);letter-spacing:.04em}
+.cust h1{font-size:32px;font-weight:800;color:var(--ink);margin:0 0 14px;letter-spacing:-.02em;line-height:1.2}
+.lede{font-size:16px;color:var(--ink2);line-height:1.6;margin:0 0 36px}
+.card-sum{background:var(--c1);border-radius:12px;padding:24px;margin-bottom:24px}
+.cs-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--c2);font-size:14px}
+.cs-row:last-child{border-bottom:none}
+.cs-k{color:var(--ink3);font-weight:500}
+.cs-v{color:var(--ink);font-weight:600;text-align:right;max-width:60%}
+.card-next{border:1.5px solid var(--c3);border-radius:12px;padding:24px;margin-bottom:32px}
+.cn-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:16px}
+.cn-step{display:flex;gap:14px;margin-bottom:14px;align-items:flex-start}
+.cn-step:last-child{margin-bottom:0}
+.cn-num{width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font-family:var(--font-mono);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.cn-text{font-size:14px;color:var(--ink2);line-height:1.5}
+.cn-text strong{color:var(--ink)}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;border:none;font-family:var(--font-sans);text-decoration:none;transition:background .15s}
+.btn.primary{background:var(--brand);color:#fff}
+.btn.primary:hover{background:var(--brand-dark)}
+.btn.ghost{background:transparent;border:1.5px solid var(--c3);color:var(--ink2)}
+.btn.ghost:hover{border-color:var(--ink3)}
+@media(max-width:720px){.cust{padding:40px 20px}}
+/* ---- right: internal pipeline + receipt ---- */
+.internal{background:var(--ink);padding:64px 48px;overflow-y:auto}
+.internal .eyebrow{color:rgba(255,255,255,.4)}
+.int-title{font-size:20px;font-weight:700;color:#fff;margin:12px 0 32px;letter-spacing:-.01em}
+/* pipeline */
+.pipeline{margin-bottom:40px}
+.node{display:grid;grid-template-columns:32px 1fr;gap:0 14px;align-items:start}
+.pipcol{display:flex;flex-direction:column;align-items:center}
+.pip{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.conn{display:grid;grid-template-columns:32px 1fr;gap:0 14px;height:28px}
+.conn .bar{width:2px;background:rgba(255,255,255,.12);margin:0 auto;height:100%}
+.ncard{border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:0}
+.nk{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}
+.nt{font-size:13px;font-weight:700;color:#fff;margin-bottom:2px}
+.ns{font-size:12px;color:rgba(255,255,255,.5);line-height:1.4}
+/* email receipt */
+.receipt-wrap{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:20px;margin-top:8px}
+.emrow{display:flex;gap:10px;font-size:12px;margin-bottom:6px}
+.emrow .l{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);min-width:36px;padding-top:2px}
+.emrow .val{color:rgba(255,255,255,.7);word-break:break-all}
+.em{margin-bottom:10px}
+pre{margin:0;overflow-x:auto}
+code{font-family:var(--font-mono);font-size:11.5px;line-height:1.7;color:rgba(255,255,255,.6)}
+.ky{color:#7DD3FC}
+.cm{color:rgba(255,255,255,.25)}
+.sysnote{font-size:11.5px;color:rgba(255,255,255,.3);margin-top:14px;line-height:1.5;font-family:var(--font-mono)}
+@media(max-width:900px){.internal{display:none}}
+</style>
+
+<div class="split">
+  <!-- LEFT: customer receipt -->
+  <div class="cust">
+    <img class="logo" src="/brand/alg-logo-color.svg" alt="Archipelago Lighting Group">
+    <div class="rcv">
+      <div class="tick">&#10003;</div>
+      <div><div class="ek">Submission received</div><div class="rma" id="rma">RMA-26-01207</div></div>
+    </div>
+    <h1 id="headline">We&#8217;ve got it from here.</h1>
+    <p class="lede">Confirmation sent to <b id="email">your email</b>. Updates come by email &#8212; reply anytime.</p>
+    <div class="card-sum">
+      <div class="cs-row"><span class="cs-k">RMA reference</span><span class="cs-v" id="r_rma">&#8212;</span></div>
+      <div class="cs-row"><span class="cs-k">Products</span><span class="cs-v" id="r_product">&#8212;</span></div>
+      <div class="cs-row"><span class="cs-k">Outcome requested</span><span class="cs-v" id="r_action">&#8212;</span></div>
+    </div>
+    <div class="card-next">
+      <div class="cn-title">What happens next</div>
+      <div class="cn-step"><div class="cn-num">1</div><div class="cn-text"><strong>Check your inbox.</strong> A copy of this submission was sent to your email. If you don&#8217;t see it within a few minutes, check your spam folder.</div></div>
+      <div class="cn-step"><div class="cn-num">2</div><div class="cn-text"><strong>Our team reviews your claim.</strong> We aim to follow up within 2 business days. Safety-related or larger claims are prioritized.</div></div>
+      <div class="cn-step"><div class="cn-num">3</div><div class="cn-text"><strong>We&#8217;ll contact you with next steps.</strong> This may include a shipping label, a replacement order, or a request for additional information.</div></div>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="/support/returns/">Back to Returns &amp; Exchanges</a>
+      <a class="btn ghost" href="/support/">Support home</a>
+    </div>
+  </div>
+
+  <!-- RIGHT: internal pipeline + receipt (hidden on mobile) -->
+  <div class="internal">
+    <div class="eyebrow">Internal record</div>
+    <div class="int-title">What we received</div>
+    <div class="pipeline" id="pipeline"></div>
+    <div class="receipt-wrap">
+      <div class="em" id="emHeader"></div>
+      <pre><code id="receipt"></code></pre>
+    </div>
+    <div class="sysnote">This is the record your warranty team receives &#8212; nothing is re-keyed. You&#8217;ll hear back by email.</div>
+  </div>
+</div>
+
+<script is:inline>
+(function(){
+  // ---- seed fallback so the page renders fully when opened directly ----
+  var SEED={rma:"RMA-26-01207",
+    email:"mdelgado@westcoastelec.com",contact:"Maria Delgado",phone:"(909) 555-0182",
+    company:"Westcoast Electric Supply",account:"ALG-04412",poRef:"PO-48201",
+    productLabel:"JUP2-150W-MV-50K-DLC \xb7 qty 12",action:"replacement",actionLabel:"Replacement",
+    lines:[{sku:"JUP2-150W-MV-50K-DLC",qty:12,dateCode:"2509-B"}],
+    evidenceCount:3,receivedISO:"2026-06-05T14:08:00"};
+  var q=new URLSearchParams(location.search),st={};
+  try{st=JSON.parse(sessionStorage.getItem('alg_rma')||'{}');}catch(e){}
+  var R=Object.assign({},SEED,st);
+  if(q.get('rma'))R.rma=q.get('rma');
+  var first=((R.contact||'').trim().split(/\s+/)[0])||'there';
+  function set(id,v){var e=document.getElementById(id);if(e&&v!=null&&v!=='')e.textContent=v;}
+  // ---- LEFT ----
+  set('rma',R.rma);set('r_rma',R.rma);
+  document.getElementById('headline').textContent="We\u2019ve got it from here, "+first+".";
+  set('email',R.email);
+  set('r_product',R.productLabel);set('r_action',R.actionLabel||R.action);
+  // What happens next uses safe static copy (legal H3) — no per-claim SLA override.
+  // ---- RIGHT: pipeline ----
+  var pipeline=[
+    {k:'01 \xb7 Input',t:'Your submission',s:'Secure form \xb7 6 steps \xb7 '+R.evidenceCount+' evidence files',accent:'rgba(255,255,255,.5)',done:true},
+    {k:'02 \xb7 Logged',t:'Recorded in ALG Records',s:'Captured on intake \u2014 nothing re-keyed',accent:'var(--grn)',done:true},
+    {k:'03 \xb7 Dispatch',t:'Sent to our warranty team',s:'Emailed securely \u2014 no live database connection',accent:'var(--brand)',done:true},
+    {k:'04 \xb7 Draft record',t:'Returns & Exchanges',s:R.rma+' \xb7 created on intake',accent:'#F09A2B',done:false}
+  ];
+  document.getElementById('pipeline').innerHTML=pipeline.map(function(n,i){
+    var fg=n.accent==='var(--yellow)'?'var(--ink)':'#fff';
+    var pip='<div class="node"><div class="pipcol"><div class="pip" style="background:'+(n.done?n.accent:'transparent')+';border:2px solid '+n.accent+';color:'+fg+'">'+(n.done?'\u2713':'\u25cf')+'</div></div>'+
+      '<div class="ncard" style="border-left:3px solid '+n.accent+'"><div class="nk" style="color:'+n.accent+'">'+n.k+'</div><div class="nt">'+n.t+'</div><div class="ns">'+n.s+'</div></div></div>';
+    var conn=i<pipeline.length-1?'<div class="conn"><div class="bar"></div><div></div></div>':'';
+    return pip+conn;
+  }).join('');
+  // ---- email header ----
+  var totalQty=(R.lines||[]).reduce(function(a,l){return a+(parseInt(l.qty,10)||0);},0);
+  var sku0=(R.lines&&R.lines[0]&&R.lines[0].sku)||'\u2014';
+  var subjTail=R.rma+' \xb7 '+(R.company||'\u2014')+' \xb7 '+sku0+(R.lines.length>1?' +'+(R.lines.length-1):'')+' \xb7 qty '+totalQty;
+  document.getElementById('emHeader').innerHTML=
+    '<div class="emrow"><span class="l">To</span><span class="val">warranty@archipelagolighting.com</span></div>'+
+    '<div class="emrow"><span class="l">Subj</span><span class="val">RMA '+esc(subjTail)+'</span></div>';
+  // ---- neutral RECEIPT (legal H1: no severity / routing / classification shown to the buyer) ----
+  var lineRows=(R.lines||[]).map(function(l){return '  - sku: '+(l.sku||'\u2014')+' | qty: '+(l.qty||0)+' | date_code: '+(l.dateCode||'\u2014');}).join('\n');
+  var raw=
+'\u2014\u2014\u2014 ALG-RMA RECEIPT \u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\n'+
+'rma_ref:       '+R.rma+'\n'+
+'received:      '+R.receivedISO+'\n'+
+'buyer:         '+(R.company||'\u2014')+'\n'+
+'account:       '+(R.account||'\u2014')+'\n'+
+'contact:       '+(R.contact||'\u2014')+' / '+(R.email||'\u2014')+' / '+(R.phone||'\u2014')+'\n'+
+'po_ref:        '+(R.poRef||'\u2014')+'\n'+
+'lines:\n'+lineRows+'\n'+
+'evidence:      '+R.evidenceCount+' files attached\n'+
+'action:        '+(R.actionLabel||R.action||'Replacement')+'\n'+
+'record:        ALG Records \u203a Returns & Exchanges\n'+
+'status:        RECEIVED (logged on intake \xb7 '+R.rma+')\n'+
+'\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014';
+  document.getElementById('receipt').innerHTML=colorize(raw);
+  function colorize(txt){
+    return txt.replace(/[<>&]/g,function(m){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[m];})
+      .replace(/^(\u2014\u2014\u2014.*)$/gm,'<span class="cm">$1</span>')
+      .replace(/^([a-z_]+:)/gm,'<span class="ky">$1</span>')
+      .replace(/\bRECEIVED\b/g,'<span style="color:#5BD6A6;font-weight:700">RECEIVED</span>');
+  }
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+})();
+</script>
+</BaseLayout>

@@ -621,23 +621,23 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <div>
           <div class="rma-eyebrow">Returns &amp; Exchanges</div>
           <h1 class="rma-hero__h1">Something not working? <span>We'll make it right.</span></h1>
-          <p class="rma-hero__sub">Submit a Return Material Authorization (RMA) request in under 3 minutes. We acknowledge every claim within 24 hours and stand behind every fixture we ship.</p>
+          <p class="rma-hero__sub">Submit a Return Material Authorization (RMA) request in under 3 minutes. Most claims get a reply within a couple of business days, and every fixture is backed by our written Limited Warranty.</p>
           <div class="rma-hero__ctas">
-            <a href="#rma-form" class="rma-btn rma-btn--primary">Start an RMA request →</a>
+            <a href="/support/returns/wizard/" class="rma-btn rma-btn--primary">Start an RMA request →</a>
             <a href="https://accounts.archipelagolighting.com/portal/customerdashboard" target="_blank" rel="noopener" class="rma-btn rma-btn--secondary">Sign in to track existing RMA</a>
           </div>
           <div class="rma-hero__stats">
             <div>
-              <span class="rma-stat__v">24h</span>
-              <span class="rma-stat__k">Acknowledgment</span>
+              <span class="rma-stat__v">Up to 10&#8209;yr</span>
+              <span class="rma-stat__k">Limited warranty · 100,000 hrs</span>
             </div>
             <div>
-              <span class="rma-stat__v">30d</span>
-              <span class="rma-stat__k">Standard resolution</span>
+              <span class="rma-stat__v">LaborShield&#8482;</span>
+              <span class="rma-stat__k">Optional labor coverage</span>
             </div>
             <div>
-              <span class="rma-stat__v">100%</span>
-              <span class="rma-stat__k">Year 1–7 LaborShield</span>
+              <span class="rma-stat__v">Photo&#8209;first</span>
+              <span class="rma-stat__k">Most claims · usually no return shipping</span>
             </div>
           </div>
         </div>
@@ -675,7 +675,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <section class="rma-process">
     <div class="rma-inner">
       <div class="rma-eyebrow">What to expect</div>
-      <div class="rma-process__title">From submission to replacement, on a published clock.</div>
+      <div class="rma-process__title">From submission to replacement — what to expect.</div>
       <div class="rma-steps">
         <div class="rma-step">
           <div class="rma-step__num">01</div>
@@ -685,17 +685,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <div class="rma-step">
           <div class="rma-step__num">02</div>
           <div class="rma-step__title">We review</div>
-          <p class="rma-step__desc">Claim reviewed within 1 business day per warranty policy. CS or PM owns it end-to-end.</p>
+          <p class="rma-step__desc">We review — our team reviews your photos and confirms coverage.</p>
         </div>
         <div class="rma-step">
           <div class="rma-step__num">03</div>
           <div class="rma-step__title">Evidence review</div>
-          <p class="rma-step__desc">PM reviews photos. Most claims clear without physical return. RMA issued within assessment window.</p>
+          <p class="rma-step__desc">We review your photos. Most claims clear without a physical return, and your RMA is issued once approved.</p>
         </div>
         <div class="rma-step">
           <div class="rma-step__num">04</div>
           <div class="rma-step__title">Replacement ships</div>
-          <p class="rma-step__desc">3–5 business days from RMA. Cross-warehouse fulfillment absorbed by ALG.</p>
+          <p class="rma-step__desc">Replacement ships — typically within about 5 business days when in stock; we cover cross-warehouse transfers.</p>
         </div>
       </div>
     </div>
@@ -754,8 +754,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                 <span class="rma-faq__toggle">+</span>
               </button>
               <div class="rma-faq__a">
-                <!-- R-WARRANTY (CFG-WARR-1): ECO 5-year · PRO 7-year · PRO+ 10-year -->
-                Warranty period varies by tier: ECO 5 years, PRO 7 years, PRO+ flagship 10 years. Emergency battery: 1 year. The form will confirm coverage based on your purchase date.
+                <p><strong>Shipping or freight damage.</strong> Inspect every shipment when it arrives and note any visible damage on the carrier's delivery receipt before you sign. Report freight or concealed damage to us right away — <strong>within 3 days of delivery</strong> — because carriers allow only a short window to file a concealed-damage claim, and a missed window can forfeit recovery. Keep the original packaging and send photos. Shipping damage is handled under our Sales Terms &amp; Conditions, separately from the product warranty.</p>
+                <p><strong>Product defects.</strong> File any time within the product's warranty period — <strong>PRO+ 10 years, PRO 7 years, ECO 5 years</strong>, linear lamps 7 years, decorative lamps 3 years, and sensors 3–5 years. Emergency &amp; life-safety units carry a split term: <strong>5 years on the electronics, 1 year on the battery.</strong> Coverage starts at installation (when you register) or 90 days after purchase, whichever comes first.</p>
               </div>
             </div>
             <div class="rma-faq__item">
@@ -764,7 +764,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                 <span class="rma-faq__toggle">+</span>
               </button>
               <div class="rma-faq__a">
-                Usually no. Our Product Management team accepts photo/video evidence for most failure modes — driver failure, visible burn marks, discoloration, housing cracks. We'll request a physical return only if hands-on inspection is needed.
+                Usually not. For most claims, clear photos of the failure plus the product label (SKU and date code) are enough for us to approve the claim, issue your RMA, and ship a replacement. We'll only ask for the unit back when the failure needs hands-on inspection to confirm the cause — and we'll tell you exactly where to send it. We do reserve the right to examine a returned product; if a unit we've requested isn't returned for analysis, the claim can't be completed.
               </div>
             </div>
             <div class="rma-faq__item">
@@ -773,7 +773,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                 <span class="rma-faq__toggle">+</span>
               </button>
               <div class="rma-faq__a">
-                If a physical return is requested by ALG, customer pays return freight per warranty terms. If further analysis is needed, we coordinate the logistics.
+                <ul style="margin:0 0 8px;padding-left:20px;">
+                  <li><strong>Warranty replacement</strong> — we ship your replacement; you return the defective unit freight prepaid to the address on your RMA. The replacement invoice is credited once the defective unit reaches us (within 30 days).</li>
+                  <li><strong>Our error</strong> (wrong item, shortage, or damage from our warehouse) — we cover return freight and issue full credit. Report it within 5 business days of receipt, with photos.</li>
+                  <li><strong>Non-defective catalog returns</strong> — standard stock can be returned within 90 days, in original unopened packaging and resalable condition, shipped freight prepaid by you, less a 25% restocking fee.</li>
+                </ul>
+                <p style="margin:0;">The standard warranty covers the product only — removal, re-installation, and access equipment (lifts, cranes, scaffolding) are the customer's responsibility unless the project carries LaborShield + Labor.</p>
               </div>
             </div>
             <div class="rma-faq__item">
@@ -782,7 +787,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                 <span class="rma-faq__toggle">+</span>
               </button>
               <div class="rma-faq__a">
-                Our optional 10-year labor coverage. If you registered it at install, we cover the electrician's invoice (100% years 1–7, 75% years 8–9, 50% year 10) up to 10% of the project's product value. <a href="/documents/ALG-Limited-Product-Warranty.pdf" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">LaborShield Terms</a> are in Section 6 of the Limited Product Warranty.
+                <p>LaborShield&#8482; is our optional 10-year extended-warranty program. It's added as a line item on your <strong>original purchase order</strong> (it can't be added later) and registered within <strong>90 days of installation</strong>. It comes in two tiers:</p>
+                <ul style="margin:0 0 8px;padding-left:20px;">
+                  <li><strong>10-Year Extended Limited Warranty</strong> — extends the standard product warranty to a full 10 years / 100,000 hours. Product replacement only; no labor. Available on PRO+, PRO, ECO, linear-lamp, and emergency/life-safety products.</li>
+                  <li><strong>10-Year Extended Warranty + Limited Labor</strong> — everything above, plus a labor allowance toward the electrician's cost to swap a covered defective fixture: up to <strong>$50 per unit</strong>, on a declining schedule (100% years 1–7, then 75%, then 50%), capped at 10% of the project's product value. Available on PRO+, PRO, and ECO fixtures.</li>
+                </ul>
+                <p style="margin:0;">See the full <a href="/documents/ALG-Limited-Product-Warranty.pdf" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">LaborShield Terms</a> for eligibility, registration, and limits.</p>
               </div>
             </div>
             <div class="rma-faq__item">
@@ -791,165 +801,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                 <span class="rma-faq__toggle">+</span>
               </button>
               <div class="rma-faq__a">
-                Acknowledgment within 24 hours for standard claims. Anything safety-related gets immediate routing to Operations.
+                We aim to reply within about <strong>2 business days</strong> for most claims, and we prioritize larger, multi-unit issues. Anything involving a <strong>safety concern</strong> — fire, smoke, melting, or a fixture coming loose — skips the queue: call <strong>(866) 912-3220</strong> and it goes straight to our Operations team. After we acknowledge your claim, we keep you updated as we review it; because every claim is different, we don't put a fixed clock on final resolution.
               </div>
             </div>
           </div>
         </div>
 
       </div>
-    </div>
-  </section>
-
-  <!-- ── RMA REQUEST FORM ── -->
-  <section class="rma-form-section" id="rma-form">
-    <div class="rma-inner">
-      <div class="rma-eyebrow">RMA Request</div>
-      <div class="rma-form-section__title">Three steps. <span style="color:var(--brand)">One form.</span></div>
-      <p class="rma-form-section__sub">Tell us what's not working. Send a few photos. We approve the RMA and ship a replacement. No phone tag, no login to submit, no runaround.</p>
-
-      <form
-        class="rma-form-card"
-        action="mailto:warranty@archipelagolighting.com"
-        method="get"
-        enctype="text/plain"
-        id="rma-request-form"
-      >
-        <!-- Step 01: Who's filing -->
-        <div class="rma-eyebrow" style="margin-bottom:20px;">Step 01 — Who's filing this claim?</div>
-        <p style="font-size:13.5px;color:var(--ink2);margin:0 0 20px;line-height:1.55;">Tell us who you are and how to reach you. We'll only contact you about this RMA.</p>
-        <div class="rma-form-grid">
-          <div class="rma-field">
-            <label class="rma-label" for="rma-company">Company name <span>*</span></label>
-            <input type="text" id="rma-company" name="Company" placeholder="Westcoast Electric Supply" required>
-          </div>
-          <div class="rma-field">
-            <label class="rma-label" for="rma-contact">Contact name <span>*</span></label>
-            <input type="text" id="rma-contact" name="Contact" placeholder="Maria Delgado" required>
-          </div>
-          <div class="rma-field">
-            <label class="rma-label" for="rma-email">Email <span>*</span></label>
-            <input type="email" id="rma-email" name="Email" placeholder="mdelgado@example.com" required>
-          </div>
-          <div class="rma-field">
-            <label class="rma-label" for="rma-phone">Phone <span>*</span></label>
-            <input type="tel" id="rma-phone" name="Phone" placeholder="(909) 555-0182" required>
-          </div>
-          <div class="rma-field rma-form-grid--full">
-            <label class="rma-label" for="rma-address">Address</label>
-            <input type="text" id="rma-address" name="Address" placeholder="1840 W Mission Blvd">
-          </div>
-          <div class="rma-field">
-            <label class="rma-label" for="rma-city">City, State, ZIP</label>
-            <input type="text" id="rma-city" name="City_State_ZIP" placeholder="Pomona, CA 91766">
-          </div>
-          <div class="rma-field">
-            <label class="rma-label" for="rma-account">ALG account # <span style="font-weight:400;opacity:.7">(optional)</span></label>
-            <input type="text" id="rma-account" name="ALG_Account" placeholder="ALG-04412" style="font-family:var(--font-mono)">
-          </div>
-          <div class="rma-field rma-form-grid--full">
-            <label class="rma-label" for="rma-rep">Sales rep / distributor <span style="font-weight:400;opacity:.7">(if known)</span></label>
-            <input type="text" id="rma-rep" name="Sales_Rep" placeholder="J. Park — Pacific Region">
-          </div>
-        </div>
-
-        <!-- Proof of purchase sub-card -->
-        <div class="rma-po-card">
-          <div class="rma-po-card__label">Proof of purchase</div>
-          <div class="rma-po-card__title">Enter the ALG PO# or Invoice# from your order <span style="color:var(--brand)">*</span></div>
-          <div class="rma-form-grid">
-            <div class="rma-field">
-              <label class="rma-label" for="rma-po">ALG PO# <span style="font-weight:400;opacity:.7">(PO-…)</span></label>
-              <input type="text" id="rma-po" name="ALG_PO" placeholder="PO-48201" style="font-family:var(--font-mono)">
-            </div>
-            <div class="rma-field">
-              <label class="rma-label" for="rma-invoice">ALG Invoice# <span style="font-weight:400;opacity:.7">(INV-…)</span></label>
-              <input type="text" id="rma-invoice" name="ALG_Invoice" placeholder="INV-YYYY-MM-NNNNN" style="font-family:var(--font-mono)">
-            </div>
-          </div>
-          <p class="rma-po-card__hint">Either one works — it's how we verify the order and match it to your account. Find it on your ALG order confirmation or invoice.</p>
-        </div>
-
-        <!-- Step 02: Products affected -->
-        <div style="margin-top:36px;">
-          <div class="rma-eyebrow" style="margin-bottom:20px;">Step 02 — Which products are affected?</div>
-          <p style="font-size:13.5px;color:var(--ink2);margin:0 0 20px;line-height:1.55;">List each SKU and its date code. Date code is printed on the fixture label — we need it to identify the production lot.</p>
-          <div class="rma-form-grid">
-            <div class="rma-field">
-              <label class="rma-label" for="rma-sku">Product SKU <span>*</span></label>
-              <input type="text" id="rma-sku" name="Product_SKU" placeholder="JUP2-150W-MV-50K-DLC" style="font-family:var(--font-mono)" required>
-            </div>
-            <div class="rma-field">
-              <label class="rma-label" for="rma-datecode">Date code <span>*</span></label>
-              <input type="text" id="rma-datecode" name="Date_Code" placeholder="2509-B" style="font-family:var(--font-mono)" required>
-            </div>
-            <div class="rma-field">
-              <label class="rma-label" for="rma-qty">Quantity affected <span>*</span></label>
-              <input type="number" id="rma-qty" name="Quantity" placeholder="12" min="1" required>
-            </div>
-            <div class="rma-field">
-              <label class="rma-label" for="rma-install-date">Install date <span>*</span></label>
-              <input type="date" id="rma-install-date" name="Install_Date" required>
-            </div>
-            <div class="rma-field rma-form-grid--full">
-              <label class="rma-label" for="rma-site">Site address <span>*</span></label>
-              <input type="text" id="rma-site" name="Site_Address" placeholder="1840 W Mission Blvd, Pomona, CA 91766" required>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 03: Describe the failure -->
-        <div style="margin-top:36px;">
-          <div class="rma-eyebrow" style="margin-bottom:20px;">Step 03 — Describe what went wrong</div>
-          <p style="font-size:13.5px;color:var(--ink2);margin:0 0 20px;line-height:1.55;">The more specific, the faster we can route it to the right engineer.</p>
-          <div class="rma-form-grid">
-            <div class="rma-field rma-form-grid--full">
-              <label class="rma-label" for="rma-reason">Primary reason <span>*</span></label>
-              <select id="rma-reason" name="Primary_Reason" required>
-                <option value="">Select a reason…</option>
-                <option value="driver-failure">Driver / power supply failure</option>
-                <option value="flicker">Flicker or dimming issue</option>
-                <option value="no-light">No light output</option>
-                <option value="burn-marks">Burn marks or discoloration</option>
-                <option value="housing-crack">Housing crack or physical damage</option>
-                <option value="wrong-item">Wrong item received</option>
-                <option value="missing-parts">Missing parts or accessories</option>
-                <option value="other">Other — describe below</option>
-              </select>
-            </div>
-            <div class="rma-field rma-form-grid--full">
-              <label class="rma-label" for="rma-description">Description <span>*</span></label>
-              <textarea id="rma-description" name="Description" placeholder="Describe the failure in detail — when it started, conditions, any patterns you've noticed…" required></textarea>
-            </div>
-            <div class="rma-field rma-form-grid--full">
-              <label class="rma-label" for="rma-resolution">Preferred resolution</label>
-              <select id="rma-resolution" name="Preferred_Resolution">
-                <option value="replacement">Replacement — same SKU shipped to original or alternate address</option>
-                <option value="credit">Credit — applied to next order</option>
-                <option value="refund">Refund — returned to original payment method</option>
-                <option value="laborshield">LaborShield reimbursement — include electrician invoice</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- Evidence note -->
-        <div class="rma-callout" style="margin-top:28px;">
-          <div class="rma-callout__label">Evidence required</div>
-          <p class="rma-callout__body">After submitting, our team will reply within 24 hours with a secure upload link for your photos. Please have ready: <strong>full view of the fixture</strong>, <strong>close-up of the failure</strong>, and <strong>the product label</strong> (SKU + date code visible).</p>
-        </div>
-
-        <!-- Submit -->
-        <div class="rma-form-submit">
-          <button type="submit" class="rma-btn rma-btn--primary">Submit RMA Request →</button>
-          <div class="rma-form-note">
-            Opens your email client pre-filled to warranty@archipelagolighting.com<br>
-            You'll receive a confirmation and upload link within 24 hours.
-          </div>
-          <p style="font-size:12px;color:var(--ink3);margin:12px 0 0;line-height:1.5;">By submitting you confirm this claim falls within the <a href="/documents/ALG-Limited-Product-Warranty.pdf" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Read the full Limited Warranty</a>. <a href="/documents/ALG-Limited-Product-Warranty.pdf" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">LaborShield Terms</a> apply where registered.
-          </p>
-        </div>
-      </form>
     </div>
   </section>
 
@@ -968,7 +826,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <div>
           <div class="rma-contact__eyebrow">Talk to a human</div>
           <div class="rma-contact__title">Need to bypass the form? Our warranty team picks up.</div>
-          <p class="rma-contact__sub">Especially for large-scale failures, life-safety fixtures, or anything that needs a phone call. We don't hide behind tickets.</p>
+          <p class="rma-contact__sub">Especially for large multi-unit failures, life-safety fixtures, or anything that needs a phone call. We don't hide behind tickets.</p>
         </div>
         <div class="rma-contact__lines">
           <div class="rma-contact__line">
@@ -982,7 +840,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <div class="rma-contact__line-k">Email</div>
             <div>
               <div class="rma-contact__line-v">warranty@archipelagolighting.com</div>
-              <div class="rma-contact__line-sub">Same-business-day reply</div>
+              <div class="rma-contact__line-sub">Typical reply within ~2 business days</div>
             </div>
           </div>
           <div class="rma-contact__line">
