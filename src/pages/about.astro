@@ -837,6 +837,14 @@ import ContentShell from '../layouts/ContentShell.astro';
   font-family: var(--font-sans);
 }
 
+/* ── GUTTER FORCE — every non-hero content section must match Contact (97.5px desktop) ── */
+.block:not(.hero),
+.section-head,
+.block-dark,
+.block-vetting {
+  padding-left: var(--pad-x) !important;
+  padding-right: var(--pad-x) !important;
+}
 /* ── HERO ── */
 .hero {
   padding: 56px var(--pad-x) 100px;
