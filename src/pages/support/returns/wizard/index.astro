@@ -619,15 +619,21 @@ W.submit=function(){
   var d=collect();
   var selAct=document.querySelector('.act.sel');
   var actName=selAct?selAct.querySelector('.act-name').textContent:'\u2014';
+  var actId=selAct?selAct.dataset.id:'';
   var severity=classify(d);
   var rma=genRMA();
-  var rows=[];
+  // Build lines[] from product table rows
+  var lines=[];
   document.querySelectorAll('#productTable .r').forEach(function(r){
     var sku=r.querySelector('[name^=sku]');
     var qty=r.querySelector('[name^=qty]');
-    if(sku&&sku.value) rows.push((qty&&qty.value?qty.value+'\u00d7 ':'')+sku.value);
+    var desc=r.querySelector('[name^=desc]');
+    var loc=r.querySelector('[name^=loc]');
+    if(sku&&sku.value) lines.push({sku:sku.value,qty:qty?qty.value:'',desc:desc?desc.value:'',loc:loc?loc.value:''});
   });
-  var body=[
+  // Build mailto body (used as fallback)
+  var rows=lines.map(function(l){return (l.qty?l.qty+'\u00d7 ':'')+l.sku;});
+  var mailBody=[
     'RMA: '+rma,
     '--- CONTACT ---',
     'Company: '+d.company,'Contact: '+d.contact,'Email: '+d.email,'Phone: '+(d.phone||'\u2014'),
@@ -644,14 +650,43 @@ W.submit=function(){
     '--- INTERNAL ---','Severity: '+severity,
     '--- SIGNATURE ---','Signed: '+d.signature,
   ].join('\n');
-  sessionStorage.setItem('alg_rma',JSON.stringify({rma:rma,company:d.company,email:d.email,action:actName}));
   var mailto='mailto:warranty@archipelagolighting.com'
     +'?subject='+encodeURIComponent('[RMA] '+rma+' \u2014 '+d.company)
-    +'&body='+encodeURIComponent(body);
-  window.location.href=mailto;
-  setTimeout(function(){
-    window.location.href='/support/returns/confirmation/?rma='+encodeURIComponent(rma);
-  },1500);
+    +'&body='+encodeURIComponent(mailBody);
+  // Build structured payload for the server-side function
+  var payload={
+    rma:rma,company:d.company,contact:d.contact,email:d.email,phone:d.phone||'',
+    account:d.account||'',poRef:(d.poNumber||'')+(d.invoiceNumber?' / '+d.invoiceNumber:''),
+    lines:lines,
+    reasons:[d.failureType],description:d.failureDesc,
+    installDate:d.installDate||'',siteAddress:d.projectName||'',
+    safetyFlag:!!(d.failureType&&(d.failureType.toLowerCase().includes('physical damage')||d.failureType.toLowerCase().includes('driver'))),
+    action:actId,actionLabel:actName,laborShield:d.laborShield||'',
+    evidenceCount:Object.keys(files).filter(function(k){return files[k];}).length,
+    receivedISO:new Date().toISOString(),
+    _sev:severity,_route:severity==='SYSTEMIC'?'warranty-escalation':'standard',
+  };
+  sessionStorage.setItem('alg_rma',JSON.stringify({rma:rma,company:d.company,email:d.email,action:actName}));
+  var btn=document.getElementById('next');
+  btn.disabled=true;
+  btn.textContent='Sending\u2026';
+  var confirmUrl='/support/returns/confirmation/?rma='+encodeURIComponent(rma);
+  fetch('/api/rma-submit',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)})
+    .then(function(r){
+      if(r.ok){
+        // Server-side success — go straight to confirmation, no mailto
+        window.location.href=confirmUrl;
+      } else {
+        // Non-2xx — fall back to mailto then redirect
+        window.location.href=mailto;
+        setTimeout(function(){window.location.href=confirmUrl;},1500);
+      }
+    })
+    .catch(function(){
+      // Network error — fall back to mailto then redirect
+      window.location.href=mailto;
+      setTimeout(function(){window.location.href=confirmUrl;},1500);
+    });
 };
 
 buildActions();

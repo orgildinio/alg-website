@@ -1,24 +1,19 @@
 /**
  * Cloudflare Pages Function: /api/rma-submit
  *
- * Scaffold — receives the RMA JSON payload from the wizard,
- * forwards it to the warranty team email via a transactional
- * email provider (e.g. Resend, SendGrid, Postmark).
+ * Receives the RMA JSON payload from the wizard and forwards it to the
+ * warranty team via Resend. reply_to is set to the customer's email so
+ * the warranty team can reply directly.
  *
- * Current state: mailto: flow in the wizard handles delivery.
- * This endpoint is wired for the future server-side upgrade.
+ * Environment variables (set in CF Pages → Settings → Environment variables):
+ *   RMA_MAIL_TOKEN  — Resend API key
+ *   RMA_TO          — destination address (default: warranty@archipelagolighting.com)
+ *   RMA_FROM        — verified sender (e.g. no-reply@archipelagolighting.com)
  *
- * Environment variables required (set in CF Pages dashboard):
- *   RESEND_API_KEY   — Resend API key
- *   WARRANTY_EMAIL   — destination address (warranty@archipelagolighting.com)
- *   FROM_EMAIL       — verified sender (noreply@archipelagolighting.com)
+ * If RMA_MAIL_TOKEN is missing, returns 503 so the front-end falls back to mailto.
  */
-
 export async function onRequestPost(context) {
   const { request, env } = context;
-
-  // CORS preflight handled by CF Pages automatically for same-origin.
-  // For cross-origin dev, add headers as needed.
 
   let payload;
   try {
@@ -41,7 +36,7 @@ export async function onRequestPost(context) {
 
   // Build plain-text email body for the warranty team
   const lineRows = (lines || [])
-    .map(l => `  · ${l.sku || '—'} | qty ${l.qty || 0} | lot ${l.dateCode || '—'}`)
+    .map(l => `  · ${l.sku || '—'} | qty ${l.qty || 0} | desc ${l.desc || '—'} | loc ${l.loc || '—'}`)
     .join('\n');
 
   const body = [
@@ -52,12 +47,12 @@ export async function onRequestPost(context) {
     `company: ${company}`,
     `contact: ${contact}`,
     `email: ${email}`,
-    `phone: ${phone}`,
+    `phone: ${phone || '—'}`,
     `account: ${account || '—'}`,
     `po/inv: ${poRef || '—'}`,
     '',
     'PRODUCTS',
-    lineRows,
+    lineRows || '  (none)',
     '',
     'FAILURE',
     `reasons: ${(reasons || []).join(', ')}`,
@@ -69,36 +64,40 @@ export async function onRequestPost(context) {
     `laborShield: ${laborShield || '—'}`,
     `evidence: ${evidenceCount || 0} files (attached separately)`,
     '',
-    `received: ${receivedISO}`,
+    `received: ${receivedISO || new Date().toISOString()}`,
   ].join('\n');
 
-  // Forward via Resend (swap for SendGrid/Postmark as needed)
-  if (env.RESEND_API_KEY) {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: env.FROM_EMAIL || 'noreply@archipelagolighting.com',
-        to: [env.WARRANTY_EMAIL || 'warranty@archipelagolighting.com'],
-        subject: `[${_sev || 'RMA'}] ${rma} — ${company || ''}`,
-        text: body,
-      }),
+  // If token is missing, return non-2xx so the front-end falls back to mailto
+  if (!env.RMA_MAIL_TOKEN) {
+    console.log('rma-submit: RMA_MAIL_TOKEN not set — returning 503 for mailto fallback');
+    return new Response(JSON.stringify({ ok: false, error: 'Email provider not configured' }), {
+      status: 503,
+      headers: { 'Content-Type': 'application/json' },
     });
+  }
 
-    if (!res.ok) {
-      const err = await res.text();
-      console.error('Resend error:', err);
-      return new Response(JSON.stringify({ ok: false, error: 'Email delivery failed' }), {
-        status: 502,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-  } else {
-    // No email provider configured — log to CF Workers logs for now
-    console.log('rma-submit (no email provider):', JSON.stringify({ rma, company, _sev }));
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${env.RMA_MAIL_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: env.RMA_FROM || 'no-reply@archipelagolighting.com',
+      to: [env.RMA_TO || 'warranty@archipelagolighting.com'],
+      reply_to: email || undefined,
+      subject: `[${_sev || 'RMA'}] ${rma} · ${company || ''} · ${(lines && lines[0] && lines[0].sku) || '—'} · qty ${(lines || []).reduce((s, l) => s + (parseInt(l.qty) || 0), 0)}`,
+      text: body,
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    console.error('Resend error:', err);
+    return new Response(JSON.stringify({ ok: false, error: 'Email delivery failed' }), {
+      status: 502,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   return new Response(JSON.stringify({ ok: true, rma }), {
