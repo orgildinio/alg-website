@@ -25,11 +25,10 @@ a{color:inherit}
 
 /* slim wizard bar */
 .wz-head{
-  display:grid;grid-template-columns:auto 1fr auto;align-items:center;
+  display:grid;grid-template-columns:1fr auto;align-items:center;
   gap:24px;padding:18px 0 20px;border-bottom:1px solid var(--c3);
   margin-bottom:36px;
 }
-.wz-head img{height:28px;width:auto}
 .wz-head .div{display:flex;flex-direction:column;gap:2px}
 .wz-head .eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
 .wz-head .ttl{font-size:16px;font-weight:700;color:var(--ink)}
@@ -107,14 +106,27 @@ select.in{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 
 /* product rows */
 .lt{border:1px solid var(--c3);border-radius:8px;overflow:hidden;margin-bottom:18px}
-.lt .h{background:var(--c1);display:grid;grid-template-columns:1.2fr 1.7fr .6fr .9fr 40px;gap:0;padding:8px 12px;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase}
-.lt .r{display:grid;grid-template-columns:1.2fr 1.7fr .6fr .9fr 40px;gap:0;padding:10px 12px;border-top:1px solid var(--c3);align-items:center}
+.lt .h{background:var(--c1);display:grid;grid-template-columns:1.1fr 1.1fr .5fr 1.1fr 40px;gap:0;padding:8px 12px;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase;align-items:center}
+.lt .r{display:grid;grid-template-columns:1.1fr 1.1fr .5fr 1.1fr 40px;gap:0;padding:10px 12px;border-top:1px solid var(--c3);align-items:center}
 .lt .r .in{border:none;border-bottom:1px solid var(--c3);border-radius:0;padding:4px 0;font-size:13px}
 .lt .r .in:focus{border-bottom-color:var(--ink2)}
 .add-row{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);background:none;border:1px solid var(--c3);border-radius:6px;padding:7px 14px;cursor:pointer;margin-top:4px}
 .add-row:hover{background:var(--c1)}
 .del-row{background:none;border:none;cursor:pointer;color:var(--ink3);font-size:16px;padding:0;line-height:1}
 .del-row:hover{color:var(--brand)}
+/* date-code help tooltip */
+.dchelp{position:relative;display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;border:1px solid var(--ink3);color:var(--ink3);font-family:var(--font-sans);font-size:10px;font-weight:700;cursor:help;line-height:1;text-transform:none;letter-spacing:0;flex-shrink:0}
+.dchelp:hover,.dchelp:focus{border-color:var(--brand);color:var(--brand);outline:none}
+.dctip{position:absolute;top:140%;left:0;z-index:30;width:300px;background:#fff;border:1px solid var(--c3);box-shadow:0 10px 34px rgba(0,0,0,.16);padding:14px;opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .12s,transform .12s;text-align:left}
+.dchelp:hover .dctip,.dchelp:focus .dctip,.dchelp:focus-within .dctip{opacity:1;visibility:visible;transform:translateY(0)}
+.dctip::before{content:"";position:absolute;top:-6px;left:14px;width:10px;height:10px;background:#fff;border-left:1px solid var(--c3);border-top:1px solid var(--c3);transform:rotate(45deg)}
+.dctip .cap{display:block;font-family:var(--font-sans);font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink2);line-height:1.5;margin:0 0 10px}
+.dclbl{display:block;border:1.5px solid var(--ink);padding:10px 12px;font-family:var(--font-sans);font-size:11.5px;line-height:1.55;color:var(--ink)}
+.dclbl .lr{display:block;opacity:.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dclbl .lr.brand{font-weight:800;letter-spacing:.02em}
+.dclbl .made{display:flex;justify-content:space-between;align-items:center;gap:8px;opacity:1}
+.dclbl .made .mic{opacity:.3}
+.dc-hl{background:#FFE89A;border:1.5px solid var(--brand);color:var(--ink);font-weight:800;font-family:var(--font-mono);font-size:11px;padding:2px 6px;white-space:nowrap}
 
 /* evidence */
 .evgrid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px}
@@ -212,7 +224,6 @@ select.in{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
   .progress{grid-template-columns:1fr}
 }
 @media(max-width:480px){
-  .wz-head{grid-template-columns:auto 1fr}
   .wz-head .right{display:none}
   .nav{flex-direction:column}
   .btn.lg,.btn.md{width:100%;justify-content:center}
@@ -221,7 +232,6 @@ select.in{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 
 <div class="wrap">
   <header class="wz-head">
-    <img src="/brand/alg-logo-color.svg" alt="Archipelago Lighting Group">
     <div class="div">
       <div class="eyebrow">Returns &amp; Exchanges</div>
       <div class="ttl">New RMA Request</div>
@@ -272,10 +282,31 @@ select.in{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
         </div>
         <div class="subhead"><span class="t">Products</span></div>
         <div class="lt" id="productTable">
-          <div class="h"><span>SKU</span><span>Description</span><span>Qty</span><span>Install loc.</span><span></span></div>
+          <div class="h">
+            <span>SKU <span class="req" style="color:var(--brand)">*</span></span>
+            <span style="display:flex;align-items:center;gap:6px">Production Date Code <span class="req" style="color:var(--brand)">*</span>
+              <span class="dchelp" tabindex="0" role="button" aria-label="What is a date code?">?
+                <span class="dctip" role="tooltip">
+                  <span class="cap">The date code is printed on the fixture&#8217;s spec label &#8212; format <b>YYMM-letter</b> (e.g. 2509-B):</span>
+                  <span class="dclbl">
+                    <span class="lr brand">ARCHIPELAGO LIGHTING &middot; UL</span>
+                    <span class="lr">LED Linear High Bay Light</span>
+                    <span class="lr">Model: LLHB155-2CS-UT</span>
+                    <span class="lr">120&#8211;277VAC &middot; 50/60Hz &middot; 1.6A</span>
+                    <span class="lr">WATTselect: 85W | 130W | 155W</span>
+                    <span class="lr">CCTselect: 4000K | 5000K</span>
+                    <span class="made"><span class="mic">Made in Mexico</span><span class="dc-hl">Date Code: 2509-B</span></span>
+                  </span>
+                </span>
+              </span>
+            </span>
+            <span>Qty <span class="req" style="color:var(--brand)">*</span></span>
+            <span>Install loc.</span>
+            <span></span>
+          </div>
           <div class="r" data-row="1">
             <input class="in mono" name="sku_1" placeholder="LBLP24-33MXP2">
-            <input class="in" name="desc_1" placeholder="Fixture description">
+            <input class="in mono" name="datecode_1" placeholder="2509-B">
             <input class="in" type="number" name="qty_1" placeholder="1" min="1" style="width:100%">
             <input class="in" name="loc_1" placeholder="Aisle 3 Bay 7">
             <button class="del-row" onclick="W.delRow(this)" title="Remove row">&#10005;</button>
@@ -417,13 +448,20 @@ var STEP_HELP=[
   'Pick a resolution, review your claim summary, sign, and pass the security check to submit.',
 ];
 
-function classify(d){
+function classify(d,lines){
   var n=parseInt(d.affectedCount)||1,t=parseInt(d.totalInstalled)||n;
   var ratio=n/t;
   var ft=(d.failureType||'').toLowerCase();
   var safety=ft.includes('physical damage')||ft.includes('driver');
   if(safety&&n>=3) return 'SYSTEMIC';
   if(ratio>=0.3||n>=10) return 'SYSTEMIC';
+  // Batch detection: same SKU + same date code at volume
+  if(lines&&lines.length>=2){
+    var dcMap={};
+    lines.forEach(function(l){if(l.sku&&l.datecode){var k=l.sku+'|'+l.datecode;dcMap[k]=(dcMap[k]||0)+(parseInt(l.qty)||1);}});
+    var maxLot=Object.values(dcMap).reduce(function(a,b){return Math.max(a,b);},0);
+    if(maxLot>=5) return 'BATCH';
+  }
   if(ratio>=0.1||n>=3) return 'BATCH';
   return 'ISOLATED';
 }
@@ -513,7 +551,7 @@ W.addRow=function(){
   var row=document.createElement('div');
   row.className='r';row.dataset.row=rowCount;
   row.innerHTML='<input class="in mono" name="sku_'+rowCount+'" placeholder="LBLP24-33MXP2">'+
-    '<input class="in" name="desc_'+rowCount+'" placeholder="Fixture description">'+
+    '<input class="in mono" name="datecode_'+rowCount+'" placeholder="2509-B">'+
     '<input class="in" type="number" name="qty_'+rowCount+'" placeholder="1" min="1" style="width:100%">'+
     '<input class="in" name="loc_'+rowCount+'" placeholder="Aisle 3 Bay 7">'+
     '<button class="del-row" onclick="W.delRow(this)" title="Remove row">\u2715</button>';
@@ -577,7 +615,8 @@ function buildReview(){
   document.querySelectorAll('#productTable .r').forEach(function(r){
     var sku=r.querySelector('[name^=sku]');
     var qty=r.querySelector('[name^=qty]');
-    if(sku&&sku.value) rows.push((qty&&qty.value?qty.value+'\u00d7 ':'')+sku.value);
+    var dc=r.querySelector('[name^=datecode]');
+    if(sku&&sku.value) rows.push((qty&&qty.value?qty.value+'\u00d7 ':'')+sku.value+(dc&&dc.value?' ['+dc.value+']':''));
   });
   var photoCount=Object.keys(files).filter(function(k){return files[k]}).length;
   var items=[
@@ -620,19 +659,19 @@ W.submit=function(){
   var selAct=document.querySelector('.act.sel');
   var actName=selAct?selAct.querySelector('.act-name').textContent:'\u2014';
   var actId=selAct?selAct.dataset.id:'';
-  var severity=classify(d);
   var rma=genRMA();
   // Build lines[] from product table rows
   var lines=[];
   document.querySelectorAll('#productTable .r').forEach(function(r){
     var sku=r.querySelector('[name^=sku]');
     var qty=r.querySelector('[name^=qty]');
-    var desc=r.querySelector('[name^=desc]');
+    var datecode=r.querySelector('[name^=datecode]');
     var loc=r.querySelector('[name^=loc]');
-    if(sku&&sku.value) lines.push({sku:sku.value,qty:qty?qty.value:'',desc:desc?desc.value:'',loc:loc?loc.value:''});
+    if(sku&&sku.value) lines.push({sku:sku.value,qty:qty?qty.value:'',datecode:datecode?datecode.value:'',loc:loc?loc.value:''});
   });
+  var severity=classify(d,lines);
   // Build mailto body (used as fallback)
-  var rows=lines.map(function(l){return (l.qty?l.qty+'\u00d7 ':'')+l.sku;});
+  var rows=lines.map(function(l){return (l.qty?l.qty+'\u00d7 ':'')+l.sku+(l.datecode?' ['+l.datecode+']':'');});
   var mailBody=[
     'RMA: '+rma,
     '--- CONTACT ---',
