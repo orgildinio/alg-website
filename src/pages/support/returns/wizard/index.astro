@@ -115,17 +115,20 @@ select.in{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 .del-row{background:none;border:none;cursor:pointer;color:var(--ink3);font-size:16px;padding:0;line-height:1}
 .del-row:hover{color:var(--brand)}
 /* date-code help tooltip */
-.dchelp{position:relative;display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;border:1px solid var(--ink3);color:var(--ink3);font-family:var(--font-sans);font-size:10px;font-weight:700;cursor:help;line-height:1;text-transform:none;letter-spacing:0;flex-shrink:0}
+/* ---- date-code tooltip v2: position:fixed, JS-anchored, never clipped by .lt overflow:hidden ---- */
+.dchelp{position:relative;display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;
+  border:1px solid var(--ink3);color:var(--ink3);font-family:var(--font-sans);font-size:10px;font-weight:700;cursor:help;line-height:1;text-transform:none;letter-spacing:0;flex-shrink:0}
 .dchelp:hover,.dchelp:focus{border-color:var(--brand);color:var(--brand);outline:none}
-.dctip{position:absolute;top:140%;left:0;z-index:30;width:300px;background:#fff;border:1px solid var(--c3);box-shadow:0 10px 34px rgba(0,0,0,.16);padding:14px;opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .12s,transform .12s;text-align:left}
-.dchelp:hover .dctip,.dchelp:focus .dctip,.dchelp:focus-within .dctip{opacity:1;visibility:visible;transform:translateY(0)}
-.dctip::before{content:"";position:absolute;top:-6px;left:14px;width:10px;height:10px;background:#fff;border-left:1px solid var(--c3);border-top:1px solid var(--c3);transform:rotate(45deg)}
+.dctip{position:fixed;top:0;left:0;z-index:9999;width:300px;max-width:calc(100vw - 24px);background:#fff;border:1px solid var(--c3);box-shadow:0 12px 38px rgba(0,0,0,.18);
+  padding:14px;opacity:0;visibility:hidden;transition:opacity .12s;text-align:left;pointer-events:none}
+.dchelp:hover .dctip,.dchelp:focus .dctip,.dchelp:focus-within .dctip{opacity:1;visibility:visible}
+.dctip-arrow{position:absolute;width:10px;height:10px;background:#fff;border:1px solid var(--c3);transform:rotate(45deg)}
 .dctip .cap{display:block;font-family:var(--font-sans);font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink2);line-height:1.5;margin:0 0 10px}
-.dclbl{display:block;border:1.5px solid var(--ink);padding:10px 12px;font-family:var(--font-sans);font-size:11.5px;line-height:1.55;color:var(--ink)}
-.dclbl .lr{display:block;opacity:.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.dclbl .lr.brand{font-weight:800;letter-spacing:.02em}
-.dclbl .made{display:flex;justify-content:space-between;align-items:center;gap:8px;opacity:1}
-.dclbl .made .mic{opacity:.3}
+.lbl{display:block;border:1.5px solid var(--ink);padding:10px 12px;font-family:var(--font-sans);font-size:11.5px;line-height:1.55;color:var(--ink)}
+.lbl .r{display:block;opacity:.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lbl .r.brand{font-weight:800;letter-spacing:.02em}
+.lbl .made{display:flex;justify-content:space-between;align-items:center;gap:8px;opacity:1}
+.lbl .made .mic{opacity:.3}
 .dc-hl{background:#FFE89A;border:1.5px solid var(--brand);color:var(--ink);font-weight:800;font-family:var(--font-mono);font-size:11px;padding:2px 6px;white-space:nowrap}
 
 /* evidence */
@@ -287,14 +290,15 @@ select.in{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
             <span style="display:flex;align-items:center;gap:6px">Production Date Code <span class="req" style="color:var(--brand)">*</span>
               <span class="dchelp" tabindex="0" role="button" aria-label="What is a date code?">?
                 <span class="dctip" role="tooltip">
+                  <span class="dctip-arrow" aria-hidden="true"></span>
                   <span class="cap">The date code is printed on the fixture&#8217;s spec label &#8212; format <b>YYMM-letter</b> (e.g. 2509-B):</span>
-                  <span class="dclbl">
-                    <span class="lr brand">ARCHIPELAGO LIGHTING &middot; UL</span>
-                    <span class="lr">LED Linear High Bay Light</span>
-                    <span class="lr">Model: LLHB155-2CS-UT</span>
-                    <span class="lr">120&#8211;277VAC &middot; 50/60Hz &middot; 1.6A</span>
-                    <span class="lr">WATTselect: 85W | 130W | 155W</span>
-                    <span class="lr">CCTselect: 4000K | 5000K</span>
+                  <span class="lbl">
+                    <span class="r brand">ARCHIPELAGO LIGHTING &middot; UL</span>
+                    <span class="r">LED Linear High Bay Light</span>
+                    <span class="r">Model: LLHB155-2CS-UT</span>
+                    <span class="r">120&#8211;277VAC &middot; 50/60Hz &middot; 1.6A</span>
+                    <span class="r">WATTselect: 85W | 130W | 155W</span>
+                    <span class="r">CCTselect: 4000K | 5000K</span>
                     <span class="made"><span class="mic">Made in Mexico</span><span class="dc-hl">Date Code: 2509-B</span></span>
                   </span>
                 </span>
@@ -730,6 +734,34 @@ W.submit=function(){
 
 buildActions();
 showStep(1);
+
+/* ---- Tooltip v2: anchor fixed .dctip to its .dchelp icon; flip above if no room below ---- */
+(function(){
+  function place(help){
+    var tip=help.querySelector('.dctip'); if(!tip) return;
+    var arrow=tip.querySelector('.dctip-arrow');
+    var r=help.getBoundingClientRect();
+    var w=tip.offsetWidth||300, h=tip.offsetHeight||230, vw=window.innerWidth, vh=window.innerHeight, M=12, GAP=8;
+    var left=r.left+r.width/2-22;
+    if(left+w>vw-M) left=vw-w-M;
+    if(left<M) left=M;
+    var below=true, top=r.bottom+GAP;
+    if(top+h>vh-M){ top=r.top-h-GAP; below=false; }
+    if(top<M) top=M;
+    tip.style.left=Math.round(left)+'px';
+    tip.style.top=Math.round(top)+'px';
+    if(arrow){
+      var ax=Math.max(8,Math.min(w-18,(r.left+r.width/2)-left-5));
+      arrow.style.left=Math.round(ax)+'px';
+      if(below){ arrow.style.top='-6px'; arrow.style.bottom='auto'; arrow.style.borderWidth='1px 0 0 1px'; }
+      else     { arrow.style.bottom='-6px'; arrow.style.top='auto'; arrow.style.borderWidth='0 1px 1px 0'; }
+    }
+  }
+  document.addEventListener('mouseover', function(e){ var h=e.target.closest&&e.target.closest('.dchelp'); if(h) place(h); });
+  document.addEventListener('focusin',  function(e){ var h=e.target.closest&&e.target.closest('.dchelp'); if(h) place(h); });
+  window.addEventListener('scroll', function(){ var h=document.querySelector('.dchelp:hover,.dchelp:focus,.dchelp:focus-within'); if(h) place(h); }, true);
+  window.addEventListener('resize', function(){ var h=document.querySelector('.dchelp:hover,.dchelp:focus,.dchelp:focus-within'); if(h) place(h); });
+})();
 })();
 </script>
 

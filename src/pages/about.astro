@@ -476,11 +476,11 @@ import ContentShell from '../layouts/ContentShell.astro';
         <div class="where-card-role">US Production · Driver assembly · Final QA · Branded fulfillment</div>
         <div class="where-card-addr">9345 Sycamore Canyon Blvd, Riverside, CA 92508</div>
       </div>
-      <div class="where-card where-card-partner">
+      <div class="where-card">
         <div class="where-card-num">03</div>
-        <div class="where-card-name">Vetted OEM partners</div>
-        <div class="where-card-role">Component fabrication · Housing tooling · Volume runs for retail UPC programs</div>
-        <div class="where-card-addr">Locations and audit records available on request to qualified partners.</div>
+        <div class="where-card-name">Global manufacturing</div>
+        <div class="where-card-role">United States · Mexico · China · Thailand</div>
+        <div class="where-card-addr">Built to ALG engineering specifications, with final quality control in California. Country of origin is stated on every product and its documentation.</div>
       </div>
     </div>
   </div>
@@ -517,7 +517,7 @@ import ContentShell from '../layouts/ContentShell.astro';
     <div class="principle-card">
       <div class="principle-n">04</div>
       <h4 class="principle-title">Engineered in California. Built where it ships best.</h4>
-      <p class="principle-body">US production for branded volume that needs short cycles. Vetted OEM partners for retail UPC programs that need scale. Both report to the same QA log. Country of origin is a print on the box, not a substitute for testing.</p>
+      <p class="principle-body">US production for branded volume that needs short cycles. Global manufacturing — United States, Mexico, China, Thailand — for programs that need scale. All production is built to ALG engineering specifications and reports to the same QA log. Country of origin is stated on every product and its documentation.</p>
     </div>
   </div>
 </section>
@@ -1641,8 +1641,7 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: .04em;
   grid-column: 2;
 }
-.where-card-partner { border-left-color: var(--grey); }
-.where-card-partner .where-card-num { color: var(--grey); }
+/* where-card-partner removed — card 03 now uses standard .where-card styling */
 
 /* ====================== BRAND PORTFOLIO ====================== */
 .brand-grid {
