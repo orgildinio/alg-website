@@ -315,7 +315,7 @@ function render(){
     ?[...sel].map(function(k){return'<div class="psel"><span>'+k.split('|')[1]+'</span><span class="x" onclick="toggleSel(\''+k+'\')">&#x2715;</span></div>'}).join('')
     :'<div style="font-family:var(--mono);font-size:11px;color:#7e848d;margin-bottom:8px">Select families to build a packet.</div>';
 }
-window.setType=setType;window.tog=tog;window.goto=goto;window.clearAll=clearAll;
+window.render=render;window.setType=setType;window.tog=tog;window.goto=goto;window.clearAll=clearAll;
 window.clearSel=clearSel;window.toggleSel=toggleSel;window.qset=qset;window.clr=clr;
 window.downloadPacket=downloadPacket;window.emailPacket=emailPacket;
 build();render();
