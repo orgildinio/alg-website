@@ -61,9 +61,9 @@ const totalFamilies = docs.length;
  <aside class="rrail" id="specpacket">
   <div class="packet"><h3>Your Spec Packet · <span id="selN">0</span></h3><p>Pick any family below to add its documents to a custom bundle — wrapped in a labeled ZIP with a cover sheet, ready to forward to your distributor or attach to a bid.</p><div id="selList"><div style="font-family:var(--mono);font-size:11px;color:#7e848d;margin-bottom:8px">Select families to build a packet.</div></div><div class="pacts"><button class="red" onclick="downloadPacket()">↓ Download</button><button onclick="emailPacket()">✉ Email</button></div></div>
   <div class="tools"><h4>Spec Tools</h4>
-   <a class="tool" href="/support/layout-request"><span class="ti">⚡</span><span><div class="tt">Layout Designer</div><div class="td">Request a free lighting layout from ALG</div></span></a>
-   <a class="tool" href="/support/part-number-decoder"><span class="ti">▦</span><span><div class="tt">Part-Number Decoder</div><div class="td">Decode any ALG SKU</div></span></a>
-   <a class="tool" href="/collections/controls/"><span class="ti">◉</span><span><div class="tt">Compatibility Check</div><div class="td"><span class="aa">Ⓐ</span>CS App, dimmers, sensors</div></span></a>
+   <a class="tool" href="mailto:sales@archipelagolighting.com?subject=Lighting%20Layout%20%26%20Design%20Request"><span class="ti">⚡</span><span><div class="tt">Layout Designer</div><div class="td">Request a free lighting layout from ALG</div></span></a>
+   <a class="tool" href="/collections/constant/"><span class="ti">▦</span><span><div class="tt">const<span class="aa">Ⓐ</span>NT Compatibility</div><div class="td">UL 924 emergency &amp; life-safety drivers</div></span></a>
+   <a class="tool" href="/collections/controls/"><span class="ti">◉</span><span><div class="tt">contr<span class="aa">Ⓐ</span>LS Compatibility</div><div class="td"><span class="aa">Ⓐ</span>CS App, dimmers, sensors</div></span></a>
    <a class="tool" href="/support/rebate-center/"><span class="ti">★</span><span><div class="tt">Rebate Finder</div><div class="td">DLC, utility, T20/24 incentives</div></span></a></div>
   <div class="needhelp"><div class="nh-k">Need Help?</div><div class="nh-d">Reach an ALG spec engineer directly.</div><a class="nh-c" href="mailto:spec@archipelagolighting.com">spec@archipelagolighting.com</a><a class="nh-c" href="tel:+18669123220">+1 (866) 912-3220</a></div>
  </aside>
@@ -147,7 +147,7 @@ tbody td{padding:12px 10px;vertical-align:top}
 .docs{display:flex;flex-wrap:wrap;gap:4px 12px}
 /* SOLID FILLED document buttons — background = type color, white text, 1px border same color */
 .docbtn{display:inline-flex;align-items:center;gap:0;border-width:1px;border-style:solid;padding:6px 11px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;color:#fff;text-decoration:none;cursor:pointer;border-radius:2px;transition:filter .12s;white-space:nowrap}
-.docbtn:hover{filter:brightness(.88)}.empty{font-family:var(--mono);font-size:11px;color:var(--c3)}
+.docbtn:hover{background:#fff !important;color:var(--c) !important;filter:none}.empty{font-family:var(--mono);font-size:11px;color:var(--c3)}
 /* right rail */
 .packet{background:var(--ink);color:#fff;padding:20px;border-top:3px solid var(--brand);margin-bottom:18px}.packet h3{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.06em;margin:0 0 8px;font-family:'Lato',system-ui,sans-serif !important}.packet p{font-size:12px;color:#aeb4bc;line-height:1.5;margin:0 0 14px}
 .psel{background:#22262b;padding:10px 12px;margin-bottom:8px;font-family:var(--mono);font-size:10.5px;color:#c7ccd3;display:flex;justify-content:space-between}.psel .x{color:var(--brand);cursor:pointer}
@@ -221,14 +221,14 @@ function build(){
   var cols=[...new Set(DATA.map(function(r){return r.collection}))];
   /* collection facet — .cwrap + .cname (white-space:nowrap) + .sub below */
   document.getElementById('colFacet').innerHTML=cols.map(function(col){
-    return '<label class="opt"><input type="checkbox" onchange="tog(fCols,\''+col+'\')"><span class="cwrap"><span class="cname">'+col.replace(/\u24B6/g,'<span class=aa>\u24B6</span>')+'</span><span class="sub">'+(CMETA[col]||'')+'</span></span><span class="n">'+DATA.filter(function(r){return r.collection===col}).length+'</span></label>';
+    return '<label class="opt"><input type="checkbox" onchange="tog(window.fCols,\''+col+'\')"><span class="cwrap"><span class="cname">'+col.replace(/\u24B6/g,'<span class=aa>\u24B6</span>')+'</span><span class="sub">'+(CMETA[col]||'')+'</span></span><span class="n">'+DATA.filter(function(r){return r.collection===col}).length+'</span></label>';
   }).join('');
   document.getElementById('tierFacet').innerHTML=['ECO','PRO','PRO+'].map(function(t){
-    return '<label class="opt"><input type="checkbox" onchange="tog(fTiers,\''+t+'\')"> <span class="tier '+tc(t)+'">'+t+'</span> <span class="n">'+DATA.filter(function(r){return r.tier===t}).length+'</span></label>';
+    return '<label class="opt"><input type="checkbox" onchange="tog(window.fTiers,\''+t+'\')"> <span class="tier '+tc(t)+'">'+t+'</span> <span class="n">'+DATA.filter(function(r){return r.tier===t}).length+'</span></label>';
   }).join('');
   /* file-type facet — .opt--ft: swatch LEFT of label */
   document.getElementById('typeFacet').innerHTML=TYPES.map(function(t){
-    return '<label class="opt opt--ft"><input type="checkbox" onchange="tog(fTypes,\''+t+'\')"><span class="sw" style="background:'+META[t].c+'"></span><span class="ftname">'+SHORT[t]+'</span><span class="ftn">'+c[t]+'</span></label>';
+    return '<label class="opt opt--ft"><input type="checkbox" onchange="tog(window.fTypes,\''+t+'\')"><span class="sw" style="background:'+META[t].c+'"></span><span class="ftname">'+SHORT[t]+'</span><span class="ftn">'+c[t]+'</span></label>';
   }).join('');
   document.getElementById('legend').innerHTML=TYPES.map(function(t){
     return '<span><i style="background:'+META[t].c+'"></i>'+SHORT[t]+'</span>';
@@ -298,7 +298,7 @@ function render(){
   document.getElementById('tbody').innerHTML=pageRows.map(function(r){
     var k=key(r);
     var btns=TYPES.filter(function(t){return r.docs[t]}).map(function(t){
-      return '<a class="docbtn" style="background:'+META[t].c+';border-color:'+META[t].c+'" href="'+r.docs[t]+'" target="_blank" rel="noopener">'+SHORT[t]+'</a>';
+      return '<a class="docbtn" style="--c:'+META[t].c+';background:var(--c);border-color:var(--c)" href="'+r.docs[t]+'" target="_blank" rel="noopener">'+SHORT[t]+'</a>';
     }).join('');
     return '<tr><td><input type="checkbox" '+(sel.has(k)?'checked':'')+' onchange="toggleSel(\''+k+'\')"></td><td><div class="famcell"><span class="fam">'+r.family+'</span><span class="fmeta"><span class="cchip">'+r.collection.replace(/\u24B6/g,'<span class=aa>\u24B6</span>')+'</span>'+(r.tier?'<span class="tier '+tc(r.tier)+'">'+r.tier+'</span>':'')+'<span class="sub">'+(r.subcategory||'')+'</span>'+(r.sku_count?'<span class="sub">\u00B7 '+r.sku_count+' SKUs</span>':'')+'</span></div></td><td><div class="docs">'+(btns||'<span class=empty>\u2014</span>')+'</div></td></tr>';
   }).join('');
@@ -318,6 +318,8 @@ function render(){
 window.render=render;window.setType=setType;window.tog=tog;window.goto=goto;window.clearAll=clearAll;
 window.clearSel=clearSel;window.toggleSel=toggleSel;window.qset=qset;window.clr=clr;
 window.downloadPacket=downloadPacket;window.emailPacket=emailPacket;
+/* Expose mutable Sets so inline onchange handlers (global scope) can reach them */
+window.fCols=fCols;window.fTiers=fTiers;window.fTypes=fTypes;
 build();render();
 })();
 </script>
