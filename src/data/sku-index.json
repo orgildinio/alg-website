@@ -245,7 +245,7 @@
         {
           "sku": "LSPL-B1/DMR",
           "family": "Beacon",
-          "sub_category": "",
+          "sub_category": "Sports Lighting",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [],
@@ -256,7 +256,7 @@
         {
           "sku": "LSPL-B1/LSG",
           "family": "Beacon",
-          "sub_category": "",
+          "sub_category": "Sports Lighting",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [],
@@ -267,7 +267,7 @@
         {
           "sku": "LSPL-B1/SMB",
           "family": "Beacon",
-          "sub_category": "",
+          "sub_category": "Sports Lighting",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [],
@@ -278,7 +278,7 @@
         {
           "sku": "LSPL-B1/YKA",
           "family": "Beacon",
-          "sub_category": "",
+          "sub_category": "Sports Lighting",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [],
@@ -289,7 +289,7 @@
         {
           "sku": "LSPL1200-57B1-48VB/TR/44/TAA",
           "family": "Beacon",
-          "sub_category": "",
+          "sub_category": "Sports Lighting",
           "display_echelon": "PRO+",
           "wattages": [
             1200
@@ -304,7 +304,7 @@
         {
           "sku": "LSPL600-57B1-48VB/TR/44/TAA",
           "family": "Beacon",
-          "sub_category": "",
+          "sub_category": "Sports Lighting",
           "display_echelon": "PRO+",
           "wattages": [
             600
@@ -319,7 +319,7 @@
         {
           "sku": "LSPL850-57B1-48VB/TR/44/TAA",
           "family": "Beacon",
-          "sub_category": "",
+          "sub_category": "Sports Lighting",
           "display_echelon": "PRO+",
           "wattages": [
             850
@@ -334,7 +334,7 @@
         {
           "sku": "LDKT-C1/ARM",
           "family": "Canadarm",
-          "sub_category": "",
+          "sub_category": "Dock Light",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -345,7 +345,7 @@
         {
           "sku": "LDKT-C1/WG",
           "family": "Canadarm",
-          "sub_category": "",
+          "sub_category": "Dock Light",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -356,7 +356,7 @@
         {
           "sku": "LDKT30",
           "family": "Canadarm",
-          "sub_category": "",
+          "sub_category": "Dock Light",
           "display_echelon": "PRO",
           "wattages": [
             30
@@ -371,7 +371,7 @@
         {
           "sku": "LDKT60",
           "family": "Canadarm",
-          "sub_category": "",
+          "sub_category": "Dock Light",
           "display_echelon": "PRO",
           "wattages": [
             60
@@ -2870,7 +2870,7 @@
         {
           "sku": "LSBX-A (2-Hole)",
           "family": "Plymouth",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -2881,7 +2881,7 @@
         {
           "sku": "LSBX-B (2-Hole)",
           "family": "Plymouth",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -3565,7 +3565,7 @@
         {
           "sku": "SP-TR-D",
           "family": "Tenon Adaptors",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -3576,7 +3576,7 @@
         {
           "sku": "SQR2-180-D-R60",
           "family": "Tenon Adaptors",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -3587,7 +3587,7 @@
         {
           "sku": "SQR2-90-R60",
           "family": "Tenon Adaptors",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -3598,7 +3598,7 @@
         {
           "sku": "SQR3-120-D-R60",
           "family": "Tenon Adaptors",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -3609,7 +3609,7 @@
         {
           "sku": "SQR3-90-D-R60",
           "family": "Tenon Adaptors",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -3620,7 +3620,7 @@
         {
           "sku": "SQR4-90-D-R60",
           "family": "Tenon Adaptors",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -3631,7 +3631,7 @@
         {
           "sku": "SQRD-3SQR",
           "family": "Tenon Adaptors",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -3642,7 +3642,7 @@
         {
           "sku": "SQRD-4SQ",
           "family": "Tenon Adaptors",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -3653,7 +3653,7 @@
         {
           "sku": "SQRD-4SQR",
           "family": "Tenon Adaptors",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -3664,7 +3664,7 @@
         {
           "sku": "SQRD-5SQ",
           "family": "Tenon Adaptors",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -3675,7 +3675,7 @@
         {
           "sku": "SQRD-5SQR",
           "family": "Tenon Adaptors",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -3686,7 +3686,7 @@
         {
           "sku": "SQRD-SQ",
           "family": "Tenon Adaptors",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -3697,7 +3697,7 @@
         {
           "sku": "SQRD-WM",
           "family": "Tenon Adaptors",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -3862,7 +3862,7 @@
         {
           "sku": "LFLD3W035-3CS-27VS2/3AB/D",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -3877,7 +3877,7 @@
         {
           "sku": "LFLD3W035-3CS-27VS2/3AB/D/TAA",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -3892,7 +3892,7 @@
         {
           "sku": "LFLD3W080-3CS-27VS2/3AB/D",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -3907,7 +3907,7 @@
         {
           "sku": "LFLD3W080-3CS-27VS2/3AB/D/TAA",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -3922,7 +3922,7 @@
         {
           "sku": "LFLD3W150-3CS-27VS2/3AB/D",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -3937,7 +3937,7 @@
         {
           "sku": "LFLD3W150-3CS-27VS2/3AB/D/TAA",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -3952,7 +3952,7 @@
         {
           "sku": "LFLD3W150-3CS-48VS2/3AB/D",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -3967,7 +3967,7 @@
         {
           "sku": "LFLD3W150-3CS-48VS2/3AB/D/TAA",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -3982,7 +3982,7 @@
         {
           "sku": "LFLD3W240-3CS-27VS2/3AB/D",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -3997,7 +3997,7 @@
         {
           "sku": "LFLD3W240-3CS-27VS2/3AB/D/TAA",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -4012,7 +4012,7 @@
         {
           "sku": "LFLD3W240-3CS-48VS2/3AB/D",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -4027,7 +4027,7 @@
         {
           "sku": "LFLD3W240-3CS-48VS2/3AB/D/TAA",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -4042,7 +4042,7 @@
         {
           "sku": "LFLD3W300-3CS-27VS2/3AB/D",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -4057,7 +4057,7 @@
         {
           "sku": "LFLD3W300-3CS-27VS2/3AB/D/TAA",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -4072,7 +4072,7 @@
         {
           "sku": "LFLD3W300-3CS-48VS2/3AB/D",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -4087,7 +4087,7 @@
         {
           "sku": "LFLD3W300-3CS-48VS2/3AB/D/TAA",
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "wattages": [],
           "ccts": [
@@ -4172,7 +4172,7 @@
         },
         {
           "family": "Beacon",
-          "sub_category": "",
+          "sub_category": "Sports Lighting",
           "display_echelon": "PRO+",
           "max_wattage": 1200,
           "sku_count": 7,
@@ -4191,7 +4191,7 @@
         },
         {
           "family": "Canadarm",
-          "sub_category": "",
+          "sub_category": "Dock Light",
           "display_echelon": "PRO",
           "max_wattage": 60,
           "sku_count": 4,
@@ -4436,7 +4436,7 @@
         },
         {
           "family": "Plymouth",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "ECO",
           "max_wattage": 0,
           "sku_count": 2,
@@ -4567,7 +4567,7 @@
         },
         {
           "family": "Tenon Adaptors",
-          "sub_category": "",
+          "sub_category": "Area Light",
           "display_echelon": "ECO",
           "max_wattage": 0,
           "sku_count": 13,
@@ -4628,7 +4628,7 @@
         },
         {
           "family": "Zion",
-          "sub_category": "",
+          "sub_category": "Flood Light",
           "display_echelon": "PRO+",
           "max_wattage": 0,
           "sku_count": 16,
@@ -7287,7 +7287,7 @@
         },
         {
           "sku": "LBLP14-xx-A2",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7302,12 +7302,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP22-xx-A7",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7322,12 +7322,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP24-xx-A6",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7342,12 +7342,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP14-33MXP2",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7361,12 +7361,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP14-33MXP2/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7380,12 +7380,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP14-33MXP2/SR",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7399,12 +7399,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP14-33MXP2/SR/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7418,12 +7418,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP22-33MXP2",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7437,12 +7437,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP22-33MXP2/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7456,12 +7456,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP22-33MXP2/SR",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7475,12 +7475,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP22-33MXP2/SR/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7494,12 +7494,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP24-33MXP2",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7513,12 +7513,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP24-33MXP2/E6W3",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7532,12 +7532,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP24-33MXP2/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7551,12 +7551,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP24-33MXP2/SR",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7570,12 +7570,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP24-33MXP2/SR/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7589,12 +7589,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "MXP2/BEM14",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7604,12 +7604,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "MXP2/BEM22",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7619,12 +7619,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "MXP2/BEM24",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7634,12 +7634,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "MXP2/EMBX14",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7649,12 +7649,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "MXP2/EMBX22",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7664,12 +7664,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP14-55MXP3",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -7685,12 +7685,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP14-55MXP3/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -7706,12 +7706,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP14-55MXP3/SR",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -7727,12 +7727,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP14-55MXP3/SR/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -7748,12 +7748,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP22-55MXP3",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -7769,12 +7769,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP22-55MXP3/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -7790,12 +7790,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP22-55MXP3/SR",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -7811,12 +7811,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP22-55MXP3/SR/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -7832,12 +7832,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP24-55MXP3",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -7853,12 +7853,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP24-55MXP3/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -7874,12 +7874,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP24-55MXP3/HD",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -7895,12 +7895,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP24-55MXP3/SR",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -7916,12 +7916,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP24-55MXP3/SR/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -7937,12 +7937,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVT14-33MXP1",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7956,12 +7956,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVT14-33MXP1/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7975,12 +7975,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVT14-33MXP1/SR",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -7994,12 +7994,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVT14-33MXP1/SR/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8013,12 +8013,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVT22-33MXP1",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8032,12 +8032,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVT22-33MXP1/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8051,12 +8051,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVT22-33MXP1/SR",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8070,12 +8070,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVT22-33MXP1/SR/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8089,12 +8089,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVT24-33MXP1",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8108,12 +8108,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVT24-33MXP1/E6W3",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8127,12 +8127,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVT24-33MXP1/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8146,12 +8146,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVT24-33MXP1/SR",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8165,12 +8165,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVT24-33MXP1/SR/EM",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8184,12 +8184,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVT22-33MXP2",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8203,12 +8203,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVT24-33MXP2",
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8222,12 +8222,12 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLP14-Q/SPP",
-          "family": "quince\u24b6RCH",
+          "family": "quinceⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8238,7 +8238,7 @@
         },
         {
           "sku": "LBLP22-Q/SPP",
-          "family": "quince\u24b6RCH",
+          "family": "quinceⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8249,7 +8249,7 @@
         },
         {
           "sku": "LBLP22-Q53",
-          "family": "quince\u24b6RCH",
+          "family": "quinceⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8264,7 +8264,7 @@
         },
         {
           "sku": "LBLP24-Q/SPP",
-          "family": "quince\u24b6RCH",
+          "family": "quinceⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8275,7 +8275,7 @@
         },
         {
           "sku": "LBLP24-Q53",
-          "family": "quince\u24b6RCH",
+          "family": "quinceⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8290,7 +8290,7 @@
         },
         {
           "sku": "LBLR14-33MXP1",
-          "family": "retro\u24b6RCH-P1",
+          "family": "retroⒶRCH-P1",
           "sub_category": "Retrofit Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8301,12 +8301,12 @@
           ],
           "voltage": "120 - 277V",
           "mount_types": [],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLR14-33MXP1/EM",
-          "family": "retro\u24b6RCH-P1",
+          "family": "retroⒶRCH-P1",
           "sub_category": "Retrofit Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8317,12 +8317,12 @@
           ],
           "voltage": "120 - 277V",
           "mount_types": [],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLR14-33MXP1/SR",
-          "family": "retro\u24b6RCH-P1",
+          "family": "retroⒶRCH-P1",
           "sub_category": "Retrofit Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8333,12 +8333,12 @@
           ],
           "voltage": "120 - 277V",
           "mount_types": [],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLR14-33MXP1/SR/EM",
-          "family": "retro\u24b6RCH-P1",
+          "family": "retroⒶRCH-P1",
           "sub_category": "Retrofit Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8349,12 +8349,12 @@
           ],
           "voltage": "120 - 277V",
           "mount_types": [],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLR22-33MXP1",
-          "family": "retro\u24b6RCH-P1",
+          "family": "retroⒶRCH-P1",
           "sub_category": "Retrofit Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8365,12 +8365,12 @@
           ],
           "voltage": "120 - 277V",
           "mount_types": [],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLR22-33MXP1/EM",
-          "family": "retro\u24b6RCH-P1",
+          "family": "retroⒶRCH-P1",
           "sub_category": "Retrofit Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8381,12 +8381,12 @@
           ],
           "voltage": "120 - 277V",
           "mount_types": [],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLR22-33MXP1/SR",
-          "family": "retro\u24b6RCH-P1",
+          "family": "retroⒶRCH-P1",
           "sub_category": "Retrofit Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8397,12 +8397,12 @@
           ],
           "voltage": "120 - 277V",
           "mount_types": [],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLR22-33MXP1/SR/EM",
-          "family": "retro\u24b6RCH-P1",
+          "family": "retroⒶRCH-P1",
           "sub_category": "Retrofit Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8413,12 +8413,12 @@
           ],
           "voltage": "120 - 277V",
           "mount_types": [],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLR24-33MXP1",
-          "family": "retro\u24b6RCH-P1",
+          "family": "retroⒶRCH-P1",
           "sub_category": "Retrofit Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8429,12 +8429,12 @@
           ],
           "voltage": "120 - 277V",
           "mount_types": [],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLR24-33MXP1/EM",
-          "family": "retro\u24b6RCH-P1",
+          "family": "retroⒶRCH-P1",
           "sub_category": "Retrofit Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8445,12 +8445,12 @@
           ],
           "voltage": "120 - 277V",
           "mount_types": [],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLR24-33MXP1/SR",
-          "family": "retro\u24b6RCH-P1",
+          "family": "retroⒶRCH-P1",
           "sub_category": "Retrofit Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8461,12 +8461,12 @@
           ],
           "voltage": "120 - 277V",
           "mount_types": [],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LBLR24-33MXP1/SR/EM",
-          "family": "retro\u24b6RCH-P1",
+          "family": "retroⒶRCH-P1",
           "sub_category": "Retrofit Panel",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8477,12 +8477,12 @@
           ],
           "voltage": "120 - 277V",
           "mount_types": [],
-          "taa": false,
+          "taa": true,
           "dlc": "Listed"
         },
         {
           "sku": "LPVR14-33MXP1",
-          "family": "retro\u24b6RCH",
+          "family": "retroⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8497,7 +8497,7 @@
         },
         {
           "sku": "LPVR14-33MXP1/EM",
-          "family": "retro\u24b6RCH",
+          "family": "retroⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8512,7 +8512,7 @@
         },
         {
           "sku": "LPVR14-33MXP1/SR",
-          "family": "retro\u24b6RCH",
+          "family": "retroⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8527,7 +8527,7 @@
         },
         {
           "sku": "LPVR14-33MXP1/SR/EM",
-          "family": "retro\u24b6RCH",
+          "family": "retroⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8542,7 +8542,7 @@
         },
         {
           "sku": "LPVR22-33MXP1",
-          "family": "retro\u24b6RCH",
+          "family": "retroⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8557,7 +8557,7 @@
         },
         {
           "sku": "LPVR22-33MXP1/EM",
-          "family": "retro\u24b6RCH",
+          "family": "retroⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8572,7 +8572,7 @@
         },
         {
           "sku": "LPVR22-33MXP1/SR",
-          "family": "retro\u24b6RCH",
+          "family": "retroⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8587,7 +8587,7 @@
         },
         {
           "sku": "LPVR22-33MXP1/SR/EM",
-          "family": "retro\u24b6RCH",
+          "family": "retroⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8602,7 +8602,7 @@
         },
         {
           "sku": "LPVR24-33MXP1",
-          "family": "retro\u24b6RCH",
+          "family": "retroⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8617,7 +8617,7 @@
         },
         {
           "sku": "LPVR24-33MXP1/EM",
-          "family": "retro\u24b6RCH",
+          "family": "retroⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8632,7 +8632,7 @@
         },
         {
           "sku": "LPVR24-33MXP1/SR",
-          "family": "retro\u24b6RCH",
+          "family": "retroⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8647,7 +8647,7 @@
         },
         {
           "sku": "LPVR24-33MXP1/SR/EM",
-          "family": "retro\u24b6RCH",
+          "family": "retroⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "wattages": [],
@@ -8662,7 +8662,7 @@
         },
         {
           "sku": "LBLP14-S3",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [],
@@ -8677,7 +8677,7 @@
         },
         {
           "sku": "LBLP14-S3/TAA",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [],
@@ -8692,7 +8692,7 @@
         },
         {
           "sku": "LBLP22-S3",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [],
@@ -8707,7 +8707,7 @@
         },
         {
           "sku": "LBLP22-S3/TAA",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [],
@@ -8722,7 +8722,7 @@
         },
         {
           "sku": "LBLP24-S3",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [],
@@ -8737,7 +8737,7 @@
         },
         {
           "sku": "LBLP24-S3/TAA",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [],
@@ -8752,7 +8752,7 @@
         },
         {
           "sku": "LPNL22-25-40-A1",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [
@@ -8767,7 +8767,7 @@
         },
         {
           "sku": "LPNL22-36-41-S",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [
@@ -8782,7 +8782,7 @@
         },
         {
           "sku": "LPNL22-40-35-A1",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [
@@ -8797,7 +8797,7 @@
         },
         {
           "sku": "LPNL24-60-50-A1",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [
@@ -8812,7 +8812,7 @@
         },
         {
           "sku": "LPVT22-35-40",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [
@@ -8827,7 +8827,7 @@
         },
         {
           "sku": "LPVT22-5S4",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [],
@@ -8843,7 +8843,7 @@
         },
         {
           "sku": "LPVT22-5S4/EM08",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [],
@@ -8859,7 +8859,7 @@
         },
         {
           "sku": "LPVT22-xx-S3",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [],
@@ -8874,7 +8874,7 @@
         },
         {
           "sku": "LPVT24-50-40",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [
@@ -8889,7 +8889,7 @@
         },
         {
           "sku": "LPVT24-5S4",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [],
@@ -8905,7 +8905,7 @@
         },
         {
           "sku": "LPVT24-xx-S3",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [],
@@ -8920,7 +8920,7 @@
         },
         {
           "sku": "LPVT24-xx-S3-EM",
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [],
@@ -8935,7 +8935,7 @@
         },
         {
           "sku": "LBLP22-25-40-A1",
-          "family": "static\u24b6RCH",
+          "family": "staticⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "wattages": [
@@ -8950,7 +8950,7 @@
         },
         {
           "sku": "LBLP14-V54-EM08",
-          "family": "venti\u24b6RCH",
+          "family": "ventiⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -8966,7 +8966,7 @@
         },
         {
           "sku": "LBLP14-V54/SR",
-          "family": "venti\u24b6RCH",
+          "family": "ventiⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -8982,7 +8982,7 @@
         },
         {
           "sku": "LBLP22-V54-EM08",
-          "family": "venti\u24b6RCH",
+          "family": "ventiⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -8998,7 +8998,7 @@
         },
         {
           "sku": "LBLP22-V54/SR",
-          "family": "venti\u24b6RCH",
+          "family": "ventiⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -9014,7 +9014,7 @@
         },
         {
           "sku": "LBLP24-V54-EM08",
-          "family": "venti\u24b6RCH",
+          "family": "ventiⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -9030,7 +9030,7 @@
         },
         {
           "sku": "LBLP24-V54/SR",
-          "family": "venti\u24b6RCH",
+          "family": "ventiⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO+",
           "wattages": [],
@@ -9336,7 +9336,7 @@
           "tierKey": "Waymark"
         },
         {
-          "family": "pro\u24b6RCH",
+          "family": "proⒶRCH",
           "sub_category": "Panel",
           "display_echelon": "PRO+",
           "max_wattage": 0,
@@ -9358,15 +9358,15 @@
             "Surface",
             "Grid"
           ],
-          "taa": false,
+          "taa": true,
           "pdpUrl": "/products/proarch/",
           "card_image": "/products/proarch/assets/hero/proarch-hero-1.webp",
           "slug": "proarch",
           "heroImage": "/products/proarch/assets/hero/proarch-hero-1.webp",
-          "tierKey": "pro\u24b6RCH"
+          "tierKey": "proⒶRCH"
         },
         {
-          "family": "quince\u24b6RCH",
+          "family": "quinceⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "max_wattage": 0,
@@ -9384,11 +9384,11 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "quince\u24b6RCH",
+          "tierKey": "quinceⒶRCH",
           "pdp_ready": false
         },
         {
-          "family": "retro\u24b6RCH-P1",
+          "family": "retroⒶRCH-P1",
           "sub_category": "Retrofit Panel",
           "display_echelon": "PRO",
           "max_wattage": 0,
@@ -9403,15 +9403,15 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false,
+          "taa": true,
           "pdpUrl": "/products/retroarch-p1/",
           "card_image": "/products/retroarch-p1/assets/hero/fam-retroarch-p1.webp",
           "slug": "retroarch-p1",
           "heroImage": "/products/retroarch-p1/assets/hero/lblr24-hero-2.webp",
-          "tierKey": "retro\u24b6RCH-P1"
+          "tierKey": "retroⒶRCH-P1"
         },
         {
-          "family": "retro\u24b6RCH",
+          "family": "retroⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO",
           "max_wattage": 0,
@@ -9429,11 +9429,11 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "retro\u24b6RCH",
+          "tierKey": "retroⒶRCH",
           "pdp_ready": false
         },
         {
-          "family": "select\u24b6RCH",
+          "family": "selectⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "max_wattage": 60,
@@ -9452,11 +9452,11 @@
           "taa": true,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "select\u24b6RCH",
+          "tierKey": "selectⒶRCH",
           "pdp_ready": false
         },
         {
-          "family": "static\u24b6RCH",
+          "family": "staticⒶRCH",
           "sub_category": "",
           "display_echelon": "ECO",
           "max_wattage": 25,
@@ -9472,11 +9472,11 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "static\u24b6RCH",
+          "tierKey": "staticⒶRCH",
           "pdp_ready": false
         },
         {
-          "family": "venti\u24b6RCH",
+          "family": "ventiⒶRCH",
           "sub_category": "",
           "display_echelon": "PRO+",
           "max_wattage": 0,
@@ -9495,34 +9495,36 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "venti\u24b6RCH",
+          "tierKey": "ventiⒶRCH",
           "pdp_ready": false
         },
         {
-          "family": "pro\u24b6RCH-T",
+          "family": "proⒶRCH-T",
           "slug": "proarch-t",
           "pdpUrl": "/products/proarch-t/",
           "heroImage": "/products/proarch-t/assets/hero/lpvt24-hero-2.webp",
-          "tierKey": "pro\u24b6RCH-T",
+          "tierKey": "proⒶRCH-T",
           "echelon": "ECO",
           "application": [
             "troffer"
           ],
-          "sub_category": "",
-          "display_echelon": "ECO"
+          "sub_category": "Troffer",
+          "display_echelon": "ECO",
+          "taa": true
         },
         {
-          "family": "retro\u24b6RCH-T1",
+          "family": "retroⒶRCH-T1",
           "slug": "retroarch-t1",
           "pdpUrl": "/products/retroarch-t1/",
           "heroImage": "/products/retroarch-t1/assets/hero/lpvr24-hero-2.webp",
-          "tierKey": "retro\u24b6RCH-T1",
+          "tierKey": "retroⒶRCH-T1",
           "echelon": "ECO",
           "application": [
             "retrofit-troffer"
           ],
-          "sub_category": "",
-          "display_echelon": "ECO"
+          "sub_category": "Retrofit Troffer",
+          "display_echelon": "ECO",
+          "taa": true
         }
       ]
     },
@@ -9844,7 +9846,7 @@
         {
           "sku": "LP15DBS-4RG11/D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -9855,7 +9857,7 @@
         {
           "sku": "LP20DBS-4RG11/D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -9866,7 +9868,7 @@
         {
           "sku": "OSP-3RBC/D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -9877,7 +9879,7 @@
         {
           "sku": "OSP-4RBC/D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -9888,7 +9890,7 @@
         {
           "sku": "OSP-4RRPC/D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -9899,7 +9901,7 @@
         {
           "sku": "OSP-4SBC/D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -9910,7 +9912,7 @@
         {
           "sku": "OSP-4SRPC/D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -9921,7 +9923,7 @@
         {
           "sku": "OSP-5SRPC/D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -9932,7 +9934,7 @@
         {
           "sku": "OSP-AB1025",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -9943,7 +9945,7 @@
         {
           "sku": "OSP-PP/R",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -9954,7 +9956,7 @@
         {
           "sku": "OSP-PP/S",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -9965,7 +9967,7 @@
         {
           "sku": "OSP10R-3G11-D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -9976,7 +9978,7 @@
         {
           "sku": "OSP10S-4G11-D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -9987,7 +9989,7 @@
         {
           "sku": "OSP15R-4G11-D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -9998,7 +10000,7 @@
         {
           "sku": "OSP15S-4G11-D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10009,7 +10011,7 @@
         {
           "sku": "OSP15S-4G11-D/4SBC/PP/AB1025",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10020,7 +10022,7 @@
         {
           "sku": "OSP20R-4G11-D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10031,7 +10033,7 @@
         {
           "sku": "OSP20S-4G11-D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10042,7 +10044,7 @@
         {
           "sku": "OSP25R-4G11-D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10053,7 +10055,7 @@
         {
           "sku": "OSP25S-4G11-D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10064,7 +10066,7 @@
         {
           "sku": "OSP30R-4G11-D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10075,7 +10077,7 @@
         {
           "sku": "OSP30S-4G11-B",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10086,7 +10088,7 @@
         {
           "sku": "OSP30S-4G11-D",
           "family": "Alpine",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10097,7 +10099,7 @@
         {
           "sku": "OSP30T-65G11-D",
           "family": "Centurion",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10108,7 +10110,7 @@
         {
           "sku": "OSP25T-65G11-D",
           "family": "Hyperion",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10354,7 +10356,7 @@
         {
           "sku": "SRP-R1/SM/AP30",
           "family": "Redwood",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10365,7 +10367,7 @@
         {
           "sku": "SRP-R1/SM/AP36",
           "family": "Redwood",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10376,7 +10378,7 @@
         {
           "sku": "SRP-R1/SM/D/BC",
           "family": "Redwood",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10387,7 +10389,7 @@
         {
           "sku": "SRP410-SM/D/BC/AP30",
           "family": "Redwood",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10664,7 +10666,7 @@
         {
           "sku": "SSP-S1/GC4/D",
           "family": "Sequoia",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10675,7 +10677,7 @@
         {
           "sku": "SSP-S1/RM05/D",
           "family": "Sequoia",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10686,7 +10688,7 @@
         {
           "sku": "SSP-S1/RM10/D",
           "family": "Sequoia",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10697,7 +10699,7 @@
         {
           "sku": "SSP-S1/SM/AP30",
           "family": "Sequoia",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10708,7 +10710,7 @@
         {
           "sku": "SSP-S1/SM/AP36",
           "family": "Sequoia",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10719,7 +10721,7 @@
         {
           "sku": "SSP-S1/SM/D/BC",
           "family": "Sequoia",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -10730,7 +10732,7 @@
         {
           "sku": "SSP410-SM/D/BC/AP30",
           "family": "Sequoia",
-          "sub_category": "",
+          "sub_category": "Pole",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -11229,7 +11231,7 @@
         },
         {
           "family": "Alpine",
-          "sub_category": "Area Light",
+          "sub_category": "Pole",
           "display_echelon": "ECO",
           "max_wattage": 0,
           "sku_count": 23,
@@ -11244,7 +11246,7 @@
         },
         {
           "family": "Centurion",
-          "sub_category": "Area Light",
+          "sub_category": "Pole",
           "display_echelon": "ECO",
           "max_wattage": 0,
           "sku_count": 1,
@@ -11259,7 +11261,7 @@
         },
         {
           "family": "Hyperion",
-          "sub_category": "Area Light",
+          "sub_category": "Pole",
           "display_echelon": "ECO",
           "max_wattage": 0,
           "sku_count": 1,
@@ -11340,7 +11342,7 @@
         },
         {
           "family": "Redwood",
-          "sub_category": "Area Light",
+          "sub_category": "Pole",
           "display_echelon": "ECO",
           "max_wattage": 0,
           "sku_count": 4,
@@ -11378,7 +11380,7 @@
         },
         {
           "family": "Sequoia",
-          "sub_category": "Area Light",
+          "sub_category": "Pole",
           "display_echelon": "ECO",
           "max_wattage": 0,
           "sku_count": 7,
@@ -11441,21 +11443,12 @@
           "tierKey": "Unity-I"
         },
         {
-          "family": "Morphos",
-          "tierKey": "Morphos-I",
-          "heroImage": "/images/family-cards/luxoarch/sentry.png",
-          "pdpUrl": "",
-          "slug": "",
-          "sub_category": "",
-          "display_echelon": "ECO"
-        },
-        {
           "family": "Traffic Control",
           "tierKey": "Traffic Control",
           "heroImage": "/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp",
           "pdpUrl": "",
           "slug": "",
-          "sub_category": "",
+          "sub_category": "Traffic Control Lamp",
           "display_echelon": "ECO"
         }
       ]
@@ -11624,7 +11617,7 @@
         {
           "sku": "LV3P-E1/AM",
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -11635,7 +11628,7 @@
         {
           "sku": "LV3P-E1/JBH",
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -11646,7 +11639,7 @@
         {
           "sku": "LV3P-E1/SM",
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -11657,7 +11650,7 @@
         {
           "sku": "LV3P-E1/TP",
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -11668,7 +11661,7 @@
         {
           "sku": "LV3P-E1/VH",
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -11679,7 +11672,7 @@
         {
           "sku": "LV3P4-3GTU-S3S",
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
@@ -11694,7 +11687,7 @@
         {
           "sku": "LV3P4-3HBP-3CS/CL",
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
@@ -11709,7 +11702,7 @@
         {
           "sku": "LV3P4-3HBU-3CS/CL",
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
@@ -11724,7 +11717,7 @@
         {
           "sku": "LV3P-E2/JBH",
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -11735,7 +11728,7 @@
         {
           "sku": "LV3P2-3E20-S3P",
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [
@@ -11750,7 +11743,7 @@
         {
           "sku": "LV3P4-3E135-S3P",
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [
@@ -11765,7 +11758,7 @@
         {
           "sku": "LV3P4-3E250-S3P",
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [
@@ -11780,7 +11773,7 @@
         {
           "sku": "LV3P4-3E40-S3P",
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [
@@ -11795,7 +11788,7 @@
         {
           "sku": "LV3P4-3E46-3SP",
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [
@@ -11810,7 +11803,7 @@
         {
           "sku": "LV3P8-3E80-S3P",
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [
@@ -14650,7 +14643,7 @@
         },
         {
           "sku": "LLSR444-PS3",
-          "family": "retro\u24b6RCH-L1",
+          "family": "retroⒶRCH-L1",
           "sub_category": "Retrofit Linear Strip",
           "display_echelon": "",
           "wattages": [],
@@ -14665,7 +14658,7 @@
         },
         {
           "sku": "LLSR888-PS3",
-          "family": "retro\u24b6RCH-L1",
+          "family": "retroⒶRCH-L1",
           "sub_category": "Retrofit Linear Strip",
           "display_echelon": "",
           "wattages": [],
@@ -14680,7 +14673,7 @@
         },
         {
           "sku": "LLSRxx-4-ES3",
-          "family": "retro\u24b6RCH-L1",
+          "family": "retroⒶRCH-L1",
           "sub_category": "Retrofit Linear Strip",
           "display_echelon": "",
           "wattages": [],
@@ -14695,7 +14688,7 @@
         },
         {
           "sku": "LLSRxx-8-PS3",
-          "family": "retro\u24b6RCH-L1",
+          "family": "retroⒶRCH-L1",
           "sub_category": "Retrofit Linear Strip",
           "display_echelon": "",
           "wattages": [],
@@ -14756,7 +14749,7 @@
         },
         {
           "family": "Eureka",
-          "sub_category": "",
+          "sub_category": "Vapor-Tight",
           "display_echelon": "PRO",
           "max_wattage": 0,
           "sku_count": 15,
@@ -15004,7 +14997,7 @@
           "pdp_ready": false
         },
         {
-          "family": "retro\u24b6RCH-L1",
+          "family": "retroⒶRCH-L1",
           "sub_category": "Retrofit Linear Strip",
           "display_echelon": "ECO",
           "max_wattage": 0,
@@ -15024,7 +15017,7 @@
           "card_image": "/products/retroarch-l1/assets/hero/fam-retroarch-l1.webp",
           "slug": "retroarch-l1",
           "heroImage": "/products/retroarch-l1/retroarch-l1/photos/LLSRXX-4-PS3-002_No_BG_1_0001.png",
-          "tierKey": "retro\u24b6RCH-L1"
+          "tierKey": "retroⒶRCH-L1"
         },
         {
           "family": "Eureka (ECO)",
@@ -15043,7 +15036,7 @@
         {
           "sku": "LVTY10-205CS/DRV/BK",
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "wattages": [
             20
@@ -15062,7 +15055,7 @@
         {
           "sku": "LVTY10-205CS/DRV/BN",
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "wattages": [
             20
@@ -15081,7 +15074,7 @@
         {
           "sku": "LVTY10-205CS/DRV/BZ",
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "wattages": [
             20
@@ -15100,7 +15093,7 @@
         {
           "sku": "LVTY18-205CS/DRV/BK",
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "wattages": [
             20
@@ -15119,7 +15112,7 @@
         {
           "sku": "LVTY18-205CS/DRV/BN",
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "wattages": [
             20
@@ -15138,7 +15131,7 @@
         {
           "sku": "LVTY18-205CS/DRV/BZ",
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "wattages": [
             20
@@ -15157,7 +15150,7 @@
         {
           "sku": "LVTY24-285CS/DRV/BK",
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "wattages": [
             28
@@ -15176,7 +15169,7 @@
         {
           "sku": "LVTY24-285CS/DRV/BN",
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "wattages": [
             28
@@ -15195,7 +15188,7 @@
         {
           "sku": "LVTY24-285CS/DRV/BZ",
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "wattages": [
             28
@@ -15214,7 +15207,7 @@
         {
           "sku": "LVTY36-385CS/DRV/BK",
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "wattages": [
             38
@@ -15233,7 +15226,7 @@
         {
           "sku": "LVTY36-385CS/DRV/BN",
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "wattages": [
             38
@@ -15252,7 +15245,7 @@
         {
           "sku": "LVTY36-385CS/DRV/BZ",
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "wattages": [
             38
@@ -15271,7 +15264,7 @@
         {
           "sku": "LVTY48-505CS/DRV/BK",
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "wattages": [
             50
@@ -15290,7 +15283,7 @@
         {
           "sku": "LVTY48-505CS/DRV/BN",
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "wattages": [
             50
@@ -15309,7 +15302,7 @@
         {
           "sku": "LVTY48-505CS/DRV/BZ",
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "wattages": [
             50
@@ -15328,7 +15321,7 @@
         {
           "sku": "LSMT4-KIT",
           "family": "Crescent",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -15339,7 +15332,7 @@
         {
           "sku": "LSMT410-S5",
           "family": "Crescent",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -15358,7 +15351,7 @@
         {
           "sku": "LSMT6-KIT",
           "family": "Crescent",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -15369,7 +15362,7 @@
         {
           "sku": "LSMT615-S5",
           "family": "Crescent",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -15388,7 +15381,7 @@
         {
           "sku": "LDLL05-09-S5",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             9
@@ -15407,7 +15400,7 @@
         {
           "sku": "LDLL05-09-S5/B",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             9
@@ -15426,7 +15419,7 @@
         {
           "sku": "LDLL05-KIT",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -15437,7 +15430,7 @@
         {
           "sku": "LDLL07-12-S5",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             12
@@ -15456,7 +15449,7 @@
         {
           "sku": "LDLL07-12-S5/B",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             12
@@ -15475,7 +15468,7 @@
         {
           "sku": "LDLL07-KIT",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -15486,7 +15479,7 @@
         {
           "sku": "LDLL09-18-S5",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             18
@@ -15505,7 +15498,7 @@
         {
           "sku": "LDLL09-18-S5/B",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             18
@@ -15524,7 +15517,7 @@
         {
           "sku": "LDLL12-22-S5",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             22
@@ -15543,7 +15536,7 @@
         {
           "sku": "LDLL12-22-S5/B",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             22
@@ -15562,7 +15555,7 @@
         {
           "sku": "LDLL-E2/JBX",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -15573,7 +15566,7 @@
         {
           "sku": "LDLL-E2/MSP/W",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -15584,7 +15577,7 @@
         {
           "sku": "LDLL0510-E2S5/B",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             10
@@ -15603,7 +15596,7 @@
         {
           "sku": "LDLL0510-E2S5/W",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             10
@@ -15622,7 +15615,7 @@
         {
           "sku": "LDLL0712-E2S5/W/S",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             12
@@ -15641,7 +15634,7 @@
         {
           "sku": "LDLL0715-E2S5/B",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             15
@@ -15660,7 +15653,7 @@
         {
           "sku": "LDLL0715-E2S5/W",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             15
@@ -15679,7 +15672,7 @@
         {
           "sku": "LDLL0918-E2S5/B",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             18
@@ -15698,7 +15691,7 @@
         {
           "sku": "LDLL0918-E2S5/W",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             18
@@ -15717,7 +15710,7 @@
         {
           "sku": "LDLL0918-E2S5/W/S",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             18
@@ -15736,7 +15729,7 @@
         {
           "sku": "LDLL1121-E2S5/B",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             21
@@ -15755,7 +15748,7 @@
         {
           "sku": "LDLL1121-E2S5/W",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             21
@@ -15774,7 +15767,7 @@
         {
           "sku": "LDLL1122-E2S5/W/S",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             22
@@ -15793,7 +15786,7 @@
         {
           "sku": "LDLL1324-E2S5/B",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             24
@@ -15812,7 +15805,7 @@
         {
           "sku": "LDLL1324-E2S5/W",
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             24
@@ -15831,7 +15824,7 @@
         {
           "sku": "CRC10-GFR/W",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -15842,7 +15835,7 @@
         {
           "sku": "CRC4-GFR/W",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -15853,7 +15846,7 @@
         {
           "sku": "CRC4-SB/E26",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -15864,7 +15857,7 @@
         {
           "sku": "CRC4-SB/T24",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -15875,7 +15868,7 @@
         {
           "sku": "CRC6-EM15/JBS/B",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -15886,7 +15879,7 @@
         {
           "sku": "CRC6-EM15/JBS/W",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -15897,7 +15890,7 @@
         {
           "sku": "CRC6-EM24/JBS/B",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -15908,7 +15901,7 @@
         {
           "sku": "CRC6-EM24/JBS/W",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -15919,7 +15912,7 @@
         {
           "sku": "CRC6-GFR/W",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -15930,7 +15923,7 @@
         {
           "sku": "CRC6-JBS/B",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -15941,7 +15934,7 @@
         {
           "sku": "CRC6-JBS/W",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -15952,7 +15945,7 @@
         {
           "sku": "CRC6-SB/E26",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -15963,7 +15956,7 @@
         {
           "sku": "CRC6-SB/E26/A19",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -15974,7 +15967,7 @@
         {
           "sku": "CRC6-SB/E26/BR30",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -15985,7 +15978,7 @@
         {
           "sku": "CRC6-SB/T24",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -15996,7 +15989,7 @@
         {
           "sku": "CRC6-SB/T24/LDRR612",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -16007,7 +16000,7 @@
         {
           "sku": "CRC6-SB/T24/LSMT615",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -16018,7 +16011,7 @@
         {
           "sku": "CRC6-ST605/WH",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -16029,7 +16022,7 @@
         {
           "sku": "CRC6-T619/WH",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -16040,7 +16033,7 @@
         {
           "sku": "CRC8-GFR/W",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -16051,7 +16044,7 @@
         {
           "sku": "CRCU-EM15/JBM",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -16062,7 +16055,7 @@
         {
           "sku": "CRCU-EM24/JBM",
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "",
           "wattages": [],
           "ccts": [],
@@ -16073,7 +16066,7 @@
         {
           "sku": "LDLL0510-LE1S5/B",
           "family": "Lunar Eclipse",
-          "sub_category": "Surface Mount",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             10
@@ -16094,7 +16087,7 @@
         {
           "sku": "LDLL0715-LE1S5/B",
           "family": "Lunar Eclipse",
-          "sub_category": "Surface Mount",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             15
@@ -16115,7 +16108,7 @@
         {
           "sku": "LDLL0918-LE1S5/B",
           "family": "Lunar Eclipse",
-          "sub_category": "Surface Mount",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             18
@@ -16136,7 +16129,7 @@
         {
           "sku": "LDRR-4N-B/TBK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16147,7 +16140,7 @@
         {
           "sku": "LDRR-4N-B/TBN",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16158,7 +16151,7 @@
         {
           "sku": "LDRR-4N-B/TBZ",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16169,7 +16162,7 @@
         {
           "sku": "LDRR-4N-B/TCR",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16180,7 +16173,7 @@
         {
           "sku": "LDRR-4N-S/TBK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16191,7 +16184,7 @@
         {
           "sku": "LDRR-4N-S/TBN",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16202,7 +16195,7 @@
         {
           "sku": "LDRR-4N-S/TBZ",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16213,7 +16206,7 @@
         {
           "sku": "LDRR-4N-S/TCR",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16224,7 +16217,7 @@
         {
           "sku": "LDRR-6N-B/TBK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16235,7 +16228,7 @@
         {
           "sku": "LDRR-6N-B/TBN",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16246,7 +16239,7 @@
         {
           "sku": "LDRR-6N-B/TBZ",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16257,7 +16250,7 @@
         {
           "sku": "LDRR-6N-B/TCR",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16268,7 +16261,7 @@
         {
           "sku": "LDRR-6N-S/TBK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16279,7 +16272,7 @@
         {
           "sku": "LDRR-6N-S/TBN",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16290,7 +16283,7 @@
         {
           "sku": "LDRR-6N-S/TBZ",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16301,7 +16294,7 @@
         {
           "sku": "LDRR-6N-S/TCR",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16312,7 +16305,7 @@
         {
           "sku": "LDRR4-10-S5-B",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -16331,7 +16324,7 @@
         {
           "sku": "LDRR6-15-S5-B",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -16350,7 +16343,7 @@
         {
           "sku": "LDRR-4N2-B/TBK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16361,7 +16354,7 @@
         {
           "sku": "LDRR-4N2-B/TBN",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16372,7 +16365,7 @@
         {
           "sku": "LDRR-4N2-B/TBZ",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16383,7 +16376,7 @@
         {
           "sku": "LDRR-4N2-S/TBK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16394,7 +16387,7 @@
         {
           "sku": "LDRR-4N2-S/TBN",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16405,7 +16398,7 @@
         {
           "sku": "LDRR-4N2-S/TBZ",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16416,7 +16409,7 @@
         {
           "sku": "LDRR-6N2-B/TBK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16427,7 +16420,7 @@
         {
           "sku": "LDRR-6N2-B/TBN",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16438,7 +16431,7 @@
         {
           "sku": "LDRR-6N2-B/TBZ",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16449,7 +16442,7 @@
         {
           "sku": "LDRR-6N2-S/TBK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16460,7 +16453,7 @@
         {
           "sku": "LDRR-6N2-S/TBN",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16471,7 +16464,7 @@
         {
           "sku": "LDRR-6N2-S/TBZ",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [],
@@ -16482,7 +16475,7 @@
         {
           "sku": "LDRR410-S5-N2/B/BK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -16501,7 +16494,7 @@
         {
           "sku": "LDRR410-S5-N2/B/BK/12PK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -16520,7 +16513,7 @@
         {
           "sku": "LDRR410-S5-N2/B/BZ",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -16539,7 +16532,7 @@
         {
           "sku": "LDRR410-S5-N2/B/BZ/12PK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -16558,7 +16551,7 @@
         {
           "sku": "LDRR410-S5-N2/B/W",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -16577,7 +16570,7 @@
         {
           "sku": "LDRR410-S5-N2/B/W/12PK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -16596,7 +16589,7 @@
         {
           "sku": "LDRR410-S5-N2/S/BK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -16615,7 +16608,7 @@
         {
           "sku": "LDRR410-S5-N2/S/BK/12PK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -16634,7 +16627,7 @@
         {
           "sku": "LDRR410-S5-N2/S/BZ",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -16653,7 +16646,7 @@
         {
           "sku": "LDRR410-S5-N2/S/BZ/12PK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -16672,7 +16665,7 @@
         {
           "sku": "LDRR410-S5-N2/S/W",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -16691,7 +16684,7 @@
         {
           "sku": "LDRR410-S5-N2/S/W/12PK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -16710,7 +16703,7 @@
         {
           "sku": "LDRR615-S5-N2/B/BK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -16729,7 +16722,7 @@
         {
           "sku": "LDRR615-S5-N2/B/BK/12PK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -16748,7 +16741,7 @@
         {
           "sku": "LDRR615-S5-N2/B/BZ",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -16767,7 +16760,7 @@
         {
           "sku": "LDRR615-S5-N2/B/BZ/12PK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -16786,7 +16779,7 @@
         {
           "sku": "LDRR615-S5-N2/B/W",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -16805,7 +16798,7 @@
         {
           "sku": "LDRR615-S5-N2/B/W/12PK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -16824,7 +16817,7 @@
         {
           "sku": "LDRR615-S5-N2/S/BK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -16843,7 +16836,7 @@
         {
           "sku": "LDRR615-S5-N2/S/BK/12PK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -16862,7 +16855,7 @@
         {
           "sku": "LDRR615-S5-N2/S/BZ",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -16881,7 +16874,7 @@
         {
           "sku": "LDRR615-S5-N2/S/BZ/12PK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -16900,7 +16893,7 @@
         {
           "sku": "LDRR615-S5-N2/S/W",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -16919,7 +16912,7 @@
         {
           "sku": "LDRR615-S5-N2/S/W/12PK",
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -16938,7 +16931,7 @@
         {
           "sku": "LDGR410-S5/O1/B",
           "family": "Orbit",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -16957,7 +16950,7 @@
         {
           "sku": "LDGR410-S5/O1/W",
           "family": "Orbit",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -16976,7 +16969,7 @@
         {
           "sku": "LDGR615-S5/O1/B",
           "family": "Orbit",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -16995,7 +16988,7 @@
         {
           "sku": "LDGR615-S5/O1/W",
           "family": "Orbit",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -17182,7 +17175,7 @@
         {
           "sku": "LDRS-4R1/TBK",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -17193,7 +17186,7 @@
         {
           "sku": "LDRS-4R1/TCR",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -17204,7 +17197,7 @@
         {
           "sku": "LDRS-4R1/TGK",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -17215,7 +17208,7 @@
         {
           "sku": "LDRS-6R1/TBK",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -17226,7 +17219,7 @@
         {
           "sku": "LDRS-6R1/TCR",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -17237,7 +17230,7 @@
         {
           "sku": "LDRS-6R1/TGK",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
@@ -17248,7 +17241,7 @@
         {
           "sku": "LDRS4-09-S5-B",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             9
@@ -17267,7 +17260,7 @@
         {
           "sku": "LDRS4-09-S5-F",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             9
@@ -17286,7 +17279,7 @@
         {
           "sku": "LDRS6-12-S5-B",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             12
@@ -17305,7 +17298,7 @@
         {
           "sku": "LDRS6-12-S5-F",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             12
@@ -17324,7 +17317,7 @@
         {
           "sku": "LDRS409-R2S5/F",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             9
@@ -17343,7 +17336,7 @@
         {
           "sku": "LDRS409-R2S5/F/12PK",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             9
@@ -17362,7 +17355,7 @@
         {
           "sku": "LDRS612-R2S5/F",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             12
@@ -17381,7 +17374,7 @@
         {
           "sku": "LDRS612-R2S5/F/12PK",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             12
@@ -17400,7 +17393,7 @@
         {
           "sku": "LDRS818-R2S5/F",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             18
@@ -17419,7 +17412,7 @@
         {
           "sku": "LDRS818-R2S5/F/12PK",
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "wattages": [
             18
@@ -17438,7 +17431,7 @@
         {
           "sku": "LDRS409-R2SZ5/B",
           "family": "Radius-II SafeZone",
-          "sub_category": "",
+          "sub_category": "SafeZone Downlights",
           "display_echelon": "PRO+",
           "wattages": [
             10
@@ -17457,7 +17450,7 @@
         {
           "sku": "LDRS612-R2SZ5/B",
           "family": "Radius-II SafeZone",
-          "sub_category": "",
+          "sub_category": "SafeZone Downlights",
           "display_echelon": "PRO+",
           "wattages": [
             14
@@ -17476,7 +17469,7 @@
         {
           "sku": "LFMT1015-B5",
           "family": "RingMaster",
-          "sub_category": "",
+          "sub_category": "Flushmount",
           "display_echelon": "PRO",
           "wattages": [
             15
@@ -17495,7 +17488,7 @@
         {
           "sku": "LFMT1015-N5",
           "family": "RingMaster",
-          "sub_category": "",
+          "sub_category": "Flushmount",
           "display_echelon": "PRO",
           "wattages": [
             15
@@ -17514,7 +17507,7 @@
         {
           "sku": "LFMT1220-B5",
           "family": "RingMaster",
-          "sub_category": "",
+          "sub_category": "Flushmount",
           "display_echelon": "PRO",
           "wattages": [
             20
@@ -17533,7 +17526,7 @@
         {
           "sku": "LFMT1220-N5",
           "family": "RingMaster",
-          "sub_category": "",
+          "sub_category": "Flushmount",
           "display_echelon": "PRO",
           "wattages": [
             20
@@ -17552,7 +17545,7 @@
         {
           "sku": "LFMT1422-B5",
           "family": "RingMaster",
-          "sub_category": "",
+          "sub_category": "Flushmount",
           "display_echelon": "PRO",
           "wattages": [
             22
@@ -17571,7 +17564,7 @@
         {
           "sku": "LFMT1422-N5",
           "family": "RingMaster",
-          "sub_category": "",
+          "sub_category": "Flushmount",
           "display_echelon": "PRO",
           "wattages": [
             22
@@ -17590,7 +17583,7 @@
         {
           "sku": "LFMT1626-B5",
           "family": "RingMaster",
-          "sub_category": "",
+          "sub_category": "Flushmount",
           "display_echelon": "PRO",
           "wattages": [
             26
@@ -17609,7 +17602,7 @@
         {
           "sku": "LFMT1626-N5",
           "family": "RingMaster",
-          "sub_category": "",
+          "sub_category": "Flushmount",
           "display_echelon": "PRO",
           "wattages": [
             26
@@ -17628,7 +17621,7 @@
         {
           "sku": "LSFL25-5CS/B/W1",
           "family": "Wally",
-          "sub_category": "",
+          "sub_category": "Security Flood",
           "display_echelon": "ECO",
           "wattages": [],
           "ccts": [
@@ -17645,7 +17638,7 @@
         {
           "sku": "LSMT410-S5E",
           "family": "eCrescent",
-          "sub_category": "Surface Mount",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -17666,7 +17659,7 @@
         {
           "sku": "LSMT410-S5E/24PK",
           "family": "eCrescent",
-          "sub_category": "Surface Mount",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             10
@@ -17687,7 +17680,7 @@
         {
           "sku": "LSMT615-S5E",
           "family": "eCrescent",
-          "sub_category": "Surface Mount",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -17708,7 +17701,7 @@
         {
           "sku": "LSMT615-S5E/24PK",
           "family": "eCrescent",
-          "sub_category": "Surface Mount",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -17729,7 +17722,7 @@
         {
           "sku": "LSMT615-S5E/P",
           "family": "eCrescent",
-          "sub_category": "Surface Mount",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "wattages": [
             15
@@ -17751,7 +17744,7 @@
       "families": [
         {
           "family": "Clarity",
-          "sub_category": "",
+          "sub_category": "Vanity",
           "display_echelon": "ECO",
           "max_wattage": 50,
           "sku_count": 15,
@@ -17774,7 +17767,7 @@
         },
         {
           "family": "Crescent",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "max_wattage": 15,
           "sku_count": 4,
@@ -17800,7 +17793,7 @@
         },
         {
           "family": "Eclipse",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "max_wattage": 24,
           "sku_count": 25,
@@ -17826,7 +17819,7 @@
         },
         {
           "family": "Gehry",
-          "sub_category": "Housing Cans",
+          "sub_category": "Commercial Recess Can",
           "display_echelon": "ECO",
           "max_wattage": 0,
           "sku_count": 22,
@@ -17843,7 +17836,7 @@
         },
         {
           "family": "Lunar Eclipse",
-          "sub_category": "Surface Mount",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "max_wattage": 18,
           "sku_count": 3,
@@ -17870,7 +17863,7 @@
         },
         {
           "family": "Nebula",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "max_wattage": 15,
           "sku_count": 54,
@@ -17896,7 +17889,7 @@
         },
         {
           "family": "Orbit",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "max_wattage": 15,
           "sku_count": 4,
@@ -17949,7 +17942,7 @@
         },
         {
           "family": "Radius",
-          "sub_category": "",
+          "sub_category": "Downlight",
           "display_echelon": "PRO",
           "max_wattage": 18,
           "sku_count": 16,
@@ -17975,7 +17968,7 @@
         },
         {
           "family": "Radius-II SafeZone",
-          "sub_category": "",
+          "sub_category": "SafeZone Downlights",
           "display_echelon": "PRO+",
           "max_wattage": 14,
           "sku_count": 2,
@@ -17998,7 +17991,7 @@
         },
         {
           "family": "RingMaster",
-          "sub_category": "",
+          "sub_category": "Flushmount",
           "display_echelon": "PRO",
           "max_wattage": 26,
           "sku_count": 8,
@@ -18021,7 +18014,7 @@
         },
         {
           "family": "Wally",
-          "sub_category": "",
+          "sub_category": "Security Flood",
           "display_echelon": "ECO",
           "max_wattage": 0,
           "sku_count": 1,
@@ -18044,7 +18037,7 @@
         },
         {
           "family": "eCrescent",
-          "sub_category": "Surface Mount",
+          "sub_category": "Downlight",
           "display_echelon": "ECO",
           "max_wattage": 15,
           "sku_count": 5,
@@ -20268,7 +20261,7 @@
         },
         {
           "family": "t5-cs-u5",
-          "sub_category": "T5HE \u00b7 T5HO",
+          "sub_category": "T5HE · T5HO",
           "display_echelon": "UL-A+B",
           "max_wattage": 24,
           "sku_count": 6,
@@ -20282,7 +20275,7 @@
         },
         {
           "family": "t5-cs-de5",
-          "sub_category": "T5HE \u00b7 T5HO",
+          "sub_category": "T5HE · T5HO",
           "display_echelon": "UL-B",
           "max_wattage": 24,
           "sku_count": 6,
@@ -20369,7 +20362,7 @@
     "vintage-decor": {
       "skus": [
         {
-          "sku": "D\u00e9cor | Victorian-Smoked/3.5W/2200K/Spiral-Horizontal",
+          "sku": "Décor | Victorian-Smoked/3.5W/2200K/Spiral-Horizontal",
           "family": "victorian",
           "sub_category": "Victorian",
           "display_echelon": "",
@@ -20384,7 +20377,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Victorian A19 | Amber | 4.5W/2200K",
+          "sku": "Décor | Victorian A19 | Amber | 4.5W/2200K",
           "family": "victorian",
           "sub_category": "Victorian",
           "display_echelon": "",
@@ -20399,7 +20392,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Victorian A19 | Amber | 3.5W/2200K/Squirrel Cage",
+          "sku": "Décor | Victorian A19 | Amber | 3.5W/2200K/Squirrel Cage",
           "family": "victorian",
           "sub_category": "Victorian",
           "display_echelon": "",
@@ -20414,7 +20407,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Victorian A21 | Amber | 2.0W/2200K",
+          "sku": "Décor | Victorian A21 | Amber | 2.0W/2200K",
           "family": "victorian",
           "sub_category": "Victorian",
           "display_echelon": "",
@@ -20429,7 +20422,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Victorian A19 | Amber | 3.5W/2200K/Spiral Horizontal",
+          "sku": "Décor | Victorian A19 | Amber | 3.5W/2200K/Spiral Horizontal",
           "family": "victorian",
           "sub_category": "Victorian",
           "display_echelon": "",
@@ -20444,7 +20437,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Victorian A19 | Amber | 2.0W/2200K",
+          "sku": "Décor | Victorian A19 | Amber | 2.0W/2200K",
           "family": "victorian",
           "sub_category": "Victorian",
           "display_echelon": "",
@@ -20459,7 +20452,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Victorian A19 | Amber | 3.5W/2200K",
+          "sku": "Décor | Victorian A19 | Amber | 3.5W/2200K",
           "family": "victorian",
           "sub_category": "Victorian",
           "display_echelon": "",
@@ -20474,7 +20467,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Victorian A21 | Amber | 3.5W/2200K",
+          "sku": "Décor | Victorian A21 | Amber | 3.5W/2200K",
           "family": "victorian",
           "sub_category": "Victorian",
           "display_echelon": "",
@@ -20489,7 +20482,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Victorian A19 | Amber | 6.0W/2200K/90CRI+",
+          "sku": "Décor | Victorian A19 | Amber | 6.0W/2200K/90CRI+",
           "family": "victorian",
           "sub_category": "Victorian",
           "display_echelon": "",
@@ -20504,7 +20497,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Tubular T9 | Clear | 2.0W/2700K",
+          "sku": "Décor | Tubular T9 | Clear | 2.0W/2700K",
           "family": "tubular",
           "sub_category": "Tubular",
           "display_echelon": "",
@@ -20519,7 +20512,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Tubular T9 | Amber | 3.5W/2200K",
+          "sku": "Décor | Tubular T9 | Amber | 3.5W/2200K",
           "family": "tubular",
           "sub_category": "Tubular",
           "display_echelon": "",
@@ -20534,7 +20527,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Tubular T9 | Amber | 3.5W/2200K/Spiral Vertical",
+          "sku": "Décor | Tubular T9 | Amber | 3.5W/2200K/Spiral Vertical",
           "family": "tubular",
           "sub_category": "Tubular",
           "display_echelon": "",
@@ -20549,7 +20542,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Tubular T6 | Clear | 2.5W/2700K/90CRI | T20/JA8",
+          "sku": "Décor | Tubular T6 | Clear | 2.5W/2700K/90CRI | T20/JA8",
           "family": "tubular",
           "sub_category": "Tubular",
           "display_echelon": "",
@@ -20564,7 +20557,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Tubular T6 | Amber | 2.0W/2200K/92CRI+",
+          "sku": "Décor | Tubular T6 | Amber | 2.0W/2200K/92CRI+",
           "family": "tubular",
           "sub_category": "Tubular",
           "display_echelon": "",
@@ -20579,7 +20572,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Tubular T10 | Clear | 3.5W/2700K",
+          "sku": "Décor | Tubular T10 | Clear | 3.5W/2700K",
           "family": "tubular",
           "sub_category": "Tubular",
           "display_echelon": "",
@@ -20594,7 +20587,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Tubular T10 | Amber | 4.5W/2200K",
+          "sku": "Décor | Tubular T10 | Amber | 4.5W/2200K",
           "family": "tubular",
           "sub_category": "Tubular",
           "display_echelon": "",
@@ -20609,7 +20602,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Tubular T6 | Amber | 2.0W/2200K",
+          "sku": "Décor | Tubular T6 | Amber | 2.0W/2200K",
           "family": "tubular",
           "sub_category": "Tubular",
           "display_echelon": "",
@@ -20624,7 +20617,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Tubular T9 | Amber | 2.0W/2200K",
+          "sku": "Décor | Tubular T9 | Amber | 2.0W/2200K",
           "family": "tubular",
           "sub_category": "Tubular",
           "display_echelon": "",
@@ -20639,7 +20632,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Tubular T9 | Amber | 3.5W/2200K/Gen-1",
+          "sku": "Décor | Tubular T9 | Amber | 3.5W/2200K/Gen-1",
           "family": "tubular",
           "sub_category": "Tubular",
           "display_echelon": "",
@@ -20654,7 +20647,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Tubular T10 | Amber | 2.5W/2200K",
+          "sku": "Décor | Tubular T10 | Amber | 2.5W/2200K",
           "family": "tubular",
           "sub_category": "Tubular",
           "display_echelon": "",
@@ -20669,7 +20662,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Tubular T10 | Amber | 2.5W/2200K - Gen 2",
+          "sku": "Décor | Tubular T10 | Amber | 2.5W/2200K - Gen 2",
           "family": "tubular",
           "sub_category": "Tubular",
           "display_echelon": "",
@@ -20684,7 +20677,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Edison ST19 | Smoked | 3.5W/2200K/Spiral Vertical",
+          "sku": "Décor | Edison ST19 | Smoked | 3.5W/2200K/Spiral Vertical",
           "family": "edison",
           "sub_category": "Edison",
           "display_echelon": "",
@@ -20699,7 +20692,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Edison ST19 | Clear | 2.0W/2700K",
+          "sku": "Décor | Edison ST19 | Clear | 2.0W/2700K",
           "family": "edison",
           "sub_category": "Edison",
           "display_echelon": "",
@@ -20714,7 +20707,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Edison ST19 | Amber | 4.5W/2200K/92CRI",
+          "sku": "Décor | Edison ST19 | Amber | 4.5W/2200K/92CRI",
           "family": "edison",
           "sub_category": "Edison",
           "display_echelon": "",
@@ -20729,7 +20722,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Edison ST19 | Amber | 3.5W/2200K/Looped Thread",
+          "sku": "Décor | Edison ST19 | Amber | 3.5W/2200K/Looped Thread",
           "family": "edison",
           "sub_category": "Edison",
           "display_echelon": "",
@@ -20744,7 +20737,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Edison ST19 | Amber | 3.5W/2200K/Spiral Vertical",
+          "sku": "Décor | Edison ST19 | Amber | 3.5W/2200K/Spiral Vertical",
           "family": "edison",
           "sub_category": "Edison",
           "display_echelon": "",
@@ -20759,7 +20752,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Edison ST19 | Amber | 3.5W/2200K/Squirrel Cage",
+          "sku": "Décor | Edison ST19 | Amber | 3.5W/2200K/Squirrel Cage",
           "family": "edison",
           "sub_category": "Edison",
           "display_echelon": "",
@@ -20774,7 +20767,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Edison ST21 | Amber | 3.5W/2200K",
+          "sku": "Décor | Edison ST21 | Amber | 3.5W/2200K",
           "family": "edison",
           "sub_category": "Edison",
           "display_echelon": "",
@@ -20789,7 +20782,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Edison ST19 | Amber | 2.0W/2200K",
+          "sku": "Décor | Edison ST19 | Amber | 2.0W/2200K",
           "family": "edison",
           "sub_category": "Edison",
           "display_echelon": "",
@@ -20804,7 +20797,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Edison ST21 | Amber | 2.0W/2200K",
+          "sku": "Décor | Edison ST21 | Amber | 2.0W/2200K",
           "family": "edison",
           "sub_category": "Edison",
           "display_echelon": "",
@@ -20819,7 +20812,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Edison ST19 | Amber | 2.0W/2200K/Spiral Horizontal",
+          "sku": "Décor | Edison ST19 | Amber | 2.0W/2200K/Spiral Horizontal",
           "family": "edison",
           "sub_category": "Edison",
           "display_echelon": "",
@@ -20834,7 +20827,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Edison ST19 | Amber | 2.0W/1800K/Gen-1",
+          "sku": "Décor | Edison ST19 | Amber | 2.0W/1800K/Gen-1",
           "family": "edison",
           "sub_category": "Edison",
           "display_echelon": "",
@@ -20849,7 +20842,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Edison ST19 | Amber | 2.0W/2200K/Gen-1",
+          "sku": "Décor | Edison ST19 | Amber | 2.0W/2200K/Gen-1",
           "family": "edison",
           "sub_category": "Edison",
           "display_echelon": "",
@@ -20864,7 +20857,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Edison ST19 | Clear | 4.0W/2700K/92CRI",
+          "sku": "Décor | Edison ST19 | Clear | 4.0W/2700K/92CRI",
           "family": "edison",
           "sub_category": "Edison",
           "display_echelon": "",
@@ -20879,7 +20872,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Edison ST19 | Amber | 3.5W/2200K",
+          "sku": "Décor | Edison ST19 | Amber | 3.5W/2200K",
           "family": "edison",
           "sub_category": "Edison",
           "display_echelon": "",
@@ -20894,7 +20887,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Radio T14 | Clear | 3.5W/2700K/92CRI",
+          "sku": "Décor | Radio T14 | Clear | 3.5W/2700K/92CRI",
           "family": "radio",
           "sub_category": "Radio",
           "display_echelon": "",
@@ -20909,7 +20902,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Radio T14 | Amber | 3.5W/2200K/92CRI",
+          "sku": "Décor | Radio T14 | Amber | 3.5W/2200K/92CRI",
           "family": "radio",
           "sub_category": "Radio",
           "display_echelon": "",
@@ -20924,7 +20917,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Radio T10 | Clear | 3.5W/2700K",
+          "sku": "Décor | Radio T10 | Clear | 3.5W/2700K",
           "family": "radio",
           "sub_category": "Radio",
           "display_echelon": "",
@@ -20939,37 +20932,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Radio T14 | Amber | 2.0W/2200K",
-          "family": "radio",
-          "sub_category": "Radio",
-          "display_echelon": "",
-          "wattages": [
-            2
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "D\u00e9cor | Radio T14 | Amber | 3.5W/2200K",
-          "family": "radio",
-          "sub_category": "Radio",
-          "display_echelon": "",
-          "wattages": [
-            3.5
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "D\u00e9cor | Radio T10 | Amber | 2.0W/2200K/Gen-1",
+          "sku": "Décor | Radio T14 | Amber | 2.0W/2200K",
           "family": "radio",
           "sub_category": "Radio",
           "display_echelon": "",
@@ -20984,7 +20947,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | Radio T14 | Amber | 3.5W/2200K/Gen-1",
+          "sku": "Décor | Radio T14 | Amber | 3.5W/2200K",
           "family": "radio",
           "sub_category": "Radio",
           "display_echelon": "",
@@ -20999,7 +20962,37 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G40 | Amber | 2W/2200K/Spiral Vertical",
+          "sku": "Décor | Radio T10 | Amber | 2.0W/2200K/Gen-1",
+          "family": "radio",
+          "sub_category": "Radio",
+          "display_echelon": "",
+          "wattages": [
+            2
+          ],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false,
+          "comingSoon": false
+        },
+        {
+          "sku": "Décor | Radio T14 | Amber | 3.5W/2200K/Gen-1",
+          "family": "radio",
+          "sub_category": "Radio",
+          "display_echelon": "",
+          "wattages": [
+            3.5
+          ],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false,
+          "comingSoon": false
+        },
+        {
+          "sku": "Décor | G40 | Amber | 2W/2200K/Spiral Vertical",
           "family": "globe",
           "sub_category": "Globe",
           "display_echelon": "",
@@ -21014,7 +21007,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G25 | Smoked | 3.5W/2200K/Spiral Horizontal",
+          "sku": "Décor | G25 | Smoked | 3.5W/2200K/Spiral Horizontal",
           "family": "globe",
           "sub_category": "Globe",
           "display_echelon": "",
@@ -21029,7 +21022,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G25 | Amber | 3.5W/2200K",
+          "sku": "Décor | G25 | Amber | 3.5W/2200K",
           "family": "globe",
           "sub_category": "Globe",
           "display_echelon": "",
@@ -21044,7 +21037,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Amber | 3.5W/2200K",
+          "sku": "Décor | G16.5 | Amber | 3.5W/2200K",
           "family": "globe",
           "sub_category": "Globe",
           "display_echelon": "",
@@ -21059,7 +21052,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Amber | 2.0W/2200K",
+          "sku": "Décor | G16.5 | Amber | 2.0W/2200K",
           "family": "globe",
           "sub_category": "Globe",
           "display_echelon": "",
@@ -21074,7 +21067,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G40 | Amber | 3.5W/2200K",
+          "sku": "Décor | G40 | Amber | 3.5W/2200K",
           "family": "globe",
           "sub_category": "Globe",
           "display_echelon": "",
@@ -21089,7 +21082,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Amber | 2.0W/2200K/E26",
+          "sku": "Décor | G16.5 | Amber | 2.0W/2200K/E26",
           "family": "globe",
           "sub_category": "Globe",
           "display_echelon": "",
@@ -21104,7 +21097,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G25 | Amber | 2.0W/2200K",
+          "sku": "Décor | G25 | Amber | 2.0W/2200K",
           "family": "globe",
           "sub_category": "Globe",
           "display_echelon": "",
@@ -21119,7 +21112,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Amber | 2.0W/1800K/Gen-1",
+          "sku": "Décor | G16.5 | Amber | 2.0W/1800K/Gen-1",
           "family": "globe",
           "sub_category": "Globe",
           "display_echelon": "",
@@ -21134,7 +21127,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G25 | Amber | 3.5W/2200K/Gen-1",
+          "sku": "Décor | G25 | Amber | 3.5W/2200K/Gen-1",
           "family": "globe",
           "sub_category": "Globe",
           "display_echelon": "",
@@ -21149,7 +21142,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G40 | Amber | 4.0W/2200K",
+          "sku": "Décor | G40 | Amber | 4.0W/2200K",
           "family": "globe",
           "sub_category": "Globe",
           "display_echelon": "",
@@ -21164,7 +21157,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Amber | 4.5W/2200K/90CRI | T20",
+          "sku": "Décor | CA10 | Amber | 4.5W/2200K/90CRI | T20",
           "family": "candelabra",
           "sub_category": "Candle",
           "display_echelon": "",
@@ -21179,7 +21172,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Amber | 2.5W/2200K/90CRI | T20",
+          "sku": "Décor | CA10 | Amber | 2.5W/2200K/90CRI | T20",
           "family": "candelabra",
           "sub_category": "Candle",
           "display_echelon": "",
@@ -21284,7 +21277,7 @@
     "nostalgic-decor": {
       "skus": [
         {
-          "sku": "D\u00e9cor | S14 | Frosted | 1.5W/2400K",
+          "sku": "Décor | S14 | Frosted | 1.5W/2400K",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21299,7 +21292,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | S14 | Frosted | 1.5W/2700K",
+          "sku": "Décor | S14 | Frosted | 1.5W/2700K",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21314,7 +21307,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | S14 | Frosted | 1.0W/2400K",
+          "sku": "Décor | S14 | Frosted | 1.0W/2400K",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21329,7 +21322,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | S14 | Frosted | 1.0W/2700K",
+          "sku": "Décor | S14 | Frosted | 1.0W/2700K",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21344,7 +21337,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | S14 | Clear | 1.5W/2400K",
+          "sku": "Décor | S14 | Clear | 1.5W/2400K",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21359,7 +21352,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | S14 | Clear | 1.5W/2700K",
+          "sku": "Décor | S14 | Clear | 1.5W/2700K",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21374,7 +21367,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | S14 | Clear | 1.0W/2400K",
+          "sku": "Décor | S14 | Clear | 1.0W/2400K",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21389,7 +21382,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | S14 | Clear | 1.0W/2700K",
+          "sku": "Décor | S14 | Clear | 1.0W/2700K",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21404,7 +21397,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | S14 | Blue | 1.0W/2400K",
+          "sku": "Décor | S14 | Blue | 1.0W/2400K",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21419,7 +21412,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | S14 | Green | 1.0W/2400K",
+          "sku": "Décor | S14 | Green | 1.0W/2400K",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21434,7 +21427,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | S14 | Red | 1.0W/2400K",
+          "sku": "Décor | S14 | Red | 1.0W/2400K",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21449,7 +21442,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | S14 | Yellow | 1.0W/2400K",
+          "sku": "Décor | S14 | Yellow | 1.0W/2400K",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21464,7 +21457,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | S11 | Clear | 1.0W/2400K",
+          "sku": "Décor | S11 | Clear | 1.0W/2400K",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21479,7 +21472,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | S11 | Clear | 1.0W/2700K",
+          "sku": "Décor | S11 | Clear | 1.0W/2700K",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21494,7 +21487,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | S14 | Clear | 1.0W/2700K/Gen-1",
+          "sku": "Décor | S14 | Clear | 1.0W/2700K/Gen-1",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21509,7 +21502,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | S14 | Frosted | 1.0W/2700K/Gen-1",
+          "sku": "Décor | S14 | Frosted | 1.0W/2700K/Gen-1",
           "family": "s14",
           "sub_category": "S14",
           "display_echelon": "",
@@ -21524,7 +21517,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G40 | Frosted | 4.5W/2700K",
+          "sku": "Décor | G40 | Frosted | 4.5W/2700K",
           "family": "g25",
           "sub_category": "Globe 40",
           "display_echelon": "",
@@ -21539,7 +21532,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G40 | Clear | 3.5W/2700K",
+          "sku": "Décor | G40 | Clear | 3.5W/2700K",
           "family": "g25",
           "sub_category": "Globe 40",
           "display_echelon": "",
@@ -21554,7 +21547,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G25 | Silver-Tip | 3.5W/2700K",
+          "sku": "Décor | G25 | Silver-Tip | 3.5W/2700K",
           "family": "g25",
           "sub_category": "Globe G25",
           "display_echelon": "",
@@ -21569,7 +21562,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G25 | Frosted | 4.5W/2700K",
+          "sku": "Décor | G25 | Frosted | 4.5W/2700K",
           "family": "g25",
           "sub_category": "Globe G25",
           "display_echelon": "",
@@ -21584,7 +21577,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G25 | Frosted | 3.5W/2700K",
+          "sku": "Décor | G25 | Frosted | 3.5W/2700K",
           "family": "g25",
           "sub_category": "Globe G25",
           "display_echelon": "",
@@ -21599,7 +21592,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G25 | Clear | 4.5W/2700K",
+          "sku": "Décor | G25 | Clear | 4.5W/2700K",
           "family": "g25",
           "sub_category": "Globe G25",
           "display_echelon": "",
@@ -21614,7 +21607,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G25 | Clear | 2.0W/2400K",
+          "sku": "Décor | G25 | Clear | 2.0W/2400K",
           "family": "g25",
           "sub_category": "Globe G25",
           "display_echelon": "",
@@ -21629,7 +21622,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G25 | Clear | 2.0W/2400K/Gen-1",
+          "sku": "Décor | G25 | Clear | 2.0W/2400K/Gen-1",
           "family": "g25",
           "sub_category": "Globe G25",
           "display_echelon": "",
@@ -21644,7 +21637,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G25 | Frosted | 2.0W/2700K/Gen-1",
+          "sku": "Décor | G25 | Frosted | 2.0W/2700K/Gen-1",
           "family": "g25",
           "sub_category": "Globe G25",
           "display_echelon": "",
@@ -21659,7 +21652,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G25 | Silver-Tip | 4.5W/2400K",
+          "sku": "Décor | G25 | Silver-Tip | 4.5W/2400K",
           "family": "g25",
           "sub_category": "Globe G25",
           "display_echelon": "",
@@ -21674,7 +21667,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G25 | Silver-Tip | 4.5W/2700K",
+          "sku": "Décor | G25 | Silver-Tip | 4.5W/2700K",
           "family": "g25",
           "sub_category": "Globe G25",
           "display_echelon": "",
@@ -21689,7 +21682,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G40 | Clear | 4.5W/2700K",
+          "sku": "Décor | G40 | Clear | 4.5W/2700K",
           "family": "g25",
           "sub_category": "Globe",
           "display_echelon": "",
@@ -21704,7 +21697,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G25 | Clear | 4.5W/2700K/90CRI | T20",
+          "sku": "Décor | G25 | Clear | 4.5W/2700K/90CRI | T20",
           "family": "g25",
           "sub_category": "Globe G25",
           "display_echelon": "",
@@ -21719,7 +21712,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G25 | Frosted | 4.5W/2700K/90CRI | T20",
+          "sku": "Décor | G25 | Frosted | 4.5W/2700K/90CRI | T20",
           "family": "g25",
           "sub_category": "Globe G25",
           "display_echelon": "",
@@ -21734,7 +21727,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Frosted | 4.5W/2700K",
+          "sku": "Décor | G16.5 | Frosted | 4.5W/2700K",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21749,7 +21742,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Frosted | 3.5W/2400K",
+          "sku": "Décor | G16.5 | Frosted | 3.5W/2400K",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21764,7 +21757,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Clear | 4.5W/2400K",
+          "sku": "Décor | G16.5 | Clear | 4.5W/2400K",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21779,7 +21772,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Clear | 4.5W/2400K",
+          "sku": "Décor | G16.5 | Clear | 4.5W/2400K",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21794,7 +21787,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Clear | 4.5W/2700K",
+          "sku": "Décor | G16.5 | Clear | 4.5W/2700K",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21809,7 +21802,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Clear | 3.5W/2400K",
+          "sku": "Décor | G16.5 | Clear | 3.5W/2400K",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21824,7 +21817,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Clear | 3.5W/2700K",
+          "sku": "Décor | G16.5 | Clear | 3.5W/2700K",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21839,7 +21832,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Clear | 2.0W/2400K",
+          "sku": "Décor | G16.5 | Clear | 2.0W/2400K",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21854,7 +21847,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Clear | 2.0W/2700K",
+          "sku": "Décor | G16.5 | Clear | 2.0W/2700K",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21869,7 +21862,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Frosted | 4.5W/2700K/E26",
+          "sku": "Décor | G16.5 | Frosted | 4.5W/2700K/E26",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21884,7 +21877,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Clear | 3.5W/2700K/E26",
+          "sku": "Décor | G16.5 | Clear | 3.5W/2700K/E26",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21899,7 +21892,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Clear | 3.5W/2400K/E26",
+          "sku": "Décor | G16.5 | Clear | 3.5W/2400K/E26",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21914,7 +21907,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Clear | 2.0W/2700K/E12",
+          "sku": "Décor | G16.5 | Clear | 2.0W/2700K/E12",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21929,7 +21922,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Frosted | 3.5W/2700K",
+          "sku": "Décor | G16.5 | Frosted | 3.5W/2700K",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21944,7 +21937,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Frosted | 3.5W/2700K",
+          "sku": "Décor | G16.5 | Frosted | 3.5W/2700K",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21959,7 +21952,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Frosted | 2.0W/2700K",
+          "sku": "Décor | G16.5 | Frosted | 2.0W/2700K",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21974,7 +21967,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Frosted | 2.0W/2400K",
+          "sku": "Décor | G16.5 | Frosted | 2.0W/2400K",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -21989,7 +21982,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Clear | 4.5W/2400K/E12",
+          "sku": "Décor | G16.5 | Clear | 4.5W/2400K/E12",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -22004,7 +21997,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Clear | 2.0W/2700K/Gen-1",
+          "sku": "Décor | G16.5 | Clear | 2.0W/2700K/Gen-1",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -22019,7 +22012,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Clear | 4.5W/2700K/E12",
+          "sku": "Décor | G16.5 | Clear | 4.5W/2700K/E12",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -22034,7 +22027,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Frosted | 2.0W/2700K/E12",
+          "sku": "Décor | G16.5 | Frosted | 2.0W/2700K/E12",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -22049,7 +22042,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Frosted | 4.5W/2400K",
+          "sku": "Décor | G16.5 | Frosted | 4.5W/2400K",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -22064,7 +22057,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | G16.5 | Frosted | 4.0W/2700K/E26",
+          "sku": "Décor | G16.5 | Frosted | 4.0W/2700K/E26",
           "family": "g16-5",
           "sub_category": "Globe G16.5",
           "display_echelon": "",
@@ -22079,7 +22072,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Frosted | 4.5W/2400K",
+          "sku": "Décor | CA10 | Frosted | 4.5W/2400K",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22094,7 +22087,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Frosted | 3.5W/2400K",
+          "sku": "Décor | CA10 | Frosted | 3.5W/2400K",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22109,7 +22102,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Frosted | 3.5W/2700K/92CRI",
+          "sku": "Décor | CA10 | Frosted | 3.5W/2700K/92CRI",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22124,7 +22117,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Frosted | 2.0W/2700K",
+          "sku": "Décor | CA10 | Frosted | 2.0W/2700K",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22139,7 +22132,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Clear | 4.5W/2400K",
+          "sku": "Décor | CA10 | Clear | 4.5W/2400K",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22154,7 +22147,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Clear | 3.5W/2700K/92CRI",
+          "sku": "Décor | CA10 | Clear | 3.5W/2700K/92CRI",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22169,7 +22162,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Clear | 2.0W/2700K",
+          "sku": "Décor | CA10 | Clear | 2.0W/2700K",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22184,7 +22177,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Clear | 2.0W/2400K",
+          "sku": "Décor | CA10 | Clear | 2.0W/2400K",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22199,7 +22192,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Clear | 3.5W/2400K",
+          "sku": "Décor | CA10 | Clear | 3.5W/2400K",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22214,7 +22207,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Frosted | 2.0W/2700K/E26",
+          "sku": "Décor | CA10 | Frosted | 2.0W/2700K/E26",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22229,7 +22222,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Clear | 3.5W/2700K/E26",
+          "sku": "Décor | CA10 | Clear | 3.5W/2700K/E26",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22244,7 +22237,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Frosted | 4.5W/2700K/E26",
+          "sku": "Décor | CA10 | Frosted | 4.5W/2700K/E26",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22259,7 +22252,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Clear | 3.5W/2400K/E26",
+          "sku": "Décor | CA10 | Clear | 3.5W/2400K/E26",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22274,7 +22267,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Clear | 4.5W/2700K/E12",
+          "sku": "Décor | CA10 | Clear | 4.5W/2700K/E12",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22289,7 +22282,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | C7 | Clear | 1.0W/2400K/Gen-1",
+          "sku": "Décor | C7 | Clear | 1.0W/2400K/Gen-1",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22304,7 +22297,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Clear | 2.0W/2400K/E26",
+          "sku": "Décor | CA10 | Clear | 2.0W/2400K/E26",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22319,7 +22312,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Clear | 2.0W/2700K/E26",
+          "sku": "Décor | CA10 | Clear | 2.0W/2700K/E26",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22334,7 +22327,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Clear | 3.5W/2700K",
+          "sku": "Décor | CA10 | Clear | 3.5W/2700K",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22349,7 +22342,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Frosted | 3.5W/2700K/E26",
+          "sku": "Décor | CA10 | Frosted | 3.5W/2700K/E26",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22364,7 +22357,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Frosted | 4.5W/2400K/E26",
+          "sku": "Décor | CA10 | Frosted | 4.5W/2400K/E26",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22379,7 +22372,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Frosted | 4.5W/2700K",
+          "sku": "Décor | CA10 | Frosted | 4.5W/2700K",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22394,7 +22387,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Clear | 2.5W/2400K/90CRI | T20",
+          "sku": "Décor | CA10 | Clear | 2.5W/2400K/90CRI | T20",
           "family": "ca10",
           "sub_category": "Candle | Flame-Tip",
           "display_echelon": "",
@@ -22409,7 +22402,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 4.5W/2700K/E26",
+          "sku": "Décor | B10 | Frosted | 4.5W/2700K/E26",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22424,7 +22417,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 4.5W/2700K/92CRI",
+          "sku": "Décor | B10 | Frosted | 4.5W/2700K/92CRI",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22439,7 +22432,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 2.0W/2400K",
+          "sku": "Décor | B10 | Frosted | 2.0W/2400K",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22454,7 +22447,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Clear | 4.5W/2700K/E26",
+          "sku": "Décor | B10 | Clear | 4.5W/2700K/E26",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22469,7 +22462,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Clear | 4.5W/2700K/E26",
+          "sku": "Décor | B10 | Clear | 4.5W/2700K/E26",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22484,7 +22477,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Clear | 3.5W/2700K/92CRI",
+          "sku": "Décor | B10 | Clear | 3.5W/2700K/92CRI",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22499,7 +22492,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Clear | 2.0W/2400K",
+          "sku": "Décor | B10 | Clear | 2.0W/2400K",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22514,7 +22507,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Clear | 5.5W/2700K/E12",
+          "sku": "Décor | B10 | Clear | 5.5W/2700K/E12",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22529,7 +22522,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Clear | 3.5W/2700K",
+          "sku": "Décor | B10 | Clear | 3.5W/2700K",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22544,7 +22537,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 5.5W/2700K/E12/T20",
+          "sku": "Décor | B10 | Frosted | 5.5W/2700K/E12/T20",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22559,7 +22552,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Clear | 3.5W/2700K/E26",
+          "sku": "Décor | B10 | Clear | 3.5W/2700K/E26",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22574,7 +22567,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 3.5W/2700K/E26",
+          "sku": "Décor | B10 | Frosted | 3.5W/2700K/E26",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22589,7 +22582,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Clear | 2.0W/2400K/E26",
+          "sku": "Décor | B10 | Clear | 2.0W/2400K/E26",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22604,7 +22597,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Clear | 2.0W/2700K/E26",
+          "sku": "Décor | B10 | Clear | 2.0W/2700K/E26",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22619,7 +22612,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Clear | 3.5W/2400K/E12",
+          "sku": "Décor | B10 | Clear | 3.5W/2400K/E12",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22634,7 +22627,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Clear | 3.5W/2400K/E26",
+          "sku": "Décor | B10 | Clear | 3.5W/2400K/E26",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22649,7 +22642,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Clear | 4.5W/2400K",
+          "sku": "Décor | B10 | Clear | 4.5W/2400K",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22664,7 +22657,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 2.0W/2400K/E26",
+          "sku": "Décor | B10 | Frosted | 2.0W/2400K/E26",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22679,7 +22672,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 2.0W/2700K/E26",
+          "sku": "Décor | B10 | Frosted | 2.0W/2700K/E26",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22694,7 +22687,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 3.5W/2400K/E12",
+          "sku": "Décor | B10 | Frosted | 3.5W/2400K/E12",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22709,7 +22702,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 3.5W/2400K/E26",
+          "sku": "Décor | B10 | Frosted | 3.5W/2400K/E26",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22724,7 +22717,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 3.5W/2400K/E26",
+          "sku": "Décor | B10 | Frosted | 3.5W/2400K/E26",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22739,7 +22732,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 3.5W/2700K",
+          "sku": "Décor | B10 | Frosted | 3.5W/2700K",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22754,7 +22747,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 4.5W/2400K/E26",
+          "sku": "Décor | B10 | Frosted | 4.5W/2400K/E26",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22769,7 +22762,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 4.5W/2400K/E26",
+          "sku": "Décor | B10 | Frosted | 4.5W/2400K/E26",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22784,7 +22777,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | CA10 | Clear | 3.5W/2700K/E26/Gen-1",
+          "sku": "Décor | CA10 | Clear | 3.5W/2700K/E26/Gen-1",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22799,37 +22792,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 2.0W/2700K/Gen-1",
-          "family": "b10",
-          "sub_category": "Candle | Blunt-Tip",
-          "display_echelon": "",
-          "wattages": [
-            2
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "D\u00e9cor | B10 | Frosted | 3.5W/2700K/Gen-1",
-          "family": "b10",
-          "sub_category": "Candle | Blunt-Tip",
-          "display_echelon": "",
-          "wattages": [
-            3.5
-          ],
-          "ccts": [],
-          "voltage": "",
-          "mount_types": [],
-          "dlc": null,
-          "taa": false,
-          "comingSoon": false
-        },
-        {
-          "sku": "D\u00e9cor | B10 | Clear | 2.0W/2700K/E26/Gen-1",
+          "sku": "Décor | B10 | Frosted | 2.0W/2700K/Gen-1",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22844,7 +22807,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Clear | 3.5W/2400K/E26/Gen-1",
+          "sku": "Décor | B10 | Frosted | 3.5W/2700K/Gen-1",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22859,7 +22822,22 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Clear | 3.5W/2700K/E26/Gen-1",
+          "sku": "Décor | B10 | Clear | 2.0W/2700K/E26/Gen-1",
+          "family": "b10",
+          "sub_category": "Candle | Blunt-Tip",
+          "display_echelon": "",
+          "wattages": [
+            2
+          ],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false,
+          "comingSoon": false
+        },
+        {
+          "sku": "Décor | B10 | Clear | 3.5W/2400K/E26/Gen-1",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22874,7 +22852,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 3.5W/2700K/92CRI",
+          "sku": "Décor | B10 | Clear | 3.5W/2700K/E26/Gen-1",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22889,7 +22867,22 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | B10 | Frosted | 4.5W/2700K/JA8",
+          "sku": "Décor | B10 | Frosted | 3.5W/2700K/92CRI",
+          "family": "b10",
+          "sub_category": "Candle | Blunt-Tip",
+          "display_echelon": "",
+          "wattages": [
+            3.5
+          ],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false,
+          "comingSoon": false
+        },
+        {
+          "sku": "Décor | B10 | Frosted | 4.5W/2700K/JA8",
           "family": "b10",
           "sub_category": "Candle | Blunt-Tip",
           "display_echelon": "",
@@ -22904,7 +22897,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A19 | Silver-Tip | 7.5W/2700K",
+          "sku": "Décor | A19 | Silver-Tip | 7.5W/2700K",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -22919,7 +22912,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A19 | Silver-Tip | 4.5W/2400K",
+          "sku": "Décor | A19 | Silver-Tip | 4.5W/2400K",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -22934,7 +22927,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A19 | Frosted | 4.5W/2700K",
+          "sku": "Décor | A19 | Frosted | 4.5W/2700K",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -22949,7 +22942,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Frosted | 4.5W/2700K/92CRI",
+          "sku": "Décor | A15 | Frosted | 4.5W/2700K/92CRI",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -22964,7 +22957,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Frosted | 3.5W/2700K",
+          "sku": "Décor | A15 | Frosted | 3.5W/2700K",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -22979,7 +22972,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Frosted | 3.5W/2400K",
+          "sku": "Décor | A15 | Frosted | 3.5W/2400K",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -22994,7 +22987,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Frosted | 2.0W/2700K",
+          "sku": "Décor | A15 | Frosted | 2.0W/2700K",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23009,7 +23002,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Clear | 4.5W/2700K/92CRI",
+          "sku": "Décor | A15 | Clear | 4.5W/2700K/92CRI",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23024,7 +23017,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Clear | 2.0W/2700K",
+          "sku": "Décor | A15 | Clear | 2.0W/2700K",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23039,7 +23032,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Clear | 4.5W/2700K",
+          "sku": "Décor | A15 | Clear | 4.5W/2700K",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23054,7 +23047,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Clear | 2.0W/2400K/E12",
+          "sku": "Décor | A15 | Clear | 2.0W/2400K/E12",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23069,7 +23062,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Clear | 2.0W/2700K/E12",
+          "sku": "Décor | A15 | Clear | 2.0W/2700K/E12",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23084,7 +23077,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Clear | 4.5W/2400K/E12",
+          "sku": "Décor | A15 | Clear | 4.5W/2400K/E12",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23099,7 +23092,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Clear | 3.5W/2700K/E12",
+          "sku": "Décor | A15 | Clear | 3.5W/2700K/E12",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23114,7 +23107,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Clear | 4.5W/2400K/E12",
+          "sku": "Décor | A15 | Clear | 4.5W/2400K/E12",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23129,7 +23122,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Clear | 4.5W/2400K",
+          "sku": "Décor | A15 | Clear | 4.5W/2400K",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23144,7 +23137,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Clear | 4.5W/2700K/E12",
+          "sku": "Décor | A15 | Clear | 4.5W/2700K/E12",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23159,7 +23152,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Frosted | 3.5W/2700K/E12",
+          "sku": "Décor | A15 | Frosted | 3.5W/2700K/E12",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23174,7 +23167,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Frosted | 4.5W/2400K",
+          "sku": "Décor | A15 | Frosted | 4.5W/2400K",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23189,7 +23182,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Frosted | 4.5W/2700K/E12",
+          "sku": "Décor | A15 | Frosted | 4.5W/2700K/E12",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23204,7 +23197,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A17 | Clear | 3.5W/2400K/Gen-1",
+          "sku": "Décor | A17 | Clear | 3.5W/2400K/Gen-1",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23219,7 +23212,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A17 | Frosted | 3.5W/2700K/Gen-1",
+          "sku": "Décor | A17 | Frosted | 3.5W/2700K/Gen-1",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23234,7 +23227,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A19 | Frosted | 4.5W/2700K/Gen-1",
+          "sku": "Décor | A19 | Frosted | 4.5W/2700K/Gen-1",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23249,7 +23242,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A19 | Silver-Tip | 4.5W/2700K",
+          "sku": "Décor | A19 | Silver-Tip | 4.5W/2700K",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23264,7 +23257,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A15 | Clear | 4.5W/2700K/E26",
+          "sku": "Décor | A15 | Clear | 4.5W/2700K/E26",
           "family": "a15",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23279,7 +23272,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A19 | Frosted | 7.5W/2700K",
+          "sku": "Décor | A19 | Frosted | 7.5W/2700K",
           "family": "a19",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23294,7 +23287,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A19 | Frosted | 7.5W/3000K",
+          "sku": "Décor | A19 | Frosted | 7.5W/3000K",
           "family": "a19",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23309,7 +23302,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A19 | Frosted | 7.5W/4100K",
+          "sku": "Décor | A19 | Frosted | 7.5W/4100K",
           "family": "a19",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23324,7 +23317,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A19 | Clear | 7.5W/2400K",
+          "sku": "Décor | A19 | Clear | 7.5W/2400K",
           "family": "a19",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23339,7 +23332,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A19 | Clear | 7.5W/2700K",
+          "sku": "Décor | A19 | Clear | 7.5W/2700K",
           "family": "a19",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23354,7 +23347,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A19 | Clear | 8.0W/3000K",
+          "sku": "Décor | A19 | Clear | 8.0W/3000K",
           "family": "a19",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23369,7 +23362,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A19 | Clear | 6.5W/2700K/Non-Dimmable",
+          "sku": "Décor | A19 | Clear | 6.5W/2700K/Non-Dimmable",
           "family": "a19",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23384,7 +23377,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A19 | Clear | 6.5W/2700K/Non-Dimmable",
+          "sku": "Décor | A19 | Clear | 6.5W/2700K/Non-Dimmable",
           "family": "a19",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23399,7 +23392,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A19 | Clear | 6.5W/2700K/Non-Dimmable",
+          "sku": "Décor | A19 | Clear | 6.5W/2700K/Non-Dimmable",
           "family": "a19",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23414,7 +23407,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | A19 | Frosted | 7.5W/3000K/T20",
+          "sku": "Décor | A19 | Frosted | 7.5W/3000K/T20",
           "family": "a19",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23429,7 +23422,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | PS25 | Silver-Tip | 15W/2200K",
+          "sku": "Décor | PS25 | Silver-Tip | 15W/2200K",
           "family": "a19",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23444,7 +23437,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | PS25 | Silver-Tip | 15W/2200K/T20",
+          "sku": "Décor | PS25 | Silver-Tip | 15W/2200K/T20",
           "family": "a19",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23459,7 +23452,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | PS25 | Amber | 15W/2200K",
+          "sku": "Décor | PS25 | Amber | 15W/2200K",
           "family": "a19",
           "sub_category": "A-Lamp",
           "display_echelon": "",
@@ -23474,7 +23467,7 @@
           "comingSoon": false
         },
         {
-          "sku": "D\u00e9cor | PS25 | Amber | 15W/2200K/T20",
+          "sku": "Décor | PS25 | Amber | 15W/2200K/T20",
           "family": "a19",
           "sub_category": "A-Lamp",
           "display_echelon": "",
