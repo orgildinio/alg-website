@@ -25,46 +25,59 @@ const multifamilyData = {
     { value: 'JA8',  label: 'Title 24' },
     { value: '48-hr',label: 'Layouts' },
   ],
-  // C1: Updated to 13 families · 167 SKUs · 4 applications (Wally removed, new taxonomy)
+  // C1: Updated to 13 families · 167 SKUs · 6 applications (filter realignment)
   redBanner: [
     { value: '8',   label: 'Families'     },
     { value: '167', label: 'Active SKUs'  },
-    { value: '4',   label: 'Applications' },
+    { value: '6',   label: 'Applications' },
     { value: 'DLC', label: 'Premium'      },
     { value: 'TAA', label: 'Available'    },
     { value: '5 US',label: 'Warehouses'   },
   ],
-  // C2: 4-bucket application taxonomy per §A2 (canonical)
+  // C2: 6-bucket application taxonomy (filter realignment)
   // appMulti maps to the sub_category values in sku-index.json (comma-separated)
-  // C6: skuCount updated per §A2 canonical counts
   applications: [
     {
-      name: 'Housing Cans',
-      slug: 'housing-cans',
-      skuCount: 8,
-      appMulti: 'Housing Cans',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>',
-    },
-    {
-      name: 'Recessed Downlights',
-      slug: 'recessed-downlights',
-      skuCount: 22,
-      appMulti: 'Recessed Downlights',
+      name: 'Downlight',
+      slug: 'downlight',
+      skuCount: 0,
+      appMulti: 'Downlight',
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>',
     },
     {
       name: 'SafeZone Downlights',
       slug: 'safezone-downlights',
-      skuCount: 8,
+      skuCount: 0,
       appMulti: 'SafeZone Downlights',
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
     },
     {
-      name: 'Surface Mount',
-      slug: 'surface-mount',
-      skuCount: 21,
-      appMulti: 'Surface Mount',
+      name: 'Vanity',
+      slug: 'vanity',
+      skuCount: 0,
+      appMulti: 'Vanity',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>',
+    },
+    {
+      name: 'Commercial Recess Can',
+      slug: 'commercial-recess-can',
+      skuCount: 0,
+      appMulti: 'Commercial Recess Can',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>',
+    },
+    {
+      name: 'Flushmount',
+      slug: 'flushmount',
+      skuCount: 0,
+      appMulti: 'Flushmount',
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+    },
+    {
+      name: 'Security Flood',
+      slug: 'security-flood',
+      skuCount: 0,
+      appMulti: 'Security Flood',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
     },
   ],
   // C5: familiesHeadline updated to reflect 8 total families
