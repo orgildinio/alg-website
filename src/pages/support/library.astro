@@ -377,9 +377,14 @@ window.downloadPacket=downloadPacket;window.emailPacket=emailPacket;
 window.fCols=fCols;window.fTiers=fTiers;window.fTypes=fTypes;
 /* URL deep-link: ?q=...&type=...&taa=1 */
 (function(){
+  var SLUG_MAP={'datasheet':'Datasheet','install-guide':'Installation Guide','quick-sheet':'Quicksheet','sell-sheet':'Sell Sheet','ies-bundle':'IES Photometric'};
   var sp=new URLSearchParams(location.search);
   var qv=sp.get('q');if(qv){var el=document.getElementById('q');if(el)el.value=qv;}
-  var tv=sp.get('type');if(tv&&(['All'].concat(TYPES).indexOf(tv)>=0)){fType=tv;}
+  var tv=sp.get('type');
+  if(tv){
+    var mapped=SLUG_MAP[tv]||tv;
+    if(['All'].concat(TYPES).indexOf(mapped)>=0){fType=mapped;}
+  }
   if(sp.get('taa')==='1'){fTaa=true;}
 })();
 build();render();

@@ -501,7 +501,7 @@
       "LSPL1200-57R1-HB/TR/020",
       "LSPL850-57R1-HB/TR/020"
     ],
-    "taa": true
+    "taa": false
   },
   {
     "docs": {
@@ -561,7 +561,7 @@
     "skus": [
       "LSPL480-RGBR3-UB/TR/O30"
     ],
-    "taa": true
+    "taa": false
   },
   {
     "docs": {
@@ -1126,7 +1126,7 @@
       "LBLP22-xx-A7",
       "LBLP24-xx-A6"
     ],
-    "taa": true
+    "taa": false
   },
   {
     "docs": {
