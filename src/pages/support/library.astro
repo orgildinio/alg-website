@@ -386,6 +386,9 @@ window.fCols=fCols;window.fTiers=fTiers;window.fTypes=fTypes;
     if(['All'].concat(TYPES).indexOf(mapped)>=0){fType=mapped;}
   }
   if(sp.get('taa')==='1'){fTaa=true;}
+  var COL_SLUG={'cityarch':'cityⒶRCH','constant':'constⒶNT','contrals':'contrⒶLS','lampararch':'lamparⒶRCH','luxoarch':'luxoⒶRCH','planoarch':'planoⒶRCH'};
+  var cv=sp.get('collection');
+  if(cv){var col=COL_SLUG[cv.toLowerCase()]||cv;if(DATA.some(function(r){return r.collection===col})){fCols.add(col);}}
 })();
 build();render();
 })();
