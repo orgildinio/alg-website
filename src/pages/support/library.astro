@@ -18,6 +18,7 @@ const docs = docsRaw as Array<{
   tier: string;
   subcategory: string;
   sku_count: number;
+  taa: boolean;
 }>;
 
 const totalDocs = docs.reduce((a, r) => a + Object.keys(r.docs).length, 0);
@@ -50,6 +51,7 @@ const totalFamilies = docs.length;
   <div class="facet"><div class="fh">Tier <span style="color:var(--ink3)">+</span></div><div class="opts" id="tierFacet"></div></div>
   <div class="facet"><div class="fh" style="color:var(--ink3)">Product Family <span>+</span></div></div>
   <div class="facet"><div class="fh" style="color:var(--ink3)">File Type <span>+</span></div><div class="opts" id="typeFacet"></div></div>
+  <div class="facet"><div class="fh">Compliance</div><div class="opts" id="compFacet"></div></div>
  </aside>
  <main class="results">
   <div class="fby" id="fby"></div>
@@ -123,6 +125,10 @@ h1{font-size:48px;font-weight:900;letter-spacing:-.025em;margin:10px 0 8px;line-
 .ECO{background:#e8f5e9;color:#2e7d32}.PRO{background:#e3f2fd;color:#1565c0}.PROp{background:#f3e5f5;color:#6a1b9a}
 /* file-type facet — swatch LEFT of label */
 .opt--ft{display:flex;align-items:center;gap:8px}.opt--ft .sw{width:10px;height:10px;border-radius:2px;flex:none}.opt--ft .ftname{color:var(--ink);font-size:13px}.opt--ft .ftn{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-left:6px}
+/* compliance facet */
+.opt--comp{display:flex;align-items:center;gap:8px}.opt--comp .compname{color:var(--ink);font-size:13px}.opt--comp .compn{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-left:6px}
+/* TAA badge — outlined brand-red with checkmark */
+.taa-badge{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--brand);color:var(--brand);background:transparent;border-radius:4px;padding:5px 10px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
 /* results */
 .results{padding:0 22px}
 .rhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px}
@@ -145,8 +151,8 @@ tbody td{padding:12px 10px;vertical-align:top}
 .cchip{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.06em;background:var(--c2);color:var(--ink2);padding:2px 6px;border-radius:2px}
 .sub{font-family:var(--mono);font-size:9.5px;color:var(--ink3);text-transform:uppercase}
 .docs{display:flex;flex-wrap:wrap;gap:4px 12px}
-/* SOLID FILLED document buttons — background = type color, white text, 1px border same color */
-.docbtn{display:inline-flex;align-items:center;gap:0;border-width:1px;border-style:solid;padding:6px 11px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;color:#fff;text-decoration:none;cursor:pointer;border-radius:2px;transition:filter .12s;white-space:nowrap}
+/* SOLID FILLED document buttons — pill style per §11 spec */
+.docbtn{display:inline-flex;align-items:center;gap:0;border-width:1px;border-style:solid;padding:5px 10px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#fff;text-decoration:none;cursor:pointer;border-radius:4px;transition:filter .12s;white-space:nowrap}
 .docbtn:hover{background:#fff !important;color:var(--c) !important;filter:none}.empty{font-family:var(--mono);font-size:11px;color:var(--c3)}
 /* right rail */
 .packet{background:var(--ink);color:#fff;padding:20px;border-top:3px solid var(--brand);margin-bottom:18px}.packet h3{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.06em;margin:0 0 8px;font-family:'Lato',system-ui,sans-serif !important}.packet p{font-size:12px;color:#aeb4bc;line-height:1.5;margin:0 0 14px}
@@ -206,7 +212,7 @@ var CMETA={
   "lampar\u24B6RCH":"Indoor C&I","city\u24B6RCH":"Outdoor / Area",
   "const\u24B6NT":"Drivers & Power","contr\u24B6LS":"Controls & \u24B6CS App"
 };
-var page=1,perPage=25,fType='All',fCols=new Set(),fTiers=new Set(),fTypes=new Set(),sel=new Set();
+var page=1,perPage=25,fType='All',fCols=new Set(),fTiers=new Set(),fTypes=new Set(),fTaa=false,sel=new Set();
 function tc(t){return t==='PRO+'?'PROp':t}
 function counts(){
   var c={All:0};TYPES.forEach(function(t){c[t]=0});
@@ -233,16 +239,19 @@ function build(){
   document.getElementById('legend').innerHTML=TYPES.map(function(t){
     return '<span><i style="background:'+META[t].c+'"></i>'+SHORT[t]+'</span>';
   }).join('');
+  /* compliance facet */
+  var taaCount=DATA.filter(function(r){return r.taa}).length;
+  document.getElementById('compFacet').innerHTML='<label class="opt opt--comp"><input type="checkbox" id="taaChk" '+(fTaa?'checked':'')+' onchange="window.toggleTaa()"><span class="compname">TAA Compliant</span><span class="compn">'+taaCount+'</span></label>';
 }
 function setType(t){fType=t;page=1;render()}
 function tog(s,v){s.has(v)?s.delete(v):s.add(v);page=1;render()}
 function goto(p){page=p;render()}
-function clearAll(){fType='All';fCols.clear();fTiers.clear();fTypes.clear();page=1;build();render()}
+function clearAll(){fType='All';fCols.clear();fTiers.clear();fTypes.clear();fTaa=false;page=1;build();render()}
 function clearSel(){sel.clear();render()}
 function key(r){return r.collection+'|'+r.family}
 function toggleSel(k){sel.has(k)?sel.delete(k):sel.add(k);render()}
 function qset(v){document.getElementById('q').value=v;page=1;render()}
-function clr(k,v){page=1;if(k==='type0'){fType='All';build()}else{var m={col:fCols,tier:fTiers,ftype:fTypes};m[k].delete(v)}render()}
+function clr(k,v){page=1;if(k==='type0'){fType='All';build()}else if(k==='taa'){fTaa=false;build()}else{var m={col:fCols,tier:fTiers,ftype:fTypes};m[k].delete(v)}render()}
 function downloadPacketFallback(){
   // Fallback: TXT link list when /api/packet is unavailable
   var lines=['ALG Spec Packet','Generated: '+new Date().toLocaleDateString(),'','Families:'];
@@ -314,6 +323,7 @@ function render(){
     if(fTypes.size&&!TYPES.some(function(t){return fTypes.has(t)&&r.docs[t]}))return false;  // presence check unchanged
     if(fCols.size&&!fCols.has(r.collection))return false;
     if(fTiers.size&&!fTiers.has(r.tier))return false;
+    if(fTaa&&!r.taa)return false;
     return true;
   });
   var ordPlain=['luxoⒶRCH','planoⒶRCH','lamparⒶRCH','cityⒶRCH','constⒶNT','contrⒶLS'];
@@ -330,7 +340,8 @@ function render(){
   var af=(fType!=='All'?[['type0',fType,SHORT[fType],1]]:[])
     .concat([...fCols].map(function(c){return['col',c,c,0]}))
     .concat([...fTiers].map(function(t){return['tier',t,t,0]}))
-    .concat([...fTypes].map(function(t){return['ftype',t,SHORT[t],0]}));
+    .concat([...fTypes].map(function(t){return['ftype',t,SHORT[t],0]}))
+    .concat(fTaa?[['taa','taa','TAA Compliant',0]]:[]);
   document.getElementById('nActive').textContent=af.length+' active';
   document.getElementById('fby').innerHTML=af.length
     ?'<span class="lab">Filtering by:</span>'+af.map(function(x){return'<span class="fchip '+(x[3]?'red':'')+'" onclick="clr(\''+x[0]+'\',\''+x[1]+'\')">'+x[2]+'</span>'}).join('')
@@ -342,7 +353,8 @@ function render(){
       var docUrl=r.docs[t].url||r.docs[t];
       return '<a class="docbtn" style="--c:'+META[t].c+';background:var(--c);border-color:var(--c)" href="'+docUrl+'" target="_blank" rel="noopener">'+SHORT[t]+'</a>';
     }).join('');
-    return '<tr><td><input type="checkbox" '+(sel.has(k)?'checked':'')+' onchange="toggleSel(\''+k+'\')"></td><td><div class="famcell"><span class="fam">'+r.family+'</span><span class="fmeta"><span class="cchip">'+r.collection.replace(/\u24B6/g,'<span class=aa>\u24B6</span>')+'</span>'+(r.tier?'<span class="tier '+tc(r.tier)+'">'+r.tier+'</span>':'')+'<span class="sub">'+(r.subcategory||'')+'</span>'+(r.sku_count?'<span class="sub">\u00B7 '+r.sku_count+' SKUs</span>':'')+'</span></div></td><td><div class="docs">'+(btns||'<span class=empty>\u2014</span>')+'</div></td></tr>';
+    var taaBadge=r.taa?'<span class="taa-badge">\u2713 TAA</span>':'';
+    return '<tr><td><input type="checkbox" '+(sel.has(k)?'checked':'')+' onchange="toggleSel(\''+k+'\')"></td><td><div class="famcell"><span class="fam">'+r.family+'</span><span class="fmeta"><span class="cchip">'+r.collection.replace(/\u24B6/g,'<span class=aa>\u24B6</span>')+'</span>'+(r.tier?'<span class="tier '+tc(r.tier)+'">'+r.tier+'</span>':'')+'<span class="sub">'+(r.subcategory||'')+'</span>'+(r.sku_count?'<span class="sub">\u00B7 '+r.sku_count+' SKUs</span>':'')+''+taaBadge+'</span></div></td><td><div class="docs">'+(btns||'<span class=empty>\u2014</span>')+'</div></td></tr>';
   }).join('');
   var pg='';
   for(var p=1;p<=pages;p++){
@@ -357,11 +369,19 @@ function render(){
     ?[...sel].map(function(k){return'<div class="psel"><span>'+k.split('|')[1]+'</span><span class="x" onclick="toggleSel(\''+k+'\')">&#x2715;</span></div>'}).join('')
     :'<div style="font-family:var(--mono);font-size:11px;color:#7e848d;margin-bottom:8px">Select families to build a packet.</div>';
 }
+window.toggleTaa=function(){fTaa=!fTaa;page=1;build();render();};
 window.render=render;window.setType=setType;window.tog=tog;window.goto=goto;window.clearAll=clearAll;
 window.clearSel=clearSel;window.toggleSel=toggleSel;window.qset=qset;window.clr=clr;
 window.downloadPacket=downloadPacket;window.emailPacket=emailPacket;
 /* Expose mutable Sets so inline onchange handlers (global scope) can reach them */
 window.fCols=fCols;window.fTiers=fTiers;window.fTypes=fTypes;
+/* URL deep-link: ?q=...&type=...&taa=1 */
+(function(){
+  var sp=new URLSearchParams(location.search);
+  var qv=sp.get('q');if(qv){var el=document.getElementById('q');if(el)el.value=qv;}
+  var tv=sp.get('type');if(tv&&(['All'].concat(TYPES).indexOf(tv)>=0)){fType=tv;}
+  if(sp.get('taa')==='1'){fTaa=true;}
+})();
 build();render();
 })();
 </script>
