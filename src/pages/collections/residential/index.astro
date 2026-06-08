@@ -78,7 +78,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   /* Collection grid */
   .collection-grid { padding: 40px 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .coll-card { display: block; text-decoration: none; color: inherit; }
-  .coll-card-header { background: var(--color-ink); color: #fff; padding: 32px 36px 28px; position: relative; transition: background .25s ease; }
+  .coll-card-header { background: var(--color-ink); color: #fff; padding: 32px 36px 28px; position: relative; transition: background .25s ease; min-height: 252px; }
   .coll-card-header:hover { background: var(--color-alg-red); }
   .coll-name { margin-top: 16px; font-size: 56px; line-height: 1; letter-spacing: -.025em; font-weight: 800; white-space: nowrap; }
   .coll-name .a-enc { color: var(--color-alg-red); }
@@ -106,6 +106,19 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .coll-cta:hover { background: var(--color-alg-red-dark); color: #fff; }
   .coll-cta-label { font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
   .coll-cta-url { font-family: var(--font-mono); font-size: 11.5px; color: rgba(255,255,255,.85); letter-spacing: .06em; }
+
+  /* Flagship strip */
+  .flagship-block { background: #fff; border: 1px solid var(--color-border); border-top: none; padding: 20px 36px 14px; }
+  .flagship-grid { margin-top: 14px; display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+  .flagship-card { border: 1px solid var(--color-border); background: #fff; display: flex; flex-direction: column; }
+  .flagship-thumb { height: 76px; background: var(--color-bg-soft); display: flex; align-items: center; justify-content: center; padding: 8px; border-bottom: 1px solid var(--color-border); }
+  .flagship-thumb img { width: 100%; height: 100%; object-fit: contain; }
+  .flagship-info { padding: 10px 12px 12px; }
+  .flagship-app { font-family: var(--font-mono); font-size: 9.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .flagship-name { margin-top: 4px; font-size: 14.5px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+  .flagship-star { color: var(--color-alg-red); font-size: 13px; }
+  .flagship-stat { margin-top: 4px; font-family: var(--font-mono); font-size: 10.5px; color: var(--color-ink-soft); letter-spacing: .02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .flag-pending { height: 100%; width: 100%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 8.5px; font-weight: 700; letter-spacing: .1em; color: var(--color-ink-mute); text-align: center; background: repeating-linear-gradient(45deg,#f2f1ee,#f2f1ee 6px,#eceae6 6px,#eceae6 12px); }
 
   /* Why ALG */
   .why-section { padding: 40px 56px 56px; background: var(--color-bg-soft); }
@@ -254,6 +267,40 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <div class="coll-stat-cell"><div class="coll-stat-v">UL 924</div><div class="coll-stat-k">Emergency &amp; Egress</div></div>
           <div class="coll-stat-cell"><div class="coll-stat-v">Pack Quantities</div><div class="coll-stat-k">6 / 12 / 24 ct Contractor</div></div>
         </div>
+        <!-- FLAGSHIP FAMILIES strip (Multi-Family only) -->
+        <div class="flagship-block">
+          <div class="cat-bar">
+            <span class="cat-bar-title">Flagship Families</span>
+            <span class="cat-bar-tag">3 of 8</span>
+          </div>
+          <div class="flagship-grid" style="grid-template-columns:repeat(3,1fr)">
+            <div class="flagship-card">
+              <div class="flagship-thumb"><img src="/products/multi-family/nebula-ii/assets/photos/hero/6in/Nebula-II-6in-1.png" alt="Nebula-II" loading="lazy"></div>
+              <div class="flagship-info">
+                <div class="flagship-app">Recessed · ECO</div>
+                <div class="flagship-name">Nebula-II <span class="flagship-star">★</span></div>
+                <div class="flagship-stat">retrofit</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb"><img src="/products/multi-family/eclipse-ii/assets/photos/eclipse-ii/13in/Eclipse-II-13in-White-1.png" alt="Eclipse-II" loading="lazy"></div>
+              <div class="flagship-info">
+                <div class="flagship-app">Surface · PRO</div>
+                <div class="flagship-name">Eclipse-II</div>
+                <div class="flagship-stat">edge-lit</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb"><div class="flag-pending">PHOTO<br>PENDING</div></div>
+              <div class="flagship-info">
+                <div class="flagship-app">SafeZone · PRO+</div>
+                <div class="flagship-name">Radius SafeZone</div>
+                <div class="flagship-stat">UL 924 egress</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /FLAGSHIP FAMILIES strip -->
         <div class="family-block">
           <div class="cat-bar"><span class="cat-bar-title">Categories</span><span class="cat-bar-tag">5 Families · All Active</span></div>
           <div class="family-row">
