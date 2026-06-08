@@ -101,6 +101,24 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .coll-stat-cell + .coll-stat-cell { border-left: 1px solid var(--color-border); }
   .coll-stat-v { font-size: 18px; font-weight: 700; line-height: 1.05; color: var(--color-ink); white-space: nowrap; }
   .coll-stat-k { margin-top: 6px; font-family: var(--font-mono); font-size: 9.5px; color: var(--color-ink-mute); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* Flagship block */
+  .flagship-block { background: #fff; padding: 20px 36px 16px; border: 1px solid var(--color-border); border-top: none; }
+  .flagship-bar { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 6px; border-bottom: 2px solid var(--color-ink); margin-bottom: 14px; }
+  .flagship-bar-title { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--color-ink); }
+  .flagship-bar-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-mute); }
+  .flagship-cards { display: grid; gap: 12px; }
+  .flagship-cards--4 { grid-template-columns: repeat(4, 1fr); }
+  .flagship-cards--3 { grid-template-columns: repeat(3, 1fr); }
+  .flagship-card { border: 1px solid var(--color-border); background: var(--color-bg-soft); padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .flagship-card-img { width: 100%; aspect-ratio: 4/3; object-fit: contain; background: #fff; border: 1px solid var(--color-border); display: block; }
+  .flagship-card-img--pending { width: 100%; aspect-ratio: 4/3; background: repeating-linear-gradient(45deg, #f5f5f5 0px, #f5f5f5 8px, #e8e8e8 8px, #e8e8e8 16px); border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--color-ink-mute); text-align: center; line-height: 1.4; }
+  .flagship-card-eyebrow { font-family: var(--font-mono); font-size: 9.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .flagship-card-name { font-size: 14px; font-weight: 700; color: var(--color-ink); line-height: 1.2; }
+  .flagship-card-name .star { color: var(--color-alg-red); margin-left: 3px; }
+  .flagship-card-desc { font-family: var(--font-mono); font-size: 10px; color: var(--color-ink-mute); letter-spacing: .04em; }
+  /* min-height on card headers for symmetry */
+  .coll-card-header { min-height: 252px; }
+
   /* Family rows */
   .family-block { background: #fff; padding: 24px 36px 20px; border: 1px solid var(--color-border); border-top: none; overflow-x: auto; }
   .cat-bar { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 6px; border-bottom: 2px solid var(--color-ink); }
@@ -223,13 +241,43 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <p class="coll-tagline">Life-safety, always-on. UL 924 emergency luminaires, exit signs, battery-backup modules and central battery systems for code-required egress, stairwells, corridors and assembly spaces.</p>
         </div>
         <div class="coll-stats">
-          <div class="coll-stat-cell"><div class="coll-stat-v">5 Forms</div><div class="coll-stat-k">Exit · EML · EBB · Bug-Eye · CBS</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">3 Forms</div><div class="coll-stat-k">EXIT · EML · EBB</div></div>
           <div class="coll-stat-cell"><div class="coll-stat-v">90 Minutes</div><div class="coll-stat-k">UL 924 Discharge Standard</div></div>
           <div class="coll-stat-cell"><div class="coll-stat-v">Self-Test</div><div class="coll-stat-k">Standard On PRO &amp; PRO+</div></div>
           <div class="coll-stat-cell"><div class="coll-stat-v">7 Yrs</div><div class="coll-stat-k">Standard Warranty</div></div>
         </div>
+        <!-- FLAGSHIP FORMS — constⒶNT -->
+        <div class="flagship-block">
+          <div class="flagship-bar"><span class="flagship-bar-title">Flagship Forms</span><span class="flagship-bar-tag">4 of 4</span></div>
+          <div class="flagship-cards flagship-cards--4">
+            <div class="flagship-card">
+              <img class="flagship-card-img" src="/images/flagship-cards/safety/lemx-exit.png" alt="LEMX exit sign" loading="lazy">
+              <div class="flagship-card-eyebrow">Exit &amp; Egress · UL 924</div>
+              <div class="flagship-card-name">LEMX<span class="star">★</span></div>
+              <div class="flagship-card-desc">edge-lit</div>
+            </div>
+            <div class="flagship-card">
+              <img class="flagship-card-img" src="/products/em20-hmb135ac/assets/em20-hmb-135ac-001_white.png" alt="EM-Series emergency driver" loading="lazy">
+              <div class="flagship-card-eyebrow">Emergency Driver · UL 924</div>
+              <div class="flagship-card-name">EM-Series</div>
+              <div class="flagship-card-desc">constant-power</div>
+            </div>
+            <div class="flagship-card">
+              <img class="flagship-card-img" src="/products/crcu-em24-jbm/assets/crcu-em24-jbm_001_white.png" alt="CRC J-Box" loading="lazy">
+              <div class="flagship-card-eyebrow">Quick Install</div>
+              <div class="flagship-card-name">CRC J-Box</div>
+              <div class="flagship-card-desc">integrated</div>
+            </div>
+            <div class="flagship-card">
+              <img class="flagship-card-img" src="/products/em60-umb170dc/assets/em60-umb170dc_001_white.png" alt="ⒶrcticGuard cold EM" loading="lazy">
+              <div class="flagship-card-eyebrow">Cold EM · /AG</div>
+              <div class="flagship-card-name"><span class="aa">Ⓐ</span>rcticGuard</div>
+              <div class="flagship-card-desc">−4°F</div>
+            </div>
+          </div>
+        </div>
         <div class="family-block">
-          <div class="cat-bar"><span class="cat-bar-title">Form Factors</span><span class="cat-bar-tag">5 Families · All Active</span></div>
+          <div class="cat-bar"><span class="cat-bar-title">Form Factors</span><span class="cat-bar-tag">3 Families · All Active</span></div>
           <div class="family-row">
             <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="14" y="36" width="92" height="48" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><rect x="14" y="36" width="92" height="12" fill="#0FAE7C"/><text x="60" y="48" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fff" letter-spacing="1">EXIT</text><line x1="14" y1="84" x2="106" y2="84" stroke="#9CA0A8"/></svg></div>
             <div><div class="family-code">EXT</div><div class="family-name">Exit Signs</div></div>
@@ -248,19 +296,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             <div class="family-spec">7–20W EM output · 90-min · 0–10V passthrough · field-installed</div>
             <span class="badge-active">Active</span>
           </div>
-          <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="36" y="46" width="48" height="28" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="30" cy="60" r="10" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="90" cy="60" r="10" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/></svg></div>
-            <div><div class="family-code">BUG</div><div class="family-name">Bug-Eye / Wall-Pack</div></div>
-            <div class="family-spec">Adjustable lamp heads · 90-min · UL 924 · damp/wet rated</div>
-            <span class="badge-active">Active</span>
-          </div>
-          <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="22" width="76" height="76" rx="2" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><rect x="30" y="30" width="60" height="60" fill="#EEEDF0" stroke="#9CA0A8"/><text x="60" y="64" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#3A3E47" letter-spacing="1">CBS</text></svg></div>
-            <div><div class="family-code">CBS</div><div class="family-name">Central Battery System</div></div>
-            <div class="family-spec">550–2200W · 90/120-min · 24/48V · NFPA 110 · monitored</div>
-            <span class="badge-active">Active</span>
-          </div>
         </div>
+        <!-- FLAGSHIP FORMS strip closes above, CTA follows -->
         <a href="/collections/constant/" class="coll-cta">
           <span class="coll-cta-label">View const<span style="color:#F5C24A">Ⓐ</span>NT Collection</span>
           <span class="coll-cta-url">archipelagolighting.com/collections/constant/ →</span>
@@ -281,6 +318,30 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <div class="coll-stat-cell"><div class="coll-stat-v">Title 24</div><div class="coll-stat-k">Part 6 · §140.6 · §141.0</div></div>
           <div class="coll-stat-cell"><div class="coll-stat-v"><span class="aa">Ⓐ</span>CS by ALG</div><div class="coll-stat-k">Bluetooth Mesh · 250 Nodes</div></div>
           <div class="coll-stat-cell"><div class="coll-stat-v">BACnet</div><div class="coll-stat-k">BMS Integration · PRO+</div></div>
+        </div>
+        <!-- FLAGSHIP FORMS — contrⒶLS -->
+        <div class="flagship-block">
+          <div class="flagship-bar"><span class="flagship-bar-title">Flagship Forms</span><span class="flagship-bar-tag">3 of 5</span></div>
+          <div class="flagship-cards flagship-cards--3">
+            <div class="flagship-card">
+              <img class="flagship-card-img" src="/images/flagship-cards/safety/ctrl-occupancy.png" alt="MSP-HTO/09P3 occupancy sensor" loading="lazy">
+              <div class="flagship-card-eyebrow">Bi-Level · Occupancy</div>
+              <div class="flagship-card-name">MSP-HTO/09P3<span class="star">★</span></div>
+              <div class="flagship-card-desc">PIR high-mount</div>
+            </div>
+            <div class="flagship-card">
+              <img class="flagship-card-img" src="/images/flagship-cards/safety/ctrl-silvair.png" alt="SILVAIR mesh gateway" loading="lazy">
+              <div class="flagship-card-eyebrow">SILVAIR · NLC Mesh</div>
+              <div class="flagship-card-name">SILVAIR</div>
+              <div class="flagship-card-desc">gateway-free</div>
+            </div>
+            <div class="flagship-card">
+              <img class="flagship-card-img" src="/images/flagship-cards/safety/ctrl-acs.png" alt="ⒶCS cloud BLE mesh" loading="lazy">
+              <div class="flagship-card-eyebrow"><span class="aa">Ⓐ</span>CS · Cloud</div>
+              <div class="flagship-card-name"><span class="aa">Ⓐ</span>CS</div>
+              <div class="flagship-card-desc">BLE mesh</div>
+            </div>
+          </div>
         </div>
         <div class="family-block">
           <div class="cat-bar"><span class="cat-bar-title">Form Factors</span><span class="cat-bar-tag">5 Families · All Active</span></div>
@@ -367,11 +428,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <div class="faq-list">
       <div class="faq-item">
         <div class="faq-q"><div class="faq-num">01</div><div class="faq-text">Is const<span class="aa">Ⓐ</span>NT UL 924 listed?</div></div>
-        <div class="faq-a">Yes. Every Beacon-II, Sentry-LX, Lifeline, Watchman and Citadel SKU is UL 924 listed for 90-minute discharge. The UL file number prints on the spec sheet and on the housing label — drop it directly into the AHJ submittal.</div>
+        <div class="faq-a">Yes. Every <strong>LEMX</strong> exit sign and <strong>EM-series</strong> emergency driver is UL 924 listed for 90-minute discharge. The UL file number prints on the spec sheet and on the housing label — drop it directly into the AHJ submittal.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q"><div class="faq-num">02</div><div class="faq-text">Do contr<span class="aa">Ⓐ</span>LS sensors meet Title 24 Part 6 and ASHRAE 90.1?</div></div>
-        <div class="faq-a">Yes. Periscope occupancy and daylight sensors are CEC Title 24 Part 6 §140.6 and §141.0 compliant out of the box, and meet ASHRAE 90.1 §9.4 auto shut-off + daylight-zone requirements. Programming is field-default; no commissioning trip required for code minimum.</div>
+        <div class="faq-a">Yes. <strong>MSP and MSM</strong> occupancy and daylight sensors are CEC Title 24 Part 6 §140.6 and §141.0 compliant out of the box, and meet ASHRAE 90.1 §9.4 auto shut-off + daylight-zone requirements. Programming is field-default; no commissioning trip required for code minimum.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q"><div class="faq-num">03</div><div class="faq-text">Is the <span class="aa">Ⓐ</span>CS by ALG App a separate panel or part of the luminaire?</div></div>
@@ -387,12 +448,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       </div>
       <div class="faq-item">
         <div class="faq-q"><div class="faq-num">06</div><div class="faq-text">What about retrofit — can <span class="aa">Ⓐ</span>CS retrofit existing 0–10V drivers?</div></div>
-        <div class="faq-a">Yes. The Glide-1V dimming module and MeshNode-5 wireless node attach to any 0–10V driver from any manufacturer. Field commissioning takes ~2 minutes per fixture using the <span class="aa">Ⓐ</span>CS App. No re-wiring of the line-voltage feed.</div>
+        <div class="faq-a">Yes. The <strong>MSX</strong> dimming module and the <strong>SILVAIR / <span class="aa">Ⓐ</span>CS</strong> mesh node attach to any 0–10V driver from any manufacturer. Field commissioning takes ~2 minutes per fixture using the <span class="aa">Ⓐ</span>CS App. No re-wiring of the line-voltage feed.</div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q"><div class="faq-num">07</div><div class="faq-text">Does central battery (CBS) meet NFPA 110?</div></div>
-        <div class="faq-a">Citadel CBS systems carry NFPA 110 Type 10 / Class 1.5 listings (10-second transfer, 90-minute runtime). Higher classes (Class 2, Class 6) available on the 2200W chassis. Self-test, monitored output and remote dry-contact alarm standard on PRO+.</div>
-      </div>
+
     </div>
   </section>
 
