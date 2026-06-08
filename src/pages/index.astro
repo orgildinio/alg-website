@@ -1522,93 +1522,93 @@ const verticals = [
     letter-spacing: 0.05em;
   }
   /* iv-* row styles — IN THIS VIEW list (v2 polish) */
+  /* iv-row v2 — locked 3-column grid: 40px logo · 1fr body · auto distance */
   .iv-row {
     list-style: none;
-    padding: 10px 0;
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 13px 6px;
     border-bottom: 1px solid rgba(255,255,255,0.10);
     cursor: pointer;
-    transition: background 0.15s ease;
+    transition: background 0.12s;
   }
   .iv-row:last-child { border-bottom: none; }
   .iv-row:hover { background: rgba(255,255,255,0.035); }
-
-  .iv-row-main {
+  .iv-logo {
+    position: relative;
+    width: 40px; height: 40px;
+    border-radius: 8px;
     display: grid;
-    grid-template-columns: 1fr 64px;
-    align-items: baseline;
-    gap: 12px;
+    place-items: center;
+    overflow: hidden;
+    background: #22262b;
+    border: 1px solid rgba(255,255,255,0.10);
+    flex-shrink: 0;
   }
-
-  /* Name — line 1 */
+  .iv-logo .iv-lg {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    background: #fff;
+    padding: 3px;
+  }
+  .iv-logo .iv-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: .02em;
+    color: rgba(255,255,255,0.85);
+  }
+  .iv-body { min-width: 0; }
   .iv-name {
     font-family: 'Lato', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #ffffff;
-    line-height: 1.25;
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -.01em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     min-width: 0;
   }
-
-  /* Distance badge — line 1 right, fixed-width column */
-  .iv-distance {
-    display: inline-block;
-    min-width: 56px;
-    text-align: right;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 500;
-    color: #F32740;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-  }
-
-  /* Sub-line — line 2 */
-  .iv-row-sub {
+  .iv-info {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-top: 4px;
-    font-family: 'Lato', sans-serif;
-    font-size: 12px;
-    line-height: 1.35;
-    color: rgba(255,255,255,0.62);
-  }
-  .iv-citystate {
+    gap: 8px;
+    margin-top: 3px;
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.55);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-width: 0;
-    flex: 1 1 auto;
   }
-  .iv-sep {
-    color: rgba(255,255,255,0.30);
-    flex-shrink: 0;
-  }
-
-  /* Type chip */
-  .iv-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
-    flex-shrink: 0;
-    font-family: 'Lato', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.82);
-  }
-  .iv-chip-dot {
-    width: 8px;
-    height: 8px;
+  .iv-dot {
+    width: 8px; height: 8px;
     border-radius: 50%;
     flex-shrink: 0;
   }
-  .iv-row--warehouse   .iv-chip-dot { background: #F32740; }
-  .iv-row--rep         .iv-chip-dot { background: #FFB300; }
-  .iv-row--distributor .iv-chip-dot { background: #22C55E; }
+  .iv-row--warehouse   .iv-dot { background: #F45163; }
+  .iv-row--rep         .iv-dot { background: #E8B23A; }
+  .iv-row--distributor .iv-dot { background: #18C29C; }
+  .iv-distance {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
+    padding-left: 6px;
+  }
+  .iv-distance .iv-u {
+    color: rgba(255,255,255,0.45);
+    font-weight: 400;
+    font-size: 11px;
+    margin-left: 2px;
+  }
 
   /* Sort toggle row */
   .iv-sort-row {
@@ -2387,6 +2387,66 @@ const verticals = [
       let currentSort = 'nearest';
       let currentInViewRows = [];
 
+      const LOGO_MAP = {
+        'NRG INTENSI-T INC': '/images/locator-logos/nrgqc.png',
+        'Riversound Energy Solutions': '/images/locator-logos/riversoundes.png',
+        'Lighting Associates': '/images/locator-logos/laiweb.png',
+        'Riffle & Associates': '/images/locator-logos/riffleassoc.png',
+        'Federated Lighting': '/images/locator-logos/flvirginia.png',
+        'LAI - Lighting Associates Inc - Houston, TX': '/images/locator-logos/laiweb.png',
+        'Integrated Lighting': '/images/locator-logos/gotlumens.png',
+        'PLG - Pruitt Lighting Group': '/images/locator-logos/prulights.png',
+        'CONTRACT SPEC ASSOCIATES': '/images/locator-logos/contractspec.png',
+        'Triangle Lighting Solutions': '/images/locator-logos/trianglelightingsolutions.png',
+        'Chicago Lightworks': '/images/locator-logos/chicagolightworks.png',
+        'GIZMO CONSULTING': '/images/locator-logos/gizmo-consulting.png',
+        'ESA - Electrical Sales Associates': '/images/locator-logos/repesa.png',
+        'JTH LIGHTING ALLIANCE': '/images/locator-logos/jthlighting.png',
+        'RDL and Associates': '/images/locator-logos/rdlandassociates.png',
+        'GRACE LIGHTING': '/images/locator-logos/grace.png',
+        'ASCEND SALES AND MARKETING': '/images/locator-logos/ascendsm.png',
+        'BIBEN MARKETING GROUP, INC': '/images/locator-logos/bibensales.png',
+        'Yanow, Inc.': '/images/locator-logos/yanow.png',
+        'LUMINOSITY LIGHTING ASSOCIATES': '/images/locator-logos/l2a.png',
+        'AUGUST AGENTS': '/images/locator-logos/augustagents.png',
+        'Mountain States Agency': '/images/locator-logos/mountainstatesagency.png',
+        'Golden Lights': '/images/locator-logos/goldlts.png',
+        'PREMIER LIGHTING GROUP - Little Rock': '/images/locator-logos/premier-ltg.png',
+        'FORM2LIGHT LLC': '/images/locator-logos/form2light.png',
+        'Indiana Lightworks': '/images/locator-logos/indianalightworks.png',
+        'Southwest Sales, LLC': '/images/locator-logos/southwestsales.png',
+        'BULBS.COM': '/images/locator-logos/bulbs.png',
+        'WEDCO - DOMINION ELECTRIC SUPPLY a DIVISION OF BORDER STATES - FARGO, ND': '/images/locator-logos/borderstates.png',
+        'BULBMAN, INC.': '/images/locator-logos/bulbman.png',
+        'CED - EL PASO, TX': '/images/locator-logos/cedcredit.png',
+        'PACIFIC LAMP WHOLESALE': '/images/locator-logos/pacificlamplighting.png',
+        'CED - VEGAS ELECTRIC SUPPLY CO': '/images/locator-logos/cedcredit.png',
+        'CED - LAS CRUCES': '/images/locator-logos/cedcredit.png',
+        'INTERACTIVE ENERGIES GROUP': '/images/locator-logos/interactive-energies.png',
+        'CES - HUTTO': '/images/locator-logos/cityelectricsupply.png',
+        'CES - TRADESMAN': '/images/locator-logos/cityelectricsupply.png',
+        'CED - CHICO, CA': '/images/locator-logos/cedcredit.png',
+        'LED ELECTRIC & LIGHTING CONTRACTORS OF SAN ANTONIO': '/images/locator-logos/ledelectric.png',
+        '1000Bulbs.com': '/images/locator-logos/1000bulbs.png',
+        'CITY ELECTRIC SUPPLY (CES) - ROCHESTER HILLS, MI': '/images/locator-logos/cityelectricsupply.png',
+        'CED - NOTOCO INDUSTRIES': '/images/locator-logos/cedcredit.png',
+        'NATONAL WHOLESALE SUPPLY DBA TEMPLE ELECTIC': '/images/locator-logos/nws-inc.png',
+        'CED - FRESNO': '/images/locator-logos/cedcredit.png',
+        'CES - CITY ELECTRIC SUPPLY - SAN ANTONIO NORTH': '/images/locator-logos/cityelectricsupply.png',
+        'BOWLING GREEN WINLECTRIC CO': '/images/locator-logos/bowlinggreenlighting.png',
+        'CES - DOWNTOWN SAN ANTONIO': '/images/locator-logos/cityelectricsupply.png',
+        'STOKES ELECTRIC COMPANY': '/images/locator-logos/stokeslightingandelectric.png',
+        'CODALE ELECTRIC SUPPLY - NEDCO SUPPLY': '/images/locator-logos/codale.png',
+        "SITLER'S SUPPLIES, INC.": '/images/locator-logos/sitlersledsupplies.png',
+        'CES - CENTRAL LAS VEGAS': '/images/locator-logos/cityelectricsupply.png',
+        'PRECISION LIGHTING & TRANSFORMER, INC': '/images/locator-logos/pltsolutions.png'
+      };
+      function monogram(name) {
+        const words = (name || '').trim().split(/\s+/);
+        if (words.length >= 2) return (words[0][0] + words[1][0]).toUpperCase();
+        return (name || '').slice(0, 2).toUpperCase();
+      }
+
       function renderList(entries, header) {
         if (headerEl) headerEl.textContent = header || 'IN THIS VIEW';
         if (!listEl) return;
@@ -2395,29 +2455,32 @@ const verticals = [
           return;
         }
         const typeClass = { warehouse: 'warehouse', rep: 'rep', dist: 'distributor' };
-        const chipLabel = { warehouse: 'Warehouse', rep: 'Sales Rep', dist: 'Stocking Distributor', distributor: 'Stocking Distributor' };
+        const typeLabel = { warehouse: 'ALG Warehouse', rep: 'Sales Rep', dist: 'Stocking Distributor', distributor: 'Stocking Distributor' };
         listEl.innerHTML = entries.map(p => {
-          const distStr = formatDistance(p.distanceMi);
+          const rawDist = formatDistance(p.distanceMi);
           const rawCity = p.city || '';
           const rawState = p.state || '';
           const cityState = titleCaseCityState([rawCity, rawState].filter(Boolean).join(', '));
           const displayName = toTitleCase(p.name || cityState);
           const tc = typeClass[p.type] || p.type;
-          const chip = chipLabel[p.type] || '';
+          const typeStr = typeLabel[p.type] || '';
           const pinId = p.id ? String(p.id) : '';
+          const logoPath = LOGO_MAP[p.name] || null;
+          const mg = monogram(p.name || cityState);
+          const distParts = rawDist.match(/^([\d.]+)\s*(mi|km)?$/);
+          const distHtml = distParts
+            ? distParts[1] + '<span class="iv-u">' + (distParts[2] || 'mi') + '</span>'
+            : rawDist;
+          const logoHtml = logoPath
+            ? '<span class="iv-mono">' + mg + '</span><img class="iv-lg" src="' + logoPath + '" alt="' + displayName + '" loading="lazy" onerror="this.remove()">'
+            : '<span class="iv-mono">' + mg + '</span>';
           return '<li class="iv-row iv-row--' + tc + '" data-pin-id="' + pinId + '">' +
-            '<div class="iv-row-main">' +
-              '<span class="iv-name">' + displayName + '</span>' +
-              '<span class="iv-distance">' + distStr + '</span>' +
+            '<div class="iv-logo">' + logoHtml + '</div>' +
+            '<div class="iv-body">' +
+              '<div class="iv-name">' + displayName + '</div>' +
+              '<div class="iv-info"><span class="iv-dot" aria-hidden="true"></span><span>' + typeStr + ' · ' + cityState + '</span></div>' +
             '</div>' +
-            '<div class="iv-row-sub">' +
-              '<span class="iv-chip iv-chip--' + tc + '">' +
-                '<span class="iv-chip-dot" aria-hidden="true"></span>' +
-                '<span class="iv-chip-label">' + chip + '</span>' +
-              '</span>' +
-              '<span class="iv-sep">·</span>' +
-              '<span class="iv-citystate">' + cityState + '</span>' +
-            '</div>' +
+            '<div class="iv-distance">' + distHtml + '</div>' +
           '</li>';
         }).join('');
       }
