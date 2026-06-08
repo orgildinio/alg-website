@@ -10,6 +10,12 @@
  *   --brand #E3353C → var(--color-alg-red) #F32740
  *   --font-sans 'Sora' → 'Lato'
  *   UtilityBar/footer chrome stripped
+ *
+ * outdoor-flagships patch:
+ *   + Flagship Families strip (4 cards each collection)
+ *   + Corrected Form Factors taxonomy (canonical SKU codes, no per-row counts)
+ *   + min-height:252px on coll-card-header for symmetry
+ *   + luxoⒶRCH eyebrow/tagline updated to include Dock
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 ---
@@ -169,7 +175,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   /* Collection grid */
   .collection-grid { padding: 40px 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .coll-card { display: block; text-decoration: none; color: inherit; }
-  .coll-card-header { background: var(--color-ink); color: #fff; padding: 32px 36px 28px; position: relative; transition: background .25s ease; }
+  .coll-card-header { background: var(--color-ink); color: #fff; padding: 32px 36px 28px; position: relative; min-height: 252px; transition: background .25s ease; }
   .coll-card-header:hover { background: var(--color-alg-red); }
   .coll-name { margin-top: 16px; font-size: 56px; line-height: 1; letter-spacing: -.025em; font-weight: 800; white-space: nowrap; }
   .coll-name .a-enc { color: var(--color-alg-red); }
@@ -181,13 +187,25 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .coll-stat-cell + .coll-stat-cell { border-left: 1px solid var(--color-border); }
   .coll-stat-v { font-size: 18px; font-weight: 700; line-height: 1.05; color: var(--color-ink); white-space: nowrap; }
   .coll-stat-k { margin-top: 6px; font-family: var(--font-mono); font-size: 9.5px; color: var(--color-ink-mute); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* Flagship strip */
+  .flagship-block { background: #fff; border: 1px solid var(--color-border); border-top: none; padding: 20px 36px 14px; }
+  .flagship-grid { margin-top: 14px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .flagship-card { border: 1px solid var(--color-border); background: #fff; display: flex; flex-direction: column; }
+  .flagship-thumb { height: 76px; background: var(--color-bg-soft); display: flex; align-items: center; justify-content: center; padding: 8px; border-bottom: 1px solid var(--color-border); overflow: hidden; }
+  .flagship-thumb img { width: 100%; height: 100%; object-fit: contain; }
+  .flagship-info { padding: 10px 12px 12px; }
+  .flagship-app { font-family: var(--font-mono); font-size: 9.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .flagship-name { margin-top: 4px; font-size: 14.5px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+  .flagship-star { color: var(--color-alg-red); font-size: 13px; }
+  .flagship-stat { margin-top: 4px; font-family: var(--font-mono); font-size: 10.5px; color: var(--color-ink-soft); letter-spacing: .02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   /* Family rows */
   .family-block { background: #fff; padding: 24px 36px 20px; border: 1px solid var(--color-border); border-top: none; }
   .cat-bar { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 6px; border-bottom: 2px solid var(--color-ink); }
   .cat-bar-title { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--color-ink); }
   .cat-bar-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-mute); }
   .family-row { display: grid; grid-template-columns: 64px 120px 1fr auto; gap: 16px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--color-bg-strong); }
-  .family-thumb { width: 56px; height: 40px; background: var(--color-bg-soft); border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; }
+  .family-thumb { width: 56px; height: 40px; background: var(--color-bg-soft); border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .family-thumb img { width: 100%; height: 100%; object-fit: contain; }
   .family-thumb svg { width: 100%; height: 100%; }
   .family-code { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; color: var(--color-alg-red); }
   .family-name { font-size: 13.5px; font-weight: 600; margin-top: 2px; color: var(--color-ink); }
@@ -320,76 +338,123 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <div data-coll-card="luxo">
       <a href="https://staging.archipelagolighting.com/collections/luxoarch/" target="_blank" rel="noopener noreferrer" class="coll-card">
         <div class="coll-card-header">
-          <div class="eyebrow eyebrow--yellow" style="font-size:11px">Area · Canopy · Cylinder · Flood · Sports · String · Wall Pack</div>
+          <div class="eyebrow eyebrow--yellow" style="font-size:11px">Area · Canopy · Cylinder · Dock · Flood · Sports · String · Wall Pack</div>
           <div class="coll-name">luxo<span class="a-enc">Ⓐ</span>RCH</div>
-          <p class="coll-tagline">Outdoor lighting for the commercial perimeter. Area lights, canopies, cylinders, floods, sports lighters, string lights and the full wall-pack family — for parking lots, perimeter, façade, sports fields, hospitality patios, and big-box retail.</p>
+          <p class="coll-tagline">Outdoor lighting for the commercial perimeter. Area lights, canopies, cylinders, dock lights, floods, sports lighters, string lights and the full wall-pack family — for parking lots, perimeter, façade, sports fields, hospitality patios, and big-box retail.</p>
         </div>
         <div class="coll-stats">
           <div class="coll-stat-cell"><div class="coll-stat-v">21 Families</div><div class="coll-stat-k">Active in luxo<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</div></div>
           <div class="coll-stat-cell"><div class="coll-stat-v">140 SKUs</div><div class="coll-stat-k">Active Across Tiers</div></div>
-          <div class="coll-stat-cell"><div class="coll-stat-v">10 Apps</div><div class="coll-stat-k">Area → Wall Pack · Cutoff</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">11 Apps</div><div class="coll-stat-k">Area → Wall Pack · Cutoff</div></div>
           <div class="coll-stat-cell"><div class="coll-stat-v">DLC Premium</div><div class="coll-stat-k">Listed on PRO Tier</div></div>
         </div>
+
+        <!-- FLAGSHIP FAMILIES — luxoⒶRCH -->
+        <div class="flagship-block">
+          <div class="cat-bar"><div class="cat-bar-title">Flagship Families</div><div class="cat-bar-tag">4 of 4</div></div>
+          <div class="flagship-grid">
+            <div class="flagship-card">
+              <div class="flagship-thumb"><img src="/products/liberty/assets/hero/liberty-hero-1.webp" alt="Liberty"></div>
+              <div class="flagship-info">
+                <div class="flagship-app">Area Light · PRO</div>
+                <div class="flagship-name">Liberty <span class="flagship-star">★</span></div>
+                <div class="flagship-stat">shoebox</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb"><img src="/products/illuminator/assets/hero/illuminator-hero-1.webp" alt="Illuminator"></div>
+              <div class="flagship-info">
+                <div class="flagship-app">Sports Lighting · PRO</div>
+                <div class="flagship-name">Illuminator</div>
+                <div class="flagship-stat">field</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb"><img src="/products/aura/assets/hero/aura-hero-1.webp" alt="Aura"></div>
+              <div class="flagship-info">
+                <div class="flagship-app">Cylinder · PRO</div>
+                <div class="flagship-name">Aura</div>
+                <div class="flagship-stat">column</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb"><img src="/products/guardian/assets/hero/guardian-hero-1.webp" alt="Guardian"></div>
+              <div class="flagship-info">
+                <div class="flagship-app">Wall Pack · ECO</div>
+                <div class="flagship-name">Guardian</div>
+                <div class="flagship-stat">classic</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FORM FACTORS — luxoⒶRCH (11 rows) -->
         <div class="family-block">
-          <div class="cat-bar"><span class="cat-bar-title">Form Factors</span><span class="cat-bar-tag">10 Families · All Active</span></div>
+          <div class="cat-bar"><span class="cat-bar-title">Form Factors</span><span class="cat-bar-tag">11 Applications · All Active</span></div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><line x1="60" y1="6" x2="60" y2="34" stroke="#1A1D23" stroke-width="2"/><rect x="42" y="34" width="36" height="14" fill="#1A1D23"/><ellipse cx="60" cy="72" rx="44" ry="22" fill="#fff" stroke="#1A1D23" stroke-width="2"/><ellipse cx="60" cy="72" rx="36" ry="16" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
-            <div><div class="family-code">AREA</div><div class="family-name">Area Light</div></div>
-            <div class="family-spec"><span class="tier">Heritage · Liberty</span><span class="sep">·</span>4 · 25 SKUs · ECO/PRO · 300W / 450W max · DLC Premium</div>
+            <div class="family-thumb"><img src="/images/family-cards/luxoarch/liberty.png" alt=""></div>
+            <div><div class="family-code">LSBX</div><div class="family-name">Area Light</div></div>
+            <div class="family-spec">Liberty · Heritage · Rosetta · Plymouth · ECO/PRO/PRO+ · 30/40/50K</div>
             <span class="badge-active">Active</span>
           </div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="46" width="76" height="22" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><rect x="14" y="68" width="92" height="14" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
-            <div><div class="family-code">CNPY</div><div class="family-name">Canopy</div></div>
-            <div class="family-spec"><span class="tier">Navigator · Pathfinder</span><span class="sep">·</span>3 · 4 SKUs · ECO/PRO · 100W / 110W max · DLC Premium</div>
+            <div class="family-thumb"><img src="/products/pathfinder/assets/hero/pathfinder-hero-1.webp" alt=""></div>
+            <div><div class="family-code">LCNP</div><div class="family-name">Canopy</div></div>
+            <div class="family-spec">Pathfinder · Navigator · ECO/PRO · 30/35/40/50K</div>
             <span class="badge-active">Active</span>
           </div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><line x1="60" y1="6" x2="60" y2="36" stroke="#1A1D23" stroke-width="2"/><rect x="44" y="36" width="32" height="48" rx="16" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/></svg></div>
-            <div><div class="family-code">CYL</div><div class="family-name">Cylinder</div></div>
-            <div class="family-spec"><span class="tier">Aura</span><span class="sep">·</span>4 SKUs · PRO · 45W max · 30/40/50K · 120–277V · DLC Premium</div>
+            <div class="family-thumb"><img src="/images/family-cards/luxoarch/aura.png" alt=""></div>
+            <div><div class="family-code">LCWS</div><div class="family-name">Cylinder</div></div>
+            <div class="family-spec">Aura · PRO · 30/40/50K</div>
             <span class="badge-active">Active</span>
           </div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="14" y="36" width="92" height="48" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><line x1="14" y1="60" x2="106" y2="60" stroke="#9CA0A8"/></svg></div>
-            <div><div class="family-code">FLD</div><div class="family-name">Flood Light</div></div>
-            <div class="family-spec"><span class="tier">Everest</span><span class="sep">·</span>8 SKUs · ECO · 150W max · 40/50K · 120–277V · DLC Premium</div>
+            <div class="family-thumb"><img src="/images/family-cards/luxoarch/canadarm.png" alt=""></div>
+            <div><div class="family-code">LDKT</div><div class="family-name">Dock Light</div></div>
+            <div class="family-spec">Canadarm · PRO · 50K</div>
             <span class="badge-active">Active</span>
           </div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><line x1="60" y1="6" x2="60" y2="30" stroke="#1A1D23" stroke-width="3"/><rect x="10" y="30" width="100" height="60" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><line x1="10" y1="60" x2="110" y2="60" stroke="#9CA0A8"/></svg></div>
-            <div><div class="family-code">SPT</div><div class="family-name">Sports Lighting</div></div>
-            <div class="family-spec"><span class="tier">Illuminator · Radiator · Beacon</span><span class="sep">·</span>5 families · 27 SKUs · PRO/PRO+ · 480–1200W</div>
+            <div class="family-thumb"><img src="/products/everest/assets/hero/everest-hero-1.webp" alt=""></div>
+            <div><div class="family-code">LFLD</div><div class="family-name">Flood Light</div></div>
+            <div class="family-spec">Zion · Everest · ECO/PRO+ · 30/35/40/50K</div>
             <span class="badge-active">Active</span>
           </div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><circle cx="30" cy="60" r="8" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="60" r="8" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="90" cy="60" r="8" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><line x1="14" y1="60" x2="106" y2="60" stroke="#9CA0A8" stroke-dasharray="3 3"/></svg></div>
-            <div><div class="family-code">STR</div><div class="family-name">String Light</div></div>
-            <div class="family-spec"><span class="tier">LSL Series</span><span class="sep">·</span>19 SKUs · ECO · 16W max · 22/24/27/30K · 120V</div>
+            <div class="family-thumb"><img src="/products/illuminator/assets/hero/illuminator-hero-1.webp" alt=""></div>
+            <div><div class="family-code">LSPL</div><div class="family-name">Sports Lighting</div></div>
+            <div class="family-spec">Radiator · Illuminator · Beacon · PRO/PRO+ · 40/50K</div>
             <span class="badge-active">Active</span>
           </div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="46" width="76" height="28" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><rect x="22" y="46" width="76" height="8" fill="#1A1D23"/></svg></div>
-            <div><div class="family-code">WP-A</div><div class="family-name">Wall Pack · Architectural</div></div>
-            <div class="family-spec"><span class="tier">Anaheim · Atlanta</span><span class="sep">·</span>2 families · 12 SKUs · ECO/PRO · 80W / 120W max · DLC Premium</div>
+            <div class="family-thumb"><img src="/images/family-cards/luxoarch/lsl-series.png" alt=""></div>
+            <div><div class="family-code">LSL</div><div class="family-name">String Light</div></div>
+            <div class="family-spec">LSL Series · ECO · 22/24/27K</div>
             <span class="badge-active">Active</span>
           </div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="46" width="76" height="28" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><line x1="22" y1="60" x2="98" y2="60" stroke="#9CA0A8"/></svg></div>
-            <div><div class="family-code">WP-C</div><div class="family-name">Wall Pack · Classic</div></div>
-            <div class="family-spec"><span class="tier">Guardian · Shield · Sentinel</span><span class="sep">·</span>3 families · 13 SKUs · ECO/PRO · 120W max · DLC Premium</div>
+            <div class="family-thumb"><img src="/products/anaheim/assets/hero/anaheim-hero-1.webp" alt=""></div>
+            <div><div class="family-code">LWPA</div><div class="family-name">Wall Pack · Architectural</div></div>
+            <div class="family-spec">Anaheim · Atlanta · ECO/PRO · 30/40/50K</div>
             <span class="badge-active">Active</span>
           </div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="52" width="76" height="22" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><path d="M22 74 L60 90 L98 74" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
-            <div><div class="family-code">WP-E</div><div class="family-name">Wall Pack · Entryway</div></div>
-            <div class="family-spec"><span class="tier">Ramparts · Wedge-I</span><span class="sep">·</span>2 families · 6 SKUs · ECO · 20W max · 30/40/50K · DLC Premium</div>
+            <div class="family-thumb"><img src="/products/guardian/assets/hero/guardian-hero-1.webp" alt=""></div>
+            <div><div class="family-code">LWPF</div><div class="family-name">Wall Pack · Classic</div></div>
+            <div class="family-spec">Guardian · Sentinel · Shield · ECO/PRO · 30/35/40/50K</div>
             <span class="badge-active">Active</span>
           </div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="22" y="46" width="76" height="28" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><rect x="22" y="74" width="76" height="6" fill="#1A1D23"/></svg></div>
-            <div><div class="family-code">WP-F</div><div class="family-name">Wall Pack · Full-Cutoff</div></div>
-            <div class="family-spec"><span class="tier">Watchtower · Nightwatch</span><span class="sep">·</span>2 families · 15 SKUs · ECO/PRO · 100W / 120W max · full-cutoff</div>
+            <div class="family-thumb"><img src="/products/ramparts/assets/hero/ramparts-hero-1.webp" alt=""></div>
+            <div><div class="family-code">LWPE</div><div class="family-name">Wall Pack · Entryway</div></div>
+            <div class="family-spec">Wedge · Ramparts · ECO · 30/40/50K</div>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="family-row">
+            <div class="family-thumb"><img src="/products/watchtower/assets/hero/watchtower-hero-1.webp" alt=""></div>
+            <div><div class="family-code">LWPC</div><div class="family-name">Wall Pack · Full-Cutoff</div></div>
+            <div class="family-spec">Nightwatch · Watchtower · ECO/PRO · 30/40/50K</div>
             <span class="badge-active">Active</span>
           </div>
         </div>
@@ -411,51 +476,92 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="coll-stats">
           <div class="coll-stat-cell"><div class="coll-stat-v">11 Families</div><div class="coll-stat-k">Active in city<span style="color:var(--color-alg-red)">Ⓐ</span>RCH</div></div>
           <div class="coll-stat-cell"><div class="coll-stat-v">77 SKUs</div><div class="coll-stat-k">Active Across Tiers</div></div>
-          <div class="coll-stat-cell"><div class="coll-stat-v">6 Apps</div><div class="coll-stat-k">Bollard → Roadway</div></div>
+          <div class="coll-stat-cell"><div class="coll-stat-v">7 Apps</div><div class="coll-stat-k">Bollard → Roadway</div></div>
           <div class="coll-stat-cell"><div class="coll-stat-v">TAA · DLC</div><div class="coll-stat-k">Government-Ready</div></div>
         </div>
+
+        <!-- FLAGSHIP FAMILIES — cityⒶRCH -->
+        <div class="flagship-block">
+          <div class="cat-bar"><div class="cat-bar-title">Flagship Families</div><div class="cat-bar-tag">4 of 4</div></div>
+          <div class="flagship-grid">
+            <div class="flagship-card">
+              <div class="flagship-thumb"><img src="/products/lptp-symmetry-post-top/assets/symmetry/hero/symmetry-1-front-round.png" alt="Symmetry"></div>
+              <div class="flagship-info">
+                <div class="flagship-app">Post Top · PRO</div>
+                <div class="flagship-name">Symmetry <span class="flagship-star">★</span></div>
+                <div class="flagship-stat">decorative</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb"><img src="/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp" alt="Sentry"></div>
+              <div class="flagship-info">
+                <div class="flagship-app">Bollard · PRO</div>
+                <div class="flagship-name">Sentry</div>
+                <div class="flagship-stat">site</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb"><img src="/products/lrdw-abbey-roadway/assets/abbey/abbey-hero-1.webp" alt="Abbey"></div>
+              <div class="flagship-info">
+                <div class="flagship-app">Roadway · PRO</div>
+                <div class="flagship-name">Abbey</div>
+                <div class="flagship-stat">cobra-head</div>
+              </div>
+            </div>
+            <div class="flagship-card">
+              <div class="flagship-thumb"><img src="/products/lhmf-omnimax-high-mast/assets/omnimax/hero/omnimax-hero-1.webp" alt="OmniMax"></div>
+              <div class="flagship-info">
+                <div class="flagship-app">High Mast · PRO+</div>
+                <div class="flagship-name">OmniMax</div>
+                <div class="flagship-stat">TAA</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FORM FACTORS — cityⒶRCH (7 rows) -->
         <div class="family-block">
-          <div class="cat-bar"><span class="cat-bar-title">Form Factors</span><span class="cat-bar-tag">7 Families · All Active</span></div>
+          <div class="cat-bar"><span class="cat-bar-title">Form Factors</span><span class="cat-bar-tag">7 Applications · All Active</span></div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="48" y="20" width="24" height="80" rx="4" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><ellipse cx="60" cy="20" rx="12" ry="6" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
-            <div><div class="family-code">BLD</div><div class="family-name">Bollard</div></div>
-            <div class="family-spec"><span class="tier">Sentry</span><span class="sep">·</span>4 SKUs · PRO · 26W max · 30/40K · 120–277V · DLC Premium</div>
+            <div class="family-thumb"><img src="/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp" alt=""></div>
+            <div><div class="family-code">LBOL</div><div class="family-name">Bollard</div></div>
+            <div class="family-spec">Sentry · PRO · 30/40/50K</div>
             <span class="badge-active">Active</span>
           </div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><line x1="60" y1="6" x2="60" y2="40" stroke="#1A1D23" stroke-width="3"/><ellipse cx="60" cy="60" rx="50" ry="24" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><ellipse cx="60" cy="60" rx="38" ry="16" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
-            <div><div class="family-code">HM</div><div class="family-name">High Mast</div></div>
-            <div class="family-spec"><span class="tier">OmniMax</span><span class="sep">·</span>10 SKUs · PRO+ · 750W max · 40/50K · 277–480V · DLC Premium</div>
+            <div class="family-thumb"><img src="/products/lhmf-omnimax-high-mast/assets/omnimax/hero/omnimax-hero-1.webp" alt=""></div>
+            <div><div class="family-code">LHMF</div><div class="family-name">High Mast</div></div>
+            <div class="family-spec">OmniMax · PRO+ · 50K</div>
             <span class="badge-active">Active</span>
           </div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="54" y="10" width="12" height="100" fill="#1A1D23"/><rect x="40" y="10" width="40" height="16" rx="2" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
-            <div><div class="family-code">PL</div><div class="family-name">Pole</div></div>
-            <div class="family-spec"><span class="tier">Redwood · Sequoia</span><span class="sep">·</span>2 families · 2 SKUs · decorative pole bodies for site / streetscape</div>
+            <div class="family-thumb">▢</div>
+            <div><div class="family-code">OSP</div><div class="family-name">Pole</div></div>
+            <div class="family-spec">Alpine · Sequoia · Redwood · Centurion · Hyperion</div>
             <span class="badge-active">Active</span>
           </div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><line x1="60" y1="6" x2="60" y2="40" stroke="#1A1D23" stroke-width="2"/><circle cx="60" cy="60" r="28" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="60" r="18" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
-            <div><div class="family-code">PT</div><div class="family-name">Post Top</div></div>
-            <div class="family-spec"><span class="tier">Unity · Symmetry</span><span class="sep">·</span>2 families · 31 SKUs · ECO/PRO · 150W / 160W max · DLC Premium</div>
+            <div class="family-thumb"><img src="/products/lptp-symmetry-post-top/assets/symmetry/hero/symmetry-1-front-round.png" alt=""></div>
+            <div><div class="family-code">LPTP</div><div class="family-name">Post Top</div></div>
+            <div class="family-spec">Symmetry · Unity · ECO/PRO · 30/35/40/50K</div>
             <span class="badge-active">Active</span>
           </div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><line x1="60" y1="6" x2="60" y2="40" stroke="#1A1D23" stroke-width="2"/><path d="M14 40 Q60 40 106 40 L96 80 L24 80 Z" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/></svg></div>
-            <div><div class="family-code">RDW</div><div class="family-name">Roadway</div></div>
-            <div class="family-spec"><span class="tier">Abbey</span><span class="sep">·</span>11 SKUs · PRO · 150W max · 30/40/50K · 120–277V · DLC Premium</div>
+            <div class="family-thumb"><img src="/products/lrdw-abbey-roadway/assets/abbey/abbey-hero-1.webp" alt=""></div>
+            <div><div class="family-code">LRDW</div><div class="family-name">Roadway</div></div>
+            <div class="family-spec">Abbey · PRO · 30/40/50K</div>
             <span class="badge-active">Active</span>
           </div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><rect x="14" y="36" width="92" height="48" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><line x1="14" y1="60" x2="106" y2="60" stroke="#9CA0A8"/></svg></div>
-            <div><div class="family-code">SS</div><div class="family-name">Street Sign</div></div>
-            <div class="family-spec"><span class="tier">Alpine</span><span class="sep">·</span>14 SKUs · surface mount · municipal way-finding &amp; signage</div>
+            <div class="family-thumb"><img src="/products/ly-t10-slimline-sign-lamp/assets/lyt10/lyt10-hero-1.png" alt=""></div>
+            <div><div class="family-code">LY</div><div class="family-name">Street Sign</div></div>
+            <div class="family-spec">LY-T10 · ECO · 50K</div>
             <span class="badge-active">Active</span>
           </div>
           <div class="family-row">
-            <div class="family-thumb"><svg viewBox="0 0 120 120"><circle cx="60" cy="40" r="20" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="80" r="20" fill="#fff" stroke="#1A1D23" stroke-width="1.5"/><circle cx="60" cy="40" r="10" fill="#EEEDF0" stroke="#9CA0A8"/><circle cx="60" cy="80" r="10" fill="#EEEDF0" stroke="#9CA0A8"/></svg></div>
-            <div><div class="family-code">TC</div><div class="family-name">Traffic Control Lamp</div></div>
-            <div class="family-spec"><span class="tier">LPAR Series</span><span class="sep">·</span>3 SKUs · PRO · 14W max · PAR retrofit · traffic signal heads</div>
+            <div class="family-thumb"><img src="/products/lpar-traffic-par38/assets/lpar/lpar-hero-1.png" alt=""></div>
+            <div><div class="family-code">LPAR</div><div class="family-name">Traffic Control Lamp</div></div>
+            <div class="family-spec">LPAR Series · PRO · 30K</div>
             <span class="badge-active">Active</span>
           </div>
         </div>
