@@ -369,8 +369,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
   .iv-row:last-child { border-bottom: none; }
   .iv-row:hover { background: rgba(255,255,255,0.035); }
-  /* Logo tile */
-  .iv-logo {
+  /* Logo tile — :global() so rules reach JS-injected iv-logo nodes (ISS-33 PATCH-1) */
+  :global(.iv-logo) {
     position: relative;
     width: 40px; height: 40px;
     border-radius: 8px;
@@ -381,7 +381,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     border: 1px solid var(--line, rgba(255,255,255,0.10));
     flex-shrink: 0;
   }
-  .iv-logo .iv-lg {
+  :global(.iv-logo .iv-lg) {
     position: absolute;
     inset: 0;
     width: 100%; height: 100%;
@@ -389,7 +389,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     background: #fff;
     padding: 3px;
   }
-  .iv-logo .iv-mono {
+  :global(.iv-logo .iv-mono) {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 700;
     font-size: 13px;
