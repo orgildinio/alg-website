@@ -663,7 +663,8 @@
       "state": "CA",
       "country": "USA",
       "lat": 34.0775104,
-      "lon": -117.6897776
+      "lon": -117.6897776,
+      "hidden": true
     },
     {
       "name": "WEST | Montclair, CA",
@@ -671,7 +672,8 @@
       "state": "CA",
       "country": "USA",
       "lat": 34.0775104,
-      "lon": -117.6897776
+      "lon": -117.6897776,
+      "hidden": true
     },
     {
       "name": "WEST | Riverside, CA",
@@ -687,7 +689,8 @@
       "state": "CA",
       "country": "USA",
       "lat": 36.7014631,
-      "lon": -118.755997
+      "lon": -118.755997,
+      "hidden": true
     },
     {
       "name": "WEST | Rancho Cucamonga, CA",
@@ -711,7 +714,8 @@
       "state": "NJ",
       "country": "USA",
       "lat": 40.6081591,
-      "lon": -74.2776468
+      "lon": -74.2776468,
+      "hidden": true
     },
     {
       "name": "MIDWEST | Crestwood, IL",
@@ -771,7 +775,7 @@
     },
     {
       "name": "Loki 3PL",
-      "city": null,
+      "city": "Jackson",
       "state": "NJ",
       "country": "USA",
       "lat": 40.0757384,

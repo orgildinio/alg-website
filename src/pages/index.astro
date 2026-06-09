@@ -456,7 +456,7 @@ const verticals = [
           <span class="loc-filter-label">Show:</span>
           <span class="loc-pill active" data-filter="all">All</span>
             <span class="loc-pill" data-filter="warehouse">
-            <span class="kind-dot wh"></span>Warehouses <span class="loc-count">(16)</span>
+            <span class="kind-dot wh"></span>Warehouses <span class="loc-count">(12)</span>
           </span>
           <span class="loc-pill" data-filter="rep">
             <span class="kind-dot rep"></span>Sales Reps
@@ -477,7 +477,7 @@ const verticals = [
             <h4>Map key</h4>
             <div class="legend-row">
               <span class="legend-dot"><span class="dot-vis" style="background:#F32740;"></span>ALG Warehouse</span>
-              <span class="legend-count">16 locations</span>
+              <span class="legend-count">12 locations</span>
             </div>
             <div class="legend-row">
               <span class="legend-dot"><span class="dot-vis" style="background:#f0a932;"></span>Sales Rep</span>
@@ -1543,8 +1543,8 @@ const verticals = [
     display: grid;
     place-items: center;
     overflow: hidden;
-    background: #22262b;
-    border: 1px solid rgba(255,255,255,0.10);
+    background: var(--panel3, #22262b);
+    border: 1px solid var(--line, rgba(255,255,255,0.10));
     flex-shrink: 0;
   }
   .iv-logo .iv-lg {
@@ -2313,12 +2313,14 @@ const verticals = [
         return { warehouse: 'ALG Warehouse', rep: 'Sales Rep', dist: 'Stocking Distributor', distributor: 'Stocking Distributor' }[type] || '';
       }
       function popup(rec, kind) {
-        const displayName = toTitleCase(rec.name);
         const loc = [rec.city, rec.state].filter(Boolean).join(', ');
         const displayLoc = titleCaseCityState(loc);
+        // ISS-34: warehouses show City, State as title; never the internal name
+        const displayName = (kind === 'warehouse') ? displayLoc : toTitleCase(rec.name);
+        const popupSub = (kind === 'warehouse') ? 'ALG Warehouse' : (displayLoc + (labelFor(kind) ? ' · ' + labelFor(kind) : ''));
         let html = '<div class="iv-popup">';
         html += '<div class="iv-popup-name">' + displayName + '</div>';
-        if (displayLoc) html += '<div class="iv-popup-sub">' + displayLoc + (labelFor(kind) ? ' · ' + labelFor(kind) : '') + '</div>';
+        if (popupSub) html += '<div class="iv-popup-sub">' + popupSub + '</div>';
         if (rec.phone) html += '<div class="iv-popup-row"><a href="tel:' + rec.phone.replace(/[^+\d]/g,'') + '">' + rec.phone + '</a></div>';
         if (rec.website) {
           const url = rec.website.startsWith('http') ? rec.website : 'https://' + rec.website;
@@ -2345,7 +2347,7 @@ const verticals = [
         const res = await fetch('/data/local_support.json');
         const data = await res.json();
         data.warehouses.forEach(r => {
-          if (r.lat && r.lon) {
+          if (r.lat && r.lon && !r.hidden) {
             const m = L.marker([r.lat, r.lon], { icon: iconWh }).bindPopup(popup(r,'warehouse')).addTo(layers.warehouse);
             if (r.id) markerByPinId.set(String(r.id), m);
             allPins.push({ ...r, type: 'warehouse', lat: r.lat, lng: r.lon });
@@ -2461,7 +2463,8 @@ const verticals = [
           const rawCity = p.city || '';
           const rawState = p.state || '';
           const cityState = titleCaseCityState([rawCity, rawState].filter(Boolean).join(', '));
-          const displayName = toTitleCase(p.name || cityState);
+          // ISS-34: warehouses show City, State; never the internal name
+        const displayName = (p.type === 'warehouse') ? cityState : toTitleCase(p.name || cityState);
           const tc = typeClass[p.type] || p.type;
           const typeStr = typeLabel[p.type] || '';
           const pinId = p.id ? String(p.id) : '';
