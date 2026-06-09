@@ -5248,8 +5248,8 @@ body { overflow-x: hidden; }
  statPeak.textContent = d.peak;
  if (statPeakSub) statPeakSub.textContent = 'Type-III forward throw at ' + state.watt + 'W . ' + state.cct + '00K';
  statLum.textContent = d.lumens;
- statLpw.innerHTML = d.lpw;
- statDraw.textContent = d.draw;
+ if (statLpw) statLpw.innerHTML = d.lpw;
+ if (statDraw) statDraw.textContent = d.draw;
  statFile.textContent = d.file;
  }
 
