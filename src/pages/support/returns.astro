@@ -27,12 +27,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── Shell margin (locked: L==R≥56px, cap 1320) ── */
+  /* ── Shell margin (ISS-30 B9: matches wizard .wrap clamp(20px,4vw,56px)) ── */
   .rma-inner {
     max-width: 1320px;
     margin: 0 auto;
-    padding-left:  calc(0.5 * max(56px, calc((100vw - 1320px) / 2)));
-    padding-right: calc(0.5 * max(56px, calc((100vw - 1320px) / 2)));
+    padding-left:  clamp(20px, 4vw, 56px);
+    padding-right: clamp(20px, 4vw, 56px);
   }
 
   /* ── Breadcrumb ── */
