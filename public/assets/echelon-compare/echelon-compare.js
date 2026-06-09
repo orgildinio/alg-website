@@ -113,8 +113,20 @@
     if(a.nextElementSibling!==m){ a.parentNode.insertBefore(m, a.nextSibling); } // (re)anchor after the visible results
     return m;
   }
+  // ISS-20 B10: trigger gate — only fire when the SOLE active facet group is "application"
+  function hasNonAppFilter(){
+    // Check if any non-application facet checkbox is checked
+    var nonApp = [].slice.call(document.querySelectorAll('input[data-facet]:not([data-facet="application"]):checked'));
+    if (nonApp.length) return true;
+    // Check wattage slider (if present and not at max)
+    var ws = document.getElementById('wattSlider') || document.querySelector('input[type="range"][id*="watt"]');
+    if (ws && ws.max && parseInt(ws.value) < parseInt(ws.max)) return true;
+    return false;
+  }
   function update(){
     var m = mountNode(); if(!m) return;
+    // ISS-20: suppress block entirely when any non-application filter is active
+    if (hasNonAppFilter()){ state.slug=null; m.innerHTML=''; return; }
     var ps = pressedApps();
     if (ps.length === 1 && APPS[ps[0]]){
       if (state.slug !== ps[0]){ state.slug = ps[0]; state.fam = {}; state.hidden = false; }
@@ -134,7 +146,8 @@
     var debounce; function bump(){ clearTimeout(debounce); debounce=setTimeout(update, 80); }
     var obs = new MutationObserver(bump);
     obs.observe(document.body, { subtree:true, childList:true, attributes:true, attributeFilter:['aria-pressed','checked','class','style'] });
-    document.addEventListener('change', function(e){ if(e.target && e.target.matches && e.target.matches('input[data-facet="application"]')) bump(); });
+    // ISS-20: bump on any facet change (update() guards internally)
+    document.addEventListener('change', function(e){ if(e.target && e.target.matches && e.target.matches('input[data-facet]')) bump(); });
     document.querySelectorAll('.app-tile').forEach(function(b){ b.addEventListener('click', function(){ setTimeout(update, 80); }); });
     update();
   }
