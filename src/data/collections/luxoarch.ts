@@ -142,7 +142,7 @@ const luxoarchData = {
     },
   ],
   featuredHeadline: 'Five flagship families from the luxoARCH collection.',
-  familiesHeadline: '24 families. One outdoor portfolio.',
+  familiesHeadline: '18 families. One outdoor portfolio.',
   familiesSubhead: 'Filter by application, echelon, wattage, CCT, and more.',
   legacy: {
     headline: 'Discontinued families.',

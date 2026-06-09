@@ -4207,7 +4207,8 @@
           "pdpUrl": "",
           "card_image": "",
           "tierKey": "Canadarm",
-          "heroImage": "/images/family-cards/luxoarch/canadarm.png"
+          "heroImage": "/images/family-cards/luxoarch/canadarm.png",
+          "hidden": true
         },
         {
           "family": "Everest",
@@ -4447,11 +4448,12 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Plymouth"
+          "tierKey": "Plymouth",
+          "hidden": true
         },
         {
           "family": "Radiator",
-          "sub_category": "Wall Pack | Architectural",
+          "sub_category": "Sports Lighting",
           "display_echelon": "PRO",
           "max_wattage": 1200,
           "sku_count": 31,
@@ -4500,7 +4502,7 @@
         },
         {
           "family": "Rosetta",
-          "sub_category": "Area Shoebox",
+          "sub_category": "Area Light",
           "display_echelon": "PRO+",
           "max_wattage": 0,
           "sku_count": 8,
@@ -4519,7 +4521,8 @@
           "pdpUrl": "",
           "card_image": "",
           "tierKey": "Rosetta-III",
-          "heroImage": "/products/liberty/assets/hero/fam-rosetta-iii.webp"
+          "heroImage": "/products/liberty/assets/hero/fam-rosetta-iii.webp",
+          "hidden": true
         },
         {
           "family": "Sentinel",
@@ -4563,7 +4566,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": null,
-          "tierKey": "Shield"
+          "tierKey": "Shield",
+          "hidden": true
         },
         {
           "family": "Tenon Adaptors",
@@ -4578,7 +4582,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Tenon Adaptors"
+          "tierKey": "Tenon Adaptors",
+          "hidden": true
         },
         {
           "family": "Watchtower",
@@ -4647,7 +4652,8 @@
           "pdpUrl": "",
           "card_image": "",
           "tierKey": "Zion-II",
-          "heroImage": "/images/family-cards/luxoarch/everest.png"
+          "heroImage": "/images/family-cards/luxoarch/everest.png",
+          "hidden": true
         }
       ]
     },
@@ -11666,7 +11672,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Alpine"
+          "tierKey": "Alpine",
+          "hidden": true
         },
         {
           "family": "Centurion",
@@ -11681,7 +11688,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Centurion"
+          "tierKey": "Centurion",
+          "hidden": true
         },
         {
           "family": "Hyperion",
@@ -11696,7 +11704,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Hyperion"
+          "tierKey": "Hyperion",
+          "hidden": true
         },
         {
           "family": "LPAR Series",
@@ -11777,7 +11786,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Redwood"
+          "tierKey": "Redwood",
+          "hidden": true
         },
         {
           "family": "Sentry",
@@ -11815,7 +11825,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Sequoia"
+          "tierKey": "Sequoia",
+          "hidden": true
         },
         {
           "family": "Symmetry",
@@ -18186,7 +18197,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Clarity"
+          "tierKey": "Clarity",
+          "hidden": true
         },
         {
           "family": "Crescent",
@@ -18410,7 +18422,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Radius-II SafeZone"
+          "tierKey": "Radius-II SafeZone",
+          "hidden": true
         },
         {
           "family": "RingMaster",
@@ -18433,7 +18446,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "RingMaster"
+          "tierKey": "RingMaster",
+          "hidden": true
         },
         {
           "family": "Wally",
@@ -18456,7 +18470,8 @@
           "taa": false,
           "pdpUrl": "",
           "card_image": "",
-          "tierKey": "Wally"
+          "tierKey": "Wally",
+          "hidden": true
         },
         {
           "family": "eCrescent",
