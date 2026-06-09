@@ -116,12 +116,11 @@
   // ISS-20 B10: trigger gate — only fire when the SOLE active facet group is "application"
   function hasNonAppFilter(){
     // Check if any non-application facet checkbox is checked
+    // NOTE: wattage slider is intentionally excluded — its JS-set initial value may differ from
+    // the HTML max attribute, causing false positives. The slider does not trigger update() via
+    // the change listener; only checkbox facets do.
     var nonApp = [].slice.call(document.querySelectorAll('input[data-facet]:not([data-facet="application"]):checked'));
-    if (nonApp.length) return true;
-    // Check wattage slider (if present and not at max)
-    var ws = document.getElementById('wattSlider') || document.querySelector('input[type="range"][id*="watt"]');
-    if (ws && ws.max && parseInt(ws.value) < parseInt(ws.max)) return true;
-    return false;
+    return nonApp.length > 0;
   }
   function update(){
     var m = mountNode(); if(!m) return;
@@ -148,6 +147,15 @@
     obs.observe(document.body, { subtree:true, childList:true, attributes:true, attributeFilter:['aria-pressed','checked','class','style'] });
     // ISS-20: bump on any facet change (update() guards internally)
     document.addEventListener('change', function(e){ if(e.target && e.target.matches && e.target.matches('input[data-facet]')) bump(); });
+    // ISS-20: also suppress block when wattage slider is moved (not at its initial max)
+    var wattSlider = document.getElementById('wattSlider');
+    if (wattSlider) {
+      var wattMax = wattSlider.value; // capture JS-initialized max (may differ from HTML max attr)
+      wattSlider.addEventListener('input', function(){
+        if (parseInt(wattSlider.value) < parseInt(wattMax)) { state.slug=null; var m=mountNode(); if(m) m.innerHTML=''; }
+        else bump();
+      });
+    }
     document.querySelectorAll('.app-tile').forEach(function(b){ b.addEventListener('click', function(){ setTimeout(update, 80); }); });
     update();
   }
