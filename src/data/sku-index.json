@@ -4167,7 +4167,7 @@
           "pdpUrl": "/products/aura/",
           "card_image": "/images/family-cards/luxoarch/aura.png",
           "slug": "aura",
-          "heroImage": "/products/aura/assets/hero/aura-hero-1.webp",
+          "heroImage": null,
           "tierKey": "Aura-I"
         },
         {
