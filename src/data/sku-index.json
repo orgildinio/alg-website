@@ -4667,7 +4667,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4685,7 +4687,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4703,7 +4707,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4721,7 +4727,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4739,7 +4747,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4757,7 +4767,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4775,7 +4787,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4793,7 +4807,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4811,7 +4827,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4829,7 +4847,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4847,7 +4867,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4865,7 +4887,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4883,7 +4907,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4901,7 +4927,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4919,7 +4947,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4937,7 +4967,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4955,7 +4987,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4973,7 +5007,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -4991,7 +5027,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5009,7 +5047,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5027,7 +5067,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5045,7 +5087,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5063,7 +5107,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5081,7 +5127,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5099,7 +5147,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5117,7 +5167,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5135,7 +5187,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5153,7 +5207,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5171,7 +5227,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5189,7 +5247,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5201,7 +5261,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5213,7 +5275,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5225,7 +5289,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5237,7 +5303,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5249,7 +5317,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5261,7 +5331,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5273,7 +5345,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5285,7 +5359,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5297,7 +5373,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5309,7 +5387,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5321,7 +5401,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5333,7 +5415,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5345,7 +5429,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5357,7 +5443,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5369,7 +5457,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5381,7 +5471,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5393,7 +5485,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5405,7 +5499,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5417,7 +5513,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5429,7 +5527,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5441,7 +5541,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5453,7 +5555,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5465,7 +5569,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5477,7 +5583,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5489,7 +5597,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5501,7 +5611,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5513,7 +5625,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5525,7 +5639,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5537,7 +5653,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5549,7 +5667,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5636,7 +5756,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5648,7 +5770,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5660,7 +5784,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5672,7 +5798,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5684,7 +5812,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5696,7 +5826,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5708,7 +5840,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5720,7 +5854,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5732,7 +5868,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5744,7 +5882,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5762,7 +5902,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5780,7 +5922,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5798,7 +5942,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5816,7 +5962,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5834,7 +5982,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5852,7 +6002,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5864,7 +6016,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5876,7 +6030,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5888,7 +6044,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5900,7 +6058,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5912,7 +6072,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5924,7 +6086,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5936,7 +6100,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5948,7 +6114,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5960,7 +6128,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5972,7 +6142,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5984,7 +6156,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -5996,7 +6170,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6008,7 +6184,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6020,7 +6198,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6032,7 +6212,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6044,7 +6226,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6056,7 +6240,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6068,7 +6254,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6080,7 +6268,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6092,7 +6282,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6104,7 +6296,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6116,7 +6310,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6128,7 +6324,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6140,7 +6338,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6152,7 +6352,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6164,7 +6366,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6176,7 +6380,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6188,7 +6394,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6200,7 +6408,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6212,7 +6422,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6224,7 +6436,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6242,7 +6456,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6260,7 +6476,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6278,7 +6496,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6296,7 +6516,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6314,7 +6536,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6331,7 +6555,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6348,7 +6574,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6360,7 +6588,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6372,7 +6602,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6389,7 +6621,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6406,7 +6640,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6418,7 +6654,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6430,7 +6668,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6447,7 +6687,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6464,7 +6706,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6476,7 +6720,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6488,7 +6734,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6500,7 +6748,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6512,7 +6762,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6524,7 +6776,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6536,7 +6790,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6554,7 +6810,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6566,7 +6824,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6578,7 +6838,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6590,7 +6852,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6602,7 +6866,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6614,7 +6880,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6626,7 +6894,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6638,7 +6908,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6656,7 +6928,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6674,7 +6948,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6686,7 +6962,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6698,7 +6976,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6710,7 +6990,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6722,7 +7004,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6734,7 +7018,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6746,7 +7032,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6758,7 +7046,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6776,7 +7066,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6794,7 +7086,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6806,7 +7100,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6818,7 +7114,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6830,7 +7128,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6842,7 +7142,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6854,7 +7156,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6866,7 +7170,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6878,7 +7184,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6896,7 +7204,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6914,7 +7224,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6926,7 +7238,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6938,7 +7252,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6950,7 +7266,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6962,7 +7280,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6974,7 +7294,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6986,7 +7308,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -6998,7 +7322,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7016,7 +7342,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7034,7 +7362,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7052,7 +7382,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7070,7 +7402,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7086,7 +7420,9 @@
             "4000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7102,7 +7438,9 @@
             "4000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7118,7 +7456,9 @@
             "4000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7130,7 +7470,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7142,7 +7484,9 @@
           "wattages": [],
           "ccts": [],
           "voltage": "",
-          "mount_types": [],
+          "mount_types": [
+            "Recessed"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7177,7 +7521,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7195,7 +7541,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7213,7 +7561,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7230,7 +7580,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7247,7 +7599,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7264,7 +7618,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -7281,7 +7637,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Surface"
+          ],
           "taa": false,
           "dlc": "Listed"
         },
@@ -8300,7 +8658,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": true,
           "dlc": "Listed"
         },
@@ -8316,7 +8676,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": true,
           "dlc": "Listed"
         },
@@ -8332,7 +8694,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": true,
           "dlc": "Listed"
         },
@@ -8348,7 +8712,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": true,
           "dlc": "Listed"
         },
@@ -8364,7 +8730,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": true,
           "dlc": "Listed"
         },
@@ -8380,7 +8748,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": true,
           "dlc": "Listed"
         },
@@ -8396,7 +8766,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": true,
           "dlc": "Listed"
         },
@@ -8412,7 +8784,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": true,
           "dlc": "Listed"
         },
@@ -8428,7 +8802,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": true,
           "dlc": "Listed"
         },
@@ -8444,7 +8820,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": true,
           "dlc": "Listed"
         },
@@ -8460,7 +8838,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": true,
           "dlc": "Listed"
         },
@@ -8476,7 +8856,9 @@
             "5000"
           ],
           "voltage": "120 - 277V",
-          "mount_types": [],
+          "mount_types": [
+            "Grid"
+          ],
           "taa": true,
           "dlc": "Listed"
         },
@@ -9043,6 +9425,42 @@
           "voltage": "120 - 277V",
           "mount_types": [],
           "taa": false
+        },
+        {
+          "sku": "LPVT-T-PLACEHOLDER",
+          "family": "proⒶRCH-T",
+          "sub_category": "Troffer",
+          "display_echelon": "PRO",
+          "wattages": [],
+          "ccts": [
+            "3500",
+            "4000",
+            "5000"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Grid"
+          ],
+          "taa": true,
+          "dlc": "Listed"
+        },
+        {
+          "sku": "LRFT-T1-PLACEHOLDER",
+          "family": "retroⒶRCH-T1",
+          "sub_category": "Retrofit Troffer",
+          "display_echelon": "PRO",
+          "wattages": [],
+          "ccts": [
+            "3500",
+            "4000",
+            "5000"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Grid"
+          ],
+          "taa": true,
+          "dlc": "Listed"
         }
       ],
       "families": [
@@ -9510,7 +9928,10 @@
           ],
           "sub_category": "Troffer",
           "display_echelon": "ECO",
-          "taa": true
+          "taa": true,
+          "mount_types": [
+            "Grid"
+          ]
         },
         {
           "family": "retroⒶRCH-T1",
@@ -9524,7 +9945,10 @@
           ],
           "sub_category": "Retrofit Troffer",
           "display_echelon": "ECO",
-          "taa": true
+          "taa": true,
+          "mount_types": [
+            "Grid"
+          ]
         }
       ]
     },
