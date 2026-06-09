@@ -833,8 +833,8 @@
   }
   .zoom-modal.open { display: flex; }
   .zoom-modal-content { width: 100%; max-width: 1280px; max-height: 88vh; display: flex; align-items: center; justify-content: center; }
-  .zoom-modal-content img { max-width: 100%; max-height: 88vh; height: auto; width: auto; }
-  .zoom-modal-content svg { width: 100%; height: 100%; }
+  .zoom-modal-content img { max-width: 90vw; max-height: 90vh; height: auto; width: auto; object-fit: contain; }
+  .zoom-modal-content svg { max-width: 90vw; max-height: 90vh; width: auto; height: auto; }
   .zoom-modal-close {
     position: absolute;
     top: 24px;
@@ -7281,7 +7281,7 @@ body { overflow-x: hidden; }
       if (e) { e.preventDefault(); e.stopPropagation(); }
       var src = getVisibleDimSvg();
       if (src) {
-        dst.innerHTML = src.outerHTML.replace(/\bdisplay\s*:\s*none[;]?/i, '').replace(/\bdisplay\s*:\s*block[;]?/i, 'display:block;');
+        dst.innerHTML = src.outerHTML.replace(/\bdisplay\s*:\s*none[;]?/i, '').replace(/\bdisplay\s*:\s*block[;]?/i, 'display:block;').replace(/\bmax-width\s*:[^;]*;?/gi, '').replace(/\bwidth\s*:\s*100%[;]?/gi, '').replace(/\bmargin\s*:[^;]*;?/gi, '');
       }
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -7292,6 +7292,9 @@ body { overflow-x: hidden; }
       document.body.style.overflow = '';
     }
     btn.addEventListener('click', openModal);
+    // Wire drawing click → openModal (ISS-5 fix)
+    var drawingHost = document.getElementById('dimImageHost');
+    if (drawingHost) { drawingHost.style.cursor = 'zoom-in'; drawingHost.addEventListener('click', openModal); }
     modal.addEventListener('click', closeModal);
     if (closeBtn) closeBtn.addEventListener('click', function(e){ e.stopPropagation(); closeModal(e); });
     document.addEventListener('keydown', function(e) {
