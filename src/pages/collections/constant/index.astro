@@ -193,11 +193,11 @@ const skus = [
   { id: 'sku-em20-cmb-150dc',   tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'EM20-CMB/150DC',    meta: '20W · 150Vdc · J-Box CMB',               pdp: '/products/em20-cmb150dc/' ,
     photo: '/products/em20-cmb150dc/assets/em20-cmb150dc_001_white.png', output: 'dc', family: 'universal', adder: '' },
   { id: 'sku-crcu-em24-jbm',    tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'CRCU-EM24/JBM',     meta: '24W · 190Vdc · J-Box mount',             pdp: '/products/crcu-em24-jbm/' ,
-    photo: '/products/crcu-em24-jbm/assets/crcu-em24-jbm_001_white.png', output: 'dc', family: 'universal', adder: '' },
+    photo: '/products/crcu-em24-jbm/assets/crcu-em24-jbm_001_white.png', output: 'dc', family: 'universal', adder: '', noBg: true },
   { id: 'sku-crc6-em24-jbs-b',  tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'CRC6-EM24/JBS/B',   meta: '24W · 190Vdc · black · J-Box surface',   pdp: '/products/crc6-em24-jbs-b/' ,
-    photo: '/products/crc6-em24-jbs-b/assets/crc6-em24-jbs-b_001_white.png', output: 'dc', family: 'luxoarch', adder: '' },
+    photo: '/products/crc6-em24-jbs-b/assets/crc6-em24-jbs-b_001_white.png', output: 'dc', family: 'luxoarch', adder: '', noBg: true },
   { id: 'sku-crc6-em24-jbs-w',  tier: 'quick',   eyebrow: 'QUICK · MID-POWER · PRO',    name: 'CRC6-EM24/JBS/W',   meta: '24W · 190Vdc · white · J-Box surface',   pdp: '/products/crc6-em24-jbs-w/' ,
-    photo: '/products/crc6-em24-jbs-w/assets/crc6-em24-jbs-w_001_white.png', output: 'dc', family: 'luxoarch', adder: '' },
+    photo: '/products/crc6-em24-jbs-w/assets/crc6-em24-jbs-w_001_white.png', output: 'dc', family: 'luxoarch', adder: '', noBg: true },
 ];
 ---
 <BaseLayout
@@ -452,7 +452,7 @@ const skus = [
                   <span class="fc-subcat">{sku.eyebrow}</span>
                   <span class="fc-tier tier-badge tier-pro">PRO</span>
                 </div>
-                <div class="fc-img" style={sku.photo ? `background-image: url(${sku.photo})` : undefined}>
+                <div class="fc-img" style={sku.photo && !sku.noBg ? `background-image: url(${sku.photo})` : undefined}>
                   <img
                     src={sku.photo}
                     alt={sku.name}
