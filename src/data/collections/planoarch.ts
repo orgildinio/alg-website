@@ -13,7 +13,7 @@ const planoarchData = {
   titleAscii: 'planoⒶRCH',
   headlineLine: 'plano<span class="aa">Ⓐ</span>RCH',
   description: 'Commercial indoor lighting for offices, retail, and healthcare. 13 active families, 326 active SKUs.',
-  pillRow: ['DLC-LISTED', 'TAA AVAILABLE', '5 US WAREHOUSES', '<5-DAY DELIVERY', '9 APPLICATIONS'],
+  pillRow: ['DLC-LISTED', 'TAA AVAILABLE', '12 US WAREHOUSES', '<5-DAY DELIVERY', '9 APPLICATIONS'],
   statStrip: [
     { value: '13',  label: 'Fixture Families' },
     { value: '326', label: 'Active SKUs'       },
@@ -26,7 +26,7 @@ const planoarchData = {
     { value: '9',   label: 'Applications' },
     { value: 'DLC', label: 'Listed'    },
     { value: 'TAA', label: 'Available'    },
-    { value: '5 US',label: 'Warehouses'   },
+    { value: '12 US',label: 'Warehouses'   },
   ],
   applications: [
     {
@@ -141,7 +141,7 @@ const planoarchData = {
   getStarted: {
     layoutCopy: 'Submit a project address and fixture list. Our team returns a complete photometric layout within 48 hours.',
     sampleCopy: 'Request a physical sample of any active PLANOARCH family. Ships from a US warehouse within 3 business days.',
-    distributorCopy: 'Find a stocking distributor near your project site. All 5 US warehouses carry core PLANOARCH SKUs.',
+    distributorCopy: 'Find a stocking distributor near your project site. All 12 US warehouses carry core PLANOARCH SKUs.',
     repCopy: 'Connect with a local sales rep for specification support, pricing, and project tracking.',
   },
   relatedCollections: [

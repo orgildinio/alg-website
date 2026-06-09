@@ -6,14 +6,14 @@
 
 const luxoarchData = {
   slug: 'luxoarch',
-  searchKeywords: 'outdoor commercial,parking lot,facade,sports lighting,wall pack,canopy,bollard,roadway,shoebox,flood light,DLC-listed,TAA compliant,5 US warehouses,less-than-5-day delivery',
+  searchKeywords: 'outdoor commercial,parking lot,facade,sports lighting,wall pack,canopy,bollard,roadway,shoebox,flood light,DLC-listed,TAA compliant,12 US warehouses,less-than-5-day delivery',
   parentVertical: 'Outdoor',
   parentSubVertical: 'Commercial',
   name: 'luxoⒶRCH',
   titleAscii: 'LUXOⒶRCH',
   headlineLine: 'luxo<span class="aa">Ⓐ</span>RCH',
   description: 'Outdoor lighting for the commercial perimeter. 24 active families, 272 active SKUs.',
-  pillRow: ['DLC-LISTED', 'TAA AVAILABLE', '5 US WAREHOUSES', '<5-DAY DELIVERY', '10 APPLICATIONS'],
+  pillRow: ['DLC-LISTED', 'TAA AVAILABLE', '12 US WAREHOUSES', '<5-DAY DELIVERY', '10 APPLICATIONS'],
   statStrip: [
     { value: '16',  label: 'Fixture Families' },
     { value: '272', label: 'Active SKUs'       },
@@ -26,7 +26,7 @@ const luxoarchData = {
     { value: '10',  label: 'Applications' },
     { value: 'DLC', label: 'Listed'    },
     { value: 'TAA', label: 'Available'    },
-    { value: '5 US',label: 'Warehouses'   },
+    { value: '12 US',label: 'Warehouses'   },
   ],
   applications: [
     {
@@ -152,7 +152,7 @@ const luxoarchData = {
   getStarted: {
     layoutCopy: 'Submit a project address and fixture list. Our team returns a complete photometric layout within 48 hours.',
     sampleCopy: 'Request a physical sample of any active LUXOARCH family. Ships from a US warehouse within 3 business days.',
-    distributorCopy: 'Find a stocking distributor near your project site. All 5 US warehouses carry core LUXOARCH SKUs.',
+    distributorCopy: 'Find a stocking distributor near your project site. All 12 US warehouses carry core LUXOARCH SKUs.',
     repCopy: 'Connect with a local sales rep for specification support, pricing, and project tracking.',
   },
   relatedCollections: [

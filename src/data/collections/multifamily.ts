@@ -32,7 +32,7 @@ const multifamilyData = {
     { value: '6',   label: 'Applications' },
     { value: 'DLC', label: 'Premium'      },
     { value: 'TAA', label: 'Available'    },
-    { value: '5 US',label: 'Warehouses'   },
+    { value: '12 US',label: 'Warehouses'   },
   ],
   // C2: 6-bucket application taxonomy (filter realignment)
   // appMulti maps to the sub_category values in sku-index.json (comma-separated)
@@ -106,7 +106,7 @@ const multifamilyData = {
   getStarted: {
     layoutCopy: 'Submit a project address and fixture list. Our team returns a complete photometric layout within 48 hours.',
     sampleCopy: 'Request a physical sample of any active multi-fAMILY family. Ships from a US warehouse within 3 business days.',
-    distributorCopy: 'Find a stocking distributor near your project site. All 5 US warehouses carry core multi-fAMILY SKUs.',
+    distributorCopy: 'Find a stocking distributor near your project site. All 12 US warehouses carry core multi-fAMILY SKUs.',
     repCopy: 'Connect with a local sales rep for specification support, pricing, and project tracking.',
   },
   relatedCollections: [

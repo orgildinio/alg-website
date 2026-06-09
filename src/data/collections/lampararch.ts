@@ -25,7 +25,7 @@ const lampararchData = {
     { value: '6',   label: 'Applications' },
     { value: 'DLC', label: 'Listed'    },
     { value: 'TAA', label: 'Available'    },
-    { value: '5 US',label: 'Warehouses'   },
+    { value: '12 US',label: 'Warehouses'   },
   ],
   applications: [
     {
@@ -122,7 +122,7 @@ const lampararchData = {
   getStarted: {
     layoutCopy: 'Submit a project address and fixture list. Our team returns a complete photometric layout within 48 hours.',
     sampleCopy: 'Request a physical sample of any active LAMPARARCH family. Ships from a US warehouse within 3 business days.',
-    distributorCopy: 'Find a stocking distributor near your project site. All 5 US warehouses carry core LAMPARARCH SKUs.',
+    distributorCopy: 'Find a stocking distributor near your project site. All 12 US warehouses carry core LAMPARARCH SKUs.',
     repCopy: 'Connect with a local sales rep for specification support, pricing, and project tracking.',
   },
   relatedCollections: [

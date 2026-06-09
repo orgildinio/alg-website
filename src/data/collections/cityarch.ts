@@ -16,7 +16,7 @@ const cityarchData = {
   titleAscii: 'CITYⒶRCH',
   headlineLine: 'city<span class="aa">Ⓐ</span>RCH',
   description: 'Street and roadway luminaires for municipal and utility applications. 12 active families, 129 active SKUs across 6 applications.',
-  pillRow: ['DLC-LISTED', 'TAA AVAILABLE', '5 US WAREHOUSES', '<5-DAY DELIVERY', '6 APPLICATIONS'],
+  pillRow: ['DLC-LISTED', 'TAA AVAILABLE', '12 US WAREHOUSES', '<5-DAY DELIVERY', '6 APPLICATIONS'],
   statStrip: [
     { value: '7',   label: 'Fixture Families' },
     { value: '129', label: 'Active SKUs'  },
@@ -29,7 +29,7 @@ const cityarchData = {
     { value: '6',   label: 'Applications' },
     { value: 'DLC', label: 'Listed'    },
     { value: 'TAA', label: 'Available'    },
-    { value: '5 US',label: 'Warehouses'   },
+    { value: '12 US',label: 'Warehouses'   },
   ],
   applications: [
     {
@@ -130,7 +130,7 @@ const cityarchData = {
   getStarted: {
     layoutCopy: 'Submit a project address and fixture list. Our team returns a complete photometric layout within 48 hours.',
     sampleCopy: 'Request a physical sample of any active CITYARCH family. Ships from a US warehouse within 3 business days.',
-    distributorCopy: 'Find a stocking distributor near your project site. All 5 US warehouses carry core CITYARCH SKUs.',
+    distributorCopy: 'Find a stocking distributor near your project site. All 12 US warehouses carry core CITYARCH SKUs.',
     repCopy: 'Connect with a local sales rep for specification support, pricing, and project tracking.',
   },
   relatedCollections: [
