@@ -4671,7 +4671,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830",
@@ -4691,7 +4691,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF10/BF",
@@ -4711,7 +4711,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF10/MW/SP",
@@ -4731,7 +4731,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF10/MW/SS",
@@ -4751,7 +4751,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF10/SP",
@@ -4771,7 +4771,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF10/SS",
@@ -4791,7 +4791,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF10/WF",
@@ -4811,7 +4811,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF4/BF",
@@ -4831,7 +4831,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF4/MW/SP",
@@ -4851,7 +4851,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF4/MW/SS",
@@ -4871,7 +4871,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF4/SP",
@@ -4891,7 +4891,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF4/SS",
@@ -4911,7 +4911,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF4/WF",
@@ -4931,7 +4931,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF6/BF",
@@ -4951,7 +4951,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF6/MW/SP",
@@ -4971,7 +4971,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF6/MW/SS",
@@ -4991,7 +4991,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF6/SP",
@@ -5011,7 +5011,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF6/SS",
@@ -5031,7 +5031,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF6/WF",
@@ -5051,7 +5051,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF8/BF",
@@ -5071,7 +5071,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF8/MW/SP",
@@ -5091,7 +5091,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF8/MW/SS",
@@ -5111,7 +5111,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF8/SP",
@@ -5131,7 +5131,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF8/SS",
@@ -5151,7 +5151,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/RF8/WF",
@@ -5171,7 +5171,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/SR4/MW/SS",
@@ -5191,7 +5191,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/SR6/MW/SS",
@@ -5211,7 +5211,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS1830/SR8/MW/SS",
@@ -5231,7 +5231,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/DMS3050",
@@ -5251,7 +5251,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF10/BF",
@@ -5265,7 +5265,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF10/MW/SP",
@@ -5279,7 +5279,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF10/MW/SS",
@@ -5293,7 +5293,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF10/SP",
@@ -5307,7 +5307,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF10/SS",
@@ -5321,7 +5321,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF10/WF",
@@ -5335,7 +5335,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF4/BF",
@@ -5349,7 +5349,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF4/MW/SP",
@@ -5363,7 +5363,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF4/MW/SS",
@@ -5377,7 +5377,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF4/SP",
@@ -5391,7 +5391,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF4/SS",
@@ -5405,7 +5405,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF4/WF",
@@ -5419,7 +5419,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF6/BF",
@@ -5433,7 +5433,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF6/MW/SP",
@@ -5447,7 +5447,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF6/MW/SS",
@@ -5461,7 +5461,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF6/SP",
@@ -5475,7 +5475,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF6/SS",
@@ -5489,7 +5489,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF6/WF",
@@ -5503,7 +5503,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF8/BF",
@@ -5517,7 +5517,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF8/MW/SP",
@@ -5531,7 +5531,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF8/MW/SS",
@@ -5545,7 +5545,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF8/SP",
@@ -5559,7 +5559,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF8/SS",
@@ -5573,7 +5573,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/RF8/WF",
@@ -5587,7 +5587,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/SR4/MS/SS",
@@ -5601,7 +5601,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/SR4/MW/SS",
@@ -5615,7 +5615,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/SR6/MS/SS",
@@ -5629,7 +5629,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/SR6/MW/SS",
@@ -5643,7 +5643,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/SR8/MS/SS",
@@ -5657,7 +5657,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-A1/SR8/MW/SS",
@@ -5671,7 +5671,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LWRP4xx-S3",
@@ -6780,7 +6780,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-SE/NCP",
@@ -6794,7 +6794,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL10-2238CS",
@@ -6814,7 +6814,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL10-SE/BK",
@@ -6828,7 +6828,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL10-SE/BK/WW",
@@ -6842,7 +6842,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL10-SE/BN",
@@ -6856,7 +6856,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL10-SE/BN/WW",
@@ -6870,7 +6870,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL10-SE/BR",
@@ -6884,7 +6884,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL10-SE/BR/WW",
@@ -6898,7 +6898,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL10-SE/WH/WW",
@@ -6912,7 +6912,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL4-0612CS",
@@ -6932,7 +6932,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL4-0612CS/SQ",
@@ -6952,7 +6952,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL4-SE/BK",
@@ -6966,7 +6966,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL4-SE/BK/WW",
@@ -6980,7 +6980,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL4-SE/BN",
@@ -6994,7 +6994,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL4-SE/BN/WW",
@@ -7008,7 +7008,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL4-SE/BR",
@@ -7022,7 +7022,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL4-SE/BR/WW",
@@ -7036,7 +7036,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL4-SE/WH/WW",
@@ -7050,7 +7050,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL6-1222CS",
@@ -7070,7 +7070,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL6-1222CS/SQ",
@@ -7090,7 +7090,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL6-SE/BK",
@@ -7104,7 +7104,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL6-SE/BK/WW",
@@ -7118,7 +7118,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL6-SE/BN",
@@ -7132,7 +7132,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL6-SE/BN/WW",
@@ -7146,7 +7146,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL6-SE/BR",
@@ -7160,7 +7160,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL6-SE/BR/WW",
@@ -7174,7 +7174,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL6-SE/WH/WW",
@@ -7188,7 +7188,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL8-1730CS",
@@ -7208,7 +7208,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL8-1730CSSQ",
@@ -7228,7 +7228,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL8-SE/BK",
@@ -7242,7 +7242,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL8-SE/BK/WW",
@@ -7256,7 +7256,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL8-SE/BN",
@@ -7270,7 +7270,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL8-SE/BN/WW",
@@ -7284,7 +7284,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL8-SE/BR",
@@ -7298,7 +7298,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL8-SE/BR/WW",
@@ -7312,7 +7312,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL8-SE/WH/WW",
@@ -7326,7 +7326,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL10-2635/SSZ5/RS",
@@ -7346,7 +7346,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL4-0711/SSZ5/RS",
@@ -7366,7 +7366,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL6-1119/SSZ5/RS",
@@ -7386,7 +7386,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL8-2227/SSZ5/RS",
@@ -7406,7 +7406,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-S1/DMS1020",
@@ -7424,7 +7424,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-S1/DMS2740",
@@ -7442,7 +7442,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-S1/DMS3060",
@@ -7460,7 +7460,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-S1/RF04/BF",
@@ -7474,7 +7474,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LCDL-S1/RF04/WF",
@@ -7488,7 +7488,7 @@
             "Recessed"
           ],
           "taa": false,
-          "dlc": "Listed"
+          "dlc": false
         },
         {
           "sku": "LASD2/3-24CS5/90",
@@ -9470,7 +9470,7 @@
           "display_echelon": "PRO+",
           "max_wattage": 0,
           "sku_count": 60,
-          "dlc": true,
+          "dlc": false,
           "ccts": [
             "2700",
             "3000",
@@ -9613,7 +9613,7 @@
           "display_echelon": "ECO",
           "max_wattage": 0,
           "sku_count": 37,
-          "dlc": true,
+          "dlc": false,
           "ccts": [
             "2700",
             "3000",
@@ -9638,7 +9638,7 @@
           "display_echelon": "PRO",
           "max_wattage": 0,
           "sku_count": 4,
-          "dlc": true,
+          "dlc": false,
           "ccts": [
             "2700",
             "3000",
@@ -9663,7 +9663,7 @@
           "display_echelon": "PRO+",
           "max_wattage": 0,
           "sku_count": 5,
-          "dlc": true,
+          "dlc": false,
           "ccts": [
             "3000",
             "3500",
@@ -12006,7 +12006,7 @@
           "ccts": [
             "5000"
           ],
-          "voltage": "347 - 480V",
+          "voltage": "",
           "mount_types": [],
           "taa": false
         },
@@ -12243,7 +12243,7 @@
           "sku": "LLSN-H1/DCP",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -12254,7 +12254,7 @@
           "sku": "LLSN-H1/FL2",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -12265,7 +12265,7 @@
           "sku": "LLSN-H1/FL4",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -12276,7 +12276,7 @@
           "sku": "LLSN-H1/FL8",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -12287,7 +12287,7 @@
           "sku": "LLSN-H1/FR2",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -12298,7 +12298,7 @@
           "sku": "LLSN-H1/FR4",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -12309,7 +12309,7 @@
           "sku": "LLSN-H1/FR8",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -12320,7 +12320,7 @@
           "sku": "LLSN-H1/MAC",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -12331,7 +12331,7 @@
           "sku": "LLSN-H1/MJP",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -12342,7 +12342,7 @@
           "sku": "LLSN-H1/RL2",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -12353,7 +12353,7 @@
           "sku": "LLSN-H1/RL4",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -12364,7 +12364,7 @@
           "sku": "LLSN-H1/RL8",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -12375,7 +12375,7 @@
           "sku": "LLSN-H1/WL2",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -12386,7 +12386,7 @@
           "sku": "LLSN-H1/WL4",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -12397,7 +12397,7 @@
           "sku": "LLSN-H1/WL8",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -12408,7 +12408,7 @@
           "sku": "LLSN2-2035CS",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12424,7 +12424,7 @@
           "sku": "LLSN2-2035CS/B",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12440,7 +12440,7 @@
           "sku": "LLSN2-2035CS/B/FL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12456,7 +12456,7 @@
           "sku": "LLSN2-2035CS/B/FR",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12472,7 +12472,7 @@
           "sku": "LLSN2-2035CS/B/RL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12488,7 +12488,7 @@
           "sku": "LLSN2-2035CS/B/WL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12504,7 +12504,7 @@
           "sku": "LLSN2-2035CS/FL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12520,7 +12520,7 @@
           "sku": "LLSN2-2035CS/FR",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12536,7 +12536,7 @@
           "sku": "LLSN2-2035CS/RL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12552,7 +12552,7 @@
           "sku": "LLSN2-2035CS/WL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12568,7 +12568,7 @@
           "sku": "LLSN4-3550CS",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12584,7 +12584,7 @@
           "sku": "LLSN4-3550CS/B",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12600,7 +12600,7 @@
           "sku": "LLSN4-3550CS/B/FL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12616,7 +12616,7 @@
           "sku": "LLSN4-3550CS/B/FR",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12632,7 +12632,7 @@
           "sku": "LLSN4-3550CS/B/RL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12648,7 +12648,7 @@
           "sku": "LLSN4-3550CS/B/WL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12664,7 +12664,7 @@
           "sku": "LLSN4-3550CS/FL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12680,7 +12680,7 @@
           "sku": "LLSN4-3550CS/FR",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12696,7 +12696,7 @@
           "sku": "LLSN4-3550CS/RL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12712,7 +12712,7 @@
           "sku": "LLSN4-3550CS/WL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12728,7 +12728,7 @@
           "sku": "LLSN8-40100CS",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12744,7 +12744,7 @@
           "sku": "LLSN8-40100CS/B",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12760,7 +12760,7 @@
           "sku": "LLSN8-40100CS/B/FL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12776,7 +12776,7 @@
           "sku": "LLSN8-40100CS/B/FR",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12792,7 +12792,7 @@
           "sku": "LLSN8-40100CS/B/RL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12808,7 +12808,7 @@
           "sku": "LLSN8-40100CS/B/WL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12824,7 +12824,7 @@
           "sku": "LLSN8-40100CS/FL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12840,7 +12840,7 @@
           "sku": "LLSN8-40100CS/FR",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12856,7 +12856,7 @@
           "sku": "LLSN8-40100CS/RL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12872,7 +12872,7 @@
           "sku": "LLSN8-40100CS/WL",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [
             "3000",
@@ -12888,7 +12888,7 @@
           "sku": "RP-LLSN4",
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "wattages": [],
           "ccts": [],
           "voltage": "",
@@ -15161,8 +15161,7 @@
             "5000"
           ],
           "voltages": [
-            "120 - 277V",
-            "347 - 480V"
+            "120 - 277V"
           ],
           "mount_types": [],
           "taa": false,
@@ -15197,7 +15196,7 @@
         {
           "family": "Hallmark",
           "sub_category": "Linear Strip",
-          "display_echelon": "PRO+",
+          "display_echelon": "PRO",
           "max_wattage": 0,
           "sku_count": 46,
           "dlc": true,
