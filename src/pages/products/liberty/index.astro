@@ -5204,6 +5204,7 @@ body { overflow-x: hidden; }
  var state = { housing: '150', watt: '150', cct: '50' };
 
  function rebuildWattTabs() {
+ if (!wattTabContainer) return;
  var labels = WATT_LABELS[state.housing];
  wattTabContainer.innerHTML = '';
  labels.forEach(function(spec, idx) {
@@ -5287,6 +5288,7 @@ body { overflow-x: hidden; }
  });
 
  // Wire the initial wattage tab listeners (page-load default)
+ if (wattTabContainer) {
  var initialWattTabs = wattTabContainer.querySelectorAll('.spec-watt-tab[data-photo-watt]');
  initialWattTabs.forEach(function(t) {
  t.addEventListener('click', function() {
@@ -5300,7 +5302,7 @@ body { overflow-x: hidden; }
  render();
  });
  });
-
+ }
  render();
  }
  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
