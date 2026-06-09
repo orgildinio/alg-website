@@ -63,6 +63,7 @@ const multifamilyData = {
   featured: [
     {
       family: 'Nebula-II',
+      cardLabel: 'LDRR · Nebula-II',
       subCategory: 'Recessed Downlights',
       displayEchelon: 'ECO' as const,
       maxWattage: 15,
@@ -73,6 +74,7 @@ const multifamilyData = {
     },
     {
       family: 'Eclipse-II',
+      cardLabel: 'LDLL · Eclipse-II',
       subCategory: 'Surface Mount',
       displayEchelon: 'PRO' as const,
       maxWattage: 24,
@@ -83,6 +85,7 @@ const multifamilyData = {
     },
     {
       family: 'Radius SafeZone',
+      cardLabel: 'LDRS · Radius SafeZone',
       subCategory: 'SafeZone Downlights',
       displayEchelon: 'PRO+' as const,
       maxWattage: 19,

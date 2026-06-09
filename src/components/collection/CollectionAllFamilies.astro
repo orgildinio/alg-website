@@ -231,7 +231,7 @@ const skusJson = JSON.stringify(skus);
                   }
                 </div>
                 <div class="fc-bottom">
-                  <div class="fc-name" set:html={wrapAa((fam as any).display_name ?? fam.family)}></div>
+                  <div class="fc-name" set:html={wrapAa((fam as any).card_label ?? (fam as any).display_name ?? fam.family)}></div>
                   <div class="fc-meta">
                     {fam.max_wattage > 0 && <span class="fc-watt">{fam.max_wattage}W max</span>}
                     <span class="fc-skucount">· {fam.sku_count} SKUs</span>

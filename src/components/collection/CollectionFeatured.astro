@@ -11,6 +11,7 @@ export interface Props {
   featuredHeadline?: string; // Optional override for the section headline
   featured: {
     family: string;
+    cardLabel?: string;           // Optional display label override (e.g. "LDRR · Nebula-II")
     subCategory: string;
     displayEchelon: 'ECO' | 'PRO' | 'PRO+' | null;
     maxWattage: number | null;
@@ -51,7 +52,7 @@ const { collectionName, collectionSlug, featured, featuredHeadline } = Astro.pro
           </div>
           <!-- Bottom strip -->
           <div class="feat-bottom">
-            <div class="feat-name">{f.family}</div>
+            <div class="feat-name">{(f as any).cardLabel ?? f.family}</div>
             <div class="feat-meta">
               {f.maxWattage && <span class="feat-watt">{f.maxWattage}W max</span>}
               <span class="feat-skus">{f.skuCount} SKUs</span>
