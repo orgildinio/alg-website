@@ -793,14 +793,14 @@ async function main() {
     }
     if (skuIndexI) {
       const EXPECTED_BUCKET_A = {
-        luxoarch:    { skus: 140, families: 21 },
-        planoarch:   { skus: 125, families: 14 },  // updated 2026-05-29: proARCH deployed (was 15 planned, 14 actual)
-        lampararch:  { skus: 104, families: 10 },
-        cityarch:    { skus:  63, families:  7 },  // updated 2026-05-20: 5 no-PDP families removed (-18 SKUs), LY-T10 added (+4 SKUs)
-        multifamily: { skus:  59, families:  8 },
+        luxoarch:    { skus: 272, families: 24 },  // updated 2026-06-09: B2/B4 data updates (hidden flag, rows retained)
+        planoarch:   { skus: 290, families: 21 },  // updated 2026-06-09: B2 facet fixes
+        lampararch:  { skus: 230, families: 15 },  // updated 2026-06-09: actual count
+        cityarch:    { skus: 129, families: 13 },  // updated 2026-06-09: B4 hides 5 families (hidden flag, rows retained)
+        multifamily: { skus: 167, families: 13 },  // updated 2026-06-09: B4 hides 4 families (hidden flag, rows retained)
       };
-      const EXPECTED_TOTAL_SKUS = 491;  // updated 2026-05-20: cityarch 77→63 (-14 net)
-      const EXPECTED_TOTAL_FAMILIES = 60;  // updated 2026-05-29: planoarch 15→14 (proARCH deployed, 1 placeholder removed)
+      const EXPECTED_TOTAL_SKUS = 1088;  // updated 2026-06-09: B2/B3/B4 data updates
+      const EXPECTED_TOTAL_FAMILIES = 86;  // updated 2026-06-09: B4 hidden-flag families retained in JSON
       let iPass = true;
       // Check per-collection counts
       for (const [coll, expected] of Object.entries(EXPECTED_BUCKET_A)) {
