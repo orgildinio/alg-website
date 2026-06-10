@@ -147,7 +147,7 @@ After all of the above, you should be able to verify:
 1. **GitHub repo:** `https://github.com/jamesalg/alg-website` shows all the files
 2. **First Cloudflare deploy succeeded:** the build log says ✓ on every step
 3. **Default Cloudflare URL works:** visit `alg-website.pages.dev` — sees the placeholder homepage with the brand-mark test
-4. **Staging domain works:** visit `https://staging.archipelagolighting.com` — same placeholder homepage
+4. **Staging domain works:** visit `/` — same placeholder homepage
 5. **CI is configured:** GitHub repo → Actions tab shows the Build & Verify workflow has run on the foundation commit and is green ✓
 
 If all 5 are green, the foundation is live. Tell me, and I send the v2.1.0 prompt to Manus.

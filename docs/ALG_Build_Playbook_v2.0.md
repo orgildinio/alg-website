@@ -420,7 +420,7 @@ This playbook is written so a Claude instance with no prior session memory can p
 
 **One thing to verify before responding to anything in a new session:**
 
-1. Fetch `https://staging.archipelagolighting.com` and confirm the current state matches the latest tag in the GitHub repo
+1. Fetch `/` and confirm the current state matches the latest tag in the GitHub repo
 2. Read this file (`ALG_Build_Playbook_v2.0.md`)
 3. Read `docs/lock_register.md` to know what's locked
 4. Read `docs/ITERATION_LOG.md` to see what's been merged

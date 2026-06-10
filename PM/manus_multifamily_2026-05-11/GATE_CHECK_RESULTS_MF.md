@@ -148,12 +148,12 @@ Pattern: `HOME › PRODUCTS › INDOOR › RESIDENTIAL · MULTI-FAMILY › MULTI
 
 | Page | URL |
 |---|---|
-| Eclipse-II | https://staging.archipelagolighting.com/products/multi-family/eclipse-ii/ |
-| Radius-II | https://staging.archipelagolighting.com/products/multi-family/radius-ii/ |
-| Nebula-II | https://staging.archipelagolighting.com/products/multi-family/nebula-ii/ |
-| Crescent | https://staging.archipelagolighting.com/products/multi-family/crescent/ |
-| eCrescent | https://staging.archipelagolighting.com/products/multi-family/ecrescent/ |
-| Orbit-I | https://staging.archipelagolighting.com/products/multi-family/orbit-i/ |
-| Lunar Eclipse | https://staging.archipelagolighting.com/products/multi-family/lunar-eclipse/ |
-| Gehry | https://staging.archipelagolighting.com/products/multi-family/gehry/ |
-| Eclipse-II Submittal | https://staging.archipelagolighting.com/products/multi-family/eclipse-ii/submittal/ |
+| Eclipse-II | /products/multi-family/eclipse-ii/ |
+| Radius-II | /products/multi-family/radius-ii/ |
+| Nebula-II | /products/multi-family/nebula-ii/ |
+| Crescent | /products/multi-family/crescent/ |
+| eCrescent | /products/multi-family/ecrescent/ |
+| Orbit-I | /products/multi-family/orbit-i/ |
+| Lunar Eclipse | /products/multi-family/lunar-eclipse/ |
+| Gehry | /products/multi-family/gehry/ |
+| Eclipse-II Submittal | /products/multi-family/eclipse-ii/submittal/ |

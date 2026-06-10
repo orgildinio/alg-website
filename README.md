@@ -92,7 +92,7 @@ npm run verify           # runs the playbook check suite against dist/
 2. Read `docs/ALG_Build_Playbook_v2.0.md` end-to-end
 3. Read `docs/ITERATION_LOG.md` to see what's merged
 4. Read `docs/lock_register.md` to see what's locked
-5. Fetch `https://staging.archipelagolighting.com` to see the current deployed state
+5. Fetch `/` to see the current deployed state
 6. Compare to `git log --oneline` on `main` — they should agree
 
 If they disagree, infrastructure is the suspect. Surface to James before iterating.

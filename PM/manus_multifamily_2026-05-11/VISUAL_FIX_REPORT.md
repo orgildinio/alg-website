@@ -30,4 +30,4 @@ All three visual regressions identified on the staging site have been diagnosed 
 - **Result:** The SVGs now scale correctly to fill their designated layout containers while maintaining their aspect ratio.
 
 ---
-The staging site is now rendering correctly. Please review the updated deployment at [staging.archipelagolighting.com](https://staging.archipelagolighting.com/collections/multi-family/).
+The staging site is now rendering correctly. Please review the updated deployment at [staging.archipelagolighting.com](/collections/multi-family/).
