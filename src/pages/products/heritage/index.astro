@@ -1696,6 +1696,53 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
  }
  .acc-card:hover .acc-card-cta { color: var(--brand-red); gap: 10px; }
 
+ /* ISS-46: QR badge on ACS accessory cards */
+ .acc-card-qr {
+ position: absolute;
+ top: 10px;
+ right: 10px;
+ z-index: 2;
+ width: 44px;
+ height: 44px;
+ padding: 3px;
+ background: #fff;
+ border: 1px solid rgba(255,255,255,0.10);
+ border-radius: 3px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ box-shadow: 0 4px 10px rgba(0,0,0,0.45);
+ pointer-events: none;
+ }
+ .acc-card-qr img { width: 100%; height: 100%; object-fit: contain; display: block; }
+ .acc-modal-acsqr {
+ display: flex;
+ align-items: flex-start;
+ gap: 14px;
+ padding: 14px 16px;
+ background: var(--bg-darker);
+ border: 1px solid var(--line);
+ border-radius: 3px;
+ margin-top: -2px;
+ }
+ .acc-modal-acsqr-img {
+ width: 96px;
+ height: 96px;
+ padding: 6px;
+ background: #fff;
+ border-radius: 3px;
+ box-shadow: 0 4px 12px rgba(0,0,0,0.45);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ flex-shrink: 0;
+ }
+ .acc-modal-acsqr-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
+ .acc-modal-acsqr-copy { display: flex; flex-direction: column; gap: 4px; }
+ .acc-modal-acsqr-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brand-red); }
+ .acc-modal-acsqr-title { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+ .acc-modal-acsqr-sub { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+
  /* Modal */
  .acc-modal {
  position: fixed;
@@ -4399,19 +4446,22 @@ body { overflow-x: hidden; }
  if (!grid || !modal) return;
  var cards = grid.querySelectorAll('.acc-card');
 
+ // ISS-47: Ⓐ glyph whitelist for INBOX modal
+ function brandify(str) {
+ return str.replace(/\b(ACS|contrALS|luxoARCH|planoARCH|cityARCH|lamparARCH|multi-fAMILY|Arch(?:ipelago)?)\b/g, function(m) {
+ return m.replace('A', '<span class="aa" aria-hidden="true">A</span>');
+ });
+ }
  function openModal(card) {
  var id = card.dataset.id;
  var d = INBOX[id];
  if (!d) { console.warn('inbox-modal: no data for id', id); return; }
- catEl.textContent = d.cat.replace(/A/g, '');
+ catEl.innerHTML = brandify(d.cat);
  titleEl.textContent = d.title;
  skuEl.innerHTML = d.sku + (d.model && d.model !== d.sku ? '<div style="font-size:11px;color:var(--text-muted);font-weight:400;margin-top:2px;">' + d.model + '</div>' : '');
  descEl.innerHTML = d.desc;
- if (d.cat.indexOf('A') >= 0) {
- catEl.innerHTML = d.cat.replace(/A/g, '<span class="aa" aria-hidden="true">A</span>');
- }
  specsEl.innerHTML = d.specs.map(function(s) {
- var v = (s[1] || '').toString().replace(/A/g, '<span class="aa" aria-hidden="true">A</span>');
+ var v = brandify((s[1] || '').toString());
  return '<div class="acc-spec-row">' +
  '<div class="acc-spec-key">' + s[0] + '</div>' +
  '<div class="acc-spec-val">' + v + '</div>' +
@@ -4806,6 +4856,7 @@ body { overflow-x: hidden; }
  <span class="acc-card-img-tag">ⒶCS BT MESH</span>
  <img class="acc-card-photo" src="/products/heritage/assets/accessories/sensor-acs.webp" loading="lazy"
  alt="MSP-SRO/903PX/ACS — outdoor 3-pin twist-lock occupancy sensor with ⒶCS Bluetooth Mesh radio (same physical hardware as the /NLC SILVAIR variant)" />
+ <span class="acc-card-qr" title="Scan to download ⒶCS mobile app"><img src="/products/heritage/assets/accessories/sensors/acs-app-qr.png" alt="QR code · scan to download the ⒶCS mobile app" loading="lazy"/></span>
  </div>
  <div class="acc-card-body">
  <div class="acc-card-cat">contr<span class="aa">Ⓐ</span>LS · Mesh · SaaS</div>
@@ -5108,6 +5159,8 @@ body { overflow-x: hidden; }
  <div class="acc-modal-sku" id="accModalSku">—</div>
  <p class="acc-modal-desc" id="accModalDesc">—</p>
  <div class="acc-modal-specs" id="accModalSpecs"></div>
+ <!-- ISS-46: QR block for ACS accessories -->
+ <div id="accModalAcsQr"></div>
  <!-- Drill template download grid — only renders for Mount accessories (each
  of which carries a `drillTemplates` array). 9 PDFs total: A/B/C/D/E
  (+ 150W/200W/300W variants) + F. Pending state per CFG-DOCS-1 until
@@ -5319,6 +5372,7 @@ body { overflow-x: hidden; }
  cat: 'contrALS . ACS Mesh + SaaS',
  title: '/ACS . ACS Bluetooth Mesh + Cloud Analytics',
  sku: 'MSP-SRO/903PX/ACS . 3-pin twist-lock',
+ acs: true,
  datasheet: { url: '', label: 'contrALS | by ACS | MSP-SRO:903PX:ACS.pdf', pending: true },
  desc: '<span class="aa">A</span>CS Bluetooth Mesh + cloud SaaS analytics. <strong>DLC NLC application in flight</strong> &mdash; once qualified, <code>/ACS</code> unlocks a stackable NLC rebate on top of SSL (the only Heritage controls path that does this). Companion <code>MSX-ACS</code> mesh controller (100-ft range &middot; IP65 &middot; MTO) extends across multi-pole sites without a gateway.',
  specs: [
@@ -5588,6 +5642,7 @@ body { overflow-x: hidden; }
  var drillMeta= document.getElementById('accModalDrillMeta');
  var drillNote= document.getElementById('accModalDrillNote');
  var drillGrid= document.getElementById('accModalDrillGrid');
+ var acsQrEl = document.getElementById('accModalAcsQr');
  var pills = document.querySelectorAll('.acc-pill');
  if (!grid || !modal) return;
  var cards = grid.querySelectorAll('.acc-card');
@@ -5606,25 +5661,44 @@ body { overflow-x: hidden; }
  });
  });
 
+ // ISS-47: Ⓐ glyph whitelist for ACC modal
+ function brandifyAcc(str) {
+ return str.replace(/\b(ACS|contrALS|luxoARCH|planoARCH|cityARCH|lamparARCH|multi-fAMILY|Arch(?:ipelago)?)\b/g, function(m) {
+ return m.replace('A', '<span class="aa" aria-hidden="true">A</span>');
+ });
+ }
  // ---- Open modal ----
  function openModal(card) {
  var id = card.dataset.id;
  var d = ACC[id];
  if (!d) { console.warn('acc-modal: no data for id', id); return; }
- catEl.textContent = d.cat.replace(/A/g, '');
- titleEl.innerHTML = d.title.replace(/A/g, '<span class="aa" aria-hidden="true">A</span>');
+ catEl.innerHTML = brandifyAcc(d.cat);
+ titleEl.innerHTML = brandifyAcc(d.title);
  skuEl.textContent = d.sku;
  descEl.innerHTML = d.desc;
- if (d.cat.indexOf('A') >= 0) {
- catEl.innerHTML = d.cat.replace(/A/g, '<span class="aa" aria-hidden="true">A</span>');
- }
  specsEl.innerHTML = d.specs.map(function(s) {
- var v = (s[1] || '').toString().replace(/A/g, '<span class="aa" aria-hidden="true">A</span>');
+ var v = brandifyAcc((s[1] || '').toString());
  return '<div class="acc-spec-row">' +
  '<div class="acc-spec-key">' + s[0] + '</div>' +
  '<div class="acc-spec-val">' + v + '</div>' +
  '</div>';
  }).join('');
+ // ISS-46: QR block for ACS accessories
+ if (acsQrEl) {
+ if (d.acs) {
+ acsQrEl.innerHTML =
+ '<div class="acc-modal-acsqr">' +
+ '<div class="acc-modal-acsqr-img"><img src="/products/heritage/assets/accessories/sensors/acs-app-qr.png" alt="QR code \u00b7 scan to download the \u24b6CS mobile app"/></div>' +
+ '<div class="acc-modal-acsqr-copy">' +
+ '<div class="acc-modal-acsqr-eyebrow">Commission with the <span class="aa" aria-hidden="true">A</span>CS App</div>' +
+ '<div class="acc-modal-acsqr-title">Scan to download the <span class="aa" aria-hidden="true">A</span>CS mobile app</div>' +
+ '<div class="acc-modal-acsqr-sub">Bluetooth-pair this device \u00b7 build a mesh network \u00b7 push scenes, schedules, and energy analytics from your phone. Free \u00b7 Apple App Store + Google Play.</div>' +
+ '</div>' +
+ '</div>';
+ } else {
+ acsQrEl.innerHTML = '';
+ }
+ }
  // Drill pattern block - Mount accessories carry a `drillSvg` object pointing at
  // the polished SVG recreation of the source CAD drill template. The block shows
  // a thumbnail of the SVG inline + a "View Full Drill Pattern" CTA that opens the
