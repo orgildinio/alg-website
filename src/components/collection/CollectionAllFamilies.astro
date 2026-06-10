@@ -19,18 +19,22 @@ const { collectionSlug, familiesHeadline, familiesSubhead } = Astro.props;
 const colData = skuIndex.collections[collectionSlug as keyof typeof skuIndex.collections];
 const families = (colData?.families ?? []).filter((f: any) => f.pdp_ready !== false && !f.hidden);
 const skus = colData?.skus ?? [];
+// ISS-43: Only use SKUs belonging to visible (non-hidden) families for facet option lists.
+// This prevents 0-match options from hidden families appearing in the sidebar.
+const visibleFamilyNames = new Set(families.map((f: any) => f.family));
+const visibleSkus = skus.filter((s: any) => visibleFamilyNames.has(s.family));
 
-// Compute facet options from data
+// Compute facet options from data (ISS-43: use visibleSkus, not all skus)
 const allSubCats = [...new Set(families.map(f => f.sub_category))].sort();
 const allEchelons = [...new Set(families.map(f => f.display_echelon))].sort((a,b)=>{
   const o:Record<string,number> = {ECO:0,PRO:1,'PRO+':2};
   return (o[a]??9)-(o[b]??9);
 });
-const allCcts = [...new Set(skus.flatMap(s => s.ccts))].sort();
-const allVoltages = [...new Set(skus.map(s => s.voltage).filter(Boolean))].sort();
-const allDlc = [...new Set(skus.map(s => s.dlc).filter(Boolean))].sort() as string[];
-const allMounts = [...new Set(skus.flatMap(s => s.mount_types))].sort();
-const hasTaa = skus.some(s => s.taa);
+const allCcts = [...new Set(visibleSkus.flatMap((s: any) => s.ccts))].sort();
+const allVoltages = [...new Set(visibleSkus.map((s: any) => s.voltage).filter(Boolean))].sort();
+const allDlc = [...new Set(visibleSkus.map((s: any) => s.dlc).filter(Boolean))].sort() as string[];
+const allMounts = [...new Set(visibleSkus.flatMap((s: any) => s.mount_types))].sort();
+const hasTaa = visibleSkus.some((s: any) => s.taa);
 
 const minWatt = Math.min(...families.map(f => f.max_wattage).filter(n=>n>0));
 const maxWatt = Math.max(...families.map(f => f.max_wattage).filter(n=>n>0));
@@ -40,18 +44,19 @@ function wrapAa(str: string): string {
   return str.replace(/Ⓐ/g, '<span class="aa">Ⓐ</span>');
 }
 
-// Count helpers (family-level)
+// Count helpers (family-level) — ISS-43: use visibleSkus so counts match visible families only
 function subCatCount(sub: string) { return families.filter(f=>f.sub_category===sub).length; }
 function echelonCount(e: string)  { return families.filter(f=>f.display_echelon===e).length; }
-function cctCount(cct: string)    { return families.filter(f=>skus.some(s=>s.family===f.family&&s.ccts.includes(cct))).length; }
-function voltCount(v: string)     { return families.filter(f=>skus.some(s=>s.family===f.family&&s.voltage===v)).length; }
-function dlcCount(d: string)      { return families.filter(f=>skus.some(s=>s.family===f.family&&s.dlc===d)).length; }
-function mountCount(m: string)    { return families.filter(f=>skus.some(s=>s.family===f.family&&s.mount_types.includes(m))).length; }
-function taaCount()               { return families.filter(f=>skus.some(s=>s.family===f.family&&s.taa)).length; }
+function cctCount(cct: string)    { return families.filter(f=>visibleSkus.some((s:any)=>s.family===f.family&&s.ccts.includes(cct))).length; }
+function voltCount(v: string)     { return families.filter(f=>visibleSkus.some((s:any)=>s.family===f.family&&s.voltage===v)).length; }
+function dlcCount(d: string)      { return families.filter(f=>visibleSkus.some((s:any)=>s.family===f.family&&s.dlc===d)).length; }
+function mountCount(m: string)    { return families.filter(f=>visibleSkus.some((s:any)=>s.family===f.family&&s.mount_types.includes(m))).length; }
+function taaCount()               { return families.filter(f=>visibleSkus.some((s:any)=>s.family===f.family&&s.taa)).length; }
 
 // Serialize families for client JS
+// ISS-43: pass visibleSkus (not all skus) so client-side facet counts also exclude hidden-family SKUs
 const familiesJson = JSON.stringify(families);
-const skusJson = JSON.stringify(skus);
+const skusJson = JSON.stringify(visibleSkus);
 ---
 
 <section class="collection-section collection-section--families" id="families">

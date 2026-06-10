@@ -8,7 +8,17 @@
  * Gehry echelon: PRO. Orbit renamed to Orbit-I.
  * C5: Featured heading corrected to "Three flagship families".
  * C6: Browse-by-Application tiles wired via appMulti field.
+ * ISS-35: skuCount computed from sku-index.json (family count per sub_category, visible families only).
  */
+import skuIndex from '../sku-index.json';
+
+// ISS-35: compute family counts per sub_category for visible families
+const _mfCol = (skuIndex as any).collections['multifamily'];
+const _mfFamilies = (_mfCol?.families ?? []).filter((f: any) => f.pdp_ready !== false && !f.hidden);
+function _subCatFamCount(sub: string): number {
+  return _mfFamilies.filter((f: any) => f.sub_category === sub).length;
+}
+
 const multifamilyData = {
   slug: 'multifamily',
   searchKeywords: 'multi-family,apartment,condo,property management,low-glare,downlight,puck light,recess can,wall sconce,balcony lighting,corridor lighting,stairwell lighting,fixture-only,wireless control',
@@ -40,21 +50,21 @@ const multifamilyData = {
     {
       name: 'Downlight',
       slug: 'downlight',
-      skuCount: 0,
+      skuCount: _subCatFamCount('Downlight'),
       appMulti: 'Downlight',
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>',
     },
     {
       name: 'SafeZone Downlights',
       slug: 'safezone-downlights',
-      skuCount: 0,
+      skuCount: _subCatFamCount('SafeZone Downlights'),
       appMulti: 'SafeZone Downlights',
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
     },
     {
       name: 'Commercial Recess Can',
       slug: 'commercial-recess-can',
-      skuCount: 0,
+      skuCount: _subCatFamCount('Commercial Recess Can'),
       appMulti: 'Commercial Recess Can',
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>',
     },
