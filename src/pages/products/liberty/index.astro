@@ -3867,7 +3867,7 @@ body { overflow-x: hidden; }
  document.querySelectorAll('.spec-dim-svg[data-dim-group]').forEach(function(img) {
  var on = img.dataset.dimGroup === dimGroup;
  img.classList.toggle('is-active', on);
- if (on) activeSrc = img.src;
+ if (on) activeSrc = img.getAttribute('src');
  });
  // Keep the zoom-modal's img src in sync with the active dim SVG so when
  // the user expands, they see the housing they're currently viewing.
