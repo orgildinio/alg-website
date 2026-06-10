@@ -90,6 +90,66 @@ const bundleHeadStyles = headStyleMatches.join('\n');
     <!-- Bundle body content: splash screen, loader script, manifest, template -->
     <Fragment set:html={bundleBodyContent} />
   </div>
+
+  <!-- ISS-38: Promote hero heading to H1 for SEO / accessibility.
+       The React bundle renders the hero headline as a <span> inside a <div>.
+       This script wraps that span in an <h1 style="display:contents"> after React
+       renders, so the heading is semantically correct without affecting layout.
+       Selector: the hero section's first large BrandText span (font-size >= 90px). -->
+  <script>
+    (function () {
+      function promoteHeroH1() {
+        // Find the hero headline span: BrandText inside the hero section
+        // It has font-size 96px (catalog dir) and font-weight 800
+        var spans = document.querySelectorAll('#contrals-pdp-host span');
+        for (var i = 0; i < spans.length; i++) {
+          var s = spans[i];
+          var cs = window.getComputedStyle(s);
+          var fs = parseFloat(cs.fontSize);
+          var fw = cs.fontWeight;
+          // Hero headline: large font-size (>= 80px), bold, contains 'contrⒶLS' text
+          if (fs >= 80 && (fw === '800' || fw === 'bold') && s.textContent.includes('contr')) {
+            // Already wrapped?
+            if (s.parentElement && s.parentElement.tagName === 'H1') return;
+            var h1 = document.createElement('h1');
+            h1.style.cssText = 'display:contents;margin:0;padding:0;font:inherit;';
+            s.parentNode.insertBefore(h1, s);
+            h1.appendChild(s);
+            return;
+          }
+        }
+      }
+      // Poll until React renders the hero (max 5s)
+      var attempts = 0;
+      var timer = setInterval(function () {
+        attempts++;
+        promoteHeroH1();
+        if (attempts >= 50) clearInterval(timer);
+        // Stop polling once promoted
+        var h1 = document.querySelector('#contrals-pdp-host h1');
+        if (h1) clearInterval(timer);
+      }, 100);
+    })();
+  </script>
+
+  <!-- ISS-29: Override 4 wrong product grid thumbnails with correct static assets.
+       Placed AFTER the bundle body so this runs after the bundle's inline __sku_images
+       scripts. React reads __sku_images during DOMContentLoaded, which fires after all
+       synchronous inline scripts, so these overrides win. -->
+  <script>
+    (function () {
+      var imgs = window.__sku_images = window.__sku_images || {};
+      // MSP-SRI/903P1 (SILVAIR · BLE) → SR-SV9035A-PIR
+      imgs['MSP-SRI/903P1/NLC'] = '/collections/controls/assets/SR-SV9035A-PIR.png';
+      // MSP-SRO/903P3 (SILVAIR · Outdoor) → SR-BL9033A-PIR-white
+      imgs['MSP-SRO/903P3/NLC'] = '/collections/controls/assets/SR-BL9033A-PIR-white.png';
+      // MSP-HTI/08P1 (BLS · PIR) → HD08VR-P-1-90deg
+      imgs['MSP-HTI/08P1/BLS'] = '/collections/controls/assets/HD08VR-P-1-90deg.png';
+      // MSM-HTI/126P1 (SILVAIR · MW) → MSM-HTI-126_3
+      imgs['MSM-HTI/126P1/NLC'] = '/collections/controls/assets/MSM-HTI-126_3.png';
+    })();
+  </script>
+
 <style is:global>
   /* CFG-EYEBROW-1 · tighten Ⓐ glyph in heavy-tracked .marker eyebrows only */
   .marker .aa { letter-spacing: 0 !important; margin: 0 -0.9em !important; }
