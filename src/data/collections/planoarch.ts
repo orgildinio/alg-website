@@ -91,7 +91,7 @@ const planoarchData = {
       displayEchelon: 'PRO+' as const,
       maxWattage: 18,
       skuCount: 27,
-      dlc: true,
+      dlc: false,
       lineDrawing: null,
       pdpUrl: '/products/astra/',
       cardImage: '/products/astra/assets/hero/fam-astra-1.webp',
