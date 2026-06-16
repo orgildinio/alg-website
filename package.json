@@ -14,7 +14,6 @@
     "verify": "node scripts/verify.mjs"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.1.6",
     "astro": "^4.16.0"
   },
   "engines": {

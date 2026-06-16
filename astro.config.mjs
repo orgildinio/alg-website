@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 import { execSync } from 'child_process';
-import sitemap from '@astrojs/sitemap';
 
 // Astro config for ALG Website
 // Output: static site
@@ -50,6 +49,50 @@ function pagefindIntegration() {
   };
 }
 
+// SEO1: Manual sitemap integration — no external package required.
+// Writes sitemap-index.xml + sitemap-0.xml to the build output using the
+// pages array from astro:build:done. Compatible with Astro 4.x and 5.x.
+// Excludes: /submittal/, /_pagefind/, /404, /tools/ utility routes.
+function sitemapIntegration() {
+  const SITE = 'https://www.archipelagolighting.com';
+  const EXCLUDE = ['/submittal', '/_pagefind', '/404', '/tools/'];
+  return {
+    name: 'alg-sitemap',
+    hooks: {
+      'astro:build:done': async ({ dir, pages }) => {
+        const { writeFileSync } = await import('node:fs');
+        const { join } = await import('node:path');
+        const outDir = dir.pathname.replace(/\/$/, '');
+
+        // Build URL list from pages array
+        const urls = pages
+          .map(p => {
+            let path = p.pathname;
+            // Normalise: strip leading slash, then re-add for full URL
+            if (path.startsWith('/')) path = path.slice(1);
+            return `${SITE}/${path}`;
+          })
+          .filter(url => !EXCLUDE.some(ex => url.includes(ex)));
+
+        const now = new Date().toISOString().slice(0, 10);
+
+        // sitemap-0.xml — all URLs
+        const urlset = urls.map(url =>
+          `  <url>\n    <loc>${url}</loc>\n    <lastmod>${now}</lastmod>\n  </url>`
+        ).join('\n');
+        const sitemap0 = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urlset}\n</urlset>\n`;
+        writeFileSync(join(outDir, 'sitemap-0.xml'), sitemap0, 'utf-8');
+
+        // sitemap-index.xml — points to sitemap-0.xml
+        const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap>\n    <loc>${SITE}/sitemap-0.xml</loc>\n    <lastmod>${now}</lastmod>\n  </sitemap>\n</sitemapindex>\n`;
+        writeFileSync(join(outDir, 'sitemap-index.xml'), sitemapIndex, 'utf-8');
+
+        console.log(`[alg-sitemap] Wrote sitemap-index.xml + sitemap-0.xml (${urls.length} URLs)`);
+      }
+    }
+  };
+}
+
 export default defineConfig({
   site: 'https://www.archipelagolighting.com',
   output: 'static',
@@ -58,16 +101,7 @@ export default defineConfig({
   },
   trailingSlash: 'never',
   integrations: [
-    // SEO1: sitemap auto-generated at /sitemap-index.xml + /sitemap-0.xml
-    sitemap({
-      filter: (page) => {
-        // Exclude submittal pages, pagefind internals, and 404
-        if (page.includes('/submittal/')) return false;
-        if (page.includes('/_pagefind/')) return false;
-        if (page.includes('/404')) return false;
-        return true;
-      },
-    }),
+    sitemapIntegration(),
     pagefindIntegration(),
   ],
   // Compression handled by Cloudflare CDN — no in-build minification quirks
