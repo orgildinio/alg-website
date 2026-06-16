@@ -18,6 +18,67 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   description="Total-store LED package from −40°F freezers to fuel canopies. Specify one manufacturer for cooler, sales floor, back-of-house, and exterior zones."
   bodyClass="page-vertical-cold-storage"
 >
+  <Fragment slot="head">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.archipelagolighting.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Solutions",
+          "item": "https://www.archipelagolighting.com/solutions/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Cold Storage & Grocery",
+          "item": "https://www.archipelagolighting.com/solutions/cold-storage-grocery/"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What lighting is recommended for cold storage and grocery?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cold storage facilities require vapor-tight, IP-rated LED fixtures that perform reliably in sub-zero temperatures without warm-up times. Grocery aisles benefit from high-CRI linear lighting to enhance product appearance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are there DLC rebates for cold storage retrofits?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, upgrading legacy cold storage lighting to DLC-listed LEDs yields excellent utility rebates. LEDs emit less heat than traditional sources, generating secondary savings by reducing the load on refrigeration systems."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What controls do cold storage facilities need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cold storage areas require low-temperature-rated occupancy sensors to ensure lights are only active when forklifts or personnel are present, preventing unnecessary heat generation."
+          }
+        }
+      ]
+    }
+    </script>
+  </Fragment>
+
   <link rel="stylesheet" href="/styles/industry-vertical-system.css" slot="head" />
 
   <!-- Breadcrumb -->
@@ -38,7 +99,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <div>
 <span class="hero__eyebrow">Vertical Solutions · Cold Storage &amp; Grocery</span>
 <h1 class="hero__title">Cold Storage &amp; Grocery Lighting Solutions</h1>
-<p class="hero__deck">Total-Store LED Systems — From Freezer to Fuel Canopy. ALG is one of the few manufacturers offering a complete store lighting package under one brand.</p>
+<p class="hero__deck">Cold storage facilities require vapor-tight, IP-rated LED fixtures that perform reliably in sub-zero temperatures without warm-up times. Grocery aisles benefit from high-CRI linear lighting to enhance product appearance. Total-Store LED Systems — From Freezer to Fuel Canopy. ALG is one of the few manufacturers offering a complete store lighting package under one brand.</p>
 <div class="hero__cta-row">
 <a class="btn btn--primary" href="mailto:sales@archipelagolighting.com?subject=Lighting%20Inquiry%20%E2%80%94%20Cold%20Storage%20%26%20Grocery%20Solutions&amp;body=Hi%20ALG%20Sales%2C%0A%0AI%27m%20interested%20in%20lighting%20for%20a%20Cold%20Storage%20%26%20Grocery%20project%20and%20would%20like%20to%20discuss%20layout%2C%20specifications%2C%20and%20pricing.%0A%0AProject%20details%3A%0A-%20Facility%20/%20location%3A%0A-%20Approx.%20square%20footage%3A%0A-%20Mounting%20height%20/%20ceiling%20type%3A%0A-%20Target%20timeline%3A%0A%0AThank%20you.">Contact Sales <span class="arrow">→</span></a>
 <a target="_blank" rel="noopener" class="btn btn--ghost" href="https://workdrive.archipelagolighting.com/external/a622da1fae20c64b36d0e1e84d59df9aad9210b1f194c17572152649be490d38">Download Spec Pack</a>
@@ -369,6 +430,27 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <a class="btn btn--primary" href="mailto:sales@archipelagolighting.com?subject=Lighting%20Inquiry%20%E2%80%94%20Cold%20Storage%20%26%20Grocery%20Solutions&amp;body=Hi%20ALG%20Sales%2C%0A%0AI%27m%20interested%20in%20lighting%20for%20a%20Cold%20Storage%20%26%20Grocery%20project%20and%20would%20like%20to%20discuss%20layout%2C%20specifications%2C%20and%20pricing.%0A%0AProject%20details%3A%0A-%20Facility%20/%20location%3A%0A-%20Approx.%20square%20footage%3A%0A-%20Mounting%20height%20/%20ceiling%20type%3A%0A-%20Target%20timeline%3A%0A%0AThank%20you.">Contact Sales <span class="arrow">→</span></a>
 <a class="btn btn--ghost" href="mailto:sales@archipelagolighting.com?subject=Lighting%20Inquiry%20%E2%80%94%20Cold%20Storage%20%26%20Grocery%20Solutions&amp;body=Hi%20ALG%20Sales%2C%0A%0AI%27m%20interested%20in%20lighting%20for%20a%20Cold%20Storage%20%26%20Grocery%20project%20and%20would%20like%20to%20discuss%20layout%2C%20specifications%2C%20and%20pricing.%0A%0AProject%20details%3A%0A-%20Facility%20/%20location%3A%0A-%20Approx.%20square%20footage%3A%0A-%20Mounting%20height%20/%20ceiling%20type%3A%0A-%20Target%20timeline%3A%0A%0AThank%20you.">Contact Sales</a>
 </div>
+</div>
+</div>
+</section>
+
+<section class="section faq" data-screen-label="FAQ">
+<div class="container">
+<span class="eyebrow">Frequently Asked Questions</span>
+<h2 class="section-title section-title--underline">Expert Answers</h2>
+<div class="faq-grid">
+<article class="faq-item">
+<h3 class="faq-item__q">What lighting is recommended for cold storage and grocery?</h3>
+<p class="faq-item__a">Cold storage facilities require vapor-tight, IP-rated LED fixtures that perform reliably in sub-zero temperatures without warm-up times. Grocery aisles benefit from high-CRI linear lighting to enhance product appearance.</p>
+</article>
+<article class="faq-item">
+<h3 class="faq-item__q">Are there DLC rebates for cold storage retrofits?</h3>
+<p class="faq-item__a">Yes, upgrading legacy cold storage lighting to DLC-listed LEDs yields excellent utility rebates. LEDs emit less heat than traditional sources, generating secondary savings by reducing the load on refrigeration systems.</p>
+</article>
+<article class="faq-item">
+<h3 class="faq-item__q">What controls do cold storage facilities need?</h3>
+<p class="faq-item__a">Cold storage areas require low-temperature-rated occupancy sensors to ensure lights are only active when forklifts or personnel are present, preventing unnecessary heat generation.</p>
+</article>
 </div>
 </div>
 </section>

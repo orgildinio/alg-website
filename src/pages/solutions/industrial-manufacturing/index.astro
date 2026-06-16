@@ -18,6 +18,67 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   description="Production-floor and process-facility lighting engineered for uptime. Washdown-rated, vibration-resistant, and hazardous-location configurations."
   bodyClass="page-vertical-industrial-manufacturing"
 >
+  <Fragment slot="head">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.archipelagolighting.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Solutions",
+          "item": "https://www.archipelagolighting.com/solutions/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Industrial & Manufacturing",
+          "item": "https://www.archipelagolighting.com/solutions/industrial-manufacturing/"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What lighting is code-required for industrial manufacturing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Industrial facilities must meet OSHA and IESNA illumination standards, which typically require 30 to 100+ footcandles depending on the precision of the manufacturing task. High-visibility 5000K LED lighting is standard for safety and quality control."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are there DLC rebates for manufacturing plant retrofits?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, manufacturing plants can secure substantial utility rebates by upgrading to DLC Premium high-bays and linear fixtures. Adding advanced lighting controls can often double the rebate amount."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What IP ratings do industrial light fixtures need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Industrial environments with dust, debris, or moisture require IP65 or IP66 rated fixtures. Vapor tight fixtures and sealed high-bays prevent ingress and withstand high-pressure washdowns."
+          }
+        }
+      ]
+    }
+    </script>
+  </Fragment>
+
   <link rel="stylesheet" href="/styles/industry-vertical-system.css" slot="head" />
 
   <!-- Breadcrumb -->
@@ -38,7 +99,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <div>
 <span class="hero__eyebrow">Vertical Solutions · Industrial &amp; Manufacturing</span>
 <h1 class="hero__title">Built for the Toughest Environments</h1>
-<p class="hero__deck">From production floors and clean rooms to loading docks and hazardous areas — Archipelago Lighting delivers rugged, high-output LED solutions that survive where others fail.</p>
+<p class="hero__deck">Industrial facilities must meet OSHA and IESNA illumination standards, which typically require 30 to 100+ footcandles depending on the precision of the manufacturing task. High-visibility 5000K LED lighting is standard for safety and quality control. From production floors and clean rooms to loading docks and hazardous areas — Archipelago Lighting delivers rugged, high-output LED solutions that survive where others fail.</p>
 <div class="hero__cta-row">
 <a class="btn btn--primary" href="mailto:sales@archipelagolighting.com?subject=Lighting%20Inquiry%20%E2%80%94%20Industrial%20%26%20Manufacturing%20Solutions&amp;body=Hi%20ALG%20Sales%2C%0A%0AI%27m%20interested%20in%20lighting%20for%20a%20Industrial%20%26%20Manufacturing%20project%20and%20would%20like%20to%20discuss%20layout%2C%20specifications%2C%20and%20pricing.%0A%0AProject%20details%3A%0A-%20Facility%20/%20location%3A%0A-%20Approx.%20square%20footage%3A%0A-%20Mounting%20height%20/%20ceiling%20type%3A%0A-%20Target%20timeline%3A%0A%0AThank%20you.">Contact Sales <span class="arrow">→</span></a>
 <a target="_blank" rel="noopener" class="btn btn--ghost" href="https://workdrive.archipelagolighting.com/external/3eb26418f00a72e6d8d5f4c2296c9caae2ecc3e7fab69084df2b551d8c715cda">Download Spec Pack</a>
@@ -339,6 +400,27 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <a class="btn btn--primary" href="mailto:sales@archipelagolighting.com?subject=Lighting%20Inquiry%20%E2%80%94%20Industrial%20%26%20Manufacturing%20Solutions&amp;body=Hi%20ALG%20Sales%2C%0A%0AI%27m%20interested%20in%20lighting%20for%20a%20Industrial%20%26%20Manufacturing%20project%20and%20would%20like%20to%20discuss%20layout%2C%20specifications%2C%20and%20pricing.%0A%0AProject%20details%3A%0A-%20Facility%20/%20location%3A%0A-%20Approx.%20square%20footage%3A%0A-%20Mounting%20height%20/%20ceiling%20type%3A%0A-%20Target%20timeline%3A%0A%0AThank%20you.">Contact Sales <span class="arrow">→</span></a>
 <a class="btn btn--ghost" href="mailto:sales@archipelagolighting.com?subject=Lighting%20Inquiry%20%E2%80%94%20Industrial%20%26%20Manufacturing%20Solutions&amp;body=Hi%20ALG%20Sales%2C%0A%0AI%27m%20interested%20in%20lighting%20for%20a%20Industrial%20%26%20Manufacturing%20project%20and%20would%20like%20to%20discuss%20layout%2C%20specifications%2C%20and%20pricing.%0A%0AProject%20details%3A%0A-%20Facility%20/%20location%3A%0A-%20Approx.%20square%20footage%3A%0A-%20Mounting%20height%20/%20ceiling%20type%3A%0A-%20Target%20timeline%3A%0A%0AThank%20you.">Contact Sales</a>
 </div>
+</div>
+</div>
+</section>
+
+<section class="section faq" data-screen-label="FAQ">
+<div class="container">
+<span class="eyebrow">Frequently Asked Questions</span>
+<h2 class="section-title section-title--underline">Expert Answers</h2>
+<div class="faq-grid">
+<article class="faq-item">
+<h3 class="faq-item__q">What lighting is code-required for industrial manufacturing?</h3>
+<p class="faq-item__a">Industrial facilities must meet OSHA and IESNA illumination standards, which typically require 30 to 100+ footcandles depending on the precision of the manufacturing task. High-visibility 5000K LED lighting is standard for safety and quality control.</p>
+</article>
+<article class="faq-item">
+<h3 class="faq-item__q">Are there DLC rebates for manufacturing plant retrofits?</h3>
+<p class="faq-item__a">Yes, manufacturing plants can secure substantial utility rebates by upgrading to DLC Premium high-bays and linear fixtures. Adding advanced lighting controls can often double the rebate amount.</p>
+</article>
+<article class="faq-item">
+<h3 class="faq-item__q">What IP ratings do industrial light fixtures need?</h3>
+<p class="faq-item__a">Industrial environments with dust, debris, or moisture require IP65 or IP66 rated fixtures. Vapor tight fixtures and sealed high-bays prevent ingress and withstand high-pressure washdowns.</p>
+</article>
 </div>
 </div>
 </section>
