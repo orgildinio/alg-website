@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import { execSync } from 'child_process';
+import sitemap from '@astrojs/sitemap';
 
 // Astro config for ALG Website
 // Output: static site
@@ -50,13 +51,25 @@ function pagefindIntegration() {
 }
 
 export default defineConfig({
-  site: 'https://archipelagolighting.com',
+  site: 'https://www.archipelagolighting.com',
   output: 'static',
   build: {
     format: 'directory'
   },
   trailingSlash: 'never',
-  integrations: [pagefindIntegration()],
+  integrations: [
+    // SEO1: sitemap auto-generated at /sitemap-index.xml + /sitemap-0.xml
+    sitemap({
+      filter: (page) => {
+        // Exclude submittal pages, pagefind internals, and 404
+        if (page.includes('/submittal/')) return false;
+        if (page.includes('/_pagefind/')) return false;
+        if (page.includes('/404')) return false;
+        return true;
+      },
+    }),
+    pagefindIntegration(),
+  ],
   // Compression handled by Cloudflare CDN — no in-build minification quirks
   vite: {
     server: {

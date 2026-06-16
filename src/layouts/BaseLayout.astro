@@ -11,6 +11,8 @@
  *   - title (browser tab + OG)
  *   - description (meta + OG)
  *   - bodyClass (for page-specific CSS hooks)
+ *   - ogImage (optional, defaults to ALG color logo)
+ *   - isHomepage (optional, enables Organization+WebSite JSON-LD)
  */
 
 import Header from '../components/Header.astro';
@@ -23,14 +25,21 @@ interface Props {
   description?: string;
   bodyClass?: string;
   hideFooterCta?: boolean;
+  ogImage?: string;
+  isHomepage?: boolean;
 }
 
 const {
   title,
   description = 'Archipelago Lighting Group — commercial and industrial LED lighting. Specified. Stocked. Shipped.',
   bodyClass = '',
-  hideFooterCta = false
+  hideFooterCta = false,
+  ogImage = 'https://www.archipelagolighting.com/brand/alg-logo-color.png',
+  isHomepage = false,
 } = Astro.props;
+
+// SEO1: self-referencing canonical — strip query strings, always www
+const canonicalUrl = new URL(Astro.url.pathname, 'https://www.archipelagolighting.com').href;
 ---
 <!doctype html>
 <html lang="en">
@@ -38,9 +47,20 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <!-- SEO1: canonical — self-referencing, query-string stripped, always www -->
+    <link rel="canonical" href={canonicalUrl} />
+    <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="Archipelago Lighting Group" />
+    <!-- SEO1: Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -50,6 +70,34 @@ const {
     <!-- Cormorant Garamond 400/600/700 + italic 400, Playfair Display 600/700, JetBrains Mono 400/500 -->
     <title>{title}</title>
     <slot name="head" />
+    <!-- SEO1: Organization + WebSite JSON-LD (homepage only) -->
+    {isHomepage && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://www.archipelagolighting.com/#organization",
+            "name": "Archipelago Lighting Group",
+            "url": "https://www.archipelagolighting.com",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.archipelagolighting.com/brand/alg-logo-color.png"
+            },
+            "sameAs": []
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.archipelagolighting.com/#website",
+            "url": "https://www.archipelagolighting.com",
+            "name": "Archipelago Lighting Group",
+            "publisher": {
+              "@id": "https://www.archipelagolighting.com/#organization"
+            }
+          }
+        ]
+      })} />
+    )}
     <!-- §9 Microsoft Clarity analytics (v27x)
          To activate: set PUBLIC_CLARITY_ID env var in CF Pages dashboard (Settings > Environment variables)
          to your Clarity project ID from clarity.microsoft.com.

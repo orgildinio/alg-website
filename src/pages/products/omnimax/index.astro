@@ -12,6 +12,46 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   bodyClass="cityarch-pdp page-omnimax-pdp"
   hideFooterCta={false}
 >
+  <Fragment slot="head">
+      <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.archipelagolighting.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Products",
+      "item": "https://www.archipelagolighting.com/products/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "OUTDOOR",
+      "item": "https://www.archipelagolighting.com/collections/outdoor/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "CITY\u24b6RCH",
+      "item": "https://www.archipelagolighting.com/collections/cityarch/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "name": "LHMF \u00b7 OmniMax",
+      "item": "https://www.archipelagolighting.com/products/omnimax/"
+    }
+  ]
+}
+    </script>
+  </Fragment>
 
 <!-- CFG-CHROME-2 · .mockup-banner stripped 2026-05-20 PM — dev artifact must not ship to staging -->
 <!-- CFG-CHROME-1 · inline <header class="site-header"> removed 2026-05-20 PM — canonical chrome comes from Astro layout (utility-bar + main header + mega menu + REQUEST SAMPLE/LAYOUT CTAs), inline replaces it and breaks the brand. See Heritage as reference: <header id="site-header" data-pagefind-ignore="">. -->

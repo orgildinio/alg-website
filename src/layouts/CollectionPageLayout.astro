@@ -107,11 +107,33 @@ const anchorSections = [
 ];
 ---
 <BaseLayout title={`${c.titleAscii} | Archipelago Lighting Group`} description={c.description}>
-  {echelonDataFile && (
-    <Fragment slot="head">
+  <Fragment slot="head">
+    {echelonDataFile && (
       <link rel="stylesheet" href="/assets/echelon-compare/echelon-compare.css" />
-    </Fragment>
-  )}
+    )}
+    {/* SEO1: BreadcrumbList + CollectionPage JSON-LD */}
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.archipelagolighting.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://www.archipelagolighting.com/products/" },
+            { "@type": "ListItem", "position": 3, "name": c.parentVertical, "item": `https://www.archipelagolighting.com/collections/${c.parentVertical.toLowerCase()}/` },
+            ...(c.parentSubVertical ? [{ "@type": "ListItem", "position": 4, "name": c.parentSubVertical, "item": `https://www.archipelagolighting.com/collections/${c.parentVertical.toLowerCase()}/` }] : []),
+            { "@type": "ListItem", "position": c.parentSubVertical ? 5 : 4, "name": c.titleAscii, "item": `https://www.archipelagolighting.com/collections/${c.slug}/` }
+          ]
+        },
+        {
+          "@type": "CollectionPage",
+          "name": c.titleAscii,
+          "description": c.description,
+          "url": `https://www.archipelagolighting.com/collections/${c.slug}/`
+        }
+      ]
+    })} />
+  </Fragment>
   <!-- Pagefind breadcrumb meta (invisible, excluded from excerpt) -->
   <span data-pagefind-meta={`breadcrumb:${c.parentVertical} › ${c.parentSubVertical} · ${c.name}`} data-pagefind-ignore="all" style="display:none"></span>
   {c.searchKeywords && <span data-pagefind-meta={`keywords:${c.searchKeywords}`} data-pagefind-ignore="all" style="display:none"></span>}

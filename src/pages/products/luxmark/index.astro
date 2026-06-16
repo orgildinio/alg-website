@@ -42,6 +42,45 @@ const fontPreconnects = [...headContent.matchAll(/<link[^>]*rel="preconnect"[^>]
   bodyClass="planoarch-pdp luxmark-pdp"
 >
   <Fragment slot="head">
+      <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.archipelagolighting.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Products",
+      "item": "https://www.archipelagolighting.com/products/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "INDOOR",
+      "item": "https://www.archipelagolighting.com/collections/indoor/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "PLANO\u24b6RCH",
+      "item": "https://www.archipelagolighting.com/collections/planoarch/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "name": "LPVT \u00b7 Luxmark",
+      "item": "https://www.archipelagolighting.com/products/luxmark/"
+    }
+  ]
+}
+    </script>
+
     <Fragment set:html={fontPreconnects} />
     <Fragment set:html={fontLinks} />
     <Fragment set:html={styleBlocks} />
