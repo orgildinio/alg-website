@@ -39,7 +39,10 @@ const {
 } = Astro.props;
 
 // SEO1: self-referencing canonical — strip query strings, always www
-const canonicalUrl = new URL(Astro.url.pathname, 'https://www.archipelagolighting.com').href;
+// SEO3: ensure trailing slash matches served URL convention (every route serves with trailing slash)
+const _rawPath = Astro.url.pathname;
+const _canonPath = _rawPath === '/' ? '/' : (_rawPath.endsWith('/') ? _rawPath : _rawPath + '/');
+const canonicalUrl = new URL(_canonPath, 'https://www.archipelagolighting.com').href;
 ---
 <!doctype html>
 <html lang="en">

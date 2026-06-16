@@ -91,6 +91,20 @@ const ECHELON_DATA_FILE: Record<string, string> = {
   planoarch:   'planoarch.js',
 };
 const echelonDataFile = ECHELON_DATA_FILE[c.slug] ?? null;
+
+// SEO3: keyword-led title map — front-load generic search term, preserve glyph sub-brand
+// Pattern: "{Keyword} — {titleAscii} | Archipelago Lighting Group"
+const COLLECTION_KEYWORD: Record<string, string> = {
+  planoarch:   'Commercial LED Panels & Troffers',
+  luxoarch:    'Commercial Outdoor & Area Lighting',
+  cityarch:    'LED Street & Roadway Lighting',
+  lampararch:  'LED High-Bay & Industrial Lighting',
+  multifamily: 'Multifamily & Apartment LED Lighting',
+};
+const keywordPrefix = COLLECTION_KEYWORD[c.slug];
+const pageTitle = keywordPrefix
+  ? `${keywordPrefix} — ${c.titleAscii} | Archipelago Lighting Group`
+  : `${c.titleAscii} | Archipelago Lighting Group`;
 const echelonScripts = echelonDataFile
   ? `<script src="/assets/echelon-compare/data/${echelonDataFile}"></script><script src="/assets/echelon-compare/echelon-compare.js"></script>`
   : null;
@@ -106,7 +120,7 @@ const anchorSections = [
   { id: 'related',     label: 'Related'     },
 ];
 ---
-<BaseLayout title={`${c.titleAscii} | Archipelago Lighting Group`} description={c.description}>
+<BaseLayout title={pageTitle} description={c.description}>
   <Fragment slot="head">
     {echelonDataFile && (
       <link rel="stylesheet" href="/assets/echelon-compare/echelon-compare.css" />
