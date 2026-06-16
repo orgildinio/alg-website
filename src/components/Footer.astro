@@ -20,9 +20,11 @@ const { hideFooterCta = false } = Astro.props;
 const year = new Date().getFullYear();
 const buildHash = (import.meta.env.PUBLIC_BUILD_HASH || 'dev').slice(0, 7);
 const buildTimeRaw = import.meta.env.PUBLIC_BUILD_TIME;
-const buildTime = buildTimeRaw
-  ? new Date(buildTimeRaw).toISOString().slice(0, 16) + 'Z'
-  : 'local';
+// Guard: new Date('local') throws Invalid Date — fall back to build-time clock
+const _d = buildTimeRaw ? new Date(buildTimeRaw) : null;
+const buildTime = (_d && !isNaN(_d.getTime()))
+  ? _d.toISOString().slice(0, 16) + 'Z'
+  : new Date().toISOString().slice(0, 16) + 'Z';
 // G2 PROD GATE: always render badge in HTML; client-side JS hides it on the production hostname.
 // Production: archipelagolighting.com (exact, no subdomain)
 // Staging/preview: staging.archipelagolighting.com, *.pages.dev, localhost — badge visible
