@@ -118,3 +118,63 @@
 /products/ltrk-trackstar /products/trackstar/ 301
 /products/lbol-sentry/ /products/lbol-sentry-bollard/ 301
 /products/lbol-sentry /products/lbol-sentry-bollard/ 301
+
+# 2026-06-16 decor-doc-link-integrity — lamp-line product slug 301s (PART 2 + PART 3)
+# Vintage Décor product slugs
+/products/brighton                   /collections/vintage-decor/tubular/     301
+/products/brighton/                  /collections/vintage-decor/tubular/     301
+/products/t9                         /collections/vintage-decor/tubular/     301
+/products/t9/                        /collections/vintage-decor/tubular/     301
+/products/ltt9                       /collections/vintage-decor/tubular/     301
+/products/ltt9/                      /collections/vintage-decor/tubular/     301
+/products/glasgow                    /collections/vintage-decor/candelabra/  301
+/products/glasgow/                   /collections/vintage-decor/candelabra/  301
+/products/foundry-edison             /collections/vintage-decor/edison/      301
+/products/foundry-edison/            /collections/vintage-decor/edison/      301
+/products/foundry                    /collections/vintage-decor/edison/      301
+/products/foundry/                   /collections/vintage-decor/edison/      301
+/products/provence                   /collections/vintage-decor/globe/       301
+/products/provence/                  /collections/vintage-decor/globe/       301
+/products/marconi                    /collections/vintage-decor/radio/       301
+/products/marconi/                   /collections/vintage-decor/radio/       301
+/products/belgravia                  /collections/vintage-decor/victorian/   301
+/products/belgravia/                 /collections/vintage-decor/victorian/   301
+# Nostalgic Décor product slugs
+/products/eames                      /collections/nostalgic-decor/a19/       301
+/products/eames/                     /collections/nostalgic-decor/a19/       301
+/products/eames-a19                  /collections/nostalgic-decor/a19/       301
+/products/eames-a19/                 /collections/nostalgic-decor/a19/       301
+/products/knoll                      /collections/nostalgic-decor/b10/       301
+/products/knoll/                     /collections/nostalgic-decor/b10/       301
+/products/bauer                      /collections/nostalgic-decor/ca10/      301
+/products/bauer/                     /collections/nostalgic-decor/ca10/      301
+/products/heath                      /collections/nostalgic-decor/g16/       301
+/products/heath/                     /collections/nostalgic-decor/g16/       301
+/products/eichler                    /collections/nostalgic-decor/g25/       301
+/products/eichler/                   /collections/nostalgic-decor/g25/       301
+/products/marshall                   /collections/nostalgic-decor/s14/       301
+/products/marshall/                  /collections/nostalgic-decor/s14/       301
+# tubulARCH product slugs
+/products/pl                         /collections/tubulararch/pl/            301
+/products/pl/                        /collections/tubulararch/pl/            301
+/products/pll                        /collections/tubulararch/pll/           301
+/products/pll/                       /collections/tubulararch/pll/           301
+/products/t5                         /collections/tubulararch/t5/            301
+/products/t5/                        /collections/tubulararch/t5/            301
+/products/t8                         /collections/tubulararch/t8/            301
+/products/t8/                        /collections/tubulararch/t8/            301
+/products/lt8f                       /collections/tubulararch/t8/            301
+/products/lt8f/                      /collections/tubulararch/t8/            301
+/products/u6                         /collections/tubulararch/u6/            301
+/products/u6/                        /collections/tubulararch/u6/            301
+/products/tubularch                  /collections/tubularch/                 301
+/products/tubularch/                 /collections/tubularch/                 301
+/products/tubularch-t8               /collections/tubularch/                 301
+/products/tubularch-t8/              /collections/tubularch/                 301
+# Collection mis-slugs
+/collections/vintage                 /collections/vintage-decor/             301
+/collections/vintage/                /collections/vintage-decor/             301
+/collections/nostalgic               /collections/nostalgic-decor/           301
+/collections/nostalgic/              /collections/nostalgic-decor/           301
+# PART 3 — tubulARCH slug consistency: non-slash stem variant (slash variant already in v2.7.13)
+/collections/tubulararch             /collections/tubularch/                 301

@@ -45,11 +45,12 @@ const href = fallback
 const target = fallback ? '_self' : '_blank';
 const rel = fallback ? undefined : 'noopener noreferrer';
 const ctaText = fallback ? 'Request via sales →' : '↗ ZOHO WORKDRIVE';
+const displayTitle = fallback ? `Request ${title}` : title;
 ---
 
 <a href={href} target={target} rel={rel} class="resource-card">
   <div class="resource-icon">{icon}</div>
-  <div class="resource-title">{title}</div>
+  <div class="resource-title">{displayTitle}</div>
   <div class="resource-desc">{desc}</div>
   <div class="resource-cta" class:list={[fallback ? 'resource-cta--fallback' : '']}>{ctaText}</div>
 </a>
