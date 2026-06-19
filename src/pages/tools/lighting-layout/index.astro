@@ -630,21 +630,43 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   const ACC_BASE = 'https://acc.archipelagolighting.com/api/ple/v1';
   const STUB_MODE = true; // Set to false when ACC delivers the live endpoint
 
-  /* ---- Stub response (warehouse high-bay sample per contract) ---- */
-  const STUB_RESPONSE = {
-    layout_id: 'ple_stub_8f3a2b',
-    fixture_schedule: [
-      { type: 'F1', sku: 'LRHB3W240-40-UNV', description: 'lamparⒶRCH Jupiter · 240W high-bay · 34,800 lm · 4000K', watts: 240, lumens: 34800, qty: 15, mount_ft: 24 }
-    ],
-    grid: { cols: 24, rows: 16, spacing_ft: 5, values: null }, // null = use illustrative render
-    stats: { avg_fc: 32.1, min_fc: 21.0, max_fc: 47.4, uniformity_min_avg: 0.66, lpd_w_ft2: 0.38 },
-    pass: true,
-    target_fc: 30,
-    render: { pdf_url: null, png_url: null, svg_url: null }, // null until ACC delivers signed URLs
-    engine_version: 'ple-stub-1.0.0',
-    computed_at: new Date().toISOString(),
-    note: 'Preliminary layout for budgeting — not a stamped engineering plan.'
+  /* ---- Per-application stub catalog (mirrors ACC engine SKU-lock per app) ---- */
+  const APP = {
+    warehouse: {
+      fixture: { type: 'F1', sku: 'LRHB3W240-40-UNV', description: 'lampar<span class="aa">Ⓐ</span>RCH Jupiter · 240W high-bay · 34,800 lm · 4000K', watts: 240, lumens: 34800 },
+      qty: 15, mount_ft: 24, grid: { cols: 5, rows: 3, spacing_ft: 20 },
+      stats: { avg_fc: 32.1, min_fc: 21.0, max_fc: 47.4, uniformity_min_avg: 0.66, lpd_w_ft2: 0.38 },
+      target_fc: 30
+    },
+    area: {
+      fixture: { type: 'F1', sku: 'LSBX1W150-40-UNV', description: 'luxo<span class="aa">Ⓐ</span>RCH Liberty · LSBX shoebox area · 150W · 21,000 lm · 4000K', watts: 150, lumens: 21000 },
+      qty: 8, mount_ft: 25, grid: { cols: 4, rows: 2, spacing_ft: 30 },
+      stats: { avg_fc: 1.8, min_fc: 0.7, max_fc: 3.4, uniformity_min_avg: 0.39, lpd_w_ft2: 0.13 },
+      target_fc: 1.5
+    },
+    office: {
+      fixture: { type: 'F1', sku: 'LBLP24-40MXP2', description: 'plano<span class="aa">Ⓐ</span>RCH pro<span class="aa">Ⓐ</span>RCH-II · 2×4 backlit panel · 40W · 5,000 lm · 4000K', watts: 40, lumens: 5000 },
+      qty: 24, mount_ft: 10, grid: { cols: 6, rows: 4, spacing_ft: 8 },
+      stats: { avg_fc: 31.0, min_fc: 24.0, max_fc: 38.0, uniformity_min_avg: 0.77, lpd_w_ft2: 0.30 },
+      target_fc: 30
+    }
   };
+  /* ---- Build a stub response for a given app key + user inputs ---- */
+  function buildStubResponse(appKey, qty, mountFt) {
+    const a = APP[appKey] || APP.warehouse;
+    return {
+      layout_id: `ple_stub_${appKey}_${Date.now().toString(36)}`,
+      fixture_schedule: [{ ...a.fixture, qty, mount_ft: mountFt }],
+      grid: { ...a.grid, values: null },
+      stats: { ...a.stats },
+      pass: true,
+      target_fc: a.target_fc,
+      render: { pdf_url: null, png_url: null, svg_url: null },
+      engine_version: 'ple-stub-1.0.0',
+      computed_at: new Date().toISOString(),
+      note: 'Preliminary layout for budgeting — not a stamped engineering plan.'
+    };
+  }
 
   /* ---- State ---- */
   let currentLayoutId = null;
@@ -846,21 +868,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     try {
       let data;
       if (STUB_MODE) {
-        // Stub: simulate network delay + return sample response
+        // Stub: simulate network delay + return per-application sample response
         await new Promise(r => setTimeout(r, 900));
-        data = { ...STUB_RESPONSE, target_fc: FC, computed_at: new Date().toISOString() };
-        // Adjust stub qty based on area (illustrative)
+        const a = APP[currentApp] || APP.warehouse;
         const area = L * W;
-        const stubQty = Math.max(4, Math.round(area / 640));
-        data.fixture_schedule = [{ ...STUB_RESPONSE.fixture_schedule[0], qty: stubQty, mount_ft: MH }];
-        data.stats = {
-          avg_fc: FC * (0.9 + Math.random() * 0.3),
-          min_fc: FC * (0.6 + Math.random() * 0.1),
-          max_fc: FC * (1.4 + Math.random() * 0.2),
-          uniformity_min_avg: 0.60 + Math.random() * 0.15,
-          lpd_w_ft2: (240 * stubQty) / area
-        };
-        data.pass = data.stats.avg_fc >= FC;
+        // Scale qty to room area while keeping the correct fixture family
+        const areaRatio = area / (120 * 80); // baseline 120×80
+        const stubQty = Math.max(a.qty <= 10 ? 2 : 4, Math.round(a.qty * areaRatio));
+        data = buildStubResponse(currentApp, stubQty, MH);
       } else {
         // Live: POST to ACC
         const resp = await fetch(`${ACC_BASE}/auto-design`, {
