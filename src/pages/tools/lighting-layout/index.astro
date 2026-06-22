@@ -140,7 +140,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .ll-passchip.warn { background: rgba(255,160,0,0.12); color: #b07000; }
   .ll-passchip .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
   .ll-plan { position: relative; background: #fff; border: 1px solid var(--ll-line); border-radius: 10px; overflow: hidden; aspect-ratio: 3/2; }
-  #ll-heat { display: block; width: 100%; height: 100%; }
+  #ll-plotArea { display: block; width: 100%; height: 100%; line-height: 0; }
+  #ll-plotArea svg { display: block; width: 100%; height: 100%; }
   .ll-wmark { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0.10; overflow: hidden; }
   .ll-wmark .tile { font-weight: 900; font-size: 42px; color: #232930; transform: rotate(-30deg); white-space: nowrap; letter-spacing: 14px; line-height: 2.6; font-family: var(--ll-sans); }
   .ll-plan-legend { position: absolute; left: 12px; bottom: 12px; background: rgba(255,255,255,0.94); border: 1px solid var(--ll-line); border-radius: 6px; padding: 8px 10px; display: flex; align-items: center; gap: 9px; }
@@ -365,7 +366,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <span class="ll-passchip pass" id="ll-rPass"><span class="dot"></span> PASS · 32 fc avg vs 30 target</span>
         </div>
         <div class="ll-plan">
-          <canvas id="ll-heat" width="600" height="400"></canvas>
+          <div id="ll-plotArea"></div>
           <div class="ll-wmark"><div class="tile">Ⓐ&nbsp;ALG&nbsp;&nbsp;Ⓐ&nbsp;ALG&nbsp;&nbsp;Ⓐ&nbsp;ALG</div></div>
           <div class="ll-scalebadge" id="ll-rScale">5 ft grid · 15 fixtures</div>
           <div class="ll-plan-legend">
@@ -699,94 +700,31 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     errorBanner.classList.add('show');
   }
 
-  /* ---- Heatmap color helpers (ACC #81/#82 contract) ---- */
+  /* ---- Plot render — ACC /export SVG (ACC #85 contract) ---- */
 
-  // Parse a hex color string to [r,g,b] integers.
-  function hexToRgb(hex) {
-    const h = hex.replace('#', '');
-    return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
-  }
-
-  // Interpolate two [r,g,b] arrays by factor t ∈ [0,1].
-  function lerpRgb(a, b, t) {
-    return [Math.round(a[0]+(b[0]-a[0])*t), Math.round(a[1]+(b[1]-a[1])*t), Math.round(a[2]+(b[2]-a[2])*t)];
-  }
-
-  // Map a footcandle value to a continuous interpolated color using the ACC falseColor band stops.
-  // Within each band [loFc, hiFc) the color is linearly interpolated between the band's color and
-  // the next band's color, giving smooth per-cell variation instead of a flat plateau.
-  // The discrete 6-band legend is unchanged — only the canvas cell fill gets finer.
-  function fcInterpolatedColor(fcVal, bands) {
-    if (!bands || !bands.length) return '#888';
-    // Clamp to range
-    if (fcVal <= bands[0].loFc) return bands[0].color;
-    if (fcVal >= bands[bands.length - 1].hiFc) return bands[bands.length - 1].color;
-    for (let i = 0; i < bands.length; i++) {
-      const lo = bands[i].loFc, hi = bands[i].hiFc;
-      if (fcVal >= lo && fcVal < hi) {
-        // t = position within this band [0,1]
-        const t = (fcVal - lo) / (hi - lo);
-        const colorA = hexToRgb(bands[i].color);
-        // Interpolate toward the next band's color if it exists, else stay at this band's color
-        const colorB = i + 1 < bands.length ? hexToRgb(bands[i + 1].color) : colorA;
-        const [r, g, b] = lerpRgb(colorA, colorB, t);
-        return `rgb(${r},${g},${b})`;
-      }
+  // Fetch the report-grade SVG from ACC /export and render it inline in #ll-plotArea.
+  // Called after every successful /solve with the returned handle.
+  async function renderPlot(handle) {
+    const plotArea = document.getElementById('ll-plotArea');
+    if (!handle) { plotArea.innerHTML = ''; return; }
+    try {
+      const resp = await fetch(`${ACC_BASE}/export`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ handle })
+      });
+      if (!resp.ok) throw new Error('export-failed');
+      const svgText = await resp.text();
+      plotArea.innerHTML = svgText;
+    } catch (_) {
+      // Export failed — clear the plot area silently (stats/schedule still visible)
+      plotArea.innerHTML = '';
     }
-    return bands[bands.length - 1].color;
-  }
-
-  // Paint the real point-by-point heatmap from the engine grid.
-  // gridObj: { cols, rows, cellFt, fc } — fc[r][c] = footcandles, rows=width(y), cols=length(x)
-  // bands: ACC falseColor array [{loFc, hiFc, color}]
-  // fixturePositions: [{xFt, yFt}, ...] from ACC #82 — real fixture positions in room coordinates
-  // cellFt: cell size in feet (from gridObj.cellFt) — used to map xFt/yFt to canvas
-  function renderHeatFromGrid(gridObj, bands, fixturePositions) {
-    const { cols, rows, cellFt, fc: fcGrid } = gridObj;
-    const c = document.getElementById('ll-heat');
-    const ctx = c.getContext('2d');
-    const W = c.width, H = c.height;
-    const cw = W / cols, ch = H / rows;
-
-    // Paint each cell with continuous interpolated color (finer than flat band fill)
-    for (let r = 0; r < rows; r++) {
-      for (let col = 0; col < cols; col++) {
-        ctx.fillStyle = fcInterpolatedColor(fcGrid[r][col], bands);
-        ctx.fillRect(col * cw, r * ch, Math.ceil(cw) + 1, Math.ceil(ch) + 1);
-      }
-    }
-
-    // Draw fixture markers from real fixturePositions [{xFt, yFt}].
-    // Map: xFt along length (cols), yFt along width (rows), top-left origin.
-    // Canvas pixel = (xFt / cellFt) * cw, (yFt / cellFt) * ch
-    if (fixturePositions && fixturePositions.length) {
-      ctx.fillStyle = '#fff';
-      ctx.strokeStyle = '#232930';
-      ctx.lineWidth = 1.5;
-      for (const { xFt, yFt } of fixturePositions) {
-        const px = (xFt / cellFt) * cw;
-        const py = (yFt / cellFt) * ch;
-        ctx.beginPath();
-        ctx.rect(px - 4, py - 4, 8, 8);
-        ctx.fill();
-        ctx.stroke();
-      }
-    }
-  }
-
-  // Graceful fallback when grid is absent: clear the canvas to dark
-  function renderHeatFallback() {
-    const c = document.getElementById('ll-heat');
-    const ctx = c.getContext('2d');
-    ctx.clearRect(0, 0, c.width, c.height);
-    ctx.fillStyle = '#1b2230';
-    ctx.fillRect(0, 0, c.width, c.height);
   }
 
   /* ---- Render result from ACC response (live contract) ---- */
   function renderResult(data, inputs) {
-    // ACC #82 contract: adds fixturePositions [{xFt,yFt}] alongside grid, falseColor bands, etc.
-    const { stats, pass, fixture, schedule, energy, falseColor: fcBands, grid, fixturePositions, watermark } = data;
+    const { stats, pass, fixture, schedule, energy } = data;
     const targetFc = inputs.targetFc;
 
     // Title + pass chip
@@ -832,23 +770,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     document.getElementById('ll-rMax').textContent = `${Math.round(maxFc)} fc`;
     document.getElementById('ll-rCount').textContent = `${totalQty} fixture${totalQty !== 1 ? 's' : ''}`;
 
-    // Heatmap — paint real point-by-point grid from ACC engine; fall back to dark canvas if absent
-    if (grid && grid.fc && grid.cols && grid.rows && fcBands && fcBands.length) {
-      renderHeatFromGrid(grid, fcBands, fixturePositions || []);
-    } else {
-      renderHeatFallback();
-    }
-
-    // Watermark overlay — paint ACC watermark descriptor on-screen
-    // ACC also watermarks the exported SVG server-side; this is the on-screen layer.
-    const wmarkEl = document.querySelector('.ll-wmark');
-    if (wmarkEl) {
-      // Always show the tiled ALG watermark (ACC contract: watermark always on)
-      wmarkEl.style.display = '';
-      if (watermark && watermark.text) {
-        wmarkEl.querySelector('.tile').textContent = watermark.text;
-      }
-    }
+    // Plot — ACC /export SVG rendered inline (ACC #85); fired in parallel after /solve
+    renderPlot(data.handle);
 
     // Fixture schedule
     const tbody = document.getElementById('ll-schedBody');
