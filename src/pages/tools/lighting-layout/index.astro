@@ -778,10 +778,10 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     const appLabel = { warehouse: 'Warehouse', area: 'Parking / Area', office: 'Office / Retail' }[inputs.application] || inputs.application;
     document.getElementById('ll-rTitle').textContent = `Layout · ${inputs.lengthFt} ft × ${inputs.widthFt} ft · ${appLabel}`;
     const passChip = document.getElementById('ll-rPass');
-    const avgFc = stats?.avg ?? stats?.avg_fc ?? 0;
-    const minFc = stats?.min ?? stats?.min_fc ?? 0;
-    const maxFc = stats?.max ?? stats?.max_fc ?? 0;
-    const uni   = stats?.uniformity ?? stats?.uniformity_min_avg ?? 0;
+    const avgFc = stats?.avgFc ?? stats?.avg ?? stats?.avg_fc ?? 0;
+    const minFc = stats?.minFc ?? stats?.min ?? stats?.min_fc ?? 0;
+    const maxFc = stats?.maxFc ?? stats?.max ?? stats?.max_fc ?? 0;
+    const uni   = data?.uniformity?.avgMinRatio ?? stats?.uniformity ?? stats?.uniformity_min_avg ?? 0;
     const lpd   = energy?.wPerSqFt ?? 0;
     const ashraeLimit = energy?.ashraeLimit ?? null;
     const lpdOk = energy?.lpdCompliant ?? null;
@@ -807,8 +807,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       lpdEl.innerHTML = `${lpd.toFixed(2)} <small>W/ft²</small> <span style="color:var(--ll-red);font-size:11px;font-weight:700;">✗ over ${ashraeLimit}</span>`;
     }
 
-    // Schedule (new contract: schedule array of rows)
-    const rows = schedule || (fixture ? [{ type: 'F1', sku: fixture.sku, description: fixture.description || fixture.sku, qty: fixture.qty, mountFt: inputs.mountHeightFt }] : []);
+    // Schedule: ACC returns either an array (multi-fixture) or a single object {symbol,sku,name,qty,...}
+    const schedArr = Array.isArray(schedule)
+      ? schedule
+      : (schedule && schedule.sku ? [schedule] : null);
+    const rows = schedArr || (fixture ? [{ type: 'F1', sku: fixture.sku || fixture, description: fixture.name || fixture.description || fixture.sku || fixture, qty: fixture.qty, mountFt: inputs.mountHeightFt }] : []);
     const totalQty = rows.reduce((s, r) => s + (r.qty || 0), 0);
     document.getElementById('ll-rScale').textContent = `${totalQty} fixture${totalQty !== 1 ? 's' : ''}`;
     document.getElementById('ll-rMax').textContent = `${Math.round(maxFc)} fc`;
@@ -840,7 +843,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <tr>
         <td>F${i + 1}</td>
         <td class="sku">${r.sku || ''}</td>
-        <td>${r.description || r.sku || ''}</td>
+        <td>${r.description || r.name || r.sku || ''}</td>
         <td class="q">${r.qty || ''}</td>
         <td>${r.mountFt ?? inputs.mountHeightFt} ft</td>
       </tr>
@@ -864,7 +867,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       targetFc,
       mountHeightFt,
       cct: currentCCT,
-      requester: { name: '', email: '', company: '' }, // anonymous on first generate; enriched after email capture
+      requester: { name: 'anonymous', email: 'anonymous@archipelagolighting.com', company: 'anonymous' }, // enriched after email capture
       source: 'website'
     };
 
@@ -1061,8 +1064,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     window.location.href = `mailto:layouts@archipelagolighting.com?subject=${subject}&body=${body}`;
   });
 
-  /* ---- Initial illustrative render ---- */
-  renderIllustrativeHeat(24, 16, 15);
+  /* ---- Initial live render on mount ---- */
+  genBtn.click();
 
 })();
 </script>
