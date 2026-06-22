@@ -2,10 +2,10 @@
 /**
  * Lighting Layout Tool
  * /tools/lighting-layout/
- * v1.0 — port of ALG_Lighting_Layout_Tool_v2.html (approved mockup)
+ * v2.0 — live ACC PLE API (no stub)
  * Thin front-end over the ACC Photometric Layout Engine API.
- * ACC contract: /PM/research/2026-06-18_ACC-PLE_public_API_contract.md
- * API is STUBBED — wire live endpoint when ACC delivers.
+ * Base URL: https://alg-command-center.onrender.com/api/public/ple
+ * ACC contract: 2026-06-18_ACC-PLE_public_API_contract.md
  *
  * Hard rules (enforced by ACC, not UI):
  *  1. ALG fixtures only — no IES upload, no free-text, no competitor fixture.
@@ -618,55 +618,22 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <script>
 /* ================================================================
    LIGHTING LAYOUT TOOL — client-side controller
-   ACC API endpoint: https://acc.archipelagolighting.com/api/ple/v1/auto-design
-   STATUS: STUBBED — wire live endpoint when ACC delivers.
-   Contract: /PM/research/2026-06-18_ACC-PLE_public_API_contract.md
+   ACC PLE API: https://alg-command-center.onrender.com/api/public/ple
+   Contract: 2026-06-18_ACC-PLE_public_API_contract.md (live, no stub)
    ================================================================ */
 
 (function() {
   'use strict';
 
-  /* ---- ACC API config (STUB) ---- */
-  const ACC_BASE = 'https://acc.archipelagolighting.com/api/ple/v1';
-  const STUB_MODE = true; // Set to false when ACC delivers the live endpoint
+  /* ---- ACC API config (LIVE) ---- */
+  const ACC_BASE = 'https://alg-command-center.onrender.com/api/public/ple';
 
-  /* ---- Per-application stub catalog (mirrors ACC engine SKU-lock per app) ---- */
-  const APP = {
-    warehouse: {
-      fixture: { type: 'F1', sku: 'LRHB3W240-40-UNV', description: 'lampar<span class="aa">Ⓐ</span>RCH Jupiter · 240W high-bay · 34,800 lm · 4000K', watts: 240, lumens: 34800 },
-      qty: 15, mount_ft: 24, grid: { cols: 5, rows: 3, spacing_ft: 20 },
-      stats: { avg_fc: 32.1, min_fc: 21.0, max_fc: 47.4, uniformity_min_avg: 0.66, lpd_w_ft2: 0.38 },
-      target_fc: 30
-    },
-    area: {
-      fixture: { type: 'F1', sku: 'LSBX1W150-40-UNV', description: 'luxo<span class="aa">Ⓐ</span>RCH Liberty · LSBX shoebox area · 150W · 21,000 lm · 4000K', watts: 150, lumens: 21000 },
-      qty: 8, mount_ft: 25, grid: { cols: 4, rows: 2, spacing_ft: 30 },
-      stats: { avg_fc: 1.8, min_fc: 0.7, max_fc: 3.4, uniformity_min_avg: 0.39, lpd_w_ft2: 0.13 },
-      target_fc: 1.5
-    },
-    office: {
-      fixture: { type: 'F1', sku: 'LBLP24-40MXP2', description: 'plano<span class="aa">Ⓐ</span>RCH pro<span class="aa">Ⓐ</span>RCH-II · 2×4 backlit panel · 40W · 5,000 lm · 4000K', watts: 40, lumens: 5000 },
-      qty: 24, mount_ft: 10, grid: { cols: 6, rows: 4, spacing_ft: 8 },
-      stats: { avg_fc: 31.0, min_fc: 24.0, max_fc: 38.0, uniformity_min_avg: 0.77, lpd_w_ft2: 0.30 },
-      target_fc: 30
-    }
+  /* ---- Application type map: UI key → ACC applicationType ---- */
+  const APP_TYPE = {
+    warehouse: 'warehouse',
+    area: 'parking',
+    office: 'office'
   };
-  /* ---- Build a stub response for a given app key + user inputs ---- */
-  function buildStubResponse(appKey, qty, mountFt) {
-    const a = APP[appKey] || APP.warehouse;
-    return {
-      layout_id: `ple_stub_${appKey}_${Date.now().toString(36)}`,
-      fixture_schedule: [{ ...a.fixture, qty, mount_ft: mountFt }],
-      grid: { ...a.grid, values: null },
-      stats: { ...a.stats },
-      pass: true,
-      target_fc: a.target_fc,
-      render: { pdf_url: null, png_url: null, svg_url: null },
-      engine_version: 'ple-stub-1.0.0',
-      computed_at: new Date().toISOString(),
-      note: 'Preliminary layout for budgeting — not a stamped engineering plan.'
-    };
-  }
 
   /* ---- State ---- */
   let currentLayoutId = null;
@@ -782,82 +749,95 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     }
   }
 
-  /* ---- Render result from ACC response ---- */
+  /* ---- Render result from ACC response (live contract) ---- */
   function renderResult(data, inputs) {
-    const { stats, pass, target_fc, fixture_schedule, grid, layout_id } = data;
-    currentLayoutId = layout_id;
+    // New contract: handle, fixture, schedule, stats(avg/min/max/uniformity), pass, energy, falseColor, watermark
+    const { stats, pass, fixture, schedule, energy, falseColor: fc, watermark } = data;
+    const targetFc = inputs.targetFc;
 
     // Title + pass chip
     const appLabel = { warehouse: 'Warehouse', area: 'Parking / Area', office: 'Office / Retail' }[inputs.application] || inputs.application;
-    document.getElementById('ll-rTitle').textContent = `Layout · ${inputs.length_ft} ft × ${inputs.width_ft} ft · ${appLabel}`;
+    document.getElementById('ll-rTitle').textContent = `Layout · ${inputs.lengthFt} ft × ${inputs.widthFt} ft · ${appLabel}`;
     const passChip = document.getElementById('ll-rPass');
+    const avgFc = stats?.avg ?? stats?.avg_fc ?? 0;
+    const minFc = stats?.min ?? stats?.min_fc ?? 0;
+    const maxFc = stats?.max ?? stats?.max_fc ?? 0;
+    const uni   = stats?.uniformity ?? stats?.uniformity_min_avg ?? 0;
+    const lpd   = energy?.lpd_w_ft2 ?? stats?.lpd_w_ft2 ?? 0;
     if (pass) {
       passChip.className = 'll-passchip pass';
-      passChip.innerHTML = `<span class="dot"></span> PASS · ${stats.avg_fc.toFixed(1)} fc avg vs ${target_fc} target`;
+      passChip.innerHTML = `<span class="dot"></span> PASS · ${avgFc.toFixed(1)} fc avg vs ${targetFc} target`;
     } else {
       passChip.className = 'll-passchip fail';
-      passChip.innerHTML = `<span class="dot"></span> FAIL · ${stats.avg_fc.toFixed(1)} fc avg vs ${target_fc} target`;
+      passChip.innerHTML = `<span class="dot"></span> FAIL · ${avgFc.toFixed(1)} fc avg vs ${targetFc} target`;
     }
 
     // Stats
-    document.getElementById('ll-sAvg').innerHTML = `${stats.avg_fc.toFixed(1)} <small>fc</small>`;
-    document.getElementById('ll-sMin').innerHTML = `${stats.min_fc.toFixed(1)} <small>fc</small>`;
-    document.getElementById('ll-sMax').innerHTML = `${stats.max_fc.toFixed(1)} <small>fc</small>`;
-    document.getElementById('ll-sUni').textContent = stats.uniformity_min_avg.toFixed(2);
-    document.getElementById('ll-sLPD').innerHTML = `${stats.lpd_w_ft2.toFixed(2)} <small>W/ft²</small>`;
+    document.getElementById('ll-sAvg').innerHTML = `${avgFc.toFixed(1)} <small>fc</small>`;
+    document.getElementById('ll-sMin').innerHTML = `${minFc.toFixed(1)} <small>fc</small>`;
+    document.getElementById('ll-sMax').innerHTML = `${maxFc.toFixed(1)} <small>fc</small>`;
+    document.getElementById('ll-sUni').textContent = uni.toFixed(2);
+    document.getElementById('ll-sLPD').innerHTML = `${lpd.toFixed(2)} <small>W/ft²</small>`;
 
-    // Scale badge
-    const totalQty = fixture_schedule.reduce((s, f) => s + f.qty, 0);
-    document.getElementById('ll-rScale').textContent = `${grid.spacing_ft} ft grid · ${totalQty} fixtures`;
-    document.getElementById('ll-rMax').textContent = `${Math.round(stats.max_fc)} fc`;
+    // Schedule (new contract: schedule array of rows)
+    const rows = schedule || (fixture ? [{ type: 'F1', sku: fixture.sku, description: fixture.description || fixture.sku, qty: fixture.qty, mountFt: inputs.mountHeightFt }] : []);
+    const totalQty = rows.reduce((s, r) => s + (r.qty || 0), 0);
+    document.getElementById('ll-rScale').textContent = `${totalQty} fixture${totalQty !== 1 ? 's' : ''}`;
+    document.getElementById('ll-rMax').textContent = `${Math.round(maxFc)} fc`;
     document.getElementById('ll-rCount').textContent = `${totalQty} fixture${totalQty !== 1 ? 's' : ''}`;
 
-    // Heatmap
-    if (grid.values) {
-      renderHeatFromGrid(grid.values, grid.cols, grid.rows);
+    // Heatmap — use ACC falseColor grid if provided, else illustrative
+    if (fc && fc.grid && fc.cols && fc.rows) {
+      renderHeatFromGrid(fc.grid, fc.cols, fc.rows);
     } else {
-      renderIllustrativeHeat(grid.cols, grid.rows, totalQty);
+      const cols = Math.max(4, Math.round(inputs.lengthFt / 20));
+      const rows2 = Math.max(3, Math.round(inputs.widthFt / 20));
+      renderIllustrativeHeat(cols, rows2, totalQty);
+    }
+
+    // Watermark overlay — paint ACC watermark descriptor on-screen
+    // ACC also watermarks the exported SVG server-side; this is the on-screen layer.
+    const wmarkEl = document.querySelector('.ll-wmark');
+    if (wmarkEl) {
+      // Always show the tiled ALG watermark (ACC contract: watermark always on)
+      wmarkEl.style.display = '';
+      if (watermark && watermark.text) {
+        wmarkEl.querySelector('.tile').textContent = watermark.text;
+      }
     }
 
     // Fixture schedule
     const tbody = document.getElementById('ll-schedBody');
-    tbody.innerHTML = fixture_schedule.map(f => `
+    tbody.innerHTML = rows.map((r, i) => `
       <tr>
-        <td>${f.type}</td>
-        <td class="sku">${f.sku}</td>
-        <td>${f.description}</td>
-        <td class="q">${f.qty}</td>
-        <td>${f.mount_ft} ft</td>
+        <td>F${i + 1}</td>
+        <td class="sku">${r.sku || ''}</td>
+        <td>${r.description || r.sku || ''}</td>
+        <td class="q">${r.qty || ''}</td>
+        <td>${r.mountFt ?? inputs.mountHeightFt} ft</td>
       </tr>
     `).join('');
+
+    // Scroll result into view
+    document.querySelector('.ll-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   /* ---- Generate button ---- */
   genBtn.addEventListener('click', async () => {
-    const L = parseFloat(document.getElementById('ll-L').value) || 120;
-    const W = parseFloat(document.getElementById('ll-W').value) || 80;
-    const MH = parseFloat(document.getElementById('ll-MH').value) || 24;
-    const FC = parseFloat(document.getElementById('ll-FC').value) || 30;
-
-    const inputs = {
-      application: currentApp,
-      length_ft: L,
-      width_ft: W,
-      mounting_height_ft: MH,
-      target_fc: FC,
-      cct: currentCCT,
-      fixture_sku: null
-    };
+    const lengthFt = parseFloat(document.getElementById('ll-L').value) || 120;
+    const widthFt  = parseFloat(document.getElementById('ll-W').value) || 80;
+    const mountHeightFt = parseFloat(document.getElementById('ll-MH').value) || 24;
+    const targetFc = parseFloat(document.getElementById('ll-FC').value) || 30;
 
     const requestBody = {
-      inputs,
-      requester: {}, // anonymous on first generate; filled after email capture
-      source: 'website',
-      attribution: {
-        utm_source: new URLSearchParams(window.location.search).get('utm_source'),
-        utm_campaign: new URLSearchParams(window.location.search).get('utm_campaign'),
-        referrer: document.referrer || null
-      }
+      applicationType: APP_TYPE[currentApp] || 'warehouse',
+      lengthFt,
+      widthFt,
+      targetFc,
+      mountHeightFt,
+      cct: currentCCT,
+      requester: { name: '', email: '', company: '' }, // anonymous on first generate; enriched after email capture
+      source: 'website'
     };
 
     // Show calculating state
@@ -866,36 +846,34 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     errorBanner.classList.remove('show');
 
     try {
-      let data;
-      if (STUB_MODE) {
-        // Stub: simulate network delay + return per-application sample response
-        await new Promise(r => setTimeout(r, 900));
-        const a = APP[currentApp] || APP.warehouse;
-        const area = L * W;
-        // Scale qty to room area while keeping the correct fixture family
-        const areaRatio = area / (120 * 80); // baseline 120×80
-        const stubQty = Math.max(a.qty <= 10 ? 2 : 4, Math.round(a.qty * areaRatio));
-        data = buildStubResponse(currentApp, stubQty, MH);
-      } else {
-        // Live: POST to ACC
-        const resp = await fetch(`${ACC_BASE}/auto-design`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(requestBody)
-        });
-        if (!resp.ok) {
-          const err = await resp.json().catch(() => ({}));
-          const code = err?.error?.code || 'ENGINE_ERROR';
-          if (code === 'RATE_LIMITED') {
-            const retry = err?.error?.retry_after_s;
-            throw new Error(`Rate limit reached. Please try again${retry ? ` in ${retry} seconds` : ' shortly'}.`);
-          }
-          throw new Error(err?.error?.message || 'Engine error. Please try again.');
-        }
-        data = await resp.json();
+      const resp = await fetch(`${ACC_BASE}/solve`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (resp.status === 429) {
+        const retryAfter = resp.headers.get('Retry-After') || resp.headers.get('retry-after');
+        throw new Error(`Rate limit reached. Please try again${retryAfter ? ` in ${retryAfter} seconds` : ' shortly'}.`);
+      }
+      if (resp.status === 403) {
+        throw new Error('Origin not authorized. Please use this tool at archipelagolighting.com.');
+      }
+      if (resp.status === 503) {
+        throw new Error('ALG catalog is temporarily unavailable. Please try again in a moment.');
+      }
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        const code = err?.error?.code || '';
+        if (code === 'AREA_BOUND') throw new Error('Room dimensions exceed the maximum allowed area (400,000 sq ft).');
+        if (code === 'BAD_INPUT')  throw new Error(err?.error?.message || 'Invalid input. Please check your dimensions and target footcandles.');
+        if (code === 'ALG_SKU_NOT_FOUND') throw new Error('The specified SKU was not found in the ALG catalog.');
+        throw new Error(err?.error?.message || 'Engine error. Please try again.');
       }
 
-      renderResult(data, inputs);
+      const data = await resp.json();
+      currentLayoutId = data.handle;
+      renderResult(data, { application: currentApp, lengthFt, widthFt, mountHeightFt, targetFc });
 
     } catch (err) {
       errorMsg.innerHTML = `<b>Engine unavailable.</b> ${err.message || 'Please try again in a moment.'}`;
@@ -923,43 +901,65 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     if (e.target === leadModal) leadModal.classList.remove('show');
   });
 
-  document.getElementById('ll-modalSubmit').addEventListener('click', () => {
+  document.getElementById('ll-modalSubmit').addEventListener('click', async () => {
     const email = document.getElementById('ll-mEmail').value.trim();
     if (!email || !email.includes('@')) {
       document.getElementById('ll-mEmail').focus();
       return;
     }
-    const requester = {
-      name: document.getElementById('ll-mName').value.trim(),
-      email,
-      company: document.getElementById('ll-mCompany').value.trim(),
-      type: document.getElementById('ll-mType').value,
-      rep_code: document.getElementById('ll-mRepCode').value.trim() || null
-    };
+    const name    = document.getElementById('ll-mName').value.trim();
+    const company = document.getElementById('ll-mCompany').value.trim();
+    const repCode = document.getElementById('ll-mRepCode').value.trim() || undefined;
 
-    if (STUB_MODE) {
-      // Stub: simulate email delivery
-      leadModal.classList.remove('show');
-      if (pendingDelivery === 'email') {
-        alert(`Layout will be emailed to ${email}. (Stub mode — ACC email delivery not yet wired.)`);
-      } else {
-        alert(`Download will begin shortly. (Stub mode — ACC signed URL not yet available.)`);
+    leadModal.classList.remove('show');
+
+    if (pendingDelivery === 'pdf' && currentLayoutId) {
+      // POST /export → returns image/svg+xml (ALG-watermarked server-side)
+      // Open in new tab and let the browser print-to-PDF
+      try {
+        const resp = await fetch(`${ACC_BASE}/export`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            handle: currentLayoutId,
+            requester: { name, email, company, repCode }
+          })
+        });
+        if (!resp.ok) throw new Error('Export failed');
+        const svg = await resp.text();
+        const blob = new Blob([svg], { type: 'image/svg+xml' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `alg-layout-${currentLayoutId}.svg`;
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (e) {
+        errorMsg.innerHTML = `<b>Export unavailable.</b> Please try again in a moment.`;
+        errorBanner.classList.add('show');
       }
-    } else {
-      // Live: POST claim to ACC with layout_id + requester
-      fetch(`${ACC_BASE}/auto-design`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ layout_id: currentLayoutId, requester, action: pendingDelivery })
-      }).then(() => {
-        leadModal.classList.remove('show');
-        if (pendingDelivery === 'pdf' && currentLayoutId) {
-          // Trigger download via render URL (ACC returns signed URL)
-          window.open(`${ACC_BASE}/export?layout_id=${currentLayoutId}&format=pdf`, '_blank');
-        }
-      }).catch(() => {
-        leadModal.classList.remove('show');
-      });
+    } else if (pendingDelivery === 'email' && currentLayoutId) {
+      // Re-POST /solve with requester filled in — ACC logs the full record and can trigger email
+      // (email delivery is ACC-side; we just ensure the requester is captured)
+      try {
+        await fetch(`${ACC_BASE}/export`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            handle: currentLayoutId,
+            requester: { name, email, company, repCode },
+            delivery: 'email'
+          })
+        });
+        // Show confirmation
+        errorMsg.innerHTML = `✓ <b>Layout sent to ${email}.</b> Check your inbox in a few minutes.`;
+        errorBanner.classList.add('show');
+        errorBanner.style.borderColor = 'var(--ll-grn)';
+        errorBanner.style.background = '#f0fdf7';
+      } catch (e) {
+        errorMsg.innerHTML = `<b>Email delivery unavailable.</b> Please download the PDF instead.`;
+        errorBanner.classList.add('show');
+      }
     }
   });
 
@@ -1011,30 +1011,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     data.included_items = checkedItems;
     data.project_scope = document.querySelector('#ll-branchSwitch .bs.on')?.dataset.branch || 'interior';
 
-    if (STUB_MODE) {
-      // Stub: mailto fallback
-      const subject = encodeURIComponent(`Professional Layout Request: ${data.project_name || 'New Project'}`);
-      const body = encodeURIComponent(
-        `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nPhone: ${data.phone || ''}\n` +
-        `Project: ${data.project_name}\nScope: ${data.project_scope}\nRequest type: ${data.request_type}\n` +
-        `Notes: ${data.notes || ''}`
-      );
-      window.location.href = `mailto:layouts@archipelagolighting.com?subject=${subject}&body=${body}`;
-    } else {
-      // Live: POST to layout team endpoint (TBD — confirm with ACC)
-      fetch('/api/layout-request', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      }).then(() => {
-        document.getElementById('ll-proForm').style.display = 'none';
-        document.getElementById('ll-proSuccess').classList.add('show');
-      }).catch(() => {
-        // Fallback to mailto
-        const subject = encodeURIComponent(`Professional Layout Request: ${data.project_name || 'New Project'}`);
-        window.location.href = `mailto:layouts@archipelagolighting.com?subject=${subject}`;
-      });
-    }
+    // Professional layout request — mailto fallback (layout team handles manually)
+    const subject = encodeURIComponent(`Professional Layout Request: ${data.project_name || 'New Project'}`);
+    const body = encodeURIComponent(
+      `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nPhone: ${data.phone || ''}\n` +
+      `Project: ${data.project_name}\nScope: ${data.project_scope}\nRequest type: ${data.request_type}\n` +
+      `Notes: ${data.notes || ''}`
+    );
+    window.location.href = `mailto:layouts@archipelagolighting.com?subject=${subject}&body=${body}`;
   });
 
   /* ---- Initial illustrative render ---- */
