@@ -417,11 +417,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             <span><span class="dt">Download layout PDF</span><span class="ds">plan · schedule · stats, ALG-watermarked</span></span>
             <span class="lock">🔒 email</span>
           </a>
-          <a class="ll-dl" id="ll-dlEmail" href="#" role="button">
-            <span class="di">✉</span>
-            <span><span class="dt">Email it to me</span><span class="ds">get the layout + a rep follow-up</span></span>
-            <span class="lock">🔒 email</span>
-          </a>
+
         </div>
       </div>
     </div>
@@ -611,7 +607,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--ll-ink2);">ALG rep code <span style="color:var(--ll-ink3);font-weight:400;text-transform:none;">(optional — tags layout to your rep)</span></label>
       <input type="text" id="ll-mRepCode" placeholder="if a rep sent you" style="width:100%;padding:10px 12px;border:1px solid var(--ll-line);border-radius:7px;margin-top:6px;">
     </div>
-    <button class="ll-modal-submit" id="ll-modalSubmit">Send my layout</button>
+    <button class="ll-modal-submit" id="ll-modalSubmit">Get my layout</button>
   </div>
 </div>
 
@@ -637,7 +633,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
   /* ---- State ---- */
   let currentLayoutId = null;
-  let pendingDelivery = null; // 'pdf' | 'email'
+  let pendingDelivery = null; // 'pdf'
   let currentApp = 'warehouse';
   let currentCCT = '4000K';
 
@@ -763,7 +759,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     const minFc = stats?.min ?? stats?.min_fc ?? 0;
     const maxFc = stats?.max ?? stats?.max_fc ?? 0;
     const uni   = stats?.uniformity ?? stats?.uniformity_min_avg ?? 0;
-    const lpd   = energy?.lpd_w_ft2 ?? stats?.lpd_w_ft2 ?? 0;
+    const lpd   = energy?.wPerSqFt ?? 0;
+    const ashraeLimit = energy?.ashraeLimit ?? null;
+    const lpdOk = energy?.lpdCompliant ?? null;
     if (pass) {
       passChip.className = 'll-passchip pass';
       passChip.innerHTML = `<span class="dot"></span> PASS · ${avgFc.toFixed(1)} fc avg vs ${targetFc} target`;
@@ -777,7 +775,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     document.getElementById('ll-sMin').innerHTML = `${minFc.toFixed(1)} <small>fc</small>`;
     document.getElementById('ll-sMax').innerHTML = `${maxFc.toFixed(1)} <small>fc</small>`;
     document.getElementById('ll-sUni').textContent = uni.toFixed(2);
-    document.getElementById('ll-sLPD').innerHTML = `${lpd.toFixed(2)} <small>W/ft²</small>`;
+    const lpdEl = document.getElementById('ll-sLPD');
+    if (lpdOk === null) {
+      lpdEl.innerHTML = `${lpd.toFixed(2)} <small>W/ft²</small>`;
+    } else if (lpdOk) {
+      lpdEl.innerHTML = `${lpd.toFixed(2)} <small>W/ft²</small> <span style="color:var(--ll-grn);font-size:11px;font-weight:700;">✓ ASHRAE</span>`;
+    } else {
+      lpdEl.innerHTML = `${lpd.toFixed(2)} <small>W/ft²</small> <span style="color:var(--ll-red);font-size:11px;font-weight:700;">✗ over ${ashraeLimit}</span>`;
+    }
 
     // Schedule (new contract: schedule array of rows)
     const rows = schedule || (fixture ? [{ type: 'F1', sku: fixture.sku, description: fixture.description || fixture.sku, qty: fixture.qty, mountFt: inputs.mountHeightFt }] : []);
@@ -885,13 +890,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   });
 
   /* ---- Delivery gate (email modal) ---- */
-  ['ll-dlPdf', 'll-dlEmail'].forEach(id => {
-    document.getElementById(id).addEventListener('click', e => {
-      e.preventDefault();
-      pendingDelivery = id === 'll-dlPdf' ? 'pdf' : 'email';
-      leadModal.classList.add('show');
-      document.getElementById('ll-mEmail').focus();
-    });
+  document.getElementById('ll-dlPdf').addEventListener('click', e => {
+    e.preventDefault();
+    pendingDelivery = 'pdf';
+    leadModal.classList.add('show');
+    document.getElementById('ll-mEmail').focus();
   });
 
   document.getElementById('ll-modalClose').addEventListener('click', () => {
@@ -936,28 +939,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         URL.revokeObjectURL(url);
       } catch (e) {
         errorMsg.innerHTML = `<b>Export unavailable.</b> Please try again in a moment.`;
-        errorBanner.classList.add('show');
-      }
-    } else if (pendingDelivery === 'email' && currentLayoutId) {
-      // Re-POST /solve with requester filled in — ACC logs the full record and can trigger email
-      // (email delivery is ACC-side; we just ensure the requester is captured)
-      try {
-        await fetch(`${ACC_BASE}/export`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            handle: currentLayoutId,
-            requester: { name, email, company, repCode },
-            delivery: 'email'
-          })
-        });
-        // Show confirmation
-        errorMsg.innerHTML = `✓ <b>Layout sent to ${email}.</b> Check your inbox in a few minutes.`;
-        errorBanner.classList.add('show');
-        errorBanner.style.borderColor = 'var(--ll-grn)';
-        errorBanner.style.background = '#f0fdf7';
-      } catch (e) {
-        errorMsg.innerHTML = `<b>Email delivery unavailable.</b> Please download the PDF instead.`;
         errorBanner.classList.add('show');
       }
     }
