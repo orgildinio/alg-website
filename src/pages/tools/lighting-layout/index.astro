@@ -699,79 +699,77 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     errorBanner.classList.add('show');
   }
 
-  /* ---- False-color heatmap renderer ---- */
-  function falseColor(t) {
-    const stops = [[43,58,143],[31,155,214],[25,178,122],[232,195,58],[239,125,46],[224,38,60]];
-    t = Math.max(0, Math.min(1, t));
-    const s = t * (stops.length - 1);
-    const i = Math.floor(s);
-    const f = s - i;
-    const a = stops[i], b = stops[Math.min(i + 1, stops.length - 1)];
-    return `rgb(${Math.round(a[0]+(b[0]-a[0])*f)},${Math.round(a[1]+(b[1]-a[1])*f)},${Math.round(a[2]+(b[2]-a[2])*f)})`;
+  /* ---- Real grid heatmap renderer (ACC #80 contract) ---- */
+  // Map a footcandle value to a band color using the ACC falseColor legend array.
+  // bands: [{loFc, hiFc, color}, ...] sorted ascending. Returns the last band's color for values above the top.
+  function fcBandColor(fcVal, bands) {
+    for (let i = 0; i < bands.length; i++) {
+      if (fcVal < bands[i].hiFc) return bands[i].color;
+    }
+    return bands[bands.length - 1].color;
   }
 
-  function renderHeatFromGrid(gridValues, cols, rows) {
+  // Paint the real point-by-point heatmap from the engine grid.
+  // gridObj: { cols, rows, cellFt, fc } — fc[r][c] = footcandles, rows=width(y), cols=length(x)
+  // bands: ACC falseColor array [{loFc, hiFc, color}]
+  // fixtureQty: total fixture count (used to detect the right number of local-maxima markers)
+  function renderHeatFromGrid(gridObj, bands, fixtureQty) {
+    const { cols, rows, fc: fcGrid } = gridObj;
     const c = document.getElementById('ll-heat');
     const ctx = c.getContext('2d');
     const W = c.width, H = c.height;
     const cw = W / cols, ch = H / rows;
-    let max = 0;
-    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) if (gridValues[y][x] > max) max = gridValues[y][x];
-    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
-      ctx.fillStyle = falseColor(gridValues[y][x] / max);
-      ctx.fillRect(x * cw, y * ch, cw + 1, ch + 1);
-    }
-  }
 
-  function renderIllustrativeHeat(cols, rows, fixtureCount) {
-    // Distribute fixtures evenly in a grid pattern
-    const nx = Math.ceil(Math.sqrt(fixtureCount * (cols / rows)));
-    const ny = Math.ceil(fixtureCount / nx);
-    const FX = [], FY = [];
-    for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
-      if (FX.length < fixtureCount) {
-        FX.push((i + 0.5) * cols / nx);
-        FY.push((j + 0.5) * rows / ny);
+    // Paint each cell with its band color
+    for (let r = 0; r < rows; r++) {
+      for (let col = 0; col < cols; col++) {
+        ctx.fillStyle = fcBandColor(fcGrid[r][col], bands);
+        ctx.fillRect(col * cw, r * ch, Math.ceil(cw) + 1, Math.ceil(ch) + 1);
       }
     }
-    const c = document.getElementById('ll-heat');
-    const ctx = c.getContext('2d');
-    const W = c.width, H = c.height;
-    const cw = W / cols, ch = H / rows;
-    let max = 0;
-    const grid = [];
-    for (let y = 0; y < rows; y++) {
-      grid[y] = [];
-      for (let x = 0; x < cols; x++) {
-        let v = 0;
-        for (let k = 0; k < FX.length; k++) {
-          const dx = (x + 0.5 - FX[k]), dy = (y + 0.5 - FY[k]);
-          v += 1 / ((dx * dx + dy * dy) * 0.5 + 1.1);
+
+    // Detect local maxima as fixture positions (each cell higher than all 8 neighbours).
+    // Collect all candidates, sort by fc descending, take top fixtureQty.
+    const candidates = [];
+    for (let r = 1; r < rows - 1; r++) {
+      for (let col = 1; col < cols - 1; col++) {
+        const v = fcGrid[r][col];
+        if (v >= fcGrid[r-1][col-1] && v >= fcGrid[r-1][col] && v >= fcGrid[r-1][col+1] &&
+            v >= fcGrid[r][col-1]   &&                           v >= fcGrid[r][col+1] &&
+            v >= fcGrid[r+1][col-1] && v >= fcGrid[r+1][col] && v >= fcGrid[r+1][col+1]) {
+          candidates.push({ r, col, v });
         }
-        grid[y][x] = v;
-        if (v > max) max = v;
       }
     }
-    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
-      ctx.fillStyle = falseColor(grid[y][x] / max);
-      ctx.fillRect(x * cw, y * ch, cw + 1, ch + 1);
-    }
-    // Draw fixture markers
+    candidates.sort((a, b) => b.v - a.v);
+    const markers = candidates.slice(0, fixtureQty || candidates.length);
+
+    // Draw white square fixture markers
     ctx.fillStyle = '#fff';
     ctx.strokeStyle = '#232930';
     ctx.lineWidth = 1.5;
-    for (let k = 0; k < FX.length; k++) {
+    for (const { r, col } of markers) {
+      const px = (col + 0.5) * cw, py = (r + 0.5) * ch;
       ctx.beginPath();
-      ctx.rect(FX[k] * cw - 4, FY[k] * ch - 4, 8, 8);
+      ctx.rect(px - 4, py - 4, 8, 8);
       ctx.fill();
       ctx.stroke();
     }
   }
 
+  // Graceful fallback when grid is absent: clear the canvas to dark
+  function renderHeatFallback() {
+    const c = document.getElementById('ll-heat');
+    const ctx = c.getContext('2d');
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.fillStyle = '#1b2230';
+    ctx.fillRect(0, 0, c.width, c.height);
+  }
+
   /* ---- Render result from ACC response (live contract) ---- */
   function renderResult(data, inputs) {
-    // New contract: handle, fixture, schedule, stats(avg/min/max/uniformity), pass, energy, falseColor, watermark
-    const { stats, pass, fixture, schedule, energy, falseColor: fc, watermark } = data;
+    // ACC #80 contract: handle, fixture, schedule, stats, uniformity, pass, energy, falseColor(bands), grid, watermark
+    const { stats, pass, fixture, schedule, energy, falseColor: fcBands, grid, watermark } = data;
     const targetFc = inputs.targetFc;
 
     // Title + pass chip
@@ -817,13 +815,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     document.getElementById('ll-rMax').textContent = `${Math.round(maxFc)} fc`;
     document.getElementById('ll-rCount').textContent = `${totalQty} fixture${totalQty !== 1 ? 's' : ''}`;
 
-    // Heatmap — use ACC falseColor grid if provided, else illustrative
-    if (fc && fc.grid && fc.cols && fc.rows) {
-      renderHeatFromGrid(fc.grid, fc.cols, fc.rows);
+    // Heatmap — paint real point-by-point grid from ACC engine; fall back to dark canvas if absent
+    if (grid && grid.fc && grid.cols && grid.rows && fcBands && fcBands.length) {
+      renderHeatFromGrid(grid, fcBands, totalQty);
     } else {
-      const cols = Math.max(4, Math.round(inputs.lengthFt / 20));
-      const rows2 = Math.max(3, Math.round(inputs.widthFt / 20));
-      renderIllustrativeHeat(cols, rows2, totalQty);
+      renderHeatFallback();
     }
 
     // Watermark overlay — paint ACC watermark descriptor on-screen
