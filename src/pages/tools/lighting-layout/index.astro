@@ -137,6 +137,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .ll-passchip { display: inline-flex; align-items: center; gap: 7px; font-family: var(--ll-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.8px; padding: 6px 12px; border-radius: 30px; }
   .ll-passchip.pass { background: rgba(22,163,107,0.12); color: var(--ll-grn); }
   .ll-passchip.fail { background: rgba(243,39,64,0.10); color: var(--ll-red); }
+  .ll-passchip.warn { background: rgba(255,160,0,0.12); color: #b07000; }
   .ll-passchip .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
   .ll-plan { position: relative; background: #fff; border: 1px solid var(--ll-line); border-radius: 10px; overflow: hidden; aspect-ratio: 3/2; }
   #ll-heat { display: block; width: 100%; height: 100%; }
@@ -444,14 +445,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <form id="ll-proForm">
           <div class="ll-fsec">
             <div class="fe"><span class="ix">01</span> Request</div>
-            <div class="ll-frow f3">
+            <div class="ll-frow">
               <div class="ll-ff"><label>Request type <span class="r">*</span></label><select name="request_type"><option>Standard</option><option>Expedite</option></select></div>
               <div class="ll-ff"><label>Need by</label><input type="date" name="need_by"></div>
-              <div class="ll-ff"><label>Required software</label><select name="software"><option>Any software</option><option>Visual</option><option>AGi32</option><option>Revit (added fee)</option></select></div>
             </div>
             <div class="ll-frow">
               <div class="ll-ff"><label>Complete project name <span class="r">*</span></label><input type="text" name="project_name" placeholder="e.g. Cincinnati Cold Storage retrofit" required></div>
-              <div class="ll-ff"><label>Required deliverables</label><select name="deliverables"><option>All</option><option>PDF</option><option>DWG</option><option>Source file</option></select></div>
+              <div class="ll-ff"><label>Required deliverables</label><select name="deliverables"><option>All</option><option>PDF</option></select></div>
             </div>
             <div class="ll-frow full">
               <div class="ll-ff"><label>Project scope</label>
@@ -569,7 +569,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <div class="ll-drow"><span class="di">PDF</span><span class="dn">Photometric_Layout.pdf</span><span style="font-family:var(--ll-mono);font-size:10px;color:var(--ll-ink3);">7 pp</span></div>
           <div class="ll-drow"><span class="di">IES</span><span class="dn">Fixture_IES_Files.zip</span><span style="font-family:var(--ll-mono);font-size:10px;color:var(--ll-ink3);">12</span></div>
           <div class="ll-drow"><span class="di">CSV</span><span class="dn">Bill_of_Materials.csv</span><span style="font-family:var(--ll-mono);font-size:10px;color:var(--ll-ink3);">edit</span></div>
-          <div class="ll-drow"><span class="di">DWG</span><span class="dn">Layout_Source.dwg</span><span style="font-family:var(--ll-mono);font-size:10px;color:var(--ll-ink3);">opt</span></div>
         </div>
       </div>
     </div>
@@ -663,6 +662,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         g.querySelectorAll('.ll-chip').forEach(x => x.classList.remove('on'));
         c.classList.add('on');
         currentCCT = c.dataset.cct;
+        scheduleRefetch();
       });
     });
   });
@@ -673,8 +673,31 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       document.querySelectorAll('.ll-app').forEach(x => x.classList.remove('on'));
       a.classList.add('on');
       currentApp = a.dataset.app;
+      scheduleRefetch();
     });
   });
+
+  /* ---- Debounced re-fetch ---- */
+  let _refetchTimer = null;
+  function scheduleRefetch() {
+    if (_refetchTimer) clearTimeout(_refetchTimer);
+    // Show a brief "Calculating…" to signal something is happening
+    calcOverlay.classList.remove('ll-hide');
+    _refetchTimer = setTimeout(() => { genBtn.click(); }, 500);
+  }
+
+  // Wire dimension / mount / fc inputs to auto-refetch
+  ['ll-L', 'll-W', 'll-MH', 'll-FC'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', scheduleRefetch);
+  });
+
+  /* ---- Clear result area ---- */
+  function clearResult(msg) {
+    document.querySelector('.ll-result').classList.add('ll-hide');
+    errorMsg.innerHTML = msg;
+    errorBanner.classList.add('show');
+  }
 
   /* ---- False-color heatmap renderer ---- */
   function falseColor(t) {
@@ -878,10 +901,29 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
       const data = await resp.json();
       currentLayoutId = data.handle;
+      // Clear any previous error before rendering
+      errorBanner.classList.remove('show');
+      document.querySelector('.ll-result').classList.remove('ll-hide');
       renderResult(data, { application: currentApp, lengthFt, widthFt, mountHeightFt, targetFc });
+      // meetsTarget:false — render with a visible note
+      if (data.meetsTarget === false) {
+        const note = document.getElementById('ll-rPass');
+        const existing = note ? note.textContent : '';
+        if (note) {
+          note.className = 'll-passchip warn';
+          note.innerHTML = `<span class="dot"></span> Closest match — does not fully meet your target footcandles.`;
+        }
+      }
 
     } catch (err) {
-      errorMsg.innerHTML = `<b>Engine unavailable.</b> ${err.message || 'Please try again in a moment.'}`;
+      // Clear stale result so the wrong layout is never shown
+      document.querySelector('.ll-result').classList.add('ll-hide');
+      const isNoFixture = err.message && (err.message.includes('No matching ALG fixture') || err.message.includes('not found in the ALG catalog') || err.message.includes('ALG_SKU_NOT_FOUND'));
+      if (isNoFixture) {
+        errorMsg.innerHTML = `No matching ALG fixture for these inputs yet — try adjusting, or <a href="#" class="ll-mode-link" data-mode="pro">request a Professional Layout</a>.`;
+      } else {
+        errorMsg.innerHTML = `<b>Engine unavailable.</b> ${err.message || 'Please try again in a moment.'}`;
+      }
       errorBanner.classList.add('show');
     } finally {
       genBtn.disabled = false;
@@ -983,6 +1025,19 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   }
 
   /* ---- Pro form submit ---- */
+  // Wire any .ll-mode-link elements (e.g. in error banner) to switch modes
+  document.addEventListener('click', e => {
+    const link = e.target.closest('.ll-mode-link');
+    if (!link) return;
+    e.preventDefault();
+    const mode = link.dataset.mode;
+    if (!mode) return;
+    document.querySelectorAll('.ll-mode').forEach(b => b.classList.toggle('on', b.dataset.mode === mode));
+    document.getElementById('ll-m-engine').classList.toggle('ll-hide', mode !== 'engine');
+    document.getElementById('ll-m-pro').classList.toggle('ll-hide', mode !== 'pro');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
   document.getElementById('ll-proForm').addEventListener('submit', e => {
     e.preventDefault();
     const form = e.target;
