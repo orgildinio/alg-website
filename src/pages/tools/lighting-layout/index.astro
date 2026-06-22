@@ -895,8 +895,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         const code = err?.error?.code || '';
         if (code === 'AREA_BOUND') throw new Error('Room dimensions exceed the maximum allowed area (400,000 sq ft).');
         if (code === 'BAD_INPUT')  throw new Error(err?.error?.message || 'Invalid input. Please check your dimensions and target footcandles.');
-        if (code === 'ALG_SKU_NOT_FOUND') throw new Error('The specified SKU was not found in the ALG catalog.');
-        throw new Error(err?.error?.message || 'Engine error. Please try again.');
+          // No-match: any unhandled non-200 → show the no-match message (do NOT gate on a specific code)
+        throw new Error('__NO_MATCH__');
       }
 
       const data = await resp.json();
@@ -918,11 +918,15 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     } catch (err) {
       // Clear stale result so the wrong layout is never shown
       document.querySelector('.ll-result').classList.add('ll-hide');
-      const isNoFixture = err.message && (err.message.includes('No matching ALG fixture') || err.message.includes('not found in the ALG catalog') || err.message.includes('ALG_SKU_NOT_FOUND'));
-      if (isNoFixture) {
-        errorMsg.innerHTML = `No matching ALG fixture for these inputs yet — try adjusting, or <a href="#" class="ll-mode-link" data-mode="pro">request a Professional Layout</a>.`;
+      // Show no-match message for any non-200 that isn't a friendlier special case above
+      const isFriendly = err.message && !err.message.includes('__NO_MATCH__') &&
+        (err.message.includes('Rate limit') || err.message.includes('Origin not authorized') ||
+         err.message.includes('temporarily unavailable') || err.message.includes('Room dimensions') ||
+         err.message.includes('Invalid input'));
+      if (isFriendly) {
+        errorMsg.innerHTML = `<b>Engine unavailable.</b> ${err.message}`;
       } else {
-        errorMsg.innerHTML = `<b>Engine unavailable.</b> ${err.message || 'Please try again in a moment.'}`;
+        errorMsg.innerHTML = `<b>No matching ALG fixture for these inputs yet.</b> Try adjusting your space, mounting height, or target footcandles — or <a href="#" class="ll-mode-link" data-mode="pro">request a Professional Layout</a> for a full stamped set.`;
       }
       errorBanner.classList.add('show');
     } finally {
