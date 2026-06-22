@@ -699,12 +699,39 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     errorBanner.classList.add('show');
   }
 
-  /* ---- Real grid heatmap renderer (ACC #80 contract) ---- */
-  // Map a footcandle value to a band color using the ACC falseColor legend array.
-  // bands: [{loFc, hiFc, color}, ...] sorted ascending. Returns the last band's color for values above the top.
-  function fcBandColor(fcVal, bands) {
+  /* ---- Heatmap color helpers (ACC #81/#82 contract) ---- */
+
+  // Parse a hex color string to [r,g,b] integers.
+  function hexToRgb(hex) {
+    const h = hex.replace('#', '');
+    return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
+  }
+
+  // Interpolate two [r,g,b] arrays by factor t ∈ [0,1].
+  function lerpRgb(a, b, t) {
+    return [Math.round(a[0]+(b[0]-a[0])*t), Math.round(a[1]+(b[1]-a[1])*t), Math.round(a[2]+(b[2]-a[2])*t)];
+  }
+
+  // Map a footcandle value to a continuous interpolated color using the ACC falseColor band stops.
+  // Within each band [loFc, hiFc) the color is linearly interpolated between the band's color and
+  // the next band's color, giving smooth per-cell variation instead of a flat plateau.
+  // The discrete 6-band legend is unchanged — only the canvas cell fill gets finer.
+  function fcInterpolatedColor(fcVal, bands) {
+    if (!bands || !bands.length) return '#888';
+    // Clamp to range
+    if (fcVal <= bands[0].loFc) return bands[0].color;
+    if (fcVal >= bands[bands.length - 1].hiFc) return bands[bands.length - 1].color;
     for (let i = 0; i < bands.length; i++) {
-      if (fcVal < bands[i].hiFc) return bands[i].color;
+      const lo = bands[i].loFc, hi = bands[i].hiFc;
+      if (fcVal >= lo && fcVal < hi) {
+        // t = position within this band [0,1]
+        const t = (fcVal - lo) / (hi - lo);
+        const colorA = hexToRgb(bands[i].color);
+        // Interpolate toward the next band's color if it exists, else stay at this band's color
+        const colorB = i + 1 < bands.length ? hexToRgb(bands[i + 1].color) : colorA;
+        const [r, g, b] = lerpRgb(colorA, colorB, t);
+        return `rgb(${r},${g},${b})`;
+      }
     }
     return bands[bands.length - 1].color;
   }
@@ -712,48 +739,38 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   // Paint the real point-by-point heatmap from the engine grid.
   // gridObj: { cols, rows, cellFt, fc } — fc[r][c] = footcandles, rows=width(y), cols=length(x)
   // bands: ACC falseColor array [{loFc, hiFc, color}]
-  // fixtureQty: total fixture count (used to detect the right number of local-maxima markers)
-  function renderHeatFromGrid(gridObj, bands, fixtureQty) {
-    const { cols, rows, fc: fcGrid } = gridObj;
+  // fixturePositions: [{xFt, yFt}, ...] from ACC #82 — real fixture positions in room coordinates
+  // cellFt: cell size in feet (from gridObj.cellFt) — used to map xFt/yFt to canvas
+  function renderHeatFromGrid(gridObj, bands, fixturePositions) {
+    const { cols, rows, cellFt, fc: fcGrid } = gridObj;
     const c = document.getElementById('ll-heat');
     const ctx = c.getContext('2d');
     const W = c.width, H = c.height;
     const cw = W / cols, ch = H / rows;
 
-    // Paint each cell with its band color
+    // Paint each cell with continuous interpolated color (finer than flat band fill)
     for (let r = 0; r < rows; r++) {
       for (let col = 0; col < cols; col++) {
-        ctx.fillStyle = fcBandColor(fcGrid[r][col], bands);
+        ctx.fillStyle = fcInterpolatedColor(fcGrid[r][col], bands);
         ctx.fillRect(col * cw, r * ch, Math.ceil(cw) + 1, Math.ceil(ch) + 1);
       }
     }
 
-    // Detect local maxima as fixture positions (each cell higher than all 8 neighbours).
-    // Collect all candidates, sort by fc descending, take top fixtureQty.
-    const candidates = [];
-    for (let r = 1; r < rows - 1; r++) {
-      for (let col = 1; col < cols - 1; col++) {
-        const v = fcGrid[r][col];
-        if (v >= fcGrid[r-1][col-1] && v >= fcGrid[r-1][col] && v >= fcGrid[r-1][col+1] &&
-            v >= fcGrid[r][col-1]   &&                           v >= fcGrid[r][col+1] &&
-            v >= fcGrid[r+1][col-1] && v >= fcGrid[r+1][col] && v >= fcGrid[r+1][col+1]) {
-          candidates.push({ r, col, v });
-        }
+    // Draw fixture markers from real fixturePositions [{xFt, yFt}].
+    // Map: xFt along length (cols), yFt along width (rows), top-left origin.
+    // Canvas pixel = (xFt / cellFt) * cw, (yFt / cellFt) * ch
+    if (fixturePositions && fixturePositions.length) {
+      ctx.fillStyle = '#fff';
+      ctx.strokeStyle = '#232930';
+      ctx.lineWidth = 1.5;
+      for (const { xFt, yFt } of fixturePositions) {
+        const px = (xFt / cellFt) * cw;
+        const py = (yFt / cellFt) * ch;
+        ctx.beginPath();
+        ctx.rect(px - 4, py - 4, 8, 8);
+        ctx.fill();
+        ctx.stroke();
       }
-    }
-    candidates.sort((a, b) => b.v - a.v);
-    const markers = candidates.slice(0, fixtureQty || candidates.length);
-
-    // Draw white square fixture markers
-    ctx.fillStyle = '#fff';
-    ctx.strokeStyle = '#232930';
-    ctx.lineWidth = 1.5;
-    for (const { r, col } of markers) {
-      const px = (col + 0.5) * cw, py = (r + 0.5) * ch;
-      ctx.beginPath();
-      ctx.rect(px - 4, py - 4, 8, 8);
-      ctx.fill();
-      ctx.stroke();
     }
   }
 
@@ -768,8 +785,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
   /* ---- Render result from ACC response (live contract) ---- */
   function renderResult(data, inputs) {
-    // ACC #80 contract: handle, fixture, schedule, stats, uniformity, pass, energy, falseColor(bands), grid, watermark
-    const { stats, pass, fixture, schedule, energy, falseColor: fcBands, grid, watermark } = data;
+    // ACC #82 contract: adds fixturePositions [{xFt,yFt}] alongside grid, falseColor bands, etc.
+    const { stats, pass, fixture, schedule, energy, falseColor: fcBands, grid, fixturePositions, watermark } = data;
     const targetFc = inputs.targetFc;
 
     // Title + pass chip
@@ -817,7 +834,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
     // Heatmap — paint real point-by-point grid from ACC engine; fall back to dark canvas if absent
     if (grid && grid.fc && grid.cols && grid.rows && fcBands && fcBands.length) {
-      renderHeatFromGrid(grid, fcBands, totalQty);
+      renderHeatFromGrid(grid, fcBands, fixturePositions || []);
     } else {
       renderHeatFallback();
     }
