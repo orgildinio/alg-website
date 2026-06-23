@@ -1176,12 +1176,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         }
       });
 
-      /* reflectancesC/W/F: parse "80/50/20" → numbers */
+      /* reflectances: parse "80/50/20" → {C, W, F} as 0–1 fractions */
       const rfRaw = v('int_reflectance') || '';
       const rfParts = rfRaw.split('/').map(n => parseFloat(n));
-      const reflectancesC = isNaN(rfParts[0]) ? undefined : rfParts[0];
-      const reflectancesW = isNaN(rfParts[1]) ? undefined : rfParts[1];
-      const reflectancesF = isNaN(rfParts[2]) ? undefined : rfParts[2];
+      const reflectancesC = isNaN(rfParts[0]) ? undefined : rfParts[0] / 100;
+      const reflectancesW = isNaN(rfParts[1]) ? undefined : rfParts[1] / 100;
+      const reflectancesF = isNaN(rfParts[2]) ? undefined : rfParts[2] / 100;
 
       /* Fold notesShort into additionalNotes */
       const notes = [v('additionalNotes'), v('notesShort')].filter(Boolean).join(' | ') || undefined;
@@ -1216,9 +1216,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         emLayouts:        (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_emLayouts') === 'true') : undefined,
         emergencyPower:   (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_emergencyPower') || undefined) : undefined,
         egressPath:       (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_egressPath') || undefined) : undefined,
-        reflectancesC:    (currentBranch === 'interior' || currentBranch === 'both') ? reflectancesC : undefined,
-        reflectancesW:    (currentBranch === 'interior' || currentBranch === 'both') ? reflectancesW : undefined,
-        reflectancesF:    (currentBranch === 'interior' || currentBranch === 'both') ? reflectancesF : undefined,
+        reflectances:     (currentBranch === 'interior' || currentBranch === 'both') && (reflectancesC !== undefined || reflectancesW !== undefined || reflectancesF !== undefined)
+                            ? { C: reflectancesC, W: reflectancesW, F: reflectancesF }
+                            : undefined,
         /* Exterior fields — ext-prefixed flat (no exterior{} wrapper) */
         extProjectType:   (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_projectType') || undefined) : undefined,
         extFcRequirement: (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_fcRequirements') || undefined) : undefined,
@@ -1233,7 +1233,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       return JSON.parse(JSON.stringify(payload));
     }
 
-    /* Submit handler */
+    /* Submit handler — POST application/json, body ≤ 16 KB, no file bytes */
     async function submitPro() {
       proError.classList.remove('show');
       proSpinner.classList.add('show');
@@ -1242,17 +1242,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       const fd = new FormData(proForm);
       const payload = buildPayload(fd);
 
-      const body = new FormData();
-      body.append('payload', JSON.stringify(payload));
-      attachedFiles.forEach(f => body.append('files[]', f, f.name));
-
       try {
         const resp = await fetch(`${ACC_BASE}/professional-request`, {
           method: 'POST',
-          body,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
         });
         const json = await resp.json().catch(() => ({}));
-        if (!resp.ok) throw new Error(json?.error || 'Submission failed');
+        if (!resp.ok) throw new Error(json?.error?.message || json?.error || 'Submission failed');
         const handle = json.handle || '';
         proForm.style.display = 'none';
         proSpinner.classList.remove('show');
