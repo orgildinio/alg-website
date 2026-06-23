@@ -42,7 +42,7 @@ export async function onRequestPost(context) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Origin': 'https://www.archipelagolighting.com',
+        /* No Origin header — server-to-server call; ACC validates source field in the JSON body */
       },
       body: bodyStr,
     });
