@@ -1165,10 +1165,28 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     /* Build the payload JSON from the form */
     function buildPayload(fd) {
       const v = name => fd.get(name) || undefined;
-      const included = {};
+
+      /* attachmentManifest: string[] of checked label text (not a boolean map) */
+      const attachmentManifest = [];
       document.querySelectorAll('.ll-cb').forEach(cb => {
-        if (cb.dataset.key) included[cb.dataset.key] = cb.classList.contains('on');
+        if (cb.classList.contains('on')) {
+          // label text is the last text node inside the cb span
+          const label = cb.textContent.replace(/^[\s✓]+/, '').trim();
+          if (label) attachmentManifest.push(label);
+        }
       });
+
+      /* reflectancesC/W/F: parse "80/50/20" → numbers */
+      const rfRaw = v('int_reflectance') || '';
+      const rfParts = rfRaw.split('/').map(n => parseFloat(n));
+      const reflectancesC = isNaN(rfParts[0]) ? undefined : rfParts[0];
+      const reflectancesW = isNaN(rfParts[1]) ? undefined : rfParts[1];
+      const reflectancesF = isNaN(rfParts[2]) ? undefined : rfParts[2];
+
+      /* Fold notesShort into additionalNotes */
+      const notes = [v('additionalNotes'), v('notesShort')].filter(Boolean).join(' | ') || undefined;
+
+      /* Build flat payload — matches ACC .strict() schema exactly */
       const payload = {
         source: 'website-professional',
         projectName: v('projectName'),
@@ -1179,42 +1197,40 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         requiredSoftware: v('requiredSoftware') ? [v('requiredSoftware')] : undefined,
         requester: {
           name: v('name'),
-          company: v('company'),
           email: v('email'),
+          company: v('company'),
           phone: v('phone') || undefined,
           role: v('role') || undefined,
+          repCode: v('repCode') || undefined,
         },
-        included,
-        additionalNotes: (v('additionalNotes') || v('notesShort') || undefined),
+        attachmentManifest: attachmentManifest.length ? attachmentManifest : undefined,
+        additionalNotes: notes,
+        /* Interior fields — flat top-level (no interior{} wrapper) */
+        projectType:      (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_projectType') || undefined) : undefined,
+        fcRequirement:    (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_fcRequirements') || undefined) : undefined,
+        ceilingHeights:   (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_ceilingHeights') || undefined) : undefined,
+        pendantHeights:   (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_pendantHeights') || undefined) : undefined,
+        warehouseRacking: (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_warehouseRacking') || undefined) : undefined,
+        cove:             (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_cove') || undefined) : undefined,
+        cct:              (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_cct') || undefined) : undefined,
+        emLayouts:        (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_emLayouts') === 'true') : undefined,
+        emergencyPower:   (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_emergencyPower') || undefined) : undefined,
+        egressPath:       (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_egressPath') || undefined) : undefined,
+        reflectancesC:    (currentBranch === 'interior' || currentBranch === 'both') ? reflectancesC : undefined,
+        reflectancesW:    (currentBranch === 'interior' || currentBranch === 'both') ? reflectancesW : undefined,
+        reflectancesF:    (currentBranch === 'interior' || currentBranch === 'both') ? reflectancesF : undefined,
+        /* Exterior fields — ext-prefixed flat (no exterior{} wrapper) */
+        extProjectType:   (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_projectType') || undefined) : undefined,
+        extFcRequirement: (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_fcRequirements') || undefined) : undefined,
+        extCct:           (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_cct') || undefined) : undefined,
+        mountingHeights:  (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_mountingHeights') || undefined) : undefined,
+        tiltAllowed:      (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_tiltAllowed') === 'true') : undefined,
+        lightSpillLimits: (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_lightSpill') || undefined) : undefined,
+        darkSky:          (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_darkSky') === 'true') : undefined,
       };
-      if (currentBranch === 'interior' || currentBranch === 'both') {
-        payload.interior = {
-          projectType: v('int_projectType') || undefined,
-          fcRequirements: v('int_fcRequirements') || undefined,
-          ceilingHeights: v('int_ceilingHeights') || undefined,
-          pendantHeights: v('int_pendantHeights') || undefined,
-          warehouseRacking: v('int_warehouseRacking') || undefined,
-          reflectance: v('int_reflectance') || undefined,
-          cove: v('int_cove') || undefined,
-          cct: v('int_cct') || undefined,
-          emLayouts: v('int_emLayouts') === 'true',
-          emergencyPower: v('int_emergencyPower') || undefined,
-          egressPath: v('int_egressPath') || undefined,
-        };
-      }
-      if (currentBranch === 'exterior' || currentBranch === 'both') {
-        payload.exterior = {
-          projectType: v('ext_projectType') || undefined,
-          fcRequirements: v('ext_fcRequirements') || undefined,
-          cct: v('ext_cct') || undefined,
-          mountingHeights: v('ext_mountingHeights') || undefined,
-          tiltAllowed: v('ext_tiltAllowed') === 'true',
-          lightSpill: v('ext_lightSpill') || undefined,
-          darkSky: v('ext_darkSky') === 'true',
-          lightingTypes: v('ext_lightingTypes') || undefined,
-        };
-      }
-      return payload;
+
+      /* Strip undefined keys so .strict() doesn't see them */
+      return JSON.parse(JSON.stringify(payload));
     }
 
     /* Submit handler */
