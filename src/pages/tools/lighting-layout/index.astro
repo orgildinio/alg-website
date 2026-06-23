@@ -1,0 +1,1277 @@
+---
+/**
+ * Lighting Layout Tool
+ * /tools/lighting-layout/
+ * v2.0 — live ACC PLE API (no stub)
+ * Thin front-end over the ACC Photometric Layout Engine API.
+ * Base URL: https://alg-command-center.onrender.com/api/public/ple
+ * ACC contract: 2026-06-18_ACC-PLE_public_API_contract.md
+ *
+ * Hard rules (enforced by ACC, not UI):
+ *  1. ALG fixtures only — no IES upload, no free-text, no competitor fixture.
+ *  2. ALG watermark always on — ACC returns watermarked artifacts; also painted on-screen.
+ *  3. Every generate logged to ACC — website passes requester + source + attribution.
+ *
+ * CFG-CHROME-1: Astro owns header/footer/utility bar.
+ * STAGING BRANCH — hold for James approval before production.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Lighting Layout Tool — Free Photometric Layout | Archipelago Lighting Group"
+  description="Get an instant point-by-point lighting layout for your space — powered by ALG photometrics. Warehouse, parking, office. Free. Or hand a full project to our layout team."
+  bodyClass="page-lighting-layout"
+>
+
+<Fragment slot="head">
+  <script type="application/ld+json">{JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ALG Lighting Layout Tool",
+    "url": "https://www.archipelagolighting.com/tools/lighting-layout/",
+    "description": "Free photometric lighting layout tool powered by Archipelago Lighting Group. Instant point-by-point layouts for warehouse, parking, and office spaces.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "provider": {
+      "@type": "Organization",
+      "name": "Archipelago Lighting Group",
+      "url": "https://www.archipelagolighting.com"
+    }
+  })}</script>
+</Fragment>
+
+<style>
+  /* ============================================================
+     LIGHTING LAYOUT TOOL — page-scoped styles
+     Canon: Lato + JetBrains Mono / #F32740 / #232930
+     ============================================================ */
+  :root {
+    --ll-red: #F32740;
+    --ll-red-dk: #cc1f33;
+    --ll-ink: #191c20;
+    --ll-ink2: #4a4f57;
+    --ll-ink3: #878d96;
+    --ll-line: #e4e6ea;
+    --ll-line2: #eef0f2;
+    --ll-bg: #ffffff;
+    --ll-bg2: #f6f7f8;
+    --ll-dark: #232930;
+    --ll-dark2: #1a1f24;
+    --ll-grn: #16a36b;
+    --ll-amber: #e8a83a;
+    --ll-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --ll-sans: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .ll-wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+
+  /* breadcrumb */
+  .ll-breadcrumb { border-bottom: 1px solid var(--ll-line); background: white; }
+  .ll-breadcrumb__inner { max-width: 1240px; margin: 0 auto; padding: 12px 28px; font-family: var(--ll-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; }
+  .ll-breadcrumb a { color: inherit; text-decoration: none; }
+  .ll-breadcrumb a:hover { color: var(--ll-red); opacity: 1; }
+
+  /* hero */
+  .ll-hero { background: var(--ll-dark); color: #fff; padding: 64px 0 56px; position: relative; overflow: hidden; }
+  .ll-hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 78% 30%, rgba(243,39,64,0.16), transparent 45%); pointer-events: none; }
+  .ll-hero .ll-wrap { position: relative; z-index: 2; }
+  .ll-eyebrow { font-family: var(--ll-mono); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--ll-red); font-weight: 600; display: inline-flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .ll-eyebrow::before { content: ""; width: 30px; height: 1px; background: var(--ll-red); }
+  .ll-hero h1 { font-family: var(--ll-sans); font-size: clamp(34px, 4.6vw, 54px); font-weight: 900; line-height: 1.02; letter-spacing: -1.6px; max-width: 840px; }
+  .ll-hero h1 em { font-style: normal; color: var(--ll-red); }
+  .ll-hero p { font-family: var(--ll-sans); font-size: 17px; font-weight: 300; color: #c4c9d0; max-width: 620px; margin-top: 18px; }
+  .ll-hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+  .ll-hbadge { display: inline-flex; align-items: center; gap: 8px; font-family: var(--ll-mono); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; padding: 8px 14px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.16); color: #d6dade; }
+  .ll-hbadge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ll-grn); }
+  .ll-hbadge.red { border-color: rgba(243,39,64,0.4); color: #ff8a98; }
+
+  /* mode switch */
+  .ll-modes { position: sticky; top: 0; z-index: 40; background: #fff; border-bottom: 1px solid var(--ll-line); box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+  .ll-modes .ll-wrap { display: flex; gap: 0; }
+  .ll-mode { flex: 1; display: flex; align-items: center; gap: 16px; padding: 20px 6px; background: none; border: 0; border-bottom: 3px solid transparent; cursor: pointer; text-align: left; color: inherit; font-family: var(--ll-sans); }
+  .ll-mode .n { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--ll-line); display: flex; align-items: center; justify-content: center; font-family: var(--ll-mono); font-weight: 700; font-size: 14px; color: var(--ll-ink2); flex-shrink: 0; transition: .18s; }
+  .ll-mode .ttl { font-size: 16px; font-weight: 900; letter-spacing: -0.3px; }
+  .ll-mode .mt { font-size: 12px; color: var(--ll-ink3); margin-top: 1px; }
+  .ll-mode.on { border-bottom-color: var(--ll-red); }
+  .ll-mode.on .n { background: var(--ll-red); color: #fff; border-color: var(--ll-red); }
+  .ll-mode.on .ttl { color: var(--ll-red); }
+  .ll-mode-disabled { opacity: 0.45; cursor: not-allowed !important; pointer-events: none; }
+  .ll-pro-coming-soon { max-width: 560px; margin-top: 24px; }
+  .ll-pro-coming-soon p { font-size: 16px; color: var(--ll-ink2); line-height: 1.6; }
+  .ll-pro-coming-soon a { color: var(--ll-red); text-decoration: underline; }
+
+  /* panels */
+  .ll-panel { padding: 54px 0 64px; }
+  .ll-sec-eyebrow { font-family: var(--ll-mono); font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--ll-red); font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .ll-sec-eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--ll-red); }
+  .ll-panel h2 { font-family: var(--ll-sans); font-size: clamp(26px, 3vw, 36px); font-weight: 900; letter-spacing: -0.9px; line-height: 1.08; }
+  .ll-panel > .ll-wrap > p.ll-lead { font-size: 16px; color: var(--ll-ink2); max-width: 660px; margin-top: 12px; font-weight: 300; }
+  .ll-hide { display: none !important; }
+
+  /* ============ ENGINE ============ */
+  .ll-engine { display: grid; grid-template-columns: 330px 1fr; gap: 0; margin-top: 34px; border: 1px solid var(--ll-line); border-radius: 14px; overflow: hidden; background: #fff; box-shadow: 0 18px 40px rgba(20,24,30,0.06); }
+  .ll-controls { background: var(--ll-bg2); border-right: 1px solid var(--ll-line); padding: 26px 24px; }
+  .ll-controls .grp { font-family: var(--ll-mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ll-ink3); font-weight: 600; margin: 0 0 16px; padding-bottom: 11px; border-bottom: 1px solid var(--ll-line); }
+  .ll-fld { margin-bottom: 17px; }
+  .ll-fld label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; color: var(--ll-ink2); margin-bottom: 7px; }
+  .ll-fld input, .ll-fld select { width: 100%; padding: 10px 12px; border: 1px solid var(--ll-line); border-radius: 7px; font-family: var(--ll-sans); font-size: 14px; color: var(--ll-ink); background: #fff; }
+  .ll-fld input:focus, .ll-fld select:focus { outline: none; border-color: var(--ll-red); box-shadow: 0 0 0 3px rgba(243,39,64,0.1); }
+  .ll-two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .ll-chips { display: flex; gap: 6px; }
+  .ll-chip { flex: 1; text-align: center; padding: 8px 4px; border: 1px solid var(--ll-line); border-radius: 7px; background: #fff; font-family: var(--ll-mono); font-size: 11px; font-weight: 600; color: var(--ll-ink2); cursor: pointer; letter-spacing: 0.3px; transition: .12s; }
+  .ll-chip.on { background: var(--ll-red); color: #fff; border-color: var(--ll-red); }
+  .ll-appgrid { display: flex; flex-direction: column; gap: 8px; }
+  .ll-app { display: flex; align-items: center; gap: 11px; padding: 11px 12px; border: 1px solid var(--ll-line); border-radius: 9px; background: #fff; cursor: pointer; transition: .12s; }
+  .ll-app.on { border-color: var(--ll-red); background: #fff5f6; }
+  .ll-app .ic { width: 30px; height: 30px; border-radius: 6px; background: var(--ll-bg2); display: flex; align-items: center; justify-content: center; color: var(--ll-ink2); flex-shrink: 0; font-size: 16px; }
+  .ll-app.on .ic { background: var(--ll-red); color: #fff; }
+  .ll-app .at { font-size: 13px; font-weight: 700; }
+  .ll-app .as { font-size: 11px; color: var(--ll-ink3); display: block; }
+  .ll-gen { width: 100%; margin-top: 6px; background: var(--ll-red); color: #fff; border: 0; border-radius: 8px; padding: 14px; font-family: var(--ll-sans); font-weight: 900; font-size: 13px; letter-spacing: 0.8px; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 9px; transition: .15s; }
+  .ll-gen:hover { background: var(--ll-red-dk); }
+  .ll-gen:disabled { opacity: 0.7; cursor: not-allowed; }
+  .ll-algonly { margin-top: 14px; font-size: 11px; color: var(--ll-ink3); line-height: 1.5; display: flex; gap: 8px; }
+  .ll-algonly b { color: var(--ll-ink2); }
+
+  /* result pane */
+  .ll-result { padding: 24px; display: flex; flex-direction: column; background: linear-gradient(180deg, #fbfcfd, #f3f5f7); }
+  .ll-result-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .ll-result-title { font-family: var(--ll-mono); font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--ll-ink2); font-weight: 600; }
+  .ll-passchip { display: inline-flex; align-items: center; gap: 7px; font-family: var(--ll-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.8px; padding: 6px 12px; border-radius: 30px; }
+  .ll-passchip.pass { background: rgba(22,163,107,0.12); color: var(--ll-grn); }
+  .ll-passchip.fail { background: rgba(243,39,64,0.10); color: var(--ll-red); }
+  .ll-passchip.warn { background: rgba(255,160,0,0.12); color: #b07000; }
+  .ll-passchip .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .ll-plan { position: relative; background: #fff; border: 1px solid var(--ll-line); border-radius: 10px; overflow: hidden; aspect-ratio: 3/2; }
+  #ll-plotArea { display: block; width: 100%; height: 100%; line-height: 0; }
+  #ll-plotArea svg { display: block; width: 100%; height: 100%; }
+  .ll-wmark { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0.10; overflow: hidden; }
+  .ll-wmark .tile { font-weight: 900; font-size: 42px; color: #232930; transform: rotate(-30deg); white-space: nowrap; letter-spacing: 14px; line-height: 2.6; font-family: var(--ll-sans); }
+  .ll-plan-legend { position: absolute; left: 12px; bottom: 12px; background: rgba(255,255,255,0.94); border: 1px solid var(--ll-line); border-radius: 6px; padding: 8px 10px; display: flex; align-items: center; gap: 9px; }
+  .ll-legend-bar { width: 120px; height: 9px; border-radius: 5px; background: linear-gradient(90deg, #2b3a8f, #1f9bd6, #19b27a, #e8c33a, #ef7d2e, #e0263c); }
+  .ll-legend-lbl { font-family: var(--ll-mono); font-size: 9px; color: var(--ll-ink2); letter-spacing: 0.5px; }
+  .ll-scalebadge { position: absolute; right: 12px; top: 12px; background: rgba(35,41,48,0.9); color: #fff; font-family: var(--ll-mono); font-size: 9px; letter-spacing: 0.5px; padding: 5px 9px; border-radius: 5px; }
+
+  /* calculating overlay */
+  .ll-calc-overlay { position: absolute; inset: 0; background: rgba(35,41,48,0.82); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; border-radius: 10px; z-index: 10; }
+  .ll-calc-overlay.ll-hide { display: none !important; }
+  .ll-calc-spinner { width: 36px; height: 36px; border: 3px solid rgba(255,255,255,0.2); border-top-color: var(--ll-red); border-radius: 50%; animation: ll-spin 0.8s linear infinite; }
+  @keyframes ll-spin { to { transform: rotate(360deg); } }
+  .ll-calc-label { font-family: var(--ll-mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #fff; }
+
+  .ll-stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 16px; }
+  .ll-stat { background: #fff; border: 1px solid var(--ll-line); border-radius: 8px; padding: 12px; }
+  .ll-stat .v { font-family: var(--ll-mono); font-size: 19px; font-weight: 800; color: var(--ll-ink); letter-spacing: -0.5px; line-height: 1; }
+  .ll-stat .v small { font-size: 10px; color: var(--ll-ink3); font-weight: 600; }
+  .ll-stat .l { font-size: 9.5px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--ll-ink3); font-weight: 700; margin-top: 6px; }
+  .ll-stat.hero-stat .v { color: var(--ll-red); }
+
+  .ll-schedule { margin-top: 16px; background: #fff; border: 1px solid var(--ll-line); border-radius: 8px; overflow: hidden; }
+  .ll-schedule .sh { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--ll-line); font-family: var(--ll-mono); font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ll-ink3); font-weight: 600; }
+  .ll-schedule table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .ll-schedule th { text-align: left; font-size: 9.5px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--ll-ink3); font-weight: 700; padding: 9px 16px; background: var(--ll-bg2); }
+  .ll-schedule td { padding: 11px 16px; border-top: 1px solid var(--ll-line2); }
+  .ll-schedule td.sku { font-family: var(--ll-mono); font-weight: 600; color: var(--ll-red); }
+  .ll-schedule td.q { font-family: var(--ll-mono); font-weight: 700; }
+
+  .ll-prelim { margin-top: 16px; display: flex; align-items: center; gap: 10px; background: #fdf8ec; border: 1px solid var(--ll-amber); border-left: 4px solid var(--ll-amber); border-radius: 7px; padding: 11px 15px; font-size: 12.5px; color: var(--ll-ink2); }
+  .ll-prelim b { color: var(--ll-ink); }
+
+  .ll-deliver { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ll-dl { display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid var(--ll-line); border-radius: 9px; padding: 15px; cursor: pointer; transition: .14s; text-decoration: none; color: inherit; }
+  .ll-dl:hover { border-color: var(--ll-red); }
+  .ll-dl .di { width: 38px; height: 38px; border-radius: 8px; background: var(--ll-dark); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: var(--ll-mono); font-size: 10px; font-weight: 700; }
+  .ll-dl .dt { font-size: 13px; font-weight: 700; }
+  .ll-dl .ds { font-size: 11px; color: var(--ll-ink3); display: block; }
+  .ll-dl .lock { margin-left: auto; font-family: var(--ll-mono); font-size: 9px; letter-spacing: 0.5px; color: var(--ll-ink3); text-transform: uppercase; }
+
+  /* error banner */
+  .ll-error-banner { margin-top: 24px; display: none; align-items: center; gap: 10px; background: #fff5f6; border: 1px solid var(--ll-red); border-left: 4px solid var(--ll-red); border-radius: 7px; padding: 14px 18px; font-size: 13px; color: var(--ll-ink2); }
+  .ll-error-banner.show { display: flex; }
+  .ll-error-banner b { color: var(--ll-red); }
+
+  /* lead modal */
+  .ll-modal-back { position: fixed; inset: 0; background: rgba(20,24,30,0.55); backdrop-filter: blur(3px); display: none; align-items: center; justify-content: center; z-index: 200; padding: 24px; }
+  .ll-modal-back.show { display: flex; }
+  .ll-modal { background: #fff; border-radius: 14px; max-width: 430px; width: 100%; padding: 30px; box-shadow: 0 30px 70px rgba(0,0,0,0.3); }
+  .ll-modal h3 { font-family: var(--ll-sans); font-size: 21px; font-weight: 900; letter-spacing: -0.5px; }
+  .ll-modal p { font-size: 13px; color: var(--ll-ink2); margin-top: 7px; margin-bottom: 20px; }
+  .ll-modal .ll-fld { margin-bottom: 13px; }
+  .ll-modal .x { float: right; cursor: pointer; color: var(--ll-ink3); font-size: 20px; line-height: 1; background: none; border: none; }
+  .ll-modal-submit { width: 100%; background: var(--ll-red); color: #fff; border: 0; border-radius: 9px; padding: 15px; font-family: var(--ll-sans); font-weight: 900; font-size: 13px; letter-spacing: 0.8px; text-transform: uppercase; cursor: pointer; margin-top: 8px; }
+  .ll-modal-submit:hover { background: var(--ll-red-dk); }
+
+  /* ============ PRO FORM ============ */
+  .ll-prowrap { display: grid; grid-template-columns: 1.45fr 1fr; gap: 34px; margin-top: 34px; }
+  .ll-card { background: #fff; border: 1px solid var(--ll-line); border-radius: 14px; padding: 32px; }
+  .ll-fsec { margin-bottom: 26px; padding-bottom: 26px; border-bottom: 1px solid var(--ll-line); }
+  .ll-fsec:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
+  .ll-fsec .fe { font-family: var(--ll-mono); font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--ll-red); font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+  .ll-fsec .fe .ix { font-size: 11px; color: var(--ll-ink3); }
+  .ll-frow { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-bottom: 13px; }
+  .ll-frow.f3 { grid-template-columns: 1fr 1fr 1fr; }
+  .ll-frow.full { grid-template-columns: 1fr; }
+  .ll-ff { display: flex; flex-direction: column; }
+  .ll-ff label { font-size: 11px; font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase; color: var(--ll-ink2); margin-bottom: 6px; }
+  .ll-ff label .r { color: var(--ll-red); }
+  .ll-ff input, .ll-ff select, .ll-ff textarea { padding: 10px 12px; border: 1px solid var(--ll-line); border-radius: 7px; font-family: var(--ll-sans); font-size: 13.5px; color: var(--ll-ink); background: #fff; }
+  .ll-ff input:focus, .ll-ff select:focus, .ll-ff textarea:focus { outline: none; border-color: var(--ll-red); box-shadow: 0 0 0 3px rgba(243,39,64,0.09); }
+  .ll-ff textarea { resize: vertical; min-height: 74px; }
+  .ll-cbs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .ll-cb { display: inline-flex; align-items: center; gap: 7px; background: var(--ll-bg2); border: 1px solid var(--ll-line); border-radius: 7px; padding: 8px 12px; font-size: 12.5px; font-weight: 600; color: var(--ll-ink2); cursor: pointer; user-select: none; }
+  .ll-cb.on { background: var(--ll-red); color: #fff; border-color: var(--ll-red); }
+  .ll-cb .bx { width: 13px; height: 13px; border: 1px solid currentColor; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; }
+  .ll-branch-switch { display: flex; gap: 8px; margin-bottom: 18px; }
+  .ll-branch-switch .bs { flex: 1; text-align: center; padding: 11px; border: 1px solid var(--ll-line); border-radius: 9px; font-weight: 700; font-size: 13px; cursor: pointer; color: var(--ll-ink2); background: #fff; font-family: var(--ll-sans); border: 1px solid var(--ll-line); }
+  .ll-branch-switch .bs.on { background: var(--ll-dark); color: #fff; border-color: var(--ll-dark); }
+  .ll-upload { border: 2px dashed var(--ll-line); border-radius: 10px; padding: 24px; text-align: center; cursor: pointer; background: var(--ll-bg2); transition: .14s; }
+  .ll-upload:hover { border-color: var(--ll-red); background: #fff; }
+  .ll-upload .ut { font-size: 13px; font-weight: 700; margin-top: 8px; }
+  .ll-upload .us { font-size: 11px; color: var(--ll-ink3); margin-top: 3px; }
+  .ll-submit { width: 100%; background: var(--ll-red); color: #fff; border: 0; border-radius: 9px; padding: 15px; font-family: var(--ll-sans); font-weight: 900; font-size: 13px; letter-spacing: 0.8px; text-transform: uppercase; cursor: pointer; margin-top: 4px; }
+  .ll-submit:hover { background: var(--ll-red-dk); }
+  .ll-aside { display: flex; flex-direction: column; gap: 16px; }
+  .ll-acard { background: var(--ll-dark); color: #fff; border-radius: 14px; padding: 28px; }
+  .ll-acard .fe { font-family: var(--ll-mono); font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--ll-red); font-weight: 600; margin-bottom: 12px; }
+  .ll-acard h4 { font-family: var(--ll-sans); font-size: 20px; font-weight: 900; letter-spacing: -0.4px; margin-bottom: 10px; }
+  .ll-acard p { font-size: 13px; color: #c4c9d0; line-height: 1.55; margin-bottom: 16px; font-weight: 300; }
+  .ll-acard ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .ll-acard li { font-size: 12.5px; color: #d6dade; padding-left: 22px; position: relative; line-height: 1.4; }
+  .ll-acard li::before { content: ""; position: absolute; left: 0; top: 6px; width: 12px; height: 2px; background: var(--ll-red); }
+  .ll-dcard { background: var(--ll-bg2); border: 1px solid var(--ll-line); border-radius: 14px; padding: 24px; }
+  .ll-dcard h4 { font-family: var(--ll-sans); font-size: 14px; font-weight: 900; margin-bottom: 14px; }
+  .ll-drow { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--ll-line); font-size: 12.5px; color: var(--ll-ink2); }
+  .ll-drow:first-of-type { border-top: 0; }
+  .ll-drow .di { width: 28px; height: 34px; background: #fff; border: 1px solid var(--ll-line); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-family: var(--ll-mono); font-size: 8px; font-weight: 700; color: var(--ll-red); flex-shrink: 0; }
+  .ll-drow .dn { flex: 1; font-weight: 700; color: var(--ll-ink); }
+
+  /* pro form success */
+  .ll-pro-success { display: none; text-align: center; padding: 48px 32px; }
+  .ll-pro-success.show { display: block; }
+  .ll-pro-success h3 { font-family: var(--ll-sans); font-size: 24px; font-weight: 900; margin-bottom: 12px; }
+  .ll-pro-success p { font-size: 15px; color: var(--ll-ink2); }
+  .ll-pro-handle { display: inline-block; margin: 18px auto 0; background: var(--ll-bg2); border: 1px solid var(--ll-line); border-radius: 9px; padding: 14px 24px; font-family: var(--ll-mono); font-size: 18px; font-weight: 700; color: var(--ll-ink); letter-spacing: 1px; }
+  .ll-pro-error { display: none; background: #fff3f4; border: 1px solid #f32740; border-radius: 10px; padding: 18px 20px; margin-top: 18px; font-size: 13.5px; color: var(--ll-ink); }
+  .ll-pro-error.show { display: block; }
+  .ll-pro-error a { color: var(--ll-red); font-weight: 700; }
+  .ll-pro-error .ll-retry { background: var(--ll-red); color: #fff; border: 0; border-radius: 7px; padding: 10px 18px; font-family: var(--ll-sans); font-weight: 700; font-size: 12px; letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer; margin-top: 10px; }
+  .ll-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+  .ll-pro-spinner { display: none; text-align: center; padding: 12px 0; font-size: 13px; color: var(--ll-ink3); }
+  .ll-pro-spinner.show { display: block; }
+
+  /* responsive */
+  @media (max-width: 920px) {
+    .ll-engine { grid-template-columns: 1fr; }
+    .ll-controls { border-right: 0; border-bottom: 1px solid var(--ll-line); }
+    .ll-prowrap { grid-template-columns: 1fr; }
+    .ll-frow, .ll-frow.f3 { grid-template-columns: 1fr; }
+    .ll-stats { grid-template-columns: repeat(2, 1fr); }
+    .ll-deliver { grid-template-columns: 1fr; }
+    .ll-mode .mt { display: none; }
+  }
+  @media (max-width: 480px) {
+    .ll-stats { grid-template-columns: 1fr 1fr; }
+    .ll-hero h1 { font-size: 28px; }
+  }
+</style>
+
+<!-- BREADCRUMB -->
+<div class="ll-breadcrumb">
+  <div class="ll-breadcrumb__inner">
+    <a href="/">Home</a> ›
+    <a href="/tools/">Tools</a> ›
+    Lighting Layout Tool
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="ll-hero">
+  <div class="ll-wrap">
+    <div class="ll-eyebrow">Free tool · powered by <span class="aa">Ⓐ</span>LG photometrics</div>
+    <h1>Get a professional lighting layout in <em>under a minute.</em></h1>
+    <p>Enter your space, your target light level, and generate an instant point-by-point layout — built with <span class="aa">Ⓐ</span>LG fixtures only. Or hand a full project to our layout team for a stamped-grade <span style="font-family:'JetBrains Mono',monospace;font-size:0.92em;">AGi32</span> set.</p>
+    <div class="ll-hero-badges">
+      <span class="ll-hbadge"><span class="dot"></span> Engine online · instant</span>
+      <span class="ll-hbadge red"><span class="aa" style="font-size:13px;">Ⓐ</span> ALG products only</span>
+      <span class="ll-hbadge">Pro layouts · 3-day turnaround</span>
+    </div>
+  </div>
+</section>
+
+<!-- MODE SWITCH -->
+<div class="ll-modes">
+  <div class="ll-wrap">
+    <button class="ll-mode on" data-mode="engine" id="ll-mode-engine">
+      <span class="n">1</span>
+      <span><span class="ttl">Instant Layout</span><span class="mt">~60 sec · self-serve engine</span></span>
+    </button>
+    <button class="ll-mode" data-mode="pro" id="ll-mode-pro">
+      <span class="n">2</span>
+      <span><span class="ttl">Professional Layout</span><span class="mt">full project · our layout team · free</span></span>
+    </button>
+  </div>
+</div>
+
+<!-- ====================== ENGINE PANEL ====================== -->
+<section class="ll-panel" id="ll-m-engine">
+  <div class="ll-wrap">
+    <div class="ll-sec-eyebrow">Instant · self-serve</div>
+    <h2>Try a layout now. No commitment.</h2>
+    <p class="ll-lead">Drop in your space and target footcandles — our engine auto-selects the right <span class="aa">Ⓐ</span>LG fixture and lays out a point-by-point grid. Good for budgeting and sanity-checks. For a stamped set, switch to Professional.</p>
+
+    <div class="ll-engine">
+      <!-- controls -->
+      <div class="ll-controls">
+        <div class="grp">Space &amp; target</div>
+        <div class="ll-fld">
+          <label>Application</label>
+          <div class="ll-appgrid">
+            <div class="ll-app on" data-app="warehouse">
+              <span class="ic">▦</span>
+              <span><span class="at">Warehouse / High-bay</span><span class="as">racking, open floor</span></span>
+            </div>
+            <div class="ll-app" data-app="area">
+              <span class="ic">◎</span>
+              <span><span class="at">Parking lot / Area</span><span class="as">pole &amp; site lighting</span></span>
+            </div>
+            <div class="ll-app" data-app="office">
+              <span class="ic">▭</span>
+              <span><span class="at">Office / Retail</span><span class="as">troffer &amp; panel grid</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="ll-fld">
+          <label>Space dimensions (ft)</label>
+          <div class="ll-two">
+            <input id="ll-L" type="number" value="120" min="10" max="2000" placeholder="Length">
+            <input id="ll-W" type="number" value="80" min="10" max="2000" placeholder="Width">
+          </div>
+        </div>
+        <div class="ll-fld">
+          <label>Mounting height (ft)</label>
+          <input id="ll-MH" type="number" value="24" min="8" max="100">
+        </div>
+        <div class="ll-fld">
+          <label>Target footcandles</label>
+          <input id="ll-FC" type="number" value="30" min="1" max="200">
+        </div>
+        <div class="ll-fld">
+          <label>CCT</label>
+          <div class="ll-chips">
+            <div class="ll-chip" data-cct="3500K">3500K</div>
+            <div class="ll-chip on" data-cct="4000K">4000K</div>
+            <div class="ll-chip" data-cct="5000K">5000K</div>
+          </div>
+        </div>
+        <button class="ll-gen" id="ll-genBtn">⚡ Generate my layout</button>
+        <div class="ll-algonly">
+          <span class="aa">Ⓐ</span>
+          <span><b>ALG fixtures only.</b> The engine picks from the <span class="aa">Ⓐ</span>LG catalog to hit your target. No third-party or generic fixtures, no IES upload.</span>
+        </div>
+      </div>
+
+      <!-- result pane -->
+      <div class="ll-result">
+        <div class="ll-result-head">
+          <span class="ll-result-title" id="ll-rTitle">Layout · 120 ft × 80 ft · Warehouse</span>
+          <span class="ll-passchip pass" id="ll-rPass"><span class="dot"></span> PASS · 32 fc avg vs 30 target</span>
+        </div>
+        <div class="ll-plan">
+          <div id="ll-plotArea"></div>
+          <div class="ll-wmark"><div class="tile">Ⓐ&nbsp;ALG&nbsp;&nbsp;Ⓐ&nbsp;ALG&nbsp;&nbsp;Ⓐ&nbsp;ALG</div></div>
+          <div class="ll-scalebadge" id="ll-rScale">5 ft grid · 15 fixtures</div>
+          <div class="ll-plan-legend">
+            <span class="ll-legend-lbl">0</span>
+            <span class="ll-legend-bar"></span>
+            <span class="ll-legend-lbl" id="ll-rMax">50 fc</span>
+          </div>
+          <!-- calculating overlay -->
+          <div class="ll-calc-overlay ll-hide" id="ll-calcOverlay">
+            <div class="ll-calc-spinner"></div>
+            <div class="ll-calc-label">Calculating…</div>
+          </div>
+        </div>
+
+        <div class="ll-stats">
+          <div class="ll-stat hero-stat"><div class="v" id="ll-sAvg">32 <small>fc</small></div><div class="l">Avg footcandles</div></div>
+          <div class="ll-stat"><div class="v" id="ll-sMin">21 <small>fc</small></div><div class="l">Min</div></div>
+          <div class="ll-stat"><div class="v" id="ll-sMax">47 <small>fc</small></div><div class="l">Max</div></div>
+          <div class="ll-stat"><div class="v" id="ll-sUni">0.66</div><div class="l">Uniformity min/avg</div></div>
+          <div class="ll-stat"><div class="v" id="ll-sLPD">0.38 <small>W/ft²</small></div><div class="l">Power density</div></div>
+        </div>
+
+        <div class="ll-schedule">
+          <div class="sh"><span>Fixture schedule · ALG SKUs</span><span id="ll-rCount">15 fixtures</span></div>
+          <table>
+            <thead><tr><th>Type</th><th>ALG SKU</th><th>Description</th><th>Qty</th><th>Mount</th></tr></thead>
+            <tbody id="ll-schedBody">
+              <tr>
+                <td>F1</td>
+                <td class="sku">LRHB3W240-40-UNV</td>
+                <td>lampar<span class="aa">Ⓐ</span>RCH Jupiter · 240W high-bay · 34,800 lm · 4000K</td>
+                <td class="q">15</td>
+                <td>24 ft</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ll-prelim">
+          ⚠ <span><b>Preliminary layout for budgeting — not a stamped engineering plan.</b> Computed point-by-point from <span class="aa">Ⓐ</span>LG IES data. For permit/construction, request a Professional Layout.</span>
+        </div>
+
+        <div class="ll-deliver">
+          <a class="ll-dl" id="ll-dlPdf" href="#" role="button">
+            <span class="di">PDF</span>
+            <span><span class="dt">Download layout PDF</span><span class="ds">plan · schedule · stats, ALG-watermarked</span></span>
+            <span class="lock">🔒 email</span>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <!-- Error banner lives OUTSIDE .ll-result so hiding the result pane never hides this message -->
+    <div class="ll-error-banner" id="ll-errorBanner">
+      ⚠ <span id="ll-errorMsg"><b>No matching ALG fixture for these inputs yet.</b> Try adjusting your space, mounting height, or target footcandles — or <a href="#" class="ll-mode-link" data-mode="pro">request a Professional Layout</a> for a full stamped set.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== PRO FORM PANEL ====================== -->
+<section class="ll-panel ll-hide" id="ll-m-pro" style="background:var(--ll-bg2);">
+  <div class="ll-wrap">
+    <div class="ll-sec-eyebrow">Professional · our layout team</div>
+    <h2>Hand us the whole project. Free, in 3 business days.</h2>
+    <p class="ll-lead">Send drawings and specs — our <span class="aa">Ⓐ</span>CC layout team returns a spec-grade set with point-by-point photometrics, <span class="aa">Ⓐ</span>LG fixture callouts, IES files, and a full BOM. No fee, no commitment.</p>
+
+    <div class="ll-prowrap">
+      <!-- FORM -->
+      <div class="ll-card">
+
+        <!-- Success state -->
+        <div class="ll-pro-success" id="ll-proSuccess">
+          <div style="font-size:48px;margin-bottom:16px;">✓</div>
+          <h3>Project submitted!</h3>
+          <p>Your request is in the queue. You’ll receive a <strong>Photometric Layout PDF</strong>, the <strong>fixture IES files</strong>, and a <strong>Bill of Materials</strong> within 3 business days.</p>
+          <div class="ll-pro-handle" id="ll-proHandle"></div>
+          <p style="margin-top:18px;font-size:12px;color:var(--ll-ink3);">Save your handle — reference it in any follow-up with <a href="mailto:layouts@archipelagolighting.com">layouts@archipelagolighting.com</a>.</p>
+        </div>
+
+        <!-- Error state -->
+        <div class="ll-pro-error" id="ll-proError">
+          <strong>Submission failed.</strong> Your data is preserved — please retry, or email <a href="mailto:sales@archipelagolighting.com">sales@archipelagolighting.com</a> with your project details.
+          <br><button class="ll-retry" id="ll-proRetry">Retry</button>
+        </div>
+
+        <!-- Spinner -->
+        <div class="ll-pro-spinner" id="ll-proSpinner">Submitting…</div>
+
+        <form id="ll-proForm">
+
+          <!-- 01 REQUEST -->
+          <div class="ll-fsec">
+            <div class="fe"><span class="ix">01</span> Request</div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Request type <span class="r">*</span></label>
+                <select name="requestType" required>
+                  <option value="Standard">Standard</option>
+                  <option value="Expedite">Expedite</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Need by</label><input type="date" name="needBy"></div>
+            </div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Complete project name <span class="r">*</span></label><input type="text" name="projectName" placeholder="e.g. Cincinnati Cold Storage retrofit" required></div>
+              <div class="ll-ff"><label>Required deliverables</label>
+                <select name="requiredDeliverables">
+                  <option value="All">All (PDF + IES + BOM)</option>
+                  <option value="PDF">PDF only</option>
+                  <option value="PDF,IES">PDF + IES</option>
+                </select>
+              </div>
+            </div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Required software</label>
+                <select name="requiredSoftware">
+                  <option value="">Any</option>
+                  <option value="AGi32">AGi32</option>
+                  <option value="Visual">Visual</option>
+                  <option value="AGi32,Visual">AGi32 + Visual</option>
+                  <option value="DIALux">DIALux</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Project scope <span class="r">*</span></label>
+                <div class="ll-branch-switch" id="ll-branchSwitch">
+                  <div class="bs on" data-branch="interior">Interior</div>
+                  <div class="bs" data-branch="exterior">Exterior</div>
+                  <div class="bs" data-branch="both">Both</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 02 INCLUDED FILES (manifest of intent) -->
+          <div class="ll-fsec">
+            <div class="fe"><span class="ix">02</span> Included in this submission</div>
+            <div class="ll-cbs">
+              <span class="ll-cb" data-key="dwg"><span class="bx"></span>DWG files</span>
+              <span class="ll-cb" data-key="pdf"><span class="bx"></span>PDFs</span>
+              <span class="ll-cb" data-key="ies"><span class="bx"></span>IES files</span>
+              <span class="ll-cb" data-key="specSheets"><span class="bx"></span>Spec sheets</span>
+              <span class="ll-cb" data-key="fixtureSchedule"><span class="bx"></span>Fixture schedule</span>
+              <span class="ll-cb" data-key="projectNotes"><span class="bx"></span>Project notes</span>
+            </div>
+          </div>
+
+          <!-- 03 INTERIOR BRANCH -->
+          <div class="ll-fsec ll-branch interior" id="ll-branch-interior">
+            <div class="fe"><span class="ix">03</span> Interior project detail</div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Project type</label>
+                <select name="int_projectType">
+                  <option value="">&#8212; Select &#8212;</option>
+                  <option>Warehouse</option><option>Distribution</option><option>Manufacturing</option>
+                  <option>Cold storage</option><option>Office</option><option>Retail</option>
+                  <option>Healthcare</option><option>Education</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>FC requirements</label>
+                <select name="int_fcRequirements">
+                  <option>Per IESNA Standards</option><option>NFPA 101 (EM)</option>
+                  <option>See notes</option><option>Unsure</option>
+                </select>
+              </div>
+            </div>
+            <div class="ll-frow f3">
+              <div class="ll-ff"><label>Ceiling heights</label>
+                <select name="int_ceilingHeights">
+                  <option>Shown in RCP</option><option>Shown on site plan</option>
+                  <option>See notes</option><option>Unsure</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Pendant heights</label><input type="text" name="int_pendantHeights" placeholder="e.g. 22 ft"></div>
+              <div class="ll-ff"><label>Warehouse racking</label>
+                <select name="int_warehouseRacking">
+                  <option>None</option><option>Shown in drawings</option><option>See notes</option>
+                </select>
+              </div>
+            </div>
+            <div class="ll-frow f3">
+              <div class="ll-ff"><label>Reflectance C/W/F</label><input type="text" name="int_reflectance" placeholder="80/50/20"></div>
+              <div class="ll-ff"><label>Cove (if any)</label>
+                <select name="int_cove">
+                  <option>No coves</option><option>Yes — elevations included</option><option>Unsure</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>CCT</label>
+                <select name="int_cct">
+                  <option>4000K</option><option>2700K</option><option>3000K</option>
+                  <option>3500K</option><option>4100K</option><option>5000K</option>
+                </select>
+              </div>
+            </div>
+            <div class="ll-frow f3">
+              <div class="ll-ff"><label>EM layouts req’d</label>
+                <select name="int_emLayouts">
+                  <option value="false">No</option><option value="true">Yes</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Emergency power</label>
+                <select name="int_emergencyPower">
+                  <option>None</option><option>EM Battery</option><option>Generator</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Egress path</label>
+                <select name="int_egressPath">
+                  <option>Shown in drawings</option><option>Unsure — need recommendation</option><option>See notes</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 04 EXTERIOR BRANCH -->
+          <div class="ll-fsec ll-branch exterior ll-hide" id="ll-branch-exterior">
+            <div class="fe"><span class="ix">04</span> Exterior project detail</div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Project type</label>
+                <select name="ext_projectType">
+                  <option value="">&#8212; Select &#8212;</option>
+                  <option>Parking lot</option><option>Parking structure</option>
+                  <option>Building perimeter</option><option>Roadway</option>
+                  <option>Site / area</option><option>Sports</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>FC requirements</label>
+                <select name="ext_fcRequirements">
+                  <option>Per IESNA Standards</option><option>NFPA 101 (EM)</option>
+                  <option>See notes</option><option>Unsure</option>
+                </select>
+              </div>
+            </div>
+            <div class="ll-frow f3">
+              <div class="ll-ff"><label>CCT</label>
+                <select name="ext_cct">
+                  <option>4000K</option><option>3000K</option><option>5000K</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Mounting heights</label><input type="text" name="ext_mountingHeights" placeholder="e.g. 25 ft poles"></div>
+              <div class="ll-ff"><label>Tilt allowed?</label>
+                <select name="ext_tiltAllowed">
+                  <option value="false">No</option><option value="true">Yes</option><option value="see_notes">See notes</option>
+                </select>
+              </div>
+            </div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Light spill limits</label>
+                <select name="ext_lightSpill">
+                  <option>None specified</option><option>Property-line cutoff</option><option>See notes</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Dark Sky compliance</label>
+                <select name="ext_darkSky">
+                  <option value="false">Not required</option><option value="true">Required</option><option value="unsure">Unsure</option>
+                </select>
+              </div>
+            </div>
+            <div class="ll-frow full">
+              <div class="ll-ff"><label>Type of lighting to include</label><input type="text" name="ext_lightingTypes" placeholder="e.g. Shoebox, wall pack, area"></div>
+            </div>
+          </div>
+
+          <!-- 05 ATTACH FILES -->
+          <div class="ll-fsec">
+            <div class="fe"><span class="ix">05</span> Attach drawings &amp; specs</div>
+            <div class="ll-upload" id="ll-uploadZone">
+              <div style="font-size:24px;">↑</div>
+              <div class="ut">Drop files or click to upload</div>
+              <div class="us">DWG · PDF · IES · CAD · site plan · up to 25 MB each</div>
+              <input type="file" id="ll-fileInput" multiple accept=".dwg,.pdf,.dxf,.cad,.ies,.png,.jpg,.zip" style="display:none;">
+            </div>
+            <div id="ll-fileList" style="margin-top:10px;font-size:12px;color:var(--ll-ink3);"></div>
+            <p style="margin-top:10px;font-size:11px;color:var(--ll-ink3);">Very large sets (&gt;100 MB total): submit now, then email files to <a href="mailto:layouts@archipelagolighting.com" style="color:var(--ll-red);">layouts@</a> referencing your handle.</p>
+          </div>
+
+          <!-- 06 ADDITIONAL NOTES -->
+          <div class="ll-fsec">
+            <div class="fe"><span class="ix">06</span> Additional notes</div>
+            <div class="ll-frow full">
+              <div class="ll-ff"><textarea name="additionalNotes" placeholder="Anything we should know — special conditions, phasing, existing fixtures to keep, etc."></textarea></div>
+            </div>
+          </div>
+
+          <!-- 07 YOU -->
+          <div class="ll-fsec">
+            <div class="fe"><span class="ix">07</span> You</div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Full name <span class="r">*</span></label><input type="text" name="name" placeholder="Sarah Reyes" required></div>
+              <div class="ll-ff"><label>Company <span class="r">*</span></label><input type="text" name="company" placeholder="Midwest Cold Logistics" required></div>
+            </div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Email <span class="r">*</span></label><input type="email" name="email" placeholder="sarah@company.com" required></div>
+              <div class="ll-ff"><label>Phone</label><input type="tel" name="phone" placeholder="(555) 123-4567"></div>
+            </div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Your role</label>
+                <select name="role">
+                  <option value="">&#8212; Select &#8212;</option>
+                  <option>Distributor</option><option>Sales rep</option>
+                  <option>Specifier / engineer</option><option>Contractor</option>
+                  <option>ESCO</option><option>Facility / end user</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Additional notes</label><input type="text" name="notesShort" placeholder="anything we should know"></div>
+            </div>
+          </div>
+
+          <button type="submit" class="ll-submit" id="ll-proSubmit">Submit project to the layout team</button>
+        </form>
+      </div>
+
+      <!-- ASIDE -->
+      <div class="ll-aside">
+        <div class="ll-acard">
+          <div class="fe">SLA · 3 business days · free</div>
+          <h4>What you get back</h4>
+          <p>A spec-grade set from our <span class="aa">Ⓐ</span>CC layout team, produced in AGi32 / Visual — all <span class="aa">Ⓐ</span>LG fixtures.</p>
+          <ul>
+            <li>Point-by-point photometric calc per IESNA for your space</li>
+            <li>Fixture callouts with exact <span class="aa">Ⓐ</span>LG SKUs</li>
+            <li>IES files for every product specified</li>
+            <li>Complete BOM with quantities</li>
+            <li>Footcandle map — avg / min / max / uniformity</li>
+            <li>Power density (W/ft²) vs energy code</li>
+            <li>EM / egress overlay where required</li>
+          </ul>
+        </div>
+        <div class="ll-dcard">
+          <h4>Deliverable preview</h4>
+          <div class="ll-drow"><span class="di">PDF</span><span class="dn">Photometric_Layout.pdf</span><span style="font-family:var(--ll-mono);font-size:10px;color:var(--ll-ink3);">7 pp</span></div>
+          <div class="ll-drow"><span class="di">IES</span><span class="dn">Fixture_IES_Files.zip</span><span style="font-family:var(--ll-mono);font-size:10px;color:var(--ll-ink3);">12</span></div>
+          <div class="ll-drow"><span class="di">CSV</span><span class="dn">Bill_of_Materials.csv</span><span style="font-family:var(--ll-mono);font-size:10px;color:var(--ll-ink3);">edit</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD CAPTURE MODAL -->
+<div class="ll-modal-back" id="ll-leadModal" role="dialog" aria-modal="true" aria-labelledby="ll-modalTitle">
+  <div class="ll-modal">
+    <button class="x" id="ll-modalClose" aria-label="Close">×</button>
+    <h3 id="ll-modalTitle">Get your layout</h3>
+    <p>View is free — pop in your email to download or send the full ALG-watermarked layout. We'll have a rep follow up only if you want.</p>
+    <div class="ll-fld">
+      <label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--ll-ink2);">Name</label>
+      <input type="text" id="ll-mName" placeholder="Sarah Reyes" style="width:100%;padding:10px 12px;border:1px solid var(--ll-line);border-radius:7px;margin-top:6px;">
+    </div>
+    <div class="ll-fld">
+      <label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--ll-ink2);">Work email <span style="color:var(--ll-red);">*</span></label>
+      <input type="email" id="ll-mEmail" placeholder="sarah@company.com" required style="width:100%;padding:10px 12px;border:1px solid var(--ll-line);border-radius:7px;margin-top:6px;">
+    </div>
+    <div class="ll-fld">
+      <label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--ll-ink2);">Company</label>
+      <input type="text" id="ll-mCompany" placeholder="Midwest Cold Logistics" style="width:100%;padding:10px 12px;border:1px solid var(--ll-line);border-radius:7px;margin-top:6px;">
+    </div>
+    <div class="ll-fld">
+      <label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--ll-ink2);">I am a</label>
+      <select id="ll-mType" style="width:100%;padding:10px 12px;border:1px solid var(--ll-line);border-radius:7px;margin-top:6px;font-family:'Lato',sans-serif;font-size:14px;">
+        <option value="customer">Customer / End user</option>
+        <option value="rep">Sales rep / Distributor</option>
+        <option value="specifier">Specifier / Engineer</option>
+        <option value="contractor">Contractor / ESCO</option>
+      </select>
+    </div>
+    <div class="ll-fld">
+      <label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--ll-ink2);">ALG rep code <span style="color:var(--ll-ink3);font-weight:400;text-transform:none;">(optional — tags layout to your rep)</span></label>
+      <input type="text" id="ll-mRepCode" placeholder="if a rep sent you" style="width:100%;padding:10px 12px;border:1px solid var(--ll-line);border-radius:7px;margin-top:6px;">
+    </div>
+    <button class="ll-modal-submit" id="ll-modalSubmit">Get my layout</button>
+  </div>
+</div>
+
+<script>
+/* ================================================================
+   LIGHTING LAYOUT TOOL — client-side controller
+   ACC PLE API: https://alg-command-center.onrender.com/api/public/ple
+   Contract: 2026-06-18_ACC-PLE_public_API_contract.md (live, no stub)
+   ================================================================ */
+
+(function() {
+  'use strict';
+
+  /* ---- ACC API config (LIVE) ---- */
+  const ACC_BASE = 'https://alg-command-center.onrender.com/api/public/ple';
+
+  /* ---- Application type map: UI key → ACC applicationType ---- */
+  const APP_TYPE = {
+    warehouse: 'warehouse',
+    area: 'parking',
+    office: 'office'
+  };
+
+  /* ---- State ---- */
+  let currentLayoutId = null;
+  let pendingDelivery = null; // 'pdf'
+  let currentApp = 'warehouse';
+  let currentCCT = '4000K';
+
+  /* ---- DOM refs ---- */
+  const genBtn = document.getElementById('ll-genBtn');
+  const calcOverlay = document.getElementById('ll-calcOverlay');
+  const errorBanner = document.getElementById('ll-errorBanner');
+  const errorMsg = document.getElementById('ll-errorMsg');
+  const leadModal = document.getElementById('ll-leadModal');
+
+  /* ---- Mode switch ---- */
+  document.querySelectorAll('.ll-mode').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.ll-mode').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      const m = btn.dataset.mode;
+      document.getElementById('ll-m-engine').classList.toggle('ll-hide', m !== 'engine');
+      document.getElementById('ll-m-pro').classList.toggle('ll-hide', m !== 'pro');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  /* ---- CCT chips ---- */
+  document.querySelectorAll('.ll-chips').forEach(g => {
+    g.querySelectorAll('.ll-chip').forEach(c => {
+      c.addEventListener('click', () => {
+        g.querySelectorAll('.ll-chip').forEach(x => x.classList.remove('on'));
+        c.classList.add('on');
+        currentCCT = c.dataset.cct;
+        scheduleRefetch();
+      });
+    });
+  });
+
+  /* ---- Application selector ---- */
+  document.querySelectorAll('.ll-app').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelectorAll('.ll-app').forEach(x => x.classList.remove('on'));
+      a.classList.add('on');
+      currentApp = a.dataset.app;
+      scheduleRefetch();
+    });
+  });
+
+  /* ---- Debounced re-fetch ---- */
+  let _refetchTimer = null;
+  function scheduleRefetch() {
+    if (_refetchTimer) clearTimeout(_refetchTimer);
+    // Show a brief "Calculating…" to signal something is happening
+    calcOverlay.classList.remove('ll-hide');
+    _refetchTimer = setTimeout(() => { genBtn.click(); }, 500);
+  }
+
+  // Wire dimension / mount / fc inputs to auto-refetch
+  ['ll-L', 'll-W', 'll-MH', 'll-FC'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', scheduleRefetch);
+  });
+
+  /* ---- Clear result area ---- */
+  function clearResult(msg) {
+    document.querySelector('.ll-result').classList.add('ll-hide');
+    errorMsg.innerHTML = msg;
+    errorBanner.classList.add('show');
+  }
+
+  /* ---- Plot render — ACC /export SVG (ACC #85 contract) ---- */
+
+  // Fetch the report-grade SVG from ACC /export and render it inline in #ll-plotArea.
+  // Called after every successful /solve with the returned handle.
+  async function renderPlot(handle) {
+    const plotArea = document.getElementById('ll-plotArea');
+    if (!handle) { plotArea.innerHTML = ''; return; }
+    try {
+      const resp = await fetch(`${ACC_BASE}/export`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ handle })
+      });
+      if (!resp.ok) throw new Error('export-failed');
+      const svgText = await resp.text();
+      plotArea.innerHTML = svgText;
+    } catch (_) {
+      // Export failed — clear the plot area silently (stats/schedule still visible)
+      plotArea.innerHTML = '';
+    }
+  }
+
+  /* ---- Render result from ACC response (live contract) ---- */
+  function renderResult(data, inputs) {
+    const { stats, pass, fixture, schedule, energy } = data;
+    const targetFc = inputs.targetFc;
+
+    // Title + pass chip
+    const appLabel = { warehouse: 'Warehouse', area: 'Parking / Area', office: 'Office / Retail' }[inputs.application] || inputs.application;
+    document.getElementById('ll-rTitle').textContent = `Layout · ${inputs.lengthFt} ft × ${inputs.widthFt} ft · ${appLabel}`;
+    const passChip = document.getElementById('ll-rPass');
+    const avgFc = stats?.avgFc ?? stats?.avg ?? stats?.avg_fc ?? 0;
+    const minFc = stats?.minFc ?? stats?.min ?? stats?.min_fc ?? 0;
+    const maxFc = stats?.maxFc ?? stats?.max ?? stats?.max_fc ?? 0;
+    const uni   = data?.uniformity?.avgMinRatio ?? stats?.uniformity ?? stats?.uniformity_min_avg ?? 0;
+    const lpd   = energy?.wPerSqFt ?? 0;
+    const ashraeLimit = energy?.ashraeLimit ?? null;
+    const lpdOk = energy?.lpdCompliant ?? null;
+    if (pass) {
+      passChip.className = 'll-passchip pass';
+      passChip.innerHTML = `<span class="dot"></span> PASS · ${avgFc.toFixed(1)} fc avg vs ${targetFc} target`;
+    } else {
+      passChip.className = 'll-passchip fail';
+      passChip.innerHTML = `<span class="dot"></span> FAIL · ${avgFc.toFixed(1)} fc avg vs ${targetFc} target`;
+    }
+
+    // Stats
+    document.getElementById('ll-sAvg').innerHTML = `${avgFc.toFixed(1)} <small>fc</small>`;
+    document.getElementById('ll-sMin').innerHTML = `${minFc.toFixed(1)} <small>fc</small>`;
+    document.getElementById('ll-sMax').innerHTML = `${maxFc.toFixed(1)} <small>fc</small>`;
+    document.getElementById('ll-sUni').textContent = uni.toFixed(2);
+    const lpdEl = document.getElementById('ll-sLPD');
+    if (lpdOk === null) {
+      lpdEl.innerHTML = `${lpd.toFixed(2)} <small>W/ft²</small>`;
+    } else if (lpdOk) {
+      lpdEl.innerHTML = `${lpd.toFixed(2)} <small>W/ft²</small> <span style="color:var(--ll-grn);font-size:11px;font-weight:700;">✓ ASHRAE</span>`;
+    } else {
+      lpdEl.innerHTML = `${lpd.toFixed(2)} <small>W/ft²</small> <span style="color:var(--ll-red);font-size:11px;font-weight:700;">✗ over ${ashraeLimit}</span>`;
+    }
+
+    // Schedule: ACC returns either an array (multi-fixture) or a single object {symbol,sku,name,qty,...}
+    const schedArr = Array.isArray(schedule)
+      ? schedule
+      : (schedule && schedule.sku ? [schedule] : null);
+    const rows = schedArr || (fixture ? [{ type: 'F1', sku: fixture.sku || fixture, description: fixture.name || fixture.description || fixture.sku || fixture, qty: fixture.qty, mountFt: inputs.mountHeightFt }] : []);
+    const totalQty = rows.reduce((s, r) => s + (r.qty || 0), 0);
+    document.getElementById('ll-rScale').textContent = `${totalQty} fixture${totalQty !== 1 ? 's' : ''}`;
+    document.getElementById('ll-rMax').textContent = `${Math.round(maxFc)} fc`;
+    document.getElementById('ll-rCount').textContent = `${totalQty} fixture${totalQty !== 1 ? 's' : ''}`;
+
+    // Plot — ACC /export SVG rendered inline (ACC #85); fired in parallel after /solve
+    renderPlot(data.handle);
+
+    // Fixture schedule
+    const tbody = document.getElementById('ll-schedBody');
+    tbody.innerHTML = rows.map((r, i) => `
+      <tr>
+        <td>F${i + 1}</td>
+        <td class="sku">${r.sku || ''}</td>
+        <td>${r.description || r.name || r.sku || ''}</td>
+        <td class="q">${r.qty || ''}</td>
+        <td>${r.mountFt ?? inputs.mountHeightFt} ft</td>
+      </tr>
+    `).join('');
+
+    // Scroll result into view
+    document.querySelector('.ll-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ---- Generate button ---- */
+  genBtn.addEventListener('click', async () => {
+    const lengthFt = parseFloat(document.getElementById('ll-L').value) || 120;
+    const widthFt  = parseFloat(document.getElementById('ll-W').value) || 80;
+    const mountHeightFt = parseFloat(document.getElementById('ll-MH').value) || 24;
+    const targetFc = parseFloat(document.getElementById('ll-FC').value) || 30;
+
+    const requestBody = {
+      applicationType: APP_TYPE[currentApp] || 'warehouse',
+      lengthFt,
+      widthFt,
+      targetFc,
+      mountHeightFt,
+      cct: currentCCT,
+      requester: { name: 'anonymous', email: 'anonymous@archipelagolighting.com', company: 'anonymous' }, // enriched after email capture
+      source: 'website'
+    };
+
+    // Show calculating state
+    genBtn.disabled = true;
+    calcOverlay.classList.remove('ll-hide');
+    errorBanner.classList.remove('show');
+
+    try {
+      const resp = await fetch(`${ACC_BASE}/solve`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (resp.status === 429) {
+        const retryAfter = resp.headers.get('Retry-After') || resp.headers.get('retry-after');
+        throw new Error(`Rate limit reached. Please try again${retryAfter ? ` in ${retryAfter} seconds` : ' shortly'}.`);
+      }
+      if (resp.status === 403) {
+        throw new Error('Origin not authorized. Please use this tool at archipelagolighting.com.');
+      }
+      if (resp.status === 503) {
+        throw new Error('ALG catalog is temporarily unavailable. Please try again in a moment.');
+      }
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        const code = err?.error?.code || '';
+        if (code === 'AREA_BOUND') throw new Error('Room dimensions exceed the maximum allowed area (400,000 sq ft).');
+        if (code === 'BAD_INPUT')  throw new Error(err?.error?.message || 'Invalid input. Please check your dimensions and target footcandles.');
+          // No-match: any unhandled non-200 → show the no-match message (do NOT gate on a specific code)
+        throw new Error('__NO_MATCH__');
+      }
+
+      const data = await resp.json();
+      currentLayoutId = data.handle;
+      // Clear any previous error before rendering
+      errorBanner.classList.remove('show');
+      document.querySelector('.ll-result').classList.remove('ll-hide');
+      renderResult(data, { application: currentApp, lengthFt, widthFt, mountHeightFt, targetFc });
+      // meetsTarget:false — render with a visible note
+      if (data.meetsTarget === false) {
+        const note = document.getElementById('ll-rPass');
+        const existing = note ? note.textContent : '';
+        if (note) {
+          note.className = 'll-passchip warn';
+          note.innerHTML = `<span class="dot"></span> Closest match — does not fully meet your target footcandles.`;
+        }
+      }
+
+    } catch (err) {
+      // Clear stale result so the wrong layout is never shown
+      document.querySelector('.ll-result').classList.add('ll-hide');
+      // Show no-match message for any non-200 that isn't a friendlier special case above
+      const isFriendly = err.message && !err.message.includes('__NO_MATCH__') &&
+        (err.message.includes('Rate limit') || err.message.includes('Origin not authorized') ||
+         err.message.includes('temporarily unavailable') || err.message.includes('Room dimensions') ||
+         err.message.includes('Invalid input'));
+      if (isFriendly) {
+        errorMsg.innerHTML = `<b>Engine unavailable.</b> ${err.message}`;
+      } else {
+        errorMsg.innerHTML = `<b>No matching ALG fixture for these inputs yet.</b> Try adjusting your space, mounting height, or target footcandles — or <a href="#" class="ll-mode-link" data-mode="pro">request a Professional Layout</a> for a full stamped set.`;
+      }
+      errorBanner.classList.add('show');
+    } finally {
+      genBtn.disabled = false;
+      calcOverlay.classList.add('ll-hide');
+    }
+  });
+
+  /* ---- Delivery gate (email modal) ---- */
+  document.getElementById('ll-dlPdf').addEventListener('click', e => {
+    e.preventDefault();
+    pendingDelivery = 'pdf';
+    leadModal.classList.add('show');
+    document.getElementById('ll-mEmail').focus();
+  });
+
+  document.getElementById('ll-modalClose').addEventListener('click', () => {
+    leadModal.classList.remove('show');
+  });
+  leadModal.addEventListener('click', e => {
+    if (e.target === leadModal) leadModal.classList.remove('show');
+  });
+
+  document.getElementById('ll-modalSubmit').addEventListener('click', async () => {
+    const email = document.getElementById('ll-mEmail').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('ll-mEmail').focus();
+      return;
+    }
+    const name    = document.getElementById('ll-mName').value.trim();
+    const company = document.getElementById('ll-mCompany').value.trim();
+    const repCode = document.getElementById('ll-mRepCode').value.trim() || undefined;
+
+    leadModal.classList.remove('show');
+
+    if (pendingDelivery === 'pdf' && currentLayoutId) {
+      // POST /export → returns image/svg+xml (ALG-watermarked server-side)
+      // Open in new tab and let the browser print-to-PDF
+      try {
+        const resp = await fetch(`${ACC_BASE}/export`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            handle: currentLayoutId,
+            requester: { name, email, company, repCode }
+          })
+        });
+        if (!resp.ok) throw new Error('Export failed');
+        const svg = await resp.text();
+        const blob = new Blob([svg], { type: 'image/svg+xml' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `alg-layout-${currentLayoutId}.svg`;
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (e) {
+        errorMsg.innerHTML = `<b>Export unavailable.</b> Please try again in a moment.`;
+        errorBanner.classList.add('show');
+      }
+    }
+  });
+
+  /* ---- .ll-mode-link delegated handler ---- */
+  document.addEventListener('click', e => {
+    const link = e.target.closest('.ll-mode-link');
+    if (!link) return;
+    e.preventDefault();
+    const mode = link.dataset.mode;
+    if (!mode) return;
+    document.querySelectorAll('.ll-mode').forEach(b => b.classList.toggle('on', b.dataset.mode === mode));
+    document.getElementById('ll-m-engine').classList.toggle('ll-hide', mode !== 'engine');
+    document.getElementById('ll-m-pro').classList.toggle('ll-hide', mode !== 'pro');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ============================================================
+     PRO FORM — branch switch, checkboxes, upload, multipart POST
+     POST multipart/form-data:
+       text part  "payload" = JSON string (full camelCase schema)
+       binary parts "files[]" = one per attached file
+     ACC endpoint: POST /professional-request
+     ============================================================ */
+  (function initProForm() {
+    const proForm    = document.getElementById('ll-proForm');
+    const proSubmit  = document.getElementById('ll-proSubmit');
+    const proSuccess = document.getElementById('ll-proSuccess');
+    const proHandle  = document.getElementById('ll-proHandle');
+    const proError   = document.getElementById('ll-proError');
+    const proRetry   = document.getElementById('ll-proRetry');
+    const proSpinner = document.getElementById('ll-proSpinner');
+    const branchSwitch = document.getElementById('ll-branchSwitch');
+    const uploadZone = document.getElementById('ll-uploadZone');
+    const fileInput  = document.getElementById('ll-fileInput');
+    const fileList   = document.getElementById('ll-fileList');
+    if (!proForm) return;
+
+    let currentBranch = 'interior';
+    let attachedFiles = [];
+
+    /* Branch switch */
+    branchSwitch.querySelectorAll('.bs').forEach(b => {
+      b.addEventListener('click', () => {
+        branchSwitch.querySelectorAll('.bs').forEach(x => x.classList.remove('on'));
+        b.classList.add('on');
+        currentBranch = b.dataset.branch;
+        const showInt = currentBranch === 'interior' || currentBranch === 'both';
+        const showExt = currentBranch === 'exterior' || currentBranch === 'both';
+        document.getElementById('ll-branch-interior').classList.toggle('ll-hide', !showInt);
+        document.getElementById('ll-branch-exterior').classList.toggle('ll-hide', !showExt);
+      });
+    });
+
+    /* Included-files checkboxes */
+    document.querySelectorAll('.ll-cb').forEach(cb => {
+      cb.addEventListener('click', () => {
+        cb.classList.toggle('on');
+        const bx = cb.querySelector('.bx');
+        if (bx) bx.textContent = cb.classList.contains('on') ? '\u2713' : '';
+      });
+    });
+
+    /* Upload zone */
+    uploadZone.addEventListener('click', () => fileInput.click());
+    uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.style.borderColor = 'var(--ll-red)'; });
+    uploadZone.addEventListener('dragleave', () => { uploadZone.style.borderColor = ''; });
+    uploadZone.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadZone.style.borderColor = '';
+      addFiles(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', () => addFiles(fileInput.files));
+
+    function addFiles(fl) {
+      Array.from(fl).forEach(f => {
+        if (!attachedFiles.find(x => x.name === f.name && x.size === f.size)) attachedFiles.push(f);
+      });
+      renderFileList();
+    }
+    function renderFileList() {
+      fileList.innerHTML = attachedFiles.map((f, i) =>
+        `<div style="display:flex;align-items:center;gap:8px;padding:4px 0;">
+          <span>${f.name}</span>
+          <span style="color:var(--ll-ink3);">(${(f.size/1024).toFixed(0)} KB)</span>
+          <button type="button" onclick="this.closest('div').remove()" data-i="${i}"
+            style="background:none;border:none;color:var(--ll-red);cursor:pointer;font-size:11px;">remove</button>
+        </div>`
+      ).join('');
+      /* sync attachedFiles when remove clicked */
+      fileList.querySelectorAll('button[data-i]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          attachedFiles.splice(parseInt(btn.dataset.i), 1);
+          renderFileList();
+        });
+      });
+    }
+
+    /* Build the payload JSON from the form */
+    function buildPayload(fd) {
+      const v = name => fd.get(name) || undefined;
+
+      /* attachmentManifest: string[] of checked label text (not a boolean map) */
+      const attachmentManifest = [];
+      document.querySelectorAll('.ll-cb').forEach(cb => {
+        if (cb.classList.contains('on')) {
+          // label text is the last text node inside the cb span
+          const label = cb.textContent.replace(/^[\s✓]+/, '').trim();
+          if (label) attachmentManifest.push(label);
+        }
+      });
+
+      /* reflectances: parse "80/50/20" → {C, W, F} as 0–1 fractions */
+      const rfRaw = v('int_reflectance') || '';
+      const rfParts = rfRaw.split('/').map(n => parseFloat(n));
+      const reflectancesC = isNaN(rfParts[0]) ? undefined : rfParts[0] / 100;
+      const reflectancesW = isNaN(rfParts[1]) ? undefined : rfParts[1] / 100;
+      const reflectancesF = isNaN(rfParts[2]) ? undefined : rfParts[2] / 100;
+
+      /* Fold notesShort into additionalNotes */
+      const notes = [v('additionalNotes'), v('notesShort')].filter(Boolean).join(' | ') || undefined;
+
+      /* Build flat payload — matches ACC .strict() schema exactly */
+      const payload = {
+        source: 'website-professional',
+        projectName: v('projectName'),
+        scope: currentBranch,
+        requestType: v('requestType') || 'Standard',
+        needBy: v('needBy') || undefined,
+        requiredDeliverables: (v('requiredDeliverables') || 'All').split(','),
+        requiredSoftware: v('requiredSoftware') || undefined,
+        requester: {
+          name: v('name'),
+          email: v('email'),
+          company: v('company'),
+          phone: v('phone') || undefined,
+          role: v('role') || undefined,
+          repCode: v('repCode') || undefined,
+        },
+        attachmentManifest: attachmentManifest.length ? attachmentManifest : undefined,
+        additionalNotes: notes,
+        /* Interior fields — flat top-level (no interior{} wrapper) */
+        projectType:      (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_projectType') || undefined) : undefined,
+        fcRequirement:    (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_fcRequirements') || undefined) : undefined,
+        ceilingHeights:   (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_ceilingHeights') || undefined) : undefined,
+        pendantHeights:   (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_pendantHeights') || undefined) : undefined,
+        warehouseRacking: (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_warehouseRacking') || undefined) : undefined,
+        cove:             (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_cove') || undefined) : undefined,
+        cct:              (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_cct') || undefined) : undefined,
+        emLayouts:        (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_emLayouts') || undefined) : undefined,
+        emergencyPower:   (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_emergencyPower') || undefined) : undefined,
+        egressPath:       (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_egressPath') || undefined) : undefined,
+        reflectances:     (currentBranch === 'interior' || currentBranch === 'both') && (reflectancesC !== undefined || reflectancesW !== undefined || reflectancesF !== undefined)
+                            ? { C: reflectancesC, W: reflectancesW, F: reflectancesF }
+                            : undefined,
+        /* Exterior fields — ext-prefixed flat (no exterior{} wrapper) */
+        extProjectType:   (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_projectType') || undefined) : undefined,
+        extFcRequirement: (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_fcRequirements') || undefined) : undefined,
+        extCct:           (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_cct') || undefined) : undefined,
+        mountingHeights:  (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_mountingHeights') || undefined) : undefined,
+        tiltAllowed:      (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_tiltAllowed') === 'true') : undefined,
+        lightSpillLimits: (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_lightSpill') || undefined) : undefined,
+        darkSky:          (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_darkSky') === 'true') : undefined,
+      };
+
+      /* Strip undefined keys so .strict() doesn't see them */
+      return JSON.parse(JSON.stringify(payload));
+    }
+
+    /* Submit handler — POST application/json, body ≤ 16 KB, no file bytes */
+    async function submitPro() {
+      proError.classList.remove('show');
+      proSpinner.classList.add('show');
+      proSubmit.disabled = true;
+
+      const fd = new FormData(proForm);
+      const payload = buildPayload(fd);
+
+      try {
+        /* POST to the CF Pages Function proxy — never browser-direct to ACC */
+        const resp = await fetch('/api/ple/professional-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const json = await resp.json().catch(() => ({}));
+        if (!resp.ok) throw new Error(json?.error?.message || json?.error || 'Submission failed');
+        const handle = json.handle || '';
+        proForm.style.display = 'none';
+        proSpinner.classList.remove('show');
+        proHandle.textContent = handle;
+        proSuccess.classList.add('show');
+      } catch (err) {
+        proSpinner.classList.remove('show');
+        proSubmit.disabled = false;
+        proError.classList.add('show');
+        console.error('[ALG Pro Form]', err);
+      }
+    }
+
+    proForm.addEventListener('submit', e => { e.preventDefault(); submitPro(); });
+    if (proRetry) proRetry.addEventListener('click', () => { proError.classList.remove('show'); submitPro(); });
+  })();
+
+  /* ---- Initial live render on mount ---- */
+  genBtn.click();
+
+})();
+</script>
+
+</BaseLayout>

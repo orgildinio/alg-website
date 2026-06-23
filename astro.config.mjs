@@ -55,7 +55,7 @@ function pagefindIntegration() {
 // Excludes: /submittal/, /_pagefind/, /404, /tools/ utility routes.
 function sitemapIntegration() {
   const SITE = 'https://www.archipelagolighting.com';
-  const EXCLUDE = ['/submittal', '/_pagefind', '/404', '/tools/'];
+  const EXCLUDE = ['/submittal', '/_pagefind', '/404'];
   return {
     name: 'alg-sitemap',
     hooks: {
