@@ -1243,7 +1243,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       const payload = buildPayload(fd);
 
       try {
-        const resp = await fetch(`${ACC_BASE}/professional-request`, {
+        /* POST to the CF Pages Function proxy — never browser-direct to ACC */
+        const resp = await fetch('/api/ple/professional-request', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
