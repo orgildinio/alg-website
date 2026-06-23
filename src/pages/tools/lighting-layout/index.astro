@@ -1194,7 +1194,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         requestType: v('requestType') || 'Standard',
         needBy: v('needBy') || undefined,
         requiredDeliverables: (v('requiredDeliverables') || 'All').split(','),
-        requiredSoftware: v('requiredSoftware') ? [v('requiredSoftware')] : undefined,
+        requiredSoftware: v('requiredSoftware') || undefined,
         requester: {
           name: v('name'),
           email: v('email'),
@@ -1213,7 +1213,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         warehouseRacking: (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_warehouseRacking') || undefined) : undefined,
         cove:             (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_cove') || undefined) : undefined,
         cct:              (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_cct') || undefined) : undefined,
-        emLayouts:        (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_emLayouts') === 'true') : undefined,
+        emLayouts:        (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_emLayouts') || undefined) : undefined,
         emergencyPower:   (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_emergencyPower') || undefined) : undefined,
         egressPath:       (currentBranch === 'interior' || currentBranch === 'both') ? (v('int_egressPath') || undefined) : undefined,
         reflectances:     (currentBranch === 'interior' || currentBranch === 'both') && (reflectancesC !== undefined || reflectancesW !== undefined || reflectancesF !== undefined)
