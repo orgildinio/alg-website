@@ -251,6 +251,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .ll-pro-success.show { display: block; }
   .ll-pro-success h3 { font-family: var(--ll-sans); font-size: 24px; font-weight: 900; margin-bottom: 12px; }
   .ll-pro-success p { font-size: 15px; color: var(--ll-ink2); }
+  .ll-pro-handle { display: inline-block; margin: 18px auto 0; background: var(--ll-bg2); border: 1px solid var(--ll-line); border-radius: 9px; padding: 14px 24px; font-family: var(--ll-mono); font-size: 18px; font-weight: 700; color: var(--ll-ink); letter-spacing: 1px; }
+  .ll-pro-error { display: none; background: #fff3f4; border: 1px solid #f32740; border-radius: 10px; padding: 18px 20px; margin-top: 18px; font-size: 13.5px; color: var(--ll-ink); }
+  .ll-pro-error.show { display: block; }
+  .ll-pro-error a { color: var(--ll-red); font-weight: 700; }
+  .ll-pro-error .ll-retry { background: var(--ll-red); color: #fff; border: 0; border-radius: 7px; padding: 10px 18px; font-family: var(--ll-sans); font-weight: 700; font-size: 12px; letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer; margin-top: 10px; }
+  .ll-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+  .ll-pro-spinner { display: none; text-align: center; padding: 12px 0; font-size: 13px; color: var(--ll-ink3); }
+  .ll-pro-spinner.show { display: block; }
 
   /* responsive */
   @media (max-width: 920px) {
@@ -298,9 +306,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <span class="n">1</span>
       <span><span class="ttl">Instant Layout</span><span class="mt">~60 sec · self-serve engine</span></span>
     </button>
-    <button class="ll-mode ll-mode-disabled" data-mode="pro" id="ll-mode-pro" disabled aria-disabled="true">
+    <button class="ll-mode" data-mode="pro" id="ll-mode-pro">
       <span class="n">2</span>
-      <span><span class="ttl">Professional Layout</span><span class="mt">coming soon</span></span>
+      <span><span class="ttl">Professional Layout</span><span class="mt">full project · our layout team · free</span></span>
     </button>
   </div>
 </div>
@@ -431,14 +439,278 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </section>
 
 <!-- ====================== PRO FORM PANEL ====================== -->
-<!-- PRO FORM PANEL — gated: coming soon (ACC professional pipeline not yet live) -->
-<!-- To re-enable: remove ll-pro-coming-soon div, restore ll-prowrap form block, remove disabled from ll-mode-pro tab -->
 <section class="ll-panel ll-hide" id="ll-m-pro" style="background:var(--ll-bg2);">
   <div class="ll-wrap">
     <div class="ll-sec-eyebrow">Professional · our layout team</div>
-    <h2>Professional Layouts — coming soon.</h2>
-    <div class="ll-pro-coming-soon">
-      <p>Full-project layouts from our lighting team are launching shortly. In the meantime, try the <a href="#" class="ll-mode-link" data-mode="engine">Instant Layout</a> above, or <a href="/contact/">contact us</a> for a project request.</p>
+    <h2>Hand us the whole project. Free, in 3 business days.</h2>
+    <p class="ll-lead">Send drawings and specs — our <span class="aa">Ⓐ</span>CC layout team returns a spec-grade set with point-by-point photometrics, <span class="aa">Ⓐ</span>LG fixture callouts, IES files, and a full BOM. No fee, no commitment.</p>
+
+    <div class="ll-prowrap">
+      <!-- FORM -->
+      <div class="ll-card">
+
+        <!-- Success state -->
+        <div class="ll-pro-success" id="ll-proSuccess">
+          <div style="font-size:48px;margin-bottom:16px;">✓</div>
+          <h3>Project submitted!</h3>
+          <p>Your request is in the queue. You’ll receive a <strong>Photometric Layout PDF</strong>, the <strong>fixture IES files</strong>, and a <strong>Bill of Materials</strong> within 3 business days.</p>
+          <div class="ll-pro-handle" id="ll-proHandle"></div>
+          <p style="margin-top:18px;font-size:12px;color:var(--ll-ink3);">Save your handle — reference it in any follow-up with <a href="mailto:layouts@archipelagolighting.com">layouts@archipelagolighting.com</a>.</p>
+        </div>
+
+        <!-- Error state -->
+        <div class="ll-pro-error" id="ll-proError">
+          <strong>Submission failed.</strong> Your data is preserved — please retry, or email <a href="mailto:sales@archipelagolighting.com">sales@archipelagolighting.com</a> with your project details.
+          <br><button class="ll-retry" id="ll-proRetry">Retry</button>
+        </div>
+
+        <!-- Spinner -->
+        <div class="ll-pro-spinner" id="ll-proSpinner">Submitting…</div>
+
+        <form id="ll-proForm">
+
+          <!-- 01 REQUEST -->
+          <div class="ll-fsec">
+            <div class="fe"><span class="ix">01</span> Request</div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Request type <span class="r">*</span></label>
+                <select name="requestType" required>
+                  <option value="Standard">Standard</option>
+                  <option value="Expedite">Expedite</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Need by</label><input type="date" name="needBy"></div>
+            </div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Complete project name <span class="r">*</span></label><input type="text" name="projectName" placeholder="e.g. Cincinnati Cold Storage retrofit" required></div>
+              <div class="ll-ff"><label>Required deliverables</label>
+                <select name="requiredDeliverables">
+                  <option value="All">All (PDF + IES + BOM)</option>
+                  <option value="PDF">PDF only</option>
+                  <option value="PDF,IES">PDF + IES</option>
+                </select>
+              </div>
+            </div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Required software</label>
+                <select name="requiredSoftware">
+                  <option value="">Any</option>
+                  <option value="AGi32">AGi32</option>
+                  <option value="Visual">Visual</option>
+                  <option value="AGi32,Visual">AGi32 + Visual</option>
+                  <option value="DIALux">DIALux</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Project scope <span class="r">*</span></label>
+                <div class="ll-branch-switch" id="ll-branchSwitch">
+                  <div class="bs on" data-branch="interior">Interior</div>
+                  <div class="bs" data-branch="exterior">Exterior</div>
+                  <div class="bs" data-branch="both">Both</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 02 INCLUDED FILES (manifest of intent) -->
+          <div class="ll-fsec">
+            <div class="fe"><span class="ix">02</span> Included in this submission</div>
+            <div class="ll-cbs">
+              <span class="ll-cb" data-key="dwg"><span class="bx"></span>DWG files</span>
+              <span class="ll-cb" data-key="pdf"><span class="bx"></span>PDFs</span>
+              <span class="ll-cb" data-key="ies"><span class="bx"></span>IES files</span>
+              <span class="ll-cb" data-key="specSheets"><span class="bx"></span>Spec sheets</span>
+              <span class="ll-cb" data-key="fixtureSchedule"><span class="bx"></span>Fixture schedule</span>
+              <span class="ll-cb" data-key="projectNotes"><span class="bx"></span>Project notes</span>
+            </div>
+          </div>
+
+          <!-- 03 INTERIOR BRANCH -->
+          <div class="ll-fsec ll-branch interior" id="ll-branch-interior">
+            <div class="fe"><span class="ix">03</span> Interior project detail</div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Project type</label>
+                <select name="int_projectType">
+                  <option value="">&#8212; Select &#8212;</option>
+                  <option>Warehouse</option><option>Distribution</option><option>Manufacturing</option>
+                  <option>Cold storage</option><option>Office</option><option>Retail</option>
+                  <option>Healthcare</option><option>Education</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>FC requirements</label>
+                <select name="int_fcRequirements">
+                  <option>Per IESNA Standards</option><option>NFPA 101 (EM)</option>
+                  <option>See notes</option><option>Unsure</option>
+                </select>
+              </div>
+            </div>
+            <div class="ll-frow f3">
+              <div class="ll-ff"><label>Ceiling heights</label>
+                <select name="int_ceilingHeights">
+                  <option>Shown in RCP</option><option>Shown on site plan</option>
+                  <option>See notes</option><option>Unsure</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Pendant heights</label><input type="text" name="int_pendantHeights" placeholder="e.g. 22 ft"></div>
+              <div class="ll-ff"><label>Warehouse racking</label>
+                <select name="int_warehouseRacking">
+                  <option>None</option><option>Shown in drawings</option><option>See notes</option>
+                </select>
+              </div>
+            </div>
+            <div class="ll-frow f3">
+              <div class="ll-ff"><label>Reflectance C/W/F</label><input type="text" name="int_reflectance" placeholder="80/50/20"></div>
+              <div class="ll-ff"><label>Cove (if any)</label>
+                <select name="int_cove">
+                  <option>No coves</option><option>Yes — elevations included</option><option>Unsure</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>CCT</label>
+                <select name="int_cct">
+                  <option>4000K</option><option>2700K</option><option>3000K</option>
+                  <option>3500K</option><option>4100K</option><option>5000K</option>
+                </select>
+              </div>
+            </div>
+            <div class="ll-frow f3">
+              <div class="ll-ff"><label>EM layouts req’d</label>
+                <select name="int_emLayouts">
+                  <option value="false">No</option><option value="true">Yes</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Emergency power</label>
+                <select name="int_emergencyPower">
+                  <option>None</option><option>EM Battery</option><option>Generator</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Egress path</label>
+                <select name="int_egressPath">
+                  <option>Shown in drawings</option><option>Unsure — need recommendation</option><option>See notes</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 04 EXTERIOR BRANCH -->
+          <div class="ll-fsec ll-branch exterior ll-hide" id="ll-branch-exterior">
+            <div class="fe"><span class="ix">04</span> Exterior project detail</div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Project type</label>
+                <select name="ext_projectType">
+                  <option value="">&#8212; Select &#8212;</option>
+                  <option>Parking lot</option><option>Parking structure</option>
+                  <option>Building perimeter</option><option>Roadway</option>
+                  <option>Site / area</option><option>Sports</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>FC requirements</label>
+                <select name="ext_fcRequirements">
+                  <option>Per IESNA Standards</option><option>NFPA 101 (EM)</option>
+                  <option>See notes</option><option>Unsure</option>
+                </select>
+              </div>
+            </div>
+            <div class="ll-frow f3">
+              <div class="ll-ff"><label>CCT</label>
+                <select name="ext_cct">
+                  <option>4000K</option><option>3000K</option><option>5000K</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Mounting heights</label><input type="text" name="ext_mountingHeights" placeholder="e.g. 25 ft poles"></div>
+              <div class="ll-ff"><label>Tilt allowed?</label>
+                <select name="ext_tiltAllowed">
+                  <option value="false">No</option><option value="true">Yes</option><option value="see_notes">See notes</option>
+                </select>
+              </div>
+            </div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Light spill limits</label>
+                <select name="ext_lightSpill">
+                  <option>None specified</option><option>Property-line cutoff</option><option>See notes</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Dark Sky compliance</label>
+                <select name="ext_darkSky">
+                  <option value="false">Not required</option><option value="true">Required</option><option value="unsure">Unsure</option>
+                </select>
+              </div>
+            </div>
+            <div class="ll-frow full">
+              <div class="ll-ff"><label>Type of lighting to include</label><input type="text" name="ext_lightingTypes" placeholder="e.g. Shoebox, wall pack, area"></div>
+            </div>
+          </div>
+
+          <!-- 05 ATTACH FILES -->
+          <div class="ll-fsec">
+            <div class="fe"><span class="ix">05</span> Attach drawings &amp; specs</div>
+            <div class="ll-upload" id="ll-uploadZone">
+              <div style="font-size:24px;">↑</div>
+              <div class="ut">Drop files or click to upload</div>
+              <div class="us">DWG · PDF · IES · CAD · site plan · up to 25 MB each</div>
+              <input type="file" id="ll-fileInput" multiple accept=".dwg,.pdf,.dxf,.cad,.ies,.png,.jpg,.zip" style="display:none;">
+            </div>
+            <div id="ll-fileList" style="margin-top:10px;font-size:12px;color:var(--ll-ink3);"></div>
+            <p style="margin-top:10px;font-size:11px;color:var(--ll-ink3);">Very large sets (&gt;100 MB total): submit now, then email files to <a href="mailto:layouts@archipelagolighting.com" style="color:var(--ll-red);">layouts@</a> referencing your handle.</p>
+          </div>
+
+          <!-- 06 ADDITIONAL NOTES -->
+          <div class="ll-fsec">
+            <div class="fe"><span class="ix">06</span> Additional notes</div>
+            <div class="ll-frow full">
+              <div class="ll-ff"><textarea name="additionalNotes" placeholder="Anything we should know — special conditions, phasing, existing fixtures to keep, etc."></textarea></div>
+            </div>
+          </div>
+
+          <!-- 07 YOU -->
+          <div class="ll-fsec">
+            <div class="fe"><span class="ix">07</span> You</div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Full name <span class="r">*</span></label><input type="text" name="name" placeholder="Sarah Reyes" required></div>
+              <div class="ll-ff"><label>Company <span class="r">*</span></label><input type="text" name="company" placeholder="Midwest Cold Logistics" required></div>
+            </div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Email <span class="r">*</span></label><input type="email" name="email" placeholder="sarah@company.com" required></div>
+              <div class="ll-ff"><label>Phone</label><input type="tel" name="phone" placeholder="(555) 123-4567"></div>
+            </div>
+            <div class="ll-frow">
+              <div class="ll-ff"><label>Your role</label>
+                <select name="role">
+                  <option value="">&#8212; Select &#8212;</option>
+                  <option>Distributor</option><option>Sales rep</option>
+                  <option>Specifier / engineer</option><option>Contractor</option>
+                  <option>ESCO</option><option>Facility / end user</option>
+                </select>
+              </div>
+              <div class="ll-ff"><label>Additional notes</label><input type="text" name="notesShort" placeholder="anything we should know"></div>
+            </div>
+          </div>
+
+          <button type="submit" class="ll-submit" id="ll-proSubmit">Submit project to the layout team</button>
+        </form>
+      </div>
+
+      <!-- ASIDE -->
+      <div class="ll-aside">
+        <div class="ll-acard">
+          <div class="fe">SLA · 3 business days · free</div>
+          <h4>What you get back</h4>
+          <p>A spec-grade set from our <span class="aa">Ⓐ</span>CC layout team, produced in AGi32 / Visual — all <span class="aa">Ⓐ</span>LG fixtures.</p>
+          <ul>
+            <li>Point-by-point photometric calc per IESNA for your space</li>
+            <li>Fixture callouts with exact <span class="aa">Ⓐ</span>LG SKUs</li>
+            <li>IES files for every product specified</li>
+            <li>Complete BOM with quantities</li>
+            <li>Footcandle map — avg / min / max / uniformity</li>
+            <li>Power density (W/ft²) vs energy code</li>
+            <li>EM / egress overlay where required</li>
+          </ul>
+        </div>
+        <div class="ll-dcard">
+          <h4>Deliverable preview</h4>
+          <div class="ll-drow"><span class="di">PDF</span><span class="dn">Photometric_Layout.pdf</span><span style="font-family:var(--ll-mono);font-size:10px;color:var(--ll-ink3);">7 pp</span></div>
+          <div class="ll-drow"><span class="di">IES</span><span class="dn">Fixture_IES_Files.zip</span><span style="font-family:var(--ll-mono);font-size:10px;color:var(--ll-ink3);">12</span></div>
+          <div class="ll-drow"><span class="di">CSV</span><span class="dn">Bill_of_Materials.csv</span><span style="font-family:var(--ll-mono);font-size:10px;color:var(--ll-ink3);">edit</span></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -796,19 +1068,191 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     }
   });
 
-  /* ---- .ll-mode-link delegated handler (error banner + coming-soon panel) ---- */
-  // Pro tab is disabled; ll-mode-link can only navigate to 'engine' mode.
+  /* ---- .ll-mode-link delegated handler ---- */
   document.addEventListener('click', e => {
     const link = e.target.closest('.ll-mode-link');
     if (!link) return;
     e.preventDefault();
     const mode = link.dataset.mode;
-    if (!mode || mode === 'pro') return; // Pro is gated — ignore any stale links
+    if (!mode) return;
     document.querySelectorAll('.ll-mode').forEach(b => b.classList.toggle('on', b.dataset.mode === mode));
     document.getElementById('ll-m-engine').classList.toggle('ll-hide', mode !== 'engine');
     document.getElementById('ll-m-pro').classList.toggle('ll-hide', mode !== 'pro');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  /* ============================================================
+     PRO FORM — branch switch, checkboxes, upload, multipart POST
+     POST multipart/form-data:
+       text part  "payload" = JSON string (full camelCase schema)
+       binary parts "files[]" = one per attached file
+     ACC endpoint: POST /professional-request
+     ============================================================ */
+  (function initProForm() {
+    const proForm    = document.getElementById('ll-proForm');
+    const proSubmit  = document.getElementById('ll-proSubmit');
+    const proSuccess = document.getElementById('ll-proSuccess');
+    const proHandle  = document.getElementById('ll-proHandle');
+    const proError   = document.getElementById('ll-proError');
+    const proRetry   = document.getElementById('ll-proRetry');
+    const proSpinner = document.getElementById('ll-proSpinner');
+    const branchSwitch = document.getElementById('ll-branchSwitch');
+    const uploadZone = document.getElementById('ll-uploadZone');
+    const fileInput  = document.getElementById('ll-fileInput');
+    const fileList   = document.getElementById('ll-fileList');
+    if (!proForm) return;
+
+    let currentBranch = 'interior';
+    let attachedFiles = [];
+
+    /* Branch switch */
+    branchSwitch.querySelectorAll('.bs').forEach(b => {
+      b.addEventListener('click', () => {
+        branchSwitch.querySelectorAll('.bs').forEach(x => x.classList.remove('on'));
+        b.classList.add('on');
+        currentBranch = b.dataset.branch;
+        const showInt = currentBranch === 'interior' || currentBranch === 'both';
+        const showExt = currentBranch === 'exterior' || currentBranch === 'both';
+        document.getElementById('ll-branch-interior').classList.toggle('ll-hide', !showInt);
+        document.getElementById('ll-branch-exterior').classList.toggle('ll-hide', !showExt);
+      });
+    });
+
+    /* Included-files checkboxes */
+    document.querySelectorAll('.ll-cb').forEach(cb => {
+      cb.addEventListener('click', () => {
+        cb.classList.toggle('on');
+        const bx = cb.querySelector('.bx');
+        if (bx) bx.textContent = cb.classList.contains('on') ? '\u2713' : '';
+      });
+    });
+
+    /* Upload zone */
+    uploadZone.addEventListener('click', () => fileInput.click());
+    uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.style.borderColor = 'var(--ll-red)'; });
+    uploadZone.addEventListener('dragleave', () => { uploadZone.style.borderColor = ''; });
+    uploadZone.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadZone.style.borderColor = '';
+      addFiles(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', () => addFiles(fileInput.files));
+
+    function addFiles(fl) {
+      Array.from(fl).forEach(f => {
+        if (!attachedFiles.find(x => x.name === f.name && x.size === f.size)) attachedFiles.push(f);
+      });
+      renderFileList();
+    }
+    function renderFileList() {
+      fileList.innerHTML = attachedFiles.map((f, i) =>
+        `<div style="display:flex;align-items:center;gap:8px;padding:4px 0;">
+          <span>${f.name}</span>
+          <span style="color:var(--ll-ink3);">(${(f.size/1024).toFixed(0)} KB)</span>
+          <button type="button" onclick="this.closest('div').remove()" data-i="${i}"
+            style="background:none;border:none;color:var(--ll-red);cursor:pointer;font-size:11px;">remove</button>
+        </div>`
+      ).join('');
+      /* sync attachedFiles when remove clicked */
+      fileList.querySelectorAll('button[data-i]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          attachedFiles.splice(parseInt(btn.dataset.i), 1);
+          renderFileList();
+        });
+      });
+    }
+
+    /* Build the payload JSON from the form */
+    function buildPayload(fd) {
+      const v = name => fd.get(name) || undefined;
+      const included = {};
+      document.querySelectorAll('.ll-cb').forEach(cb => {
+        if (cb.dataset.key) included[cb.dataset.key] = cb.classList.contains('on');
+      });
+      const payload = {
+        source: 'website-professional',
+        projectName: v('projectName'),
+        scope: currentBranch,
+        requestType: v('requestType') || 'Standard',
+        needBy: v('needBy') || undefined,
+        requiredDeliverables: (v('requiredDeliverables') || 'All').split(','),
+        requiredSoftware: v('requiredSoftware') ? [v('requiredSoftware')] : undefined,
+        requester: {
+          name: v('name'),
+          company: v('company'),
+          email: v('email'),
+          phone: v('phone') || undefined,
+          role: v('role') || undefined,
+        },
+        included,
+        additionalNotes: (v('additionalNotes') || v('notesShort') || undefined),
+      };
+      if (currentBranch === 'interior' || currentBranch === 'both') {
+        payload.interior = {
+          projectType: v('int_projectType') || undefined,
+          fcRequirements: v('int_fcRequirements') || undefined,
+          ceilingHeights: v('int_ceilingHeights') || undefined,
+          pendantHeights: v('int_pendantHeights') || undefined,
+          warehouseRacking: v('int_warehouseRacking') || undefined,
+          reflectance: v('int_reflectance') || undefined,
+          cove: v('int_cove') || undefined,
+          cct: v('int_cct') || undefined,
+          emLayouts: v('int_emLayouts') === 'true',
+          emergencyPower: v('int_emergencyPower') || undefined,
+          egressPath: v('int_egressPath') || undefined,
+        };
+      }
+      if (currentBranch === 'exterior' || currentBranch === 'both') {
+        payload.exterior = {
+          projectType: v('ext_projectType') || undefined,
+          fcRequirements: v('ext_fcRequirements') || undefined,
+          cct: v('ext_cct') || undefined,
+          mountingHeights: v('ext_mountingHeights') || undefined,
+          tiltAllowed: v('ext_tiltAllowed') === 'true',
+          lightSpill: v('ext_lightSpill') || undefined,
+          darkSky: v('ext_darkSky') === 'true',
+          lightingTypes: v('ext_lightingTypes') || undefined,
+        };
+      }
+      return payload;
+    }
+
+    /* Submit handler */
+    async function submitPro() {
+      proError.classList.remove('show');
+      proSpinner.classList.add('show');
+      proSubmit.disabled = true;
+
+      const fd = new FormData(proForm);
+      const payload = buildPayload(fd);
+
+      const body = new FormData();
+      body.append('payload', JSON.stringify(payload));
+      attachedFiles.forEach(f => body.append('files[]', f, f.name));
+
+      try {
+        const resp = await fetch(`${ACC_BASE}/professional-request`, {
+          method: 'POST',
+          body,
+        });
+        const json = await resp.json().catch(() => ({}));
+        if (!resp.ok) throw new Error(json?.error || 'Submission failed');
+        const handle = json.handle || '';
+        proForm.style.display = 'none';
+        proSpinner.classList.remove('show');
+        proHandle.textContent = handle;
+        proSuccess.classList.add('show');
+      } catch (err) {
+        proSpinner.classList.remove('show');
+        proSubmit.disabled = false;
+        proError.classList.add('show');
+        console.error('[ALG Pro Form]', err);
+      }
+    }
+
+    proForm.addEventListener('submit', e => { e.preventDefault(); submitPro(); });
+    if (proRetry) proRetry.addEventListener('click', () => { proError.classList.remove('show'); submitPro(); });
+  })();
 
   /* ---- Initial live render on mount ---- */
   genBtn.click();
