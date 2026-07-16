@@ -3904,7 +3904,7 @@ body { overflow-x: hidden; }
  <div class="hero-info">
  <h1>
  <span class="hero-h1-name">LTRK · Trackstar</span>
- <span class="tier-badge tier-eco">ECO</span>
+ <span class="tier-badge tier-pro">PRO</span>
  </h1>
  <h2>One head. Two track standards.</h2>
 
@@ -4239,19 +4239,7 @@ body { overflow-x: hidden; }
  <div class="feature-chip-label">SURGE<span class="aa">Ⓐ</span>RMOR</div>
  </div>
 
- <div class="feature-chip">
- <div class="feature-chip-icon">
- <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
- <circle cx="30" cy="30" r="26" stroke-width="1.4" opacity="0.35"/>
- <line x1="20" y1="14" x2="20" y2="46"/>
- <path d="M20 16 Q30 18 40 16 Q40 22 40 28 Q30 30 20 28 Z" fill="#F32740" stroke="#F32740"/>
- <circle cx="26" cy="22" r="0.9" fill="#ffffff" stroke="none"/>
- <circle cx="32" cy="22" r="0.9" fill="#ffffff" stroke="none"/>
- <circle cx="38" cy="22" r="0.9" fill="#ffffff" stroke="none"/>
- </svg>
- </div>
- <div class="feature-chip-label">TAA COMPLIANT</div>
- </div>
+ 
 
  </div>
 
@@ -4410,7 +4398,7 @@ body { overflow-x: hidden; }
  <!-- populated by JS based on active SKU tab · datasheet page 2 model spec table -->
  </tbody>
  </table>
- <div class="spec-table-foot">★ <em>Default WATTselect setting · ★ on HIGHEST WATT per datasheet bolded values (max lumen output). Field-adjustable via 3-position DIP switch. <strong>Lumens published per IESNA LM-79 testing · 60 IES files delivered (30 per SKU class · 2 beam endpoints @ 20° + 50° × 3 watts × 5 CCTs).</strong> All lumens shown at default 5000K CCTselect; ±5% lumen shift across the 5-CCT range (2700/3000/3500/4000/5000K). CRI 90+ tru<span class="aa">Ⓐ</span>COLOR™ R9>0 standard at every CCT · 3-step MacAdam binning. Voltage 120V · &gt;0.9 PF · TRIAC + Phase Dim. NOTE: datasheet pg 1 prose says "120-277V" but pg 2 spec list canonical = 120V — pg 2 spec list wins per CFG-RBT-2 datasheet hierarchy.</em></div>
+ <div class="spec-table-foot">★ <em>Default WATTselect setting · ★ on HIGHEST WATT per datasheet bolded values (max lumen output). Field-adjustable via 3-position DIP switch. <strong>Lumens published per IESNA LM-79 testing · 60 IES files delivered (30 per SKU class · 2 beam endpoints @ 20° + 50° × 3 watts × 5 CCTs).</strong> All lumens shown at default 5000K CCTselect; ±5% lumen shift across the 5-CCT range (2700/3000/3500/4000/5000K). CRI 90+ tru<span class="aa">Ⓐ</span>COLOR™ R9>0 standard at every CCT · 3-step MacAdam binning. Voltage 120V · &gt;0.9 PF · TRIAC + Phase Dim.</em></div>
  </div>
  </div>
  </div>
@@ -4671,118 +4659,6 @@ body { overflow-x: hidden; }
  </div>
 </section>
 
-<!-- (legacy Solstice §3 below — preserved as reference, hidden in render) -->
-<section class="spotlight-section" id="spotlight" aria-label="15-in-1 Spotlight" style="display:none">
- 
- <div class="spotlight-inner">
-
- <div class="spotlight-head">
- <div class="spotlight-eyebrow">Field-Tunable · 15 Configurations Per Fixture</div>
- <h2 class="spotlight-title">Set the watt. Pick the color. Stock one SKU.</h2>
- <p class="spotlight-sub">
- Three WATTselect positions × five CCTselect positions on every Solstice fixture =
- <strong>15 lighting outputs from one SKU</strong>. The contractor sets watt and color on-site
- with two DIP switches — no SKU change, no return trip to the supply house.
- Volume-tier competitors split CCT range across multiple SKUs (volume-tier downlights) or fix the
- wattage at one value (volume-tier downlights); Solstice gives the spec writer all 15 from a single line item.
- </p>
- </div>
-
- <div class="spotlight-body">
-
- <!-- LEFT: cutaway image showing both DIP dials with feature callouts -->
- <div class="spotlight-visual">
- <img src="assets/hero/solstice-hero-2.webp"
- alt="LCDL Solstice cutaway with WATTselect and CCTselect dial labels"
- class="spotlight-cutaway"
- loading="lazy" />
- <div class="spotlight-cutaway-caption">
- The two dials sit on the back of the housing — accessible during install before the trim ring goes on. Set them once on the job site; the fixture remembers the setting for the life of the install.
- </div>
- </div>
-
- <!-- RIGHT: interactive WATT × CCT picker with live readout -->
- <div class="spotlight-picker">
-
- <div class="spotlight-picker-head">
- <div class="spotlight-picker-label">Try it · pick a watt and a CCT</div>
- <div class="spotlight-picker-meta" id="spotMeta">LCDL6 · 6&quot; · default tab</div>
- </div>
-
- <div class="spotlight-row">
- <div class="spotlight-row-label">3-WATTselect</div>
- <div class="spotlight-row-chips" role="radiogroup" aria-label="WATTselect">
- <button type="button" class="spot-chip" data-spot-watt="0" role="radio" aria-checked="false">12W<span class="spot-chip-sub">LOW</span></button>
- <button type="button" class="spot-chip" data-spot-watt="1" role="radio" aria-checked="false">17W<span class="spot-chip-sub">MED ◇</span></button>
- <button type="button" class="spot-chip selected" data-spot-watt="2" role="radio" aria-checked="true">22W<span class="spot-chip-sub">HIGH ★</span></button>
- </div>
- </div>
-
- <div class="spotlight-row">
- <div class="spotlight-row-label">5-CCTselect</div>
- <div class="spotlight-row-chips" role="radiogroup" aria-label="CCTselect">
- <button type="button" class="spot-chip spot-cct" data-spot-cct="0" data-cct-color="#FFA94D" role="radio" aria-checked="false">2700K<span class="spot-chip-sub">warm</span></button>
- <button type="button" class="spot-chip spot-cct" data-spot-cct="1" data-cct-color="#FFC07F" role="radio" aria-checked="false">3000K<span class="spot-chip-sub">soft</span></button>
- <button type="button" class="spot-chip spot-cct" data-spot-cct="2" data-cct-color="#FFD9B0" role="radio" aria-checked="false">3500K<span class="spot-chip-sub">neutral</span></button>
- <button type="button" class="spot-chip spot-cct" data-spot-cct="3" data-cct-color="#E8EAEC" role="radio" aria-checked="false">4000K<span class="spot-chip-sub">cool</span></button>
- <button type="button" class="spot-chip spot-cct selected" data-spot-cct="4" data-cct-color="#C8DEFF" role="radio" aria-checked="true">5000K<span class="spot-chip-sub">daylight ★</span></button>
- </div>
- </div>
-
- <!-- Live readout panel -->
- <div class="spotlight-readout">
- <div class="spotlight-readout-row">
- <div class="spotlight-readout-key">Resolved SKU</div>
- <div class="spotlight-readout-val" id="spotSku">LCDL6-1222CS</div>
- </div>
- <div class="spotlight-readout-grid">
- <div class="spotlight-readout-cell">
- <div class="spot-cell-key">Lumens</div>
- <div class="spot-cell-val" id="spotLumens">2,200<span class="spot-cell-unit">lm</span></div>
- </div>
- <div class="spotlight-readout-cell">
- <div class="spot-cell-key">Efficacy</div>
- <div class="spot-cell-val" id="spotLpw">100<span class="spot-cell-unit">LM/W</span></div>
- </div>
- <div class="spotlight-readout-cell">
- <div class="spot-cell-key">CCT</div>
- <div class="spot-cell-val" id="spotCct">5000<span class="spot-cell-unit">K</span></div>
- </div>
- <div class="spotlight-readout-cell spot-cell-color">
- <div class="spot-cell-key">Color preview</div>
- <div class="spot-cell-swatch" id="spotSwatch" style="background:#C8DEFF;"></div>
- </div>
- </div>
- <div class="spotlight-readout-foot" id="spotFoot">
- Default = 22W ★ · 5000K ★ (datasheet-bolded). Switch tabs in §2 above to see LCDL4 / LCDL8 / LCDL10 watt tiers; the 15-CCT range stays constant across all four sizes.
- </div>
- </div>
-
- </div>
-
- </div>
-
- <!-- Bottom band — the headline takeaway, 3 quick stats -->
- <div class="spotlight-takeaway">
- <div class="spotlight-takeaway-cell">
- <div class="spot-tk-num">15</div>
- <div class="spot-tk-key">Configurations per SKU</div>
- <div class="spot-tk-sub">3 WATTselect × 5 CCTselect — every fixture, every size, no exceptions</div>
- </div>
- <div class="spotlight-takeaway-cell">
- <div class="spot-tk-num">0</div>
- <div class="spot-tk-key">Return trips to the supply house</div>
- <div class="spot-tk-sub">Contractor changes watt or CCT on-site at install — no swap-out, no restock</div>
- </div>
- <div class="spotlight-takeaway-cell">
- <div class="spot-tk-num">5×</div>
- <div class="spot-tk-key">SKU-line consolidation</div>
- <div class="spot-tk-sub">vs volume-tier downlights (3-CCT split into 2 SKUs) and volume-tier downlights (separate phase-cut + 0-10V SKUs)</div>
- </div>
- </div>
-
- </div>
-</section>
 <!-- SECTION 4 — Highlights & Features · LTRK Trackstar
  7-tile collage (locked spec from trackstar_best_of_class_story.md).
  Pattern: 1 HERO (24:9) + 3 rows of 2 = 7 tiles total.
@@ -5383,7 +5259,7 @@ body { overflow-x: hidden; }
  <span class="photo-bug-pill">3-STEP MACADAM</span>
  <span class="photo-bug-pill">tru<span class="aa">Ⓐ</span>COLOR™</span>
  </div>
- <div class="photo-stat-sub">Type-C rotationally-symmetric distribution from a TIR-optic + reflector assembly. <strong>CRI 90+ tru<span class="aa">Ⓐ</span>COLOR™ R9&gt;0 standard at every CCT</strong> with 3-step MacAdam binning per ANSI C78.377-2017. <strong>DLC Listed</strong> (per Rebate Center · CFG-RBT-2). Reference polar curves above are calibrated against J-track reference fixture, H-track brand, and a volume-spec reference fixture LM-79 reference data; the lab-measured Trackstar curves will refresh on PDP v2 when the supplier returns the 60-file IES bundle.</div>
+ <div class="photo-stat-sub">Type-C rotationally-symmetric distribution from a TIR-optic + reflector assembly. <strong>CRI 90+ tru<span class="aa">Ⓐ</span>COLOR™ R9&gt;0 standard at every CCT</strong> with 3-step MacAdam binning per ANSI C78.377-2017. <strong>DLC Listed</strong>. Reference polar curves above are calibrated against J-track reference fixture, H-track brand, and a volume-spec reference fixture LM-79 reference data; the lab-measured Trackstar curves will refresh on PDP v2 when the supplier returns the 60-file IES bundle.</div>
  </div>
  <div class="photo-stat">
  <div class="photo-stat-label">Test Lab Source</div>
@@ -5942,7 +5818,7 @@ body { overflow-x: hidden; }
  </div>
  <div class="cfg-spec-cell" style="grid-column: 1 / -1;">
  <div class="cfg-spec-cell-key">Compliance</div>
- <div class="cfg-spec-cell-val" data-spec="compliance">UL Listed · DLC Listed (per Rebate Center · CFG-RBT-2) · FCC Title 47 Part 15B · RoHS · Damp Location · DampGuard™ · 120V · 5-yr warranty · L70 @ 50,000 hrs · 95% lumen maintenance · Made in China (heads up: no TAA · no Made-in-USA)</div>
+ <div class="cfg-spec-cell-val" data-spec="compliance">UL Listed · DLC Listed · FCC Title 47 Part 15B · RoHS · Damp Location · DampGuard™ · 120V · 5-yr warranty · L70 @ 50,000 hrs · 95% lumen maintenance · Made in China</div>
  </div>
  </div>
 
@@ -6148,17 +6024,17 @@ body { overflow-x: hidden; }
 <!-- ============================================================================
  SECTION 11 — planoⒶRCH Family Band — LTRK Trackstar
  Trackstar (LTRK · the only track light in planoⒶRCH) appears next to the
- planoⒶRCH -tier networked lighting control cousins per locked spec (trackstar_best_of_class_story.md).
+ planoⒶRCH downlight cousins per locked spec (trackstar_best_of_class_story.md).
 
  Position rule (memory feedback_family_hero_pair_position_2.md):
  Position 1 = Trackstar ★ "You Are Here" (current product)
  Position 2 = Astra ★ RECOMMENDED PAIR (canonical accent + ambient pair)
- Position 3 = Spectra (high-output -tier networked lighting control cousin)
- Position 4 = Solstice (ECO -tier networked lighting control cousin)
+ Position 3 = Spectra (high-output planoⒶRCH downlight cousin)
+ Position 4 = Solstice (ECO planoⒶRCH downlight cousin)
  (SafeZone excluded · different fire-rated application motion)
 
  The architectural-buyer story: Trackstar handles accent/feature illumination
- on track infrastructure; the LCDL -tier networked lighting control family handles ambient general
+ on track infrastructure; the LCDL planoⒶRCH downlight family handles ambient general
  illumination across three spec tiers (PRO+, PRO+, ECO).
 
  Anchor: #family.
@@ -6168,9 +6044,9 @@ body { overflow-x: hidden; }
 
  <div class="lspl-family-head">
  <div class="closing-eyebrow">plano<span class="aa" aria-hidden="true">Ⓐ</span>RCH Family</div>
- <h2 class="closing-title">Track + -tier networked lighting control. One plano<span class="aa">Ⓐ</span>RCH spec.</h2>
+ <h2 class="closing-title">Track + ambient. One plano<span class="aa">Ⓐ</span>RCH spec.</h2>
  <p class="closing-sub">
- Trackstar is the plano<span class="aa">Ⓐ</span>RCH brand vertical's accent + feature track light. Pair it with the <strong>LCDL -tier networked lighting control family</strong> — Astra for spec-grade architectural ambient, Spectra for high-output integrated-J-Box installations, Solstice for value-engineered ECO can-less. Same plano<span class="aa">Ⓐ</span>RCH compliance language across the family, same QuickShip distribution, same 5-year warranty.
+ Trackstar is the plano<span class="aa">Ⓐ</span>RCH brand vertical's accent + feature track light. Pair it with the <strong>LCDL plano<span class="aa">Ⓐ</span>RCH downlight family</strong> — Astra for spec-grade architectural ambient, Spectra for high-output integrated-J-Box installations, Solstice for value-engineered ECO can-less. Same plano<span class="aa">Ⓐ</span>RCH compliance language across the family, same QuickShip distribution, same 5-year warranty.
  </p>
  </div>
 
@@ -6183,7 +6059,7 @@ body { overflow-x: hidden; }
  <span class="family-card-here-badge">You Are Here</span>
  <img class="family-card-photo"
  src="assets/hero/1.png"
- alt="LTRK Trackstar — spec-grade adjustable architectural track light · the planoⒶRCH track-light cousin to the LCDL -tier networked lighting control family"
+ alt="LTRK Trackstar — spec-grade adjustable architectural track light · the planoⒶRCH track-light cousin to the LCDL planoⒶRCH downlight family"
  loading="lazy" />
  </div>
  <div class="family-card-body">
@@ -6216,7 +6092,7 @@ body { overflow-x: hidden; }
  </div>
  <div class="family-card-title">Solstice</div>
  <div class="family-card-desc">
- Affordable Can-Less Commercial . 4 sizes · 110 LM/W peak · 3-WATTselect × 5-CCTselect 15-in-1 dip-switch · Tri-Mode Dimming (TRIAC + ELV + 0-10V from one SKU) · spring-loaded clips. The bid spec when the project value-engineers down from PRO/PRO+ tier · same plano<span class="aa">Ⓐ</span>RCH brand vertical, lower price tier.
+ Affordable Can-Less Commercial Downlight. 4 sizes · 110 LM/W peak · 3-WATTselect × 5-CCTselect 15-in-1 dip-switch · Tri-Mode Dimming (TRIAC + ELV + 0-10V from one SKU) · spring-loaded clips. The bid spec when the project value-engineers down from PRO/PRO+ tier · same plano<span class="aa">Ⓐ</span>RCH brand vertical, lower price tier.
  </div>
  <div class="family-card-stats">~3,200 lm max · 6-30W · 4&quot;/6&quot;/8&quot;/10&quot; · 110 LM/W · 5-CCT · 3-WATT</div>
  <span class="family-card-cta">View Solstice →</span>
@@ -6240,14 +6116,14 @@ body { overflow-x: hidden; }
  </div>
  <div class="family-card-title">Astra</div>
  <div class="family-card-desc">
- Spec-Grade Adjustable Architectural Commercial . CRI 90+ tru<span class="aa">Ⓐ</span>COLOR at every CCT · 4 field-swappable beam reflectors per SKU · Round + Square + 5 finishes · ~1,100+ field configurations from 3 catalog SKUs · Tri-Mode dimming · built-in 2.5kV surge. <strong>The ambient -tier networked lighting control companion to Trackstar</strong> — accent on the track, ambient in the ceiling, one plano<span class="aa">Ⓐ</span>RCH spec for the full architectural install.
+ Spec-Grade Adjustable Architectural Commercial Downlight. CRI 90+ tru<span class="aa">Ⓐ</span>COLOR at every CCT · 4 field-swappable beam reflectors per SKU · Round + Square + 5 finishes · ~1,100+ field configurations from 3 catalog SKUs · Tri-Mode dimming · built-in 2.5kV surge. <strong>The ambient plano<span class="aa">Ⓐ</span>RCH downlight companion to Trackstar</strong> — accent on the track, ambient in the ceiling, one plano<span class="aa">Ⓐ</span>RCH spec for the full architectural install.
  </div>
  <div class="family-card-stats">800-4,650 lm · 8/12/15 · 18/24/30 · 30/40/50W · 100 LM/W · 4&quot;/6&quot;/8&quot;/10&quot; · CRI 90+</div>
  <span class="family-card-cta">View Astra →</span>
  </div>
  </a>
 
- <!-- 4 / Spectra (PRO+) — high-output integrated-J-Box -tier networked lighting control cousin -->
+ <!-- 4 / Spectra (PRO+) — high-output integrated-J-Box planoⒶRCH downlight cousin -->
  <a href="/products/spectra/" class="family-card">
  <div class="family-card-img">
  <span class="family-card-tag">LCDL · plano<span class="aa">Ⓐ</span>RCH · PRO+</span>
@@ -6263,7 +6139,7 @@ body { overflow-x: hidden; }
  </div>
  <div class="family-card-title">Spectra</div>
  <div class="family-card-desc">
- Spec-Grade High-Output Integrated-J-Box Commercial . 10/15/20W · 27/34/40W · 40/50/60W up to 6,180 lm · Twist-Lock Modular + Separable J-Box · 120-347V Canadian on DMS1020/2740. The high-output -tier networked lighting control cousin for spaces requiring &gt;4,500 lm per fixture · same plano<span class="aa">Ⓐ</span>RCH compliance language as Trackstar.
+ Spec-Grade High-Output Integrated-J-Box Commercial Downlight. 10/15/20W · 27/34/40W · 40/50/60W up to 6,180 lm · Twist-Lock Modular + Separable J-Box · 120-347V Canadian on DMS1020/2740. The high-output plano<span class="aa">Ⓐ</span>RCH downlight cousin for spaces requiring &gt;4,500 lm per fixture · same plano<span class="aa">Ⓐ</span>RCH compliance language as Trackstar.
  </div>
  <div class="family-card-stats">up to 6,180 lm · 10/15/20W · 27/34/40W · 40/50/60W · 120-347V · 4&quot;/6&quot;/8&quot;</div>
  <span class="family-card-cta">View Spectra →</span>
@@ -6283,7 +6159,7 @@ body { overflow-x: hidden; }
 
  Round Out lineup mirrors Astra §12 (same factory · same controls platform ·
  same warranty promise) — these cross-line fixtures complete the install where
- Trackstar handles accent/feature and the planoⒶRCH -tier networked lighting control family (§11)
+ Trackstar handles accent/feature and the planoⒶRCH downlight family (§11)
  handles ambient:
  - Luna (LUXA · planoⒶRCH) — architectural linear pendant
  - proⒶRCH-III (LBLP · planoⒶRCH) — back-lit panel for behind-the-storefront
@@ -6442,7 +6318,7 @@ body { overflow-x: hidden; }
  <div class="pillar-eyebrow">Great Rebates</div>
  <h3 class="pillar-title">Stack the rebates.</h3>
  <p class="pillar-body">
- Trackstar qualifies for utility rebate programs at the <strong>DLC Listed tier</strong> (confirmed via Rebate Center per CFG-RBT-2) — published 90-100 LM/W efficacy clears the DLC Listed floor. For boutique retail, gallery, and curated hospitality installations where multi-fixture density is high, the per-fixture rebate stack adds up to meaningful project offset. Pair with the §11 plano<span class="aa">Ⓐ</span>RCH -tier networked lighting control family for a coherent rebate-eligible package across the install.
+ Trackstar qualifies for utility rebate programs at the <strong>DLC Listed tier</strong> (confirmed via Rebate Center) — published 90-100 LM/W efficacy clears the DLC Listed floor. For boutique retail, gallery, and curated hospitality installations where multi-fixture density is high, the per-fixture rebate stack adds up to meaningful project offset. Pair with the §11 plano<span class="aa">Ⓐ</span>RCH -tier networked lighting control family for a coherent rebate-eligible package across the install.
  </p>
  <div class="pillar-stats">
  <div class="pillar-stat">
