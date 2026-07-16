@@ -1,0 +1,140 @@
+=== 1. TAA/BAA/Made-in-USA in trackstar ===
+3193: compliance bundle) + secondary quick-link row (DLC QPL, TAA cert,
+4156: NOTE per heads up: NO TAA · NO Made-In-USA flag · Trackstar is Made in China
+4253: <div class="feature-chip-label">TAA COMPLIANT</div>
+4297: - HONEST CALL-OUTS: NO TAA · NO Made-In-USA · Made in China · DLC Listed (NOT Premium)
+5945: <div class="cfg-spec-cell-val" data-spec="compliance">UL Listed · DLC Listed (per Rebate Center · CFG-RBT-2) · FCC Title 47 Part 15B · RoHS · Damp Location · DampGuard™ · 120V · 5-yr warranty · L70 @ 50,000 hrs · 95% lumen maintenance · Made in China (heads up: no TAA · no Made-in-USA)</div>
+5988: 5-yr Warranty. NOTE: NO TAA card (Trackstar is Made in China · heads up).
+6381: For the back-of-house &mdash; retail parking decks, hospitality service corridors, gallery loading bays, and the high-bay utility spaces behind the architectural envelope. Round UFO form &middot; <strong>3-WATTselect</strong> dip-switch dials each of the 3 housing classes (150&nbsp;/&nbsp;240&nbsp;/&nbsp;300W max) to a 3-position range &middot; <strong>4-CCTselect</strong> 3000K/3500K/4000K/5000K &middot; <strong>contr<span class="aa">&#9398;</span>LS-ready</strong> integrated sensor receptacle &middot; 12&nbsp;active luminaire SKUs with full TAA variants on every class.
+6383: <div class="family-card-stats">100/120/150W &middot; 150/200/240W &middot; 200/240/300W &middot; 90&deg; optic &middot; 4-CCT &middot; UT 120-277V &middot; B + W &middot; TAA</div>
+
+=== 2. Internal notes in trackstar (rendered copy only) ===
+74: /* CFG-MF-13 · Heavy-tracked uppercase contexts (>= 0.12em letter-spacing)
+417: /* CFG-HERO-2 · labeled pill chips replace bare dots · LBLP/Luxmark/Spectra/Astra/
+487: /* CFG-NAV-1 · sticky-nav active-state · the inverse of .primary.
+542: Per CFG-DOCS-1: never ship a real but wrong URL. Always pending-flag while waiting. */
+734: padding: 10px 12px; /* tighter than 14×16 · Solstice canonical (CFG-SPEC-1 v1.2) */
+2738: CFG-CFG-1 · Asymmetric Row-Rails (added 2026-05-18 PM)
+2875: edge, otherwise the long option text overlaps the arrow (CFG-CFG-1 v1 bug
+2898: /* CFG-CFG-1 v1.4 · Legend disclaimer · James 2026-05-22 · quiet legal cover */
+2930:/* ==================== end CFG-CFG-1 row-rails ==================== */
+3781: /* CFG-MF-5 contrast lock — .closing-section cascades color:var(--text-primary) onto
+3880:/* CFG-TYPE-1 · trackstar-pdp typography lock — defeat Shopify Cormorant Garamond global */
+3884:/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+4010: NOTE: chip count dropped from Astra's 6 → Trackstar's 5 to mirror the
+4154: UL Listed · DLC Listed (per Rebate Center · CFG-RBT-2) · FCC Title 47 Part 15B ·
+4156: NOTE per heads up: NO TAA · NO Made-In-USA flag · Trackstar is Made in China
+4288: - default CCTselect = 5000K (datasheet pg 2 spec list canonical)
+4289: - 2 finishes: Black + White (no third finish · datasheet pg 2)
+4294: - Voltage 120V (datasheet pg 2 spec list canonical · NOT 120-277V — pg 1 prose inconsistency captured in knowledge pack §11)
+4413: <div class="spec-table-foot">★ <em>Default WATTselect setting · ★ on HIGHEST WATT per datasheet bolded values (max lumen output). Field-adjustable via 3-position DIP switch. <strong>Lumens published per IESNA LM-79 testing · 60 IES files delivered (30 per SKU class · 2 beam endpoints @ 20° + 50° × 3 watts × 5 CCTs).</strong> All lumens shown at default 5000K CCTselect; ±5% lumen shift across the 5-CCT range (2700/3000/3500/4000/5000K). CRI 90+ tru<span class="aa">Ⓐ</span>COLOR™ R9>0 standard at every CCT · 3-step MacAdam binning. Voltage 120V · &gt;0.9 PF · TRIAC + Phase Dim. NOTE: datasheet pg 1 prose says "120-277V" but pg 2 spec list canonical = 120V — pg 2 spec list wins per CFG-RBT-2 datasheet hierarchy.</em></div>
+4458: per ALG datasheet pg 2. Visual unaltered. Flagged to ops for v2 video supplier ask.
+5287: heads up: Supplier delivered the 60-file IES filename inventory
+5299: catalog data from Trackstar datasheet pg 2 spec table.
+5374: <div class="photo-stat-sub" id="photoStatEfficacy">93 LM/W catalog @ 30W · datasheet pg 2 · ±5% shift across the 5-CCT range</div>
+5386: <div class="photo-stat-sub">Type-C rotationally-symmetric distribution from a TIR-optic + reflector assembly. <strong>CRI 90+ tru<span class="aa">Ⓐ</span>COLOR™ R9&gt;0 standard at every CCT</strong> with 3-step MacAdam binning per ANSI C78.377-2017. <strong>DLC Listed</strong> (per Rebate Center · CFG-RBT-2). Reference polar curves above are calibrated against J-track reference fixture, H-track brand, and a volume-spec reference fixture LM-79 reference data; the lab-measured Trackstar curves will refresh on PDP v2 when the supplier returns the 60-file IES bundle.</div>
+5423: heads up: track + connector + plug components are line-item
+5945: <div class="cfg-spec-cell-val" data-spec="compliance">UL Listed · DLC Listed (per Rebate Center · CFG-RBT-2) · FCC Title 47 Part 15B · RoHS · Damp Location · DampGuard™ · 120V · 5-yr warranty · L70 @ 50,000 hrs · 95% lumen maintenance · Made in China (heads up: no TAA · no Made-in-USA)</div>
+5988: 5-yr Warranty. NOTE: NO TAA card (Trackstar is Made in China · heads up).
+6293: CFG-MF-5: .pillar-cta.outline contrast lock applied in CSS above per memory rule.
+6445: Trackstar qualifies for utility rebate programs at the <strong>DLC Listed tier</strong> (confirmed via Rebate Center per CFG-RBT-2) — published 90-100 LM/W efficacy clears the DLC Listed floor. For boutique retail, gallery, and curated hospitality installations where multi-fixture density is high, the per-fixture rebate stack adds up to meaningful project offset. Pair with the §11 plano<span class="aa">Ⓐ</span>RCH -tier networked lighting control family for a coherent rebate-eligible package across the install.
+6617:// Carousel autoplay — CFG-HERO-2 canonical · chip-driven (2026-05-24).
+
+=== 3. Solstice/LCDL in trackstar ===
+734: padding: 10px 12px; /* tighter than 14×16 · Solstice canonical (CFG-SPEC-1 v1.2) */
+880: /* SECTION 3 — Motion · 5-clip product video carousel — LCDL Astra
+882: Astra has a real promo video (LUNA-style Motion section, not Solstice's Spotlight). */
+981: /* SECTION 3.5 — Adjustable-Beam Spotlight · 4 reflectors per SKU family — LCDL Astra
+1138: /* SECTION 3 — 15-in-1 Spotlight (replaces LUNA Motion Video) — Solstice
+4683: Three WATTselect positions × five CCTselect positions on every Solstice fixture =
+4687: wattage at one value (volume-tier downlights); Solstice gives the spec writer all 15 from a single line item.
+4695: <img src="assets/hero/solstice-hero-2.webp"
+4696: alt="LCDL Solstice cutaway with WATTselect and CCTselect dial labels"
+4709: <div class="spotlight-picker-meta" id="spotMeta">LCDL6 · 6&quot; · default tab</div>
+4736: <div class="spotlight-readout-val" id="spotSku">LCDL6-1222CS</div>
+4757: Default = 22W ★ · 5000K ★ (datasheet-bolded). Switch tabs in §2 above to see LCDL4 / LCDL8 / LCDL10 watt tiers; the 15-CCT range stays constant across all four sizes.
+6157: Position 4 = Solstice (ECO -tier networked lighting control cousin)
+6161: on track infrastructure; the LCDL -tier networked lighting control family handles ambient general
+6173: Trackstar is the plano<span class="aa">Ⓐ</span>RCH brand vertical's accent + feature track light. Pair it with the <strong>LCDL -tier networked lighting control family</strong> — Astra for spec-grade architectural ambient, Spectra for high-output integrated-J-Box installations, Solstice for value-engineered ECO can-less. Same plano<span class="aa">Ⓐ</span>RCH compliance language across the family, same QuickShip distribution, same 5-year warranty.
+6186: alt="LTRK Trackstar — spec-grade adjustable architectural track light · the planoⒶRCH track-light cousin to the LCDL -tier networked lighting control family"
+6204: <a href="/products/solstice/" class="family-card">
+6206: <span class="family-card-tag">LCDL · plano<span class="aa">Ⓐ</span>RCH · ECO</span>
+6208: src="/products/solstice/assets/hero/fam-solstice.webp"
+6209: alt="LCDL Solstice — affordable can-less commercial downlight · purpose-built family-thumb studio shot · the ECO downlight cousin in the planoⒶRCH family for value-engineered projects"
+6214: LCDL · Solstice
+6217: <div class="family-card-title">Solstice</div>
+6222: <span class="family-card-cta">View Solstice →</span>
+6229: <span class="family-card-tag">LCDL · plano<span class="aa">Ⓐ</span>RCH · PRO+</span>
+6233: alt="LCDL Astra — spec-grade adjustable architectural commercial downlight in bright silver + white finish · the canonical ambient companion to Trackstar in boutique-retail and gallery installations"
+6238: LCDL · Astra
+6253: <span class="family-card-tag">LCDL · plano<span class="aa">Ⓐ</span>RCH · PRO+</span>
+6256: alt="LCDL Spectra — spec-grade high-output integrated-J-Box commercial downlight · clean studio product shot · the high-lumen downlight cousin in the planoⒶRCH family"
+6261: LCDL · Spectra
+7817:// Section 3 — 15-in-1 Spotlight controller — Solstice
+
+=== 4. Tier badge in trackstar ===
+15: --tier-pro-bg: #1a1a2a;
+16: --tier-pro-border: rgba(124,159,255,0.4);
+17: --tier-pro-color: #7c9fff;
+18: --tier-eco-bg: #112019;
+19: --tier-eco-border: rgba(95,199,122,0.40);
+20: --tier-eco-color: #6fd789;
+21: /* PRO+ tier badge — spec-grade architectural · brand-red signal vs ECO green */
+22: --tier-pro-plus-bg: #2a0e14;
+23: --tier-pro-plus-border: rgba(243,39,64,0.55);
+24: --tier-pro-plus-color: #ff7a8a;
+
+=== 5. Orphaned -tier fragments ===
+7:<meta name="description" content="LTRK Trackstar · planoⒶRCH PRO Spec-Grade · Adjustable Architectural Track Light · 2 SKU classes (LTRK3W20 · LTRK3W30) covering 6 watt positions (10/15/20/20/25/30W) · 3-WATTselect × 5-CCTselect dual dip-switch · CRI 90+ truⒶCOLOR across all 5 selectable CCTs (2700K · 3000K · 3500K · 4000K · 5000K) · 20°-50° beamⒶDJUST continuous adjustable beam · trackⒶDAPT H-Type + J-Type multi-track compatibility from one head SKU · 350° horizontal × 90° vertical gimbal aiming · 2,800 lm max · up to 100 LM/W · TRIAC + Phase Dim · DampGuard™ damp-location rated · UL Listed · DLC Listed · FCC · 5-Year warranty · L70 @ 50,000 hrs · Black + White finishes. Premium-architectural feature parity at volume-spec pricing — alternative to premium-tier track at $$ pricing — spec-grade feature parity at the volume-spec price point." />
+3452: grid-template-columns: repeat(4, 1fr); /* 4-card single row · Trackstar + 3 -tier cousins */
+3915: one SKU) · Premium-tier track bundles all three — at premium pricing.
+4155: Damp Location · CRI 90+ truⒶCOLOR (PRO-tier proof).
+4537: Trackstar's optical collar rotates from narrow accent (20°) through mid-narrow (30°) through general retail (40°) to wide wash (50°) — <strong>continuously</strong>, on the head, in the field. No reflector swap. No re-spec. Both <strong>LTRK3W20</strong> and <strong>LTRK3W30</strong> ship with the identical 20°-50° beam range — the difference between classes is driver wattage, not optical distribution. J-track and H-track category peers fix the beam at one angle per part number; premium-tier peers bundle adjustable beam only in museum-spec lines. Pick a class and a beam below to see the application fit at 8-ft mounting.
+4686: Volume-tier competitors split CCT range across multiple SKUs (volume-tier downlights) or fix the
+4687: wattage at one value (volume-tier downlights); Solstice gives the spec writer all 15 from a single line item.
+4780: <div class="spot-tk-sub">vs volume-tier downlights (3-CCT split into 2 SKUs) and volume-tier downlights (separate phase-cut + 0-10V SKUs)</div>
+4861: <p>The unique-positioning gap. <strong>No competitor in the volume-spec window bundles 5-CCTselect, adjustable beam, and CRI 90+ in one SKU.</strong> J-track category peers fork single-CCT and fixed-beam options across separate part numbers. H-track category peers offer 2-CCT with 3 fixed beams. Volume-spec peers split the three properties across separate product families. Premium-tier track bundles all three — at premium pricing. <strong>Trackstar bundles all three at the $$ spec-grade tier — no upcharge for color quality, no upcharge for adjustable beam.</strong></p>
+5001: <p>Trackstar is <strong>UL Damp Location rated standard</strong> — opens cooler-case retail, produce-display merchandising, wash-down-adjacent hospitality, and humidity-prone gallery installations at the catalog price. <strong>J-track and H-track category peers, including premium-tier track, are dry-location only at the spec-grade tier.</strong> Application footprint expands without a price-up SKU and without sourcing a separate vapor-tight family.</p>
+6151: planoⒶRCH -tier networked lighting control cousins per locked spec (trackstar_best_of_class_story.md).
+6156: Position 3 = Spectra (high-output -tier networked lighting control cousin)
+6157: Position 4 = Solstice (ECO -tier networked lighting control cousin)
+6161: on track infrastructure; the LCDL -tier networked lighting control family handles ambient general
+6171: <h2 class="closing-title">Track + -tier networked lighting control. One plano<span class="aa">Ⓐ</span>RCH spec.</h2>
+6173: Trackstar is the plano<span class="aa">Ⓐ</span>RCH brand vertical's accent + feature track light. Pair it with the <strong>LCDL -tier networked lighting control family</strong> — Astra for spec-grade architectural ambient, Spectra for high-output integrated-J-Box installations, Solstice for value-engineered ECO can-less. Same plano<span class="aa">Ⓐ</span>RCH compliance language across the family, same QuickShip distribution, same 5-year warranty.
+6186: alt="LTRK Trackstar — spec-grade adjustable architectural track light · the planoⒶRCH track-light cousin to the LCDL -tier networked lighting control family"
+6243: Spec-Grade Adjustable Architectural Commercial . CRI 90+ tru<span class="aa">Ⓐ</span>COLOR at every CCT · 4 field-swappable beam reflectors per SKU · Round + Square + 5 finishes · ~1,100+ field configurations from 3 catalog SKUs · Tri-Mode dimming · built-in 2.5kV surge. <strong>The ambient -tier networked lighting control companion to Trackstar</strong> — accent on the track, ambient in the ceiling, one plano<span class="aa">Ⓐ</span>RCH spec for the full architectural install.
+6266: Spec-Grade High-Output Integrated-J-Box Commercial . 10/15/20W · 27/34/40W · 40/50/60W up to 6,180 lm · Twist-Lock Modular + Separable J-Box · 120-347V Canadian on DMS1020/2740. The high-output -tier networked lighting control cousin for spaces requiring &gt;4,500 lm per fixture · same plano<span class="aa">Ⓐ</span>RCH compliance language as Trackstar.
+6286: Trackstar handles accent/feature and the planoⒶRCH -tier networked lighting control family (§11)
+
+=== 6. Family card truncated nouns ===
+6219: Affordable Can-Less Commercial . 4 sizes · 110 LM/W peak · 3-WATTselect × 5-CCTselect 15-in-1 dip-switch · Tri-Mode Dimming (TRIAC + ELV + 0-10V from one SKU) · spring-loaded clips. The bid spec when the project value-engineers down from PRO/PRO+ tier · same plano<span class="aa">Ⓐ</span>RCH brand vertical, lower price tier.
+6243: Spec-Grade Adjustable Architectural Commercial . CRI 90+ tru<span class="aa">Ⓐ</span>COLOR at every CCT · 4 field-swappable beam reflectors per SKU · Round + Square + 5 finishes · ~1,100+ field configurations from 3 catalog SKUs · Tri-Mode dimming · built-in 2.5kV surge. <strong>The ambient -tier networked lighting control companion to Trackstar</strong> — accent on the track, ambient in the ceiling, one plano<span class="aa">Ⓐ</span>RCH spec for the full architectural install.
+6266: Spec-Grade High-Output Integrated-J-Box Commercial . 10/15/20W · 27/34/40W · 40/50/60W up to 6,180 lm · Twist-Lock Modular + Separable J-Box · 120-347V Canadian on DMS1020/2740. The high-output -tier networked lighting control cousin for spaces requiring &gt;4,500 lm per fixture · same plano<span class="aa">Ⓐ</span>RCH compliance language as Trackstar.
+
+=== REPO-WIDE: CFG- in rendered copy ===
+public/products/anaheim/submittal/index.html:108: /* CFG-SUB-1 · editable Catalog Number (top-right of page 1).
+public/products/anaheim/submittal/index.html:452:/* CFG-TYPE-1 · Lato lock — Shopify global cascades Cormorant onto inline Lato.
+public/products/anaheim/submittal/index.html:459:/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+public/products/anaheim/submittal/index.html:2522: at 5000K). Disclosed honestly per CFG-RBT-1.
+public/products/anaheim/submittal/index.html:3399: Standard certified badges until QPL ID issues. CFG-RBT-1 honesty rule:
+public/products/anaheim/submittal/index.html:3995: CFG-SUB-1 · Editable Catalog Number (idempotent v2 — 2026-05-18)
+public/products/anaheim/submittal/index.html:4015: Reference: /PM/playbooks/PDP_BUILD_PLAYBOOK.md §CFG-SUB-1.
+public/products/astra/index.html:74:  /* CFG-MF-13 · Heavy-tracked uppercase contexts (>= 0.12em letter-spacing)
+public/products/astra/index.html:504:  /* CFG-NAV-1 · sticky-nav active-state · the inverse of .primary.
+public/products/astra/index.html:559:     Per CFG-DOCS-1: never ship a real but wrong URL. Always pending-flag while waiting. */
+public/products/astra/index.html:3127:   CFG-CFG-1 · Asymmetric Row-Rails (added 2026-05-18 PM)
+public/products/astra/index.html:3264:   edge, otherwise the long option text overlaps the arrow (CFG-CFG-1 v1 bug
+public/products/astra/index.html:3287:  /* CFG-CFG-1 v1.4 · Legend disclaimer · James 2026-05-22 · quiet legal cover */
+public/products/astra/index.html:3319:/* ====================  end CFG-CFG-1 row-rails  ==================== */
+public/products/astra/index.html:4266:/* CFG-TYPE-1 · astra-pdp typography lock — defeat Shopify Cormorant Garamond global */
+public/products/astra/index.html:4270:/* CFG-MOBILE-1 · prevent horizontal scroll on mobile */
+public/products/astra/index.html:4303:           "Adjustable Distribution" (numeric range was misleading per CFG-COPY-3). -->
+public/products/astra/index.html:4538:           DLC tier requires Rebate Center verification per CFG-RBT-2 — SellSheet shows "DLC LISTED" badge
+public/products/astra/index.html:5671:          <div class="photo-stat-sub">Rotationally-symmetric beam from a deep-regress reflector that reduces glare and optimizes even distribution. CRI 90+ tru<span class="aa">Ⓐ</span>COLOR™ standard across all 5 CCT selections with tight LED color binning per ANSI C78.377-2017. <strong>DLC tier verification pending</strong> via Rebate Center per CFG-RBT-2 — SellSheet shows "DLC LISTED" badge but datasheet is silent on tier; the published efficacy numbers (95-100 LM/W on DMS1830/3050) clear the DLC Listed floor and approach Premium-tier.</div>
+public/products/astra/index.html:5692:     Sticky-nav link also dropped. CFG-COPY-4 violations purged with it. -->
+public/products/astra/index.html:6263:              <div class="cfg-spec-cell-val" data-spec="compliance">ETL Listed · ENERGY STAR · FCC · RoHS · JA8-2022-E · UL Wet Location · IP65 · Air-Tight/Air-Shut · 120-277V Universal · &gt;0.9 PF · &lt;20% THD · non-flicker · 7-yr warranty · 75,000 hr L70 · DLC tier verification pending Rebate Center per CFG-RBT-2</div>
+public/products/astra/index.html:6420:           submittal/ (4-page · CFG-SUB-1 v2 editable Catalog Number) -->
+public/products/astra/index.html:6744:          The Astra qualifies for utility rebate programs at the DLC Listed tier (verification pending Rebate Center search per CFG-RBT-2 · published 95-100 LM/W efficacy clears the DLC Listed floor and approaches Premium). Add the contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS Bluetooth Mesh ecosystem to qualify for the Title 24 § 130.1 NLC rebate adder — typically a $30-50/fixture stack on the base rebate.
+public/products/astra/index.html:6994:// CFG-CFG-1 · syncRowCodes — update per-row SKU-fragment label next to each row title.
+public/products/astra/index.html:8103:// CFG-STATE-1 — derive ship-tier (QS / WB / MTO) from selected chip badges, render
+public/products/astra/index.html:8525:   CFG-NAV-1 · Sticky-nav scroll-sp
