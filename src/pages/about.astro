@@ -10,11 +10,31 @@
  */
 import ContentShell from '../layouts/ContentShell.astro';
 ---
+<style is:global>
+  /* CFG-COAT-1: Apple system font stack overlay */
+  body.page-about h1,
+  body.page-about h2,
+  body.page-about h3 {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    font-weight: 600 !important;
+  }
+  body.page-about * {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+</style>
 <ContentShell
   title="About Us — Archipelago Lighting Group"
   description="Archipelago Lighting Group — OEM and white-label lighting manufacturer since 1997. Retail shelf programs and commercial & industrial spec-grade catalog through authorized channels."
   bodyClass="page-about"
 >
+<div class="glow-orb" style="position:fixed;top:0;left:0;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(247,82,82,.13) 0%,transparent 70%);pointer-events:none;z-index:0;will-change:transform;"></div>
+<style is:global>
+  .page-about * {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  }
+  .page-about h1,.page-about h2,.page-about h3 { font-weight: 600 !important; }
+</style>
+
 
 <!-- ============================================================
      §01 HERO — typographic variant
@@ -648,6 +668,31 @@ import ContentShell from '../layouts/ContentShell.astro';
     </div>
   </div>
 </section>
+
+<script is:inline>
+(function(){
+  var orb=null, raf=null, EASE=0.03;
+  var tx=innerWidth*0.72, ty=innerHeight*0.26, x=tx, y=ty;
+  var fine=matchMedia('(pointer:fine)').matches,
+      still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!fine||still){
+    addEventListener('scroll',function(){ ty=innerHeight*0.26+scrollY*0.06; },{passive:true});
+  } else {
+    addEventListener('pointermove',function(e){ tx=e.clientX; ty=e.clientY; },{passive:true});
+  }
+  function tick(){
+    if(!orb) orb=document.querySelector('.glow-orb');
+    if(orb){ x+=(tx-x)*EASE; y+=(ty-y)*EASE;
+      orb.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)'; }
+    raf=requestAnimationFrame(tick);
+  }
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+    else if(!raf){ raf=requestAnimationFrame(tick); }
+  });
+  raf=requestAnimationFrame(tick);
+})();
+</script>
 
 </ContentShell>
 
@@ -2588,8 +2633,8 @@ a { color: inherit; text-decoration: none; }
 body.page-about h1,
 body.page-about h2,
 body.page-about h3 {
-  font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
-  font-weight: 800;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  font-weight: 600;
   letter-spacing: -0.02em;
 }
 /* ── GUTTER FORCE (§F guarantee) ── */

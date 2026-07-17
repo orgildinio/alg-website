@@ -17,12 +17,26 @@
 import ContentShell from '../layouts/ContentShell.astro';
 ---
 
+<style is:global>
+  /* CFG-COAT-1: Apple system font stack overlay */
+  .page-contact * {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  }
+  .page-contact h1, .page-contact h2, .page-contact h3 { font-weight: 600 !important; }
+</style>
 <ContentShell
   title="Contact Us — Archipelago Lighting Group"
   description="Reach the ALG spec desk, sales team, warranty department, or find your local rep. Direct lines, direct form — no nav required."
   bodyClass="page-contact"
   hideFooterCta={true}
 >
+<style is:global>
+  .page-contact * {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  }
+  .page-contact h1,.page-contact h2,.page-contact h3 { font-weight: 600 !important; }
+</style>
+
 
 <!-- ── DARK CANVAS ROOT ─────────────────────────────────────────────────── -->
 <div class="alg-page alg-page--glow">
@@ -70,7 +84,7 @@ import ContentShell from '../layouts/ContentShell.astro';
       </div>
       <div class="alg-stat alg-stat--dark">
         <div class="alg-stat__v" style="font-size:clamp(16px,2vw,22px)">(866) 912-3220</div>
-        <div class="alg-stat__k">Main · Mon–Fri PT</div>
+        <div class="alg-stat__k">Main · Mon–Fri · 6 AM – 5 PM PT</div>
       </div>
     </div>
   </section>
@@ -244,7 +258,7 @@ import ContentShell from '../layouts/ContentShell.astro';
       <aside class="col-rail" style="display:flex; flex-direction:column; gap:18px;">
         <div class="alg-cat-bar">
           <div class="alg-cat-bar__label">03 · Direct lines</div>
-          <div class="alg-cat-bar__tag">Mon–Fri · PT</div>
+          <div class="alg-cat-bar__tag">Mon–Fri · 6 AM – 5 PM PT</div>
         </div>
 
         <!-- Phone card (ink) -->
@@ -254,7 +268,7 @@ import ContentShell from '../layouts/ContentShell.astro';
             <a href="tel:8669123220" style="color:#fff; text-decoration:none;">(866) 912-3220</a>
           </div>
           <div style="font-family:var(--font-mono); font-size:10.5px; color:rgba(255,255,255,.5); margin-top:4px; letter-spacing:.08em; text-transform:uppercase;">
-            Mon–Fri · 7:00–17:00 PT
+            Mon–Fri · 6 AM – 5 PM PT
           </div>
           <div style="margin-top:16px;">
             <div class="alg-line alg-line--dark">
@@ -307,14 +321,14 @@ import ContentShell from '../layouts/ContentShell.astro';
         <div class="alg-card">
           <span class="alg-eyebrow alg-eyebrow--red">Montclair HQ</span>
           <div style="font-family:var(--font-mono); font-size:12.5px; color:var(--ink2); margin-top:12px; line-height:1.7;">
-            5101 Commerce Drive<br>
+            4615 State Street<br>
             Montclair, CA 91763
           </div>
           <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--c2);">
             <span class="alg-eyebrow alg-eyebrow--red" style="font-size:10px;">Production · Riverside</span>
             <div style="font-family:var(--font-mono); font-size:12.5px; color:var(--ink2); margin-top:8px; line-height:1.7;">
-              2840 Industrial Way<br>
-              Riverside, CA 92507
+              9345 Sycamore Canyon Blvd<br>
+              Riverside, CA 92508
             </div>
           </div>
         </div>
@@ -1043,47 +1057,28 @@ import ContentShell from '../layouts/ContentShell.astro';
 <!-- ── SCRIPTS ───────────────────────────────────────────────────────────── -->
 <script is:inline>
 (function () {
-  /* ── Scroll-trailing glow orb (verbatim initGlowOrb from mockup) ─────── */
-  (function initGlowOrb() {
-    var clamp = function(v, a, b) { return Math.min(b, Math.max(a, v)); };
-    function start(root, orb) {
-      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var target = function() {
-        var rect = root.getBoundingClientRect();
-        var rootTop = rect.top + window.scrollY;
-        var rootH = root.offsetHeight || 1;
-        var rootW = root.offsetWidth || 1440;
-        var vh = window.innerHeight;
-        var through = (window.scrollY + vh * 0.5) - rootTop;
-        var f = clamp(through / rootH, 0, 1);
-        return {
-          tx: rootW * (0.72 - 0.46 * Math.sin(f * Math.PI)),
-          ty: clamp(through, vh * 0.30, rootH - vh * 0.2),
-        };
-      };
-      var curX = (root.offsetWidth || 1440) * 0.72;
-      var curY = (root.offsetHeight || 2000) * 0.16;
-      function tick() {
-        var t = target();
-        curX += (t.tx - curX) * 0.045;
-        curY += (t.ty - curY) * 0.045;
-        orb.style.transform = 'translate(' + curX + 'px, ' + curY + 'px) translate(-50%, -50%)';
-        requestAnimationFrame(tick);
-      }
-      if (reduce) {
-        var t = target();
-        orb.style.transform = 'translate(' + t.tx + 'px, ' + t.ty + 'px) translate(-50%, -50%)';
-      } else {
-        requestAnimationFrame(tick);
-      }
+  /* ── Mouse-follow glow orb — canonical EASE=0.03 ─────────────────────── */
+  (function(){
+    var orb=null, raf=null, EASE=0.03;
+    var tx=innerWidth*0.72, ty=innerHeight*0.26, x=tx, y=ty;
+    var fine=matchMedia('(pointer:fine)').matches,
+        still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!fine||still){
+      addEventListener('scroll',function(){ ty=innerHeight*0.26+scrollY*0.06; },{passive:true});
+    } else {
+      addEventListener('pointermove',function(e){ tx=e.clientX; ty=e.clientY; },{passive:true});
     }
-    var tries = 0;
-    var poll = setInterval(function() {
-      var root = document.querySelector('.alg-page--glow');
-      var orb = root && root.querySelector('.glow-orb');
-      if (root && orb) { clearInterval(poll); start(root, orb); }
-      else if (++tries > 120) clearInterval(poll);
-    }, 120);
+    function tick(){
+      if(!orb) orb=document.querySelector('.glow-orb');
+      if(orb){ x+=(tx-x)*EASE; y+=(ty-y)*EASE;
+        orb.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)'; }
+      raf=requestAnimationFrame(tick);
+    }
+    document.addEventListener('visibilitychange',function(){
+      if(document.hidden){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+      else if(!raf){ raf=requestAnimationFrame(tick); }
+    });
+    raf=requestAnimationFrame(tick);
   })();
 
   /* ── Route chips: toggle active, show/hide route-specific fields ──────── */
