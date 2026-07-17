@@ -10,6 +10,13 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
+<style is:global>
+  /* CFG-COAT-1: Apple system font stack overlay */
+  .page-find-a-rep * {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  }
+  .page-find-a-rep h1, .page-find-a-rep h2, .page-find-a-rep h3 { font-weight: 600 !important; }
+</style>
 <BaseLayout
   title="Find a Rep — Archipelago Lighting Group"
   description="Find your local ALG sales rep, stocking distributor, or nearest warehouse. Search by ZIP, city, or state."

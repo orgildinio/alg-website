@@ -10,6 +10,18 @@
  */
 import ContentShell from '../layouts/ContentShell.astro';
 ---
+<style is:global>
+  /* CFG-COAT-1: Apple system font stack overlay */
+  body.page-about h1,
+  body.page-about h2,
+  body.page-about h3 {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    font-weight: 600 !important;
+  }
+  body.page-about * {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+</style>
 <ContentShell
   title="About Us — Archipelago Lighting Group"
   description="Archipelago Lighting Group — OEM and white-label lighting manufacturer since 1997. Retail shelf programs and commercial & industrial spec-grade catalog through authorized channels."

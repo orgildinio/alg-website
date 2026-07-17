@@ -12,6 +12,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BrandMark from '../components/BrandMark.astro';
 ---
+<style is:global>
+  /* CFG-COAT-1: Apple system font stack overlay */
+  .page-distributor * {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  }
+  .page-distributor h1, .page-distributor h2, .page-distributor h3 { font-weight: 600 !important; }
+</style>
 <BaseLayout
   title="For Distributors — Archipelago Lighting Group"
   description="Stock what specifiers spec. ALG Shop for 2,000+ SKUs, 12 US warehouses, free photometric layouts, and a dedicated RSM."

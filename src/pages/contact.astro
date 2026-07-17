@@ -17,6 +17,13 @@
 import ContentShell from '../layouts/ContentShell.astro';
 ---
 
+<style is:global>
+  /* CFG-COAT-1: Apple system font stack overlay */
+  .page-contact * {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  }
+  .page-contact h1, .page-contact h2, .page-contact h3 { font-weight: 600 !important; }
+</style>
 <ContentShell
   title="Contact Us — Archipelago Lighting Group"
   description="Reach the ALG spec desk, sales team, warranty department, or find your local rep. Direct lines, direct form — no nav required."
