@@ -110,6 +110,42 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 </BaseLayout>
 
+<style>
+/* Terms page — CSS tokens (shared with legal template) */
+:root {
+  --red: #F32740;
+  --ink: #1D1D1F;
+  --text: #424245;
+  --text-2: #6E6E73;
+  --text-3: #86868B;
+  --line: #D2D2D7;
+  --hairline: #E5E5E7;
+  --panel: #F5F5F7;
+  --bg: #FFFFFF;
+}
+.page-terms .glow-orb {
+  position: fixed;
+  top: 0; left: 0;
+  width: 64vw; height: 64vw;
+  max-width: 880px; max-height: 880px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(243,39,64,.20) 0%,
+    rgba(243,39,64,.09) 36%,
+    transparent 70%);
+  filter: blur(46px);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+  transform: translate(72vw, 26vh) translate(-50%, -50%);
+}
+@media print { .glow-orb { display: none !important; } }
+.page-terms section, .page-terms .legal-hero, .page-terms .legal-body {
+  position: relative;
+  z-index: 1;
+}
+</style>
+
 <script is:inline>
 (function(){
   var orb=null, raf=null, EASE=0.03;
