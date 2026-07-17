@@ -1,1304 +1,172 @@
 ---
 /**
- * contact.astro — Contact Us · Field Desk
- * Route: /contact
- * Design ref: ALG-Contact-v1.html (VariationC)
- *
- * Composition (1:1 from mockup):
- *   .alg-page--glow (dark canvas, #1A1D23)
- *     └── .glow-clip > .glow-orb (scroll-trailing red radial)
- *     └── <section .alg-section .alg-section--dark>  ← HERO (dark, orb glows through)
- *     └── <section .alg-section>                     ← 3-COL FORM/MAP/RAIL (opaque white)
- *     └── <section .alg-section .alg-section--c1>    ← FAQ (--c1 = #F5F4F1)
- *
- * The dark canvas shows between sections (inter-section gaps) and the orb glows
- * through the dark hero strip and the dark canvas gaps.
+ * page-contact.astro
+ * Cat-6 Phase-3 Batch 2 — built from Contact Us — Archipelago Lighting Group mockup v3.1
+ * «TBD-VERIFY»: copy passages marked below; James confirms at preview review
  */
-import ContentShell from '../layouts/ContentShell.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-
-<ContentShell
+<BaseLayout
   title="Contact Us — Archipelago Lighting Group"
-  description="Reach the ALG spec desk, sales team, warranty department, or find your local rep. Direct lines, direct form — no nav required."
+  description="Quote desk, spec engineer, warranty, rep finder — direct dial, direct form. ALG runs the line out of Montclair, CA."
   bodyClass="page-contact"
-  hideFooterCta={true}
 >
-
-<!-- ── DARK CANVAS ROOT ─────────────────────────────────────────────────── -->
-<div class="alg-page alg-page--glow">
-
-  <!-- Glow orb -->
-  <div class="glow-clip" aria-hidden="true">
-    <div class="glow-orb"></div>
-  </div>
-
-  <!-- ── SECTION 1: DARK HERO ──────────────────────────────────────────── -->
-  <section class="alg-section alg-section--dark">
-    <div class="hero-grid">
-      <div class="hero-left">
-        <span class="alg-eyebrow alg-eyebrow--red">Contact · Field Desk</span>
-        <h1 class="alg-h1" style="margin-top:18px; color:#fff; font-size:clamp(40px,5vw,60px);">
-          The whole desk,<br>
-          <span style="color:var(--brand)">on one page.</span>
-        </h1>
-      </div>
-      <div class="hero-right">
-        <p style="font-size:15px; line-height:1.6; color:rgba(255,255,255,.75);">
-          Built for the contractor at 6 AM with a takeoff due. Quote desk, spec
-          engineer, warranty, rep finder — direct dial, direct form, no nav.
-          ALG runs the line out of Montclair, CA.
-        </p>
-      </div>
-    </div>
-    <!-- Stats bar -->
-    <div class="stats-grid">
-      <div class="alg-stat alg-stat--dark">
-        <div class="alg-stat__v">&lt; 4 hr</div>
-        <div class="alg-stat__k">Quote turnaround</div>
-      </div>
-      <div class="alg-stat alg-stat--dark">
-        <div class="alg-stat__v">5–7 days</div>
-        <div class="alg-stat__k">PRO ship time</div>
-      </div>
-      <div class="alg-stat alg-stat--dark">
-        <div class="alg-stat__v">7 yr</div>
-        <div class="alg-stat__k">PRO warranty</div>
-      </div>
-      <div class="alg-stat alg-stat--dark">
-        <div class="alg-stat__v">48 hr</div>
-        <div class="alg-stat__k">RMA authorization</div>
-      </div>
-      <div class="alg-stat alg-stat--dark">
-        <div class="alg-stat__v" style="font-size:clamp(16px,2vw,22px)">(866) 912-3220</div>
-        <div class="alg-stat__k">Main · Mon–Fri PT</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── SECTION 2: 3-COL FORM / MAP / RAIL (opaque white) ────────────── -->
-  <section class="alg-section" style="padding-top:64px; padding-bottom:80px;">
-    <div class="cols-grid">
-
-      <!-- COL 1: SEND A MESSAGE -->
-      <div class="col-form">
-        <div class="alg-cat-bar">
-          <div class="alg-cat-bar__label">01 · Send a message</div>
-          <div class="alg-cat-bar__tag">Routed by topic</div>
-        </div>
-        <p class="alg-body--sm" style="margin-top:18px; margin-bottom:18px;">
-          Pick a topic. We route directly to the desk that owns it — no central inbox.
-        </p>
-
-        <!-- Route chips (segmented bordered control, verbatim from mockup) -->
-        <div class="alg-chips" id="contact-chips" role="group" aria-label="Message topic">
-          <button class="alg-chip active" data-route="quote" data-to="sales@archipelagolighting.com" data-subject="Quote Request" type="button">
-            <span class="alg-chip__icon">01</span>Quote
-          </button>
-          <button class="alg-chip" data-route="spec" data-to="sales@archipelagolighting.com" data-subject="Spec Request" type="button">
-            <span class="alg-chip__icon">02</span>Spec
-          </button>
-          <button class="alg-chip" data-route="dist" data-to="sales@archipelagolighting.com" data-subject="Distributor Inquiry" type="button">
-            <span class="alg-chip__icon">03</span>Distributor
-          </button>
-          <button class="alg-chip" data-route="support" data-to="warranty@archipelagolighting.com" data-subject="Warranty Claim" type="button">
-            <span class="alg-chip__icon">04</span>Warranty
-          </button>
-          <button class="alg-chip" data-route="press" data-to="sales@archipelagolighting.com" data-subject="[PRESS] Inquiry" type="button">
-            <span class="alg-chip__icon">05</span>Press
-          </button>
-        </div>
-
-        <!-- Form (2-col grid, verbatim from mockup) -->
-        <form class="alg-form" id="contact-form" novalidate style="margin-top:24px;">
-          <div class="alg-row">
-            <div class="alg-field">
-              <label class="alg-label" for="cf-name">Name <span class="req">*</span></label>
-              <input class="alg-input" id="cf-name" name="name" type="text" placeholder="Jordan Reyes" autocomplete="name" required />
-            </div>
-            <div class="alg-field">
-              <label class="alg-label" for="cf-company">Company <span class="req">*</span></label>
-              <input class="alg-input" id="cf-company" name="company" type="text" placeholder="Firm / Company" autocomplete="organization" required />
-            </div>
-          </div>
-          <div class="alg-row">
-            <div class="alg-field">
-              <label class="alg-label" for="cf-email">Work email <span class="req">*</span></label>
-              <input class="alg-input" id="cf-email" name="email" type="email" placeholder="jordan@firm.com" autocomplete="email" required />
-            </div>
-            <div class="alg-field">
-              <label class="alg-label" for="cf-phone">Phone</label>
-              <input class="alg-input" id="cf-phone" name="phone" type="tel" placeholder="(866) 912-3220" autocomplete="tel" />
-            </div>
-          </div>
-          <!-- Route-specific fields -->
-          <div class="alg-row route-fields" data-show="quote">
-            <div class="alg-field">
-              <label class="alg-label" for="cf-job">Job name</label>
-              <input class="alg-input" id="cf-job" name="job" type="text" placeholder="Riverside DC Phase II" />
-            </div>
-            <div class="alg-field">
-              <label class="alg-label" for="cf-timeline">Timeline <span class="req">*</span></label>
-              <select class="alg-select" id="cf-timeline" name="timeline">
-                <option value="" disabled selected>Select…</option>
-                <option>Bidding now</option>
-                <option>Design phase</option>
-                <option>Schematic</option>
-              </select>
-            </div>
-          </div>
-          <div class="alg-row route-fields" data-show="spec" style="display:none">
-            <div class="alg-field">
-              <label class="alg-label" for="cf-projtype">Project type <span class="req">*</span></label>
-              <select class="alg-select" id="cf-projtype" name="projtype">
-                <option value="" disabled selected>Select…</option>
-                <option>New construction</option>
-                <option>Retrofit</option>
-              </select>
-            </div>
-            <div class="alg-field">
-              <label class="alg-label" for="cf-need">Need <span class="req">*</span></label>
-              <select class="alg-select" id="cf-need" name="need">
-                <option value="" disabled selected>Select…</option>
-                <option>IES / photometric</option>
-                <option>Spec sheet</option>
-                <option>Controls drawings</option>
-                <option>Mockup sample</option>
-              </select>
-            </div>
-          </div>
-          <div class="alg-row route-fields" data-show="dist" style="display:none">
-            <div class="alg-field">
-              <label class="alg-label" for="cf-acct">Account # <span class="req">*</span></label>
-              <input class="alg-input" id="cf-acct" name="acct" type="text" placeholder="ALG-DIST-####" />
-            </div>
-            <div class="alg-field">
-              <label class="alg-label" for="cf-zip">Branch ZIP</label>
-              <input class="alg-input" id="cf-zip" name="zip" type="text" placeholder="91763" />
-            </div>
-          </div>
-          <div class="alg-row route-fields" data-show="support" style="display:none">
-            <div class="alg-field">
-              <label class="alg-label" for="cf-po">Original PO <span class="req">*</span></label>
-              <input class="alg-input" id="cf-po" name="po" type="text" placeholder="PO-####" />
-            </div>
-            <div class="alg-field">
-              <label class="alg-label" for="cf-sku">Failed SKU <span class="req">*</span></label>
-              <input class="alg-input" id="cf-sku" name="sku" type="text" placeholder="ALG-RHB-PRO-150W-50K-UNV" />
-            </div>
-          </div>
-          <div class="alg-row route-fields" data-show="press" style="display:none">
-            <div class="alg-field">
-              <label class="alg-label" for="cf-topic">Topic <span class="req">*</span></label>
-              <select class="alg-select" id="cf-topic" name="topic">
-                <option value="" disabled selected>Select…</option>
-                <option>Editorial</option>
-                <option>OEM partnership</option>
-                <option>Rep application</option>
-                <option>ⒶCS App integration</option>
-              </select>
-            </div>
-            <div class="alg-field">
-              <label class="alg-label" for="cf-deadline">Deadline</label>
-              <input class="alg-input" id="cf-deadline" name="deadline" type="date" />
-            </div>
-          </div>
-          <div class="alg-field">
-            <label class="alg-label" for="cf-message">Message <span class="req">*</span></label>
-            <textarea class="alg-textarea" id="cf-message" name="message" rows="5"
-              placeholder="Paste BOM or describe scope. Quantity helps."></textarea>
-          </div>
-          <button class="alg-submit" type="submit">
-            Send to ALG <span class="alg-submit__arrow">→</span>
-          </button>
-        </form>
-      </div>
-
-      <!-- COL 2: FIND YOUR REP (Leaflet locator, light Positron, .alg-rep cards) -->
-      <div class="col-map">
-        <div class="alg-cat-bar">
-          <div class="alg-cat-bar__label">02 · Find your rep</div>
-          <div class="alg-cat-bar__tag">By region · 5 territories</div>
-        </div>
-        <p class="alg-body--sm" style="margin-top:18px; margin-bottom:18px;">
-          Search by ZIP, city, or state. Your project ZIP routes to the nearest rep.
-        </p>
-        <!-- Search toolbar -->
-        <div class="c02-toolbar">
-          <div class="loc-search-group">
-            <input type="text" class="loc-search-input" id="c02-search-input" placeholder="ZIP, city, or state" aria-label="Search by ZIP, city, or state" />
-            <button class="loc-search-btn" id="c02-search-btn">Find Nearest</button>
-          </div>
-        </div>
-        <!-- Leaflet map — light Positron, framed in .alg-map panel -->
-        <div class="alg-map">
-          <div id="algLocatorMapContact" class="c02-locator-map" aria-label="ALG sales rep locations" role="application"></div>
-        </div>
-        <!-- Rep cards rendered below the map (populated by JS from real data) -->
-        <div id="c02-rep-cards" class="c02-rep-cards" style="margin-top:16px; display:flex; flex-direction:column; gap:10px;"></div>
-        <div style="margin-top:14px;">
-          <a href="/find-a-rep/" class="c02-full-link">Open full rep finder →</a>
-        </div>
-      </div>
-
-      <!-- COL 3: DIRECT LINES RAIL -->
-      <aside class="col-rail" style="display:flex; flex-direction:column; gap:18px;">
-        <div class="alg-cat-bar">
-          <div class="alg-cat-bar__label">03 · Direct lines</div>
-          <div class="alg-cat-bar__tag">Mon–Fri · PT</div>
-        </div>
-
-        <!-- Phone card (ink) -->
-        <div class="alg-card alg-card--ink" style="padding:22px; margin-top:6px;">
-          <span class="alg-eyebrow alg-eyebrow--red">Spec Desk · Main</span>
-          <div style="font-family:var(--font-mono); font-size:23px; font-weight:600; color:#fff; margin-top:10px; letter-spacing:-.01em;">
-            <a href="tel:8669123220" style="color:#fff; text-decoration:none;">(866) 912-3220</a>
-          </div>
-          <div style="font-family:var(--font-mono); font-size:10.5px; color:rgba(255,255,255,.5); margin-top:4px; letter-spacing:.08em; text-transform:uppercase;">
-            Mon–Fri · 7:00–17:00 PT
-          </div>
-          <div style="margin-top:16px;">
-            <div class="alg-line alg-line--dark">
-              <div class="alg-line__k">Sales</div>
-              <div class="alg-line__v"><a href="mailto:sales@archipelagolighting.com" style="color:rgba(255,255,255,.75); text-decoration:none;">sales@archipelagolighting.com</a></div>
-            </div>
-            <div class="alg-line alg-line--dark">
-              <div class="alg-line__k">Spec</div>
-              <div class="alg-line__v"><a href="mailto:spec@archipelagolighting.com" style="color:rgba(255,255,255,.75); text-decoration:none;">spec@archipelagolighting.com</a></div>
-            </div>
-            <div class="alg-line alg-line--dark">
-              <div class="alg-line__k">Warranty</div>
-              <div class="alg-line__v"><a href="mailto:warranty@archipelagolighting.com" style="color:rgba(255,255,255,.75); text-decoration:none;">warranty@archipelagolighting.com</a></div>
-            </div>
-            <div class="alg-line alg-line--dark">
-              <div class="alg-line__k">Press</div>
-              <div class="alg-line__v"><a href="mailto:press@archipelagolighting.com" style="color:rgba(255,255,255,.75); text-decoration:none;">press@archipelagolighting.com</a></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Spec library quick links -->
-        <div>
-          <span class="alg-eyebrow" style="margin-bottom:10px; display:block;">Spec library</span>
-          <div style="display:flex; flex-direction:column; gap:6px;">
-            <a href="/support/library/" class="alg-qlink">
-              <div><div class="alg-qlink__title">IES files</div><div class="alg-qlink__sub">By SKU · Versioned</div></div>
-              <div class="alg-qlink__arrow">→</div>
-            </a>
-            <a href="/support/library/" class="alg-qlink">
-              <div><div class="alg-qlink__title">Cut sheets</div><div class="alg-qlink__sub">ECO / PRO / PRO+</div></div>
-              <div class="alg-qlink__arrow">→</div>
-            </a>
-            <a href="mailto:warranty@archipelagolighting.com?subject=Warranty%20Claim" class="alg-qlink">
-              <div><div class="alg-qlink__title">Warranty form</div><div class="alg-qlink__sub">7-yr / 5-yr</div></div>
-              <div class="alg-qlink__arrow">→</div>
-            </a>
-            <a href="/support/returns" class="alg-qlink">
-              <div><div class="alg-qlink__title">Returns · RMA</div><div class="alg-qlink__sub">48-hr auth</div></div>
-              <div class="alg-qlink__arrow">→</div>
-            </a>
-            <a href="/support/library/" class="alg-qlink">
-              <div><div class="alg-qlink__title">Stocking SKUs</div><div class="alg-qlink__sub">Catalog</div></div>
-              <div class="alg-qlink__arrow">→</div>
-            </a>
-          </div>
-        </div>
-
-        <!-- HQ address card -->
-        <div class="alg-card">
-          <span class="alg-eyebrow alg-eyebrow--red">Montclair HQ</span>
-          <div style="font-family:var(--font-mono); font-size:12.5px; color:var(--ink2); margin-top:12px; line-height:1.7;">
-            5101 Commerce Drive<br>
-            Montclair, CA 91763
-          </div>
-          <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--c2);">
-            <span class="alg-eyebrow alg-eyebrow--red" style="font-size:10px;">Production · Riverside</span>
-            <div style="font-family:var(--font-mono); font-size:12.5px; color:var(--ink2); margin-top:8px; line-height:1.7;">
-              2840 Industrial Way<br>
-              Riverside, CA 92507
-            </div>
-          </div>
-        </div>
-
-        <!-- Field reality callout -->
-        <div style="padding:14px 16px; background:var(--c1); border-left:3px solid var(--brand); font-family:var(--font-mono); font-size:11.5px; color:var(--ink2); line-height:1.6;">
-          <span style="color:var(--brand); font-weight:700; letter-spacing:.14em; font-size:10px;">FIELD REALITY · </span>
-          Same-day quote on 95% of requests landed before 14:00 PT.
-        </div>
-      </aside>
-
-    </div>
-  </section>
-
-  <!-- ── SECTION 3: FAQ (--c1 background) ─────────────────────────────── -->
-  <section class="alg-section alg-section--dark" style="padding-top:64px; padding-bottom:80px;">
-    <div class="faq-grid">
-      <div class="faq-sticky">
-        <span class="alg-eyebrow alg-eyebrow--red">04 · Field FAQ</span>
-        <h2 class="alg-h2" style="margin-top:14px;">
-          Asked at the<br>spec desk daily.
-        </h2>
-        <p class="alg-body" style="margin-top:16px; max-width:360px;">
-          Lead times, samples, IES, warranty, the ⒶCS by ALG App — the
-          short answers, written by people who pick up the phone.
-        </p>
-      </div>
-      <div class="alg-faq" id="faq-list">
-
-        <div class="alg-faq__item">
-          <button class="alg-faq__q" aria-expanded="true" type="button">
-            <span class="alg-faq__num">01</span>
-            What's the typical lead time on a PRO-tier high bay?
-            <span class="alg-faq__toggle">−</span>
-          </button>
-          <div class="alg-faq__a">
-            <p>PRO-tier RHB, LHB, and STR families ship in 5–7 business days from Riverside, CA on quantities under 500. Anything larger or non-stock CCT/optic combinations runs 3–4 weeks. Get a firm date by sending the SKU plus quantity to your territory manager — they confirm against current production.</p>
-          </div>
-        </div>
-
-        <div class="alg-faq__item">
-          <button class="alg-faq__q" aria-expanded="false" type="button">
-            <span class="alg-faq__num">02</span>
-            Can I order samples before specifying?
-            <span class="alg-faq__toggle">+</span>
-          </button>
-          <div class="alg-faq__a" hidden>
-            <p>Yes. Sample requests go through your territory manager or independent agent and are free for active spec projects with a documented job name. We do not sell samples directly to end-users — work through a distributor or the rep listed for your region above.</p>
-          </div>
-        </div>
-
-        <div class="alg-faq__item">
-          <button class="alg-faq__q" aria-expanded="false" type="button">
-            <span class="alg-faq__num">03</span>
-            How do I file a warranty claim?
-            <span class="alg-faq__toggle">+</span>
-          </button>
-          <div class="alg-faq__a" hidden>
-            <!-- C1 delta: ECO 5yr · PRO 7yr · PRO+ 10yr (CFG-WARR-1) -->
-            <p>ECO fixtures carry a 5-year warranty, PRO 7-year, and PRO+ 10-year (unless otherwise stated). Email <a href="mailto:warranty@archipelagolighting.com?subject=Warranty%20Claim">warranty@archipelagolighting.com</a> with the original PO, job name, install date, and failed SKU. We ship a replacement within 5 business days of approval — no return required for failures under the warranty terms.</p>
-          </div>
-        </div>
-
-        <div class="alg-faq__item">
-          <button class="alg-faq__q" aria-expanded="false" type="button">
-            <span class="alg-faq__num">04</span>
-            Do you publish IES files and spec sheets?
-            <span class="alg-faq__toggle">+</span>
-          </button>
-          <div class="alg-faq__a" hidden>
-            <p>Every active SKU has a current IES file, photometric report, and 1-page spec sheet on the <a href="/support/library/">Spec Library</a>. PRO+ fixtures additionally publish LM-79 and LM-80 reports. Files are versioned by part number — pull the file matching the SKU on your PO.</p>
-          </div>
-        </div>
-
-        <div class="alg-faq__item">
-          <button class="alg-faq__q" aria-expanded="false" type="button">
-            <span class="alg-faq__num">05</span>
-            Is the ⒶCS by ALG App required for PRO+ fixtures?
-            <span class="alg-faq__toggle">+</span>
-          </button>
-          <div class="alg-faq__a" hidden>
-            <p>No. PRO+ fixtures operate as standard 0–10V dimming out of the box. The ⒶCS by ALG App is optional and unlocks scheduling, occupancy zoning, and group commissioning when fixtures are ordered with the integrated controller. Pair with a single commercial-grade phone/tablet on the job site.</p>
-          </div>
-        </div>
-
-        <div class="alg-faq__item">
-          <button class="alg-faq__q" aria-expanded="false" type="button">
-            <span class="alg-faq__num">06</span>
-            Where can I find a local distributor?
-            <span class="alg-faq__toggle">+</span>
-          </button>
-          <div class="alg-faq__a" hidden>
-            <p>Use the rep finder above. Independent agents listed under your region carry ALG fixtures in stock with regional distribution partners. For bid-tier ECO orders shipping nationwide, contact <a href="mailto:orders@archipelagolighting.com">orders@archipelagolighting.com</a> and we route to the nearest stocking distributor.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-</div><!-- /.alg-page--glow -->
-
-</ContentShell>
-
-<!-- ── PAGE STYLES ──────────────────────────────────────────────────────── -->
-<style>
-  /* ── Design tokens (verbatim from mockup) ─────────────────────────────── */
-  .page-contact {
-    --brand:      #F32740;
-    --brand-dark: #C8132E;
-    --ink:        #1A1D23;
-    --ink2:       #3A3E47;
-    --ink3:       #6B7280;
-    --c1:         #F5F4F1;
-    --c2:         #EEEDF0;
-    --c3:         #DCDEE2;
-    --font-sans:  'Lato', system-ui, sans-serif;
-    --font-mono:  'JetBrains Mono', ui-monospace, monospace;
-  }
-
-  /* ── Dark canvas root (verbatim from mockup) ──────────────────────────── */
-  .alg-page--glow {
-    position: relative;
-    background: var(--ink);
-  }
-  .alg-page--glow .glow-clip {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    z-index: 0;
-    pointer-events: none;
-  }
-  .alg-page--glow .glow-orb {
-    position: absolute;
-    top: 0; left: 0;
-    width: 60%;
-    aspect-ratio: 1 / 1;
-    max-width: 860px;
-    border-radius: 50%;
-    background: radial-gradient(circle,
-      hsl(357 80% 56% / 0.62) 0%,
-      hsl(357 80% 56% / 0.26) 38%,
-      transparent 70%);
-    filter: blur(48px);
-    pointer-events: none;
-    z-index: 0;
-    will-change: transform;
-    transform: translate(900px, 360px) translate(-50%, -50%);
-  }
-  /* every section paints above the orb */
-  .alg-page--glow > .alg-section,
-  .alg-page--glow > .alg-foot {
-    position: relative;
-    z-index: 1;
-  }
-  /* light sections stay fully opaque (orb hidden behind them, by design) */
-  .alg-page--glow > .alg-section:not(.alg-section--dark):not(.alg-section--c1) {
-    background: #fff;
-  }
-  /* dark zones go translucent so the orb glows through */
-  .alg-page--glow > .alg-section--dark {
-    background: rgba(20, 22, 27, 0.70);
-  }
-  @media print {
-    .alg-page--glow .glow-orb { display: none !important; }
-  }
-
-  /* ── Page shell ────────────────────────────────────────────────────────── */
-  .alg-page {
-    color: var(--ink);
-    font-family: var(--font-sans);
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* ── Section base ──────────────────────────────────────────────────────── */
-  .alg-section {
-    padding: 72px var(--pad-x);
-    border-bottom: 1px solid var(--c3);
-  }
-  .alg-section--dark {
-    background: var(--ink);
-    color: #fff;
-    border-bottom-color: rgba(255,255,255,0.08);
-  }
-  .alg-section--c1 { background: var(--c1); }
-  /* ── §04 FAQ dark-canvas overrides ──────────────────────────────────────── */
-  .alg-section--dark .alg-faq { border-top: 1px solid rgba(255,255,255,.14); }
-  .alg-section--dark .alg-faq__item { border-bottom: 1px solid rgba(255,255,255,.14); }
-  .alg-section--dark .alg-faq__q { color: #fff; }
-  .alg-section--dark .alg-faq__q:hover { color: var(--brand); }
-  .alg-section--dark .alg-faq__toggle { color: rgba(255,255,255,.55); }
-  .alg-section--dark .alg-faq__a { color: rgba(255,255,255,.72); }
-  .alg-section--dark .alg-h2 { color: #fff; }
-  .alg-section--dark .alg-body { color: rgba(255,255,255,.72); }
-
-  /* ── Hero grid ─────────────────────────────────────────────────────────── */
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 56px;
-    align-items: end;
-  }
-  .alg-h1 {
-    font-family: var(--font-sans);
-    font-size: clamp(40px, 5vw, 60px);
-    font-weight: 900;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-  }
-  .alg-h2 {
-    font-family: var(--font-sans);
-    font-size: clamp(28px, 3.5vw, 42px);
-    font-weight: 900;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-  }
-  .alg-body {
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--ink2);
-  }
-  .alg-body--sm {
-    font-size: 14px;
-    line-height: 1.55;
-    color: var(--ink3);
-  }
-
-  /* ── Stats grid ────────────────────────────────────────────────────────── */
-  .stats-grid {
-    margin-top: 48px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 16px;
-  }
-  .alg-stat {
-    padding: 14px 16px;
-    background: var(--c1);
-    border-left: 3px solid var(--brand);
-  }
-  .alg-stat--dark {
-    background: rgba(255,255,255,.06);
-    border-left-color: var(--brand);
-  }
-  .alg-stat__v {
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: -.01em;
-    color: var(--ink);
-    line-height: 1.05;
-    white-space: nowrap;
-  }
-  .alg-stat--dark .alg-stat__v { color: #fff; }
-  .alg-stat__k {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--ink3);
-    margin-top: 6px;
-  }
-  .alg-stat--dark .alg-stat__k { color: rgba(255,255,255,.6); }
-
-  /* ── Eyebrow ───────────────────────────────────────────────────────────── */
-  .alg-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--ink3);
-  }
-  .alg-eyebrow--red { color: var(--brand); }
-
-  /* ── Cat bar ───────────────────────────────────────────────────────────── */
-  .alg-cat-bar {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var(--ink);
-  }
-  .alg-cat-bar__label {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--ink);
-  }
-  .alg-cat-bar__tag {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: .08em;
-    color: var(--ink3);
-  }
-
-  /* ── 3-col grid ────────────────────────────────────────────────────────── */
-  .cols-grid {
-    display: grid;
-    grid-template-columns: 1.4fr 1.2fr .9fr;
-    gap: 40px;
-  }
-
-  /* ── Form (verbatim from mockup) ───────────────────────────────────────── */
-  .alg-form {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-  .alg-field { display: flex; flex-direction: column; gap: 6px; }
-  .alg-label {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--ink3);
-  }
-  .alg-label .req { color: var(--brand); margin-left: 3px; }
-  .alg-input,
-  .alg-textarea,
-  .alg-select {
-    font-family: var(--font-sans);
-    font-size: 14px;
-    color: var(--ink);
-    background: #fff;
-    border: 1px solid var(--c3);
-    padding: 12px 14px;
-    width: 100%;
-    outline: none;
-    transition: border-color .15s ease;
-    font-weight: 400;
-  }
-  .alg-input:focus,
-  .alg-textarea:focus,
-  .alg-select:focus { border-color: var(--ink); }
-  .alg-input::placeholder,
-  .alg-textarea::placeholder { color: var(--ink3); }
-  .alg-textarea { min-height: 130px; resize: vertical; }
-  .alg-select {
-    appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'><path fill='%231A1D23' d='M0 0l5 6 5-6z'/></svg>");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    background-size: 9px;
-    padding-right: 36px;
-    cursor: pointer;
-  }
-  .alg-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-
-  /* ── Route chips (verbatim from mockup) ────────────────────────────────── */
-  .alg-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0;
-    border: 1px solid var(--c3);
-    background: #fff;
-  }
-  .alg-chip {
-    flex: 1;
-    min-width: 0;
-    padding: 14px 16px;
-    background: #fff;
-    border: 0;
-    border-right: 1px solid var(--c3);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--ink2);
-    cursor: pointer;
-    transition: all .15s ease;
-    text-align: center;
-    white-space: nowrap;
-  }
-  .alg-chip:last-child { border-right: 0; }
-  .alg-chip:hover { background: var(--c1); color: var(--ink); }
-  .alg-chip.active { background: var(--ink); color: #fff; }
-  .alg-chip.active .alg-chip__icon { color: var(--brand); }
-  .alg-chip__icon {
-    font-family: var(--font-mono);
-    font-weight: 700;
-    color: var(--brand);
-    margin-right: 6px;
-  }
-
-  /* ── §01 field framing override (beats global border reset) ──────────── */
-  form.alg-form .alg-input,
-  form.alg-form .alg-textarea,
-  form.alg-form .alg-select {
-    border: 1px solid #C7CCD3 !important;
-    background: #F5F4F1 !important;
-    color: var(--ink) !important;
-  }
-  form.alg-form .alg-input::placeholder,
-  form.alg-form .alg-textarea::placeholder { color: var(--ink3) !important; }
-  form.alg-form .alg-input:focus,
-  form.alg-form .alg-textarea:focus,
-  form.alg-form .alg-select:focus {
-    border-color: var(--ink) !important;
-    background: #fff !important;
-  }
-  form.alg-form .alg-chips { border: 1px solid #C7CCD3 !important; }
-  form.alg-form .alg-chip { border-right: 1px solid #C7CCD3 !important; }
-  form.alg-form .alg-chip:last-child { border-right: 0 !important; }
-
-  /* ── Submit (verbatim from mockup) ─────────────────────────────────────── */
-  .alg-submit {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    background: var(--ink);
-    color: #fff;
-    border: 0;
-    padding: 16px 22px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background .15s ease;
-    align-self: flex-start;
-  }
-  .alg-submit:hover { background: var(--brand); }
-  .alg-submit__arrow { font-family: var(--font-mono); font-weight: 400; }
-
-  /* ── §02 Locator: search toolbar ───────────────────────────────────────── */
-  .c02-toolbar {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-  }
-  .loc-search-group {
-    display: flex;
-    flex: 1 1 auto;
-    min-width: 0;
-    gap: 0;
-  }
-  .loc-search-input {
-    flex: 1 1 auto;
-    min-width: 0;
-    padding: 10px 14px;
-    font-family: var(--font-sans);
-    font-size: 14px;
-    color: var(--ink);
-    background: #fff;
-    border: 1px solid var(--c3);
-    border-right: 0;
-    outline: none;
-    transition: border-color .15s;
-  }
-  .loc-search-input:focus { border-color: var(--ink); }
-  .loc-search-btn {
-    padding: 10px 18px;
-    background: var(--ink);
-    color: #fff;
-    border: 1px solid var(--ink);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background .15s;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .loc-search-btn:hover { background: var(--brand); border-color: var(--brand); }
-
-  /* ── §02 Map panel (verbatim from mockup: light, bordered, padded) ──────── */
-  .alg-map {
-    background: var(--c1);
-    border: 1px solid var(--c3);
-    position: relative;
-    padding: 0;
-    overflow: hidden;
-  }
-  .c02-locator-map {
-    width: 100%;
-    height: 360px;
-    min-height: 0;
-    background: var(--c1);
-    display: block;
-  }
-  .c02-locator-map :global(.leaflet-container) {
-    width: 100% !important;
-    height: 100% !important;
-    min-height: 0 !important;
-  }
-
-  /* ── §02 Rep cards (verbatim from mockup) ──────────────────────────────── */
-  .alg-rep {
-    background: #fff;
-    border: 1px solid var(--c3);
-    border-top: 3px solid var(--brand);
-    padding: 18px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .alg-rep__role {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--brand);
-  }
-  .alg-rep__name {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-top: 4px;
-  }
-  .alg-rep__company {
-    font-family: var(--font-mono);
-    font-size: 11.5px;
-    color: var(--ink2);
-  }
-  .alg-rep__contact {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    font-family: var(--font-mono);
-    font-size: 11.5px;
-    color: var(--ink2);
-  }
-  .alg-rep__contact a {
-    color: var(--ink2);
-    text-decoration: none;
-  }
-  .alg-rep__contact a:hover { color: var(--brand); }
-  .alg-rep__terr {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: .12em;
-    color: var(--ink3);
-    text-transform: uppercase;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid var(--c2);
-  }
-  .c02-rep-cards--empty {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--ink3);
-    padding: 12px 0;
-  }
-  .c02-full-link {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--brand);
-    text-decoration: none;
-  }
-  .c02-full-link:hover { text-decoration: underline; }
-
-  /* ── Card ──────────────────────────────────────────────────────────────── */
-  .alg-card {
-    background: #fff;
-    border: 1px solid var(--c3);
-    border-top: 3px solid var(--brand);
-    padding: 20px 22px;
-  }
-  .alg-card--ink {
-    background: var(--ink);
-    border: 1px solid var(--ink);
-    border-top: 3px solid var(--brand);
-    color: #fff;
-  }
-
-  /* ── Line ──────────────────────────────────────────────────────────────── */
-  .alg-line {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--c3);
-    gap: 8px;
-  }
-  .alg-line:last-child { border-bottom: none; }
-  .alg-line--dark { border-bottom-color: rgba(255,255,255,.08); }
-  .alg-line__k {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--ink3);
-    flex-shrink: 0;
-  }
-  .alg-line--dark .alg-line__k { color: rgba(255,255,255,.5); }
-  .alg-line__v {
-    font-size: 13px;
-    color: var(--ink2);
-    text-align: right;
-  }
-  .alg-line--dark .alg-line__v { color: rgba(255,255,255,.75); }
-
-  /* ── Quick links ───────────────────────────────────────────────────────── */
-  .alg-qlink {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 14px;
-    background: #fff;
-    border: 1px solid var(--c3);
-    text-decoration: none;
-    transition: background .15s ease, border-color .15s ease;
-    gap: 8px;
-  }
-  .alg-qlink:hover { background: var(--c1); border-color: var(--ink); }
-  .alg-qlink__title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--ink);
-  }
-  .alg-qlink__sub {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--ink3);
-    letter-spacing: .04em;
-    margin-top: 2px;
-  }
-  .alg-qlink__arrow {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    color: var(--brand);
-    flex-shrink: 0;
-  }
-
-  /* ── FAQ ───────────────────────────────────────────────────────────────── */
-  .faq-grid {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 48px;
-    align-items: start;
-  }
-  .faq-sticky { position: sticky; top: 24px; }
-  .alg-faq { border-top: 1px solid var(--c3); }
-  .alg-faq__item { border-bottom: 1px solid var(--c3); }
-  .alg-faq__q {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 22px 0;
-    background: transparent;
-    border: 0;
-    cursor: pointer;
-    text-align: left;
-    font-family: var(--font-sans);
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--ink);
-    gap: 12px;
-  }
-  .alg-faq__q:hover { color: var(--brand); }
-  .alg-faq__num {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .14em;
-    color: var(--brand);
-    margin-right: 18px;
-    flex-shrink: 0;
-  }
-  .alg-faq__toggle {
-    font-family: var(--font-mono);
-    font-weight: 600;
-    color: var(--ink3);
-    font-size: 18px;
-    flex-shrink: 0;
-    margin-left: auto;
-  }
-  .alg-faq__a {
-    padding: 0 0 22px 88px;
-    font-size: 14.5px;
-    line-height: 1.65;
-    color: var(--ink2);
-    max-width: 760px;
-  }
-  .alg-faq__a p { margin: 0; }
-  .alg-faq__a a { color: var(--brand); text-decoration: none; border-bottom: 1px solid rgba(243,39,64,.3); }
-  .alg-faq__a a:hover { border-color: var(--brand); }
-
-  /* ── Responsive ────────────────────────────────────────────────────────── */
-  @media (max-width: 1100px) {
-    .cols-grid { grid-template-columns: 1fr 1fr; }
-    .col-rail { grid-column: 1 / -1; }
-    .stats-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-  @media (max-width: 768px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 24px; }
-    .cols-grid { grid-template-columns: 1fr; gap: 32px; }
-    .col-rail { grid-column: auto; }
-    .faq-grid { grid-template-columns: 1fr; gap: 24px; }
-    .faq-sticky { position: static; }
-    .stats-grid { grid-template-columns: 1fr 1fr; }
-    .alg-chips { flex-wrap: wrap; }
-    .alg-chip { flex: 1 1 calc(50% - 1px); }
-    .alg-row { grid-template-columns: 1fr; }
-    .alg-faq__a { padding-left: 32px; }
-    .c02-locator-map { height: 280px; }
-  }
-  @media (max-width: 480px) {
-    .stats-grid { grid-template-columns: 1fr; }
+<style is:global>
+  /* Cat-6 Batch 2 — Apple system stack below header */
+  .page-about *,
+  .page-contact *,
+  .page-returns *,
+  .page-find-a-rep *,
+  .page-persona * {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  }
+  .page-about h1,.page-about h2,.page-about h3,
+  .page-contact h1,.page-contact h2,.page-contact h3,
+  .page-returns h1,.page-returns h2,.page-returns h3,
+  .page-find-a-rep h1,.page-find-a-rep h2,.page-find-a-rep h3,
+  .page-persona h1,.page-persona h2,.page-persona h3 {
+    font-weight: 600 !important;
   }
 </style>
+  <!-- ISS-53 CONFIRMED: HQ=4615 State Street Montclair CA 91763 · Riverside=9345 Sycamore Canyon Blvd · (866) 912-3220 -->
+  <!-- «TBD-VERIFY»: FAQ answers 2–6 (§04) — render as mockup, James line-checks at preview -->
+  <!-- glow orb -->
+  <div class="glow-orb" style="position:fixed;top:0;left:0;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(247,82,82,.13) 0%,transparent 70%);pointer-events:none;z-index:0;will-change:transform;"></div>
 
-<!-- ── SCRIPTS ───────────────────────────────────────────────────────────── -->
-<script is:inline>
-(function () {
-  /* ── Scroll-trailing glow orb (verbatim initGlowOrb from mockup) ─────── */
-  (function initGlowOrb() {
-    var clamp = function(v, a, b) { return Math.min(b, Math.max(a, v)); };
-    function start(root, orb) {
-      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var target = function() {
-        var rect = root.getBoundingClientRect();
-        var rootTop = rect.top + window.scrollY;
-        var rootH = root.offsetHeight || 1;
-        var rootW = root.offsetWidth || 1440;
-        var vh = window.innerHeight;
-        var through = (window.scrollY + vh * 0.5) - rootTop;
-        var f = clamp(through / rootH, 0, 1);
-        return {
-          tx: rootW * (0.72 - 0.46 * Math.sin(f * Math.PI)),
-          ty: clamp(through, vh * 0.30, rootH - vh * 0.2),
-        };
-      };
-      var curX = (root.offsetWidth || 1440) * 0.72;
-      var curY = (root.offsetHeight || 2000) * 0.16;
-      function tick() {
-        var t = target();
-        curX += (t.tx - curX) * 0.045;
-        curY += (t.ty - curY) * 0.045;
-        orb.style.transform = 'translate(' + curX + 'px, ' + curY + 'px) translate(-50%, -50%)';
-        requestAnimationFrame(tick);
-      }
-      if (reduce) {
-        var t = target();
-        orb.style.transform = 'translate(' + t.tx + 'px, ' + t.ty + 'px) translate(-50%, -50%)';
-      } else {
-        requestAnimationFrame(tick);
-      }
-    }
-    var tries = 0;
-    var poll = setInterval(function() {
-      var root = document.querySelector('.alg-page--glow');
-      var orb = root && root.querySelector('.glow-orb');
-      if (root && orb) { clearInterval(poll); start(root, orb); }
-      else if (++tries > 120) clearInterval(poll);
-    }, 120);
-  })();
+<main style="position: relative; z-index: 1;"><div style="height: 54px; display: flex; align-items: center; justify-content: center; border-bottom: 1px dashed rgb(210, 210, 215); background: rgb(255, 255, 255); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139);">Live site header mounts here — do not redesign</div><section data-screen-label="Contact hero" style="padding: 112px 24px 80px; text-align: center;">
+<div style="max-width: 980px; margin: 0px auto;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 20px;">Contact · Field Desk</p>
+<h1 style="font-size: clamp(44px, 6vw, 72px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; margin: 0px 0px 24px;">The whole desk, on one page.</h1>
+<p style="font-size: clamp(19px, 2.2vw, 24px); color: rgb(110, 110, 115); line-height: 1.45; margin: 0px auto; max-width: 740px;">Built for the contractor at 6 AM with a takeoff due. Quote desk, spec engineer, warranty, rep finder — direct dial, direct form, no nav. ALG runs the line out of Montclair, CA.</p>
+</div>
+<div style="max-width: 1100px; margin: 64px auto 0px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 26px 14px; text-align: center;"><div style="font-size: 34px; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap;">&lt; 4 hr</div><div style="width: 36px; height: 3px; background: rgb(29, 29, 31); border-radius: 2px; margin: 12px auto;"></div><div style="font-size: 13px; color: rgb(110, 110, 115);">Quote turnaround</div></div>
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 26px 14px; text-align: center;"><div style="font-size: 34px; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap;">5–7 days</div><div style="width: 36px; height: 3px; background: rgb(29, 29, 31); border-radius: 2px; margin: 12px auto;"></div><div style="font-size: 13px; color: rgb(110, 110, 115);">PRO ship time</div></div>
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 26px 14px; text-align: center;"><div style="font-size: 34px; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap;">7 yr</div><div style="width: 36px; height: 3px; background: rgb(29, 29, 31); border-radius: 2px; margin: 12px auto;"></div><div style="font-size: 13px; color: rgb(110, 110, 115);">PRO warranty</div></div>
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 26px 14px; text-align: center;"><div style="font-size: 34px; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap;">48 hr</div><div style="width: 36px; height: 3px; background: rgb(29, 29, 31); border-radius: 2px; margin: 12px auto;"></div><div style="font-size: 13px; color: rgb(110, 110, 115);">RMA authorization</div></div>
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 26px 14px; text-align: center;"><div style="font-size: 26px; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; padding-top: 6px;">(866) 912-3220</div><div style="width: 36px; height: 3px; background: rgb(29, 29, 31); border-radius: 2px; margin: 12px auto;"></div><div style="font-size: 13px; color: rgb(110, 110, 115);">Main · Mon–Fri PT</div></div>
+</div></section><section data-screen-label="01 Send a message" id="form" style="padding: 96px 24px; background: rgb(245, 245, 247);">
+<div style="max-width: 980px; margin: 0px auto;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 14px;">01 · Send a message · Routed by topic</p>
+<h2 style="font-size: clamp(38px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin: 0px 0px 12px;">Straight to the right desk.</h2>
+<p style="font-size: clamp(19px, 2.2vw, 22px); color: rgb(110, 110, 115); line-height: 1.45; margin: 0px 0px 40px;">Pick a topic. We route directly to the desk that owns it — no central inbox.</p>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 32px;">
+<div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px;">
+<button style="font-family: inherit; cursor: pointer; font-size: 14px; font-weight: 600; padding: 9px 18px; border-radius: 980px; transition: 0.2s; border: 1px solid rgb(243, 39, 64); color: rgb(243, 39, 64); background: rgb(255, 255, 255);">01 · Quote</button>
+<button style="font-family: inherit; cursor: pointer; font-size: 14px; font-weight: 600; padding: 9px 18px; border-radius: 980px; transition: 0.2s; border: 1px solid rgb(210, 210, 215); color: rgb(110, 110, 115); background: rgb(255, 255, 255);">02 · Spec</button>
+<button style="font-family: inherit; cursor: pointer; font-size: 14px; font-weight: 600; padding: 9px 18px; border-radius: 980px; transition: 0.2s; border: 1px solid rgb(210, 210, 215); color: rgb(110, 110, 115); background: rgb(255, 255, 255);">03 · Distributor</button>
+<button style="font-family: inherit; cursor: pointer; font-size: 14px; font-weight: 600; padding: 9px 18px; border-radius: 980px; transition: 0.2s; border: 1px solid rgb(210, 210, 215); color: rgb(110, 110, 115); background: rgb(255, 255, 255);">04 · Warranty</button>
+<button style="font-family: inherit; cursor: pointer; font-size: 14px; font-weight: 600; padding: 9px 18px; border-radius: 980px; transition: 0.2s; border: 1px solid rgb(210, 210, 215); color: rgb(110, 110, 115); background: rgb(255, 255, 255);">05 · Press</button>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+<div><label style="display: block; font-size: 13px; font-weight: 500; color: rgb(110, 110, 115); margin-bottom: 6px;">Name *</label><input class="scp0" style="width: 100%; box-sizing: border-box; font-size: 17px; padding: 12px 14px; border: 1px solid rgb(210, 210, 215); border-radius: 12px; outline: none; color: rgb(29, 29, 31);"/></div>
+<div><label style="display: block; font-size: 13px; font-weight: 500; color: rgb(110, 110, 115); margin-bottom: 6px;">Company *</label><input class="scp0" style="width: 100%; box-sizing: border-box; font-size: 17px; padding: 12px 14px; border: 1px solid rgb(210, 210, 215); border-radius: 12px; outline: none; color: rgb(29, 29, 31);"/></div>
+<div><label style="display: block; font-size: 13px; font-weight: 500; color: rgb(110, 110, 115); margin-bottom: 6px;">Work email *</label><input class="scp0" style="width: 100%; box-sizing: border-box; font-size: 17px; padding: 12px 14px; border: 1px solid rgb(210, 210, 215); border-radius: 12px; outline: none; color: rgb(29, 29, 31);" type="email"/></div>
+<div><label style="display: block; font-size: 13px; font-weight: 500; color: rgb(110, 110, 115); margin-bottom: 6px;">Phone</label><input class="scp0" style="width: 100%; box-sizing: border-box; font-size: 17px; padding: 12px 14px; border: 1px solid rgb(210, 210, 215); border-radius: 12px; outline: none; color: rgb(29, 29, 31);" type="tel"/></div>
+<div><label style="display: block; font-size: 13px; font-weight: 500; color: rgb(110, 110, 115); margin-bottom: 6px;">Job name</label><input class="scp0" style="width: 100%; box-sizing: border-box; font-size: 17px; padding: 12px 14px; border: 1px solid rgb(210, 210, 215); border-radius: 12px; outline: none; color: rgb(29, 29, 31);"/></div>
+<div><label style="display: block; font-size: 13px; font-weight: 500; color: rgb(110, 110, 115); margin-bottom: 6px;">Timeline *</label><select class="scp0" style="width: 100%; box-sizing: border-box; font-size: 17px; padding: 12px 14px; border: 1px solid rgb(210, 210, 215); border-radius: 12px; outline: none; color: rgb(29, 29, 31); background: rgb(255, 255, 255);"><option>Select…</option><option>Bidding now</option><option>Design phase</option><option>Schematic</option></select></div>
+<div style="grid-column: 1 / -1;"><label style="display: block; font-size: 13px; font-weight: 500; color: rgb(110, 110, 115); margin-bottom: 10px;">Project type *</label><div style="display: flex; gap: 10px; flex-wrap: wrap;"><label style="display: flex; align-items: center; gap: 8px; font-size: 15px; border: 1px solid rgb(210, 210, 215); border-radius: 980px; padding: 9px 18px; cursor: pointer;"><input name="ptype" style="accent-color: rgb(243, 39, 64); margin: 0px;" type="radio"/>New construction</label><label style="display: flex; align-items: center; gap: 8px; font-size: 15px; border: 1px solid rgb(210, 210, 215); border-radius: 980px; padding: 9px 18px; cursor: pointer;"><input name="ptype" style="accent-color: rgb(243, 39, 64); margin: 0px;" type="radio"/>Retrofit</label></div></div>
+<div style="grid-column: 1 / -1;"><label style="display: block; font-size: 13px; font-weight: 500; color: rgb(110, 110, 115); margin-bottom: 6px;">Message *</label><textarea class="scp0" rows="5" style="width: 100%; box-sizing: border-box; font-size: 17px; padding: 12px 14px; border: 1px solid rgb(210, 210, 215); border-radius: 12px; outline: none; color: rgb(29, 29, 31); resize: vertical;"></textarea></div>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 28px; flex-wrap: wrap;">
+<p style="font-size: 13px; color: rgb(134, 134, 139); margin: 0px;"><span class="sc-interp">Routes to the quote desk · sales@archipelagolighting.com</span></p>
+<button class="scp1" style="background: rgb(243, 39, 64); color: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; cursor: pointer; padding: 13px 28px; border-radius: 980px; font-size: 16px; font-weight: 600; font-family: inherit; transition: background 0.2s;">Send to ALG →</button>
+</div>
+</div>
+</div></section><section data-screen-label="02 Find your rep" style="padding: 96px 24px;">
+<div style="max-width: 980px; margin: 0px auto;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 14px;">02 · Find your rep · By region · 5 territories</p>
+<h2 style="font-size: clamp(38px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin: 0px 0px 12px;">A rep who knows your territory.</h2>
+<p style="font-size: clamp(19px, 2.2vw, 22px); color: rgb(110, 110, 115); line-height: 1.45; margin: 0px 0px 32px;">Search by ZIP, city, or state. Your project ZIP routes to the nearest rep.</p>
+<div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+<input class="scp0" placeholder="ZIP, city, or state" style="flex: 1 1 0%; min-width: 220px; box-sizing: border-box; font-size: 17px; padding: 13px 16px; border: 1px solid rgb(210, 210, 215); border-radius: 12px; outline: none; color: rgb(29, 29, 31);"/>
+<a class="scp2" href="/find-a-rep/#rep" style="background: rgb(243, 39, 64); color: rgb(255, 255, 255); padding: 13px 26px; border-radius: 980px; font-size: 16px; font-weight: 600; transition: background 0.2s;">Find Nearest</a>
+<a class="scp3" href="/find-a-rep/#rep" style="font-size: 15px; font-weight: 500; color: rgb(29, 29, 31);">Open full rep finder →</a>
+</div>
+</div></section><section data-screen-label="03 Direct lines" style="padding: 96px 24px; background: rgb(245, 245, 247);">
+<div style="max-width: 1200px; margin: 0px auto;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 14px;">03 · Direct lines · Mon–Fri · PT</p>
+<h2 style="font-size: clamp(38px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin: 0px 0px 48px;">Skip the form entirely.</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px;">
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 28px; grid-column: span 1;"><div style="display: flex; align-items: center; gap: 8px; margin: 0px 0px 10px;"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M4.5 5.5C4.5 4.4 5.4 3.5 6.5 3.5h2L10 8l-2 1.5a12 12 0 006.5 6.5L16 14l4.5 1.5v2c0 1.1-.9 2-2 2C10.6 19.5 4.5 13.4 4.5 5.5z"></path></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139);">Spec Desk · Main</span></div><div style="font-size: 24px; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap;">(866) 912-3220</div><p style="font-size: 13px; color: rgb(110, 110, 115); margin: 6px 0px 0px;">Mon–Fri · 7:00–17:00 PT</p></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 28px;"><div style="display: flex; align-items: center; gap: 8px; margin: 0px 0px 10px;"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="18"><rect height="13" rx="1.5" width="18" x="3" y="5.5"></rect><path d="M3.5 7l8.5 6 8.5-6"></path></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139);">Sales</span></div><a class="scp4" href="mailto:sales@archipelagolighting.com" style="font-size: 16px; font-weight: 600; word-break: break-all;">sales@archipelagolighting.com</a><p style="font-size: 13px; color: rgb(110, 110, 115); margin: 6px 0px 0px;">Quotes, pricing, orders</p></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 28px;"><div style="display: flex; align-items: center; gap: 8px; margin: 0px 0px 10px;"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M6 3h8l4 4v14H6z"></path><path d="M14 3v4h4M9 12h6M9 15.5h6"></path></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139);">Spec</span></div><a class="scp4" href="mailto:spec@archipelagolighting.com" style="font-size: 16px; font-weight: 600; word-break: break-all;">spec@archipelagolighting.com</a><p style="font-size: 13px; color: rgb(110, 110, 115); margin: 6px 0px 0px;">IES, layouts, submittals</p></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 28px;"><div style="display: flex; align-items: center; gap: 8px; margin: 0px 0px 10px;"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M12 3l7 2.8v5.6c0 4.3-2.9 7.3-7 8.9-4.1-1.6-7-4.6-7-8.9V5.8z"></path></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139);">Warranty</span></div><a class="scp4" href="mailto:warranty@archipelagolighting.com" style="font-size: 16px; font-weight: 600; word-break: break-all;">warranty@archipelagolighting.com</a><p style="font-size: 13px; color: rgb(110, 110, 115); margin: 6px 0px 0px;">RMAs and claims</p></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 28px;"><div style="display: flex; align-items: center; gap: 8px; margin: 0px 0px 10px;"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M4 5h16v11H9l-5 4z"></path></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139);">Press</span></div><a class="scp4" href="mailto:press@archipelagolighting.com" style="font-size: 16px; font-weight: 600; word-break: break-all;">press@archipelagolighting.com</a><p style="font-size: 13px; color: rgb(110, 110, 115); margin: 6px 0px 0px;">Editorial and media</p></div>
+</div>
+<div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; align-items: start;">
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 8px 28px;">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 0px; border-bottom: 1px solid rgb(229, 229, 231);"><div style="display: flex; gap: 14px; align-items: center;"><svg fill="none" height="20" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="flex: 0 0 auto;" viewbox="0 0 24 24" width="20"><path d="M6 3h8l4 4v14H6z"></path><path d="M14 3v4h4M9 12h6M9 15.5h6"></path></svg><div><div style="font-size: 16px; font-weight: 600;">IES files</div><div style="font-size: 13px; color: rgb(110, 110, 115);">By SKU · Versioned</div></div><a class="scp3" href="/support/" style="font-size: 14px; font-weight: 500; flex: 0 0 auto;">Library →</a></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 0px; border-bottom: 1px solid rgb(229, 229, 231);"><div style="display: flex; gap: 14px; align-items: center;"><svg fill="none" height="20" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="flex: 0 0 auto;" viewbox="0 0 24 24" width="20"><path d="M6 3h8l4 4v14H6z"></path><path d="M14 3v4h4M9 12h6M9 15.5h6"></path></svg><div><div style="font-size: 16px; font-weight: 600;">Cut sheets</div><div style="font-size: 13px; color: rgb(110, 110, 115);">ECO / PRO / PRO+</div></div><a class="scp3" href="/support/" style="font-size: 14px; font-weight: 500; flex: 0 0 auto;">Library →</a></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 0px; border-bottom: 1px solid rgb(229, 229, 231);"><div style="display: flex; gap: 14px; align-items: center;"><svg fill="none" height="20" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="flex: 0 0 auto;" viewbox="0 0 24 24" width="20"><path d="M12 3l7 2.8v5.6c0 4.3-2.9 7.3-7 8.9-4.1-1.6-7-4.6-7-8.9V5.8z"></path></svg><div><div style="font-size: 16px; font-weight: 600;">Warranty form</div><div style="font-size: 13px; color: rgb(110, 110, 115);">7-yr / 5-yr</div></div><a class="scp3" href="mailto:warranty@archipelagolighting.com" style="font-size: 14px; font-weight: 500; flex: 0 0 auto;">Email →</a></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 0px; border-bottom: 1px solid rgb(229, 229, 231);"><div style="display: flex; gap: 14px; align-items: center;"><svg fill="none" height="20" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="flex: 0 0 auto;" viewbox="0 0 24 24" width="20"><path d="M4 9h12a4 4 0 010 8H9"></path><path d="M8 5L4 9l4 4"></path></svg><div><div style="font-size: 16px; font-weight: 600;">Returns · RMA</div><div style="font-size: 13px; color: rgb(110, 110, 115);">48-hr auth</div></div><a class="scp3" href="/support/returns/" style="font-size: 14px; font-weight: 500; flex: 0 0 auto;">Start →</a></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 0px;"><div style="display: flex; gap: 14px; align-items: center;"><svg fill="none" height="20" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="flex: 0 0 auto;" viewbox="0 0 24 24" width="20"><path d="M3.5 7.5L12 3l8.5 4.5v9L12 21l-8.5-4.5z"></path><path d="M3.5 7.5L12 12l8.5-4.5M12 12v9"></path></svg><div><div style="font-size: 16px; font-weight: 600;">Stocking SKUs</div><div style="font-size: 13px; color: rgb(110, 110, 115);">Catalog</div></div><a class="scp3" href="/support/" style="font-size: 14px; font-weight: 500; flex: 0 0 auto;">Library →</a></div>
+</div>
+<div style="display: grid; gap: 16px;">
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 24px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 8px;">Montclair HQ</p><p style="font-size: 15px; line-height: 1.5; margin: 0px;">4615 State Street<br/>Montclair, CA 91763</p></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 24px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 8px;">Production · Riverside</p><p style="font-size: 15px; line-height: 1.5; margin: 0px;">9345 Sycamore Canyon Blvd<br/>Riverside, CA 92508</p></div>
+<div style="background: rgb(255, 255, 255); border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 24px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 8px;">Field Reality</p><p style="font-size: 15px; line-height: 1.5; color: rgb(66, 66, 69); margin: 0px;">Same-day quote on 95% of requests landed before 14:00 PT.</p></div>
+</div>
+</div>
+</div></div></div></div></div></div></section><section data-screen-label="04 Field FAQ" style="padding: 96px 24px;">
+<div style="max-width: 980px; margin: 0px auto;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 14px;">04 · Field FAQ</p>
+<h2 style="font-size: clamp(38px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin: 0px 0px 12px;">Asked at the spec desk daily.</h2>
+<p style="font-size: clamp(19px, 2.2vw, 22px); color: rgb(110, 110, 115); line-height: 1.45; margin: 0px 0px 40px;">Lead times, samples, IES, warranty, the <span style="color: rgb(243, 39, 64);">Ⓐ</span>CS by ALG App — the short answers, written by people who pick up the phone.</p>
+<div style="border-top: 1px solid rgb(229, 229, 231);">
+<div style="border-bottom: 1px solid rgb(229, 229, 231);">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 0px; cursor: pointer;"><span style="font-size: 17px; font-weight: 600;"><span style="color: rgb(134, 134, 139); font-weight: 600; margin-right: 14px;">01</span>What's the typical lead time on a PRO-tier high bay?</span><span style="font-size: 22px; color: rgb(134, 134, 139); flex: 0 0 auto;"><span class="sc-interp">−</span></span></div>
+<p style="font-size: 16px; line-height: 1.55; color: rgb(66, 66, 69); margin: 0px; padding: 0px 40px 24px 34px;">PRO-tier RHB, LHB, and STR families ship in 5–7 business days from Riverside, CA on quantities under 500. Anything larger or non-stock CCT/optic combinations runs 3–4 weeks.</p>
+</div>
+<div style="border-bottom: 1px solid rgb(229, 229, 231);">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 0px; cursor: pointer;"><span style="font-size: 17px; font-weight: 600;"><span style="color: rgb(134, 134, 139); font-weight: 600; margin-right: 14px;">02</span>Can I order samples before specifying?</span><span style="font-size: 22px; color: rgb(134, 134, 139); flex: 0 0 auto;"><span class="sc-interp">+</span></span></div>
+</div>
+<div style="border-bottom: 1px solid rgb(229, 229, 231);">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 0px; cursor: pointer;"><span style="font-size: 17px; font-weight: 600;"><span style="color: rgb(134, 134, 139); font-weight: 600; margin-right: 14px;">03</span>How do I file a warranty claim?</span><span style="font-size: 22px; color: rgb(134, 134, 139); flex: 0 0 auto;"><span class="sc-interp">+</span></span></div>
+</div>
+<div style="border-bottom: 1px solid rgb(229, 229, 231);">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 0px; cursor: pointer;"><span style="font-size: 17px; font-weight: 600;"><span style="color: rgb(134, 134, 139); font-weight: 600; margin-right: 14px;">04</span>Do you publish IES files and spec sheets?</span><span style="font-size: 22px; color: rgb(134, 134, 139); flex: 0 0 auto;"><span class="sc-interp">+</span></span></div>
+</div>
+<div style="border-bottom: 1px solid rgb(229, 229, 231);">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 0px; cursor: pointer;"><span style="font-size: 17px; font-weight: 600;"><span style="color: rgb(134, 134, 139); font-weight: 600; margin-right: 14px;">05</span>Is the <span style="color: rgb(243, 39, 64);">Ⓐ</span>CS by ALG App required for PRO+ fixtures?</span><span style="font-size: 22px; color: rgb(134, 134, 139); flex: 0 0 auto;"><span class="sc-interp">+</span></span></div>
+</div>
+<div style="border-bottom: 1px solid rgb(229, 229, 231);">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 0px; cursor: pointer;"><span style="font-size: 17px; font-weight: 600;"><span style="color: rgb(134, 134, 139); font-weight: 600; margin-right: 14px;">06</span>Where can I find a local distributor?</span><span style="font-size: 22px; color: rgb(134, 134, 139); flex: 0 0 auto;"><span class="sc-interp">+</span></span></div>
+</div>
+</div>
+</div></section><div>
+<section style="background: rgb(255, 255, 255); border-top: 1px solid rgb(229, 229, 231); padding: 88px 24px; text-align: center;">
+<h3 style="font-size: clamp(24px, 2.4vw, 32px); font-weight: 600; letter-spacing: -0.02em; color: rgb(29, 29, 31); margin: 0px 0px 8px;">Need a quote, layout, sample, or rebate check?</h3>
+<p style="font-size: clamp(19px, 2.2vw, 22px); color: rgb(110, 110, 115); margin: 0px 0px 28px; line-height: 1.4;">We respond the same business day.</p>
+<div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+<a class="scp2" href="/contact/" style="background: rgb(243, 39, 64); color: rgb(255, 255, 255); padding: 12px 26px; border-radius: 980px; font-size: 15px; font-weight: 600; letter-spacing: 0.02em; transition: background 0.2s;">GET A QUOTE</a>
+<a href="/contact/" style="color: rgb(29, 29, 31); border: 1px solid rgb(210, 210, 215); padding: 12px 26px; border-radius: 980px; font-size: 15px; font-weight: 600; letter-spacing: 0.02em;">REQUEST A PHOTOMETRIC</a>
+</div>
+</section>
+</div></main>
 
-  /* ── Route chips: toggle active, show/hide route-specific fields ──────── */
-  var chips = document.querySelectorAll('.alg-chip');
-  var routeFields = document.querySelectorAll('.route-fields');
-  var msgArea = document.getElementById('cf-message');
-
-  var PLACEHOLDERS = {
-    quote:   'Paste BOM or describe scope. Quantity helps.',
-    spec:    'Mounting height, target FC, controls strategy…',
-    dist:    'Restock, account, PO routing…',
-    support: 'Install date, environment, observed symptom…',
-    press:   "Tell us what you're working on…"
-  };
-
-  function activateRoute(route) {
-    chips.forEach(function(c) { c.classList.remove('active'); });
-    var active = document.querySelector('.alg-chip[data-route="' + route + '"]');
-    if (active) active.classList.add('active');
-    routeFields.forEach(function(f) {
-      f.style.display = (f.getAttribute('data-show') === route) ? '' : 'none';
-    });
-    if (msgArea && PLACEHOLDERS[route]) msgArea.placeholder = PLACEHOLDERS[route];
+  <script is:inline>
+(function(){
+  var orb=null, raf=null, EASE=0.03;
+  var tx=innerWidth*0.72, ty=innerHeight*0.26, x=tx, y=ty;
+  var fine=matchMedia('(pointer:fine)').matches,
+      still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!fine||still){
+    addEventListener('scroll',function(){ ty=innerHeight*0.26+scrollY*0.06; },{passive:true});
+  } else {
+    addEventListener('pointermove',function(e){ tx=e.clientX; ty=e.clientY; },{passive:true});
   }
-
-  chips.forEach(function(chip) {
-    chip.addEventListener('click', function() {
-      activateRoute(chip.getAttribute('data-route'));
-    });
+  function tick(){
+    if(!orb) orb=document.querySelector('.glow-orb');
+    if(orb){ x+=(tx-x)*EASE; y+=(ty-y)*EASE;
+      orb.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)'; }
+    raf=requestAnimationFrame(tick);
+  }
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+    else if(!raf){ raf=requestAnimationFrame(tick); }
   });
-
-  /* ── Form submit → mailto (preserved verbatim) ───────────────────────── */
-  var form = document.getElementById('contact-form');
-  if (form) {
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      var chip = document.querySelector('.alg-chip.active') || chips[0];
-      var to = chip.getAttribute('data-to') || 'sales@archipelagolighting.com';
-      var baseSubject = chip.getAttribute('data-subject') || 'Contact';
-      var name    = (document.getElementById('cf-name')    || {}).value || '';
-      var company = (document.getElementById('cf-company') || {}).value || '';
-      var email   = (document.getElementById('cf-email')   || {}).value || '';
-      var phone   = (document.getElementById('cf-phone')   || {}).value || '';
-      var message = (document.getElementById('cf-message') || {}).value || '';
-      var subject = baseSubject + (company ? ' · ' + company : '');
-      var body = [
-        'Name: ' + name,
-        'Company: ' + company,
-        'Email: ' + email,
-        phone ? 'Phone: ' + phone : '',
-        '',
-        message
-      ].filter(Boolean).join('\n');
-      window.location.href = 'mailto:' + to
-        + '?subject=' + encodeURIComponent(subject)
-        + '&body='    + encodeURIComponent(body);
-    });
-  }
-
-  /* ── §02 Leaflet locator (reps-only, CARTO Positron light) ──────────────── */
-  (function initContactLocator() {
-    var mapEl = document.getElementById('algLocatorMapContact');
-    if (!mapEl) return;
-    var link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-    document.head.appendChild(link);
-    var script = document.createElement('script');
-    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-    script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
-    script.crossOrigin = '';
-    script.onload = async function () {
-      var map = L.map('algLocatorMapContact', { zoomControl: true, scrollWheelZoom: false }).setView([37.5, -96], 4);
-      /* FIX B: CARTO Positron light tiles */
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 19,
-      }).addTo(map);
-      function makeIcon(color, shadow) {
-        return L.divIcon({
-          className: '',
-          html: '<div style="width:12px;height:12px;background:' + color + ';border-radius:50%;border:2px solid #fff;box-shadow:0 0 8px ' + shadow + ';"></div>',
-          iconSize: [12, 12],
-          iconAnchor: [6, 6],
-          popupAnchor: [0, -8],
-        });
-      }
-      var iconRep = makeIcon('#F32740', 'rgba(243,39,64,0.5)');
-      function toTitleCase(s) {
-        if (!s) return s;
-        var upperRatio = (s.match(/[A-Z]/g) || []).length / Math.max(1, (s.match(/[A-Za-z]/g) || []).length);
-        if (upperRatio < 0.7) return s;
-        return s.toLowerCase().replace(/\b([a-z])(\w*)/g, function(m, f, r) { return f.toUpperCase() + r; });
-      }
-      function titleCaseCityState(s) {
-        if (!s) return s;
-        var idx = s.lastIndexOf(',');
-        if (idx === -1) return toTitleCase(s);
-        return toTitleCase(s.slice(0, idx)) + ', ' + s.slice(idx + 1).trim().toUpperCase();
-      }
-      function popup(rec) {
-        var displayName = toTitleCase(rec.name);
-        var loc = [rec.city, rec.state].filter(Boolean).join(', ');
-        var displayLoc = titleCaseCityState(loc);
-        var html = '<div style="font-family:\'Lato\',sans-serif;">';
-        html += '<div style="font-weight:700;font-size:13px;color:#1A1D23;">' + displayName + '</div>';
-        if (displayLoc) html += '<div style="font-size:11px;color:#6B7280;margin-top:2px;">' + displayLoc + ' · Sales Rep</div>';
-        if (rec.phone) html += '<div style="margin-top:6px;font-size:12px;"><a href="tel:' + rec.phone.replace(/[^+\d]/g,'') + '" style="color:#F32740;">' + rec.phone + '</a></div>';
-        if (rec.website) {
-          var url = rec.website.startsWith('http') ? rec.website : 'https://' + rec.website;
-          html += '<div style="font-size:12px;"><a href="' + url + '" target="_blank" rel="noopener" style="color:#F32740;">Website ↗</a></div>';
-        }
-        html += '</div>';
-        return html;
-      }
-      var repLayer = L.layerGroup();
-      var allReps = [];
-      var markerByPinId = new Map();
-      var cardsEl = document.getElementById('c02-rep-cards');
-
-      try {
-        var res = await fetch('/data/local_support.json');
-        var data = await res.json();
-        data.sales_reps.forEach(function(r) {
-          if (r.lat && r.lon) {
-            var m = L.marker([r.lat, r.lon], { icon: iconRep }).bindPopup(popup(r)).addTo(repLayer);
-            if (r.id) markerByPinId.set(String(r.id), m);
-            allReps.push(Object.assign({}, r, { type: 'rep', lat: r.lat, lng: r.lon, _marker: m }));
-          }
-        });
-      } catch(e) { console.error('ALG contact locator: failed to load data', e); }
-      repLayer.addTo(map);
-
-      /* Render .alg-rep cards from real data (no invented fields) */
-      function renderRepCards(entries) {
-        if (!cardsEl) return;
-        if (!entries || entries.length === 0) {
-          cardsEl.innerHTML = '<div class="c02-rep-cards--empty">No reps found near this location. Try a different ZIP or city.</div>';
-          return;
-        }
-        cardsEl.innerHTML = entries.slice(0, 4).map(function(p) {
-          var displayName = toTitleCase(p.name || '');
-          var cityState = titleCaseCityState([p.city || '', p.state || ''].filter(Boolean).join(', '));
-          var contactHtml = '';
-          if (p.phone) contactHtml += '<a href="tel:' + p.phone.replace(/[^+\d]/g,'') + '">' + p.phone + '</a>';
-          if (p.website) {
-            var url = p.website.startsWith('http') ? p.website : 'https://' + p.website;
-            contactHtml += '<a href="' + url + '" target="_blank" rel="noopener">Website ↗</a>';
-          }
-          return '<div class="alg-rep" data-pin-id="' + (p.id || '') + '" style="cursor:pointer;">'
-            + '<div class="alg-rep__role">Sales Rep</div>'
-            + '<div class="alg-rep__name">' + displayName + '</div>'
-            + (cityState ? '<div class="alg-rep__company">' + cityState + '</div>' : '')
-            + (contactHtml ? '<div class="alg-rep__contact">' + contactHtml + '</div>' : '')
-            + '</div>';
-        }).join('');
-        /* Click rep card → fly to pin */
-        cardsEl.querySelectorAll('.alg-rep[data-pin-id]').forEach(function(card) {
-          card.addEventListener('click', function() {
-            var marker = markerByPinId.get(card.dataset.pinId);
-            if (!marker) return;
-            map.flyTo(marker.getLatLng(), Math.max(map.getZoom(), 9), { duration: 0.6 });
-            marker.openPopup();
-          });
-        });
-      }
-
-      /* Initial render: show 4 nearest to map center */
-      function updateRepCards(centerLatLng) {
-        var center = centerLatLng || map.getCenter();
-        var sorted = allReps
-          .map(function(p) { return Object.assign({}, p, { distanceMi: center.distanceTo(L.latLng(p.lat, p.lng)) / 1609.344 }); })
-          .sort(function(a, b) { return a.distanceMi - b.distanceMi; });
-        renderRepCards(sorted);
-      }
-
-      updateRepCards();
-      setTimeout(function() { map.invalidateSize(); }, 0);
-
-      /* Search: geocode → fly → update cards */
-      var searchInput = document.getElementById('c02-search-input');
-      var searchBtn   = document.getElementById('c02-search-btn');
-      async function doSearch() {
-        var q = searchInput ? searchInput.value.trim() : '';
-        if (!q) return;
-        try {
-          var r = await fetch('https://nominatim.openstreetmap.org/search?format=json&countrycodes=us&limit=1&q=' + encodeURIComponent(q), { headers: { 'Accept-Language': 'en' } });
-          var results = await r.json();
-          if (!results.length) return;
-          var lat = +results[0].lat, lon = +results[0].lon;
-          map.setView([lat, lon], 8);
-          updateRepCards(L.latLng(lat, lon));
-        } catch(e) { console.error('ALG contact locator search error', e); }
-      }
-      if (searchBtn) searchBtn.addEventListener('click', doSearch);
-      if (searchInput) searchInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(); });
-    };
-    document.head.appendChild(script);
-  })();
-
-  /* ── FAQ accordion ───────────────────────────────────────────────────── */
-  var faqList = document.getElementById('faq-list');
-  if (faqList) {
-    faqList.addEventListener('click', function(e) {
-      var btn = e.target.closest('.alg-faq__q');
-      if (!btn) return;
-      var item = btn.closest('.alg-faq__item');
-      var answer = item.querySelector('.alg-faq__a');
-      var toggle = btn.querySelector('.alg-faq__toggle');
-      var isOpen = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
-      answer.hidden = isOpen;
-      if (toggle) toggle.textContent = isOpen ? '+' : '−';
-    });
-  }
+  raf=requestAnimationFrame(tick);
 })();
-</script>
+  </script>
+</BaseLayout>

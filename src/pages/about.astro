@@ -1,2682 +1,309 @@
 ---
 /**
- * about.astro — /about
- * Visual reference: ALG-About-Us-v1.html (VariationC, heroVariant="typo", channelLayout="side")
- * Shell: ContentShell.astro (canonical --pad-x, 1320px cap, 56px gutter)
- * Chrome: BaseLayout (via ContentShell) — canon header + mega-menu + footer
- * A2: 6 aisle cards with consumer page icons + anchor links
- * A3: no HQ/contact block, no placeholder logo, no "2009"/"EST."
- * CFG-CHROME-3: 0 year/month in body chrome
+ * page-about.astro
+ * Cat-6 Phase-3 Batch 2 — built from About — Archipelago Lighting Group mockup v3.1
+ * «TBD-VERIFY»: copy passages marked below; James confirms at preview review
  */
-import ContentShell from '../layouts/ContentShell.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<ContentShell
-  title="About Us — Archipelago Lighting Group"
-  description="Archipelago Lighting Group — OEM and white-label lighting manufacturer since 1997. Retail shelf programs and commercial & industrial spec-grade catalog through authorized channels."
+<BaseLayout
+  title="About — Archipelago Lighting Group"
+  description="Founded in 1997. OEM manufacturer for nine national retailers and a two-channel C&I catalog. Montclair, CA."
   bodyClass="page-about"
 >
-
-<!-- ============================================================
-     §01 HERO — typographic variant
-     ============================================================ -->
-<section class="block hero hero-typo" id="top">
-  <div class="eyebrow">ABOUT · ARCHIPELAGO LIGHTING GROUP · MONTCLAIR, CA · SINCE 1997</div>
-  <h1 class="hero-headline-big">
-    Lighting,<br>
-    <span class="hero-light">reinvented.</span>
-  </h1>
-  <p class="hero-sub">
-    Built for 40-foot warehouses, K-12 corridors, cold-storage rooms,<br>
-    and spec-grade projects, and the retail aisles of nine national retailers.
-  </p>
-  <div class="hero-meta-strip">
-    <div class="hero-meta-cell"><div class="v">1997</div><div class="k">Founded</div></div>
-    <div class="hero-meta-cell"><div class="v">30+ yr</div><div class="k">Supplying Shelves</div></div>
-    <div class="hero-meta-cell"><div class="v">85M+</div><div class="k">Units Shipped</div></div>
-    <div class="hero-meta-cell"><div class="v">9</div><div class="k">National Retail Accounts</div></div>
-    <div class="hero-meta-cell"><div class="v">12</div><div class="k">US Warehouses</div></div>
-  </div>
-</section>
-
-<!-- ============================================================
-     §02 HERITAGE — story + OEM capabilities card
-     ============================================================ -->
-<section class="block" id="heritage">
-  <div class="section-head">
-    <div class="section-head-meta">
-      <span class="section-num">01</span>
-      <span class="section-rule"></span>
-      <span class="section-label">HERITAGE · SINCE 1997</span>
-    </div>
-    <h2 class="section-title">Three decades of OEM discipline.</h2>
-    <p class="section-kicker">From the retail shelf to the spec package — one quality system, two doors.</p>
-  </div>
-  <div class="heritage-grid">
-    <div class="heritage-main">
-      <p class="heritage-lede">
-        ALG was founded in 1997 as an OEM and white-label manufacturer. For three decades we've been <em>vetted, audited, and approved</em> to put product on the shelves of America's largest home and garden retailers — The Home Depot, Lowe's, Costco, Walmart, Tractor Supply, Canadian Tire, Kroger, Fred Meyer, and Batteries Plus.
-      </p>
-      <p class="heritage-body-text">
-        That vetting is not casual. National retailers require multi-year compliance histories, safety-listing discipline, quarterly factory audits, retail-grade packaging, and the operational maturity to refill a planogram in a single replenishment cycle. We earned a place on those shelves the long way — one passed audit, one warranty cycle, one accepted line review at a time.
-      </p>
-      <p class="heritage-body-text">
-        Out of that retail OEM discipline grew our commercial &amp; industrial catalog. Same factories. Same quality system. <strong>A completely separate sales motion, a separate price book, and a separate set of customers.</strong> Specifiers, electrical contractors, ESCOs, EPCs, and authorized distributors never see a retail SKU in a project package — and a retail buyer never sees a spec-grade quote.
-      </p>
-      <div class="heritage-pull">
-        <div class="heritage-pull-label">THE DISCIPLINE</div>
-        <div class="heritage-pull-text">House brand, co-brand, or OEM — retail product is built to a retailer's planogram, packaging standard, and replenishment rhythm. Commercial &amp; industrial product is built to a specifier's photometric file. Neither program crosses into the other channel's aisle.</div>
-      </div>
-    </div>
-    <aside class="heritage-side">
-      <div class="heritage-side-card">
-        <div class="heritage-side-card-head">RETAIL OEM CAPABILITIES · ACTIVE</div>
-        <ul class="heritage-side-list">
-          <li><span class="dot"></span><span><strong>House brand</strong> · Full private-label SKU programs under the retailer's name and UPC</span></li>
-          <li><span class="dot"></span><span><strong>Co-brand</strong> · Joint program with retailer + manufacturer marks</span></li>
-          <li><span class="dot"></span><span><strong>OEM / white-label</strong> · Build-to-spec for the retailer's category architecture</span></li>
-          <li><span class="dot"></span><span><strong>Replenishment readiness</strong> · 12 US warehouses · same-week refill on in-season SKUs</span></li>
-          <li><span class="dot"></span><span><strong>Compliance discipline</strong> · UL / ETL where applicable · outdoor IP ratings · retail warranty programs</span></li>
-        </ul>
-        <div class="heritage-side-footnote">Retailer-specific program documentation available under MNDA to qualified buyers.</div>
-      </div>
-      <div class="heritage-stat-grid">
-        <div class="stat"><div class="v">30+ yr</div><div class="k">Continuous OEM operation since 1997</div></div>
-        <div class="stat"><div class="v">85M+</div><div class="k">Units shipped through retail channel</div></div>
-      </div>
-    </aside>
-  </div>
-</section>
-
-<!-- ============================================================
-     §03 BY THE NUMBERS — dark block
-     ============================================================ -->
-<section class="block block-dark" id="numbers">
-  <div class="block-dark-head">
-    <div class="block-dark-eyebrow">02 · BY THE NUMBERS</div>
-    <div class="block-dark-title">A spec-grade manufacturer, sized for both shelves.</div>
-  </div>
-  <div class="numbers-grid">
-    <div class="number-cell"><div class="number-v">1997</div><div class="number-k">Year founded · Montclair, CA</div></div>
-    <div class="number-cell"><div class="number-v">85M+</div><div class="number-k">Units shipped through retail channel</div></div>
-    <div class="number-cell"><div class="number-v">9</div><div class="number-k">National retail accounts · active</div></div>
-    <div class="number-cell"><div class="number-v">6</div><div class="number-k">Retail aisles · Home to Party</div></div>
-    <div class="number-cell"><div class="number-v">12</div><div class="number-k">US replenishment warehouses</div></div>
-    <div class="number-cell"><div class="number-v">9</div><div class="number-k">Commercial &amp; industrial brand families</div></div>
-    <div class="number-cell"><div class="number-v">8</div><div class="number-k">Industry verticals served · spec channel</div></div>
-    <div class="number-cell"><div class="number-v">0</div><div class="number-k">Channel-conflict incidents · by policy</div></div>
-  </div>
-</section>
-
-<!-- ============================================================
-     §04 TWO CHANNELS — side-by-side cards
-     ============================================================ -->
-<section class="block" id="channels">
-  <div class="section-head">
-    <div class="section-head-meta">
-      <span class="section-num">03</span>
-      <span class="section-rule"></span>
-      <span class="section-label">THE TWO CHANNELS</span>
-    </div>
-    <h2 class="section-title">One catalog. Two doors.</h2>
-    <p class="section-kicker">ALG sells through two channels that never share a shelf, never share a part number, and never share a price sheet.</p>
-  </div>
-  <div class="channel-grid">
-    <!-- Retail channel card -->
-    <div class="channel-card ch-retail channel-card-side">
-      <div class="channel-card-head">
-        <div class="channel-eyebrow">RETAIL · OEM · WHITE-LABEL</div>
-        <h3 class="channel-title">Retail · Consumer</h3>
-        <p class="channel-tagline">On the shelves of the people who sell to consumers.</p>
-      </div>
-      <dl class="channel-spec">
-        <div class="cs-row"><dt>BUYER</dt><dd>National big-box retailers, regional chains, category managers, retail buyers</dd></div>
-        <div class="cs-row"><dt>PROGRAMS</dt><dd>
-          <span class="brand-chip">House brand</span>
-          <span class="brand-chip">Co-brand</span>
-          <span class="brand-chip">OEM / white-label</span>
-          <span class="brand-chip">PolyGrow (horticultural)</span>
-        </dd></div>
-        <div class="cs-row"><dt>DISTRIBUTION</dt><dd>The Home Depot · Lowe's · Costco · Walmart · Tractor Supply · Canadian Tire · Kroger · Fred Meyer · Batteries Plus</dd></div>
-        <div class="cs-row"><dt>SCALE</dt><dd>6 retail aisles · UPC + PDQ + shelf-ready packaging · planogram-mapped</dd></div>
-        <div class="cs-row"><dt>WARRANTY</dt><dd>Retail-program warranty · built for replenishment economics</dd></div>
-        <div class="cs-row"><dt>PRICING</dt><dd>Retailer-set · we never set consumer price</dd></div>
-        <div class="cs-row"><dt>LEAD TIME</dt><dd>12 US warehouses · same-week replenishment on in-season SKUs</dd></div>
-      </dl>
-      <div class="channel-note">
-        <span class="channel-note-label">CHANNEL POLICY</span>
-        <span class="channel-note-text">ALG does not sell directly to consumers. Every retail SKU ships through a vetted retailer.</span>
-      </div>
-      <div class="channel-cta-row">
-        <a href="/contact?topic=retail" class="btn-primary">Become a retail buyer →</a>
-        <a href="/contact?topic=oem" class="btn-ghost">Request capability deck</a>
-      </div>
-    </div>
-    <!-- C&I channel card -->
-    <div class="channel-card ch-ci channel-card-side">
-      <div class="channel-card-head">
-        <div class="channel-eyebrow">COMMERCIAL &amp; INDUSTRIAL · SPEC-GRADE</div>
-        <h3 class="channel-title">Commercial &amp; Industrial</h3>
-        <p class="channel-tagline">Specified, quoted, and installed through authorized channels only.</p>
-      </div>
-      <dl class="channel-spec">
-        <div class="cs-row"><dt>BUYER</dt><dd>Specifiers, electrical contractors, ESCOs, EPCs, lighting agents, authorized distributors</dd></div>
-        <div class="cs-row"><dt>BRAND FAMILIES</dt><dd>
-          <span class="brand-chip">plano<span class="aa">Ⓐ</span>RCH</span>
-          <span class="brand-chip">lampar<span class="aa">Ⓐ</span>RCH</span>
-          <span class="brand-chip">luxo<span class="aa">Ⓐ</span>RCH</span>
-          <span class="brand-chip">city<span class="aa">Ⓐ</span>RCH</span>
-          <span class="brand-chip">multi-f<span class="aa">Ⓐ</span>MILY</span>
-          <span class="brand-chip">tubul<span class="aa">Ⓐ</span>RCH</span>
-          <span class="brand-chip">sign<span class="aa">Ⓐ</span>TURE</span>
-          <span class="brand-chip">const<span class="aa">Ⓐ</span>NT</span>
-          <span class="brand-chip">contr<span class="aa">Ⓐ</span>LS</span>
-        </dd></div>
-        <div class="cs-row"><dt>DISTRIBUTION</dt><dd>Authorized distributors · independent reps (AURA portal) · ALG distributor portal · direct project quote</dd></div>
-        <div class="cs-row"><dt>SCALE</dt><dd>8 industry verticals · DLC Premium / Standard · LM-79 + LM-80 photometric library on file</dd></div>
-        <div class="cs-row"><dt>WARRANTY</dt><dd>5–10 yr by tier · ECO · PRO · PRO+</dd></div>
-        <div class="cs-row"><dt>PRICING</dt><dd>Quote · project · rebate-eligible · TAA-compliant SKUs available</dd></div>
-        <div class="cs-row"><dt>LEAD TIME</dt><dd>Hundreds of thousands of units available to ship from US stock</dd></div>
-      </dl>
-      <div class="channel-note">
-        <span class="channel-note-label">CHANNEL POLICY</span>
-        <span class="channel-note-text">C&amp;I product is never sold through retail aisles. Authorized distribution only.</span>
-      </div>
-      <div class="channel-cta-row">
-        <a href="/contact?topic=spec" class="btn-primary">Talk to a spec rep →</a>
-        <a href="/find-a-distributor/" class="btn-ghost">Find a distributor</a>
-      </div>
-    </div>
-  </div>
-  <!-- Channel rule bar -->
-  <div class="channel-rule-bar">
-    <div class="channel-rule-bar-label">HOW WE KEEP THE TWO CHANNELS HONEST</div>
-    <p class="channel-rule-intro">A retailer's shelf is valuable real estate; a specifier's project package is a contract. Both depend on trust that our product only shows up where it's supposed to. We protect that trust with five written rules.</p>
-    <ul class="channel-rule-list">
-      <li><span class="rl-n">01</span><span><strong>Retail product is sold only by retailers.</strong> ALG does not list retail SKUs on its own commercial-facing site, in its distributor portal, or in any project quote. Consumers buy from our retail partners — not from us.</span></li>
-      <li><span class="rl-n">02</span><span><strong>Commercial &amp; industrial product is sold only through authorized channels.</strong> plano<span class="aa">Ⓐ</span>RCH, lampar<span class="aa">Ⓐ</span>RCH, luxo<span class="aa">Ⓐ</span>RCH and the rest of the C&amp;I families ship only via authorized distributors, reps, and the ALG distributor portal — never via retail aisles or direct consumer e-commerce.</span></li>
-      <li><span class="rl-n">03</span><span><strong>No SKU lives in both channels.</strong> Form factors may rhyme — a retail garage light and a commercial high-bay share a driver platform — but the SKU number, the UPC, the listing, and the warranty are channel-specific.</span></li>
-      <li><span class="rl-n">04</span><span><strong>Separate sales orgs, separate price books.</strong> Retail account managers do not quote projects. Spec reps do not negotiate planograms. Pricing for each channel is built against that channel's cost stack and never reconciled in the field.</span></li>
-      <li><span class="rl-n">05</span><span><strong>Shared everything else.</strong> Same factory floor, same driver bench, same QA log, same warranty rigor. A failure learned on a retail SKU patches a spec SKU, and vice versa.</span></li>
-    </ul>
-  </div>
-</section>
-
-<!-- ============================================================
-     §05 RETAIL VETTING — proof of shelf
-     ============================================================ -->
-<section class="block block-vetting" id="vetting">
-  <div class="section-head">
-    <div class="section-head-meta">
-      <span class="section-num">05</span>
-      <span class="section-rule"></span>
-      <span class="section-label">RETAIL VETTING · PROOF OF SHELF</span>
-    </div>
-    <h2 class="section-title">Approved to ship to nine national retailers.</h2>
-    <p class="section-kicker">Every name below ran a multi-quarter audit before our first SKU hit their planogram. Each program is active. None of these retailers stocks our commercial &amp; industrial product — by policy.</p>
-  </div>
-  <div class="vetting-grid">
-    <div class="vetting-card">
-      <div class="vetting-logo"><img src="/assets/consumer/retail-logos/the-home-depot.webp" alt="The Home Depot" loading="lazy" style="max-width:170px;max-height:56px;object-fit:contain;display:block;margin:0 auto"></div>
-      <div class="vetting-sub">EST. PROGRAM</div>
-    </div>
-    <div class="vetting-card">
-      <div class="vetting-logo"><img src="/assets/consumer/retail-logos/lowes.webp" alt="Lowe's" loading="lazy" style="max-width:170px;max-height:56px;object-fit:contain;display:block;margin:0 auto"></div>
-      <div class="vetting-sub">EST. PROGRAM</div>
-    </div>
-    <div class="vetting-card">
-      <div class="vetting-logo"><img src="/assets/consumer/retail-logos/costco.webp" alt="Costco" loading="lazy" style="max-width:170px;max-height:56px;object-fit:contain;display:block;margin:0 auto"></div>
-      <div class="vetting-sub">CLUB CHANNEL</div>
-    </div>
-    <div class="vetting-card">
-      <div class="vetting-logo"><img src="/assets/consumer/retail-logos/walmart.svg" alt="Walmart" loading="lazy" style="max-width:170px;max-height:56px;object-fit:contain;display:block;margin:0 auto"></div>
-      <div class="vetting-sub">EST. PROGRAM</div>
-    </div>
-    <div class="vetting-card">
-      <div class="vetting-logo"><img src="/assets/consumer/retail-logos/tractor-supply-co.webp" alt="Tractor Supply" loading="lazy" style="max-width:170px;max-height:56px;object-fit:contain;display:block;margin:0 auto"></div>
-      <div class="vetting-sub">RURAL / FARM</div>
-    </div>
-    <div class="vetting-card">
-      <div class="vetting-logo"><img src="/assets/consumer/retail-logos/canadian-tire.webp" alt="Canadian Tire" loading="lazy" style="max-width:170px;max-height:56px;object-fit:contain;display:block;margin:0 auto"></div>
-      <div class="vetting-sub">CANADA NATIONAL</div>
-    </div>
-    <div class="vetting-card">
-      <div class="vetting-logo"><img src="/assets/consumer/retail-logos/kroger.webp" alt="Kroger" loading="lazy" style="max-width:170px;max-height:56px;object-fit:contain;display:block;margin:0 auto"></div>
-      <div class="vetting-sub">GROCERY</div>
-    </div>
-    <div class="vetting-card">
-      <div class="vetting-logo"><img src="/assets/consumer/retail-logos/fred-meyer.webp" alt="Fred Meyer" loading="lazy" style="max-width:170px;max-height:56px;object-fit:contain;display:block;margin:0 auto"></div>
-      <div class="vetting-sub">PNW REGIONAL</div>
-    </div>
-    <div class="vetting-card">
-      <div class="vetting-logo"><img src="/assets/consumer/retail-logos/batteries-plus.webp" alt="Batteries Plus" loading="lazy" style="max-width:170px;max-height:56px;object-fit:contain;display:block;margin:0 auto"></div>
-      <div class="vetting-sub">SPECIALTY</div>
-    </div>
-  </div>
-  <div class="vetting-footnote">
-    <div class="vetting-footnote-label">SOME SHELVES ARE STILL OPEN.</div>
-    <div class="vetting-footnote-text">If you're a retail buyer evaluating a house-brand, co-brand, or OEM/white-label program in lighting, ALG has bench capacity.</div>
-    <a href="/contact?topic=retail" class="btn-primary vetting-cta">Request a buyer capability deck →</a>
-  </div>
-</section>
-
-<!-- ============================================================
-     §06 BRAND PORTFOLIO — C&I brands + retail aisles (A2 delta)
-     ============================================================ -->
-<section class="block" id="catalog">
-  <div class="section-head">
-    <div class="section-head-meta">
-      <span class="section-num">06</span>
-      <span class="section-rule"></span>
-      <span class="section-label">BRAND PORTFOLIO · FULL CATALOG</span>
-    </div>
-    <h2 class="section-title">Nine C&amp;I families. Six retail aisles.</h2>
-    <p class="section-kicker">Two catalogs that never cross. The C&amp;I brands are sold only through authorized channels. The retail aisles are sold only through vetted retailers.</p>
-  </div>
-
-  <!-- C&I brands -->
-  <div class="catalog-section">
-    <div class="catalog-section-head">
-      <div class="catalog-section-meta">
-        <span class="catalog-section-num">9</span>
-        <span class="catalog-section-rule"></span>
-        <span class="catalog-section-label">COMMERCIAL &amp; INDUSTRIAL · SPEC-GRADE</span>
-        <span class="catalog-section-pill">AUTHORIZED CHANNELS ONLY</span>
-      </div>
-      <p class="catalog-section-kicker">Specified, quoted, and installed through authorized distributors and reps. Not available at retail.</p>
-    </div>
-    <div class="brand-grid">
-      <div class="brand-card">
-        <div class="brand-mark">plano<span class="aa">Ⓐ</span>RCH</div>
-        <div class="brand-cat">COMMERCIAL INDOOR</div>
-        <div class="brand-desc">Recessed downlights, panels, troffers, linear, low-bay. Offices, retail, education, healthcare.</div>
-        <div class="brand-footer">
-          <span class="brand-channel-pill ci">C&amp;I</span>
-          <span class="brand-tag">PRO+ · PRO · ECO</span>
-        </div>
-      </div>
-      <div class="brand-card">
-        <div class="brand-mark">lampar<span class="aa">Ⓐ</span>RCH</div>
-        <div class="brand-cat">INDUSTRIAL</div>
-        <div class="brand-desc">Round &amp; linear high-bay, low-bay, washdown, dock light, vapor-tight. 14–40 ft mounting heights.</div>
-        <div class="brand-footer">
-          <span class="brand-channel-pill ci">C&amp;I</span>
-          <span class="brand-tag">DLC PREMIUM</span>
-        </div>
-      </div>
-      <div class="brand-card">
-        <div class="brand-mark">luxo<span class="aa">Ⓐ</span>RCH</div>
-        <div class="brand-cat">COMMERCIAL OUTDOOR</div>
-        <div class="brand-desc">Area, canopy, flood, wall pack. Building exterior, parking, job-site, gas station.</div>
-        <div class="brand-footer">
-          <span class="brand-channel-pill ci">C&amp;I</span>
-          <span class="brand-tag">IP65 · DARK-SKY</span>
-        </div>
-      </div>
-      <div class="brand-card">
-        <div class="brand-mark">city<span class="aa">Ⓐ</span>RCH</div>
-        <div class="brand-cat">MUNICIPAL</div>
-        <div class="brand-desc">Bollard, pole, post-top, roadway. Public works, transit, parks, streetscape.</div>
-        <div class="brand-footer">
-          <span class="brand-channel-pill ci">C&amp;I</span>
-          <span class="brand-tag">TAA · BABA-ELIGIBLE</span>
-        </div>
-      </div>
-      <div class="brand-card">
-        <div class="brand-mark">multi-f<span class="aa">Ⓐ</span>MILY</div>
-        <div class="brand-cat">MULTI-FAMILY HOUSING</div>
-        <div class="brand-desc">Recessed cans, surface mount, SafeZone exit/EM, corridor and exterior pack for MDU.</div>
-        <div class="brand-footer">
-          <span class="brand-channel-pill ci">C&amp;I</span>
-          <span class="brand-tag">CALIFORNIA TITLE-24</span>
-        </div>
-      </div>
-      <div class="brand-card">
-        <div class="brand-mark">tubul<span class="aa">Ⓐ</span>RCH</div>
-        <div class="brand-cat">LINEAR LAMPS</div>
-        <div class="brand-desc">T5 · T8 · PL · PLL · U6. Drop-in retrofit. Ballast-compatible and direct-wire SKUs.</div>
-        <div class="brand-footer">
-          <span class="brand-channel-pill ci">C&amp;I</span>
-          <span class="brand-tag">GEN-2 · ACTIVE</span>
-        </div>
-      </div>
-      <div class="brand-card">
-        <div class="brand-mark">sign<span class="aa">Ⓐ</span>TURE</div>
-        <div class="brand-cat">REFLECTORS &amp; RETROFIT</div>
-        <div class="brand-desc">A-lamp, BR flood, PAR, HID retrofit corn-cobs. The replacement-lamp catalog.</div>
-        <div class="brand-footer">
-          <span class="brand-channel-pill ci">C&amp;I</span>
-          <span class="brand-tag">ENERGY STAR</span>
-        </div>
-      </div>
-      <div class="brand-card">
-        <div class="brand-mark">const<span class="aa">Ⓐ</span>NT</div>
-        <div class="brand-cat">EMERGENCY &amp; LIFE SAFETY</div>
-        <div class="brand-desc">Battery backup, exit signs, combination units. UL 924-listed for egress.</div>
-        <div class="brand-footer">
-          <span class="brand-channel-pill ci">C&amp;I</span>
-          <span class="brand-tag">UL 924</span>
-        </div>
-      </div>
-      <div class="brand-card">
-        <div class="brand-mark">contr<span class="aa">Ⓐ</span>LS</div>
-        <div class="brand-cat">CONTROLS</div>
-        <div class="brand-desc">Occupancy, daylight, networked BLE-mesh controls. DLC NLC5 listed.</div>
-        <div class="brand-footer">
-          <span class="brand-channel-pill ci">C&amp;I</span>
-          <span class="brand-tag">NLC5 · BLE-MESH</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Retail aisles — A2 delta: icons + anchor links to /collections/consumer#{aisle} -->
-  <div class="catalog-section">
-    <div class="catalog-section-head">
-      <div class="catalog-section-meta">
-        <span class="catalog-section-num retail">6</span>
-        <span class="catalog-section-rule"></span>
-        <span class="catalog-section-label">RETAIL · 6 AISLES</span>
-        <span class="catalog-section-pill retail">VETTED RETAILERS ONLY</span>
-      </div>
-      <p class="catalog-section-kicker">House brand, co-brand, and OEM programs. Sold only through vetted retailers — never direct to consumers.</p>
-    </div>
-    <div class="aisle-grid">
-      <!-- A2: each card links to /collections/consumer#{aisle} with exact icon SVGs from consumer page -->
-      <a href="/collections/consumer#home" class="aisle-card">
-        <div class="aisle-num">01</div>
-        <div class="aisle-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.3V21h14V9.3"/><path d="M9.5 21v-6h5v6"/></svg>
-        </div>
-        <div class="aisle-name">Home</div>
-        <div class="aisle-desc">Garage, security, pathway, recessed, ceiling. The everyday house catalog.</div>
-        <div class="aisle-tag">ENERGY STAR</div>
-      </a>
-      <a href="/collections/consumer#garden" class="aisle-card">
-        <div class="aisle-num">02</div>
-        <div class="aisle-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 13h11l-1.3 7.2a1 1 0 0 1-1 .8H8.8a1 1 0 0 1-1-.8z"/><path d="M12 13V7"/><path d="M12 10c0-2.5 1.7-4.3 4.5-5-.4 2.8-1.8 4.6-4.5 5z"/><path d="M12 11.2c0-2-1.4-3.4-3.6-4 .3 2.2 1.4 3.6 3.6 4z"/></svg>
-        </div>
-        <div class="aisle-name">Garden</div>
-        <div class="aisle-desc">PolyGrow horticultural + landscape accent + path light + solar.</div>
-        <div class="aisle-tag">POLYGROW</div>
-      </a>
-      <a href="/collections/consumer#work" class="aisle-card">
-        <div class="aisle-num">03</div>
-        <div class="aisle-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7.5" width="18" height="12.5" rx="1.6"/><path d="M8.5 7.5V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1.5"/><path d="M3 12.5h18"/><path d="M11 12.5h2"/></svg>
-        </div>
-        <div class="aisle-name">Work</div>
-        <div class="aisle-desc">Portable work lights, shop lights, job-site temporary fixtures.</div>
-        <div class="aisle-tag">PORTABLE · MAGNETIC</div>
-      </a>
-      <a href="/collections/consumer#auto" class="aisle-card">
-        <div class="aisle-num">04</div>
-        <div class="aisle-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13.5l1.8-4.6A2 2 0 0 1 7.7 7.6h8.6a2 2 0 0 1 1.9 1.3L20 13.5"/><path d="M3.5 13.5h17V17a1 1 0 0 1-1 1h-1.5a1 1 0 0 1-1-1v-.5h-9V17a1 1 0 0 1-1 1H4.5a1 1 0 0 1-1-1z"/><path d="M6.5 13.5h11"/></svg>
-        </div>
-        <div class="aisle-name">Auto</div>
-        <div class="aisle-desc">Inspection lighting, mobile mechanic essentials, truck-bed work lights.</div>
-        <div class="aisle-tag">AUTOMOTIVE</div>
-      </a>
-      <a href="/collections/consumer#camping" class="aisle-card">
-        <div class="aisle-num">05</div>
-        <div class="aisle-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 20h19"/><path d="M12 4 3.5 20"/><path d="M12 4l8.5 16"/><path d="M12 9.5 6.7 20"/><path d="M12 9.5 17.3 20"/></svg>
-        </div>
-        <div class="aisle-name">Camping</div>
-        <div class="aisle-desc">Lanterns, headlamps, string lights, portable solar. The outdoor recreation aisle.</div>
-        <div class="aisle-tag">OUTDOOR · SOLAR</div>
-      </a>
-      <a href="/collections/consumer#party" class="aisle-card">
-        <div class="aisle-num">06</div>
-        <div class="aisle-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l3.2-9.2 6 6z"/><path d="M13.2 16.8 7.2 10.8"/><path d="M14 4.5c-1.2 1-1.2 2.4-.3 3.3"/><path d="M17.5 5.2c1.3-.4 2.4.5 2.4 1.9"/><path d="M19.5 10.5c.9.2 1.5 1 1.4 2"/><path d="M16 9l2-2"/></svg>
-        </div>
-        <div class="aisle-name">Party</div>
-        <div class="aisle-desc">String lights, decorative, seasonal, novelty. The celebration aisle.</div>
-        <div class="aisle-tag">SEASONAL · DÉCOR</div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     §07 WHERE WE MAKE IT — operations footprint
-     ============================================================ -->
-<section class="block" id="operations">
-  <div class="section-head">
-    <div class="section-head-meta">
-      <span class="section-num">07</span>
-      <span class="section-rule"></span>
-      <span class="section-label">WHERE WE MAKE IT · OPERATIONS FOOTPRINT</span>
-    </div>
-    <h2 class="section-title">Designed in California. Built where it ships best.</h2>
-    <p class="section-kicker">Two California facilities run engineering and US branded production. A twelve-warehouse domestic footprint runs retail replenishment.</p>
-  </div>
-  <div class="where-grid">
-    <div class="where-map">
-      <div class="where-map-label">NORTH AMERICA · OPERATIONS FOOTPRINT</div>
-      <div class="where-map-canvas" id="algAboutMap" style="min-height:0;"></div>
-      <div class="where-legend">
-        <div class="where-legend-item"><span class="lg-dot brand"></span> HQ — Montclair, CA</div>
-        <div class="where-legend-item"><span class="lg-dot ink"></span> US Production — Riverside, CA</div>
-        <div class="where-legend-item"><span class="lg-dot ink-faint"></span> Warehouses shown · reps/distributors on <a href="/find-a-rep/" style="color:inherit;text-decoration:underline;">Find a Rep</a></div>
-      </div>
-    </div>
-    <div class="where-side">
-      <div class="where-card">
-        <div class="where-card-num">01</div>
-        <div class="where-card-name">Montclair, CA</div>
-        <div class="where-card-role">HQ · Industrial design · Sales · Customer service</div>
-        <div class="where-card-addr">4615 State Street, Montclair, CA 91763</div>
-      </div>
-      <div class="where-card">
-        <div class="where-card-num">02</div>
-        <div class="where-card-name">Riverside, CA</div>
-        <div class="where-card-role">US Production · Driver assembly · Final QA · Branded fulfillment</div>
-        <div class="where-card-addr">9345 Sycamore Canyon Blvd, Riverside, CA 92508</div>
-      </div>
-      <div class="where-card">
-        <div class="where-card-num">03</div>
-        <div class="where-card-name">Global manufacturing</div>
-        <div class="where-card-role">United States · Mexico · China · Thailand</div>
-        <div class="where-card-addr">Built to ALG engineering specifications, with final quality control in California. Country of origin is stated on every product and its documentation.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     §08 HOW WE WORK — operating principles
-     ============================================================ -->
-<section class="block" id="principles">
-  <div class="section-head">
-    <div class="section-head-meta">
-      <span class="section-num">08</span>
-      <span class="section-rule"></span>
-      <span class="section-label">HOW WE WORK · OPERATING PRINCIPLES</span>
-    </div>
-    <h2 class="section-title">Four rules that decide everything else.</h2>
-  </div>
-  <div class="principles-grid">
-    <div class="principle-card">
-      <div class="principle-n">01</div>
-      <h4 class="principle-title">The part number is the hero.</h4>
-      <p class="principle-body">A contractor on a Friday afternoon does not need a marketing story; they need a SKU they can read off a shelf, type into a quote tool, and reorder Monday. We design packaging, catalogs, and websites around that one act.</p>
-    </div>
-    <div class="principle-card">
-      <div class="principle-n">02</div>
-      <h4 class="principle-title">The shelf decides.</h4>
-      <p class="principle-body">If a SKU does not move at the shelf — physical or specified — it does not get a generation-two refresh. We do not subsidize loyalty to our own platforms. The catalog is pruned annually, not grown.</p>
-    </div>
-    <div class="principle-card">
-      <div class="principle-n">03</div>
-      <h4 class="principle-title">Two channels, one catalog.</h4>
-      <p class="principle-body">Retail and Spec are commercially separate, but technically unified. The same driver platform, the same connector library, the same warranty discipline. A failure mode learned in one channel patches both.</p>
-    </div>
-    <div class="principle-card">
-      <div class="principle-n">04</div>
-      <h4 class="principle-title">Engineered in California. Built where it ships best.</h4>
-      <p class="principle-body">US production for branded volume that needs short cycles. Global manufacturing — United States, Mexico, China, Thailand — for programs that need scale. All production is built to ALG engineering specifications and reports to the same QA log. Country of origin is stated on every product and its documentation.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     §09 TIMELINE — 30 years
-     ============================================================ -->
-<section class="block" id="timeline">
-  <div class="section-head">
-    <div class="section-head-meta">
-      <span class="section-num">09</span>
-      <span class="section-rule"></span>
-      <span class="section-label">TIMELINE · 30 YEARS</span>
-    </div>
-    <h2 class="section-title">From retail OEM floor to a two-catalog manufacturer.</h2>
-  </div>
-  <div class="timeline">
-    <div class="timeline-rail"></div>
-    <div class="timeline-row">
-      <div class="timeline-year">1997</div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-body">
-        <div class="timeline-title">Founded in Montclair, CA</div>
-        <div class="timeline-text">Archipelago Lighting Group incorporates as an OEM and white-label lighting manufacturer.</div>
-      </div>
-    </div>
-    <div class="timeline-row">
-      <div class="timeline-year">2001</div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-body">
-        <div class="timeline-title">First national retail program</div>
-        <div class="timeline-text">First passed line review at a national home retailer. The retail compliance discipline takes hold.</div>
-      </div>
-    </div>
-    <div class="timeline-row">
-      <div class="timeline-year">2008</div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-body">
-        <div class="timeline-title">Twelve-warehouse US footprint</div>
-        <div class="timeline-text">Distribution build-out gives ALG same-week replenishment on in-season retail SKUs.</div>
-      </div>
-    </div>
-    <div class="timeline-row">
-      <div class="timeline-year">2012</div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-body">
-        <div class="timeline-title">PolyGrow horticultural launches</div>
-        <div class="timeline-text">First retail sub-brand built for the garden aisle — supplemental grow + accent lighting.</div>
-      </div>
-    </div>
-    <div class="timeline-row">
-      <div class="timeline-year">2014</div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-body">
-        <div class="timeline-title">Two-channel structure formalized</div>
-        <div class="timeline-text">Retail and C&amp;I split into independent commercial orgs. Separate price books, separate sales teams, shared engineering.</div>
-      </div>
-    </div>
-    <div class="timeline-row">
-      <div class="timeline-year">2015</div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-body">
-        <div class="timeline-title">Riverside production opens</div>
-        <div class="timeline-text">9345 Sycamore Canyon Blvd. Driver assembly + final QA brought in-house for branded C&amp;I product.</div>
-      </div>
-    </div>
-    <div class="timeline-row">
-      <div class="timeline-year">2018</div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-body">
-        <div class="timeline-title">plano<span class="aa">Ⓐ</span>RCH · lampar<span class="aa">Ⓐ</span>RCH ship</div>
-        <div class="timeline-text">First branded commercial &amp; industrial SKUs ship under the <span class="aa">Ⓐ</span> family. Sold only through authorized channels.</div>
-      </div>
-    </div>
-    <div class="timeline-row">
-      <div class="timeline-year">2021</div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-body">
-        <div class="timeline-title">contr<span class="aa">Ⓐ</span>LS launches</div>
-        <div class="timeline-text">BLE-mesh networked controls platform. DLC NLC5 listed. No gateway, no cloud lock.</div>
-      </div>
-    </div>
-    <div class="timeline-row">
-      <div class="timeline-year">Now</div>
-      <div class="timeline-dot"></div>
-      <div class="timeline-body">
-        <div class="timeline-title">Distributor + AURA portals live</div>
-        <div class="timeline-text">Direct-to-distributor portal with rebate calc + IES on demand. AURA rep portal goes live.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     §10 SPLIT CTA — dark block
-     ============================================================ -->
-<section class="block block-dark cta-block" id="cta">
-  <div class="cta-head">
-    <div class="block-dark-eyebrow">NEXT STEP</div>
-    <h2 class="cta-title">Pick the door you came through.</h2>
-  </div>
-  <div class="cta-grid">
-    <div class="cta-card cta-retail">
-      <div class="cta-card-eyebrow">RETAIL · DIY</div>
-      <div class="cta-card-title">For homeowners, light contractors, and retail buyers.</div>
-      <ul class="cta-card-list">
-        <li><span class="dot"></span><span>Find ALG at The Home Depot, Lowe's, and Amazon</span></li>
-        <li><span class="dot"></span><span>Apply to become a retail buyer or category lead</span></li>
-        <li><span class="dot"></span><span>Retail packaging spec sheets · UPC + planogram</span></li>
-      </ul>
-      <div class="cta-card-actions">
-        <a class="btn-primary-light" href="/collections/consumer">Shop retail →</a>
-        <a class="btn-ghost-light" href="/contact?topic=retail">Become a retail buyer</a>
-      </div>
-    </div>
-    <div class="cta-card cta-ci">
-      <div class="cta-card-eyebrow">COMMERCIAL &amp; INDUSTRIAL · SPEC-GRADE</div>
-      <div class="cta-card-title">For specifiers, electrical contractors, and authorized distributors.</div>
-      <ul class="cta-card-list">
-        <li><span class="dot"></span><span>Talk to a spec rep · project quote · rebate desk</span></li>
-        <li><span class="dot"></span><span>Download the lampar<span class="aa">Ⓐ</span>RCH Product Guide (PDF)</span></li>
-        <li><span class="dot"></span><span>Authorized distributor portal · IES + LM-79 on demand</span></li>
-      </ul>
-      <div class="cta-card-actions">
-        <a class="btn-primary-light" href="/contact?topic=spec">Talk to a spec rep →</a>
-        <a class="btn-ghost-light" href="/support/library/">Request the Product Guide</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-</ContentShell>
-
 <style is:global>
-/* cyrillic-ext */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("a26e348a-c7fa-4ccf-b3e4-bfb9bd1102c3") format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("34e1f536-6288-4278-890a-e074e65c83e2") format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("62f6f43e-7708-42a1-99d1-b42716c95147") format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("1a7db466-a972-4f79-aad4-6e6e67742efd") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("201cbe75-b8ff-43b9-9fd6-81b397b072f6") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("e101d3a6-7a9d-4495-9418-372f2536661a") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("a26e348a-c7fa-4ccf-b3e4-bfb9bd1102c3") format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("34e1f536-6288-4278-890a-e074e65c83e2") format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("62f6f43e-7708-42a1-99d1-b42716c95147") format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("1a7db466-a972-4f79-aad4-6e6e67742efd") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("201cbe75-b8ff-43b9-9fd6-81b397b072f6") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("e101d3a6-7a9d-4495-9418-372f2536661a") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("a26e348a-c7fa-4ccf-b3e4-bfb9bd1102c3") format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("34e1f536-6288-4278-890a-e074e65c83e2") format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("62f6f43e-7708-42a1-99d1-b42716c95147") format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("1a7db466-a972-4f79-aad4-6e6e67742efd") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("201cbe75-b8ff-43b9-9fd6-81b397b072f6") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("e101d3a6-7a9d-4495-9418-372f2536661a") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("a26e348a-c7fa-4ccf-b3e4-bfb9bd1102c3") format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("34e1f536-6288-4278-890a-e074e65c83e2") format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("62f6f43e-7708-42a1-99d1-b42716c95147") format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("1a7db466-a972-4f79-aad4-6e6e67742efd") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("201cbe75-b8ff-43b9-9fd6-81b397b072f6") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("e101d3a6-7a9d-4495-9418-372f2536661a") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin-ext */
-
-/* latin */
-
-/* latin-ext */
-
-/* latin */
-
-/* latin-ext */
-
-/* latin */
-
-/* latin-ext */
-
-/* latin */
-
-/* latin-ext */
-
-/* latin */
-
-/* latin-ext */
-
-/* latin */
-
-
-
-.page-about {
-  --brand:       #F32740;
-  --brand-dark:  #C8132E;
-  --ink:         #1A1D23;
-  --ink2:        #3A3E47;
-  --ink3:        #6B7280;
-  --c1:          #F5F4F1;
-  --c2:          #EEEDF0;
-  --c3:          #DCDEE2;
-  --white:       #FFFFFF;
-  --grn:         #0FAE7C;
-  --yellow:      #FDD85E;
-  --grey:        #8A8F97;
-
-  --font-sans:   'Lato', system-ui, -apple-system, sans-serif;
-  --font-mono:   'JetBrains Mono', ui-monospace, monospace;
-
-  --pad-x:       calc(0.5 * max(56px, calc((100vw - 1320px) / 2)));
-  --block-pad-y: 120px;
-  --block-gap:   0;
-}
-
-body[data-density="compact"] {
-  --block-pad-y: 80px;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-html, body {
-  background: var(--white);
-  color: var(--ink);
-  font-family: var(--font-sans);
-  font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-  scroll-behavior: smooth;
-}
-
-a { color: inherit; text-decoration: none; }
-
-/* ====================== TOPBAR ====================== */
-.topbar {
-  position: fixed; top: 0; left: 0; right: 0;
-  z-index: 50;
-  background: rgba(255,255,255,0);
-  transition: background 200ms ease, border-color 200ms ease;
-  border-bottom: 1px solid transparent;
-}
-.topbar.scrolled {
-  background: rgba(255,255,255,.96);
-  border-bottom: 1px solid var(--c3);
-  backdrop-filter: saturate(140%) blur(8px);
-}
-.topbar-inner {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 32px;
-  padding: 16px var(--pad-x);
-}
-.topbar-logo img { display: block; width: 156px; height: auto; }
-.topbar-nav {
-  display: flex; justify-content: center; gap: 28px;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--ink2);
-}
-.topbar-nav a {
-  padding: 4px 0;
-  border-bottom: 1px solid transparent;
-  transition: color 120ms ease, border-color 120ms ease;
-}
-.topbar-nav a:hover { color: var(--brand); border-bottom-color: var(--brand); }
-.topbar-cta { display: flex; align-items: center; gap: 16px; }
-.topbar-channel-tag {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: .16em;
-  color: var(--ink3);
-  padding: 4px 8px;
-  border: 1px solid var(--c3);
-  white-space: nowrap;
-}
-
-/* ====================== BUTTONS ====================== */
-.btn-primary, .btn-primary-light {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 12px 20px;
-  background: var(--ink);
-  color: #fff !important;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  border: 1px solid var(--ink);
-  cursor: pointer;
-  transition: background 120ms ease, transform 120ms ease;
-}
-.btn-primary:hover, .btn-primary-light:hover {
-  background: var(--brand);
-  border-color: var(--brand);
-}
-.btn-ghost, .btn-ghost-light {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 12px 20px;
-  background: transparent;
-  color: var(--ink);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  border: 1px solid var(--c3);
-  cursor: pointer;
-  transition: border-color 120ms ease, color 120ms ease;
-}
-.btn-ghost:hover { border-color: var(--ink); }
-.btn-ghost-light { color: #fff; border-color: rgba(255,255,255,.35); }
-.btn-ghost-light:hover { border-color: #fff; }
-
-/* ====================== ATOMS ====================== */
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--ink3);
-}
-
-/* Section head */
-.section-head { margin-bottom: 56px; max-width: 920px; }
-.section-head-meta {
-  display: flex; align-items: center; gap: 16px;
-  margin-bottom: 24px;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--ink3);
-}
-.section-num { color: var(--brand); font-weight: 700; }
-.section-rule { display: block; width: 56px; height: 1px; background: var(--ink); }
-.section-label { color: var(--ink2); font-weight: 600; }
-.section-title {
-  font-size: clamp(40px, 5vw, 64px);
-  font-weight: 800;
-  letter-spacing: -.02em;
-  line-height: 1.02;
-  color: var(--ink);
-  text-wrap: balance;
-}
-.section-kicker {
-  font-size: 17px;
-  line-height: 1.55;
-  color: var(--ink2);
-  margin-top: 22px;
-  max-width: 760px;
-  font-weight: 300;
-  text-wrap: pretty;
-}
-
-/* Block scaffold */
-.block {
-  padding: var(--block-pad-y) var(--pad-x);
-  border-top: 1px solid var(--c3);
-}
-.block:first-of-type { border-top: none; }
-.block-dark {
-  background: var(--ink);
-  color: #fff;
-  border-top: none;
-}
-.block-dark-head { margin-bottom: 48px; max-width: 920px; }
-.block-dark-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--yellow);
-  margin-bottom: 18px;
-}
-.block-dark-title {
-  font-size: clamp(36px, 4.6vw, 56px);
-  font-weight: 800;
-  letter-spacing: -.02em;
-  line-height: 1.04;
-  text-wrap: balance;
-}
-
-/* ====================== HERO ====================== */
-.hero {
-  padding: 56px var(--pad-x) 100px;
-  position: relative;
-}
-.hero-typo .eyebrow { margin-bottom: 32px; }
-.hero-headline-big {
-  font-size: clamp(96px, 16vw, 240px);
-  font-weight: 800;
-  letter-spacing: -.04em;
-  line-height: .88;
-  color: var(--ink);
-  margin-bottom: 32px;
-}
-.hero-headline-big .hero-light { color: var(--brand); }
-.hero-sub {
-  font-size: clamp(20px, 2.2vw, 28px);
-  font-weight: 300;
-  line-height: 1.35;
-  color: var(--ink2);
-  max-width: 980px;
-  letter-spacing: -.01em;
-}
-.hero-meta-strip {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0;
-  margin-top: 80px;
-  border-top: 1px solid var(--c3);
-  border-bottom: 1px solid var(--c3);
-}
-.hero-meta-cell {
-  padding: 24px 20px;
-  border-right: 1px solid var(--c3);
-}
-.hero-meta-cell:last-child { border-right: none; }
-.hero-meta-cell .v {
-  font-size: 34px;
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: -.02em;
-  line-height: 1;
-}
-.hero-meta-cell .k {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  color: var(--ink3);
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  margin-top: 12px;
-}
-
-/* hero split variant */
-.hero-split {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-.hero-headline {
-  font-size: clamp(48px, 6vw, 88px);
-  font-weight: 800;
-  letter-spacing: -.03em;
-  line-height: .98;
-  color: var(--ink);
-  margin: 28px 0 32px;
-}
-.hero-headline-sub {
-  font-size: clamp(28px, 3.4vw, 48px);
-  font-weight: 300;
-  color: var(--ink2);
-  letter-spacing: -.02em;
-  line-height: 1.1;
-  display: block;
-  margin-top: 18px;
-}
-.hero-lede {
-  font-size: 18px;
-  font-weight: 300;
-  line-height: 1.55;
-  color: var(--ink2);
-  max-width: 540px;
-}
-.hero-figure {
-  position: relative;
-  background: var(--c1);
-  border: 1px solid var(--c3);
-  padding: 40px;
-  aspect-ratio: 1 / 1;
-}
-.hero-figure-grid {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 18px;
-  height: 100%;
-  width: 100%;
-}
-.hero-dot {
-  background: var(--c3);
-  border-radius: 50%;
-  aspect-ratio: 1 / 1;
-  width: 100%;
-}
-.hero-dot.on { background: var(--ink); }
-.hero-dot.on.accent { background: var(--brand); }
-.hero-figure-tag {
-  position: absolute;
-  left: 24px; right: 24px; bottom: 24px;
-  background: rgba(255,255,255,.94);
-  border-left: 3px solid var(--brand);
-  padding: 12px 14px;
-}
-.hero-figure-tag-body {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink2);
-  letter-spacing: .02em;
-  margin-top: 4px;
-  line-height: 1.45;
-}
-
-/* ====================== HERITAGE ====================== */
-.heritage-grid {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 64px;
-}
-.heritage-lede {
-  font-size: 26px;
-  font-weight: 300;
-  line-height: 1.35;
-  color: var(--ink);
-  letter-spacing: -.01em;
-  text-wrap: pretty;
-  margin-bottom: 28px;
-}
-.heritage-lede em {
-  color: var(--brand);
-  font-style: normal;
-  font-weight: 600;
-}
-.heritage-body-text {
-  font-size: 16px;
-  line-height: 1.65;
-  color: var(--ink2);
-  font-weight: 400;
-  margin-top: 18px;
-  max-width: 660px;
-}
-.heritage-pull {
-  margin-top: 36px;
-  background: var(--c1);
-  border-left: 3px solid var(--brand);
-  padding: 20px 24px;
-}
-.heritage-pull-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .16em;
-  color: var(--brand);
-  margin-bottom: 8px;
-}
-.heritage-pull-text {
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--ink2);
-  font-weight: 400;
-}
-
-.heritage-side-card {
-  background: #fff;
-  border: 1px solid var(--c3);
-  border-top: 3px solid var(--brand);
-  padding: 24px;
-}
-.heritage-side-card-head {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: .14em;
-  color: var(--ink);
-  font-weight: 700;
-  text-transform: uppercase;
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--ink);
-  margin-bottom: 16px;
-}
-.heritage-side-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.heritage-side-list li {
-  display: grid;
-  grid-template-columns: 14px 1fr;
-  gap: 10px;
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: var(--ink2);
-}
-.heritage-side-list .dot {
-  width: 6px; height: 6px;
-  background: var(--brand);
-  margin-top: 8px;
-  border-radius: 50%;
-}
-.heritage-side-list strong {
-  color: var(--ink);
-  font-weight: 700;
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  letter-spacing: .04em;
-}
-.heritage-side-footnote {
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px dashed var(--c3);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink3);
-  line-height: 1.45;
-}
-.heritage-stat-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 16px;
-}
-.stat {
-  padding: 14px 16px;
-  background: var(--c1);
-  border-left: 3px solid var(--brand);
-}
-.stat .v { font-size: 22px; font-weight: 700; line-height: 1.05; color: var(--ink); white-space: nowrap; }
-.stat .k {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--ink3);
-  margin-top: 8px;
-  line-height: 1.4;
-}
-
-/* ====================== BY THE NUMBERS ====================== */
-.numbers-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  border-top: 1px solid rgba(255,255,255,.18);
-  border-left: 1px solid rgba(255,255,255,.18);
-}
-.number-cell {
-  padding: 28px 28px;
-  border-right: 1px solid rgba(255,255,255,.18);
-  border-bottom: 1px solid rgba(255,255,255,.18);
-}
-.number-v {
-  font-size: 48px;
-  font-weight: 700;
-  letter-spacing: -.02em;
-  line-height: 1;
-  color: #fff;
-}
-.number-k {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: .14em;
-  color: var(--yellow);
-  margin-top: 16px;
-  text-transform: uppercase;
-  line-height: 1.45;
-}
-
-/* ====================== TWO CHANNELS ====================== */
-.channel-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-.channel-card {
-  background: #fff;
-  border: 1px solid var(--c3);
-  padding: 36px 36px 32px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-.channel-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--brand);
-}
-.channel-card.ch-retail::before { background: var(--yellow); }
-.channel-card.ch-ci::before { background: var(--brand); }
-.channel-card-head { margin-bottom: 28px; }
-.channel-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--ink3);
-  font-weight: 700;
-}
-.channel-card.ch-retail .channel-eyebrow { color: #B07A00; }
-.channel-card.ch-ci .channel-eyebrow { color: var(--brand); }
-.channel-title {
-  font-size: 36px;
-  font-weight: 800;
-  letter-spacing: -.02em;
-  line-height: 1.05;
-  margin-top: 12px;
-  color: var(--ink);
-}
-.channel-tagline {
-  font-size: 16px;
-  font-style: italic;
-  font-weight: 300;
-  color: var(--ink2);
-  margin-top: 12px;
-  letter-spacing: -.01em;
-  line-height: 1.4;
-}
-
-.channel-spec {
-  display: flex;
-  flex-direction: column;
-  border-top: 2px solid var(--ink);
-}
-.cs-row {
-  display: grid;
-  grid-template-columns: 130px 1fr;
-  gap: 16px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--c2);
-  align-items: baseline;
-}
-.cs-row:last-child { border-bottom: none; }
-.cs-row dt {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: .14em;
-  color: var(--ink3);
-  font-weight: 600;
-}
-.cs-row dd {
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--ink2);
-}
-.brand-chip {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ink);
-  background: var(--c1);
-  padding: 3px 8px;
-  margin: 2px 6px 2px 0;
-  border-radius: 2px;
-  white-space: nowrap;
-}
-
-.channel-cta-row {
-  margin-top: 28px;
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-/* Channel rule bar */
-.channel-rule-bar {
-  margin-top: 32px;
-  background: var(--c1);
-  padding: 28px 32px;
-  border-left: 3px solid var(--ink);
-}
-.channel-rule-bar-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: .16em;
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 18px;
-}
-.channel-rule-list {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px 32px;
-}
-.channel-rule-list li {
-  display: grid;
-  grid-template-columns: 36px 1fr;
-  gap: 12px;
-  font-size: 14px;
-  line-height: 1.55;
-  color: var(--ink2);
-}
-.channel-rule-list .rl-n {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--brand);
-  letter-spacing: .04em;
-}
-.channel-rule-list strong { color: var(--ink); font-weight: 700; }
-
-/* Tabs variant */
-.channel-tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  border-top: 2px solid var(--ink);
-  border-bottom: 1px solid var(--c3);
-  margin-bottom: 36px;
-}
-.channel-tab {
-  text-align: left;
-  background: transparent;
-  border: 0;
-  border-right: 1px solid var(--c3);
-  padding: 22px 28px;
-  cursor: pointer;
-  font-family: var(--font-sans);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  transition: background 120ms ease;
-  position: relative;
-}
-.channel-tab:last-child { border-right: none; }
-.channel-tab:hover { background: var(--c1); }
-.channel-tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: -1px; left: 0; right: 0;
-  height: 3px;
-  background: var(--brand);
-}
-.channel-tab.active { background: var(--c1); }
-.channel-tab-label {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -.01em;
-  color: var(--ink);
-}
-.channel-tab-tagline {
-  font-size: 13px;
-  font-style: italic;
-  font-weight: 300;
-  color: var(--ink3);
-}
-.channel-card-full {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-}
-
-/* ====================== WHERE WE MAKE IT ====================== */
-.where-grid {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 48px;
-}
-.where-map {
-  background: var(--c1);
-  border: 1px solid var(--c3);
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-}
-.where-map-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--ink3);
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--c3);
-  margin-bottom: 20px;
-}
-.where-map-canvas {
-  flex: 1;
-  min-height: 0;
-  height: 380px;
-  overflow: hidden;
-}
-/* CFG-MAP-1: Leaflet container fills the canvas, no resize on drag */
-.where-map-canvas :global(.leaflet-container) {
-  width: 100% !important;
-  height: 100% !important;
-  min-height: 0 !important;
-  border-radius: 0;
-}
-.where-legend {
-  display: flex;
-  gap: 32px;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--c3);
-  flex-wrap: wrap;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: .08em;
-  color: var(--ink2);
-}
-.where-legend-item { display: flex; align-items: center; gap: 8px; }
-.lg-dot { width: 10px; height: 10px; border-radius: 50%; }
-.lg-dot.brand { background: var(--brand); }
-.lg-dot.ink { background: var(--ink); border-radius: 0; }
-.lg-dot.ink-faint { background: var(--ink); opacity: .5; }
-
-.where-side { display: flex; flex-direction: column; gap: 16px; }
-.where-card {
-  background: #fff;
-  border: 1px solid var(--c3);
-  border-left: 3px solid var(--brand);
-  padding: 24px 26px;
-  display: grid;
-  grid-template-columns: 56px 1fr;
-  gap: 20px;
-  align-items: start;
-}
-.where-card-num {
-  font-family: var(--font-mono);
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--brand);
-  line-height: 1;
-}
-.where-card-name {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -.01em;
-  color: var(--ink);
-  grid-column: 2;
-}
-.where-card-role {
-  font-size: 13.5px;
-  color: var(--ink2);
-  margin-top: 8px;
-  line-height: 1.55;
-  grid-column: 2;
-}
-.where-card-addr {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  color: var(--ink3);
-  margin-top: 10px;
-  letter-spacing: .04em;
-  grid-column: 2;
-}
-/* where-card-partner removed — card 03 now uses standard .where-card styling */
-
-/* ====================== BRAND PORTFOLIO ====================== */
-.brand-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-.brand-card {
-  background: #fff;
-  border: 1px solid var(--c3);
-  padding: 28px;
-  position: relative;
-  transition: opacity 200ms ease;
-  display: flex;
-  flex-direction: column;
-  min-height: 240px;
-}
-.brand-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--brand);
-}
-.brand-card.brand-retail::before { background: var(--yellow); }
-.brand-card.brand-both::before {
-  background: linear-gradient(90deg, var(--yellow) 0%, var(--yellow) 50%, var(--brand) 50%, var(--brand) 100%);
-}
-.brand-dim { opacity: .35; }
-.brand-mark {
-  font-size: 30px;
-  font-weight: 800;
-  letter-spacing: -.02em;
-  color: var(--ink);
-  line-height: 1;
-}
-.brand-cat {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--ink3);
-  margin-top: 10px;
-  font-weight: 700;
-}
-.brand-desc {
-  font-size: 14px;
-  line-height: 1.55;
-  color: var(--ink2);
-  margin-top: 14px;
-  flex: 1;
-}
-.brand-footer {
-  margin-top: 18px;
-  padding-top: 14px;
-  border-top: 1px solid var(--c2);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.brand-channel-pill {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: .14em;
-  font-weight: 700;
-  padding: 3px 8px;
-  background: var(--ink);
-  color: #fff;
-  border-radius: 2px;
-}
-.brand-card.brand-retail .brand-channel-pill { background: var(--yellow); color: var(--ink); }
-.brand-card.brand-both .brand-channel-pill { background: var(--ink); }
-.brand-tag {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: .1em;
-  color: var(--ink3);
-  font-weight: 600;
-}
-
-/* ====================== CHANNEL NOTE ====================== */
-.channel-note {
-  margin-top: 24px;
-  padding: 14px 16px;
-  background: var(--c1);
-  border-left: 3px solid var(--ink);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.ch-retail .channel-note { border-left-color: #B07A00; }
-.ch-ci .channel-note { border-left-color: var(--brand); }
-.channel-note-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: .16em;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--ink);
-}
-.channel-note-text {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--ink2);
-  font-weight: 500;
-}
-
-.channel-rule-intro {
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--ink2);
-  margin-bottom: 22px;
-  max-width: 880px;
-  font-weight: 400;
-}
-
-/* ====================== RETAIL VETTING ====================== */
-.block-vetting {
-  background: var(--c1);
-}
-.vetting-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  border-top: 1px solid var(--c3);
-  border-left: 1px solid var(--c3);
-}
-.vetting-card {
-  background: #fff;
-  padding: 28px 24px 24px;
-  border-right: 1px solid var(--c3);
-  border-bottom: 1px solid var(--c3);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 12px;
-}
-.vetting-checkmark {
-  width: 36px; height: 36px;
-  background: var(--grn);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  grid-row: span 2;
-}
-.vetting-name {
-  font-size: 19px;
-  font-weight: 700;
-  letter-spacing: -.01em;
-  color: var(--ink);
-  line-height: 1.15;
-}
-.vetting-sub {
-  grid-column: 2;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: .14em;
-  color: var(--ink3);
-  font-weight: 600;
-  margin-top: 4px;
-}
-.vetting-footnote {
-  margin-top: 36px;
-  background: var(--ink);
-  color: #fff;
-  padding: 32px 36px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 32px;
-  align-items: center;
-}
-.vetting-footnote-label {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: .18em;
-  font-weight: 700;
-  color: var(--yellow);
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.vetting-footnote-text {
-  font-size: 15px;
-  line-height: 1.5;
-  color: #D5D6DC;
-  max-width: 640px;
-}
-.vetting-cta {
-  background: var(--brand);
-  border-color: var(--brand);
-  white-space: nowrap;
-}
-.vetting-cta:hover {
-  background: var(--brand-dark);
-  border-color: var(--brand-dark);
-}
-
-/* ====================== CATALOG SECTIONS (C&I + Aisles) ====================== */
-.catalog-section { margin-top: 48px; }
-.catalog-section:first-of-type { margin-top: 16px; }
-.catalog-section-head {
-  margin-bottom: 28px;
-  padding-bottom: 18px;
-  border-bottom: 2px solid var(--ink);
-}
-.catalog-section-meta {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
-.catalog-section-num {
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--brand);
-  letter-spacing: 0;
-  line-height: 1;
-  padding: 6px 14px;
-  background: var(--c1);
-  border-left: 3px solid var(--brand);
-  font-family: var(--font-sans);
-}
-.catalog-section-num.retail {
-  color: #B07A00;
-  border-left-color: var(--yellow);
-}
-.catalog-section-rule {
-  display: block;
-  width: 32px;
-  height: 1px;
-  background: var(--ink);
-}
-.catalog-section-label {
-  color: var(--ink);
-  font-weight: 700;
-}
-.catalog-section-pill {
-  margin-left: auto;
-  font-size: 10px;
-  padding: 4px 10px;
-  background: var(--ink);
-  color: #fff;
-  border-radius: 2px;
-}
-.catalog-section-pill.retail {
-  background: var(--yellow);
-  color: var(--ink);
-}
-.catalog-section-kicker {
-  font-size: 14.5px;
-  line-height: 1.55;
-  color: var(--ink2);
-  margin-top: 14px;
-  max-width: 800px;
-}
-
-/* aisle grid (retail) */
-.aisle-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  border-top: 1px solid var(--c3);
-  border-left: 1px solid var(--c3);
-}
-.aisle-card {
-  padding: 28px 28px 24px;
-  background: #fff;
-  border-right: 1px solid var(--c3);
-  border-bottom: 1px solid var(--c3);
-  display: flex;
-  flex-direction: column;
-  min-height: 200px;
-  transition: opacity 200ms ease;
-  position: relative;
-}
-.aisle-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; bottom: 0;
-  width: 3px;
-  background: var(--yellow);
-}
-.aisle-num {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .14em;
-  color: #B07A00;
-  margin-bottom: 12px;
-}
-.aisle-name {
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -.02em;
-  color: var(--ink);
-  line-height: 1;
-}
-.aisle-desc {
-  font-size: 13.5px;
-  line-height: 1.55;
-  color: var(--ink2);
-  margin-top: 12px;
-  flex: 1;
-}
-.aisle-tag {
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid var(--c2);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: .12em;
-  color: var(--ink3);
-  font-weight: 600;
-}
-
-/* Aisle icon size constraint */
-.aisle-icon-wrap{ width:34px; height:34px; flex:none; }
-.aisle-icon-wrap svg{ width:34px !important; height:34px !important; color:var(--brand); stroke:currentColor; }
-/* C&I pill recolor */
-.brand-channel-pill.ci { background: var(--brand); color: #fff; }
-.brand-channel-pill.retail { background: var(--yellow); color: var(--ink); }
-
-/* ====================== PRINCIPLES ====================== */
-.principles-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0;
-  border-top: 1px solid var(--c3);
-  border-left: 1px solid var(--c3);
-}
-.principle-card {
-  padding: 36px 40px;
-  border-right: 1px solid var(--c3);
-  border-bottom: 1px solid var(--c3);
-  display: grid;
-  grid-template-columns: 72px 1fr;
-  gap: 18px;
-  align-items: start;
-}
-.principle-n {
-  font-family: var(--font-mono);
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--brand);
-  line-height: 1;
-}
-.principle-title {
-  grid-column: 2;
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -.01em;
-  color: var(--ink);
-  line-height: 1.2;
-  text-wrap: balance;
-}
-.principle-body {
-  grid-column: 2;
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--ink2);
-  margin-top: 12px;
-  text-wrap: pretty;
-}
-
-/* ====================== TIMELINE ====================== */
-.timeline {
-  position: relative;
-  padding-left: 8px;
-}
-.timeline-rail {
-  position: absolute;
-  left: 134px; top: 0; bottom: 0;
-  width: 1px; background: var(--c3);
-}
-.timeline-row {
-  display: grid;
-  grid-template-columns: 120px 36px 1fr;
-  gap: 16px;
-  align-items: start;
-  padding: 18px 0;
-}
-.timeline-year {
-  font-family: var(--font-mono);
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--brand);
-  letter-spacing: .02em;
-  padding-top: 2px;
-}
-.timeline-dot {
-  width: 12px; height: 12px;
-  background: var(--brand);
-  margin: 8px auto 0;
-  border-radius: 50%;
-  position: relative;
-  z-index: 1;
-  box-shadow: 0 0 0 4px #fff;
-}
-.timeline-title {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: -.01em;
-  color: var(--ink);
-}
-.timeline-text {
-  font-size: 14.5px;
-  line-height: 1.55;
-  color: var(--ink2);
-  margin-top: 6px;
-  max-width: 720px;
-}
-
-/* ====================== LEADERSHIP ====================== */
-.leadership-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-.leader-card {
-  background: #fff;
-  border: 1px solid var(--c3);
-  padding: 0 0 24px;
-  display: flex;
-  flex-direction: column;
-}
-.leader-photo {
-  background: var(--c1);
-  aspect-ratio: 4 / 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 3px solid var(--brand);
-  position: relative;
-}
-.leader-photo-initials {
-  font-size: 72px;
-  font-weight: 300;
-  color: var(--c3);
-  letter-spacing: -.02em;
-  font-family: var(--font-mono);
-}
-.leader-photo-tag {
-  position: absolute;
-  bottom: 12px;
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: .14em;
-  color: var(--ink3);
-}
-.leader-role {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--brand);
-  font-weight: 700;
-  padding: 18px 24px 6px;
-}
-.leader-name {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -.01em;
-  color: var(--ink);
-  padding: 0 24px;
-}
-.leader-stripe {
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: var(--ink2);
-  padding: 8px 24px 0;
-}
-
-/* ====================== CTA ====================== */
-.cta-block { background: var(--ink); }
-.cta-head { max-width: 920px; margin-bottom: 48px; }
-.cta-title {
-  font-size: clamp(40px, 5vw, 64px);
-  font-weight: 800;
-  letter-spacing: -.02em;
-  line-height: 1.04;
-  margin-top: 16px;
-  color: #fff;
-  text-wrap: balance;
-}
-.cta-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-.cta-card {
-  background: #232730;
-  border: 1px solid #2c313c;
-  padding: 36px;
-  position: relative;
-}
-.cta-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-}
-.cta-retail::before { background: var(--yellow); }
-.cta-ci::before { background: var(--brand); }
-.cta-card-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: .16em;
-  font-weight: 700;
-  color: var(--ink3);
-}
-.cta-retail .cta-card-eyebrow { color: var(--yellow); }
-.cta-ci .cta-card-eyebrow { color: var(--brand); }
-.cta-card-title {
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -.01em;
-  color: #fff;
-  margin-top: 14px;
-  text-wrap: balance;
-  line-height: 1.25;
-}
-.cta-card-list {
-  list-style: none;
-  margin-top: 22px;
-  margin-bottom: 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.cta-card-list li {
-  display: grid;
-  grid-template-columns: 14px 1fr;
-  gap: 12px;
-  font-size: 14px;
-  line-height: 1.55;
-  color: #D5D6DC;
-}
-.cta-card-list .dot {
-  width: 6px; height: 6px;
-  background: #fff;
-  border-radius: 50%;
-  margin-top: 8px;
-}
-.cta-retail .cta-card-list .dot { background: var(--yellow); }
-.cta-ci .cta-card-list .dot { background: var(--brand); }
-.cta-card-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-
-.cta-contact-strip {
-  margin-top: 48px;
-  display: grid;
-  grid-template-columns: 2fr 2fr 1fr 1.4fr;
-  border-top: 1px solid rgba(255,255,255,.18);
-}
-.cta-contact-cell {
-  padding: 24px 24px;
-  border-right: 1px solid rgba(255,255,255,.18);
-}
-.cta-contact-cell:last-child { border-right: none; }
-.cta-contact-cell .ck {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: .14em;
-  color: var(--yellow);
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-.cta-contact-cell .cv {
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  color: #fff;
-  line-height: 1.55;
-}
-
-/* ====================== FOOTER ====================== */
-.footer-bar {
-  background: #fff;
-  border-top: 1px solid var(--c3);
-  padding: 36px var(--pad-x);
-}
-.footer-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-.footer-cell { display: flex; align-items: center; gap: 18px; }
-.footer-logo { width: 120px; height: auto; }
-.footer-tag {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: .14em;
-  color: var(--ink3);
-}
-.footer-meta {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  color: var(--ink3);
-  letter-spacing: .1em;
-  display: flex;
-  gap: 12px;
-}
-
-/* ============================================================
-   CLAUDE EDITOR — in-place AI copy editing overlay
-   ============================================================ */
-.claude-edit-launch {
-  position: fixed;
-  right: 24px; bottom: 24px;
-  z-index: 90;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 20px;
-  background: var(--ink);
-  color: #fff;
-  border: 0;
-  font-family: var(--font-sans);
-  font-size: 13.5px;
-  font-weight: 600;
-  letter-spacing: -.01em;
-  cursor: pointer;
-  box-shadow: 0 12px 32px rgba(0,0,0,.18), 0 0 0 1px rgba(255,255,255,.06) inset;
-  transition: transform 120ms ease, background 120ms ease;
-}
-.claude-edit-launch:hover {
-  background: var(--brand);
-  transform: translateY(-1px);
-}
-.claude-edit-launch-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--yellow);
-  box-shadow: 0 0 0 4px rgba(253, 216, 94, .25);
-  animation: claude-pulse 1.8s ease-in-out infinite;
-}
-@keyframes claude-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: .5; }
-}
-
-/* Hover + selected outlines on editable elements */
-[data-claude-editable] {
-  cursor: pointer !important;
-  position: relative;
-  transition: outline-offset 80ms ease;
-}
-[data-claude-editable]:hover {
-  outline: 1px dashed var(--brand);
-  outline-offset: 6px;
-}
-[data-claude-selected] {
-  outline: 2px solid var(--brand) !important;
-  outline-offset: 6px !important;
-  background: rgba(227, 53, 60, .04);
-}
-
-/* Panel */
-.claude-editor-panel {
-  position: fixed;
-  right: 24px; bottom: 24px;
-  width: 380px;
-  max-height: calc(100vh - 48px);
-  background: #fff;
-  border: 1px solid var(--c3);
-  z-index: 100;
-  box-shadow: 0 24px 64px rgba(0,0,0,.18);
-  display: flex;
-  flex-direction: column;
-  font-family: var(--font-sans);
-  overflow: hidden;
-}
-.claude-editor-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 20px 16px;
-  background: var(--ink);
-  color: #fff;
-  border-bottom: 3px solid var(--brand);
-}
-.claude-editor-head-l {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.claude-editor-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--yellow);
-  flex-shrink: 0;
-  animation: claude-pulse 1.8s ease-in-out infinite;
-}
-.claude-editor-title {
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: -.01em;
-}
-.claude-editor-sub {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: .12em;
-  color: rgba(255,255,255,.7);
-  margin-top: 4px;
-  text-transform: uppercase;
-}
-.claude-editor-x {
-  background: transparent;
-  border: 0;
-  color: rgba(255,255,255,.7);
-  font-size: 24px;
-  cursor: pointer;
-  padding: 0 4px;
-  line-height: 1;
-}
-.claude-editor-x:hover { color: #fff; }
-
-/* Target preview */
-.claude-editor-target {
-  padding: 16px 20px;
-  background: var(--c1);
-  border-bottom: 1px solid var(--c3);
-}
-.claude-editor-target-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: .16em;
-  font-weight: 700;
-  color: var(--brand);
-  margin-bottom: 8px;
-}
-.claude-editor-target-text {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--ink2);
-  font-style: italic;
-  max-height: 84px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.claude-editor-deselect {
-  margin-top: 10px;
-  background: transparent;
-  border: 0;
-  color: var(--ink3);
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: .1em;
-  cursor: pointer;
-  padding: 0;
-}
-.claude-editor-deselect:hover { color: var(--brand); }
-
-/* Prompt */
-.claude-editor-prompt {
-  padding: 18px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.claude-editor-prompt-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: .16em;
-  font-weight: 700;
-  color: var(--ink3);
-}
-.claude-editor-textarea {
-  width: 100%;
-  padding: 12px 12px;
-  border: 1px solid var(--c3);
-  background: #fff;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.45;
-  color: var(--ink);
-  resize: vertical;
-  min-height: 76px;
-  outline: none;
-  transition: border-color 120ms ease;
-}
-.claude-editor-textarea:focus { border-color: var(--ink); }
-.claude-editor-textarea:disabled { background: var(--c1); cursor: not-allowed; }
-.claude-editor-textarea::placeholder { color: var(--ink3); font-style: italic; }
-
-.claude-editor-prompt-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.claude-editor-hint {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: .1em;
-  color: var(--ink3);
-}
-.claude-editor-run {
-  padding: 10px 18px;
-  background: var(--brand);
-  color: #fff;
-  border: 0;
-  font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  letter-spacing: -.01em;
-  transition: background 120ms ease;
-}
-.claude-editor-run:hover:not(:disabled) { background: var(--brand-dark); }
-.claude-editor-run:disabled {
-  background: var(--c3);
-  color: var(--ink3);
-  cursor: not-allowed;
-}
-.claude-editor-error {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--brand);
-  background: rgba(227,53,60,.06);
-  padding: 8px 10px;
-  border-left: 2px solid var(--brand);
-  line-height: 1.4;
-}
-
-/* History */
-.claude-editor-history {
-  padding: 14px 20px;
-  border-top: 1px solid var(--c3);
-  background: var(--c1);
-  max-height: 180px;
-  overflow-y: auto;
-}
-.claude-editor-history-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: .16em;
-  font-weight: 700;
-  color: var(--ink3);
-  margin-bottom: 10px;
-}
-.claude-editor-undo {
-  background: transparent;
-  border: 0;
-  color: var(--brand);
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: .08em;
-  cursor: pointer;
-  padding: 0;
-  font-weight: 700;
-}
-.claude-editor-history ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.claude-editor-history li {
-  font-size: 12px;
-  color: var(--ink2);
-  line-height: 1.4;
-}
-.claude-editor-h-instr {
-  font-style: italic;
-}
-
-.claude-editor-foot {
-  padding: 12px 20px 14px;
-  background: #fff;
-  border-top: 1px solid var(--c3);
-  font-size: 11.5px;
-  line-height: 1.5;
-  color: var(--ink3);
-}
-.claude-editor-foot strong {
-  color: var(--ink);
-  font-weight: 700;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  margin-right: 4px;
-}
-
-@media (max-width: 720px) {
-  .claude-editor-panel {
-    right: 12px;
-    left: 12px;
-    bottom: 12px;
-    width: auto;
+  /* Cat-6 Batch 2 — Apple system stack below header */
+  .page-about *,
+  .page-contact *,
+  .page-returns *,
+  .page-find-a-rep *,
+  .page-persona * {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
   }
-  .claude-edit-launch { right: 12px; bottom: 12px; }
-}
-
-@media (max-width: 1100px) {
-  .topbar-nav { display: none; }
-  .topbar-inner { grid-template-columns: auto 1fr auto; }
-  .heritage-grid,
-  .where-grid,
-  .channel-grid,
-  .channel-card-full,
-  .hero-split {
-    grid-template-columns: 1fr;
-    gap: 36px;
+  .page-about h1,.page-about h2,.page-about h3,
+  .page-contact h1,.page-contact h2,.page-contact h3,
+  .page-returns h1,.page-returns h2,.page-returns h3,
+  .page-find-a-rep h1,.page-find-a-rep h2,.page-find-a-rep h3,
+  .page-persona h1,.page-persona h2,.page-persona h3 {
+    font-weight: 600 !important;
   }
-  .brand-grid { grid-template-columns: 1fr 1fr; }
-  .vetting-grid { grid-template-columns: 1fr 1fr; }
-  .aisle-grid { grid-template-columns: 1fr 1fr; }
-  .vetting-footnote { grid-template-columns: 1fr; gap: 16px; }
-  .principles-grid { grid-template-columns: 1fr; }
-  .numbers-grid { grid-template-columns: 1fr 1fr; }
-  .channel-rule-list { grid-template-columns: 1fr; }
-  .cta-grid { grid-template-columns: 1fr; }
-  .cta-contact-strip { grid-template-columns: 1fr 1fr; }
-  .leadership-grid { grid-template-columns: 1fr 1fr; }
-  .hero-meta-strip { grid-template-columns: repeat(3, 1fr); }
-}
-@media (max-width: 720px) {
-  .topbar-channel-tag { display: none; }
-  .brand-grid { grid-template-columns: 1fr; }
-  .vetting-grid { grid-template-columns: 1fr; }
-  .aisle-grid { grid-template-columns: 1fr; }
-  .numbers-grid { grid-template-columns: 1fr; }
-  .leadership-grid { grid-template-columns: 1fr; }
-  .timeline-row { grid-template-columns: 80px 24px 1fr; }
-  .timeline-rail { left: 92px; }
-  .cta-contact-strip { grid-template-columns: 1fr; }
-  .hero-meta-strip { grid-template-columns: repeat(2, 1fr); }
-  .channel-tabs { grid-template-columns: 1fr; }
-}
-
-/* ── HEADING FONT PIN (CFG-TYPE-1) ── */
-body.page-about h1,
-body.page-about h2,
-body.page-about h3 {
-  font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-/* ── GUTTER FORCE (§F guarantee) ── */
-.page-about .block,
-.page-about .block-dark,
-.page-about .block-vetting {
-  padding-left: var(--pad-x) !important;
-  padding-right: var(--pad-x) !important;
-}
-
-/* ── VETTING LOGO (PART 2 override) ── */
-.vetting-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 64px;
-  padding: 8px 0;
-}
-.vetting-logo img {
-  max-width: 170px;
-  max-height: 56px;
-  object-fit: contain;
-  display: block;
-}
 </style>
+  <!-- «TBD-VERIFY»: Heritage paragraphs (§01), About family blurbs (§05), retail-aisle badge copy (§04) — render as mockup, James line-checks at preview -->
+  <!-- glow orb -->
+  <div class="glow-orb" style="position:fixed;top:0;left:0;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(247,82,82,.13) 0%,transparent 70%);pointer-events:none;z-index:0;will-change:transform;"></div>
 
-<!-- CFG-MAP-1: Leaflet warehouse-only map for /about Operations section -->
-<script is:inline>
-(function () {
-  // Load Leaflet CSS
-  var link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-  link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
-  link.crossOrigin = '';
-  document.head.appendChild(link);
+<main style="position: relative; z-index: 1;"><div style="height: 54px; display: flex; align-items: center; justify-content: center; border-bottom: 1px dashed rgb(210, 210, 215); background: rgb(255, 255, 255); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139);">Live site header mounts here — do not redesign</div><nav style="position: sticky; top: 54px; z-index: 90; background: rgba(255, 255, 255, 0.94); border-bottom: 1px solid rgb(229, 229, 231); overflow-x: auto;">
+<div style="max-width: 1200px; margin: 0px auto; padding: 12px 24px; display: flex; gap: 26px; font-size: 13px; color: rgb(110, 110, 115); white-space: nowrap;">
+<a href="#heritage" style="color: rgb(110, 110, 115);">Heritage</a>
+<a href="#numbers" style="color: rgb(110, 110, 115);">By the Numbers</a>
+<a href="#channels" style="color: rgb(110, 110, 115);">The Two Channels</a>
+<a href="#vetting" style="color: rgb(110, 110, 115);">Retail Vetting</a>
+<a href="#portfolio" style="color: rgb(110, 110, 115);">Brand Portfolio</a>
+<a href="#operations" style="color: rgb(110, 110, 115);">Operations</a>
+<a href="#principles" style="color: rgb(110, 110, 115);">Operating Principles</a>
+<a href="#timeline" style="color: rgb(110, 110, 115);">Timeline</a>
+<a href="#doors" style="color: rgb(110, 110, 115);">Next Step</a>
+</div></nav><section data-screen-label="About hero" style="padding: 120px 24px 88px; text-align: center;">
+<div style="max-width: 980px; margin: 0px auto;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 20px;">About · Archipelago Lighting Group · Montclair, CA · Since 1997</p>
+<h1 style="font-size: clamp(48px, 7.5vw, 88px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; margin: 0px 0px 24px;">Lighting, <span style="color: rgb(243, 39, 64);">reinvented.</span></h1>
+<p style="font-size: clamp(19px, 2.2vw, 24px); color: rgb(110, 110, 115); line-height: 1.45; margin: 0px auto; max-width: 720px;">Built for 40-foot warehouses, K-12 corridors, cold-storage rooms, and spec-grade projects, and the retail aisles of nine national retailers.</p>
+</div>
+<div style="max-width: 1100px; margin: 72px auto 0px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 28px 16px; text-align: center;"><div style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em;">1997</div><div style="width: 36px; height: 3px; background: rgb(29, 29, 31); border-radius: 2px; margin: 12px auto;"></div><div style="font-size: 13px; color: rgb(110, 110, 115);">Founded</div></div>
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 28px 16px; text-align: center;"><div style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em;">30+ yr</div><div style="width: 36px; height: 3px; background: rgb(29, 29, 31); border-radius: 2px; margin: 12px auto;"></div><div style="font-size: 13px; color: rgb(110, 110, 115);">Supplying Shelves</div></div>
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 28px 16px; text-align: center;"><div style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em;">85M+</div><div style="width: 36px; height: 3px; background: rgb(29, 29, 31); border-radius: 2px; margin: 12px auto;"></div><div style="font-size: 13px; color: rgb(110, 110, 115);">Units Shipped</div></div>
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 28px 16px; text-align: center;"><div style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em;">9</div><div style="width: 36px; height: 3px; background: rgb(29, 29, 31); border-radius: 2px; margin: 12px auto;"></div><div style="font-size: 13px; color: rgb(110, 110, 115);">National Retail Accounts</div></div>
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 28px 16px; text-align: center;"><div style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em;">12</div><div style="width: 36px; height: 3px; background: rgb(29, 29, 31); border-radius: 2px; margin: 12px auto;"></div><div style="font-size: 13px; color: rgb(110, 110, 115);">US Warehouses</div></div>
+</div></section><section data-screen-label="01 Heritage" id="heritage" style="padding: 104px 24px; border-top: 1px solid rgb(229, 229, 231);">
+<div style="max-width: 1200px; margin: 0px auto;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 14px;">01 · Heritage · Since 1997</p>
+<h2 style="font-size: clamp(38px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin: 0px 0px 12px;">Three decades of OEM discipline.</h2>
+<p style="font-size: clamp(19px, 2.2vw, 24px); color: rgb(110, 110, 115); line-height: 1.45; margin: 0px 0px 40px; max-width: 760px;">From the retail shelf to the spec package — one quality system, two doors.</p>
+<div style="margin: 0px 0px 48px;"><image-slot id="about-heritage" placeholder="Drop heritage photography — Montclair facility / retail OEM floor, 1997–today" radius="16" shape="rounded" style="width: 100%; height: 280px;"></image-slot></div>
+<div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: start;">
+<div style="display: grid; gap: 20px;">
+<p style="font-size: 17px; line-height: 1.55; color: rgb(66, 66, 69); margin: 0px;">Archipelago Lighting Group was founded in 1997 as an OEM and white-label manufacturer for national retail programs. Before the company ever printed its own name on a box, it built lamps and fixtures to other people's specifications — and passed other people's audits to keep the business.</p>
+<p style="font-size: 17px; line-height: 1.55; color: rgb(66, 66, 69); margin: 0px;">Retail vetting is the hardest discipline in lighting: multi-year compliance reviews, quarterly factory audits, and planogram replenishment windows measured in days, not quarters. Nine national retailers keep ALG product on their shelves because the paperwork, the packaging, and the pallet all arrive right — every time.</p>
+<p style="font-size: 17px; line-height: 1.55; color: rgb(66, 66, 69); margin: 0px;">The C&amp;I catalog grew out of that retail discipline. Same factories, same quality system, same engineering bench — but a separate sales motion, a separate price book, and a different customer: the distributor, the specifier, and the contractor with a takeoff due.</p>
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 28px 32px; margin-top: 8px;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">The Discipline</p>
+<p style="font-size: 19px; font-weight: 500; line-height: 1.45; color: rgb(29, 29, 31); margin: 0px;">A retail shelf does not forgive. Miss a replenishment window once and the planogram goes to someone else. Thirty years of not missing is the quality system.</p>
+</div>
+</div>
+<div style="display: grid; gap: 24px;">
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 28px;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 18px;">Retail OEM Capabilities · <span style="color: rgb(29, 29, 31);">Active</span></p>
+<div style="display: grid; gap: 14px; font-size: 15px; line-height: 1.45;">
+<div style="border-bottom: 1px solid rgb(229, 229, 231); padding-bottom: 14px;"><span style="font-weight: 600;">House brand</span> — retailer-owned labels, built to program spec</div>
+<div style="border-bottom: 1px solid rgb(229, 229, 231); padding-bottom: 14px;"><span style="font-weight: 600;">Co-brand</span> — shared-mark programs with national accounts</div>
+<div style="border-bottom: 1px solid rgb(229, 229, 231); padding-bottom: 14px;"><span style="font-weight: 600;">OEM / white-label</span> — full private-label manufacturing</div>
+<div style="border-bottom: 1px solid rgb(229, 229, 231); padding-bottom: 14px;"><span style="font-weight: 600;">Replenishment readiness</span> — 12 US warehouses, same-week planogram refill</div>
+<div><span style="font-weight: 600;">Compliance discipline</span> — UL/ETL listings, IP, and retail warranty terms managed per program</div>
+</div>
+<p style="font-size: 13px; color: rgb(134, 134, 139); line-height: 1.5; margin: 18px 0px 0px;">Retail programs operate under mutual NDA. Retailer program details are shared in vetting conversations, not on this page.</p>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 24px;"><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.02em;">30+ yr</div><div style="width: 32px; height: 3px; background: rgb(29, 29, 31); border-radius: 2px; margin: 10px 0px;"></div><div style="font-size: 13px; color: rgb(110, 110, 115);">Supplying retail shelves</div></div>
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 24px;"><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.02em;">85M+</div><div style="width: 32px; height: 3px; background: rgb(29, 29, 31); border-radius: 2px; margin: 10px 0px;"></div><div style="font-size: 13px; color: rgb(110, 110, 115);">Units shipped since 1997</div></div>
+</div>
+</div>
+</div>
+</div></section><section data-screen-label="02 By the Numbers" id="numbers" style="padding: 104px 24px; background: rgb(245, 245, 247);">
+<div style="max-width: 1200px; margin: 0px auto;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 14px;">02 · By the Numbers</p>
+<h2 style="font-size: clamp(38px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin: 0px 0px 48px; max-width: 820px;">A spec-grade manufacturer, sized for both shelves.</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 26px; display: flex; align-items: center; gap: 18px;"><svg height="52" style="flex: 0 0 auto;" viewbox="0 0 52 52" width="52"><circle cx="26" cy="26" fill="none" r="22" stroke="#E5E5E7" stroke-width="3"></circle><circle cx="26" cy="26" fill="none" r="22" stroke="#1D1D1F" stroke-dasharray="40 139" stroke-linecap="round" stroke-width="3" transform="rotate(-90 26 26)"></circle></svg><div><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em;">1997</div><div style="font-size: 14px; color: rgb(110, 110, 115); margin-top: 2px;">Founded · Montclair, CA</div></div></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 26px; display: flex; align-items: center; gap: 18px;"><svg height="52" style="flex: 0 0 auto;" viewbox="0 0 52 52" width="52"><circle cx="26" cy="26" fill="none" r="22" stroke="#E5E5E7" stroke-width="3"></circle><circle cx="26" cy="26" fill="none" r="22" stroke="#1D1D1F" stroke-dasharray="120 139" stroke-linecap="round" stroke-width="3" transform="rotate(-90 26 26)"></circle></svg><div><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em;">85M+</div><div style="font-size: 14px; color: rgb(110, 110, 115); margin-top: 2px;">Units shipped</div></div></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 26px; display: flex; align-items: center; gap: 18px;"><svg height="52" style="flex: 0 0 auto;" viewbox="0 0 52 52" width="52"><circle cx="26" cy="26" fill="none" r="22" stroke="#E5E5E7" stroke-width="3"></circle><circle cx="26" cy="26" fill="none" r="22" stroke="#1D1D1F" stroke-dasharray="62 139" stroke-linecap="round" stroke-width="3" transform="rotate(-90 26 26)"></circle></svg><div><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em;">9</div><div style="font-size: 14px; color: rgb(110, 110, 115); margin-top: 2px;">National retail accounts</div></div></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 26px; display: flex; align-items: center; gap: 18px;"><svg height="52" style="flex: 0 0 auto;" viewbox="0 0 52 52" width="52"><circle cx="26" cy="26" fill="none" r="22" stroke="#E5E5E7" stroke-width="3"></circle><circle cx="26" cy="26" fill="none" r="22" stroke="#1D1D1F" stroke-dasharray="45 139" stroke-linecap="round" stroke-width="3" transform="rotate(-90 26 26)"></circle></svg><div><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em;">6</div><div style="font-size: 14px; color: rgb(110, 110, 115); margin-top: 2px;">Retail aisles</div></div></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 26px; display: flex; align-items: center; gap: 18px;"><svg height="52" style="flex: 0 0 auto;" viewbox="0 0 52 52" width="52"><circle cx="26" cy="26" fill="none" r="22" stroke="#E5E5E7" stroke-width="3"></circle><circle cx="26" cy="26" fill="none" r="22" stroke="#1D1D1F" stroke-dasharray="83 139" stroke-linecap="round" stroke-width="3" transform="rotate(-90 26 26)"></circle></svg><div><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em;">12</div><div style="font-size: 14px; color: rgb(110, 110, 115); margin-top: 2px;">US warehouses</div></div></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 26px; display: flex; align-items: center; gap: 18px;"><svg height="52" style="flex: 0 0 auto;" viewbox="0 0 52 52" width="52"><circle cx="26" cy="26" fill="none" r="22" stroke="#E5E5E7" stroke-width="3"></circle><circle cx="26" cy="26" fill="none" r="22" stroke="#1D1D1F" stroke-dasharray="62 139" stroke-linecap="round" stroke-width="3" transform="rotate(-90 26 26)"></circle></svg><div><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em;">9</div><div style="font-size: 14px; color: rgb(110, 110, 115); margin-top: 2px;">C&amp;I brand families</div></div></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 26px; display: flex; align-items: center; gap: 18px;"><svg height="52" style="flex: 0 0 auto;" viewbox="0 0 52 52" width="52"><circle cx="26" cy="26" fill="none" r="22" stroke="#E5E5E7" stroke-width="3"></circle><circle cx="26" cy="26" fill="none" r="22" stroke="#1D1D1F" stroke-dasharray="55 139" stroke-linecap="round" stroke-width="3" transform="rotate(-90 26 26)"></circle></svg><div><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em;">8</div><div style="font-size: 14px; color: rgb(110, 110, 115); margin-top: 2px;">Industry verticals</div></div></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 26px; display: flex; align-items: center; gap: 18px;"><svg height="52" style="flex: 0 0 auto;" viewbox="0 0 52 52" width="52"><circle cx="26" cy="26" fill="none" r="22" stroke="#E5E5E7" stroke-width="3"></circle><circle cx="26" cy="26" fill="none" r="22" stroke="#1D1D1F" stroke-dasharray="5 139" stroke-linecap="round" stroke-width="3" transform="rotate(-90 26 26)"></circle></svg><div><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em;">0</div><div style="font-size: 14px; color: rgb(110, 110, 115); margin-top: 2px;">Channel-conflict incidents · by policy</div></div></div>
+</div>
+</div></section><section data-screen-label="03 The Two Channels" id="channels" style="padding: 104px 24px;">
+<div style="max-width: 1200px; margin: 0px auto;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 14px;">03 · The Two Channels</p>
+<h2 style="font-size: clamp(38px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin: 0px 0px 48px;">One catalog. Two doors.</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 24px; align-items: start;">
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 32px;">
+<svg fill="none" height="34" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-bottom: 14px;" viewbox="0 0 24 24" width="34"><rect height="18" rx="1" width="12" x="6" y="3"></rect><circle cx="15" cy="12" fill="#86868B" r="1" stroke="none"></circle><path d="M3 21h18"></path></svg>
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 6px;">Door One</p>
+<h3 style="font-size: clamp(24px, 2.4vw, 32px); font-weight: 600; letter-spacing: -0.02em; margin: 0px 0px 24px;">Retail · Consumer</h3>
+<div style="display: grid; font-size: 15px; line-height: 1.45;">
+<div style="display: grid; grid-template-columns: 24px 112px 1fr; gap: 12px; padding: 13px 0px; border-top: 1px solid rgb(229, 229, 231);"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-top: 2px;" viewbox="0 0 24 24" width="18"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"></path></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); padding-top: 2px;">Buyer</span><span>National retail merchants and category buyers</span></div>
+<div style="display: grid; grid-template-columns: 24px 112px 1fr; gap: 12px; padding: 13px 0px; border-top: 1px solid rgb(229, 229, 231);"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-top: 2px;" viewbox="0 0 24 24" width="18"><path d="M4 11.5V4h7.5L20 12.5 12.5 20z"></path><circle cx="8.5" cy="8.5" r="1.3"></circle></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); padding-top: 2px;">Programs · Brand Families</span><span>House brand, co-brand, and OEM/white-label programs</span></div>
+<div style="display: grid; grid-template-columns: 24px 112px 1fr; gap: 12px; padding: 13px 0px; border-top: 1px solid rgb(229, 229, 231);"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-top: 2px;" viewbox="0 0 24 24" width="18"><path d="M2 7h11v9H2zM13 10h4.5L20 13v3h-2.5"></path><circle cx="6.5" cy="17" r="1.7"></circle><circle cx="16" cy="17" r="1.7"></circle></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); padding-top: 2px;">Distribution</span><span>9 national retail accounts · planogram replenishment</span></div>
+<div style="display: grid; grid-template-columns: 24px 112px 1fr; gap: 12px; padding: 13px 0px; border-top: 1px solid rgb(229, 229, 231);"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-top: 2px;" viewbox="0 0 24 24" width="18"><path d="M5 20v-7M12 20V6M19 20V10"></path></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); padding-top: 2px;">Scale</span><span>85M+ units shipped since 1997</span></div>
+<div style="display: grid; grid-template-columns: 24px 112px 1fr; gap: 12px; padding: 13px 0px; border-top: 1px solid rgb(229, 229, 231);"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-top: 2px;" viewbox="0 0 24 24" width="18"><path d="M12 3l7 2.8v5.6c0 4.3-2.9 7.3-7 8.9-4.1-1.6-7-4.6-7-8.9V5.8z"></path></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); padding-top: 2px;">Warranty</span><span>Retail program warranty, managed per account</span></div>
+<div style="display: grid; grid-template-columns: 24px 112px 1fr; gap: 12px; padding: 13px 0px; border-top: 1px solid rgb(229, 229, 231);"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-top: 2px;" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5v9M14.5 9.3c-.6-.8-1.5-1.2-2.5-1.2-1.4 0-2.5.8-2.5 2s1 1.7 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2c-1 0-1.9-.4-2.5-1.2"></path></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); padding-top: 2px;">Pricing</span><span>Program pricing, negotiated per retailer</span></div>
+<div style="display: grid; grid-template-columns: 24px 112px 1fr; gap: 12px; padding: 13px 0px; border-top: 1px solid rgb(229, 229, 231); border-bottom: 1px solid rgb(229, 229, 231);"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-top: 2px;" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); padding-top: 2px;">Lead Time</span><span>Same-week replenishment from 12 US warehouses</span></div>
+</div>
+<div style="background: rgb(245, 245, 247); border-radius: 12px; padding: 16px 20px; margin: 20px 0px 24px;"><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139);">Channel Policy</span><p style="font-size: 14px; line-height: 1.5; color: rgb(66, 66, 69); margin: 6px 0px 0px;">Retail SKUs are sold through retail shelves only — never direct, never through distribution.</p></div>
+<div style="display: flex; gap: 24px; flex-wrap: wrap; font-size: 15px; font-weight: 500;">
+<a class="scp0" href="/contact/" style="color: rgb(29, 29, 31);">Become a retail buyer →</a>
+<a class="scp0" href="#portfolio" style="color: rgb(29, 29, 31);">See the retail aisles →</a>
+</div>
+</div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 32px;">
+<svg fill="none" height="34" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-bottom: 14px;" viewbox="0 0 24 24" width="34"><rect height="18" rx="1" width="12" x="6" y="3"></rect><circle cx="9" cy="12" fill="#86868B" r="1" stroke="none"></circle><path d="M3 21h18"></path></svg>
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 6px;">Door Two</p>
+<h3 style="font-size: clamp(24px, 2.4vw, 32px); font-weight: 600; letter-spacing: -0.02em; margin: 0px 0px 24px;">Commercial &amp; Industrial</h3>
+<div style="display: grid; font-size: 15px; line-height: 1.45;">
+<div style="display: grid; grid-template-columns: 24px 112px 1fr; gap: 12px; padding: 13px 0px; border-top: 1px solid rgb(229, 229, 231);"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-top: 2px;" viewbox="0 0 24 24" width="18"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"></path></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); padding-top: 2px;">Buyer</span><span>Distributors, specifiers, contractors, ESCOs, facility teams</span></div>
+<div style="display: grid; grid-template-columns: 24px 112px 1fr; gap: 12px; padding: 13px 0px; border-top: 1px solid rgb(229, 229, 231);"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-top: 2px;" viewbox="0 0 24 24" width="18"><path d="M4 11.5V4h7.5L20 12.5 12.5 20z"></path><circle cx="8.5" cy="8.5" r="1.3"></circle></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); padding-top: 2px;">Programs · Brand Families</span><span>9 <span style="white-space: nowrap;">Ⓐ</span>RCH brand families across ECO · PRO · PRO+</span></div>
+<div style="display: grid; grid-template-columns: 24px 112px 1fr; gap: 12px; padding: 13px 0px; border-top: 1px solid rgb(229, 229, 231);"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-top: 2px;" viewbox="0 0 24 24" width="18"><path d="M2 7h11v9H2zM13 10h4.5L20 13v3h-2.5"></path><circle cx="6.5" cy="17" r="1.7"></circle><circle cx="16" cy="17" r="1.7"></circle></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); padding-top: 2px;">Distribution</span><span>Authorized distributors · 29 locations + direct from 12 US warehouses</span></div>
+<div style="display: grid; grid-template-columns: 24px 112px 1fr; gap: 12px; padding: 13px 0px; border-top: 1px solid rgb(229, 229, 231);"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-top: 2px;" viewbox="0 0 24 24" width="18"><path d="M5 20v-7M12 20V6M19 20V10"></path></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); padding-top: 2px;">Scale</span><span>2,000+ active SKUs across 8 verticals</span></div>
+<div style="display: grid; grid-template-columns: 24px 112px 1fr; gap: 12px; padding: 13px 0px; border-top: 1px solid rgb(229, 229, 231);"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-top: 2px;" viewbox="0 0 24 24" width="18"><path d="M12 3l7 2.8v5.6c0 4.3-2.9 7.3-7 8.9-4.1-1.6-7-4.6-7-8.9V5.8z"></path></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); padding-top: 2px;">Warranty</span><span>5 / 7 / 10-year limited warranty by tier</span></div>
+<div style="display: grid; grid-template-columns: 24px 112px 1fr; gap: 12px; padding: 13px 0px; border-top: 1px solid rgb(229, 229, 231);"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-top: 2px;" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5v9M14.5 9.3c-.6-.8-1.5-1.2-2.5-1.2-1.4 0-2.5.8-2.5 2s1 1.7 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2c-1 0-1.9-.4-2.5-1.2"></path></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); padding-top: 2px;">Pricing</span><span>Distributor price book · quotes in under 4 hours</span></div>
+<div style="display: grid; grid-template-columns: 24px 112px 1fr; gap: 12px; padding: 13px 0px; border-top: 1px solid rgb(229, 229, 231); border-bottom: 1px solid rgb(229, 229, 231);"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-top: 2px;" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); padding-top: 2px;">Lead Time</span><span>5–7 business days on PRO stock from Riverside, CA</span></div>
+</div>
+<div style="background: rgb(245, 245, 247); border-radius: 12px; padding: 16px 20px; margin: 20px 0px 24px;"><span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139);">Channel Policy</span><p style="font-size: 14px; line-height: 1.5; color: rgb(66, 66, 69); margin: 6px 0px 0px;">C&amp;I SKUs are sold through authorized distribution and direct desks only — never on a retail shelf.</p></div>
+<div style="display: flex; gap: 24px; flex-wrap: wrap; font-size: 15px; font-weight: 500;">
+<a class="scp0" href="/contact/" style="color: rgb(29, 29, 31);">Talk to a spec rep →</a>
+<a class="scp0" href="/find-a-rep/#distributor" style="color: rgb(29, 29, 31);">Find a distributor →</a>
+</div>
+</div>
+</div>
+<div style="margin-top: 64px;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 24px;">How we keep the two channels honest</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px;">
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 24px;"><div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;"><svg fill="none" height="20" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="20"><path d="M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16M9.5 20v-6h5v6"></path></svg><span style="font-size: 13px; font-weight: 600; color: rgb(134, 134, 139);">01</span></div><p style="font-size: 15px; line-height: 1.5; margin: 0px;"><span style="font-weight: 600;">Retail SKUs sell only through retailers.</span><br/><span style="color: rgb(110, 110, 115); font-size: 14px;">If it's on a planogram, you can't buy it from us direct — at any volume.</span></p></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 24px;"><div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;"><svg fill="none" height="20" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="20"><path d="M12 3l7 2.8v5.6c0 4.3-2.9 7.3-7 8.9-4.1-1.6-7-4.6-7-8.9V5.8z"></path><path d="M9 12l2 2 4-4"></path></svg><span style="font-size: 13px; font-weight: 600; color: rgb(134, 134, 139);">02</span></div><p style="font-size: 15px; line-height: 1.5; margin: 0px;"><span style="font-weight: 600;">C&amp;I SKUs sell only through the authorized channel.</span><br/><span style="color: rgb(110, 110, 115); font-size: 14px;">Distributors and the direct desk; no gray-market shelf.</span></p></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 24px;"><div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;"><svg fill="none" height="20" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="20"><path d="M12 4v6M12 10l-5 5v5M12 10l5 5v5"></path></svg><span style="font-size: 13px; font-weight: 600; color: rgb(134, 134, 139);">03</span></div><p style="font-size: 15px; line-height: 1.5; margin: 0px;"><span style="font-weight: 600;">No SKU lives in both catalogs.</span><br/><span style="color: rgb(110, 110, 115); font-size: 14px;">Different part numbers, different packaging, different price books — by design.</span></p></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 24px;"><div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;"><svg fill="none" height="20" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="20"><circle cx="7" cy="12" r="4"></circle><circle cx="17" cy="12" r="4"></circle></svg><span style="font-size: 13px; font-weight: 600; color: rgb(134, 134, 139);">04</span></div><p style="font-size: 15px; line-height: 1.5; margin: 0px;"><span style="font-weight: 600;">Separate sales organizations, separate price books.</span><br/><span style="color: rgb(110, 110, 115); font-size: 14px;">The retail team and the C&amp;I team don't share targets, territories, or margin.</span></p></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 24px;"><div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;"><svg fill="none" height="20" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="20"><circle cx="9" cy="12" r="5"></circle><circle cx="15" cy="12" r="5"></circle></svg><span style="font-size: 13px; font-weight: 600; color: rgb(134, 134, 139);">05</span></div><p style="font-size: 15px; line-height: 1.5; margin: 0px;"><span style="font-weight: 600;">Everything else is shared.</span><br/><span style="color: rgb(110, 110, 115); font-size: 14px;">Factories, engineering, QA, compliance, warehouses — one quality system behind both doors.</span></p></div>
+</div>
+</div>
+</div></section><section data-screen-label="05 Retail Vetting" id="vetting" style="padding: 104px 24px; background: rgb(245, 245, 247);">
+<div style="max-width: 1200px; margin: 0px auto;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 14px;">05 · Retail Vetting · Proof of Shelf</p>
+<h2 style="font-size: clamp(38px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin: 0px 0px 48px; max-width: 820px;">Approved to ship to nine national retailers.</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start;"><image-slot fit="contain" id="logo-home-depot" placeholder="The Home Depot logo · greyscale" radius="8" shape="rounded" style="width: 100%; height: 64px;"></image-slot><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">Est. Program</span></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start;"><image-slot fit="contain" id="logo-lowes" placeholder="Lowe's logo · greyscale" radius="8" shape="rounded" style="width: 100%; height: 64px;"></image-slot><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">National</span></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start;"><image-slot fit="contain" id="logo-costco" placeholder="Costco logo · greyscale" radius="8" shape="rounded" style="width: 100%; height: 64px;"></image-slot><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">Club Channel</span></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start;"><image-slot fit="contain" id="logo-walmart" placeholder="Walmart logo · greyscale" radius="8" shape="rounded" style="width: 100%; height: 64px;"></image-slot><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">National</span></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start;"><image-slot fit="contain" id="logo-tractor-supply" placeholder="Tractor Supply logo · greyscale" radius="8" shape="rounded" style="width: 100%; height: 64px;"></image-slot><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">Rural / Farm</span></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start;"><image-slot fit="contain" id="logo-canadian-tire" placeholder="Canadian Tire logo · greyscale" radius="8" shape="rounded" style="width: 100%; height: 64px;"></image-slot><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">Canada National</span></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start;"><image-slot fit="contain" id="logo-kroger" placeholder="Kroger logo · greyscale" radius="8" shape="rounded" style="width: 100%; height: 64px;"></image-slot><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">Grocery</span></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start;"><image-slot fit="contain" id="logo-fred-meyer" placeholder="Fred Meyer logo · greyscale" radius="8" shape="rounded" style="width: 100%; height: 64px;"></image-slot><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">PNW Regional</span></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start;"><image-slot fit="contain" id="logo-batteries-plus" placeholder="Batteries Plus logo · greyscale" radius="8" shape="rounded" style="width: 100%; height: 64px;"></image-slot><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">Specialty</span></div>
+</div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 32px; margin-top: 24px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;">
+<div>
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 8px;">Some shelves are still open</p>
+<p style="font-size: 19px; font-weight: 500; color: rgb(29, 29, 31); margin: 0px; line-height: 1.4;">Buying for a national retail program? Talk to the OEM desk about house-brand, co-brand, and white-label capacity.</p>
+</div>
+<a class="scp1" href="/contact/" style="flex: 0 0 auto; background: rgb(243, 39, 64); color: rgb(255, 255, 255); padding: 12px 24px; border-radius: 980px; font-size: 15px; font-weight: 600; transition: background 0.2s;">Contact the retail desk</a>
+</div>
+</div></section><section data-screen-label="06 Brand Portfolio" id="portfolio" style="padding: 104px 24px;">
+<div style="max-width: 1200px; margin: 0px auto;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 14px;">06 · Brand Portfolio · Full Catalog</p>
+<h2 style="font-size: clamp(38px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin: 0px 0px 48px;">Nine C&amp;I families. Six retail aisles.</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 28px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">Flat Panels &amp; Troffers</p><h3 style="font-size: 22px; font-weight: 600; margin: 0px 0px 8px;">plano<span style="color: rgb(243, 39, 64);">Ⓐ</span>RCH</h3><p style="font-size: 14px; line-height: 1.5; color: rgb(110, 110, 115); margin: 0px 0px 16px;">Back-lit and edge-lit panels for office, education, and healthcare ceilings.</p><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">DLC Premium</span></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 28px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">Indoor C&amp;I · High Bay</p><h3 style="font-size: 22px; font-weight: 600; margin: 0px 0px 8px;">lampar<span style="color: rgb(243, 39, 64);">Ⓐ</span>RCH</h3><p style="font-size: 14px; line-height: 1.5; color: rgb(110, 110, 115); margin: 0px 0px 16px;">Round and linear high bays, strips, and vapor-tights for 14–40 ft ceilings.</p><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">DLC Premium</span></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 28px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">Architectural Interior</p><h3 style="font-size: 22px; font-weight: 600; margin: 0px 0px 8px;">luxo<span style="color: rgb(243, 39, 64);">Ⓐ</span>RCH</h3><p style="font-size: 14px; line-height: 1.5; color: rgb(110, 110, 115); margin: 0px 0px 16px;">Downlights and architectural fixtures for spec-grade interiors.</p><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">Title-24</span></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 28px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">Outdoor &amp; Area</p><h3 style="font-size: 22px; font-weight: 600; margin: 0px 0px 8px;">city<span style="color: rgb(243, 39, 64);">Ⓐ</span>RCH</h3><p style="font-size: 14px; line-height: 1.5; color: rgb(110, 110, 115); margin: 0px 0px 16px;">Area lights, floods, and wall packs for parking, site, and perimeter.</p><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">TAA · BABA</span></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 28px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">Multifamily Housing</p><h3 style="font-size: 22px; font-weight: 600; margin: 0px 0px 8px;">multi-f<span style="color: rgb(243, 39, 64);">Ⓐ</span>MILY</h3><p style="font-size: 14px; line-height: 1.5; color: rgb(110, 110, 115); margin: 0px 0px 16px;">Unit and common-area packages for multifamily new construction and retrofit.</p><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">Title-24</span></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 28px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">LED Tubes &amp; Retrofit</p><h3 style="font-size: 22px; font-weight: 600; margin: 0px 0px 8px;">tubul<span style="color: rgb(243, 39, 64);">Ⓐ</span>RCH</h3><p style="font-size: 14px; line-height: 1.5; color: rgb(110, 110, 115); margin: 0px 0px 16px;">Type A/B TLEDs and retrofit kits for re-lamp programs at scale.</p><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">DLC Premium</span></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 28px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">Decorative &amp; Specialty</p><h3 style="font-size: 22px; font-weight: 600; margin: 0px 0px 8px;">sign<span style="color: rgb(243, 39, 64);">Ⓐ</span>TURE</h3><p style="font-size: 14px; line-height: 1.5; color: rgb(110, 110, 115); margin: 0px 0px 16px;">Decorative and architectural statement fixtures for hospitality and retail.</p><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">Title-24</span></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 28px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">Emergency &amp; Life Safety</p><h3 style="font-size: 22px; font-weight: 600; margin: 0px 0px 8px;">const<span style="color: rgb(243, 39, 64);">Ⓐ</span>NT</h3><p style="font-size: 14px; line-height: 1.5; color: rgb(110, 110, 115); margin: 0px 0px 16px;">EM drivers, exit signs, and life-safety fixtures with battery backup.</p><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">UL 924</span></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 28px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">Networked Controls</p><h3 style="font-size: 22px; font-weight: 600; margin: 0px 0px 8px;">contr<span style="color: rgb(243, 39, 64);">Ⓐ</span>LS</h3><p style="font-size: 14px; line-height: 1.5; color: rgb(110, 110, 115); margin: 0px 0px 16px;">Sensors, room controllers, and the <span style="color: rgb(243, 39, 64);">Ⓐ</span>CS by ALG App.</p><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 4px 10px;">NLC5</span></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; margin-top: 24px;">
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 24px;"><div style="margin: 0px 0px 16px;"><image-slot id="aisle-home" placeholder="Home aisle photo" radius="10" shape="rounded" style="width: 100%; height: 110px;"></image-slot></div><h4 style="font-size: 17px; font-weight: 600; margin: 0px 0px 6px;">Home</h4><p style="font-size: 13px; color: rgb(110, 110, 115); margin: 0px 0px 14px; line-height: 1.45;">A19s, BRs, and fixture programs</p><span style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139);">House Brand</span></div>
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 24px;"><div style="margin: 0px 0px 16px;"><image-slot id="aisle-garden" placeholder="Garden aisle photo" radius="10" shape="rounded" style="width: 100%; height: 110px;"></image-slot></div><h4 style="font-size: 17px; font-weight: 600; margin: 0px 0px 6px;">Garden</h4><p style="font-size: 13px; color: rgb(110, 110, 115); margin: 0px 0px 14px; line-height: 1.45;">Landscape and solar programs</p><span style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139);">Co-Brand</span></div>
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 24px;"><div style="margin: 0px 0px 16px;"><image-slot id="aisle-work" placeholder="Work aisle photo" radius="10" shape="rounded" style="width: 100%; height: 110px;"></image-slot></div><h4 style="font-size: 17px; font-weight: 600; margin: 0px 0px 6px;">Work</h4><p style="font-size: 13px; color: rgb(110, 110, 115); margin: 0px 0px 14px; line-height: 1.45;">Shop lights and utility fixtures</p><span style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139);">OEM</span></div>
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 24px;"><div style="margin: 0px 0px 16px;"><image-slot id="aisle-auto" placeholder="Auto aisle photo" radius="10" shape="rounded" style="width: 100%; height: 110px;"></image-slot></div><h4 style="font-size: 17px; font-weight: 600; margin: 0px 0px 6px;">Auto</h4><p style="font-size: 13px; color: rgb(110, 110, 115); margin: 0px 0px 14px; line-height: 1.45;">12V and work-lamp programs</p><span style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139);">OEM</span></div>
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 24px;"><div style="margin: 0px 0px 16px;"><image-slot id="aisle-camping" placeholder="Camping aisle photo" radius="10" shape="rounded" style="width: 100%; height: 110px;"></image-slot></div><h4 style="font-size: 17px; font-weight: 600; margin: 0px 0px 6px;">Camping</h4><p style="font-size: 13px; color: rgb(110, 110, 115); margin: 0px 0px 14px; line-height: 1.45;">Lanterns and portable lighting</p><span style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139);">House Brand</span></div>
+<div style="background: rgb(245, 245, 247); border-radius: 16px; padding: 24px;"><div style="margin: 0px 0px 16px;"><image-slot id="aisle-party" placeholder="Party aisle photo" radius="10" shape="rounded" style="width: 100%; height: 110px;"></image-slot></div><h4 style="font-size: 17px; font-weight: 600; margin: 0px 0px 6px;">Party</h4><p style="font-size: 13px; color: rgb(110, 110, 115); margin: 0px 0px 14px; line-height: 1.45;">String lights and seasonal</p><span style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139);">Co-Brand</span></div>
+</div>
+</div></section><section data-screen-label="07 Operations Footprint" id="operations" style="padding: 104px 24px; background: rgb(245, 245, 247);">
+<div style="max-width: 1200px; margin: 0px auto;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 14px;">07 · Operations Footprint</p>
+<h2 style="font-size: clamp(38px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin: 0px 0px 48px; max-width: 900px;">Designed in California. Built where it ships best.</h2>
+<div style="margin-bottom: 24px;"><image-slot id="ops-map" placeholder="Drop US footprint map — 12 warehouses · 29 distributor locations · 28 sales reps (pins per local_support.json)" radius="16" shape="rounded" style="width: 100%; height: 360px;"></image-slot></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 28px;"><div style="display: flex; align-items: center; gap: 8px; margin: 0px 0px 12px;"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M12 21s-6.5-5.2-6.5-10a6.5 6.5 0 0113 0c0 4.8-6.5 10-6.5 10z"></path><circle cx="12" cy="10.7" r="2.2"></circle></svg><span style="font-size: 13px; font-weight: 600; color: rgb(134, 134, 139);">01</span></div><h3 style="font-size: 20px; font-weight: 600; margin: 0px 0px 6px;">Montclair, CA — Headquarters</h3><p style="font-size: 14px; color: rgb(110, 110, 115); line-height: 1.5; margin: 0px;">4615 State Street, Montclair, CA 91763. Engineering, photometry, spec desk, and program management.</p></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 28px;"><div style="display: flex; align-items: center; gap: 8px; margin: 0px 0px 12px;"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M12 21s-6.5-5.2-6.5-10a6.5 6.5 0 0113 0c0 4.8-6.5 10-6.5 10z"></path><circle cx="12" cy="10.7" r="2.2"></circle></svg><span style="font-size: 13px; font-weight: 600; color: rgb(134, 134, 139);">02</span></div><h3 style="font-size: 20px; font-weight: 600; margin: 0px 0px 6px;">Riverside, CA — US Production</h3><p style="font-size: 14px; color: rgb(110, 110, 115); line-height: 1.5; margin: 0px;">9345 Sycamore Canyon Blvd, Riverside, CA 92508. Driver assembly and final QA.</p></div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 28px;"><div style="display: flex; align-items: center; gap: 8px; margin: 0px 0px 12px;"><svg fill="none" height="18" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="18"><path d="M12 21s-6.5-5.2-6.5-10a6.5 6.5 0 0113 0c0 4.8-6.5 10-6.5 10z"></path><circle cx="12" cy="10.7" r="2.2"></circle></svg><span style="font-size: 13px; font-weight: 600; color: rgb(134, 134, 139);">03</span></div><h3 style="font-size: 20px; font-weight: 600; margin: 0px 0px 6px;">Global manufacturing</h3><p style="font-size: 14px; color: rgb(110, 110, 115); line-height: 1.5; margin: 0px;">US · Mexico · China · Thailand — built to ALG spec, final QC in California, country of origin stated on every product.</p></div>
+</div>
+</div></section><section data-screen-label="08 Operating Principles" id="principles" style="padding: 104px 24px;">
+<div style="max-width: 1200px; margin: 0px auto;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 14px;">08 · Operating Principles</p>
+<h2 style="font-size: clamp(38px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin: 0px 0px 48px;">Four rules that decide everything else.</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 16px;">
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 32px;"><div style="display: flex; align-items: center; gap: 10px; margin: 0px 0px 16px;"><svg fill="none" height="22" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="22"><path d="M4 6v12M7.5 6v12M10.5 6v8M14 6v12M17 6v9M20 6v12"></path></svg><span style="font-size: 13px; font-weight: 600; color: rgb(134, 134, 139);">01</span></div><h3 style="font-size: clamp(22px, 2.2vw, 28px); font-weight: 600; letter-spacing: -0.02em; margin: 0px 0px 10px;">The part number is the hero.</h3><p style="font-size: 15px; line-height: 1.55; color: rgb(110, 110, 115); margin: 0px;">Marketing copy doesn't survive a bid. The SKU, the spec string, and the date code do. Every page, label, and spec sheet we publish is built around the part number.</p></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 32px;"><div style="display: flex; align-items: center; gap: 10px; margin: 0px 0px 16px;"><svg fill="none" height="22" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="22"><path d="M3 8.5h18M3 15.5h18"></path><rect height="4" width="4" x="5.5" y="4.5"></rect><rect height="4" width="4" x="14" y="11.5"></rect></svg><span style="font-size: 13px; font-weight: 600; color: rgb(134, 134, 139);">02</span></div><h3 style="font-size: clamp(22px, 2.2vw, 28px); font-weight: 600; letter-spacing: -0.02em; margin: 0px 0px 10px;">The shelf decides.</h3><p style="font-size: 15px; line-height: 1.55; color: rgb(110, 110, 115); margin: 0px;">Thirty years of retail taught us the shelf is the truth: if the product doesn't arrive right, priced right, on time, nothing else matters. The C&amp;I catalog runs on the same rule.</p></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 32px;"><div style="display: flex; align-items: center; gap: 10px; margin: 0px 0px 16px;"><svg fill="none" height="22" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="22"><rect height="16" rx="1" width="7" x="3.5" y="4"></rect><rect height="16" rx="1" width="7" x="13.5" y="4"></rect><circle cx="9" cy="12" fill="#86868B" r=".8" stroke="none"></circle><circle cx="19" cy="12" fill="#86868B" r=".8" stroke="none"></circle></svg><span style="font-size: 13px; font-weight: 600; color: rgb(134, 134, 139);">03</span></div><h3 style="font-size: clamp(22px, 2.2vw, 28px); font-weight: 600; letter-spacing: -0.02em; margin: 0px 0px 10px;">Two channels, one catalog.</h3><p style="font-size: 15px; line-height: 1.55; color: rgb(110, 110, 115); margin: 0px;">Retail and C&amp;I never compete for the same SKU. Two sales motions, two price books — one engineering and quality system underneath.</p></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 32px;"><div style="display: flex; align-items: center; gap: 10px; margin: 0px 0px 16px;"><svg fill="none" height="22" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="22"><path d="M3 21V9l5.5 3.5V9l5.5 3.5V9l7-2.5V21z"></path><path d="M7 17h2M12 17h2M17 17h2"></path></svg><span style="font-size: 13px; font-weight: 600; color: rgb(134, 134, 139);">04</span></div><h3 style="font-size: clamp(22px, 2.2vw, 28px); font-weight: 600; letter-spacing: -0.02em; margin: 0px 0px 10px;">Engineered in California, built where it ships best.</h3><p style="font-size: 15px; line-height: 1.55; color: rgb(110, 110, 115); margin: 0px;">Design, photometry, and final QC live in Montclair and Riverside. Production goes where it serves the program — US, Mexico, China, or Thailand — with COO stated on every product.</p></div>
+</div>
+</div></section><section data-screen-label="09 Timeline" id="timeline" style="padding: 104px 24px; border-top: 1px solid rgb(229, 229, 231);">
+<div style="max-width: 980px; margin: 0px auto;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 14px;">09 · Timeline · 30 Years</p>
+<h2 style="font-size: clamp(38px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin: 0px 0px 48px;">From retail OEM floor to a two-catalog manufacturer.</h2>
+<div style="display: grid;">
+<div style="display: grid; grid-template-columns: 88px 28px 1fr; gap: 14px; padding: 0px 0px 36px;"><span style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; text-align: right; padding-top: 1px;">1997</span><div style="display: flex; flex-direction: column; align-items: center; align-self: stretch;"><div style="width: 12px; height: 12px; border-radius: 50%; background: rgb(29, 29, 31); flex: 0 0 auto; margin-top: 6px;"></div><div style="flex: 1 1 0%; width: 2px; background: rgb(229, 229, 231); margin-top: 6px;"></div></div><div><h3 style="font-size: 17px; font-weight: 600; margin: 0px 0px 4px;">Founded in Montclair, CA</h3><p style="font-size: 15px; color: rgb(110, 110, 115); line-height: 1.5; margin: 0px;">An OEM and white-label lighting manufacturer, building to retail program spec from day one.</p></div></div>
+<div style="display: grid; grid-template-columns: 88px 28px 1fr; gap: 14px; padding: 0px 0px 36px;"><span style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; text-align: right; padding-top: 1px;">2001</span><div style="display: flex; flex-direction: column; align-items: center; align-self: stretch;"><div style="width: 12px; height: 12px; border-radius: 50%; background: rgb(29, 29, 31); flex: 0 0 auto; margin-top: 6px;"></div><div style="flex: 1 1 0%; width: 2px; background: rgb(229, 229, 231); margin-top: 6px;"></div></div><div><h3 style="font-size: 17px; font-weight: 600; margin: 0px 0px 4px;">First national retail program ships</h3><p style="font-size: 15px; color: rgb(110, 110, 115); line-height: 1.5; margin: 0px;">The first planogram win — and the first quarterly factory audit passed.</p></div></div>
+<div style="display: grid; grid-template-columns: 88px 28px 1fr; gap: 14px; padding: 0px 0px 36px;"><span style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; text-align: right; padding-top: 1px;">2008</span><div style="display: flex; flex-direction: column; align-items: center; align-self: stretch;"><div style="width: 12px; height: 12px; border-radius: 50%; background: rgb(29, 29, 31); flex: 0 0 auto; margin-top: 6px;"></div><div style="flex: 1 1 0%; width: 2px; background: rgb(229, 229, 231); margin-top: 6px;"></div></div><div><h3 style="font-size: 17px; font-weight: 600; margin: 0px 0px 4px;">12-warehouse US footprint completed</h3><p style="font-size: 15px; color: rgb(110, 110, 115); line-height: 1.5; margin: 0px;">Same-week replenishment coverage for every national account.</p></div></div>
+<div style="display: grid; grid-template-columns: 88px 28px 1fr; gap: 14px; padding: 0px 0px 36px;"><span style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; text-align: right; padding-top: 1px;">2012</span><div style="display: flex; flex-direction: column; align-items: center; align-self: stretch;"><div style="width: 12px; height: 12px; border-radius: 50%; background: rgb(29, 29, 31); flex: 0 0 auto; margin-top: 6px;"></div><div style="flex: 1 1 0%; width: 2px; background: rgb(229, 229, 231); margin-top: 6px;"></div></div><div><h3 style="font-size: 17px; font-weight: 600; margin: 0px 0px 4px;">PolyGrow launches</h3><p style="font-size: 15px; color: rgb(110, 110, 115); line-height: 1.5; margin: 0px;">The first ALG-owned brand program reaches retail shelves.</p></div></div>
+<div style="display: grid; grid-template-columns: 88px 28px 1fr; gap: 14px; padding: 0px 0px 36px;"><span style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; text-align: right; padding-top: 1px;">2014</span><div style="display: flex; flex-direction: column; align-items: center; align-self: stretch;"><div style="width: 12px; height: 12px; border-radius: 50%; background: rgb(29, 29, 31); flex: 0 0 auto; margin-top: 6px;"></div><div style="flex: 1 1 0%; width: 2px; background: rgb(229, 229, 231); margin-top: 6px;"></div></div><div><h3 style="font-size: 17px; font-weight: 600; margin: 0px 0px 4px;">Two-channel structure formalized</h3><p style="font-size: 15px; color: rgb(110, 110, 115); line-height: 1.5; margin: 0px;">Separate sales organizations and price books; the zero channel-conflict policy is adopted.</p></div></div>
+<div style="display: grid; grid-template-columns: 88px 28px 1fr; gap: 14px; padding: 0px 0px 36px;"><span style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; text-align: right; padding-top: 1px;">2015</span><div style="display: flex; flex-direction: column; align-items: center; align-self: stretch;"><div style="width: 12px; height: 12px; border-radius: 50%; background: rgb(29, 29, 31); flex: 0 0 auto; margin-top: 6px;"></div><div style="flex: 1 1 0%; width: 2px; background: rgb(229, 229, 231); margin-top: 6px;"></div></div><div><h3 style="font-size: 17px; font-weight: 600; margin: 0px 0px 4px;">Riverside, CA production opens</h3><p style="font-size: 15px; color: rgb(110, 110, 115); line-height: 1.5; margin: 0px;">US driver assembly and final QA come in-house.</p></div></div>
+<div style="display: grid; grid-template-columns: 88px 28px 1fr; gap: 14px; padding: 0px 0px 36px;"><span style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; text-align: right; padding-top: 1px;">2018</span><div style="display: flex; flex-direction: column; align-items: center; align-self: stretch;"><div style="width: 12px; height: 12px; border-radius: 50%; background: rgb(29, 29, 31); flex: 0 0 auto; margin-top: 6px;"></div><div style="flex: 1 1 0%; width: 2px; background: rgb(229, 229, 231); margin-top: 6px;"></div></div><div><h3 style="font-size: 17px; font-weight: 600; margin: 0px 0px 4px;">plano<span style="color: rgb(243, 39, 64);">Ⓐ</span>RCH and lampar<span style="color: rgb(243, 39, 64);">Ⓐ</span>RCH ship</h3><p style="font-size: 15px; color: rgb(110, 110, 115); line-height: 1.5; margin: 0px;">The first two C&amp;I brand families reach authorized distribution.</p></div></div>
+<div style="display: grid; grid-template-columns: 88px 28px 1fr; gap: 14px; padding: 0px 0px 36px;"><span style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; text-align: right; padding-top: 1px;">2021</span><div style="display: flex; flex-direction: column; align-items: center; align-self: stretch;"><div style="width: 12px; height: 12px; border-radius: 50%; background: rgb(29, 29, 31); flex: 0 0 auto; margin-top: 6px;"></div><div style="flex: 1 1 0%; width: 2px; background: rgb(229, 229, 231); margin-top: 6px;"></div></div><div><h3 style="font-size: 17px; font-weight: 600; margin: 0px 0px 4px;">contr<span style="color: rgb(243, 39, 64);">Ⓐ</span>LS launches</h3><p style="font-size: 15px; color: rgb(110, 110, 115); line-height: 1.5; margin: 0px;">Networked controls and the <span style="color: rgb(243, 39, 64);">Ⓐ</span>CS by ALG App enter the catalog.</p></div></div>
+<div style="display: grid; grid-template-columns: 88px 28px 1fr; gap: 14px; padding: 0px 0px 36px;"><span style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; text-align: right; padding-top: 1px;">Now</span><div style="display: flex; flex-direction: column; align-items: center; align-self: stretch;"><div style="width: 12px; height: 12px; border-radius: 50%; background: rgb(29, 29, 31); flex: 0 0 auto; margin-top: 6px;"></div><div style="flex: 1 1 0%; width: 2px; background: rgb(229, 229, 231); margin-top: 6px;"></div></div><div><h3 style="font-size: 17px; font-weight: 600; margin: 0px 0px 4px;">Distributor and AURA portals live</h3><p style="font-size: 15px; color: rgb(110, 110, 115); line-height: 1.5; margin: 0px;">ALG Shop for the distributor counter; AURA for the rep desk.</p></div></div>
+</div>
+</div></section><section data-screen-label="Next Step — two doors" id="doors" style="padding: 104px 24px; background: rgb(245, 245, 247);">
+<div style="max-width: 1200px; margin: 0px auto;">
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 14px;">Next Step</p>
+<h2 style="font-size: clamp(38px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin: 0px 0px 48px;">Pick the door you came through.</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 24px;">
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 40px;">
+<svg fill="none" height="30" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-bottom: 12px;" viewbox="0 0 24 24" width="30"><path d="M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16M9.5 20v-6h5v6"></path></svg>
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">Retail · DIY</p>
+<h3 style="font-size: clamp(24px, 2.4vw, 32px); font-weight: 600; letter-spacing: -0.02em; margin: 0px 0px 20px;">On the shelf, near you.</h3>
+<div style="display: grid; gap: 10px; font-size: 15px; line-height: 1.5; color: rgb(66, 66, 69); margin-bottom: 28px;">
+<div style="display: flex; gap: 10px;"><span style="color: rgb(134, 134, 139);">—</span><span>On the shelf at 9 national retailers</span></div>
+<div style="display: flex; gap: 10px;"><span style="color: rgb(134, 134, 139);">—</span><span>6 aisles, from Home to Party</span></div>
+<div style="display: flex; gap: 10px;"><span style="color: rgb(134, 134, 139);">—</span><span>Program warranty handled at the register</span></div>
+</div>
+<div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+<a href="#vetting" style="color: rgb(29, 29, 31); border: 1px solid rgb(210, 210, 215); padding: 11px 22px; border-radius: 980px; font-size: 15px; font-weight: 600;">Shop retail</a>
+<a class="scp0" href="/contact/" style="font-size: 15px; font-weight: 500; color: rgb(29, 29, 31);">Become a retail buyer →</a>
+</div>
+</div>
+<div style="background: rgb(255, 255, 255); border-radius: 16px; padding: 40px;">
+<svg fill="none" height="30" stroke="#86868B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" style="margin-bottom: 12px;" viewbox="0 0 24 24" width="30"><path d="M3 21V9l5.5 3.5V9l5.5 3.5V9l7-2.5V21z"></path><path d="M7 17h2M12 17h2M17 17h2"></path></svg>
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">C&amp;I · Spec-Grade</p>
+<h3 style="font-size: clamp(24px, 2.4vw, 32px); font-weight: 600; letter-spacing: -0.02em; margin: 0px 0px 20px;">On the bid, on time.</h3>
+<div style="display: grid; gap: 10px; font-size: 15px; line-height: 1.5; color: rgb(66, 66, 69); margin-bottom: 28px;">
+<div style="display: flex; gap: 10px;"><span style="color: rgb(134, 134, 139);">—</span><span>2,000+ SKUs across 9 brand families</span></div>
+<div style="display: flex; gap: 10px;"><span style="color: rgb(134, 134, 139);">—</span><span>Quotes in under 4 hours · PRO ships in 5–7 days</span></div>
+<div style="display: flex; gap: 10px;"><span style="color: rgb(134, 134, 139);">—</span><span>5 / 7 / 10-year limited warranty by tier</span></div>
+</div>
+<div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+<a class="scp1" href="/contact/" style="background: rgb(243, 39, 64); color: rgb(255, 255, 255); padding: 11px 22px; border-radius: 980px; font-size: 15px; font-weight: 600; transition: background 0.2s;">Talk to a spec rep</a>
+<a class="scp0" href="/contact/" style="font-size: 15px; font-weight: 500; color: rgb(29, 29, 31);">Request the Product Guide →</a>
+</div>
+</div>
+</div>
+</div></section><div>
+<section style="background: rgb(255, 255, 255); border-top: 1px solid rgb(229, 229, 231); padding: 88px 24px; text-align: center;">
+<h3 style="font-size: clamp(24px, 2.4vw, 32px); font-weight: 600; letter-spacing: -0.02em; color: rgb(29, 29, 31); margin: 0px 0px 8px;">Need a quote, layout, sample, or rebate check?</h3>
+<p style="font-size: clamp(19px, 2.2vw, 22px); color: rgb(110, 110, 115); margin: 0px 0px 28px; line-height: 1.4;">We respond the same business day.</p>
+<div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+<a class="scp1" href="/contact/" style="background: rgb(243, 39, 64); color: rgb(255, 255, 255); padding: 12px 26px; border-radius: 980px; font-size: 15px; font-weight: 600; letter-spacing: 0.02em; transition: background 0.2s;">GET A QUOTE</a>
+<a href="/contact/" style="color: rgb(29, 29, 31); border: 1px solid rgb(210, 210, 215); padding: 12px 26px; border-radius: 980px; font-size: 15px; font-weight: 600; letter-spacing: 0.02em;">REQUEST A PHOTOMETRIC</a>
+</div>
+</section>
+</div></main>
 
-  var mapEl = document.getElementById('algAboutMap');
-  if (!mapEl) return;
-
-  var script = document.createElement('script');
-  script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-  script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
-  script.crossOrigin = '';
-  script.onload = async function () {
-    var L = window.L;
-    // Center on Southern California (Montclair/Riverside area), zoom 7
-    var montclairLatLng = [34.0736, -117.6900];
-    var riversideLatLng = [33.9806, -117.3755];
-    var map = L.map('algAboutMap', { zoomControl: true, scrollWheelZoom: false });
-    map.fitBounds([montclairLatLng, riversideLatLng], { padding: [40, 40], maxZoom: 10 });
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 19,
-    }).addTo(map);
-
-    // Warehouse icon (brand red)
-    function makeIcon(color, shadow) {
-      return L.divIcon({
-        className: '',
-        html: '<div style="width:14px;height:14px;background:' + color + ';border-radius:50%;border:2px solid #fff;box-shadow:0 0 10px ' + shadow + ';"></div>',
-        iconSize: [14, 14],
-        iconAnchor: [7, 7],
-        popupAnchor: [0, -10],
-      });
-    }
-    var iconWh = makeIcon('#F32740', 'rgba(243,39,64,0.7)');
-
-    // ALG warehouse locations only
-    var warehouses = [
-      { name: 'ALG HQ — Montclair, CA', role: 'HQ · Design · Sales · Customer Service', addr: '4615 State Street, Montclair, CA 91763', lat: 34.0736, lon: -117.6900 },
-      { name: 'ALG US Production — Riverside, CA', role: 'US Production · Driver Assembly · Final QA · Branded Fulfillment', addr: '9345 Sycamore Canyon Blvd, Riverside, CA 92508', lat: 33.9806, lon: -117.3755 },
-    ];
-
-    warehouses.forEach(function (r) {
-      var popup = '<div style="font-family:system-ui,sans-serif;min-width:180px;">' +
-        '<div style="font-weight:700;font-size:13px;margin-bottom:4px;">' + r.name + '</div>' +
-        '<div style="font-size:12px;color:#9CA3AF;margin-bottom:4px;">' + r.role + '</div>' +
-        '<div style="font-size:11px;color:#6B7280;">' + r.addr + '</div>' +
-        '</div>';
-      L.marker([r.lat, r.lon], { icon: iconWh }).bindPopup(popup).addTo(map);
-    });
-
-    // CFG-MAP-1: invalidateSize after init so drag doesn't resize the section
-    setTimeout(function () { map.invalidateSize(); }, 0);
-  };
-  document.head.appendChild(script);
+  <script is:inline>
+(function(){
+  var orb=null, raf=null, EASE=0.03;
+  var tx=innerWidth*0.72, ty=innerHeight*0.26, x=tx, y=ty;
+  var fine=matchMedia('(pointer:fine)').matches,
+      still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!fine||still){
+    addEventListener('scroll',function(){ ty=innerHeight*0.26+scrollY*0.06; },{passive:true});
+  } else {
+    addEventListener('pointermove',function(e){ tx=e.clientX; ty=e.clientY; },{passive:true});
+  }
+  function tick(){
+    if(!orb) orb=document.querySelector('.glow-orb');
+    if(orb){ x+=(tx-x)*EASE; y+=(ty-y)*EASE;
+      orb.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)'; }
+    raf=requestAnimationFrame(tick);
+  }
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+    else if(!raf){ raf=requestAnimationFrame(tick); }
+  });
+  raf=requestAnimationFrame(tick);
 })();
-</script>
+  </script>
+</BaseLayout>
