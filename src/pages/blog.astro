@@ -1,0 +1,323 @@
+---
+/**
+ * blog.astro — Blog Index
+ * Route: /blog/
+ * Cat-6 Phase-3 Batch 1 · Design ref: Blog_v3.1.html
+ * Post cards point to # placeholders in this batch (posts ship later).
+ * §7.4 Header exclusion: BaseLayout mounts live production Header + Footer untouched.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = [
+  { k: 'product', cat: 'Product News',    hint: 'planoⒶRCH family expansion — new apertures and CCT options' },
+  { k: 'spec',    cat: 'Spec Notes',      hint: 'Specifying warehouse lighting in 2026 — wattage, mounting height, and controls' },
+  { k: 'rebates', cat: 'Rebates & Codes', hint: 'Title 24 130.1 NLC rebate adders — what qualifies and how to stack them' },
+  { k: 'product', cat: 'Product News',    hint: 'contrⒶLS by ⒶCS App update — new group scheduling and daylight harvesting' },
+  { k: 'company', cat: 'Company',         hint: 'Riverside production expansion — capacity update' },
+  { k: 'spec',    cat: 'Spec Notes',      hint: 'Photometric how-to: reading an IES file for a high-bay layout' },
+];
+---
+
+<BaseLayout
+  title="Blog — Archipelago Lighting Group"
+  description="Product news, spec notes, rebate and code updates — written by the people who answer the phone."
+  bodyClass="page-blog"
+>
+
+<div class="glow-orb" aria-hidden="true"></div>
+
+<!-- ── HERO ─────────────────────────────────────────────────────────────── -->
+<section class="blog-hero">
+  <div class="blog-container">
+    <p class="blog-eyebrow">Blog · Archipelago Lighting Group</p>
+    <h1 class="blog-h1">The latest, from the desk.</h1>
+    <p class="blog-sub">Product news, spec notes, rebate and code updates — written by the people who answer the phone.</p>
+    <div class="blog-pills" id="blog-pills">
+      <button class="pill pill--active" data-cat="all">All</button>
+      <button class="pill" data-cat="product">Product News</button>
+      <button class="pill" data-cat="spec">Spec Notes</button>
+      <button class="pill" data-cat="rebates">Rebates &amp; Codes</button>
+      <button class="pill" data-cat="company">Company</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURED POST ──────────────────────────────────────────────────────── -->
+<section class="blog-featured-section" data-cat-section="product">
+  <div class="blog-container-wide">
+    <a href="#" class="blog-featured-card">
+      <div class="featured-image-slot">
+        <div class="image-placeholder" aria-label="Featured post cover photo">
+          <span>Featured post cover</span>
+        </div>
+      </div>
+      <div class="featured-content">
+        <p class="featured-meta">Featured · Product News · <span class="date-chip">«CONFIRM date»</span></p>
+        <h2 class="featured-title">«CONFIRM — featured post title»</h2>
+        <p class="featured-excerpt">«CONFIRM — one-paragraph standfirst for the featured post.»</p>
+        <span class="read-more">Read more →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ── POST GRID ─────────────────────────────────────────────────────────── -->
+<section class="blog-grid-section">
+  <div class="blog-container-wide">
+    <div class="blog-grid" id="blog-grid">
+      {posts.map((p, i) => (
+        <a href="#" class="blog-card" data-cat={p.k}>
+          <div class="card-image-slot">
+            <div class="image-placeholder" aria-label={`Post cover — ${p.cat}`}>
+              <span>{p.cat}</span>
+            </div>
+          </div>
+          <div class="card-content">
+            <p class="card-meta">{p.cat} · <span class="date-chip">«CONFIRM date»</span></p>
+            <h3 class="card-title">«CONFIRM — {p.hint}»</h3>
+            <p class="card-excerpt">«CONFIRM — two-line excerpt.»</p>
+            <span class="read-more">Read more →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+    <div class="blog-empty" id="blog-empty" style="display:none">
+      <p>No posts in this category yet.</p>
+    </div>
+  </div>
+</section>
+
+</BaseLayout>
+
+<style is:global>
+/* ─── Apple system font stack — overrides global Cormorant/Lato cascade ─── *
+ * Scoped to .page-blog so header and footer keep their own site styles.    *
+ * Weight: headings 600, body 400/normal. No serif. No Lato.                  *
+ * ─────────────────────────────────────────────────────────────────────────── */
+.page-blog,
+.page-blog h1, .page-blog h2, .page-blog h3,
+.page-blog h4, .page-blog h5, .page-blog h6,
+.page-blog p, .page-blog li, .page-blog a,
+.page-blog span, .page-blog td, .page-blog th,
+.page-blog label, .page-blog input, .page-blog textarea,
+.page-blog select, .page-blog button {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.page-blog h1, .page-blog h2, .page-blog h3 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.page-blog h4, .page-blog h5, .page-blog h6 {
+  font-weight: 600;
+}
+.page-blog p, .page-blog li, .page-blog td, .page-blog th {
+  font-weight: 400;
+}
+
+:root {
+  --red: #F32740;
+  --ink: #1D1D1F;
+  --text: #424245;
+  --text-2: #6E6E73;
+  --text-3: #86868B;
+  --line: #D2D2D7;
+  --hairline: #E5E5E7;
+  --panel: #F5F5F7;
+  --bg: #FFFFFF;
+}
+
+/* Glow orb */
+.page-blog .glow-orb {
+  position: fixed;
+  top: 0; left: 0;
+  width: 64vw; height: 64vw;
+  max-width: 880px; max-height: 880px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(243,39,64,.20) 0%,
+    rgba(243,39,64,.09) 36%,
+    transparent 70%);
+  filter: blur(46px);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+  transform: translate(72vw, 26vh) translate(-50%, -50%);
+}
+@media print { .glow-orb { display: none !important; } }
+.page-blog section { position: relative; z-index: 1; }
+
+/* Hero */
+.blog-hero {
+  padding: 96px 24px 48px;
+  text-align: center;
+  background: var(--bg);
+}
+.blog-container { max-width: 980px; margin: 0 auto; }
+.blog-container-wide { max-width: 1200px; margin: 0 auto; }
+.blog-eyebrow {
+  font-size: 12px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-3); margin: 0 0 20px;
+}
+.blog-h1 {
+  font-size: clamp(44px, 6vw, 72px); font-weight: 600;
+  letter-spacing: -.03em; line-height: 1.05; color: var(--ink); margin: 0 0 20px;
+}
+.blog-sub {
+  font-size: clamp(19px, 2.2vw, 24px); color: var(--text-2);
+  line-height: 1.45; margin: 0 auto 40px; max-width: 620px;
+}
+
+/* Category pills */
+.blog-pills {
+  display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+}
+.pill {
+  font-family: inherit; font-size: 13.5px; font-weight: 600;
+  padding: 8px 18px; border-radius: 980px; cursor: pointer;
+  border: 1px solid var(--line); color: var(--text-2); background: var(--bg);
+  transition: all .2s ease;
+}
+.pill--active {
+  border-color: var(--red); color: var(--red); background: var(--bg);
+}
+.pill:hover:not(.pill--active) { border-color: var(--ink); color: var(--ink); }
+
+/* Featured */
+.blog-featured-section { padding: 24px 24px 0; background: var(--bg); }
+.blog-featured-card {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  background: var(--panel);
+  border-radius: 16px;
+  overflow: hidden;
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.blog-featured-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+@media (max-width: 768px) {
+  .blog-featured-card { grid-template-columns: 1fr; }
+}
+.featured-image-slot { min-height: 320px; position: relative; }
+.image-placeholder {
+  position: absolute; inset: 0;
+  background: var(--hairline);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--text-3);
+}
+.featured-content {
+  padding: 40px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.featured-meta {
+  font-size: 11.5px; font-weight: 600; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--text-3); margin: 0 0 12px;
+}
+.date-chip {
+  border-bottom: 1px dashed var(--line);
+  font-style: italic;
+}
+.featured-title {
+  font-size: clamp(24px, 2.6vw, 34px); font-weight: 600;
+  letter-spacing: -.02em; line-height: 1.15; color: var(--ink); margin: 0 0 12px;
+}
+.featured-excerpt {
+  font-size: 16px; color: var(--text-2); line-height: 1.5; margin: 0 0 20px;
+}
+.read-more { font-size: 14px; font-weight: 500; color: var(--ink); }
+.blog-featured-card:hover .read-more { color: var(--red); }
+
+/* Post grid */
+.blog-grid-section { padding: 48px 24px 104px; background: var(--bg); }
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+.blog-card {
+  display: block; border: 1px solid var(--hairline); border-radius: 16px;
+  overflow: hidden; color: var(--ink); text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.blog-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+.card-image-slot { height: 170px; position: relative; }
+.card-content { padding: 24px; }
+.card-meta {
+  font-size: 11px; font-weight: 600; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--text-3); margin: 0 0 10px;
+}
+.card-title {
+  font-size: 19px; font-weight: 600; letter-spacing: -.01em;
+  line-height: 1.25; color: var(--ink); margin: 0 0 8px;
+}
+.card-excerpt {
+  font-size: 14px; color: var(--text-2); line-height: 1.5; margin: 0 0 14px;
+}
+.blog-card:hover .read-more { color: var(--red); }
+
+/* Empty state */
+.blog-empty {
+  border: 1px solid var(--hairline); border-radius: 16px;
+  padding: 56px 24px; text-align: center;
+}
+.blog-empty p { font-size: 17px; color: var(--text-2); margin: 0; }
+</style>
+
+<script is:inline>
+/* ── Glow orb: mouse-follow, EASE 0.03 ──────────────────────────────────── */
+(function(){
+  var orb=null, raf=null, EASE=0.03;
+  var tx=innerWidth*0.72, ty=innerHeight*0.26, x=tx, y=ty;
+  var fine=matchMedia('(pointer:fine)').matches,
+      still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!fine||still){
+    addEventListener('scroll',function(){ ty=innerHeight*0.26+scrollY*0.06; },{passive:true});
+  } else {
+    addEventListener('pointermove',function(e){ tx=e.clientX; ty=e.clientY; },{passive:true});
+  }
+  function tick(){
+    if(!orb) orb=document.querySelector('.glow-orb');
+    if(orb){ x+=(tx-x)*EASE; y+=(ty-y)*EASE;
+      orb.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)'; }
+    raf=requestAnimationFrame(tick);
+  }
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+    else if(!raf){ raf=requestAnimationFrame(tick); }
+  });
+  raf=requestAnimationFrame(tick);
+})();
+
+/* ── Category filter ────────────────────────────────────────────────────── */
+(function(){
+  var pills = document.querySelectorAll('.pill');
+  var cards = document.querySelectorAll('.blog-card');
+  var empty = document.getElementById('blog-empty');
+  var featuredSection = document.querySelector('.blog-featured-section');
+
+  pills.forEach(function(pill){
+    pill.addEventListener('click', function(){
+      var cat = pill.getAttribute('data-cat');
+      pills.forEach(function(p){ p.classList.toggle('pill--active', p === pill); });
+      var visible = 0;
+      cards.forEach(function(card){
+        var show = cat === 'all' || card.getAttribute('data-cat') === cat;
+        card.style.display = show ? '' : 'none';
+        if(show) visible++;
+      });
+      if(empty) empty.style.display = visible === 0 ? '' : 'none';
+      // Hide featured section when filtering to non-product categories
+      if(featuredSection){
+        featuredSection.style.display = (cat === 'all' || cat === 'product') ? '' : 'none';
+      }
+    });
+  });
+})();
+</script>

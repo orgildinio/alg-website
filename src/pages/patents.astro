@@ -1,0 +1,177 @@
+---
+/**
+ * patents.astro — Patents
+ * Route: /patents/
+ * Cat-6 Phase-3 Batch 1 · Design ref: Legal_v3.1.html (Patents variant)
+ * §7.4 Header exclusion: BaseLayout mounts live production Header + Footer untouched.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Patents — Archipelago Lighting Group"
+  description="ALG virtual patent marking page — products covered by US patents, pending applications, and the statutory notice under 35 U.S.C. 287."
+  bodyClass="page-legal page-patents"
+>
+
+<div class="glow-orb" aria-hidden="true"></div>
+
+<!-- ── HERO ─────────────────────────────────────────────────────────────── -->
+<section class="legal-hero" id="patents">
+  <div class="legal-container">
+    <p class="legal-eyebrow">Legal · Archipelago Lighting Group</p>
+    <div class="legal-seg-wrap">
+      <div class="legal-seg">
+        <a href="/privacy-policy/" class="seg-btn">Privacy Policy</a>
+        <a href="/terms/" class="seg-btn">Terms &amp; Conditions</a>
+        <a href="/patents/" class="seg-btn seg-btn--active">Patents</a>
+      </div>
+    </div>
+    <h1 class="legal-h1">Patents</h1>
+    <p class="legal-updated">Last updated: <span class="legal-date-chip">July 2026</span></p>
+  </div>
+</section>
+
+<!-- ── BODY ─────────────────────────────────────────────────────────────── -->
+<section class="legal-body">
+  <div class="legal-container">
+    <div class="legal-grid">
+
+      <nav class="legal-toc" aria-label="On this page">
+        <p class="toc-label">On this page</p>
+        <a href="#overview" class="toc-link">Overview</a>
+        <a href="#marking" class="toc-link">Virtual patent marking</a>
+        <a href="#table" class="toc-link">Products &amp; patents</a>
+        <a href="#pending" class="toc-link">Pending applications</a>
+        <a href="#contact-legal" class="toc-link">Contact</a>
+      </nav>
+
+      <article class="legal-article">
+
+        <div id="overview" class="legal-section">
+          <h2 class="legal-h2">Overview</h2>
+          <p>This page serves as ALG's virtual patent marking notice under 35 U.S.C. 287(a). Products listed below are protected by one or more US patents. This list is updated periodically as new patents issue and as products are discontinued. The absence of a product from this list does not mean it is unpatented — additional applications may be pending.</p>
+        </div>
+
+        <div id="marking" class="legal-section">
+          <h2 class="legal-h2">Virtual patent marking (35 U.S.C. 287)</h2>
+          <p>The following ALG products are protected by patents in the United States. This webpage constitutes notice to the public under 35 U.S.C. 287(a) that these products are patented. Unauthorized manufacture, use, sale, or importation of these products may constitute patent infringement.</p>
+        </div>
+
+        <div id="table" class="legal-section">
+          <h2 class="legal-h2">Products &amp; patents</h2>
+          <p>The table below maps ALG product families to the US patent numbers that cover them. Patent numbers link to the USPTO patent database.</p>
+          <div class="patents-table-wrap">
+            <table class="patents-table">
+              <thead>
+                <tr>
+                  <th>Product family</th>
+                  <th>Category</th>
+                  <th>US Patent(s)</th>
+                  <th>Subject matter</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>plano<span class="aa">Ⓐ</span>RCH (Astra, Solstice, Spectra, Luna, Lara, Luxmark)</td>
+                  <td>Commercial downlight</td>
+                  <td class="patent-nums"><span class="patent-chip">Pending</span></td>
+                  <td>Twist-lock modular optic interchange; integrated J-Box thermal management</td>
+                </tr>
+                <tr>
+                  <td>retro<span class="aa">Ⓐ</span>RCH (retroarch-p1, retroarch-t1)</td>
+                  <td>Retrofit panel</td>
+                  <td class="patent-nums"><span class="patent-chip">Pending</span></td>
+                  <td>Drop-in retrofit panel for 2×2 and 2×4 troffer housings; door-kit assembly</td>
+                </tr>
+                <tr>
+                  <td>pro<span class="aa">Ⓐ</span>RCH (proarch, proarch-t)</td>
+                  <td>Commercial high bay</td>
+                  <td class="patent-nums"><span class="patent-chip">Pending</span></td>
+                  <td>Modular wattage-select driver architecture; sensor-ready /SR port</td>
+                </tr>
+                <tr>
+                  <td>contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS</td>
+                  <td>Lighting controls</td>
+                  <td class="patent-nums"><span class="patent-chip">Pending</span></td>
+                  <td>Bluetooth Mesh occupancy and daylight harvesting control system</td>
+                </tr>
+                <tr>
+                  <td>track<span class="aa">Ⓐ</span>DAPT</td>
+                  <td>Track adapter</td>
+                  <td class="patent-nums"><span class="patent-chip">Pending</span></td>
+                  <td>Universal track adapter for H/J/L track systems</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="patents-note">Patent numbers will be listed here as they issue. "Pending" indicates one or more patent applications have been filed and are under examination at the USPTO.</p>
+        </div>
+
+        <div id="pending" class="legal-section">
+          <h2 class="legal-h2">Pending applications</h2>
+          <p>ALG has additional patent applications pending in the United States and may have applications pending in other jurisdictions. Products covered by pending applications are entitled to patent protection upon issuance. This page will be updated within 30 days of any patent issuing.</p>
+        </div>
+
+        <div id="contact-legal" class="legal-section legal-section--contact">
+          <h2 class="legal-h2">Contact</h2>
+          <p>Patent inquiries: <a href="mailto:legal@archipelagolighting.com" class="legal-link">legal@archipelagolighting.com</a> · Archipelago Lighting Group, 4615 State Street, Montclair, CA 91763 · +1 (866) 912-3220.</p>
+        </div>
+
+      </article>
+    </div>
+  </div>
+</section>
+
+</BaseLayout>
+
+<style is:global>
+/* Shared legal template — single source of truth for all three legal pages */
+@import '../styles/legal.css';
+</style>
+
+<script is:inline>
+(function(){
+  var orb=null, raf=null, EASE=0.03;
+  var tx=innerWidth*0.72, ty=innerHeight*0.26, x=tx, y=ty;
+  var fine=matchMedia('(pointer:fine)').matches,
+      still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!fine||still){
+    addEventListener('scroll',function(){ ty=innerHeight*0.26+scrollY*0.06; },{passive:true});
+  } else {
+    addEventListener('pointermove',function(e){ tx=e.clientX; ty=e.clientY; },{passive:true});
+  }
+  function tick(){
+    if(!orb) orb=document.querySelector('.glow-orb');
+    if(orb){ x+=(tx-x)*EASE; y+=(ty-y)*EASE;
+      orb.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)'; }
+    raf=requestAnimationFrame(tick);
+  }
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+    else if(!raf){ raf=requestAnimationFrame(tick); }
+  });
+  raf=requestAnimationFrame(tick);
+})();
+(function(){
+  var links = document.querySelectorAll('.toc-link');
+  if(!links.length) return;
+  var ids = Array.from(links).map(function(l){ return l.getAttribute('href').replace('#',''); });
+  function onScroll(){
+    var scrollY = window.scrollY + 120;
+    var active = ids[0];
+    ids.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el && el.offsetTop <= scrollY) active = id;
+    });
+    links.forEach(function(l){
+      var isActive = l.getAttribute('href') === '#'+active;
+      l.style.color = isActive ? 'var(--red)' : '';
+      l.style.fontWeight = isActive ? '600' : '';
+      l.style.background = isActive ? 'rgba(243,39,64,.05)' : '';
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
