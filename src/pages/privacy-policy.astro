@@ -1,0 +1,375 @@
+---
+/**
+ * privacy-policy.astro — Privacy Policy
+ * Route: /privacy-policy/
+ * Cat-6 Phase-3 Batch 1 · Design ref: Legal_v3.1.html
+ * Canonical route. /privacy → /privacy-policy/ 301 in _redirects (ISS-54/58).
+ *
+ * §7.4 Header exclusion: BaseLayout mounts live production Header + Footer untouched.
+ * §7.1 Glow orb: one orb, mouse-follow script (EASE 0.03, touch/reduced-motion scroll-drift,
+ *      rAF pauses on hidden tab). Light-page alphas: 0.20/0.09.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Privacy Policy — Archipelago Lighting Group"
+  description="ALG's privacy policy — what we collect, how we use it, your CCPA/CPRA rights, and how to contact us."
+  bodyClass="page-legal page-privacy"
+>
+
+<!-- ── GLOW ORB ──────────────────────────────────────────────────────────── -->
+<div class="glow-orb" aria-hidden="true"></div>
+
+<!-- ── HERO ─────────────────────────────────────────────────────────────── -->
+<section class="legal-hero" id="privacy">
+  <div class="legal-container">
+    <p class="legal-eyebrow">Legal · Archipelago Lighting Group</p>
+    <div class="legal-seg-wrap">
+      <div class="legal-seg">
+        <a href="/privacy-policy/" class="seg-btn seg-btn--active">Privacy Policy</a>
+        <a href="/terms/" class="seg-btn">Terms &amp; Conditions</a>
+        <a href="/patents/" class="seg-btn">Patents</a>
+      </div>
+    </div>
+    <h1 class="legal-h1">Privacy Policy</h1>
+    <p class="legal-updated">Last updated: <span class="legal-date-chip">July 2026</span></p>
+  </div>
+</section>
+
+<!-- ── BODY ─────────────────────────────────────────────────────────────── -->
+<section class="legal-body">
+  <div class="legal-container">
+    <div class="legal-grid">
+
+      <!-- Sticky "On this page" nav -->
+      <nav class="legal-toc" aria-label="On this page">
+        <p class="toc-label">On this page</p>
+        <a href="#overview" class="toc-link">Overview</a>
+        <a href="#collect" class="toc-link">Information we collect</a>
+        <a href="#use" class="toc-link">How we use information</a>
+        <a href="#cookies" class="toc-link">Cookies &amp; analytics</a>
+        <a href="#sharing" class="toc-link">Sharing &amp; disclosure</a>
+        <a href="#retention" class="toc-link">Data retention</a>
+        <a href="#rights" class="toc-link">Your rights (CCPA/CPRA)</a>
+        <a href="#security" class="toc-link">Security</a>
+        <a href="#changes" class="toc-link">Changes to this policy</a>
+        <a href="#contact-legal" class="toc-link">Contact</a>
+      </nav>
+
+      <!-- Article -->
+      <article class="legal-article">
+
+        <div id="overview" class="legal-section">
+          <h2 class="legal-h2">Overview</h2>
+          <p>Archipelago Lighting Group ("ALG," "we," "our," or "us") operates <strong>archipelagolighting.com</strong> and related portals. This policy explains what personal information we collect when you request a quote, submit a warranty claim, use the ALG Shop, or browse our site — and how we use, share, and protect it. It applies to all visitors, customers, reps, and distributors who interact with ALG online or through our sales desk.</p>
+        </div>
+
+        <div id="collect" class="legal-section">
+          <h2 class="legal-h2">Information we collect</h2>
+          <p>We collect information you give us directly — your name, company, work email, phone, project address, and purchase order details when you submit a quote request, RMA, or contact form. We also collect account credentials and order history when you sign in to ALG Shop or the AURA portal. Automatically, we collect standard server log data (IP address, browser type, referring URL, pages visited, and timestamps) and, where cookies are enabled, session identifiers and analytics signals. We do not collect payment card data directly; card transactions are processed by our payment processor under their own PCI-DSS controls.</p>
+        </div>
+
+        <div id="use" class="legal-section">
+          <h2 class="legal-h2">How we use information</h2>
+          <p>We use the information we collect to fulfill quote requests and process orders; to route warranty and RMA claims to the correct desk; to connect you with the sales rep or distributor covering your territory; to send order confirmations, shipping notifications, and warranty correspondence; to improve our website and product documentation; and to comply with applicable law. We do not use your information for behavioral advertising or sell it to third parties for their own marketing.</p>
+        </div>
+
+        <div id="cookies" class="legal-section">
+          <h2 class="legal-h2">Cookies &amp; analytics</h2>
+          <p>Our site uses strictly necessary cookies (session management, CSRF protection) and, where you consent, analytics cookies (Microsoft Clarity, used to understand aggregate page usage). We do not use third-party advertising cookies. You can opt out of analytics cookies by setting your browser to block third-party cookies or by using your browser's built-in privacy controls. Opting out does not affect your ability to use the site or submit requests.</p>
+        </div>
+
+        <div id="sharing" class="legal-section">
+          <h2 class="legal-h2">Sharing &amp; disclosure</h2>
+          <p>We share your information with the ALG sales rep and stocking distributor assigned to your territory, solely to fulfill your request. We share it with service providers (hosting, order management, CRM, rebate tracking) under data processing agreements that restrict their use to providing services to us. We may disclose information when required by law, court order, or to protect the rights and safety of ALG or others. We do not sell personal information.</p>
+        </div>
+
+        <div id="retention" class="legal-section">
+          <h2 class="legal-h2">Data retention</h2>
+          <p>We retain contact and quote data for three years from last interaction, or longer if required for an open warranty claim or legal matter. Order and invoice records are retained for seven years to satisfy tax and audit requirements. You may request deletion of your data at any time (see Your rights below); we will honor requests subject to our legal retention obligations.</p>
+        </div>
+
+        <div id="rights" class="legal-section">
+          <h2 class="legal-h2">Your rights (CCPA/CPRA)</h2>
+          <p>California residents have the right to know what personal information we have collected about them, to request deletion of that information, to correct inaccurate information, and to opt out of any sale or sharing of personal information (we do not sell or share personal information for cross-context behavioral advertising). To exercise these rights, email <a href="mailto:privacy@archipelagolighting.com" class="legal-link">privacy@archipelagolighting.com</a> with "Privacy Request" in the subject line. We will respond within 45 days. We will not discriminate against you for exercising your privacy rights.</p>
+        </div>
+
+        <div id="security" class="legal-section">
+          <h2 class="legal-h2">Security</h2>
+          <p>We use HTTPS for all data in transit. ALG Shop and AURA portal credentials are hashed and salted; we never store plaintext passwords. Access to customer data is restricted to ALG staff with a business need. Despite these measures, no internet transmission is completely secure; if you believe your account has been compromised, contact us immediately at <a href="mailto:privacy@archipelagolighting.com" class="legal-link">privacy@archipelagolighting.com</a>.</p>
+        </div>
+
+        <div id="changes" class="legal-section">
+          <h2 class="legal-h2">Changes to this policy</h2>
+          <p>We may update this policy as our practices change or as law requires. When we do, we will update the "Last updated" date at the top of this page. Material changes will be announced via a notice on our website. Continued use of our site after a change constitutes acceptance of the updated policy.</p>
+        </div>
+
+        <div id="contact-legal" class="legal-section legal-section--contact">
+          <h2 class="legal-h2">Contact</h2>
+          <p>Questions about this policy: <a href="mailto:privacy@archipelagolighting.com" class="legal-link">privacy@archipelagolighting.com</a> · Archipelago Lighting Group, 4615 State Street, Montclair, CA 91763 · +1 (866) 912-3220.</p>
+        </div>
+
+      </article>
+    </div>
+  </div>
+</section>
+
+</BaseLayout>
+
+<style is:global>
+/* ── Legal pages shared design system ────────────────────────────────────── */
+/* Tokens */
+:root {
+  --red: #F32740;
+  --red-hover: #D91E36;
+  --ink: #1D1D1F;
+  --text: #424245;
+  --text-2: #6E6E73;
+  --text-3: #86868B;
+  --line: #D2D2D7;
+  --hairline: #E5E5E7;
+  --panel: #F5F5F7;
+  --bg: #FFFFFF;
+}
+
+/* Glow orb — light-page alphas (0.20/0.09) */
+.page-legal .glow-orb {
+  position: fixed;
+  top: 0; left: 0;
+  width: 64vw; height: 64vw;
+  max-width: 880px; max-height: 880px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(243,39,64,.20) 0%,
+    rgba(243,39,64,.09) 36%,
+    transparent 70%);
+  filter: blur(46px);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+  transform: translate(72vw, 26vh) translate(-50%, -50%);
+}
+@media print { .glow-orb { display: none !important; } }
+
+/* Ensure content paints above orb */
+.page-legal main > section,
+.page-legal main > nav,
+.page-legal .legal-hero,
+.page-legal .legal-body {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero */
+.legal-hero {
+  padding: 64px 24px 48px;
+  border-bottom: 1px solid var(--hairline);
+  background: var(--bg);
+}
+.legal-container {
+  max-width: 980px;
+  margin: 0 auto;
+}
+.legal-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 24px;
+}
+.legal-seg-wrap {
+  margin-bottom: 32px;
+}
+.legal-seg {
+  display: inline-flex;
+  background: var(--panel);
+  border-radius: 980px;
+  padding: 4px;
+  gap: 0;
+}
+.seg-btn {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 20px;
+  border-radius: 980px;
+  border: none;
+  background: none;
+  color: var(--text-2);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all .2s ease;
+  white-space: nowrap;
+}
+.seg-btn--active {
+  background: #FFFFFF;
+  color: var(--red);
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+.seg-btn:hover:not(.seg-btn--active) {
+  color: var(--ink);
+}
+.legal-h1 {
+  font-size: clamp(44px, 6vw, 72px);
+  font-weight: 600;
+  letter-spacing: -.03em;
+  line-height: 1.05;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+.legal-updated {
+  font-size: 15px;
+  color: var(--text-2);
+  margin: 0;
+}
+.legal-date-chip {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1px 8px;
+  font-size: 14px;
+}
+
+/* Body layout */
+.legal-body {
+  padding: 64px 24px 104px;
+  background: var(--bg);
+}
+.legal-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 56px;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .legal-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .legal-toc {
+    position: static !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    padding: 16px;
+    background: var(--panel);
+    border-radius: 12px;
+  }
+  .toc-label { width: 100%; margin-bottom: 4px; }
+}
+
+/* TOC */
+.legal-toc {
+  position: sticky;
+  top: 80px;
+}
+.toc-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 14px;
+}
+.toc-link {
+  display: block;
+  font-size: 13.5px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  color: var(--text-2);
+  text-decoration: none;
+  line-height: 1.35;
+  transition: color .2s ease, background .2s ease;
+}
+.toc-link:hover {
+  color: var(--red);
+  background: rgba(243,39,64,.05);
+}
+
+/* Article */
+.legal-article {
+  display: grid;
+  gap: 48px;
+}
+.legal-section {
+  scroll-margin-top: 90px;
+}
+.legal-h2 {
+  font-size: clamp(24px, 2.4vw, 32px);
+  font-weight: 600;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  margin: 0 0 14px;
+  line-height: 1.2;
+}
+.legal-section p {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+.legal-section p:last-child { margin-bottom: 0; }
+.legal-link {
+  color: var(--ink);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal-link:hover { color: var(--red); }
+.legal-section--contact {
+  border-top: 1px solid var(--hairline);
+  padding-top: 32px;
+}
+</style>
+
+<script is:inline>
+/* ── Cat-6 glow orb: mouse-follow, EASE 0.03, touch/reduced-motion scroll-drift,
+       rAF pauses on hidden tab. Canonical from Legal_v3.1 mockup. ──────── */
+(function(){
+  var orb=null, raf=null, EASE=0.03;
+  var tx=innerWidth*0.72, ty=innerHeight*0.26, x=tx, y=ty;
+  var fine=matchMedia('(pointer:fine)').matches,
+      still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!fine||still){
+    addEventListener('scroll',function(){ ty=innerHeight*0.26+scrollY*0.06; },{passive:true});
+  } else {
+    addEventListener('pointermove',function(e){ tx=e.clientX; ty=e.clientY; },{passive:true});
+  }
+  function tick(){
+    if(!orb) orb=document.querySelector('.glow-orb');
+    if(orb){ x+=(tx-x)*EASE; y+=(ty-y)*EASE;
+      orb.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)'; }
+    raf=requestAnimationFrame(tick);
+  }
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+    else if(!raf){ raf=requestAnimationFrame(tick); }
+  });
+  raf=requestAnimationFrame(tick);
+})();
+
+/* ── Smooth-scroll active TOC highlight ─────────────────────────────────── */
+(function(){
+  var links = document.querySelectorAll('.toc-link');
+  if(!links.length) return;
+  var ids = Array.from(links).map(function(l){ return l.getAttribute('href').replace('#',''); });
+  function onScroll(){
+    var scrollY = window.scrollY + 120;
+    var active = ids[0];
+    ids.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el && el.offsetTop <= scrollY) active = id;
+    });
+    links.forEach(function(l){
+      var isActive = l.getAttribute('href') === '#'+active;
+      l.style.color = isActive ? 'var(--red)' : '';
+      l.style.fontWeight = isActive ? '600' : '';
+      l.style.background = isActive ? 'rgba(243,39,64,.05)' : '';
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>

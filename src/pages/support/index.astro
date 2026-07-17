@@ -1,0 +1,359 @@
+---
+/**
+ * support/index.astro — Support Hub
+ * Route: /support/
+ * Cat-6 Phase-3 Batch 1 · Design ref: Support_v3.1.html
+ * §7.4 Header exclusion: BaseLayout mounts live production Header + Footer untouched.
+ * Card targets: existing live routes only (library, rebate-center, returns, contact,
+ *   find-a-rep, find-a-distributor, about). No invented targets.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Support — Archipelago Lighting Group"
+  description="ALG support hub — quotes, returns, spec files, rebates, reps, and warranty. Every desk, one directory."
+  bodyClass="page-support"
+>
+
+<div class="glow-orb" aria-hidden="true"></div>
+
+<!-- ── HERO ─────────────────────────────────────────────────────────────── -->
+<section class="support-hero">
+  <div class="support-container">
+    <p class="support-eyebrow">Support · Archipelago Lighting Group</p>
+    <h1 class="support-h1">Every desk, one directory.</h1>
+    <p class="support-sub">Quotes, returns, spec files, rebates, reps — pick the door. Or call the main line: (866) 912-3220, Mon–Fri PT.</p>
+  </div>
+</section>
+
+<!-- ── DIRECTORY GRID ────────────────────────────────────────────────────── -->
+<section class="support-directory">
+  <div class="support-container-wide">
+
+    <div class="support-grid">
+
+      <!-- Contact -->
+      <a href="/contact/" class="support-card">
+        <div class="card-header">
+          <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 5h16v11H9l-5 4z"/>
+          </svg>
+          <span class="card-eyebrow">Talk to us</span>
+        </div>
+        <h3 class="card-title">Contact</h3>
+        <p class="card-body">Quote desk, spec engineer, warranty, press — one routed form, direct dials.</p>
+        <span class="card-cta">Open →</span>
+      </a>
+
+      <!-- Returns & Exchanges -->
+      <a href="/support/returns/" class="support-card">
+        <div class="card-header">
+          <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 9h12a4 4 0 010 8H9"/>
+            <path d="M8 5L4 9l4 4"/>
+          </svg>
+          <span class="card-eyebrow">RMA · 48-hr auth</span>
+        </div>
+        <h3 class="card-title">Returns &amp; Exchanges</h3>
+        <p class="card-body">Photo-first RMA requests in under 3 minutes. Most claims need no return shipping.</p>
+        <span class="card-cta">Open →</span>
+      </a>
+
+      <!-- Resource Library -->
+      <a href="/support/library/" class="support-card">
+        <div class="card-header">
+          <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 5.5C5.5 4.5 7.5 4 9.5 4.5c1 .2 2 .7 2.5 1.5.5-.8 1.5-1.3 2.5-1.5 2-.5 4 0 5.5 1V19c-1.5-1-3.5-1.5-5.5-1-1 .2-2 .7-2.5 1.5-.5-.8-1.5-1.3-2.5-1.5-2-.5-4 0-5.5 1z"/>
+            <path d="M12 6v13"/>
+          </svg>
+          <span class="card-eyebrow">IES · Cut sheets · Catalogs</span>
+        </div>
+        <h3 class="card-title">Resource Library</h3>
+        <p class="card-body">IES files by SKU, cut sheets for every ECO / PRO / PRO+ family, catalogs, and controls drawings.</p>
+        <span class="card-cta">Open →</span>
+      </a>
+
+      <!-- Rebate Center -->
+      <a href="/support/rebate-center/" class="support-card">
+        <div class="card-header">
+          <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="7.5" cy="7.5" r="2.2"/>
+            <circle cx="16.5" cy="16.5" r="2.2"/>
+            <path d="M18 6L6 18"/>
+          </svg>
+          <span class="card-eyebrow">Powered by Encentiv</span>
+        </div>
+        <h3 class="card-title">Rebate Center</h3>
+        <p class="card-body">Live utility rebate lookup by ZIP and SKU, powered by Encentiv.</p>
+        <span class="card-cta">Open →</span>
+      </a>
+
+      <!-- Warranty -->
+      <a href="mailto:warranty@archipelagolighting.com" class="support-card">
+        <div class="card-header">
+          <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3l7 2.8v5.6c0 4.3-2.9 7.3-7 8.9-4.1-1.6-7-4.6-7-8.9V5.8z"/>
+          </svg>
+          <span class="card-eyebrow">5 / 7 / 10-yr by tier</span>
+        </div>
+        <h3 class="card-title">Warranty</h3>
+        <p class="card-body">The written Limited Warranty, LaborShield terms, and the warranty desk.</p>
+        <span class="card-cta">Open →</span>
+      </a>
+
+      <!-- Sample Request -->
+      <a href="/contact/#form" class="support-card">
+        <div class="card-header">
+          <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3.5 7.5L12 3l8.5 4.5v9L12 21l-8.5-4.5z"/>
+            <path d="M3.5 7.5L12 12l8.5-4.5M12 12v9"/>
+          </svg>
+          <span class="card-eyebrow">Same-week on stock SKUs</span>
+        </div>
+        <h3 class="card-title">Sample Request</h3>
+        <p class="card-body">Mockup and counter samples through your rep or the spec desk.</p>
+        <span class="card-cta">Open →</span>
+      </a>
+
+      <!-- Find a Rep -->
+      <a href="/find-a-rep/" class="support-card">
+        <div class="card-header">
+          <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="8" r="3.5"/>
+            <path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/>
+          </svg>
+          <span class="card-eyebrow">28 active reps</span>
+        </div>
+        <h3 class="card-title">Find a Rep</h3>
+        <p class="card-body">Spec support, pricing, project tracking, and submittals by territory.</p>
+        <span class="card-cta">Open →</span>
+      </a>
+
+      <!-- Find a Distributor -->
+      <a href="/find-a-distributor/" class="support-card">
+        <div class="card-header">
+          <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 21s-6.5-5.2-6.5-10a6.5 6.5 0 0113 0c0 4.8-6.5 10-6.5 10z"/>
+            <circle cx="12" cy="10.7" r="2.2"/>
+          </svg>
+          <span class="card-eyebrow">29 stocking locations</span>
+        </div>
+        <h3 class="card-title">Find a Distributor</h3>
+        <p class="card-body">Stocking distributors and 12 ALG warehouses, searchable by ZIP.</p>
+        <span class="card-cta">Open →</span>
+      </a>
+
+      <!-- About ALG -->
+      <a href="/about/" class="support-card">
+        <div class="card-header">
+          <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="5" y="3.5" width="14" height="17"/>
+            <path d="M9 7.5h2M13 7.5h2M9 11h2M13 11h2M9 14.5h2M13 14.5h2M10.5 20.5V17h3v3.5"/>
+          </svg>
+          <span class="card-eyebrow">Since 1997</span>
+        </div>
+        <h3 class="card-title">About ALG</h3>
+        <p class="card-body">Two channels, one catalog — who we are and how the company runs.</p>
+        <span class="card-cta">Open →</span>
+      </a>
+
+    </div>
+
+    <!-- Legal link row -->
+    <div class="support-legal-row">
+      <a href="/privacy-policy/" class="support-legal-link">Privacy Policy →</a>
+      <a href="/terms/" class="support-legal-link">Terms &amp; Conditions →</a>
+      <a href="/patents/" class="support-legal-link">Patents →</a>
+    </div>
+
+  </div>
+</section>
+
+</BaseLayout>
+
+<style>
+:root {
+  --red: #F32740;
+  --ink: #1D1D1F;
+  --text: #424245;
+  --text-2: #6E6E73;
+  --text-3: #86868B;
+  --line: #D2D2D7;
+  --hairline: #E5E5E7;
+  --panel: #F5F5F7;
+  --bg: #FFFFFF;
+}
+
+/* Glow orb — light-page alphas */
+.page-support .glow-orb {
+  position: fixed;
+  top: 0; left: 0;
+  width: 64vw; height: 64vw;
+  max-width: 880px; max-height: 880px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(243,39,64,.20) 0%,
+    rgba(243,39,64,.09) 36%,
+    transparent 70%);
+  filter: blur(46px);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+  transform: translate(72vw, 26vh) translate(-50%, -50%);
+}
+@media print { .glow-orb { display: none !important; } }
+
+.page-support section,
+.page-support .support-hero,
+.page-support .support-directory {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero */
+.support-hero {
+  padding: 112px 24px 72px;
+  text-align: center;
+  background: var(--bg);
+}
+.support-container {
+  max-width: 980px;
+  margin: 0 auto;
+}
+.support-container-wide {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.support-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 20px;
+}
+.support-h1 {
+  font-size: clamp(44px, 6vw, 72px);
+  font-weight: 600;
+  letter-spacing: -.03em;
+  line-height: 1.05;
+  color: var(--ink);
+  margin: 0 0 24px;
+}
+.support-sub {
+  font-size: clamp(19px, 2.2vw, 24px);
+  color: var(--text-2);
+  line-height: 1.45;
+  margin: 0 auto;
+  max-width: 640px;
+}
+
+/* Directory */
+.support-directory {
+  padding: 0 24px 104px;
+  background: var(--bg);
+}
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+/* Cards */
+.support-card {
+  display: block;
+  background: var(--panel);
+  border-radius: 16px;
+  padding: 32px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.support-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+  color: var(--ink);
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+.card-icon {
+  color: var(--text-3);
+  flex-shrink: 0;
+}
+.card-eyebrow {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.card-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 8px;
+  line-height: 1.2;
+}
+.card-body {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-2);
+  margin: 0 0 16px;
+}
+.card-cta {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.support-card:hover .card-cta {
+  color: var(--red);
+}
+
+/* Legal link row */
+.support-legal-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--hairline);
+  font-size: 14px;
+}
+.support-legal-link {
+  color: var(--text-2);
+  text-decoration: none;
+  transition: color .2s ease;
+}
+.support-legal-link:hover { color: var(--red); }
+</style>
+
+<script is:inline>
+(function(){
+  var orb=null, raf=null, EASE=0.03;
+  var tx=innerWidth*0.72, ty=innerHeight*0.26, x=tx, y=ty;
+  var fine=matchMedia('(pointer:fine)').matches,
+      still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!fine||still){
+    addEventListener('scroll',function(){ ty=innerHeight*0.26+scrollY*0.06; },{passive:true});
+  } else {
+    addEventListener('pointermove',function(e){ tx=e.clientX; ty=e.clientY; },{passive:true});
+  }
+  function tick(){
+    if(!orb) orb=document.querySelector('.glow-orb');
+    if(orb){ x+=(tx-x)*EASE; y+=(ty-y)*EASE;
+      orb.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)'; }
+    raf=requestAnimationFrame(tick);
+  }
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+    else if(!raf){ raf=requestAnimationFrame(tick); }
+  });
+  raf=requestAnimationFrame(tick);
+})();
+</script>
