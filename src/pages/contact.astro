@@ -16,12 +16,6 @@
  */
 import ContentShell from '../layouts/ContentShell.astro';
 ---
-<style is:global>
-  .page-contact * {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
-  }
-  .page-contact h1,.page-contact h2,.page-contact h3 { font-weight: 600 !important; }
-</style>
 
 <ContentShell
   title="Contact Us — Archipelago Lighting Group"
@@ -29,6 +23,13 @@ import ContentShell from '../layouts/ContentShell.astro';
   bodyClass="page-contact"
   hideFooterCta={true}
 >
+<style is:global>
+  .page-contact * {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  }
+  .page-contact h1,.page-contact h2,.page-contact h3 { font-weight: 600 !important; }
+</style>
+
 
 <!-- ── DARK CANVAS ROOT ─────────────────────────────────────────────────── -->
 <div class="alg-page alg-page--glow">
@@ -1046,27 +1047,265 @@ import ContentShell from '../layouts/ContentShell.astro';
   }
 </style>
 
-<script>
-(function(){
-  var orb=null, raf=null, EASE=0.03;
-  var tx=innerWidth*0.72, ty=innerHeight*0.26, x=tx, y=ty;
-  var fine=matchMedia('(pointer:fine)').matches,
-      still=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(!fine||still){
-    addEventListener('scroll',function(){ ty=innerHeight*0.26+scrollY*0.06; },{passive:true});
-  } else {
-    addEventListener('pointermove',function(e){ tx=e.clientX; ty=e.clientY; },{passive:true});
+<!-- ── SCRIPTS ───────────────────────────────────────────────────────────── -->
+<script is:inline>
+(function () {
+  /* ── Scroll-trailing glow orb (verbatim initGlowOrb from mockup) ─────── */
+  (function initGlowOrb() {
+    var clamp = function(v, a, b) { return Math.min(b, Math.max(a, v)); };
+    function start(root, orb) {
+      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var target = function() {
+        var rect = root.getBoundingClientRect();
+        var rootTop = rect.top + window.scrollY;
+        var rootH = root.offsetHeight || 1;
+        var rootW = root.offsetWidth || 1440;
+        var vh = window.innerHeight;
+        var through = (window.scrollY + vh * 0.5) - rootTop;
+        var f = clamp(through / rootH, 0, 1);
+        return {
+          tx: rootW * (0.72 - 0.46 * Math.sin(f * Math.PI)),
+          ty: clamp(through, vh * 0.30, rootH - vh * 0.2),
+        };
+      };
+      var curX = (root.offsetWidth || 1440) * 0.72;
+      var curY = (root.offsetHeight || 2000) * 0.16;
+      function tick() {
+        var t = target();
+        curX += (t.tx - curX) * 0.045;
+        curY += (t.ty - curY) * 0.045;
+        orb.style.transform = 'translate(' + curX + 'px, ' + curY + 'px) translate(-50%, -50%)';
+        requestAnimationFrame(tick);
+      }
+      if (reduce) {
+        var t = target();
+        orb.style.transform = 'translate(' + t.tx + 'px, ' + t.ty + 'px) translate(-50%, -50%)';
+      } else {
+        requestAnimationFrame(tick);
+      }
+    }
+    var tries = 0;
+    var poll = setInterval(function() {
+      var root = document.querySelector('.alg-page--glow');
+      var orb = root && root.querySelector('.glow-orb');
+      if (root && orb) { clearInterval(poll); start(root, orb); }
+      else if (++tries > 120) clearInterval(poll);
+    }, 120);
+  })();
+
+  /* ── Route chips: toggle active, show/hide route-specific fields ──────── */
+  var chips = document.querySelectorAll('.alg-chip');
+  var routeFields = document.querySelectorAll('.route-fields');
+  var msgArea = document.getElementById('cf-message');
+
+  var PLACEHOLDERS = {
+    quote:   'Paste BOM or describe scope. Quantity helps.',
+    spec:    'Mounting height, target FC, controls strategy…',
+    dist:    'Restock, account, PO routing…',
+    support: 'Install date, environment, observed symptom…',
+    press:   "Tell us what you're working on…"
+  };
+
+  function activateRoute(route) {
+    chips.forEach(function(c) { c.classList.remove('active'); });
+    var active = document.querySelector('.alg-chip[data-route="' + route + '"]');
+    if (active) active.classList.add('active');
+    routeFields.forEach(function(f) {
+      f.style.display = (f.getAttribute('data-show') === route) ? '' : 'none';
+    });
+    if (msgArea && PLACEHOLDERS[route]) msgArea.placeholder = PLACEHOLDERS[route];
   }
-  function tick(){
-    if(!orb) orb=document.querySelector('.glow-orb');
-    if(orb){ x+=(tx-x)*EASE; y+=(ty-y)*EASE;
-      orb.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)'; }
-    raf=requestAnimationFrame(tick);
-  }
-  document.addEventListener('visibilitychange',function(){
-    if(document.hidden){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
-    else if(!raf){ raf=requestAnimationFrame(tick); }
+
+  chips.forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      activateRoute(chip.getAttribute('data-route'));
+    });
   });
-  raf=requestAnimationFrame(tick);
+
+  /* ── Form submit → mailto (preserved verbatim) ───────────────────────── */
+  var form = document.getElementById('contact-form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var chip = document.querySelector('.alg-chip.active') || chips[0];
+      var to = chip.getAttribute('data-to') || 'sales@archipelagolighting.com';
+      var baseSubject = chip.getAttribute('data-subject') || 'Contact';
+      var name    = (document.getElementById('cf-name')    || {}).value || '';
+      var company = (document.getElementById('cf-company') || {}).value || '';
+      var email   = (document.getElementById('cf-email')   || {}).value || '';
+      var phone   = (document.getElementById('cf-phone')   || {}).value || '';
+      var message = (document.getElementById('cf-message') || {}).value || '';
+      var subject = baseSubject + (company ? ' · ' + company : '');
+      var body = [
+        'Name: ' + name,
+        'Company: ' + company,
+        'Email: ' + email,
+        phone ? 'Phone: ' + phone : '',
+        '',
+        message
+      ].filter(Boolean).join('\n');
+      window.location.href = 'mailto:' + to
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body='    + encodeURIComponent(body);
+    });
+  }
+
+  /* ── §02 Leaflet locator (reps-only, CARTO Positron light) ──────────────── */
+  (function initContactLocator() {
+    var mapEl = document.getElementById('algLocatorMapContact');
+    if (!mapEl) return;
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    document.head.appendChild(link);
+    var script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+    script.crossOrigin = '';
+    script.onload = async function () {
+      var map = L.map('algLocatorMapContact', { zoomControl: true, scrollWheelZoom: false }).setView([37.5, -96], 4);
+      /* FIX B: CARTO Positron light tiles */
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19,
+      }).addTo(map);
+      function makeIcon(color, shadow) {
+        return L.divIcon({
+          className: '',
+          html: '<div style="width:12px;height:12px;background:' + color + ';border-radius:50%;border:2px solid #fff;box-shadow:0 0 8px ' + shadow + ';"></div>',
+          iconSize: [12, 12],
+          iconAnchor: [6, 6],
+          popupAnchor: [0, -8],
+        });
+      }
+      var iconRep = makeIcon('#F32740', 'rgba(243,39,64,0.5)');
+      function toTitleCase(s) {
+        if (!s) return s;
+        var upperRatio = (s.match(/[A-Z]/g) || []).length / Math.max(1, (s.match(/[A-Za-z]/g) || []).length);
+        if (upperRatio < 0.7) return s;
+        return s.toLowerCase().replace(/\b([a-z])(\w*)/g, function(m, f, r) { return f.toUpperCase() + r; });
+      }
+      function titleCaseCityState(s) {
+        if (!s) return s;
+        var idx = s.lastIndexOf(',');
+        if (idx === -1) return toTitleCase(s);
+        return toTitleCase(s.slice(0, idx)) + ', ' + s.slice(idx + 1).trim().toUpperCase();
+      }
+      function popup(rec) {
+        var displayName = toTitleCase(rec.name);
+        var loc = [rec.city, rec.state].filter(Boolean).join(', ');
+        var displayLoc = titleCaseCityState(loc);
+        var html = '<div style="font-family:\'Lato\',sans-serif;">';
+        html += '<div style="font-weight:700;font-size:13px;color:#1A1D23;">' + displayName + '</div>';
+        if (displayLoc) html += '<div style="font-size:11px;color:#6B7280;margin-top:2px;">' + displayLoc + ' · Sales Rep</div>';
+        if (rec.phone) html += '<div style="margin-top:6px;font-size:12px;"><a href="tel:' + rec.phone.replace(/[^+\d]/g,'') + '" style="color:#F32740;">' + rec.phone + '</a></div>';
+        if (rec.website) {
+          var url = rec.website.startsWith('http') ? rec.website : 'https://' + rec.website;
+          html += '<div style="font-size:12px;"><a href="' + url + '" target="_blank" rel="noopener" style="color:#F32740;">Website ↗</a></div>';
+        }
+        html += '</div>';
+        return html;
+      }
+      var repLayer = L.layerGroup();
+      var allReps = [];
+      var markerByPinId = new Map();
+      var cardsEl = document.getElementById('c02-rep-cards');
+
+      try {
+        var res = await fetch('/data/local_support.json');
+        var data = await res.json();
+        data.sales_reps.forEach(function(r) {
+          if (r.lat && r.lon) {
+            var m = L.marker([r.lat, r.lon], { icon: iconRep }).bindPopup(popup(r)).addTo(repLayer);
+            if (r.id) markerByPinId.set(String(r.id), m);
+            allReps.push(Object.assign({}, r, { type: 'rep', lat: r.lat, lng: r.lon, _marker: m }));
+          }
+        });
+      } catch(e) { console.error('ALG contact locator: failed to load data', e); }
+      repLayer.addTo(map);
+
+      /* Render .alg-rep cards from real data (no invented fields) */
+      function renderRepCards(entries) {
+        if (!cardsEl) return;
+        if (!entries || entries.length === 0) {
+          cardsEl.innerHTML = '<div class="c02-rep-cards--empty">No reps found near this location. Try a different ZIP or city.</div>';
+          return;
+        }
+        cardsEl.innerHTML = entries.slice(0, 4).map(function(p) {
+          var displayName = toTitleCase(p.name || '');
+          var cityState = titleCaseCityState([p.city || '', p.state || ''].filter(Boolean).join(', '));
+          var contactHtml = '';
+          if (p.phone) contactHtml += '<a href="tel:' + p.phone.replace(/[^+\d]/g,'') + '">' + p.phone + '</a>';
+          if (p.website) {
+            var url = p.website.startsWith('http') ? p.website : 'https://' + p.website;
+            contactHtml += '<a href="' + url + '" target="_blank" rel="noopener">Website ↗</a>';
+          }
+          return '<div class="alg-rep" data-pin-id="' + (p.id || '') + '" style="cursor:pointer;">'
+            + '<div class="alg-rep__role">Sales Rep</div>'
+            + '<div class="alg-rep__name">' + displayName + '</div>'
+            + (cityState ? '<div class="alg-rep__company">' + cityState + '</div>' : '')
+            + (contactHtml ? '<div class="alg-rep__contact">' + contactHtml + '</div>' : '')
+            + '</div>';
+        }).join('');
+        /* Click rep card → fly to pin */
+        cardsEl.querySelectorAll('.alg-rep[data-pin-id]').forEach(function(card) {
+          card.addEventListener('click', function() {
+            var marker = markerByPinId.get(card.dataset.pinId);
+            if (!marker) return;
+            map.flyTo(marker.getLatLng(), Math.max(map.getZoom(), 9), { duration: 0.6 });
+            marker.openPopup();
+          });
+        });
+      }
+
+      /* Initial render: show 4 nearest to map center */
+      function updateRepCards(centerLatLng) {
+        var center = centerLatLng || map.getCenter();
+        var sorted = allReps
+          .map(function(p) { return Object.assign({}, p, { distanceMi: center.distanceTo(L.latLng(p.lat, p.lng)) / 1609.344 }); })
+          .sort(function(a, b) { return a.distanceMi - b.distanceMi; });
+        renderRepCards(sorted);
+      }
+
+      updateRepCards();
+      setTimeout(function() { map.invalidateSize(); }, 0);
+
+      /* Search: geocode → fly → update cards */
+      var searchInput = document.getElementById('c02-search-input');
+      var searchBtn   = document.getElementById('c02-search-btn');
+      async function doSearch() {
+        var q = searchInput ? searchInput.value.trim() : '';
+        if (!q) return;
+        try {
+          var r = await fetch('https://nominatim.openstreetmap.org/search?format=json&countrycodes=us&limit=1&q=' + encodeURIComponent(q), { headers: { 'Accept-Language': 'en' } });
+          var results = await r.json();
+          if (!results.length) return;
+          var lat = +results[0].lat, lon = +results[0].lon;
+          map.setView([lat, lon], 8);
+          updateRepCards(L.latLng(lat, lon));
+        } catch(e) { console.error('ALG contact locator search error', e); }
+      }
+      if (searchBtn) searchBtn.addEventListener('click', doSearch);
+      if (searchInput) searchInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(); });
+    };
+    document.head.appendChild(script);
+  })();
+
+  /* ── FAQ accordion ───────────────────────────────────────────────────── */
+  var faqList = document.getElementById('faq-list');
+  if (faqList) {
+    faqList.addEventListener('click', function(e) {
+      var btn = e.target.closest('.alg-faq__q');
+      if (!btn) return;
+      var item = btn.closest('.alg-faq__item');
+      var answer = item.querySelector('.alg-faq__a');
+      var toggle = btn.querySelector('.alg-faq__toggle');
+      var isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      answer.hidden = isOpen;
+      if (toggle) toggle.textContent = isOpen ? '+' : '−';
+    });
+  }
 })();
 </script>
