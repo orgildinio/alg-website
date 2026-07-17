@@ -8,11 +8,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
 <style is:global>
-  /* CFG-COAT-1: Apple system font stack overlay */
-  .page-returns * {
+  /* CFG-COAT-1: Apple system font stack overlay — targets .rma-page directly (no bodyClass on this page) */
+  .rma-hero__h1 {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    font-weight: 600 !important;
   }
-  .page-returns h1, .page-returns h2, .page-returns h3 { font-weight: 600 !important; }
 </style>
 <BaseLayout title="Returns & Exchanges — Archipelago Lighting Group"
  description="Submit a Return Material Authorization (RMA) request. Most claims get a reply within a couple of business days, and every fixture is backed by our written Limited Warranty.">
@@ -27,7 +27,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     --c3:   #E2E0DB;
     --brand: #F32740;
     --yellow: #F59E0B;
-    --font-sans: 'Lato', system-ui, sans-serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-mono: 'JetBrains Mono', 'Courier New', monospace;
     background: #fff;
     color: var(--ink);
