@@ -32,7 +32,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <!-- glow orb -->
   <div class="glow-orb" style="position:fixed;top:0;left:0;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(247,82,82,.13) 0%,transparent 70%);pointer-events:none;z-index:0;will-change:transform;"></div>
 
-<main style="position: relative; z-index: 1;"><div style="height: 54px; display: flex; align-items: center; justify-content: center; border-bottom: 1px dashed rgb(210, 210, 215); background: rgb(255, 255, 255); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139);">Live site header mounts here — do not redesign</div><section data-screen-label="Returns hero" style="padding: 56px 24px 88px;">
+<main style="position: relative; z-index: 1;"><!-- Live site header mounts here — do not redesign --><section data-screen-label="Returns hero" style="padding: 56px 24px 88px;">
 <div style="max-width: 1200px; margin: 0px auto;">
 <p style="font-size: 13px; color: rgb(134, 134, 139); margin: 0px 0px 40px;"><a class="scp0" href="/support/" style="color: rgb(134, 134, 139);">Support</a> › <span style="color: rgb(29, 29, 31);">Returns &amp; Exchanges</span></p>
 <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; align-items: start;">
@@ -41,8 +41,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <h1 style="font-size: clamp(44px, 6vw, 72px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; margin: 0px 0px 20px;">Something not working? We'll make it right.</h1>
 <p style="font-size: clamp(19px, 2.2vw, 24px); color: rgb(110, 110, 115); line-height: 1.45; margin: 0px 0px 32px;">Submit a Return Material Authorization (RMA) request in under 3 minutes. Most claims get a reply within a couple of business days, and every fixture is backed by our written Limited Warranty.</p>
 <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-bottom: 36px;">
-<a class="scp1" href="#" style="background: rgb(243, 39, 64); color: rgb(255, 255, 255); padding: 13px 28px; border-radius: 980px; font-size: 16px; font-weight: 600; transition: background 0.2s;">Start an RMA request →</a>
-<a class="scp2" href="#" style="font-size: 15px; font-weight: 500; color: rgb(29, 29, 31);">Sign in to track existing RMA</a>
+<a class="scp1" href="mailto:warranty@archipelagolighting.com?subject=RMA%20Request" style="background: rgb(243, 39, 64); color: rgb(255, 255, 255); padding: 13px 28px; border-radius: 980px; font-size: 16px; font-weight: 600; transition: background 0.2s;">Start an RMA request →</a>
+<a class="scp2" href="mailto:warranty@archipelagolighting.com?subject=RMA%20Status%20Inquiry" style="font-size: 15px; font-weight: 500; color: rgb(29, 29, 31);">Sign in to track existing RMA</a>
 </div>
 <div style="display: flex; gap: 12px; flex-wrap: wrap;">
 <div style="background: rgb(245, 245, 247); border-radius: 12px; padding: 14px 18px;"><div style="font-size: 14px; font-weight: 600;">Up to 10-yr</div><div style="font-size: 12.5px; color: rgb(110, 110, 115);">Limited warranty · 100,000 hrs</div></div>
@@ -54,10 +54,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 12px;">Existing customer</p>
 <h3 style="font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin: 0px 0px 8px;">Track your RMAs in the Customer Portal</h3>
 <p style="font-size: 14px; color: rgb(110, 110, 115); line-height: 1.5; margin: 0px 0px 20px;">Claim status, replacement tracking, and history in one place. We never share claim data outside your account.</p>
-<a class="scp3" href="#" style="display: block; text-align: center; background: rgb(29, 29, 31); color: rgb(255, 255, 255); padding: 12px; border-radius: 980px; font-size: 15px; font-weight: 600;">Sign in</a>
+<a class="scp3" href="mailto:warranty@archipelagolighting.com?subject=Portal%20Access%20Request" style="display: block; text-align: center; background: rgb(29, 29, 31); color: rgb(255, 255, 255); padding: 12px; border-radius: 980px; font-size: 15px; font-weight: 600;">Sign in</a>
 <div style="display: grid; gap: 8px; margin-top: 16px; font-size: 14px;">
 <a class="scp0" href="mailto:warranty@archipelagolighting.com?subject=Portal access" style="color: rgb(66, 66, 69);">→ Request portal access</a>
-<a class="scp0" href="#" style="color: rgb(66, 66, 69);">→ Forgot password</a>
+<a class="scp0" href="mailto:warranty@archipelagolighting.com?subject=Portal%20Password%20Reset" style="color: rgb(66, 66, 69);">→ Forgot password</a>
 </div>
 </div>
 </div>
@@ -107,9 +107,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </div>
 </div>
 <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-top: 24px; font-size: 14px; font-weight: 500;">
-<a class="scp2" href="#" style="color: rgb(66, 66, 69);">Limited Product Warranty (PDF) →</a>
-<a class="scp2" href="#" style="color: rgb(66, 66, 69);">LaborShield Terms (PDF) →</a>
-<a class="scp2" href="#" style="color: rgb(66, 66, 69);">Sales Terms &amp; Conditions (PDF) →</a>
+<a class="scp2" href="mailto:warranty@archipelagolighting.com?subject=Warranty%20Document%20Request" style="color: rgb(66, 66, 69);">Limited Product Warranty (PDF) →</a>
+<a class="scp2" href="mailto:warranty@archipelagolighting.com?subject=LaborShield%20Terms%20Request" style="color: rgb(66, 66, 69);">LaborShield Terms (PDF) →</a>
+<a class="scp2" href="mailto:warranty@archipelagolighting.com?subject=Sales%20Terms%20Request" style="color: rgb(66, 66, 69);">Sales Terms &amp; Conditions (PDF) →</a>
 </div>
 </div></section><section data-screen-label="Talk to a human" style="padding: 96px 24px;">
 <div style="max-width: 1200px; margin: 0px auto;">
@@ -117,7 +117,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <h2 style="font-size: clamp(38px, 4vw, 52px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin: 0px 0px 12px; max-width: 860px;">Need to bypass the form? Our warranty team picks up.</h2>
 <p style="font-size: clamp(19px, 2.2vw, 22px); color: rgb(110, 110, 115); line-height: 1.45; margin: 0px 0px 48px; max-width: 760px;">Especially for large multi-unit failures, life-safety fixtures, or anything that needs a phone call. We don't hide behind tickets.</p>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
-<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 28px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">Phone</p><div style="font-size: 24px; font-weight: 600; white-space: nowrap;">(866) 912-3220</div><p style="font-size: 14px; color: rgb(110, 110, 115); margin: 8px 0px 0px;">Mon–Fri · <span style="background: rgb(245, 245, 247); border: 1px dashed rgb(210, 210, 215); border-radius: 6px; padding: 1px 6px;">7:00–17:00 PT</span> PT</p></div>
+<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 28px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">Phone</p><div style="font-size: 24px; font-weight: 600; white-space: nowrap;">(866) 912-3220</div><p style="font-size: 14px; color: rgb(110, 110, 115); margin: 8px 0px 0px;">Mon–Fri · <span style="background: rgb(245, 245, 247); border: 1px dashed rgb(210, 210, 215); border-radius: 6px; padding: 1px 6px;">7:00–17:00 PT</span></p></div>
 <div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 28px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">Email</p><a class="scp0" href="mailto:warranty@archipelagolighting.com" style="font-size: 17px; font-weight: 600; word-break: break-all;">warranty@archipelagolighting.com</a><p style="font-size: 14px; color: rgb(110, 110, 115); margin: 8px 0px 0px;">Typical reply within ~2 business days</p></div>
 <div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 28px;"><p style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px 0px 10px;">Mail</p><p style="font-size: 17px; font-weight: 600; margin: 0px;">4615 State Street</p><p style="font-size: 14px; color: rgb(110, 110, 115); margin: 8px 0px 0px;">Montclair, CA 91763</p></div>
 </div>

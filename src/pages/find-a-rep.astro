@@ -33,7 +33,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- glow orb -->
   <div class="glow-orb" style="position:fixed;top:0;left:0;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(247,82,82,.13) 0%,transparent 70%);pointer-events:none;z-index:0;will-change:transform;"></div>
 
-<main style="position: relative; z-index: 1;"><div style="height: 54px; display: flex; align-items: center; justify-content: center; border-bottom: 1px dashed rgb(210, 210, 215); background: rgb(255, 255, 255); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139);">Live site header mounts here — do not redesign</div><section data-screen-label="Locator hero" style="padding: 56px 24px 48px;">
+<main style="position: relative; z-index: 1;"><!-- Live site header mounts here — do not redesign --><section data-screen-label="Locator hero" style="padding: 56px 24px 48px;">
 <div style="max-width: 1200px; margin: 0px auto;">
 <p style="font-size: 13px; color: rgb(134, 134, 139); margin: 0px 0px 32px;">Home › <span style="color: rgb(29, 29, 31);"><span class="sc-interp">Find a Rep</span></span></p>
 <div style="display: inline-flex; background: rgb(245, 245, 247); border-radius: 980px; padding: 4px; margin-bottom: 36px;">
@@ -76,123 +76,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <div style="height: 320px;"><image-slot id="locator-map" placeholder="Drop US map — shared interactive map component (homepage + Contact) · binds to local_support.json" radius="16" shape="rounded" style="width: 100%; height: 100%;"></image-slot></div>
 <div>
 <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
-<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px;">In this view · <span class="sc-interp">12 results</span> · <span style="font-weight: 500; text-transform: none; letter-spacing: 0px;">sample results</span></p>
+<p style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(134, 134, 139); margin: 0px;">In this view &middot; <span id="results-count">loading&hellip;</span></p>
 <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgb(110, 110, 115);">Sort:
-            <button style="font-family: inherit; cursor: pointer; font-size: 13px; font-weight: 600; padding: 5px 10px; border-radius: 8px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; background: none; transition: color 0.2s; color: rgb(243, 39, 64);">Nearest</button>
-<button style="font-family: inherit; cursor: pointer; font-size: 13px; font-weight: 600; padding: 5px 10px; border-radius: 8px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; background: none; transition: color 0.2s; color: rgb(110, 110, 115);">A–Z</button>
-<button style="font-family: inherit; cursor: pointer; font-size: 13px; font-weight: 600; padding: 5px 10px; border-radius: 8px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; background: none; transition: color 0.2s; color: rgb(110, 110, 115);">Type</button>
+<button id="sort-nearest" onclick="window._algSort('nearest')" style="font-family: inherit; cursor: pointer; font-size: 13px; font-weight: 600; padding: 5px 10px; border-radius: 8px; border: none; background: none; transition: color 0.2s; color: rgb(243, 39, 64);">Nearest</button>
+<button id="sort-az" onclick="window._algSort('az')" style="font-family: inherit; cursor: pointer; font-size: 13px; font-weight: 600; padding: 5px 10px; border-radius: 8px; border: none; background: none; transition: color 0.2s; color: rgb(110, 110, 115);">A&ndash;Z</button>
+<button id="sort-type" onclick="window._algSort('type')" style="font-family: inherit; cursor: pointer; font-size: 13px; font-weight: 600; padding: 5px 10px; border-radius: 8px; border: none; background: none; transition: color 0.2s; color: rgb(110, 110, 115);">Type</button>
 </div>
 </div>
-<div style="display: grid; gap: 12px;">
-<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 20px 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;">
-<div>
-<span style="display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 3px 8px; margin-bottom: 8px;"><span class="sc-interp">Sales Rep</span></span>
-<div style="font-size: 17px; font-weight: 600;"><span class="sc-interp">D. Alvarez — West Territory</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">Ontario, CA · covers CA · AZ · NV</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">(866) 912-3220 x201</span> · <span class="sc-interp">sales@archipelagolighting.com</span></div>
+<div id="alg-results-grid" style="display: grid; gap: 12px;">
+<!-- Results injected by _algLocator — bound to /data/local_support.json -->
 </div>
-<a class="scp2" href="mailto:sales@archipelagolighting.com?subject=Rep inquiry" style="flex: 0 0 auto; font-size: 14px; font-weight: 600; border: 1px solid rgb(210, 210, 215); border-radius: 980px; padding: 9px 18px; white-space: nowrap;"><span class="sc-interp">Contact rep</span></a>
-</div>
-<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 20px 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;">
-<div>
-<span style="display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 3px 8px; margin-bottom: 8px;"><span class="sc-interp">Sales Rep</span></span>
-<div style="font-size: 17px; font-weight: 600;"><span class="sc-interp">K. Shaw — Mountain Territory</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">Denver, CO · covers CO · UT · NM</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">(866) 912-3220 x204</span> · <span class="sc-interp">sales@archipelagolighting.com</span></div>
-</div>
-<a class="scp2" href="mailto:sales@archipelagolighting.com?subject=Rep inquiry" style="flex: 0 0 auto; font-size: 14px; font-weight: 600; border: 1px solid rgb(210, 210, 215); border-radius: 980px; padding: 9px 18px; white-space: nowrap;"><span class="sc-interp">Contact rep</span></a>
-</div>
-<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 20px 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;">
-<div>
-<span style="display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 3px 8px; margin-bottom: 8px;"><span class="sc-interp">Sales Rep</span></span>
-<div style="font-size: 17px; font-weight: 600;"><span class="sc-interp">M. Okafor — Central Territory</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">Dallas, TX · covers TX · OK · LA</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">(866) 912-3220 x207</span> · <span class="sc-interp">sales@archipelagolighting.com</span></div>
-</div>
-<a class="scp2" href="mailto:sales@archipelagolighting.com?subject=Rep inquiry" style="flex: 0 0 auto; font-size: 14px; font-weight: 600; border: 1px solid rgb(210, 210, 215); border-radius: 980px; padding: 9px 18px; white-space: nowrap;"><span class="sc-interp">Contact rep</span></a>
-</div>
-<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 20px 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;">
-<div>
-<span style="display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 3px 8px; margin-bottom: 8px;"><span class="sc-interp">Sales Rep</span></span>
-<div style="font-size: 17px; font-weight: 600;"><span class="sc-interp">R. Bennett — Southeast Territory</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">Atlanta, GA · covers GA · FL · AL</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">(866) 912-3220 x210</span> · <span class="sc-interp">sales@archipelagolighting.com</span></div>
-</div>
-<a class="scp2" href="mailto:sales@archipelagolighting.com?subject=Rep inquiry" style="flex: 0 0 auto; font-size: 14px; font-weight: 600; border: 1px solid rgb(210, 210, 215); border-radius: 980px; padding: 9px 18px; white-space: nowrap;"><span class="sc-interp">Contact rep</span></a>
-</div>
-<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 20px 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;">
-<div>
-<span style="display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 3px 8px; margin-bottom: 8px;"><span class="sc-interp">Sales Rep</span></span>
-<div style="font-size: 17px; font-weight: 600;"><span class="sc-interp">J. Liu — Northeast Territory</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">Newark, NJ · covers NY · NJ · New England</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">(866) 912-3220 x213</span> · <span class="sc-interp">sales@archipelagolighting.com</span></div>
-</div>
-<a class="scp2" href="mailto:sales@archipelagolighting.com?subject=Rep inquiry" style="flex: 0 0 auto; font-size: 14px; font-weight: 600; border: 1px solid rgb(210, 210, 215); border-radius: 980px; padding: 9px 18px; white-space: nowrap;"><span class="sc-interp">Contact rep</span></a>
-</div>
-<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 20px 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;">
-<div>
-<span style="display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 3px 8px; margin-bottom: 8px;"><span class="sc-interp">Stocking Distributor</span></span>
-<div style="font-size: 17px; font-weight: 600;"><span class="sc-interp">Pacific Electric Supply</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">Riverside, CA · counter + will-call</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">(909) 555-0141</span> · <span class="sc-interp">orders@pacelectric.example</span></div>
-</div>
-<a class="scp2" href="#" style="flex: 0 0 auto; font-size: 14px; font-weight: 600; border: 1px solid rgb(210, 210, 215); border-radius: 980px; padding: 9px 18px; white-space: nowrap;"><span class="sc-interp">Get directions</span></a>
-</div>
-<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 20px 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;">
-<div>
-<span style="display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 3px 8px; margin-bottom: 8px;"><span class="sc-interp">Stocking Distributor</span></span>
-<div style="font-size: 17px; font-weight: 600;"><span class="sc-interp">Summit Lighting Supply</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">Phoenix, AZ · counter + delivery</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">(602) 555-0177</span> · <span class="sc-interp">counter@summitlight.example</span></div>
-</div>
-<a class="scp2" href="#" style="flex: 0 0 auto; font-size: 14px; font-weight: 600; border: 1px solid rgb(210, 210, 215); border-radius: 980px; padding: 9px 18px; white-space: nowrap;"><span class="sc-interp">Get directions</span></a>
-</div>
-<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 20px 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;">
-<div>
-<span style="display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 3px 8px; margin-bottom: 8px;"><span class="sc-interp">Stocking Distributor</span></span>
-<div style="font-size: 17px; font-weight: 600;"><span class="sc-interp">Great Lakes Electrical</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">Columbus, OH · counter + will-call</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">(614) 555-0132</span> · <span class="sc-interp">sales@gle.example</span></div>
-</div>
-<a class="scp2" href="#" style="flex: 0 0 auto; font-size: 14px; font-weight: 600; border: 1px solid rgb(210, 210, 215); border-radius: 980px; padding: 9px 18px; white-space: nowrap;"><span class="sc-interp">Get directions</span></a>
-</div>
-<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 20px 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;">
-<div>
-<span style="display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 3px 8px; margin-bottom: 8px;"><span class="sc-interp">Stocking Distributor</span></span>
-<div style="font-size: 17px; font-weight: 600;"><span class="sc-interp">Gulf Coast Supply</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">Houston, TX · counter + delivery</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">(713) 555-0164</span> · <span class="sc-interp">orders@gulfcoast.example</span></div>
-</div>
-<a class="scp2" href="#" style="flex: 0 0 auto; font-size: 14px; font-weight: 600; border: 1px solid rgb(210, 210, 215); border-radius: 980px; padding: 9px 18px; white-space: nowrap;"><span class="sc-interp">Get directions</span></a>
-</div>
-<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 20px 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;">
-<div>
-<span style="display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 3px 8px; margin-bottom: 8px;"><span class="sc-interp">ALG Warehouse</span></span>
-<div style="font-size: 17px; font-weight: 600;"><span class="sc-interp">ALG Warehouse — Riverside</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">Riverside, CA · ships anywhere US in 3 days</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">(866) 912-3220</span> · <span class="sc-interp">sales@archipelagolighting.com</span></div>
-</div>
-<a class="scp2" href="mailto:sales@archipelagolighting.com" style="flex: 0 0 auto; font-size: 14px; font-weight: 600; border: 1px solid rgb(210, 210, 215); border-radius: 980px; padding: 9px 18px; white-space: nowrap;"><span class="sc-interp">Ship direct</span></a>
-</div>
-<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 20px 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;">
-<div>
-<span style="display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 3px 8px; margin-bottom: 8px;"><span class="sc-interp">ALG Warehouse</span></span>
-<div style="font-size: 17px; font-weight: 600;"><span class="sc-interp">ALG Warehouse — Dallas</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">Dallas, TX · same-week replenishment hub</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">(866) 912-3220</span> · <span class="sc-interp">sales@archipelagolighting.com</span></div>
-</div>
-<a class="scp2" href="mailto:sales@archipelagolighting.com" style="flex: 0 0 auto; font-size: 14px; font-weight: 600; border: 1px solid rgb(210, 210, 215); border-radius: 980px; padding: 9px 18px; white-space: nowrap;"><span class="sc-interp">Ship direct</span></a>
-</div>
-<div style="border: 1px solid rgb(229, 229, 231); border-radius: 16px; padding: 20px 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;">
-<div>
-<span style="display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgb(110, 110, 115); border: 1px solid rgb(210, 210, 215); border-radius: 8px; padding: 3px 8px; margin-bottom: 8px;"><span class="sc-interp">ALG Warehouse</span></span>
-<div style="font-size: 17px; font-weight: 600;"><span class="sc-interp">ALG Warehouse — Atlanta</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">Atlanta, GA · ships anywhere US in 3 days</span></div>
-<div style="font-size: 13.5px; color: rgb(110, 110, 115); margin-top: 2px;"><span class="sc-interp">(866) 912-3220</span> · <span class="sc-interp">sales@archipelagolighting.com</span></div>
-</div>
-<a class="scp2" href="mailto:sales@archipelagolighting.com" style="flex: 0 0 auto; font-size: 14px; font-weight: 600; border: 1px solid rgb(210, 210, 215); border-radius: 980px; padding: 9px 18px; white-space: nowrap;"><span class="sc-interp">Ship direct</span></a>
-</div>
-</div>
+<div id="alg-no-results" style="display:none; text-align:center; padding:48px 0; color:rgb(110,110,115);">
+  <p style="font-size:18px;font-weight:600;margin:0 0 8px;">No results found</p>
+  <p style="font-size:14px;margin:0;">Try a different ZIP or city — or <a href="mailto:sales@archipelagolighting.com?subject=Rep inquiry" style="color:#F32740;">email the sales team</a>.</p>
 </div>
 </div>
 </div></section><section data-screen-label="Direct contact closer" style="padding: 96px 24px; background: rgb(245, 245, 247); text-align: center;">
@@ -235,5 +131,147 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   });
   raf=requestAnimationFrame(tick);
 })();
+  </script>
+
+  <script is:inline>
+  // ALG Locator — binds to /data/local_support.json
+  (function(){
+    var CARD_STYLE = 'border:1px solid rgb(229,229,231);border-radius:16px;padding:20px 24px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;';
+    var BADGE_STYLE = 'display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:rgb(110,110,115);border:1px solid rgb(210,210,215);border-radius:8px;padding:3px 8px;margin-bottom:8px;';
+    var NAME_STYLE = 'font-size:17px;font-weight:600;';
+    var META_STYLE = 'font-size:13.5px;color:rgb(110,110,115);margin-top:2px;';
+    var BTN_STYLE = 'flex:0 0 auto;font-size:14px;font-weight:600;border:1px solid rgb(210,210,215);border-radius:980px;padding:9px 18px;white-space:nowrap;text-decoration:none;color:inherit;';
+
+    var allEntries = [];
+    var currentSort = 'az';
+
+    function typeLabel(t){
+      if(t==='rep') return 'Sales Rep';
+      if(t==='distributor') return 'Stocking Distributor';
+      if(t==='warehouse') return 'ALG Warehouse';
+      return t;
+    }
+
+    function makeCard(e){
+      var name = e.name || '';
+      var city = e.city || '';
+      var state = e.state || '';
+      var phone = e.phone || '';
+      var email = e.email || '';
+      var type = e.type || '';
+      var mapUrl = (city && state) ? 'https://maps.google.com/?q='+encodeURIComponent(name+' '+city+' '+state) : '';
+
+      var meta1 = [city, state].filter(Boolean).join(', ');
+      if(e.coverage) meta1 += ' \u00b7 ' + e.coverage;
+      var meta2parts = [];
+      if(phone) meta2parts.push(phone);
+      if(email) meta2parts.push('<a href="mailto:'+email+'?subject=Inquiry" style="color:inherit;">'+email+'</a>');
+      var meta2 = meta2parts.join(' \u00b7 ');
+
+      var btnHtml;
+      if(type==='rep'){
+        var repEmail = email || 'sales@archipelagolighting.com';
+        btnHtml = '<a href="mailto:'+repEmail+'?subject=Rep inquiry" style="'+BTN_STYLE+'">Contact rep</a>';
+      } else if(type==='warehouse'){
+        btnHtml = '<a href="mailto:sales@archipelagolighting.com?subject=Warehouse order" style="'+BTN_STYLE+'">Ship direct</a>';
+      } else {
+        btnHtml = mapUrl ? '<a href="'+mapUrl+'" target="_blank" rel="noopener" style="'+BTN_STYLE+'">Get directions</a>' : '';
+      }
+
+      return '<div style="'+CARD_STYLE+'"><div>'
+        +'<span style="'+BADGE_STYLE+'">'+typeLabel(type)+'</span>'
+        +'<div style="'+NAME_STYLE+'">'+name+'</div>'
+        +(meta1?'<div style="'+META_STYLE+'">'+meta1+'</div>':'')
+        +(meta2?'<div style="'+META_STYLE+'">'+meta2+'</div>':'')
+        +'</div>'+btnHtml+'</div>';
+    }
+
+    function sortEntries(arr, mode){
+      var order = {rep:0, distributor:1, warehouse:2};
+      if(mode==='type'){
+        return arr.slice().sort(function(a,b){ return (order[a.type]||9)-(order[b.type]||9) || a.name.localeCompare(b.name); });
+      }
+      return arr.slice().sort(function(a,b){ return a.name.localeCompare(b.name); });
+    }
+
+    function render(entries){
+      var grid = document.getElementById('alg-results-grid');
+      var noRes = document.getElementById('alg-no-results');
+      var count = document.getElementById('results-count');
+      if(!grid) return;
+      var sorted = sortEntries(entries, currentSort);
+      if(sorted.length===0){
+        grid.innerHTML='';
+        if(noRes) noRes.style.display='';
+        if(count) count.textContent='0 results';
+        return;
+      }
+      if(noRes) noRes.style.display='none';
+      if(count) count.textContent=sorted.length+' result'+(sorted.length!==1?'s':'');
+      grid.innerHTML = sorted.map(makeCard).join('');
+    }
+
+    function filterByZip(zip){
+      // Simple state-based filter using ZIP prefix ranges
+      // Full geo-search requires a server; this is a best-effort client-side filter
+      var stateMap = {
+        '0':['CT','MA','ME','NH','NJ','NY','PR','RI','VT'],
+        '1':['DE','MD','NY','PA'],
+        '2':['DC','MD','NC','SC','VA','WV'],
+        '3':['AL','FL','GA','MS','TN'],
+        '4':['IN','KY','MI','OH'],
+        '5':['IA','MN','MT','ND','SD','WI'],
+        '6':['IL','KS','MO','NE'],
+        '7':['AR','LA','OK','TX'],
+        '8':['AZ','CO','ID','NM','NV','UT','WY'],
+        '9':['AK','CA','HI','OR','WA']
+      };
+      var prefix = zip.charAt(0);
+      var states = stateMap[prefix] || [];
+      var filtered = allEntries.filter(function(e){
+        return !states.length || states.indexOf(e.state) !== -1 || e.type==='warehouse';
+      });
+      render(filtered);
+    }
+
+    window._algSort = function(mode){
+      currentSort = mode;
+      ['nearest','az','type'].forEach(function(m){
+        var btn = document.getElementById('sort-'+m);
+        if(btn) btn.style.color = m===mode ? 'rgb(243,39,64)' : 'rgb(110,110,115)';
+      });
+      render(allEntries);
+    };
+
+    // Wire ZIP search
+    document.addEventListener('DOMContentLoaded', function(){
+      var form = document.querySelector('form[data-locator-form], .locator-search-form');
+      var input = document.querySelector('input[data-zip], input[placeholder*="ZIP"], input[placeholder*="zip"]');
+      if(form && input){
+        form.addEventListener('submit', function(ev){
+          ev.preventDefault();
+          var z = input.value.trim();
+          if(z) filterByZip(z); else render(allEntries);
+        });
+      }
+    });
+
+    // Load real data
+    fetch('/data/local_support.json')
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        // Flatten reps, distributors, warehouses — exclude hidden:true
+        var entries = [];
+        (data.reps||[]).forEach(function(e){ if(!e.hidden) entries.push(Object.assign({},e,{type:'rep'})); });
+        (data.distributors||[]).forEach(function(e){ if(!e.hidden) entries.push(Object.assign({},e,{type:'distributor'})); });
+        (data.warehouses||[]).forEach(function(e){ if(!e.hidden) entries.push(Object.assign({},e,{type:'warehouse'})); });
+        allEntries = entries;
+        render(allEntries);
+      })
+      .catch(function(){
+        var count = document.getElementById('results-count');
+        if(count) count.textContent='unable to load — email sales@archipelagolighting.com';
+      });
+  })();
   </script>
 </BaseLayout>
