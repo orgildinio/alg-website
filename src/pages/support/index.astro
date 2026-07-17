@@ -173,6 +173,30 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
+/* ─── Apple system font stack — overrides global Cormorant/Lato cascade ─── *
+ * Scoped to .page-support so header and footer keep their own site styles.    *
+ * Weight: headings 600, body 400/normal. No serif. No Lato.                  *
+ * ─────────────────────────────────────────────────────────────────────────── */
+.page-support,
+.page-support h1, .page-support h2, .page-support h3,
+.page-support h4, .page-support h5, .page-support h6,
+.page-support p, .page-support li, .page-support a,
+.page-support span, .page-support td, .page-support th,
+.page-support label, .page-support input, .page-support textarea,
+.page-support select, .page-support button {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.page-support h1, .page-support h2, .page-support h3 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.page-support h4, .page-support h5, .page-support h6 {
+  font-weight: 600;
+}
+.page-support p, .page-support li, .page-support td, .page-support th {
+  font-weight: 400;
+}
+
 :root {
   --red: #F32740;
   --ink: #1D1D1F;

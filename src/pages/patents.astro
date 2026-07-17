@@ -126,6 +126,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
+/* ─── Apple system font stack — overrides global Cormorant/Lato cascade ─── *
+ * Scoped to .page-legal.page-patents so header and footer keep their own site styles.    *
+ * Weight: headings 600, body 400/normal. No serif. No Lato.                  *
+ * ─────────────────────────────────────────────────────────────────────────── */
+.page-legal.page-patents,
+.page-legal.page-patents h1, .page-legal.page-patents h2, .page-legal.page-patents h3,
+.page-legal.page-patents h4, .page-legal.page-patents h5, .page-legal.page-patents h6,
+.page-legal.page-patents p, .page-legal.page-patents li, .page-legal.page-patents a,
+.page-legal.page-patents span, .page-legal.page-patents td, .page-legal.page-patents th,
+.page-legal.page-patents label, .page-legal.page-patents input, .page-legal.page-patents textarea,
+.page-legal.page-patents select, .page-legal.page-patents button {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.page-legal.page-patents h1, .page-legal.page-patents h2, .page-legal.page-patents h3 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.page-legal.page-patents h4, .page-legal.page-patents h5, .page-legal.page-patents h6 {
+  font-weight: 600;
+}
+.page-legal.page-patents p, .page-legal.page-patents li, .page-legal.page-patents td, .page-legal.page-patents th {
+  font-weight: 400;
+}
+
 /* Patents page — CSS tokens (shared with legal template) */
 :root {
   --red: #F32740;

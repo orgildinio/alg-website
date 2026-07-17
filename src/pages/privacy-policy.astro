@@ -118,7 +118,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style is:global>
-/* ── Legal pages shared design system ────────────────────────────────────── */
+/* ─── Apple system font stack — overrides global Cormorant/Lato cascade ─── *
+ * Scoped to .page-legal so header/footer keep their own site styles.          *
+ * Weight: headings 600, body 400/normal. No serif. No Lato.                  *
+ * ─────────────────────────────────────────────────────────────────────────── */
+.page-legal,
+.page-legal h1, .page-legal h2, .page-legal h3,
+.page-legal h4, .page-legal h5, .page-legal h6,
+.page-legal p, .page-legal li, .page-legal a,
+.page-legal span, .page-legal td, .page-legal th,
+.page-legal label, .page-legal input, .page-legal textarea,
+.page-legal select, .page-legal button {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.page-legal h1, .page-legal h2, .page-legal h3 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.page-legal h4, .page-legal h5, .page-legal h6 {
+  font-weight: 600;
+}
+.page-legal p, .page-legal li, .page-legal td, .page-legal th {
+  font-weight: 400;
+}
+
+/* ── Legal pages shared design system ─────────────────────────────────────────────────────── */
 /* Tokens */
 :root {
   --red: #F32740;

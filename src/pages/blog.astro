@@ -90,6 +90,30 @@ const posts = [
 </BaseLayout>
 
 <style>
+/* ─── Apple system font stack — overrides global Cormorant/Lato cascade ─── *
+ * Scoped to .page-blog so header and footer keep their own site styles.    *
+ * Weight: headings 600, body 400/normal. No serif. No Lato.                  *
+ * ─────────────────────────────────────────────────────────────────────────── */
+.page-blog,
+.page-blog h1, .page-blog h2, .page-blog h3,
+.page-blog h4, .page-blog h5, .page-blog h6,
+.page-blog p, .page-blog li, .page-blog a,
+.page-blog span, .page-blog td, .page-blog th,
+.page-blog label, .page-blog input, .page-blog textarea,
+.page-blog select, .page-blog button {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.page-blog h1, .page-blog h2, .page-blog h3 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.page-blog h4, .page-blog h5, .page-blog h6 {
+  font-weight: 600;
+}
+.page-blog p, .page-blog li, .page-blog td, .page-blog th {
+  font-weight: 400;
+}
+
 :root {
   --red: #F32740;
   --ink: #1D1D1F;

@@ -111,6 +111,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
+/* ─── Apple system font stack — overrides global Cormorant/Lato cascade ─── *
+ * Scoped to .page-legal.page-terms so header and footer keep their own site styles.    *
+ * Weight: headings 600, body 400/normal. No serif. No Lato.                  *
+ * ─────────────────────────────────────────────────────────────────────────── */
+.page-legal.page-terms,
+.page-legal.page-terms h1, .page-legal.page-terms h2, .page-legal.page-terms h3,
+.page-legal.page-terms h4, .page-legal.page-terms h5, .page-legal.page-terms h6,
+.page-legal.page-terms p, .page-legal.page-terms li, .page-legal.page-terms a,
+.page-legal.page-terms span, .page-legal.page-terms td, .page-legal.page-terms th,
+.page-legal.page-terms label, .page-legal.page-terms input, .page-legal.page-terms textarea,
+.page-legal.page-terms select, .page-legal.page-terms button {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.page-legal.page-terms h1, .page-legal.page-terms h2, .page-legal.page-terms h3 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.page-legal.page-terms h4, .page-legal.page-terms h5, .page-legal.page-terms h6 {
+  font-weight: 600;
+}
+.page-legal.page-terms p, .page-legal.page-terms li, .page-legal.page-terms td, .page-legal.page-terms th {
+  font-weight: 400;
+}
+
 /* Terms page — CSS tokens (shared with legal template) */
 :root {
   --red: #F32740;
