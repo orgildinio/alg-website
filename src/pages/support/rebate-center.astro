@@ -125,14 +125,14 @@ const WIDGET_VER   = '2.0.2.4';
     }
   </script>
 
-  <style is:global>
+  <style>
     /* ============================================================
        REBATE CENTER — page chrome (LIGHT theme per §C 2026-05-10)
        Visual target: production /pages/rebate-center
        ============================================================ */
 
     /* §C2: Light body override — this page is always light */
-    body.page-rebate-center {
+    :global(body.page-rebate-center) {
       background: #ffffff;
       color: var(--ink, #1A1D23);
     }

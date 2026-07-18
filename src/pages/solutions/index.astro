@@ -18,6 +18,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   description="Eight industries, indoor and outdoor. Find the right fixture for any vertical with the coverage matrix and Quick Spec."
   bodyClass="solutions-siteandshell"
 >
+<style>
+/* CFG-COAT-1: scoped anchor forces Astro to generate a page CSS file,
+   which includes the is:global block below (apple-system + orb overlay). */
+.glow-orb{display:block;}
+</style>
 <style is:global>
 
 :root{

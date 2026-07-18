@@ -76,10 +76,15 @@ const totalFamilies = docs.length;
 <div class="selbar" id="selbar"><span class="n"><span id="selN2">0</span> families selected</span><div><button onclick="clearSel()">Clear</button><button class="red" onclick="downloadPacket()">↓ Download Packet</button></div></div>
 </BaseLayout>
 
+<style>
+/* CFG-COAT-1: scoped anchor forces Astro to generate a page CSS file,
+   which includes the is:global block below (apple-system + orb overlay). */
+.glow-orb{display:block;}
+</style>
 <style is:global>
 /* ============================================================
    ALG Document Library — verbatim from ALG-Library-MERGED-v3.html
-   CFG-TYPE-1: h1/h2/h3 pinned Lato !important
+   CFG-TYPE-1: h1/h2/h3 pinned apple-system !important
    ============================================================ */
 :root{--brand:#F32740;--press:#C8132E;--ink:#1A1D23;--ink2:#3A3E47;--ink3:#6B7280;--c1:#F5F4F1;--c2:#EEEDF0;--c3:#DCDEE2;--cb:#C7CCD3;--grn:#0FAE7C;--yel:#FDD85E;--pad-x:calc(0.5*max(56px,calc((100vw - 1320px)/2)));--mono:'JetBrains Mono',ui-monospace,monospace;--sans:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,Helvetica,Arial,sans-serif}
 *{box-sizing:border-box}.aa{color:var(--brand)}
