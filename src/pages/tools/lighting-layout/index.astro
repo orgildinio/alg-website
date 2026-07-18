@@ -995,16 +995,32 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         const nem = data.noEfficientMatch || {};
         const headline = nem.headline || 'No efficient match for these inputs.';
         const detail = nem.detail || '';
-        const bestOption = nem.bestOption || '';
+        const bestOptionRaw = nem.bestOption || '';
         const whatWeCanDo = nem.whatWeCanDo || '';
         const proUrl = nem.professionalRequestUrl || null;
         const proLink = proUrl
           ? `<a href="${proUrl}" class="ll-mode-link" data-mode="pro">Request a Professional Layout</a>`
           : `<a href="#" class="ll-mode-link" data-mode="pro">Request a Professional Layout</a>`;
+        // bestOption may be a structured object or a plain string — format either gracefully
+        let bestOptionStr = '';
+        if (bestOptionRaw && typeof bestOptionRaw === 'object') {
+          const b = bestOptionRaw;
+          const parts = [];
+          if (b.sku) parts.push(`Closest fit: <b>${b.sku}</b>`);
+          if (b.qty) parts.push(`${b.qty} fixtures`);
+          if (b.avgFc) parts.push(`${b.avgFc} fc avg`);
+          if (b.overshootX) parts.push(`${b.overshootX}× target`);
+          if (b.lpdCompliant === false && b.wPerSqFt && b.ashraeLimit) {
+            parts.push(`${b.wPerSqFt} W/ft² (ASHRAE limit ${b.ashraeLimit} W/ft²)`);
+          }
+          bestOptionStr = parts.join(' · ');
+        } else if (typeof bestOptionRaw === 'string' && bestOptionRaw) {
+          bestOptionStr = bestOptionRaw;
+        }
         errorMsg.innerHTML = [
           `<b>${headline}</b>`,
           detail ? `<br>${detail}` : '',
-          bestOption ? `<br><span class="ll-nem-best">${bestOption}</span>` : '',
+          bestOptionStr ? `<br><span class="ll-nem-best">${bestOptionStr}</span>` : '',
           whatWeCanDo ? `<br>${whatWeCanDo}` : '',
           `<br>${proLink} for a full stamped set.`
         ].filter(Boolean).join('');
