@@ -775,6 +775,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   let pendingDelivery = null; // 'pdf'
   let currentApp = 'warehouse';
   let currentCCT = '4000K';
+  // #96b: preferred Professional-request URL from noEfficientMatch response; falls back to ACC default
+  let proRequestUrl = 'https://alg-command-center.onrender.com/api/public/ple/professional-request';
 
   /* ---- DOM refs ---- */
   const genBtn = document.getElementById('ll-genBtn');
@@ -998,6 +1000,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         const bestOptionRaw = nem.bestOption || '';
         const whatWeCanDo = nem.whatWeCanDo || '';
         const proUrl = nem.professionalRequestUrl || null;
+        // #96b: store for use by the Pro form submit handler
+        if (proUrl) proRequestUrl = proUrl;
         const proLink = proUrl
           ? `<a href="${proUrl}" class="ll-mode-link" data-mode="pro">Request a Professional Layout</a>`
           : `<a href="#" class="ll-mode-link" data-mode="pro">Request a Professional Layout</a>`;
@@ -1304,8 +1308,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       const payload = buildPayload(fd);
 
       try {
-        /* POST to the CF Pages Function proxy — never browser-direct to ACC */
-        const resp = await fetch('/api/ple/professional-request', {
+        /* POST to ACC directly — absolute URL (www is static; /api/* soft-falls to homepage) */
+        // #96b: prefer professionalRequestUrl from noEfficientMatch response if present
+        const resp = await fetch(proRequestUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
