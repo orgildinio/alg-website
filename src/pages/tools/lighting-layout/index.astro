@@ -1289,9 +1289,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         extFcRequirement: (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_fcRequirements') || undefined) : undefined,
         extCct:           (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_cct') || undefined) : undefined,
         mountingHeights:  (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_mountingHeights') || undefined) : undefined,
-        tiltAllowed:      (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_tiltAllowed') === 'true') : undefined,
+        tiltAllowed:      (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_tiltAllowed') || undefined) : undefined,  // #96c: pass string — ACC schema expects string, not boolean
         lightSpillLimits: (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_lightSpill') || undefined) : undefined,
-        darkSky:          (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_darkSky') === 'true') : undefined,
+        darkSky:          (currentBranch === 'exterior' || currentBranch === 'both') ? (v('ext_darkSky') || undefined) : undefined,          // #96c: pass string — ACC schema expects string, not boolean
       };
 
       /* Strip undefined keys so .strict() doesn't see them */
