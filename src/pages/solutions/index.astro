@@ -400,9 +400,11 @@ buildDirectoryDual(document.getElementById('ed-list'),document.getElementById('e
 const mx=buildToggleMatrix(document.getElementById('mx-grid'),document.getElementById('mx-readout'),document.getElementById('dom-toggle'));
 buildDecisionEnv(document.getElementById('dp-pane'),mx);
 
-/* CFG-COAT-1: canonical mouse-follow orb EASE=0.03 */
+})();
+</script>
+<script is:inline>
 (function(){
-  var orb2=null, raf2=null, EASE=0.03;
+  var orb=null, raf=null, EASE=0.03;
   var tx=innerWidth*0.72, ty=innerHeight*0.26, x=tx, y=ty;
   var fine=matchMedia('(pointer:fine)').matches,
       still=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -411,18 +413,17 @@ buildDecisionEnv(document.getElementById('dp-pane'),mx);
   } else {
     addEventListener('pointermove',function(e){ tx=e.clientX; ty=e.clientY; },{passive:true});
   }
-  function tick2(){
-    if(!orb2) orb2=document.querySelector('.glow-orb');if(!orb2)return;
-    x+=(tx-x)*EASE; y+=(ty-y)*EASE;
-    orb2.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)';
-    raf2=requestAnimationFrame(tick2);
+  function tick(){
+    if(!orb) orb=document.querySelector('.glow-orb');
+    if(orb){ x+=(tx-x)*EASE; y+=(ty-y)*EASE;
+      orb.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)'; }
+    raf=requestAnimationFrame(tick);
   }
   document.addEventListener('visibilitychange',function(){
-    if(document.hidden){ if(raf2){ cancelAnimationFrame(raf2); raf2=null; } }
-    else if(!raf2){ raf2=requestAnimationFrame(tick2); }
+    if(document.hidden){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+    else if(!raf){ raf=requestAnimationFrame(tick); }
   });
-  raf2=requestAnimationFrame(tick2);
-})();
+  raf=requestAnimationFrame(tick);
 })();
 </script>
 </BaseLayout>

@@ -408,9 +408,9 @@ build();render();
     addEventListener('pointermove',function(e){ tx=e.clientX; ty=e.clientY; },{passive:true});
   }
   function tick(){
-    if(!orb) orb=document.querySelector('.glow-orb');if(!orb)return;
-    x+=(tx-x)*EASE; y+=(ty-y)*EASE;
-    orb.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)';
+    if(!orb) orb=document.querySelector('.glow-orb');
+    if(orb){ x+=(tx-x)*EASE; y+=(ty-y)*EASE;
+      orb.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)'; }
     raf=requestAnimationFrame(tick);
   }
   document.addEventListener('visibilitychange',function(){
