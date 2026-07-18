@@ -36,6 +36,8 @@ const WIDGET_VER   = '2.0.2.4';
   description="Find utility rebates for any ALG SKU. Filter by ZIP code, state, utility, or program type — programs across all 50 states."
   bodyClass="page-rebate-center"
 >
+  {/* CFG-COAT-1: canonical mouse-follow orb */}
+  <div class="glow-orb" aria-hidden="true" style="position:fixed;top:0;left:0;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(243,39,64,.11) 0%,transparent 70%);filter:blur(48px);pointer-events:none;z-index:0;will-change:transform;"></div>
   {/* §B1: Breadcrumb — Support path (not Tools) */}
   <nav class="rebate-breadcrumb" aria-label="Breadcrumb">
     <div class="rebate-breadcrumb-inner">
@@ -165,7 +167,7 @@ const WIDGET_VER   = '2.0.2.4';
       padding: 0 32px 64px;
       background: #ffffff;
       color: var(--ink, #1A1D23);
-      font-family: var(--font-body, 'Lato', sans-serif);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -184,7 +186,7 @@ const WIDGET_VER   = '2.0.2.4';
       color: var(--brand-red, #F32740); margin-bottom: 12px;
     }
     .rebate-hero h1 {
-      font-family: var(--font-body, 'Lato', sans-serif); font-weight: 900;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important; font-weight: 600 !important;
       font-size: 56px; line-height: 1.02; letter-spacing: -0.02em;
       margin: 0 0 16px; color: var(--ink, #1A1D23);
     }
@@ -227,7 +229,8 @@ const WIDGET_VER   = '2.0.2.4';
       color: var(--brand-red, #F32740); line-height: 1; margin-bottom: 12px;
     }
     .hiw-title {
-      font-size: 16px; font-weight: 700; color: var(--ink, #1A1D23);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important; font-weight: 600 !important;
+      font-size: 16px; color: var(--ink, #1A1D23);
       margin: 0 0 6px; letter-spacing: -0.01em;
     }
     .hiw-body { font-size: 13px; color: #374151; margin: 0; line-height: 1.55; }
@@ -266,4 +269,29 @@ const WIDGET_VER   = '2.0.2.4';
       .rebate-hero-stats { grid-template-columns: 1fr; gap: 12px; }
     }
   </style>
+
+  <script is:inline>
+(function(){
+  var orb=null, raf=null, EASE=0.03;
+  var tx=innerWidth*0.72, ty=innerHeight*0.26, x=tx, y=ty;
+  var fine=matchMedia('(pointer:fine)').matches,
+      still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!fine||still){
+    addEventListener('scroll',function(){ ty=innerHeight*0.26+scrollY*0.06; },{passive:true});
+  } else {
+    addEventListener('pointermove',function(e){ tx=e.clientX; ty=e.clientY; },{passive:true});
+  }
+  function tick(){
+    if(!orb) orb=document.querySelector('.glow-orb');if(!orb)return;
+    x+=(tx-x)*EASE; y+=(ty-y)*EASE;
+    orb.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)';
+    raf=requestAnimationFrame(tick);
+  }
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+    else if(!raf){ raf=requestAnimationFrame(tick); }
+  });
+  raf=requestAnimationFrame(tick);
+})();
+  </script>
 </BaseLayout>
