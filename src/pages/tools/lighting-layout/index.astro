@@ -986,6 +986,37 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       }
 
       const data = await resp.json();
+
+      // --- #96: outcome-based routing (200-response class) ---
+      // Compose with #94 transport/422 routing above — this handles valid 200 responses only.
+      if (data.outcome === 'no_efficient_match') {
+        // Engine returned a verdict: no efficient match exists for these inputs.
+        // Render the honest panel using API-provided copy — never invent copy.
+        const nem = data.noEfficientMatch || {};
+        const headline = nem.headline || 'No efficient match for these inputs.';
+        const detail = nem.detail || '';
+        const bestOption = nem.bestOption || '';
+        const whatWeCanDo = nem.whatWeCanDo || '';
+        const proUrl = nem.professionalRequestUrl || null;
+        const proLink = proUrl
+          ? `<a href="${proUrl}" class="ll-mode-link" data-mode="pro">Request a Professional Layout</a>`
+          : `<a href="#" class="ll-mode-link" data-mode="pro">Request a Professional Layout</a>`;
+        errorMsg.innerHTML = [
+          `<b>${headline}</b>`,
+          detail ? `<br>${detail}` : '',
+          bestOption ? `<br><span class="ll-nem-best">${bestOption}</span>` : '',
+          whatWeCanDo ? `<br>${whatWeCanDo}` : '',
+          `<br>${proLink} for a full stamped set.`
+        ].filter(Boolean).join('');
+        document.querySelector('.ll-result').classList.add('ll-hide');
+        errorBanner.classList.add('show');
+        genBtn.disabled = false;
+        calcOverlay.classList.add('ll-hide');
+        return; // do not fall through to renderResult
+      }
+      // outcome === 'ok' OR outcome is absent (old response shape) → render normally
+      // If outcome is absent, behave exactly as before #96 (defensive fallback).
+
       currentLayoutId = data.handle;
       // Clear any previous error before rendering
       errorBanner.classList.remove('show');
