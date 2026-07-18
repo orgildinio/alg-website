@@ -952,29 +952,37 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     errorBanner.classList.remove('show');
 
     try {
-      const resp = await fetch(`${ACC_BASE}/solve`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestBody)
-      });
+      // --- fetch: tag network/transport failures before they reach the outer catch ---
+      let resp;
+      try {
+        resp = await fetch(`${ACC_BASE}/solve`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(requestBody)
+        });
+      } catch (_fetchErr) {
+        // Network error, CORS block, DNS failure, or timeout — NOT a catalog gap
+        throw new Error('__TRANSPORT__');
+      }
 
+      // --- HTTP status routing ---
       if (resp.status === 429) {
-        const retryAfter = resp.headers.get('Retry-After') || resp.headers.get('retry-after');
-        throw new Error(`Rate limit reached. Please try again${retryAfter ? ` in ${retryAfter} seconds` : ' shortly'}.`);
+        // Rate limit — honest, transient, not a catalog gap
+        throw new Error('__RATE_LIMIT__');
       }
       if (resp.status === 403) {
         throw new Error('Origin not authorized. Please use this tool at archipelagolighting.com.');
       }
-      if (resp.status === 503) {
-        throw new Error('ALG catalog is temporarily unavailable. Please try again in a moment.');
-      }
-      if (!resp.ok) {
+      if (resp.status === 422) {
+        // Genuine engine validation error — BAD_INPUT or AREA_BOUND
         const err = await resp.json().catch(() => ({}));
         const code = err?.error?.code || '';
         if (code === 'AREA_BOUND') throw new Error('Room dimensions exceed the maximum allowed area (400,000 sq ft).');
-        if (code === 'BAD_INPUT')  throw new Error(err?.error?.message || 'Invalid input. Please check your dimensions and target footcandles.');
-          // No-match: any unhandled non-200 → show the no-match message (do NOT gate on a specific code)
-        throw new Error('__NO_MATCH__');
+        throw new Error(err?.error?.message || 'Invalid input. Please check your dimensions and target footcandles.');
+      }
+      if (!resp.ok) {
+        // 404, 5xx, 503, or any other non-200 non-422 → service/transport failure, NOT a catalog gap
+        throw new Error('__TRANSPORT__');
       }
 
       const data = await resp.json();
@@ -996,15 +1004,21 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     } catch (err) {
       // Clear stale result so the wrong layout is never shown
       document.querySelector('.ll-result').classList.add('ll-hide');
-      // Show no-match message for any non-200 that isn't a friendlier special case above
-      const isFriendly = err.message && !err.message.includes('__NO_MATCH__') &&
-        (err.message.includes('Rate limit') || err.message.includes('Origin not authorized') ||
-         err.message.includes('temporarily unavailable') || err.message.includes('Room dimensions') ||
-         err.message.includes('Invalid input'));
-      if (isFriendly) {
-        errorMsg.innerHTML = `<b>Engine unavailable.</b> ${err.message}`;
-      } else {
+
+      const msg = err.message || '';
+
+      if (msg === '__TRANSPORT__') {
+        // Transport / service failure — honest fallback, never a catalog-gap claim
+        errorMsg.innerHTML = `<b>The layout engine is temporarily unavailable.</b> <a href="#" class="ll-mode-link" data-mode="pro">Request a Professional Layout</a> and we'll run it for you — same inputs, full stamped set.`;
+      } else if (msg === '__RATE_LIMIT__') {
+        // 429 — high demand, transient
+        errorMsg.innerHTML = `<b>High demand right now</b> — try again in a minute, or <a href="#" class="ll-mode-link" data-mode="pro">request a Professional Layout</a>.`;
+      } else if (msg === '__NO_MATCH__' || msg === '') {
+        // Genuine no-match from a valid 200 with no fixture result
         errorMsg.innerHTML = `<b>No matching ALG fixture for these inputs yet.</b> Try adjusting your space, mounting height, or target footcandles — or <a href="#" class="ll-mode-link" data-mode="pro">request a Professional Layout</a> for a full stamped set.`;
+      } else {
+        // Named engine errors: AREA_BOUND, BAD_INPUT, Origin not authorized, etc.
+        errorMsg.innerHTML = `<b>Engine unavailable.</b> ${msg}`;
       }
       errorBanner.classList.add('show');
     } finally {
