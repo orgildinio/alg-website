@@ -28,7 +28,10 @@ const totalFamilies = docs.length;
 <BaseLayout
   title="Document Library — Archipelago Lighting Group"
   description="Every spec sheet, IES file, and install guide in one place. Search by SKU, family, collection, tier, or vertical."
+  bodyClass="page-library"
 >
+{/* CFG-COAT-1: canonical mouse-follow orb */}
+<div class="glow-orb" aria-hidden="true" style="position:fixed;top:0;left:0;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(243,39,64,.11) 0%,transparent 70%);filter:blur(48px);pointer-events:none;z-index:0;will-change:transform;"></div>
 <div class="crumb" style="display:flex;justify-content:space-between"><span><a href="/">Home</a> › <a href="/support/">Support</a> › <b>Documentation Library</b></span><span><b id="sDocs2">{totalDocs}</b> documents · always current</span></div>
 <header class="hero"><div class="eyebrow">DOCUMENTATION LIBRARY</div>
 <h1>Every spec sheet, IES file, and install guide — in one place.</h1>
@@ -78,13 +81,13 @@ const totalFamilies = docs.length;
    ALG Document Library — verbatim from ALG-Library-MERGED-v3.html
    CFG-TYPE-1: h1/h2/h3 pinned Lato !important
    ============================================================ */
-:root{--brand:#F32740;--press:#C8132E;--ink:#1A1D23;--ink2:#3A3E47;--ink3:#6B7280;--c1:#F5F4F1;--c2:#EEEDF0;--c3:#DCDEE2;--cb:#C7CCD3;--grn:#0FAE7C;--yel:#FDD85E;--pad-x:calc(0.5*max(56px,calc((100vw - 1320px)/2)));--mono:'JetBrains Mono',ui-monospace,monospace;--sans:'Lato',system-ui,sans-serif}
+:root{--brand:#F32740;--press:#C8132E;--ink:#1A1D23;--ink2:#3A3E47;--ink3:#6B7280;--c1:#F5F4F1;--c2:#EEEDF0;--c3:#DCDEE2;--cb:#C7CCD3;--grn:#0FAE7C;--yel:#FDD85E;--pad-x:calc(0.5*max(56px,calc((100vw - 1320px)/2)));--mono:'JetBrains Mono',ui-monospace,monospace;--sans:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,Helvetica,Arial,sans-serif}
 *{box-sizing:border-box}.aa{color:var(--brand)}
-h1,h2,h3{font-family:'Lato',system-ui,sans-serif !important}
+h1,h2,h3{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif !important;font-weight:600 !important}
 .crumb{padding:13px var(--pad-x);font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink3);border-bottom:1px solid var(--c2)}.crumb b{color:var(--ink)}
 .crumb a{color:var(--ink3);text-decoration:none}.crumb a:hover{color:var(--ink)}
 .hero{padding:30px var(--pad-x) 18px}.eyebrow{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brand)}
-h1{font-size:48px;font-weight:900;letter-spacing:-.025em;margin:10px 0 8px;line-height:1;font-family:'Lato',system-ui,sans-serif !important}.lede{font-size:15px;color:var(--ink2);max-width:680px;line-height:1.5}
+h1{font-size:48px;font-weight:600;letter-spacing:-.025em;margin:10px 0 8px;line-height:1;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif !important}.lede{font-size:15px;color:var(--ink2);max-width:680px;line-height:1.5}
 .stats{display:flex;gap:24px;margin-top:14px;font-family:var(--mono);font-size:13px;color:var(--ink3)}.stats b{color:var(--ink);font-size:17px}
 /* featured guide ribbon */
 .feat{margin:14px var(--pad-x) 0;background:var(--ink);color:#fff;display:grid;grid-template-columns:230px 1fr;gap:30px;padding:26px 30px;border-top:3px solid var(--brand)}
@@ -92,7 +95,7 @@ h1{font-size:48px;font-weight:900;letter-spacing:-.025em;margin:10px 0 8px;line-
 .feat .cover .cw{font-weight:900;font-size:22px;letter-spacing:.01em}.feat .cover .cs{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--ink3);margin-top:4px}
 .feat .cover .lines{height:6px;background:var(--c2);margin:5px 0}.feat .cover .code{font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:.06em}
 .feat .fk{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--brand);text-transform:uppercase}
-.feat h2{font-size:30px;font-weight:900;margin:4px 0 6px;letter-spacing:-.02em;font-family:'Lato',system-ui,sans-serif !important}.feat .fcode{font-family:var(--mono);font-size:12px;color:#aeb4bc}
+.feat h2{font-size:30px;font-weight:600;margin:4px 0 6px;letter-spacing:-.02em;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif !important}.feat .fcode{font-family:var(--mono);font-size:12px;color:#aeb4bc}
 .feat .fd{font-size:13.5px;color:#c7ccd3;line-height:1.55;margin:12px 0;max-width:620px}
 .feat .fstats{display:flex;gap:34px;margin:8px 0 16px}.feat .fstats .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--yel);text-transform:uppercase}.feat .fstats .v{font-size:22px;font-weight:900;margin-top:3px}
 .feat .fcta{display:flex;gap:10px;flex-wrap:wrap}
@@ -391,5 +394,29 @@ window.fCols=fCols;window.fTiers=fTiers;window.fTypes=fTypes;
   if(cv){var col=COL_SLUG[cv.toLowerCase()]||cv;if(DATA.some(function(r){return r.collection===col})){fCols.add(col);}}
 })();
 build();render();
+})();
+</script>
+<script is:inline>
+(function(){
+  var orb=null, raf=null, EASE=0.03;
+  var tx=innerWidth*0.72, ty=innerHeight*0.26, x=tx, y=ty;
+  var fine=matchMedia('(pointer:fine)').matches,
+      still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!fine||still){
+    addEventListener('scroll',function(){ ty=innerHeight*0.26+scrollY*0.06; },{passive:true});
+  } else {
+    addEventListener('pointermove',function(e){ tx=e.clientX; ty=e.clientY; },{passive:true});
+  }
+  function tick(){
+    if(!orb) orb=document.querySelector('.glow-orb');
+    if(orb){ x+=(tx-x)*EASE; y+=(ty-y)*EASE;
+      orb.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)'; }
+    raf=requestAnimationFrame(tick);
+  }
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+    else if(!raf){ raf=requestAnimationFrame(tick); }
+  });
+  raf=requestAnimationFrame(tick);
 })();
 </script>
