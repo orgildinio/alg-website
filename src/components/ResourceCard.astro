@@ -16,6 +16,7 @@
  *   url:      string | null | undefined  — Zoho WorkDrive public URL
  *   family:   string  — family name for fallback subject line (e.g. "Workhorse T8")
  *   resource: string  — resource type for fallback subject line (e.g. "Datasheet")
+ *   actionLabel: string | undefined — optional CTA label for a live document card
  */
 
 interface Props {
@@ -25,9 +26,10 @@ interface Props {
   url?: string | null;
   family: string;
   resource: string;
+  actionLabel?: string;
 }
 
-const { icon, title, desc, url, family, resource } = Astro.props;
+const { icon, title, desc, url, family, resource, actionLabel } = Astro.props;
 
 function isFallback(u: string | null | undefined): boolean {
   if (!u) return true;
@@ -44,7 +46,7 @@ const href = fallback
   : url!;
 const target = fallback ? '_self' : '_blank';
 const rel = fallback ? undefined : 'noopener noreferrer';
-const ctaText = fallback ? 'Request via sales →' : '↗ ZOHO WORKDRIVE';
+const ctaText = fallback ? 'Request via sales →' : (actionLabel ?? '↗ ZOHO WORKDRIVE');
 const displayTitle = fallback ? `Request ${title}` : title;
 ---
 

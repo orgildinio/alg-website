@@ -13,17 +13,11 @@ const resources = [
     title: 'Datasheet',
     desc: 'Eames A19 product datasheet',
     url: 'https://workdrive.archipelagolighting.com/external/206567f91f1893fcaceef8b1123dc3e3c591dbd47a2e8c74365b095f2b7e37e8',
+    actionLabel: 'DOWNLOAD',
     family: 'The Eames A19',
     resource: 'Datasheet',
   },
-  {
-    icon: 'PDF',
-    title: 'Installation Sheet',
-    desc: 'Per-SKU install instructions',
-    url: null,
-    family: 'The Eames A19',
-    resource: 'Installation Sheet',
-  },
+
   {
     icon: 'IES',
     title: 'IES Files',
@@ -32,13 +26,24 @@ const resources = [
     family: 'The Eames A19',
     resource: 'IES Files',
   },
+
   {
     icon: 'PDF',
-    title: 'ALG Décor Lamps · Product Guide · Q2 2026',
-    desc: 'Full Décor lamp catalog · Nostalgic + Vintage series',
-    url: null,
+    title: 'Quick Sheet',
+    desc: 'At-a-glance product specifications and key features.',
+    url: 'https://workdrive.archipelagolighting.com/external/8451e947a87473896254c2a2636ecc429f0bbbec243122c57c3937ed4617406d',
+    actionLabel: 'DOWNLOAD',
     family: 'The Eames A19',
-    resource: 'Product Guide',
+    resource: 'Quick Sheet',
+  },
+  {
+    icon: 'PDF',
+    title: 'Sell Sheet',
+    desc: 'Product overview, features, and application highlights.',
+    url: 'https://workdrive.archipelagolighting.com/external/541ccc75594cde3b3b5a8cbc5ba32d120be5f7a29be7ee765aa91c479bb93fd2',
+    actionLabel: 'DOWNLOAD',
+    family: 'The Eames A19',
+    resource: 'Sell Sheet',
   },
 ];
 
@@ -289,7 +294,7 @@ import CollectionStickyNav from '../../../components/CollectionStickyNav.astro';
         </dl>
       </article>
     </div>
-    
+
       </div>
     <style>
       @media (max-width: 900px) { .a19-spec-grid { grid-template-columns: 1fr !important; } }
