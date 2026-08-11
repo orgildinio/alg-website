@@ -6,7 +6,7 @@
  * When url is empty, null, "n/a", contains "TODO", or contains a {TOKEN}
  * placeholder, the card renders with:
  *   - CTA text: "Request via sales →"
- *   - href: /support/sample-request?subject={encodedSubject}
+ *   - href: mailto:sales@archipelagolighting.com?subject={encodedSubject}
  *   - target: _self (not _blank)
  *
  * Props:
@@ -42,7 +42,7 @@ function isFallback(u: string | null | undefined): boolean {
 const fallback = isFallback(url);
 const subject = encodeURIComponent(`${family} ${resource}`);
 const href = fallback
-  ? `/support/sample-request?subject=${subject}`
+  ? `mailto:sales@archipelagolighting.com?subject=${subject}`
   : url!;
 const target = fallback ? '_self' : '_blank';
 const rel = fallback ? undefined : 'noopener noreferrer';
