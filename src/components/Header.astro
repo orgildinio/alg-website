@@ -839,7 +839,7 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
   .megamenu.wide{
     position:fixed;top:calc(var(--main-nav-height) + 2px);left:0;right:0;
     width:100%;max-width:none;min-width:0;padding:0;background:transparent;border:none;
-    display:grid;grid-template-columns:220px max-content minmax(0,1fr);gap:0;
+    display:grid;grid-template-columns:250px max-content minmax(0,1fr);gap:0;
     max-height:calc(100vh - 110px);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.18);border-radius:4px;
   }
   .megamenu.wide .mm-col{padding:20px 18px;overflow-y:auto;max-height:calc(100vh - 110px);scrollbar-width:thin;scrollbar-color:var(--ink4) transparent;}
@@ -852,6 +852,7 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
   .megamenu.wide .mm-col-main .mm-main-item:hover .mm-main-sub{color:var(--text-primary);}
   .megamenu.wide .mm-col-main .mm-main-item.active,.megamenu.wide .mm-col-main .mm-main-item:hover{background:var(--brand);color:rgb(17,17,17);}
   .megamenu.wide .mm-col-main .mm-main-item.active .mm-main-sub{color:rgb(17,17,17);}
+  .megamenu.wide .mm-col-main .mm-main-item.active .aa,.megamenu.wide .mm-col-main .mm-main-item:hover .aa{color:var(--color-bg);}
   .megamenu.wide .mm-col-main .mm-main-group-label{color:var(--text-primary);}
   .megamenu.wide .mm-col-main .mm-main-divider{background:var(--line);}
   .megamenu.wide .mm-col.mm-col-app{background:var(--bg);border-right:1px solid var(--color-border);width:max-content;}
