@@ -212,6 +212,8 @@ const skusJson = JSON.stringify(visibleSkus);
           {families.map(fam => {
             const famSkus = skus.filter(s => s.family === fam.family);
             const famTierClass = fam.display_echelon ? `tier-${fam.display_echelon.replace('+','-plus').toLowerCase()}` : '';
+            const familyHref = (fam as any).pdpUrl ?? `/collections/${collectionSlug}/${fam.family.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')}`;
+            const isDatasheet = (fam as any).linkType === 'datasheet';
             return (
               <div
                 class="fam-card"
@@ -220,7 +222,8 @@ const skusJson = JSON.stringify(visibleSkus);
                 data-echelon={fam.display_echelon}
                 data-maxwatt={fam.max_wattage}
                 data-tier={famTierClass}
-                href={(fam as any).pdpUrl ?? `/collections/${collectionSlug}/${fam.family.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')}`}
+                href={familyHref}
+                data-external-document={isDatasheet ? 'true' : undefined}
               >
                 <div class="fc-top">
                   <span class="fc-subcat">{fam.sub_category.toUpperCase()}</span>
@@ -242,7 +245,7 @@ const skusJson = JSON.stringify(visibleSkus);
                     <span class="fc-skucount">· {fam.sku_count} SKUs</span>
                     {fam.dlc && <span class="fc-dlc">DLC</span>}
                   </div>
-                  <a href={(fam as any).pdpUrl ?? `/collections/${collectionSlug}/${fam.family.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')}`} class="fc-view">VIEW →</a>
+                  <a href={familyHref} class="fc-view" target={isDatasheet ? '_blank' : undefined} rel={isDatasheet ? 'noopener' : undefined}>{isDatasheet ? 'DATA SHEET ↗' : 'VIEW →'}</a>
                 </div>
                 <script type="application/json" class="fc-skus-data" set:html={JSON.stringify(famSkus)}></script>
               </div>
@@ -446,7 +449,10 @@ const skusJson = JSON.stringify(visibleSkus);
         // Don't double-navigate if the click was on the fc-view link itself
         if (e.target.closest('a')) return;
         const link = card.querySelector('a.fc-view');
-        if (link && link.href) window.location.href = link.href;
+        if (link && link.href) {
+          if (card.dataset.externalDocument === 'true') window.open(link.href, '_blank', 'noopener');
+          else window.location.href = link.href;
+        }
       });
     });
 

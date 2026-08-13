@@ -4185,7 +4185,8 @@
           ],
           "mount_types": [],
           "taa": true,
-          "pdpUrl": "",
+          "pdpUrl": "https://workdrive.archipelagolighting.com/external/97dc4cf863e7f2d3ef9f8d1af87df1ee91411ac5c526d1c854d4f3a3e03d1002",
+          "linkType": "datasheet",
           "card_image": "",
           "tierKey": "Beacon"
         },
@@ -4332,7 +4333,8 @@
           ],
           "mount_types": [],
           "taa": false,
-          "pdpUrl": "",
+          "pdpUrl": "https://workdrive.archipelagolighting.com/external/137653d92417db42eef7a4bb74ad7fefdee796200a12be82065695a0ac634557",
+          "linkType": "datasheet",
           "card_image": "/images/family-cards/luxoarch/lsl-series.png",
           "heroImage": "/images/family-cards/luxoarch/lsl-series.png",
           "tierKey": "LSL Series"
@@ -11881,7 +11883,8 @@
           "family": "Traffic Control",
           "tierKey": "Traffic Control",
           "heroImage": "/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp",
-          "pdpUrl": "",
+          "pdpUrl": "https://workdrive.archipelagolighting.com/external/2716170a47ea7592faba911cd7a28b29bb7b9cf3cfa22584b40ccdf4d31b4d95",
+          "linkType": "datasheet",
           "slug": "",
           "sub_category": "Traffic Control Lamp",
           "display_echelon": "ECO"
