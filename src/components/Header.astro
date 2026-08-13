@@ -181,12 +181,12 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
     </li>
 
     <!-- ============================================================
-         PRODUCTS — 4-col wide: Main | Category | Application | Preview
+         PRODUCTS — v2 merged: Browse By | Application (badge-grouped) | Preview
          ============================================================ -->
     <li class="has-dropdown" data-mm="products">
       <a href="/products">Products</a>
       <div class="megamenu wide">
-        <!-- COLUMN 1: MAIN MENU (dark panel) -->
+        <!-- COLUMN 1: BROWSE BY -->
         <div class="mm-col mm-col-main">
           <div class="mm-col-head">Browse by</div>
           <div class="mm-main-group-label">Category</div>
@@ -196,7 +196,7 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
           <a href="/collections/lamps/" class="mm-main-item" data-main="lamps">Lamps<span class="mm-main-sub">Decor · Linear · Utility</span></a>
           <div class="mm-main-divider"></div>
           <div class="mm-main-group-label">By tech capability</div>
-          <a href="/collections/safety-controls" class="mm-main-item" data-main="controls">Safety &amp; Controls<span class="mm-main-sub">const<span class="aa">Ⓐ</span>NT · contr<span class="aa">Ⓐ</span>LS</span></a>
+          <a href="/collections/safety-controls/" class="mm-main-item" data-main="controls">Safety &amp; Controls<span class="mm-main-sub">const<span class="aa">Ⓐ</span>NT · contr<span class="aa">Ⓐ</span>LS</span></a>
           <div class="mm-main-divider"></div>
           <a href="/collections/warehouse-deals/" class="mm-main-item" data-main="openbox">Warehouse Deals<span class="mm-cs-chip">COMING SOON</span><span class="mm-main-sub">Last-run inventory</span></a>
           <div class="mm-main-divider"></div>
@@ -205,124 +205,13 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
           <a href="/support/library/?taa=1" class="mm-main-item">TAA Compliant</a>
         </div>
 
-        <!-- COLUMN 2: CATEGORY -->
-        <div class="mm-col mm-col-cat">
-          <div class="mm-col-head">Collections</div>
-          <!-- INDOOR · 2 categories -->
-          <div class="mm-cat-group active" data-cat-group="indoor">
-            <a href="/collections/planoarch/index.html" class="mm-cat-item active" data-cat="indoor-plano"
-data-preview="/mm-previews/planoarch.webp"
-                data-preview-name="Commercial | planoⒶRCH"
-               data-preview-label="Indoor · Commercial"
-               data-preview-desc="Commercial LED lighting for offices, retail, education, and healthcare. Recessed downlights, back-lit panels, architectural linear, troffers, and surface-mount.">
-               Commercial | plano<span class="aa">Ⓐ</span>RCH<span class="mm-cat-sub">Architectural linear · panels · troffers</span>
-            </a>
-            <a href="/collections/lamparch/" class="mm-cat-item" data-cat="indoor-lampar"
-data-preview="/mm-previews/lamparch.webp"
-                data-preview-name="Industrial | lamparⒶRCH"
-               data-preview-label="Indoor · Industrial"
-               data-preview-desc="Industrial LED lighting for warehouses and manufacturing facilities. High-bay · Low-Bay · Washdown.">
-               Industrial | lampar<span class="aa">Ⓐ</span>RCH<span class="mm-cat-sub">High-bay · Low-Bay · Washdown</span>
-            </a>
-          </div>
-          <!-- OUTDOOR · 2 categories -->
-          <div class="mm-cat-group" data-cat-group="outdoor">
-            <a href="/collections/luxoarch/index.html" class="mm-cat-item active" data-cat="outdoor-luxo"
-data-preview="/mm-previews/luxoarch.webp"
-                data-preview-name="Commercial | luxoⒶRCH"
-               data-preview-label="Outdoor · Commercial"
-               data-preview-desc="Outdoor commercial LED lighting for parking lots, building exteriors, and sports venues. Area, canopy, flood, sports, and wall packs.">
-               Commercial | luxo<span class="aa">Ⓐ</span>RCH<span class="mm-cat-sub">Area · canopy · flood · wall</span>
-            </a>
-            <a href="/collections/cityarch/index.html" class="mm-cat-item" data-cat="outdoor-city"
-data-preview="/mm-previews/cityarch.webp"
-                data-preview-name="Municipal | cityⒶRCH"
-               data-preview-label="Outdoor · Municipal"
-               data-preview-desc="Municipal outdoor LED lighting for cities, parks, and public infrastructure. Bollard · Poles · Post Top · Roadway.">
-               Municipal | city<span class="aa">Ⓐ</span>RCH<span class="mm-cat-sub">Bollard · Poles · Post Top · Roadway</span>
-            </a>
-          </div>
-          <!-- RESIDENTIAL · 2 categories -->
-          <div class="mm-cat-group" data-cat-group="residential">
-            <a href="/collections/consumer/index.html" class="mm-cat-item active" data-cat="res-consumer"
-data-preview="/mm-previews/consumer.webp"
-                data-preview-name="Consumer"
-               data-preview-label="Residential · Consumer"
-               data-preview-desc="Six aisles of residential and retail lighting — Home, Garden, Work, Auto, Camping, and Party. Global Consumers · Big Box Retailers.">
-               Consumer<span class="mm-cat-sub">Global Consumers · Big Box Retailers</span>
-            </a>
-            <a href="/collections/multi-family/" class="mm-cat-item" data-cat="res-multi"
-data-preview="/mm-previews/multi-family.webp"
-                data-preview-name="multi-fⒶMILY"
-               data-preview-label="Residential · multi-family"
-               data-preview-desc="Apartment-grade downlights and ceiling-mount lighting for multi-family residential developments. Housing Cans · Recessed Downlights · SafeZone Downlights · Surface Mount.">
-               multi-f<span class="aa">Ⓐ</span>MILY<span class="mm-cat-sub">Housing Cans · Recessed · SafeZone · Surface Mount</span>
-            </a>
-          </div>
-          <!-- LAMPS · 4 categories (B1, v2.5.6) -->
-          <div class="mm-cat-group" data-cat-group="lamps">
-            <a href="/collections/tubularch/" class="mm-cat-item active" data-cat="lamps-tubul"
-               data-preview="/mm-previews/lamps-tubul.webp"
-               data-preview-name="tubulⒶRCH"
-               data-preview-label="Lamps · tubulⒶRCH"
-               data-preview-desc="LED lamp retrofits for T8, T5, PL, and HID fixtures. UL-A (ballast-compatible), UL-A+B (hybrid), and UL-B (ballast-bypass) types for every retrofit scenario.">
-               Linear<span class="mm-cat-sub">T5 · T8 · PL · PLL · U6</span>
-            </a>
-            <a href="/collections/nostalgic-decor/" class="mm-cat-item" data-cat="lamps-nostalgic"
-               data-preview="/mm-previews/lamps-nostalgic.webp"
-               data-preview-name="Nostalgic Décor"
-               data-preview-label="Lamps · Nostalgic"
-               data-preview-desc="Classic filament-style LED lamps. Edison, globe, and vintage shapes with warm amber glow. Dimmable, long-life, energy-efficient.">
-               Nostalgic Décor<span class="mm-cat-sub">Classic Filament Style</span>
-            </a>
-            <a href="/collections/vintage-decor/" class="mm-cat-item" data-cat="lamps-vintage"
-data-preview="/mm-previews/vintage-decor.webp"
-                data-preview-name="Vintage Décor"
-               data-preview-label="Lamps · Vintage"
-               data-preview-desc="Old-world aesthetics with modern LED efficiency. Decorative shapes, exposed filament look, and warm CCT options for hospitality and residential.">
-               Vintage Décor<span class="mm-cat-sub">Old-World, Modern Efficiency</span>
-            </a>
-            <a href="/collections/signature/" class="mm-cat-item" data-cat="lamps-signature"
-               data-preview="/mm-previews/lamps-signature.webp"
-               data-preview-name="signⒶTURE"
-               data-preview-label="Lamps · signⒶTURE"
-               data-preview-desc="Commercial-grade LED lamps for the hardest retrofit jobs. HID retrofit, A-lamp, BR flood, and PAR reflector. One dip-switchable lamp per family.">               sign<span class="aa">Ⓐ</span>TURE<span class="mm-cat-sub">A · BR · PAR · HID</span>
-            </a>
-          </div>
-          <!-- CONTROLS · 2 categories -->
-          <div class="mm-cat-group" data-cat-group="controls">
-            <a href="/collections/constant/" class="mm-cat-item active" data-cat="ctrl-constant"
-data-preview="/mm-previews/constant.webp"
-                data-preview-name="constⒶNT"
-               data-preview-label="Controls · Emergency"
-               data-preview-desc="Emergency battery backup. Drivers, egress lights, exit signs, and combo signs with built-in 90-minute battery backup for code compliance.">
-               const<span class="aa">Ⓐ</span>NT<span class="mm-cat-sub">Emergency battery backup · Emergency lighting · Exit signs</span>
-            </a>
-            <a href="/collections/controls/" class="mm-cat-item" data-cat="ctrl-controls"
-data-preview="/mm-previews/controls.webp"
-                data-preview-name="contrⒶLS"
-               data-preview-label="Controls · contrⒶLS"
-               data-preview-desc="Occupancy sensing and networked controls by ⒶCS. Sensors, photocells, wireless controllers, and the ⒶCS by ALG App for NLC-ready deployments.">
-               contr<span class="aa">Ⓐ</span>LS<span class="mm-cat-sub">Occupancy · networked</span>
-            </a>
-          </div>
-          <!-- WAREHOUSE DEALS · single category -->
-          <div class="mm-cat-group" data-cat-group="openbox">
-            <a href="/collections/warehouse-deals/" class="mm-cat-item active" data-cat="openbox-all"
-data-preview="/mm-previews/warehouse-deals.webp"
-                data-preview-name="Warehouse Deals"
-               data-preview-label="Last-run · Limited stock"
-               data-preview-desc="Last-run inventory from discontinued SKUs and retired generations. Fully functional, factory-warranted, priced to move. While supplies last — not restocked.">
-               All Warehouse Deals<span class="mm-cat-sub">Last-run · limited stock</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- COLUMN 3: APPLICATION -->
+        <!-- COLUMN 2: APPLICATION (merged collection badges, fixed two-track region) -->
         <div class="mm-col mm-col-app">
           <div class="mm-col-head">Application</div>
-          <!-- planoⒶRCH applications -->
-          <div class="mm-app-group active" data-app-group="indoor-plano">
+          <div class="mm-app-columns">
+            <div class="mm-app-column" data-app-column="1">
+              <section class="mm-app-group" data-app-group="indoor-plano" data-app-category="indoor" data-collection-href="/collections/planoarch/" data-preview="/mm-previews/planoarch.webp" data-preview-name="Commercial | planoⒶRCH" data-preview-label="Indoor · Commercial" data-preview-desc="Commercial LED lighting for offices, retail, education, and healthcare. Recessed downlights, back-lit panels, architectural linear, troffers, and surface-mount.">
+            <span class="mm-collection-badge">plano<span class="aa">Ⓐ</span>RCH</span>
             <a href="/collections/planoarch/?application=architectural-linear" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Lara" data-tier-pro="" data-tier-proplus="Luna" data-preview-name="planoⒶRCH · Architectural Linear" data-preview-label="Indoor · Linear" data-preview-desc="Architectural linear luminaires for suspended, surface-mount, and recessed indoor applications.">Architectural Linear</a>
             <a href="/collections/planoarch/?application=downlight" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Solstice" data-tier-pro="Solstice SafeZone" data-tier-proplus="Astra" data-preview-name="planoⒶRCH · Downlight" data-preview-label="Indoor · Downlight" data-preview-desc="Commercial downlights with integral and modular housings. 4- to 8-inch apertures, Field-Selectable wattage and CCT.">Downlight</a>
             <a href="/collections/planoarch/?application=panel" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="proⒶRCH" data-tier-proplus="" data-preview-name="planoⒶRCH · Panel" data-preview-label="Indoor · Panels" data-preview-desc="Back-lit LED flat panels for drop-ceiling grid and surface mount. 2×2, 2×4, and 1×4 footprints.">Panel</a>
@@ -332,18 +221,9 @@ data-preview="/mm-previews/warehouse-deals.webp"
             <a href="/collections/planoarch/?application=track-light" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Trackstar" data-tier-pro="" data-tier-proplus="" data-preview-name="planoⒶRCH · Track Light" data-preview-label="Indoor · Track" data-preview-desc="Track lighting heads and systems for accent and display lighting.">Track Light</a>
             <a href="/collections/planoarch/?application=troffer" class="mm-app-item" data-preview-tiers="1" data-tier-eco="proⒶRCH-T" data-tier-pro="Luxmark" data-tier-proplus="" data-preview-name="planoⒶRCH · Troffer" data-preview-label="Indoor · Troffer" data-preview-desc="LED troffers with center-basket and volumetric optics. 2×2 and 2×4 grid retrofits and new construction.">Troffer</a>
             <a href="/collections/planoarch/?application=wraparound" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Waymark" data-tier-proplus="" data-preview-name="planoⒶRCH · Wraparound" data-preview-label="Indoor · Wraparound" data-preview-desc="Wraparound fixtures for utility, stairwell, and back-of-house applications.">Wraparound</a>
-          </div>
-          <!-- lamparⒶRCH applications -->
-          <div class="mm-app-group" data-app-group="indoor-lampar">
-            <a href="/collections/lamparch/?application=dock-light" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Canadarm" data-tier-proplus="" data-preview-name="lamparⒶRCH · Dock Light" data-preview-label="Industrial · Dock" data-preview-desc="Articulating dock lights for loading docks and freight handling areas.">Dock Light</a>
-            <a href="/collections/lamparch/?application=linear-high-bay" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Titan" data-tier-proplus="" data-preview-name="lamparⒶRCH · Linear High Bay" data-preview-label="Industrial · Linear HB" data-preview-desc="Linear high-bay fixtures for warehouses, manufacturing, and retail back-of-house. Titan up to 155W.">Linear High Bay</a>
-            <a href="/collections/lamparch/?application=linear-strip" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Hallmark" data-tier-pro="" data-tier-proplus="" data-preview-name="lamparⒶRCH · Linear Strip" data-preview-label="Industrial · Strip" data-preview-desc="Surface and suspended linear strip fixtures for utility and back-of-house applications.">Linear Strip</a>
-            <a href="/collections/lamparch/?application=retrofit-linear-strip" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="retroⒶRCH-L1" data-tier-proplus="" data-preview-name="lamparⒶRCH · Retrofit Linear Strip" data-preview-label="Industrial · Retrofit Strip" data-preview-desc="Drop-in LED retrofit kits for existing fluorescent linear strip housings.">Retrofit Linear Strip</a>
-            <a href="/collections/lamparch/?application=round-high-bay" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Icarus" data-tier-pro="Jupiter" data-tier-proplus="" data-preview-name="lamparⒶRCH · Round High Bay" data-preview-label="Industrial · Round HB" data-preview-desc="UFO-form round high bays for open-ceiling industrial spaces. Up to 60,000 lumens per fixture.">Round High Bay</a>
-            <a href="/collections/lamparch/?application=vapor-tight" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Eureka-II" data-tier-pro="Eureka-I" data-tier-proplus="" data-preview-name="lamparⒶRCH · Vapor-Tight" data-preview-label="Industrial · Vapor-Tight" data-preview-desc="IP65/IP66 vapor-tight fixtures for wet, damp, and washdown environments.">Vapor-Tight</a>
-          </div>
-          <!-- luxoⒶRCH applications -->
-          <div class="mm-app-group" data-app-group="outdoor-luxo">
+          </section>
+              <section class="mm-app-group" data-app-group="outdoor-luxo" data-app-category="outdoor" data-collection-href="/collections/luxoarch/" data-preview="/mm-previews/luxoarch.webp" data-preview-name="Commercial | luxoⒶRCH" data-preview-label="Outdoor · Commercial" data-preview-desc="Outdoor commercial LED lighting for parking lots, building exteriors, and sports venues. Area, canopy, flood, sports, and wall packs.">
+            <span class="mm-collection-badge">luxo<span class="aa">Ⓐ</span>RCH</span>
             <a href="/collections/luxoarch/?application=area-light" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Heritage-I" data-tier-pro="Liberty-I" data-tier-proplus="Rosetta-III" data-preview-name="luxoⒶRCH · Area Luminaire" data-preview-label="Outdoor · Area" data-preview-desc="Area luminaires for parking lots, dealerships, and commercial exteriors.">Area Luminaire</a>
             <a href="/collections/luxoarch/?application=canopy" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Pathfinder-I" data-tier-pro="Navigator-I" data-tier-proplus="" data-preview-name="luxoⒶRCH · Canopy Luminaire" data-preview-label="Outdoor · Canopy" data-preview-desc="Recessed and surface-mount canopy fixtures for service station, drive-thru, and covered-entry applications.">Canopy Luminaire</a>
             <a href="/collections/luxoarch/?application=cylinder" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Aura-I" data-tier-proplus="" data-preview-name="luxoⒶRCH · Cylinder" data-preview-label="Outdoor · Cylinder" data-preview-desc="Cylinder luminaires for architectural accent and façade lighting.">Cylinder</a>
@@ -354,9 +234,78 @@ data-preview="/mm-previews/warehouse-deals.webp"
             <a href="/collections/luxoarch/?application=wall-pack-classic" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Guardian-I" data-tier-pro="Sentinel-I" data-tier-proplus="" data-preview-name="luxoⒶRCH · Wall Pack | Classic" data-preview-label="Outdoor · Wall Pack" data-preview-desc="Traditional full-body wall packs for commercial and industrial perimeters. Guardian, Sentinel, and Shield series.">Wall Pack | Classic</a>
             <a href="/collections/luxoarch/?application=wall-pack-entryway" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Ramparts-I" data-tier-pro="Wedge-I" data-tier-proplus="" data-preview-name="luxoⒶRCH · Wall Pack | Entryway" data-preview-label="Outdoor · Wall Pack" data-preview-desc="Compact entryway wall packs for building entrances, stairwells, and covered walkways. Ramparts and Wedge-I series.">Wall Pack | Entryway</a>
             <a href="/collections/luxoarch/?application=wall-pack-full-cutoff" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Watchtower-I" data-tier-pro="Nightwatch-I" data-tier-proplus="" data-preview-name="luxoⒶRCH · Wall Pack | Full-Cutoff" data-preview-label="Outdoor · Wall Pack" data-preview-desc="Full-cutoff wall packs for dark-sky compliance and glare-free building perimeter lighting. Watchtower and Nightwatch series.">Wall Pack | Full-Cutoff</a>
-          </div>
-          <!-- cityⒶRCH applications -->
-          <div class="mm-app-group" data-app-group="outdoor-city">
+          </section>
+              <section class="mm-app-group" data-app-group="res-consumer" data-app-category="residential" data-collection-href="/collections/consumer/" data-preview="/mm-previews/consumer.webp" data-preview-name="Consumer" data-preview-label="Residential · Consumer" data-preview-desc="Six aisles of residential and retail lighting — Home, Garden, Work, Auto, Camping, and Party. Global Consumers · Big Box Retailers.">
+            <span class="mm-collection-badge">Consumer</span>
+            <a href="/collections/consumer#home" class="mm-app-item" data-preview-name="Consumer · Home" data-preview-label="Consumer · Aisle 01" data-preview-desc="Garage lights, security floods, pathway markers, shop fixtures — the broadest reach."><span class="mm-aisle-num">01</span> Home</a>
+            <a href="/collections/consumer#garden" class="mm-app-item" data-preview-name="Consumer · Garden" data-preview-label="Consumer · Aisle 02" data-preview-desc="PolyGrow horticultural fixtures. Outdoor garden ambient lighting. Pathway and accent."><span class="mm-aisle-num">02</span> Garden</a>
+            <a href="/collections/consumer#work" class="mm-app-item" data-preview-name="Consumer · Work" data-preview-label="Consumer · Aisle 03" data-preview-desc="Portable work lights. Magnetic shop lights. Temporary job-site fixtures."><span class="mm-aisle-num">03</span> Work</a>
+            <a href="/collections/consumer#auto" class="mm-app-item" data-preview-name="Consumer · Auto" data-preview-label="Consumer · Aisle 04" data-preview-desc="Inspection lighting. Mobile mechanic essentials. Truck-bed work lights."><span class="mm-aisle-num">04</span> Auto</a>
+            <a href="/collections/consumer#camping" class="mm-app-item" data-preview-name="Consumer · Camping" data-preview-label="Consumer · Aisle 05" data-preview-desc="USB-solar charged. Real output. Real runtime. Compact form factors."><span class="mm-aisle-num">05</span> Camping</a>
+            <a href="/collections/consumer#party" class="mm-app-item" data-preview-name="Consumer · Party" data-preview-label="Consumer · Aisle 06" data-preview-desc="LED festoon. Bistro string lights. Café-style decorative that survives more than one season."><span class="mm-aisle-num">06</span> Party</a>
+          </section>
+              <section class="mm-app-group" data-app-group="res-multi" data-app-category="residential" data-collection-href="/collections/multi-family/" data-preview="/mm-previews/multi-family.webp" data-preview-name="multi-fⒶMILY" data-preview-label="Residential · multi-family" data-preview-desc="Apartment-grade downlights and ceiling-mount lighting for multi-family residential developments. Housing Cans · Recessed Downlights · SafeZone Downlights · Surface Mount.">
+            <span class="mm-collection-badge">multi-f<span class="aa">Ⓐ</span>MILY</span>
+            <a href="/collections/multi-family/?application=housing-cans" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Gehry" data-tier-proplus="" data-preview-name="multi-fⒶMILY · Housing Cans" data-preview-label="RESIDENTIAL · HOUSING CANS" data-preview-desc="Insulation-contact rated commercial recess cans for ground-up multi-family builds. Code-compliant, inspector-ready.">Housing Cans</a>
+            <a href="/collections/multi-family/?application=recessed-downlights" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Nebula-II" data-tier-pro="Radius-II" data-tier-proplus="" data-preview-name="multi-fⒶMILY · Recessed Downlights" data-preview-label="RESIDENTIAL · RECESSED DOWNLIGHTS" data-preview-desc="Apartment-grade recessed downlights for in-unit hallways, kitchens, and common areas. Value-engineered to a per-door budget.">Recessed Downlights</a>
+            <a href="/collections/multi-family/?application=safezone-downlights" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="" data-tier-proplus="Radius SafeZone" data-preview-name="multi-fⒶMILY · SafeZone Downlights" data-preview-label="RESIDENTIAL · SAFEZONE DOWNLIGHTS" data-preview-desc="UL 924 emergency-rated downlights for egress paths and life-safety zones in multi-family corridors.">SafeZone Downlights</a>
+            <a href="/collections/multi-family/?application=surface-mount" class="mm-app-item" data-preview-tiers="1" data-tier-eco="eCrescent" data-tier-pro="Eclipse-II" data-tier-proplus="" data-preview-name="multi-fⒶMILY · Surface Mount" data-preview-label="RESIDENTIAL · SURFACE MOUNT" data-preview-desc="Ceiling-mount fixtures for shallow plenums, retrofits, and exterior walkways. Edge-lit profile with built-in PIR options.">Surface Mount</a>
+          </section>
+              <section class="mm-app-group" data-app-group="lamps-tubul" data-app-category="lamps" data-collection-href="/collections/tubularch/" data-preview="/mm-previews/lamps-tubul.webp" data-preview-name="tubulⒶRCH" data-preview-label="Lamps · tubulⒶRCH" data-preview-desc="LED lamp retrofits for T8, T5, PL, and HID fixtures. UL-A (ballast-compatible), UL-A+B (hybrid), and UL-B (ballast-bypass) types for every retrofit scenario.">
+            <span class="mm-collection-badge">tubul<span class="aa">Ⓐ</span>RCH</span>
+            <a href="/collections/tubulararch/t5/" class="mm-app-item">T5</a>
+            <a href="/collections/tubulararch/t8/" class="mm-app-item">T8</a>
+            <a href="/collections/tubulararch/pl/" class="mm-app-item">PL</a>
+            <a href="/collections/tubulararch/pll/" class="mm-app-item">PLL</a>
+            <a href="/collections/tubulararch/u6/" class="mm-app-item">U6</a>
+          </section>
+              <section class="mm-app-group" data-app-group="lamps-nostalgic" data-app-category="lamps" data-collection-href="/collections/nostalgic-decor/" data-preview="/mm-previews/lamps-nostalgic.webp" data-preview-name="Nostalgic Décor" data-preview-label="Lamps · Nostalgic" data-preview-desc="Classic filament-style LED lamps. Edison, globe, and vintage shapes with warm amber glow. Dimmable, long-life, energy-efficient.">
+            <span class="mm-collection-badge">Nostalgic</span>
+            <a href="/collections/nostalgic-decor/a19" class="mm-app-item">A19</a>
+            <a href="/collections/nostalgic-decor/b10" class="mm-app-item">B10</a>
+            <a href="/collections/nostalgic-decor/ca10" class="mm-app-item">CA10</a>
+            <a href="/collections/nostalgic-decor/g16" class="mm-app-item">G16.5</a>
+            <a href="/collections/nostalgic-decor/g25" class="mm-app-item">G25</a>
+            <a href="/collections/nostalgic-decor/s14" class="mm-app-item">S14</a>
+          </section>
+              <section class="mm-app-group" data-app-group="ctrl-constant" data-app-category="controls" data-collection-href="/collections/constant/" data-preview="/mm-previews/constant.webp" data-preview-name="constⒶNT" data-preview-label="Controls · Emergency" data-preview-desc="Emergency battery backup. Drivers, egress lights, exit signs, and combo signs with built-in 90-minute battery backup for code compliance.">
+            <span class="mm-collection-badge">const<span class="aa">Ⓐ</span>NT</span>
+            <a href="/collections/constant/#all-drivers" class="mm-app-item" data-preview-name="constⒶNT · Emergency Battery Backup" data-preview-label="EM · Battery Backup" data-preview-desc="Integral emergency battery backup drivers for new-construction luminaires. 90-minute runtime.">Emergency Battery Backup</a>
+            <a href="/collections/constant/?adder=cl#all-drivers" class="mm-app-item" data-preview-name="constⒶNT · constⒶNTLink EM Batteries" data-preview-label="EM · Remote Battery" data-preview-desc="Remote emergency battery packs for retrofit of non-EM fixtures. NiMH chemistry, 90-minute runtime.">const<span class="aa">Ⓐ</span>NTLink EM Batteries</a>
+            <a href="/collections/constant/exit/?family=exit" class="mm-app-item" data-preview-name="constⒶNT · Exit Signs" data-preview-label="EM · Exit Sign" data-preview-desc="LED exit signs: single and double face, edge-lit and stencil. Self-testing and self-diagnostic options.">Exit Signs</a>
+            <a href="/collections/constant/exit/?family=combo" class="mm-app-item" data-preview-name="constⒶNT · Combo Signs" data-preview-label="EM · Combo" data-preview-desc="Combination exit sign + egress light. One fixture, two code-compliance functions.">Combo Signs</a>
+            <a href="/collections/constant/exit/?family=emergency" class="mm-app-item" data-preview-name="constⒶNT · Emergency Light" data-preview-label="EM · Egress" data-preview-desc="Emergency egress light fixtures with integral battery backup for path-of-egress illumination.">Emergency Light</a>
+          </section>
+              <section class="mm-app-group" data-app-group="ctrl-controls" data-app-category="controls" data-collection-href="/collections/controls/" data-preview="/mm-previews/controls.webp" data-preview-name="contrⒶLS" data-preview-label="Controls · contrⒶLS" data-preview-desc="Occupancy sensing and networked controls by ⒶCS. Sensors, photocells, wireless controllers, and the ⒶCS by ALG App for NLC-ready deployments.">
+            <span class="mm-collection-badge">contr<span class="aa">Ⓐ</span>LS</span>
+            <a href="/collections/controls/" class="mm-app-item" data-preview-name="contrⒶLS · Bi-Level" data-preview-label="Controls · Bi-Level" data-preview-desc="Bi-level occupancy sensing for corridor and stairwell. Integrated step-dim mode for 24/7 code compliance.">Bi-Level <span class="mm-sub-tier eco">ECO</span></a>
+            <a href="/collections/controls/" class="mm-app-item" data-preview-name="contrⒶLS · ⒶRCH Connected Systems" data-preview-label="Controls · Connected" data-preview-desc="ⒶRCH Connected Systems: NLC-ready networked lighting controls across the full ALG product portfolio.">by <span class="aa">Ⓐ</span>CS <span class="mm-sub-tier pro">PRO</span></a>
+            <a href="/collections/controls/" class="mm-app-item" data-preview-name="contrⒶLS · blueⒶRCH" data-preview-label="Controls · Sensors" data-preview-desc="blueⒶRCH occupancy and daylight sensors for code-compliant commercial installations.">by Silvair <span class="mm-sub-tier proplus">PRO+</span></a>
+          </section>
+              <section class="mm-app-group" data-app-group="ctrl-synapse" data-app-category="controls" data-collection-href="/collections/controls/" data-preview="" data-preview-name="contrⒶLS by Synapse" data-preview-label="Controls · Synapse" data-preview-desc="contrⒶLS by Synapse: enterprise-grade networked lighting controls with cloud-based management.">
+            <span class="mm-collection-badge">contr<span class="aa">Ⓐ</span>LS by Synapse</span>
+            <a href="/collections/controls/" class="mm-app-item" data-preview-name="contrⒶLS by Synapse" data-preview-label="Controls · Synapse" data-preview-desc="contrⒶLS by Synapse: enterprise-grade networked lighting controls with cloud-based management.">by Synapse <span class="mm-sub-tier proplus">PRO+</span></a>
+          </section>
+              <section class="mm-app-group" data-app-group="openbox-all" data-app-category="openbox" data-collection-href="/collections/warehouse-deals/" data-preview="/mm-previews/warehouse-deals.webp" data-preview-name="Warehouse Deals" data-preview-label="Last-run · Limited stock" data-preview-desc="Last-run inventory and final production quantities are getting their own home here. Check back soon.">
+            <span class="mm-collection-badge">Warehouse Deals</span>
+            <a href="/collections/warehouse-deals/" class="mm-app-item" data-preview-name="Warehouse Deals · Indoor" data-preview-label="Warehouse Deals · Indoor" data-preview-desc="Last-run indoor fixtures. Panels, downlights, linear, and retrofit.">Indoor</a>
+            <a href="/collections/warehouse-deals/" class="mm-app-item" data-preview-name="Warehouse Deals · Outdoor" data-preview-label="Warehouse Deals · Outdoor" data-preview-desc="Last-run outdoor fixtures. Area, flood, wall, and canopy.">Outdoor</a>
+            <a href="/collections/warehouse-deals/" class="mm-app-item" data-preview-name="Warehouse Deals · Lamps" data-preview-label="Warehouse Deals · Lamps" data-preview-desc="Last-run LED lamps. T8, décor, and utility.">Lamps</a>
+            <a href="/collections/warehouse-deals/" class="mm-app-item" data-preview-name="Warehouse Deals · Accessories" data-preview-label="Warehouse Deals · Accessories" data-preview-desc="Last-run mounting brackets, lenses, and retrofit trim kits.">Accessories</a>
+          </section>
+            </div>
+            <div class="mm-app-column" data-app-column="2">
+              <section class="mm-app-group" data-app-group="indoor-lampar" data-app-category="indoor" data-collection-href="/collections/lamparch/" data-preview="/mm-previews/lamparch.webp" data-preview-name="Industrial | lamparⒶRCH" data-preview-label="Indoor · Industrial" data-preview-desc="Industrial LED lighting for warehouses and manufacturing facilities. High-bay · Low-Bay · Washdown.">
+            <span class="mm-collection-badge">lampar<span class="aa">Ⓐ</span>RCH</span>
+            <a href="/collections/lamparch/?application=dock-light" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Canadarm" data-tier-proplus="" data-preview-name="lamparⒶRCH · Dock Light" data-preview-label="Industrial · Dock" data-preview-desc="Articulating dock lights for loading docks and freight handling areas.">Dock Light</a>
+            <a href="/collections/lamparch/?application=linear-high-bay" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Titan" data-tier-proplus="" data-preview-name="lamparⒶRCH · Linear High Bay" data-preview-label="Industrial · Linear HB" data-preview-desc="Linear high-bay fixtures for warehouses, manufacturing, and retail back-of-house. Titan up to 155W.">Linear High Bay</a>
+            <a href="/collections/lamparch/?application=linear-strip" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Hallmark" data-tier-pro="" data-tier-proplus="" data-preview-name="lamparⒶRCH · Linear Strip" data-preview-label="Industrial · Strip" data-preview-desc="Surface and suspended linear strip fixtures for utility and back-of-house applications.">Linear Strip</a>
+            <a href="/collections/lamparch/?application=retrofit-linear-strip" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="retroⒶRCH-L1" data-tier-proplus="" data-preview-name="lamparⒶRCH · Retrofit Linear Strip" data-preview-label="Industrial · Retrofit Strip" data-preview-desc="Drop-in LED retrofit kits for existing fluorescent linear strip housings.">Retrofit Linear Strip</a>
+            <a href="/collections/lamparch/?application=round-high-bay" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Icarus" data-tier-pro="Jupiter" data-tier-proplus="" data-preview-name="lamparⒶRCH · Round High Bay" data-preview-label="Industrial · Round HB" data-preview-desc="UFO-form round high bays for open-ceiling industrial spaces. Up to 60,000 lumens per fixture.">Round High Bay</a>
+            <a href="/collections/lamparch/?application=vapor-tight" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Eureka-II" data-tier-pro="Eureka-I" data-tier-proplus="" data-preview-name="lamparⒶRCH · Vapor-Tight" data-preview-label="Industrial · Vapor-Tight" data-preview-desc="IP65/IP66 vapor-tight fixtures for wet, damp, and washdown environments.">Vapor-Tight</a>
+          </section>
+              <section class="mm-app-group" data-app-group="outdoor-city" data-app-category="outdoor" data-collection-href="/collections/cityarch/" data-preview="/mm-previews/cityarch.webp" data-preview-name="Municipal | cityⒶRCH" data-preview-label="Outdoor · Municipal" data-preview-desc="Municipal outdoor LED lighting for cities, parks, and public infrastructure. Bollard · Poles · Post Top · Roadway.">
+            <span class="mm-collection-badge">city<span class="aa">Ⓐ</span>RCH</span>
             <a href="/collections/cityarch/?application=bollard" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Sentry-I" data-tier-proplus="" data-preview-name="cityⒶRCH · Bollard" data-preview-label="Municipal · Bollard" data-preview-desc="Bollard luminaires for pathways, landscape, and pedestrian areas.">Bollard</a>
             <a href="/collections/cityarch/?application=high-mast" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="" data-tier-proplus="OmniMax-I" data-preview-name="cityⒶRCH · High-Mast" data-preview-label="Municipal · High-Mast" data-preview-desc="High-mast fixtures for roadway interchanges, seaports, and large open-area applications.">High-Mast</a>
             <a href="/collections/cityarch/?application=pole" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="" data-tier-proplus="" data-preview-name="cityⒶRCH · Pole" data-preview-label="Municipal · Pole" data-preview-desc="Pole-mount luminaires for parking lots, roadways, and commercial outdoor areas.">Pole</a>
@@ -364,109 +313,41 @@ data-preview="/mm-previews/warehouse-deals.webp"
             <a href="/collections/cityarch/?application=roadway" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Abbey-I" data-tier-proplus="" data-preview-name="cityⒶRCH · Roadway" data-preview-label="Municipal · Roadway" data-preview-desc="Cobra-head and shoebox roadway luminaires. NEMA 7-pin ready for utility-grade controls.">Roadway</a>
             <a href="/collections/cityarch/?application=street-sign" class="mm-app-item" data-preview-name="cityⒶRCH · Street Sign" data-preview-label="Municipal · Street Sign" data-preview-desc="Street sign lamps for illuminated signage and wayfinding applications.">Street Sign</a>
             <a href="/collections/cityarch/?application=traffic-control-lamps" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Traffic Control" data-tier-proplus="" data-preview-name="cityⒶRCH · Traffic Control Lamps" data-preview-label="Municipal · Traffic" data-preview-desc="LED traffic signal and pedestrian crossing lamps for DOT and municipal specifications.">Traffic Control Lamps</a>
-          </div>
-          <!-- Consumer applications (B3+B4, v2.5.6): 6 aisle anchors, no placeholder groups -->
-          <div class="mm-app-group" data-app-group="res-consumer">
-            <div class="mm-app-group-head">Browse by Aisle</div>
-            <a href="/collections/consumer#home" class="mm-app-item" data-preview-name="Consumer · Home" data-preview-label="Consumer · Aisle 01" data-preview-desc="Garage lights, security floods, pathway markers, shop fixtures — the broadest reach."><span class="mm-aisle-num">01</span> Home</a>
-            <a href="/collections/consumer#garden" class="mm-app-item" data-preview-name="Consumer · Garden" data-preview-label="Consumer · Aisle 02" data-preview-desc="PolyGrow horticultural fixtures. Outdoor garden ambient lighting. Pathway and accent."><span class="mm-aisle-num">02</span> Garden</a>
-            <a href="/collections/consumer#work" class="mm-app-item" data-preview-name="Consumer · Work" data-preview-label="Consumer · Aisle 03" data-preview-desc="Portable work lights. Magnetic shop lights. Temporary job-site fixtures."><span class="mm-aisle-num">03</span> Work</a>
-            <a href="/collections/consumer#auto" class="mm-app-item" data-preview-name="Consumer · Auto" data-preview-label="Consumer · Aisle 04" data-preview-desc="Inspection lighting. Mobile mechanic essentials. Truck-bed work lights."><span class="mm-aisle-num">04</span> Auto</a>
-            <a href="/collections/consumer#camping" class="mm-app-item" data-preview-name="Consumer · Camping" data-preview-label="Consumer · Aisle 05" data-preview-desc="USB-solar charged. Real output. Real runtime. Compact form factors."><span class="mm-aisle-num">05</span> Camping</a>
-            <a href="/collections/consumer#party" class="mm-app-item" data-preview-name="Consumer · Party" data-preview-label="Consumer · Aisle 06" data-preview-desc="LED festoon. Bistro string lights. Café-style decorative that survives more than one season."><span class="mm-aisle-num">06</span> Party</a>
-          </div>
-          <!-- multi-fⒶMILY applications — §B1: 4 applications, hover-driven tier cards -->
-          <div class="mm-app-group" data-app-group="res-multi">
-            <a href="/collections/multi-family/?application=housing-cans" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Gehry" data-tier-proplus="" data-preview-name="multi-fⒶMILY · Housing Cans" data-preview-label="RESIDENTIAL · HOUSING CANS" data-preview-desc="Insulation-contact rated commercial recess cans for ground-up multi-family builds. Code-compliant, inspector-ready.">Housing Cans</a>
-            <a href="/collections/multi-family/?application=recessed-downlights" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Nebula-II" data-tier-pro="Radius-II" data-tier-proplus="" data-preview-name="multi-fⒶMILY · Recessed Downlights" data-preview-label="RESIDENTIAL · RECESSED DOWNLIGHTS" data-preview-desc="Apartment-grade recessed downlights for in-unit hallways, kitchens, and common areas. Value-engineered to a per-door budget.">Recessed Downlights</a>
-            <a href="/collections/multi-family/?application=safezone-downlights" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="" data-tier-proplus="Radius SafeZone" data-preview-name="multi-fⒶMILY · SafeZone Downlights" data-preview-label="RESIDENTIAL · SAFEZONE DOWNLIGHTS" data-preview-desc="UL 924 emergency-rated downlights for egress paths and life-safety zones in multi-family corridors.">SafeZone Downlights</a>
-            <a href="/collections/multi-family/?application=surface-mount" class="mm-app-item" data-preview-tiers="1" data-tier-eco="eCrescent" data-tier-pro="Eclipse-II" data-tier-proplus="" data-preview-name="multi-fⒶMILY · Surface Mount" data-preview-label="RESIDENTIAL · SURFACE MOUNT" data-preview-desc="Ceiling-mount fixtures for shallow plenums, retrofits, and exterior walkways. Edge-lit profile with built-in PIR options.">Surface Mount</a>
-          </div>
-          <!-- constⒶNT applications -->
-          <div class="mm-app-group" data-app-group="ctrl-constant">
-            <a href="/collections/constant/" class="mm-app-item" data-preview-name="constⒶNT · Emergency Battery Backup" data-preview-label="EM · Battery Backup" data-preview-desc="Integral emergency battery backup drivers for new-construction luminaires. 90-minute runtime.">Emergency Battery Backup</a>
-            <a href="/collections/constant/" class="mm-app-item" data-preview-name="constⒶNT · constⒶNTLink EM Batteries" data-preview-label="EM · Remote Battery" data-preview-desc="Remote emergency battery packs for retrofit of non-EM fixtures. NiMH chemistry, 90-minute runtime.">const<span class="aa">Ⓐ</span>NTLink EM Batteries</a>
-            <a href="/collections/constant/exit/?family=exit" class="mm-app-item" data-preview-name="constⒶNT · Exit Signs" data-preview-label="EM · Exit Sign" data-preview-desc="LED exit signs: single and double face, edge-lit and stencil. Self-testing and self-diagnostic options.">Exit Signs</a>
-            <a href="/collections/constant/exit/?family=combo" class="mm-app-item" data-preview-name="constⒶNT · Combo Signs" data-preview-label="EM · Combo" data-preview-desc="Combination exit sign + egress light. One fixture, two code-compliance functions.">Combo Signs</a>
-            <a href="/collections/constant/exit/?family=emergency" class="mm-app-item" data-preview-name="constⒶNT · Emergency Light" data-preview-label="EM · Egress" data-preview-desc="Emergency egress light fixtures with integral battery backup for path-of-egress illumination.">Emergency Light</a>
-          </div>
-          <!-- contrⒶLS applications -->
-          <div class="mm-app-group" data-app-group="ctrl-controls">
-            <a href="/collections/controls/" class="mm-app-item" data-preview-name="contrⒶLS · Bi-Level" data-preview-label="Controls · Bi-Level" data-preview-desc="Bi-level occupancy sensing for corridor and stairwell. Integrated step-dim mode for 24/7 code compliance.">Bi-Level <span class="mm-sub-tier eco">ECO</span></a>
-            <a href="/collections/controls/" class="mm-app-item" data-preview-name="contrⒶLS · ⒶRCH Connected Systems" data-preview-label="Controls · Connected" data-preview-desc="ⒶRCH Connected Systems: NLC-ready networked lighting controls across the full ALG product portfolio.">by <span class="aa">Ⓐ</span>CS <span class="mm-sub-tier pro">PRO</span></a>
-            <a href="/collections/controls/" class="mm-app-item" data-preview-name="contrⒶLS · blueⒶRCH" data-preview-label="Controls · Sensors" data-preview-desc="blueⒶRCH occupancy and daylight sensors for code-compliant commercial installations.">by Silvair <span class="mm-sub-tier proplus">PRO+</span></a>
-            <a href="/collections/controls/" class="mm-app-item" data-preview-name="contrⒶLS by Synapse" data-preview-label="Controls · Synapse" data-preview-desc="contrⒶLS by Synapse: enterprise-grade networked lighting controls with cloud-based management.">by Synapse <span class="mm-sub-tier proplus">PRO+</span></a>
-          </div>
-          <!-- Warehouse Deals applications -->
-          <div class="mm-app-group" data-app-group="openbox-all">
-            <a href="/collections/indoor/" class="mm-app-item" data-preview-name="Warehouse Deals · Indoor" data-preview-label="Warehouse Deals · Indoor" data-preview-desc="Last-run indoor fixtures. Panels, downlights, linear, and retrofit.">Indoor</a>
-            <a href="/collections/outdoor/" class="mm-app-item" data-preview-name="Warehouse Deals · Outdoor" data-preview-label="Warehouse Deals · Outdoor" data-preview-desc="Last-run outdoor fixtures. Area, flood, wall, and canopy.">Outdoor</a>
-            <a href="/collections/lamps/" class="mm-app-item" data-preview-name="Warehouse Deals · Lamps" data-preview-label="Warehouse Deals · Lamps" data-preview-desc="Last-run LED lamps. T8, décor, and utility.">Lamps</a>
-            <a href="#" class="mm-app-item" data-preview-name="Warehouse Deals · Accessories" data-preview-label="Warehouse Deals · Accessories" data-preview-desc="Last-run mounting brackets, lenses, and retrofit trim kits.">Accessories</a>
-          </div>
-          <!-- Lamps APPLICATION groups — one per CATEGORY (B6) -->
-          <div class="mm-app-group" data-app-group="lamps-tubul">
-            <div class="mm-app-group-head">tubul<span class="aa">Ⓐ</span>RCH · Lamp Types</div>
-            <a href="/collections/tubulararch/t5/" class="mm-app-item">T5</a>
-            <a href="/collections/tubulararch/t8/" class="mm-app-item">T8</a>
-            <a href="/collections/tubulararch/pl/" class="mm-app-item">PL</a>
-            <a href="/collections/tubulararch/pll/" class="mm-app-item">PLL</a>
-            <a href="/collections/tubulararch/u6/" class="mm-app-item">U6</a>
-          </div>
-          <div class="mm-app-group" data-app-group="lamps-nostalgic">
-            <div class="mm-app-group-head">Nostalgic Décor · Shapes</div>
-            <a href="/collections/nostalgic-decor/a19" class="mm-app-item">A19</a>
-            <a href="/collections/nostalgic-decor/b10" class="mm-app-item">B10</a>
-            <a href="/collections/nostalgic-decor/ca10" class="mm-app-item">CA10</a>
-            <a href="/collections/nostalgic-decor/g16" class="mm-app-item">G16.5</a>
-            <a href="/collections/nostalgic-decor/g25" class="mm-app-item">G25</a>
-            <a href="/collections/nostalgic-decor/s14" class="mm-app-item">S14</a>
-          </div>
-          <div class="mm-app-group" data-app-group="lamps-vintage">
-            <div class="mm-app-group-head">Vintage Décor · Styles</div>
+          </section>
+              <section class="mm-app-group" data-app-group="lamps-vintage" data-app-category="lamps" data-collection-href="/collections/vintage-decor/" data-preview="/mm-previews/lamps-vintage.webp" data-preview-name="Vintage Décor" data-preview-label="Lamps · Vintage" data-preview-desc="Old-world aesthetics with modern LED efficiency. Decorative shapes, exposed filament look, and warm CCT options for hospitality and residential.">
+            <span class="mm-collection-badge">Vintage</span>
             <a href="/collections/vintage-decor/edison" class="mm-app-item">Edison</a>
             <a href="/collections/vintage-decor/victorian" class="mm-app-item">Victorian</a>
             <a href="/collections/vintage-decor/tubular" class="mm-app-item">Tubular</a>
             <a href="/collections/vintage-decor/globe" class="mm-app-item">Globe</a>
             <a href="/collections/vintage-decor/radio" class="mm-app-item">Radio</a>
             <a href="/collections/vintage-decor/candelabra" class="mm-app-item">Candelabra</a>
-          </div>
-          <div class="mm-app-group" data-app-group="lamps-signature">
-            <div class="mm-app-group-head">sign<span class="aa">Ⓐ</span>TURE · Types</div>
+          </section>
+              <section class="mm-app-group" data-app-group="lamps-signature" data-app-category="lamps" data-collection-href="/collections/signature/" data-preview="/mm-previews/lamps-signature.webp" data-preview-name="signⒶTURE" data-preview-label="Lamps · signⒶTURE" data-preview-desc="Commercial-grade LED lamps for the hardest retrofit jobs. HID retrofit, A-lamp, BR flood, and PAR reflector. One dip-switchable lamp per family.">
+            <span class="mm-collection-badge">sign<span class="aa">Ⓐ</span>TURE</span>
             <a href="/collections/signature/a-lamp" class="mm-app-item">A-Lamp <span style="font-size:10px;opacity:0.5;">(Q3)</span></a>
             <a href="/collections/signature/br-lamp" class="mm-app-item">BR Flood <span style="font-size:10px;opacity:0.5;">(Q3)</span></a>
             <a href="/collections/signature/par-lamp" class="mm-app-item">PAR Reflector <span style="font-size:10px;opacity:0.5;">(Q3)</span></a>
             <a href="/collections/signature/husk-hid" class="mm-app-item">HID Retrofit</a>
+          </section>
+            </div>
           </div>
         </div>
 
-        <!-- COLUMN 4: PREVIEW PANE -->
+        <!-- COLUMN 3: PREVIEW PANE (fixed geometry) -->
         <div class="mm-col mm-col-preview">
           <div class="mm-preview">
             <div class="preview-img-wrap">
-              <img src="/products/proarch/assets/hero/proarch-hero-1.webp" alt="Products preview" id="mmPreviewImg">
+              <img src="/mm-previews/planoarch.webp" alt="Products preview" id="mmPreviewImg">
             </div>
-            <div class="preview-label" id="mmPreviewLabel">Indoor · Commercial</div>
-            <div class="preview-name" id="mmPreviewName">Commercial | plano<span class="aa">Ⓐ</span>RCH</div>
-            <div class="preview-desc" id="mmPreviewDesc">Commercial LED lighting for offices, retail, education, and healthcare. Recessed downlights, back-lit panels, architectural linear, troffers, and surface-mount.</div>
-            <a href="/collections/planoarch/index.html" class="preview-cta" id="mmPreviewCta">View collection →</a>
-            <!-- Tier-preview sandbox (ECO / PRO / PRO+) -->
+            <div class="preview-label" id="mmPreviewLabel">Indoor · Linear</div>
+            <div class="preview-name" id="mmPreviewName">plano<span class="aa">Ⓐ</span>RCH · Architectural Linear</div>
+            <div class="preview-desc" id="mmPreviewDesc">Architectural linear luminaires for suspended, surface-mount, and recessed indoor applications.</div>
+            <a href="/collections/planoarch/" class="preview-cta" id="mmPreviewCta">View collection →</a>
             <div class="tier-strip hidden" id="mmTierStrip">
-              <div class="tier-card t-eco">
-                <img src="/products/proarch/assets/hero/proarch-hero-1.webp" alt="ECO tier" id="tierImgEco" loading="lazy">
-                <div class="tier-label">ECO</div>
-                <div class="tier-sku" id="tierSkuEco">—</div>
-              </div>
-              <div class="tier-card t-pro">
-                <img src="/products/proarch/assets/hero/proarch-hero-1.webp" alt="PRO tier" id="tierImgPro" loading="lazy">
-                <div class="tier-label">PRO</div>
-                <div class="tier-sku" id="tierSkuPro">—</div>
-              </div>
-              <div class="tier-card t-proplus">
-                <img src="/products/proarch/assets/hero/proarch-hero-1.webp" alt="PRO+ tier" id="tierImgProplus" loading="lazy">
-                <div class="tier-label">PRO+</div>
-                <div class="tier-sku" id="tierSkuProplus">—</div>
-              </div>
+              <div class="tier-card t-eco"><img src="/products/proarch/assets/hero/proarch-hero-1.webp" alt="ECO tier" id="tierImgEco" loading="lazy"><div class="tier-label">ECO</div><div class="tier-sku" id="tierSkuEco">—</div></div>
+              <div class="tier-card t-pro"><img src="/products/proarch/assets/hero/proarch-hero-1.webp" alt="PRO tier" id="tierImgPro" loading="lazy"><div class="tier-label">PRO</div><div class="tier-sku" id="tierSkuPro">—</div></div>
+              <div class="tier-card t-proplus"><img src="/products/proarch/assets/hero/proarch-hero-1.webp" alt="PRO+ tier" id="tierImgProplus" loading="lazy"><div class="tier-label">PRO+</div><div class="tier-sku" id="tierSkuProplus">—</div></div>
             </div>
           </div>
         </div>
@@ -551,24 +432,130 @@ data-preview="/mm-previews/warehouse-deals.webp"
     <a href="#" class="mob-l1" data-expand="m-products">Products<span class="mob-chev">+</span></a>
     <div class="mob-panel" data-expand-id="m-products">
       <a href="#" class="mob-l2" data-expand="m-indoor">Indoor<span class="mob-chev">+</span></a>
-      <div class="mob-panel" data-expand-id="m-indoor">
-        <a href="/collections/planoarch/index.html" class="mob-l3">Commercial | plano<span class="aa">Ⓐ</span>RCH</a>
-        <a href="/collections/lamparch/" class="mob-l3">Industrial | lampar<span class="aa">Ⓐ</span>RCH</a>
+      <div class="mob-panel mob-app-panel" data-expand-id="m-indoor">
+        <div class="mob-app-group" data-mobile-group="indoor-plano">
+          <span class="mm-collection-badge">plano<span class="aa">Ⓐ</span>RCH</span>
+            <a href="/collections/planoarch/?application=architectural-linear" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Lara" data-tier-pro="" data-tier-proplus="Luna" data-preview-name="planoⒶRCH · Architectural Linear" data-preview-label="Indoor · Linear" data-preview-desc="Architectural linear luminaires for suspended, surface-mount, and recessed indoor applications.">Architectural Linear</a>
+            <a href="/collections/planoarch/?application=downlight" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Solstice" data-tier-pro="Solstice SafeZone" data-tier-proplus="Astra" data-preview-name="planoⒶRCH · Downlight" data-preview-label="Indoor · Downlight" data-preview-desc="Commercial downlights with integral and modular housings. 4- to 8-inch apertures, Field-Selectable wattage and CCT.">Downlight</a>
+            <a href="/collections/planoarch/?application=panel" class="mob-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="proⒶRCH" data-tier-proplus="" data-preview-name="planoⒶRCH · Panel" data-preview-label="Indoor · Panels" data-preview-desc="Back-lit LED flat panels for drop-ceiling grid and surface mount. 2×2, 2×4, and 1×4 footprints.">Panel</a>
+            <a href="/collections/planoarch/?application=retrofit-panel" class="mob-app-item" data-preview-tiers="1" data-tier-eco="retroⒶRCH-P1" data-tier-pro="" data-tier-proplus="" data-preview-name="planoⒶRCH · Retrofit Panel" data-preview-label="Indoor · Retrofit" data-preview-desc="Fluorescent-to-LED retrofit kits for existing troffer, strip, and wrap housings.">Retrofit Panel</a>
+            <a href="/collections/planoarch/?application=retrofit-troffer" class="mob-app-item" data-preview-tiers="1" data-tier-eco="retroⒶRCH-T1" data-tier-pro="" data-tier-proplus="" data-preview-name="planoⒶRCH · Retrofit Troffer" data-preview-label="Indoor · Retrofit Troffer" data-preview-desc="Fluorescent-to-LED retrofit kits for existing 2×2 and 2×4 troffer housings.">Retrofit Troffer</a>
+            <a href="/collections/planoarch/?application=stairwell-passageway" class="mob-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Waymark" data-tier-proplus="" data-preview-name="planoⒶRCH · Stairwell &amp; Passageway" data-preview-label="Indoor · Stairwell" data-preview-desc="Bi-level stairwell and passageway fixtures with occupancy-sensing step dim.">Stairwell &amp; Passageway</a>
+            <a href="/collections/planoarch/?application=track-light" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Trackstar" data-tier-pro="" data-tier-proplus="" data-preview-name="planoⒶRCH · Track Light" data-preview-label="Indoor · Track" data-preview-desc="Track lighting heads and systems for accent and display lighting.">Track Light</a>
+            <a href="/collections/planoarch/?application=troffer" class="mob-app-item" data-preview-tiers="1" data-tier-eco="proⒶRCH-T" data-tier-pro="Luxmark" data-tier-proplus="" data-preview-name="planoⒶRCH · Troffer" data-preview-label="Indoor · Troffer" data-preview-desc="LED troffers with center-basket and volumetric optics. 2×2 and 2×4 grid retrofits and new construction.">Troffer</a>
+            <a href="/collections/planoarch/?application=wraparound" class="mob-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Waymark" data-tier-proplus="" data-preview-name="planoⒶRCH · Wraparound" data-preview-label="Indoor · Wraparound" data-preview-desc="Wraparound fixtures for utility, stairwell, and back-of-house applications.">Wraparound</a>
+        </div>
+        <div class="mob-app-group" data-mobile-group="indoor-lampar">
+          <span class="mm-collection-badge">lampar<span class="aa">Ⓐ</span>RCH</span>
+            <a href="/collections/lamparch/?application=dock-light" class="mob-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Canadarm" data-tier-proplus="" data-preview-name="lamparⒶRCH · Dock Light" data-preview-label="Industrial · Dock" data-preview-desc="Articulating dock lights for loading docks and freight handling areas.">Dock Light</a>
+            <a href="/collections/lamparch/?application=linear-high-bay" class="mob-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Titan" data-tier-proplus="" data-preview-name="lamparⒶRCH · Linear High Bay" data-preview-label="Industrial · Linear HB" data-preview-desc="Linear high-bay fixtures for warehouses, manufacturing, and retail back-of-house. Titan up to 155W.">Linear High Bay</a>
+            <a href="/collections/lamparch/?application=linear-strip" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Hallmark" data-tier-pro="" data-tier-proplus="" data-preview-name="lamparⒶRCH · Linear Strip" data-preview-label="Industrial · Strip" data-preview-desc="Surface and suspended linear strip fixtures for utility and back-of-house applications.">Linear Strip</a>
+            <a href="/collections/lamparch/?application=retrofit-linear-strip" class="mob-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="retroⒶRCH-L1" data-tier-proplus="" data-preview-name="lamparⒶRCH · Retrofit Linear Strip" data-preview-label="Industrial · Retrofit Strip" data-preview-desc="Drop-in LED retrofit kits for existing fluorescent linear strip housings.">Retrofit Linear Strip</a>
+            <a href="/collections/lamparch/?application=round-high-bay" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Icarus" data-tier-pro="Jupiter" data-tier-proplus="" data-preview-name="lamparⒶRCH · Round High Bay" data-preview-label="Industrial · Round HB" data-preview-desc="UFO-form round high bays for open-ceiling industrial spaces. Up to 60,000 lumens per fixture.">Round High Bay</a>
+            <a href="/collections/lamparch/?application=vapor-tight" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Eureka-II" data-tier-pro="Eureka-I" data-tier-proplus="" data-preview-name="lamparⒶRCH · Vapor-Tight" data-preview-label="Industrial · Vapor-Tight" data-preview-desc="IP65/IP66 vapor-tight fixtures for wet, damp, and washdown environments.">Vapor-Tight</a>
+        </div>
       </div>
       <a href="#" class="mob-l2" data-expand="m-outdoor">Outdoor<span class="mob-chev">+</span></a>
-      <div class="mob-panel" data-expand-id="m-outdoor">
-        <a href="/collections/luxoarch/index.html" class="mob-l3">Commercial | luxo<span class="aa">Ⓐ</span>RCH</a>
-        <a href="/collections/cityarch/index.html" class="mob-l3">Municipal | city<span class="aa">Ⓐ</span>RCH</a>
+      <div class="mob-panel mob-app-panel" data-expand-id="m-outdoor">
+        <div class="mob-app-group" data-mobile-group="outdoor-luxo">
+          <span class="mm-collection-badge">luxo<span class="aa">Ⓐ</span>RCH</span>
+            <a href="/collections/luxoarch/?application=area-light" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Heritage-I" data-tier-pro="Liberty-I" data-tier-proplus="Rosetta-III" data-preview-name="luxoⒶRCH · Area Luminaire" data-preview-label="Outdoor · Area" data-preview-desc="Area luminaires for parking lots, dealerships, and commercial exteriors.">Area Luminaire</a>
+            <a href="/collections/luxoarch/?application=canopy" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Pathfinder-I" data-tier-pro="Navigator-I" data-tier-proplus="" data-preview-name="luxoⒶRCH · Canopy Luminaire" data-preview-label="Outdoor · Canopy" data-preview-desc="Recessed and surface-mount canopy fixtures for service station, drive-thru, and covered-entry applications.">Canopy Luminaire</a>
+            <a href="/collections/luxoarch/?application=cylinder" class="mob-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Aura-I" data-tier-proplus="" data-preview-name="luxoⒶRCH · Cylinder" data-preview-label="Outdoor · Cylinder" data-preview-desc="Cylinder luminaires for architectural accent and façade lighting.">Cylinder</a>
+            <a href="/collections/luxoarch/?application=flood-light" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Everest-I" data-tier-pro="" data-tier-proplus="Zion-II" data-preview-name="luxoⒶRCH · Flood" data-preview-label="Outdoor · Flood" data-preview-desc="Flood luminaires for façade, signage, and sports practice fields.">Flood</a>
+            <a href="/collections/luxoarch/?application=sports-lighting" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Radiator-III" data-tier-pro="Illuminator-I" data-tier-proplus="" data-preview-name="luxoⒶRCH · Sports Lighters" data-preview-label="Outdoor · Sports" data-preview-desc="Sports lighters for outdoor athletic venues. Broadcast-grade visual comfort with precision optics.">Sports Lighters</a>
+            <a href="/collections/luxoarch/?application=string-light" class="mob-app-item" data-preview-name="luxoⒶRCH · String Light" data-preview-label="Outdoor · String" data-preview-desc="Commercial-grade outdoor string lights for hospitality, events, and amenity areas.">String Light</a>
+            <a href="/collections/luxoarch/?application=wall-pack-architectural" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Anaheim-I" data-tier-pro="Atlanta-I" data-tier-proplus="" data-preview-name="luxoⒶRCH · Wall Pack | Architectural" data-preview-label="Outdoor · Wall Pack" data-preview-desc="Architectural wall packs with slim profiles for modern commercial façades. Anaheim and Atlanta series.">Wall Pack | Architectural</a>
+            <a href="/collections/luxoarch/?application=wall-pack-classic" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Guardian-I" data-tier-pro="Sentinel-I" data-tier-proplus="" data-preview-name="luxoⒶRCH · Wall Pack | Classic" data-preview-label="Outdoor · Wall Pack" data-preview-desc="Traditional full-body wall packs for commercial and industrial perimeters. Guardian, Sentinel, and Shield series.">Wall Pack | Classic</a>
+            <a href="/collections/luxoarch/?application=wall-pack-entryway" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Ramparts-I" data-tier-pro="Wedge-I" data-tier-proplus="" data-preview-name="luxoⒶRCH · Wall Pack | Entryway" data-preview-label="Outdoor · Wall Pack" data-preview-desc="Compact entryway wall packs for building entrances, stairwells, and covered walkways. Ramparts and Wedge-I series.">Wall Pack | Entryway</a>
+            <a href="/collections/luxoarch/?application=wall-pack-full-cutoff" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Watchtower-I" data-tier-pro="Nightwatch-I" data-tier-proplus="" data-preview-name="luxoⒶRCH · Wall Pack | Full-Cutoff" data-preview-label="Outdoor · Wall Pack" data-preview-desc="Full-cutoff wall packs for dark-sky compliance and glare-free building perimeter lighting. Watchtower and Nightwatch series.">Wall Pack | Full-Cutoff</a>
+        </div>
+        <div class="mob-app-group" data-mobile-group="outdoor-city">
+          <span class="mm-collection-badge">city<span class="aa">Ⓐ</span>RCH</span>
+            <a href="/collections/cityarch/?application=bollard" class="mob-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Sentry-I" data-tier-proplus="" data-preview-name="cityⒶRCH · Bollard" data-preview-label="Municipal · Bollard" data-preview-desc="Bollard luminaires for pathways, landscape, and pedestrian areas.">Bollard</a>
+            <a href="/collections/cityarch/?application=high-mast" class="mob-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="" data-tier-proplus="OmniMax-I" data-preview-name="cityⒶRCH · High-Mast" data-preview-label="Municipal · High-Mast" data-preview-desc="High-mast fixtures for roadway interchanges, seaports, and large open-area applications.">High-Mast</a>
+            <a href="/collections/cityarch/?application=pole" class="mob-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="" data-tier-proplus="" data-preview-name="cityⒶRCH · Pole" data-preview-label="Municipal · Pole" data-preview-desc="Pole-mount luminaires for parking lots, roadways, and commercial outdoor areas.">Pole</a>
+            <a href="/collections/cityarch/?application=post-top" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Unity-I" data-tier-pro="Symmetry-I" data-tier-proplus="" data-preview-name="cityⒶRCH · Post Top" data-preview-label="Municipal · Post Top" data-preview-desc="Decorative and traditional post-top luminaires for streetscape and municipal applications.">Post Top</a>
+            <a href="/collections/cityarch/?application=roadway" class="mob-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Abbey-I" data-tier-proplus="" data-preview-name="cityⒶRCH · Roadway" data-preview-label="Municipal · Roadway" data-preview-desc="Cobra-head and shoebox roadway luminaires. NEMA 7-pin ready for utility-grade controls.">Roadway</a>
+            <a href="/collections/cityarch/?application=street-sign" class="mob-app-item" data-preview-name="cityⒶRCH · Street Sign" data-preview-label="Municipal · Street Sign" data-preview-desc="Street sign lamps for illuminated signage and wayfinding applications.">Street Sign</a>
+            <a href="/collections/cityarch/?application=traffic-control-lamps" class="mob-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Traffic Control" data-tier-proplus="" data-preview-name="cityⒶRCH · Traffic Control Lamps" data-preview-label="Municipal · Traffic" data-preview-desc="LED traffic signal and pedestrian crossing lamps for DOT and municipal specifications.">Traffic Control Lamps</a>
+        </div>
       </div>
       <a href="#" class="mob-l2" data-expand="m-residential">Residential<span class="mob-chev">+</span></a>
-      <div class="mob-panel" data-expand-id="m-residential">
-        <a href="/collections/consumer/index.html" class="mob-l3">Consumer</a>
-        <a href="/collections/multi-family/" class="mob-l3">multi-f<span class="aa">Ⓐ</span>MILY</a>
+      <div class="mob-panel mob-app-panel" data-expand-id="m-residential">
+        <div class="mob-app-group" data-mobile-group="res-consumer">
+          <span class="mm-collection-badge">Consumer</span>
+            <a href="/collections/consumer#home" class="mob-app-item" data-preview-name="Consumer · Home" data-preview-label="Consumer · Aisle 01" data-preview-desc="Garage lights, security floods, pathway markers, shop fixtures — the broadest reach."><span class="mm-aisle-num">01</span> Home</a>
+            <a href="/collections/consumer#garden" class="mob-app-item" data-preview-name="Consumer · Garden" data-preview-label="Consumer · Aisle 02" data-preview-desc="PolyGrow horticultural fixtures. Outdoor garden ambient lighting. Pathway and accent."><span class="mm-aisle-num">02</span> Garden</a>
+            <a href="/collections/consumer#work" class="mob-app-item" data-preview-name="Consumer · Work" data-preview-label="Consumer · Aisle 03" data-preview-desc="Portable work lights. Magnetic shop lights. Temporary job-site fixtures."><span class="mm-aisle-num">03</span> Work</a>
+            <a href="/collections/consumer#auto" class="mob-app-item" data-preview-name="Consumer · Auto" data-preview-label="Consumer · Aisle 04" data-preview-desc="Inspection lighting. Mobile mechanic essentials. Truck-bed work lights."><span class="mm-aisle-num">04</span> Auto</a>
+            <a href="/collections/consumer#camping" class="mob-app-item" data-preview-name="Consumer · Camping" data-preview-label="Consumer · Aisle 05" data-preview-desc="USB-solar charged. Real output. Real runtime. Compact form factors."><span class="mm-aisle-num">05</span> Camping</a>
+            <a href="/collections/consumer#party" class="mob-app-item" data-preview-name="Consumer · Party" data-preview-label="Consumer · Aisle 06" data-preview-desc="LED festoon. Bistro string lights. Café-style decorative that survives more than one season."><span class="mm-aisle-num">06</span> Party</a>
+        </div>
+        <div class="mob-app-group" data-mobile-group="res-multi">
+          <span class="mm-collection-badge">multi-f<span class="aa">Ⓐ</span>MILY</span>
+            <a href="/collections/multi-family/?application=housing-cans" class="mob-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Gehry" data-tier-proplus="" data-preview-name="multi-fⒶMILY · Housing Cans" data-preview-label="RESIDENTIAL · HOUSING CANS" data-preview-desc="Insulation-contact rated commercial recess cans for ground-up multi-family builds. Code-compliant, inspector-ready.">Housing Cans</a>
+            <a href="/collections/multi-family/?application=recessed-downlights" class="mob-app-item" data-preview-tiers="1" data-tier-eco="Nebula-II" data-tier-pro="Radius-II" data-tier-proplus="" data-preview-name="multi-fⒶMILY · Recessed Downlights" data-preview-label="RESIDENTIAL · RECESSED DOWNLIGHTS" data-preview-desc="Apartment-grade recessed downlights for in-unit hallways, kitchens, and common areas. Value-engineered to a per-door budget.">Recessed Downlights</a>
+            <a href="/collections/multi-family/?application=safezone-downlights" class="mob-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="" data-tier-proplus="Radius SafeZone" data-preview-name="multi-fⒶMILY · SafeZone Downlights" data-preview-label="RESIDENTIAL · SAFEZONE DOWNLIGHTS" data-preview-desc="UL 924 emergency-rated downlights for egress paths and life-safety zones in multi-family corridors.">SafeZone Downlights</a>
+            <a href="/collections/multi-family/?application=surface-mount" class="mob-app-item" data-preview-tiers="1" data-tier-eco="eCrescent" data-tier-pro="Eclipse-II" data-tier-proplus="" data-preview-name="multi-fⒶMILY · Surface Mount" data-preview-label="RESIDENTIAL · SURFACE MOUNT" data-preview-desc="Ceiling-mount fixtures for shallow plenums, retrofits, and exterior walkways. Edge-lit profile with built-in PIR options.">Surface Mount</a>
+        </div>
       </div>
-      <a href="/solutions/safety-controls/" class="mob-l2" data-expand="m-controls">Life Safety &amp; Controls<span class="mob-chev">+</span></a>
-      <div class="mob-panel" data-expand-id="m-controls">
-        <a href="/collections/constant/" class="mob-l3">const<span class="aa">Ⓐ</span>NT — Emergency Backup</a>
-        <a href="/collections/controls/" class="mob-l3">contr<span class="aa">Ⓐ</span>LS — Occupancy</a>
+      <a href="#" class="mob-l2" data-expand="m-lamps">Lamps<span class="mob-chev">+</span></a>
+      <div class="mob-panel mob-app-panel" data-expand-id="m-lamps">
+        <div class="mob-app-group" data-mobile-group="lamps-tubul">
+          <span class="mm-collection-badge">tubul<span class="aa">Ⓐ</span>RCH</span>
+            <a href="/collections/tubulararch/t5/" class="mob-app-item">T5</a>
+            <a href="/collections/tubulararch/t8/" class="mob-app-item">T8</a>
+            <a href="/collections/tubulararch/pl/" class="mob-app-item">PL</a>
+            <a href="/collections/tubulararch/pll/" class="mob-app-item">PLL</a>
+            <a href="/collections/tubulararch/u6/" class="mob-app-item">U6</a>
+        </div>
+        <div class="mob-app-group" data-mobile-group="lamps-nostalgic">
+          <span class="mm-collection-badge">Nostalgic</span>
+            <a href="/collections/nostalgic-decor/a19" class="mob-app-item">A19</a>
+            <a href="/collections/nostalgic-decor/b10" class="mob-app-item">B10</a>
+            <a href="/collections/nostalgic-decor/ca10" class="mob-app-item">CA10</a>
+            <a href="/collections/nostalgic-decor/g16" class="mob-app-item">G16.5</a>
+            <a href="/collections/nostalgic-decor/g25" class="mob-app-item">G25</a>
+            <a href="/collections/nostalgic-decor/s14" class="mob-app-item">S14</a>
+        </div>
+        <div class="mob-app-group" data-mobile-group="lamps-vintage">
+          <span class="mm-collection-badge">Vintage</span>
+            <a href="/collections/vintage-decor/edison" class="mob-app-item">Edison</a>
+            <a href="/collections/vintage-decor/victorian" class="mob-app-item">Victorian</a>
+            <a href="/collections/vintage-decor/tubular" class="mob-app-item">Tubular</a>
+            <a href="/collections/vintage-decor/globe" class="mob-app-item">Globe</a>
+            <a href="/collections/vintage-decor/radio" class="mob-app-item">Radio</a>
+            <a href="/collections/vintage-decor/candelabra" class="mob-app-item">Candelabra</a>
+        </div>
+        <div class="mob-app-group" data-mobile-group="lamps-signature">
+          <span class="mm-collection-badge">sign<span class="aa">Ⓐ</span>TURE</span>
+            <a href="/collections/signature/a-lamp" class="mob-app-item">A-Lamp <span style="font-size:10px;opacity:0.5;">(Q3)</span></a>
+            <a href="/collections/signature/br-lamp" class="mob-app-item">BR Flood <span style="font-size:10px;opacity:0.5;">(Q3)</span></a>
+            <a href="/collections/signature/par-lamp" class="mob-app-item">PAR Reflector <span style="font-size:10px;opacity:0.5;">(Q3)</span></a>
+            <a href="/collections/signature/husk-hid" class="mob-app-item">HID Retrofit</a>
+        </div>
+      </div>
+      <a href="#" class="mob-l2" data-expand="m-controls">Life Safety &amp; Controls<span class="mob-chev">+</span></a>
+      <div class="mob-panel mob-app-panel" data-expand-id="m-controls">
+        <div class="mob-app-group" data-mobile-group="ctrl-constant">
+          <span class="mm-collection-badge">const<span class="aa">Ⓐ</span>NT</span>
+            <a href="/collections/constant/#all-drivers" class="mob-app-item" data-preview-name="constⒶNT · Emergency Battery Backup" data-preview-label="EM · Battery Backup" data-preview-desc="Integral emergency battery backup drivers for new-construction luminaires. 90-minute runtime.">Emergency Battery Backup</a>
+            <a href="/collections/constant/?adder=cl#all-drivers" class="mob-app-item" data-preview-name="constⒶNT · constⒶNTLink EM Batteries" data-preview-label="EM · Remote Battery" data-preview-desc="Remote emergency battery packs for retrofit of non-EM fixtures. NiMH chemistry, 90-minute runtime.">const<span class="aa">Ⓐ</span>NTLink EM Batteries</a>
+            <a href="/collections/constant/exit/?family=exit" class="mob-app-item" data-preview-name="constⒶNT · Exit Signs" data-preview-label="EM · Exit Sign" data-preview-desc="LED exit signs: single and double face, edge-lit and stencil. Self-testing and self-diagnostic options.">Exit Signs</a>
+            <a href="/collections/constant/exit/?family=combo" class="mob-app-item" data-preview-name="constⒶNT · Combo Signs" data-preview-label="EM · Combo" data-preview-desc="Combination exit sign + egress light. One fixture, two code-compliance functions.">Combo Signs</a>
+            <a href="/collections/constant/exit/?family=emergency" class="mob-app-item" data-preview-name="constⒶNT · Emergency Light" data-preview-label="EM · Egress" data-preview-desc="Emergency egress light fixtures with integral battery backup for path-of-egress illumination.">Emergency Light</a>
+        </div>
+        <div class="mob-app-group" data-mobile-group="ctrl-controls">
+          <span class="mm-collection-badge">contr<span class="aa">Ⓐ</span>LS</span>
+            <a href="/collections/controls/" class="mob-app-item" data-preview-name="contrⒶLS · Bi-Level" data-preview-label="Controls · Bi-Level" data-preview-desc="Bi-level occupancy sensing for corridor and stairwell. Integrated step-dim mode for 24/7 code compliance.">Bi-Level <span class="mm-sub-tier eco">ECO</span></a>
+            <a href="/collections/controls/" class="mob-app-item" data-preview-name="contrⒶLS · ⒶRCH Connected Systems" data-preview-label="Controls · Connected" data-preview-desc="ⒶRCH Connected Systems: NLC-ready networked lighting controls across the full ALG product portfolio.">by <span class="aa">Ⓐ</span>CS <span class="mm-sub-tier pro">PRO</span></a>
+            <a href="/collections/controls/" class="mob-app-item" data-preview-name="contrⒶLS · blueⒶRCH" data-preview-label="Controls · Sensors" data-preview-desc="blueⒶRCH occupancy and daylight sensors for code-compliant commercial installations.">by Silvair <span class="mm-sub-tier proplus">PRO+</span></a>
+        </div>
+        <div class="mob-app-group" data-mobile-group="ctrl-synapse">
+          <span class="mm-collection-badge">contr<span class="aa">Ⓐ</span>LS by Synapse</span>
+            <a href="/collections/controls/" class="mob-app-item" data-preview-name="contrⒶLS by Synapse" data-preview-label="Controls · Synapse" data-preview-desc="contrⒶLS by Synapse: enterprise-grade networked lighting controls with cloud-based management.">by Synapse <span class="mm-sub-tier proplus">PRO+</span></a>
+        </div>
       </div>
       <a href="/collections/warehouse-deals/" class="mob-l2">Warehouse Deals</a>
       <a href="/find-a-rep/" class="mob-l2 mob-utility">Where to Buy</a>
@@ -608,10 +595,10 @@ data-preview="/mm-previews/warehouse-deals.webp"
      CSS VARIABLES
      ================================================================ */
   :root {
-    --ink:#111418;--ink2:#3a3f4a;--ink3:#8a8f99;--ink4:#c8ccd3;
-    --bg:#ffffff;--bg2:#f5f5f3;--bg3:#eceae4;
-    --dark:#0c0d12;--dark2:#14161e;
-    --brand:#F32740;--brand-dk:#C41F32;
+    --ink:#1A1D23;--ink2:#3A3E47;--ink3:#6B7280;--ink4:var(--color-border-strong);
+    --bg:var(--color-bg);--bg2:var(--color-bg-soft);--bg3:var(--color-bg-strong);
+    --dark:var(--bg-deepest);--dark2:var(--bg-page);
+    --brand:var(--color-alg-red);--brand-dk:#C8132E;
     --kraft:#c9a876;--amber:#f0a932;--grn:#0FAE7C;
     /* §3.1 (v2.7.19): Dynamic header-bottom variable.
        Default = utility bar (34px) + site-nav (56px) = 90px.
@@ -850,249 +837,71 @@ data-preview="/mm-previews/warehouse-deals.webp"
      the utility-bar height (34px), creating a 34px gap. Fix: use the site-nav
      height (56px) as the top anchor. Add 2px gap to match Tools/Support. */
   .megamenu.wide{
-    position:fixed;
-    top:calc(var(--main-nav-height) + 2px);
-    left:0;
-    right:0;
-    width:100%;
-    max-width:none;min-width:0;
-    padding:0;
-    /* A2 (v2.5.3): Remove outer white border — panels are flush */
-    background:transparent;
-    border:none;
-    display:grid;
-    grid-template-columns:220px 260px 300px 1fr;
-    gap:0;
-    max-height:calc(100vh - 110px);
-    overflow:hidden;
-    box-shadow:0 24px 80px rgba(0,0,0,0.18);
-    border-radius:4px;
+    position:fixed;top:calc(var(--main-nav-height) + 2px);left:0;right:0;
+    width:100%;max-width:none;min-width:0;padding:0;background:transparent;border:none;
+    display:grid;grid-template-columns:250px max-content minmax(0,1fr);gap:0;
+    max-height:calc(100vh - 110px);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.18);border-radius:4px;
   }
-  .megamenu.wide .mm-col{
-    padding:20px 18px;
-    overflow-y:auto;
-    max-height:calc(100vh - 110px);
-    scrollbar-width:thin;
-    scrollbar-color:rgba(0,0,0,0.2) transparent;
-  }
+  .megamenu.wide .mm-col{padding:20px 18px;overflow-y:auto;max-height:calc(100vh - 110px);scrollbar-width:thin;scrollbar-color:var(--ink4) transparent;}
   .megamenu.wide .mm-col::-webkit-scrollbar{width:6px;}
-  .megamenu.wide .mm-col::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);border-radius:3px;}
-  /* G6 v2.7.13.1: BROWSE BY column — warm cream bg matching Eichler G25 hero */
-  .megamenu.wide .mm-col.mm-col-main{background:#F5EFE3;}
-  /* G5/G7 v2.7.13.1: mm-col-main text — dark on cream, eyebrow matches Industry Vertical */
-  .megamenu.wide .mm-col-main .mm-col-head{
-    color:rgb(107,114,128);
-    border-bottom:1px solid rgba(0,0,0,0.08);
-    font-family:'JetBrains Mono',monospace;
-    font-size:9px;
-    letter-spacing:1.8px;
-    text-transform:uppercase;
-  }
-  .megamenu.wide .mm-col-main .mm-main-item{color:rgb(17,17,17);}
-  .megamenu.wide .mm-col-main .mm-main-item .mm-main-sub{color:rgba(17,17,17,0.7);}
-  .megamenu.wide .mm-col-main .mm-main-item:hover .mm-main-sub{color:rgba(17,17,17,0.7);}
-  .megamenu.wide .mm-col-main .mm-main-item.active{background:var(--brand);color:#fff;}
-  .megamenu.wide .mm-col-main .mm-main-item.active .mm-main-sub{color:rgba(255,255,255,0.85);}
-  .megamenu.wide .mm-col-main .mm-main-item:hover{background:var(--brand);color:#fff;}
-  .megamenu.wide .mm-col-main .mm-main-group-label{color:rgba(17,17,17,0.5);}
-  .megamenu.wide .mm-col-main .mm-main-divider{background:rgba(17,17,17,0.08);}
-  .megamenu.wide .mm-col.mm-col-cat{background:var(--bg2);border-right:1px solid rgba(0,0,0,0.06);}
-  .megamenu.wide .mm-col.mm-col-app{background:#fff;border-right:1px solid rgba(0,0,0,0.06);}
-  .megamenu.wide .mm-col.mm-col-preview{background:#fff;padding:20px 24px;}
-  .megamenu.wide .mm-col-head{
-    font-family:'JetBrains Mono',monospace;
-    font-size:9px;color:var(--ink3);letter-spacing:0.2em;
-    text-transform:uppercase;font-weight:600;
-    margin-bottom:14px;padding-bottom:10px;
-    border-bottom:1px solid rgba(0,0,0,0.08);
-  }
-  /* G7 v2.7.13.1: .wide mm-col-main mm-col-head — overridden above with canonical eyebrow treatment */
-
-  /* ---- COLUMN 1: Main nav items ---- */
-  .mm-main-item{
-    display:block;padding:11px 14px;
-    font-family: 'Lato', system-ui, sans-serif;font-size:14px;font-weight:600;
-    color:rgba(255,255,255,0.85);
-    letter-spacing:0.01em;
-    border-radius:3px;
-    cursor:pointer;
-    transition:background 0.12s, color 0.12s;
-    margin-bottom:2px;
-    text-decoration:none;
-  }
-  .mm-main-item:hover,
-  .mm-main-item.active{background:var(--brand);color:#fff;}
-  .mm-main-item .mm-main-sub{
-    display:block;font-size:10px;font-weight:400;
-    color:rgba(255,255,255,0.5);margin-top:2px;letter-spacing:0.02em;
-  }
-  .mm-main-item.active .mm-main-sub,
-  .mm-main-item:hover .mm-main-sub{color:rgba(255,255,255,0.85);}
-  .mm-main-divider{height:1px;background:rgba(255,255,255,0.08);margin:8px 14px;}
-  .mm-cs-chip{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(243,39,64,.75);border-radius:2px;padding:2px 5px;margin-left:7px;vertical-align:middle;line-height:1.4;}
-  .mm-main-item.active .mm-cs-chip,.mm-main-item:hover .mm-cs-chip{background:rgba(255,255,255,.25);color:#fff;}
-  .mm-main-group-label{
-    font-family:'JetBrains Mono',monospace;font-size:8px;
-    color:rgba(255,255,255,0.35);letter-spacing:0.2em;
-    text-transform:uppercase;font-weight:600;
-    padding:0 14px 4px;margin-top:6px;
-  }
-
-  /* ---- COLUMN 2: Category ---- */
-  .mm-cat-group{display:none;}
-  .mm-cat-group.active{display:block;}
-  .mm-cat-item{
-    display:block;padding:10px 12px;
-    font-family: 'Lato', system-ui, sans-serif;font-size:13px;font-weight:600;
-    color:var(--ink);letter-spacing:-0.005em;
-    border-radius:3px;cursor:pointer;
-    border-left:3px solid transparent;
-    transition:background 0.12s, border-color 0.12s, color 0.12s;
-    margin-bottom:2px;text-decoration:none;
-  }
-  .mm-cat-item:hover,
-  .mm-cat-item.active{background:#fff;border-left-color:var(--brand);color:var(--brand);}
-  .mm-cat-item .mm-cat-sub{
-    display:block;font-size:10px;font-weight:400;
-    color:var(--ink3);margin-top:2px;letter-spacing:0.01em;
-  }
-  .mm-cat-item:hover .mm-cat-sub,
-  .mm-cat-item.active .mm-cat-sub{color:var(--ink2);}
-
-  /* ---- COLUMN 3: Application ---- */
-  .mm-app-group{display:none;}
-  .mm-app-group.active{display:block;}
-  .mm-app-item{
-    display:block;padding:7px 10px;
-    font-size:13px;color:var(--ink2);
-    font-weight:400;line-height:1.35;
-    border-radius:3px;cursor:pointer;
-    transition:background 0.12s, color 0.12s;
-    margin-bottom:1px;text-decoration:none;
-  }
-  .mm-app-item:hover{background:var(--bg2);color:var(--brand);}
-  .mm-app-item .mm-app-sub{
-    display:block;font-size:10px;font-weight:400;
-    color:var(--ink3);margin-top:2px;letter-spacing:0.01em;
-  }
-  .mm-app-item:hover .mm-app-sub{color:var(--ink2);}
-  /* Sub-product links under an application leaf (e.g. Sports Lighters → Illuminator/Beacon/Radiator) */
-  .mm-app-sub-links{
-    padding:2px 0 4px 10px;
-    border-left:2px solid rgba(0,0,0,0.08);
-    margin:0 0 2px 10px;
-    display:flex;flex-direction:column;gap:1px;
-  }
-  .mm-app-sub-link{
-    display:block;padding:4px 8px;
-    font-size:12px;color:var(--ink3);
-    font-weight:400;border-radius:2px;
-    text-decoration:none;
-    transition:background 0.1s,color 0.1s;
-  }
-  .mm-app-sub-link:hover{background:var(--bg2);color:var(--brand);}
-  /* Tier badge — shared pill style (matches collection card badges) */
-  .mm-sub-tier{
-    display:inline-block;
-    font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;
-    letter-spacing:0.06em;text-transform:uppercase;
-    padding:2px 6px;border-radius:3px;
-    vertical-align:middle;margin-left:5px;flex-shrink:0;
-    /* default (used in sub-links) */
-    background:#1a1a2a;color:#7c9fff;border:1px solid rgba(124,159,255,0.4);
-  }
-  /* ECO — green */
-  .mm-sub-tier[data-tier="ECO"],
-  .mm-app-item .mm-sub-tier:not([data-tier]):first-of-type { /* fallback */ }
-  /* Color by class — higher specificity than generic rule */
-  .mm-app-item .mm-sub-tier { background:#fff;color:#7c9fff;border:1px solid rgba(124,159,255,0.6); }
-  .mm-app-item .mm-sub-tier.eco{background:#fff;color:#2e7d32;border:1px solid rgba(76,175,80,0.7);}
-  .mm-app-item .mm-sub-tier.pro{background:#fff;color:#3a5fc8;border:1px solid rgba(124,159,255,0.7);}
-  .mm-app-item .mm-sub-tier.proplus{background:#fff;color:#9c27b0;border:1px solid rgba(156,39,176,0.7);}
-  /* Sub-link tier (smaller context) */
-  .mm-app-sub-link .mm-sub-tier{
-    background:transparent;color:var(--ink3);border:none;padding:0;margin-left:4px;
-  }
-  .mm-app-sub-link:hover .mm-sub-tier{color:var(--ink2);}
-  .mm-app-group-head{
-    font-family:'JetBrains Mono',monospace;font-size:9px;
-    color:var(--brand);letter-spacing:0.16em;
-    text-transform:uppercase;font-weight:600;
-    padding:10px 10px 4px;margin-top:6px;
-    border-top:1px solid rgba(0,0,0,0.06);
-  }
-  .mm-app-group-head:first-child{border-top:0;margin-top:0;padding-top:2px;}
-  /* B4 (v2.5.6): aisle number badge in consumer sub-rail */
-  .mm-aisle-num{
-    font-family:'JetBrains Mono',monospace;font-size:9px;
-    color:var(--brand);letter-spacing:0.08em;font-weight:600;
-    margin-right:5px;
-  }
-
-  /* ---- COLUMN 4: Preview Pane ---- */
-  .mm-preview{display:flex;flex-direction:column;}
-  .mm-preview .preview-img-wrap{
-    width:100%;height:240px;background:var(--bg2);border-radius:4px;
-    overflow:hidden;margin-bottom:14px;position:relative;
-  }
-  .mm-preview .preview-img-wrap img{
-    width:100%;height:100%;object-fit:cover;object-position:center;
-    transition:opacity 0.25s ease;
-  }
-  .mm-preview .preview-img-wrap img[src*="hospitality"]{object-position:center 30%;}
-  .mm-preview .preview-img-wrap img[src*="ctrl-constant"]{object-position:center top;}
-  .mm-preview .preview-img-wrap img[src*="lamps-vintage"]{object-position:center top;}
-  .mm-preview .preview-img-wrap img[src*="res-consumer"]{object-position:center bottom;}
-  .mm-preview .preview-img-wrap img[src*="openbox-all"]{object-position:center bottom;}
-  .mm-preview .preview-label{
-    font-family:'JetBrains Mono',monospace;font-size:9px;
-    color:var(--brand);letter-spacing:0.18em;text-transform:uppercase;
-    font-weight:600;margin-bottom:6px;
-  }
-  .mm-preview .preview-name{
-    font-family: 'Lato', system-ui, sans-serif;font-size:20px;font-weight:700;
-    color:var(--ink);letter-spacing:-0.015em;margin-bottom:8px;line-height:1.15;
-  }
-  .mm-preview .preview-desc{font-size:13px;color:var(--ink2);line-height:1.5;margin-bottom:14px;}
-  .mm-preview .preview-cta{
-    font-size:11px;font-weight:700;color:var(--brand);
-    letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;
-    align-self:flex-start;
-    padding:10px 14px;border:1px solid var(--brand);border-radius:3px;
-    transition:all 0.15s;
-  }
-  .mm-preview .preview-cta:hover{background:var(--brand);color:#fff;}
-
-  /* Tier-preview sandbox */
-  .mm-preview .tier-strip{
-    display:grid;grid-template-columns:1fr 1fr 1fr;
-    grid-template-areas:"eco pro proplus";
-    gap:8px;margin-top:4px;
-  }
-  .mm-preview .tier-strip.hidden{display:none;}
-  .mm-preview .tier-card{
-    background:var(--bg2);border-radius:3px;padding:10px 8px;
-    display:flex;flex-direction:column;align-items:center;text-align:center;
-    border-top:3px solid var(--ink4);min-width:0;
-  }
-  .mm-preview .tier-card.t-eco{grid-area:eco;border-top-color:#8A8F97;}
-  .mm-preview .tier-card.t-pro{grid-area:pro;border-top-color:var(--amber);}
-  .mm-preview .tier-card.t-proplus{grid-area:proplus;border-top-color:var(--brand);}
-  .mm-preview .tier-card.slot-empty{visibility:hidden;}
-  .mm-preview .tier-card img{
-    width:100%;max-width:160px;max-height:160px;aspect-ratio:1/1;object-fit:contain;
-    background:#fff;border-radius:2px;margin-bottom:6px;
-  }
-  .mm-preview .tier-card .tier-label{
-    font-family:'JetBrains Mono',monospace;font-size:8px;
-    letter-spacing:0.15em;text-transform:uppercase;font-weight:700;
-    color:var(--ink3);margin-bottom:2px;
-  }
-  .mm-preview .tier-card .tier-sku{
-    font-family:'JetBrains Mono',monospace;font-size:10px;
-    font-weight:600;color:var(--ink);line-height:1.2;
-  }
-
+  .megamenu.wide .mm-col::-webkit-scrollbar-thumb{background:var(--ink4);border-radius:3px;}
+  .megamenu.wide .mm-col.mm-col-main{background:var(--bg-page);}
+  .megamenu.wide .mm-col-main .mm-col-head{color:var(--text-secondary);border-bottom:1px solid var(--line);font-family:var(--font-mono);font-size:12px;letter-spacing:1.8px;text-transform:uppercase;}
+  .megamenu.wide .mm-col-main .mm-main-item{color:var(--text-primary);}
+  .megamenu.wide .mm-col-main .mm-main-item .mm-main-sub{color:var(--text-secondary);}
+  .megamenu.wide .mm-col-main .mm-main-item:hover .mm-main-sub{color:var(--text-primary);}
+  .megamenu.wide .mm-col-main .mm-main-item.active,.megamenu.wide .mm-col-main .mm-main-item:hover{background:var(--brand);color:rgb(17,17,17);}
+  .megamenu.wide .mm-col-main .mm-main-item.active .mm-main-sub{color:rgb(17,17,17);}
+  .megamenu.wide .mm-col-main .mm-main-item.active .aa,.megamenu.wide .mm-col-main .mm-main-item:hover .aa{color:var(--color-bg);}
+  .megamenu.wide .mm-col-main .mm-main-group-label{color:var(--text-primary);}
+  .megamenu.wide .mm-col-main .mm-main-divider{background:var(--line);}
+  .megamenu.wide .mm-col.mm-col-app{background:var(--bg);border-right:1px solid var(--color-border);width:max-content;}
+  .megamenu.wide .mm-col.mm-col-preview{background:var(--bg-deepest);padding:0;overflow:hidden;}
+  .megamenu.wide .mm-col-head{font-family:var(--font-mono);font-size:12px;color:#3A3E47;letter-spacing:0.2em;text-transform:uppercase;font-weight:600;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--color-border);}
+  /* Shared main-rail structure: Products overrides colors below; Solutions keeps its production color rules. */
+  .mm-main-item{display:block;padding:11px 14px;font-family:'Lato',system-ui,sans-serif;font-size:14px;font-weight:600;letter-spacing:0.01em;border-radius:3px;cursor:pointer;transition:background 0.12s,color 0.12s;margin-bottom:2px;text-decoration:none;}
+  .mm-main-item .mm-main-sub{display:block;font-size:10px;font-weight:400;margin-top:2px;letter-spacing:0.02em;}
+  .mm-main-divider{height:1px;margin:8px 14px;}
+  .mm-main-group-label{font-family:var(--font-mono);font-size:8px;letter-spacing:0.2em;text-transform:uppercase;font-weight:600;padding:0 14px 4px;margin-top:6px;}
+  .megamenu.wide .mm-main-item{color:var(--text-primary);font-size:18px;}
+  .megamenu.wide .mm-main-item .mm-main-sub{font-size:13px;}
+  .megamenu.wide .mm-main-group-label{font-size:12px;}
+  .megamenu.wide .mm-main-item:hover,.megamenu.wide .mm-main-item.active{background:var(--brand);color:var(--color-bg);}
+  .megamenu.wide .mm-main-item .mm-main-sub{color:var(--text-secondary);}
+  .megamenu.wide .mm-main-item.active,.megamenu.wide .mm-main-item:hover{color:rgb(17,17,17);}
+  .megamenu.wide .mm-main-item.active .mm-main-sub,.megamenu.wide .mm-main-item:hover .mm-main-sub{color:rgb(17,17,17);}
+  .megamenu.wide .mm-main-divider{background:var(--line);}
+  .megamenu.wide .mm-cs-chip{display:inline-block;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--color-bg);background:var(--brand);border-radius:2px;padding:2px 5px;margin-left:7px;vertical-align:middle;line-height:1.4;}
+  .megamenu.wide .mm-main-group-label{color:var(--text-primary);}
+  .megamenu.wide .mm-app-columns{display:grid;grid-template-columns:repeat(var(--app-group-count,2),220px);gap:16px;min-height:0;width:max-content;}
+  .megamenu.wide .mm-app-columns:has(.mm-app-group[data-app-category="lamps"].active){grid-template-columns:repeat(2,220px);}
+  @media(min-width:1820px){.megamenu.wide .mm-app-columns:has(.mm-app-group[data-app-category="lamps"].active){grid-template-columns:repeat(4,220px);}}
+  .megamenu.wide .mm-app-column{display:contents;}
+  .megamenu.wide .mm-app-group{display:none;margin:0;min-width:0;}
+  .megamenu.wide .mm-app-group.active{min-width:0;}
+  .megamenu.wide .mm-app-group.active{display:block;align-self:stretch;}
+  .megamenu.wide .mm-collection-badge{display:inline-block;margin:0 0 7px;padding:4px 8px;border:1px solid var(--color-border-strong);border-radius:999px;background:var(--bg-card);color:var(--text-primary);font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:default;user-select:none;}
+  .megamenu.wide .mm-app-item{display:block;box-sizing:border-box;width:100%;padding:8px 4px;font-family:'Lato',system-ui,sans-serif;font-size:16px;color:var(--ink2);font-weight:400;line-height:1.5;white-space:nowrap;border-left:2px solid transparent;cursor:pointer;transition:background 0.12s,color 0.12s,border-color 0.12s;margin-bottom:1px;text-decoration:none;}
+  .megamenu.wide .mm-app-item:hover,.megamenu.wide .mm-app-item:focus-visible,.megamenu.wide .mm-app-item.active{background:var(--bg2);color:var(--brand-dk);border-left-color:var(--brand);outline:none;}
+  .megamenu.wide .mm-sub-tier{display:inline-block;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:2px 6px;border-radius:3px;vertical-align:middle;margin-left:5px;flex-shrink:0;background:var(--bg-card);color:var(--text-primary);border:1px solid var(--line-medium);}
+  .megamenu.wide .mm-app-item .mm-sub-tier.eco,.megamenu.wide .mm-app-item .mm-sub-tier.pro,.megamenu.wide .mm-app-item .mm-sub-tier.proplus{background:var(--bg-card);color:var(--text-primary);border-color:var(--line-medium);}
+  .megamenu.wide .mm-col.mm-col-preview{align-self:stretch;display:flex;}
+  .megamenu.wide .mm-preview{flex:1;min-height:0;padding:20px 24px;display:flex;flex-direction:column;background:var(--bg-deepest);}
+  .megamenu.wide .mm-preview .preview-img-wrap{width:100%;max-width:1100px;aspect-ratio:2.5 / 1;height:auto;min-height:0;background:var(--bg-card);border-radius:4px;overflow:hidden;margin:0 auto 14px;position:relative;}
+  .megamenu.wide .mm-preview .preview-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center;transition:opacity 0.25s ease;}
+  .megamenu.wide .mm-preview .preview-label{font-family:var(--font-mono);font-size:12px;color:var(--text-primary);letter-spacing:0.18em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .megamenu.wide .mm-preview .preview-name{font-family:'Lato' !important;font-size:26px;font-weight:700;color:var(--text-primary);letter-spacing:-0.015em;margin-bottom:8px;line-height:1.15;}
+  .megamenu.wide .mm-preview .preview-desc{font-family:'Lato',system-ui,sans-serif;font-size:16px;color:var(--text-secondary);line-height:1.5;margin:0 0 14px;}
+  .megamenu.wide .mm-preview .preview-cta{font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--text-primary);letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;align-self:flex-start;padding:10px 14px;border:1px solid var(--brand);border-radius:3px;transition:background 0.15s,color 0.15s;}
+  .megamenu.wide .mm-preview .preview-cta:hover{background:var(--brand);color:var(--color-bg);}
+  .megamenu.wide .mm-preview .tier-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px;}
+  .megamenu.wide .mm-preview .tier-strip.hidden{display:none;}
+  .megamenu.wide .mm-preview .tier-card{background:var(--bg-card);border-radius:3px;padding:7px 6px;display:flex;flex-direction:column;align-items:center;text-align:center;border-top:3px solid var(--brand);min-width:0;}
+  .megamenu.wide .mm-preview .tier-card.slot-empty{visibility:hidden;}
+  .megamenu.wide .mm-preview .tier-card img{width:100%;max-width:90px;max-height:58px;object-fit:contain;background:var(--bg-spec);border-radius:2px;margin-bottom:4px;}
+  .megamenu.wide .mm-preview .tier-card .tier-label{font-family:var(--font-mono);font-size:13px;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;color:var(--text-primary);margin-bottom:2px;}
+  .megamenu.wide .mm-preview .tier-card .tier-sku{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--text-primary);line-height:1.2;}
+  @media(max-width:1100px){.megamenu.wide{grid-template-columns:200px max-content minmax(0,1fr);}.megamenu.wide .mm-col.mm-col-preview{width:auto;}}
   /* ---- Legacy mm-head (Tools / Support narrow menus) ---- */
   .megamenu .mm-head{
     font-family:'JetBrains Mono',monospace;font-size:10px;
@@ -1131,33 +940,34 @@ data-preview="/mm-previews/warehouse-deals.webp"
   /* G6/G5/G7 v2.7.13.1: SOLUTIONS mm-col-main — warm cream bg, dark text, canonical eyebrow */
   .megamenu.solutions .mm-col-main{background:#F5EFE3;}
   .megamenu.solutions .mm-col-main .mm-col-head{
-    color:rgb(107,114,128);
+    color:#3A3E47;
     border-bottom:1px solid rgba(0,0,0,0.08);
     font-family:'JetBrains Mono',monospace;
-    font-size:9px;
+    font-size:12px;
+    line-height:1.5;
     letter-spacing:1.8px;
     text-transform:uppercase;
   }
-  .megamenu.solutions .mm-col-main .mm-main-item{color:rgb(17,17,17);}
-  .megamenu.solutions .mm-col-main .mm-main-item .mm-main-sub{color:rgba(17,17,17,0.7);}
-  .megamenu.solutions .mm-col-main .mm-main-item.active{background:var(--brand);color:#fff;}
-  .megamenu.solutions .mm-col-main .mm-main-item.active .mm-main-sub{color:rgba(255,255,255,0.85);}
-  .megamenu.solutions .mm-col-main .mm-main-item:hover{background:var(--brand);color:#fff;}
-  .megamenu.solutions .mm-col-main .mm-main-item:hover .mm-main-sub{color:rgba(255,255,255,0.85);}
-  .megamenu.solutions .mm-col-main .mm-main-group-label{color:rgba(17,17,17,0.5);}
+  .megamenu.solutions .mm-col-main .mm-main-item{color:rgb(17,17,17);font-size:18px;line-height:1.5;}
+  .megamenu.solutions .mm-col-main .mm-main-item .mm-main-sub{color:rgba(17,17,17,0.7);font-size:13px;line-height:1.5;}
+  .megamenu.solutions .mm-col-main .mm-main-item.active{background:var(--brand);color:rgb(17,17,17);}
+  .megamenu.solutions .mm-col-main .mm-main-item.active .mm-main-sub{color:rgb(17,17,17);}
+  .megamenu.solutions .mm-col-main .mm-main-item:hover{background:var(--brand);color:rgb(17,17,17);}
+  .megamenu.solutions .mm-col-main .mm-main-item:hover .mm-main-sub{color:rgb(17,17,17);}
+  .megamenu.solutions .mm-col-main .mm-main-group-label{color:#575E6B;font-size:12px;line-height:1.5;}
   .megamenu.solutions .mm-col-main .mm-main-divider{background:rgba(17,17,17,0.08);}
   .megamenu.solutions .mm-col-vert{background:var(--bg2);border-right:1px solid rgba(0,0,0,0.06);}
   .megamenu.solutions .mm-col-preview{background:#fff;padding:20px 24px;}
   .megamenu.solutions .mm-col-head{
-    font-family:'JetBrains Mono',monospace;font-size:9px;
-    color:var(--ink3);letter-spacing:0.2em;text-transform:uppercase;
+    font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.5;
+    color:#3A3E47;letter-spacing:0.2em;text-transform:uppercase;
     font-weight:600;margin-bottom:14px;padding-bottom:10px;
     border-bottom:1px solid rgba(0,0,0,0.08);
   }
   /* G7 v2.7.13.1: .solutions mm-col-main mm-col-head — overridden above with canonical eyebrow treatment */
   .mm-vert-item{
     display:block;padding:11px 14px;
-    font-family: 'Lato', system-ui, sans-serif;font-size:13px;font-weight:600;
+    font-family: 'Lato', system-ui, sans-serif;font-size:18px;line-height:1.5;font-weight:600;
     color:var(--ink);letter-spacing:-0.005em;
     border-radius:3px;cursor:pointer;
     border-left:3px solid transparent;
@@ -1165,9 +975,9 @@ data-preview="/mm-previews/warehouse-deals.webp"
     margin-bottom:2px;text-decoration:none;
   }
   .mm-vert-item:hover,
-  .mm-vert-item.active{background:#fff;border-left-color:var(--brand);color:var(--brand);}
+  .mm-vert-item.active{background:#fff;border-left-color:var(--brand);color:var(--brand-dk);}
   .mm-vert-item .mm-vert-sub{
-    display:block;font-size:10px;font-weight:400;
+    display:block;font-size:13px;line-height:1.5;font-weight:400;
     color:var(--ink3);margin-top:2px;letter-spacing:0.01em;
   }
 
@@ -1238,6 +1048,11 @@ data-preview="/mm-previews/warehouse-deals.webp"
     border-bottom:1px solid rgba(0,0,0,0.03);
     background:var(--bg3);text-decoration:none;
   }
+  .mob-app-panel{background:var(--bg3);}
+  .mob-app-group{padding:12px 0 4px;border-bottom:1px solid rgba(0,0,0,0.08);}
+  .mob-app-group .mm-collection-badge{display:inline-block;margin:0 24px 8px;padding:4px 8px;border:1px solid var(--color-border-strong);border-radius:999px;background:var(--bg-card);color:var(--text-primary);font-family:var(--font-mono);font-size:12px;line-height:1.5;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+  .mob-app-item{display:flex;align-items:center;min-height:44px;padding:10px 24px 10px 40px;font-family:'Lato',system-ui,sans-serif;font-size:16px;line-height:1.5;color:var(--ink2);text-decoration:none;border-top:1px solid rgba(0,0,0,0.03);}
+  .mob-app-item:active,.mob-app-item:focus-visible{background:var(--bg2);color:var(--brand-dk);outline:none;}
   .mob-chev{
     font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:400;
     color:var(--ink3);transition:transform 0.2s;width:16px;text-align:center;
@@ -1245,7 +1060,7 @@ data-preview="/mm-previews/warehouse-deals.webp"
   .mob-l1[aria-expanded="true"] .mob-chev,
   .mob-l2[aria-expanded="true"] .mob-chev{transform:rotate(45deg);color:var(--brand);}
   .mob-panel{max-height:0;overflow:hidden;transition:max-height 0.25s ease;}
-  .mob-panel.open{max-height:1600px;}
+  .mob-panel.open{max-height:10000px;}
   .mob-cta-row{
     display:flex;gap:10px;padding:24px;
     border-top:1px solid rgba(0,0,0,0.08);margin-top:12px;
@@ -1305,126 +1120,85 @@ data-preview="/mm-previews/warehouse-deals.webp"
   }
 
   /* =============================================================
-     PRODUCTS MEGA MENU · 3-tier cascade
+     PRODUCTS MEGA MENU · v2 merged collection-badge application model
      ============================================================= */
   const productsLi = document.querySelector('li[data-mm="products"]');
   if (productsLi){
-    const menu       = productsLi.querySelector('.megamenu.wide');
-    const mainItems  = menu.querySelectorAll('.mm-col-main .mm-main-item[data-main]');
-    const catGroups  = menu.querySelectorAll('.mm-cat-group');
-    const catItems   = menu.querySelectorAll('.mm-cat-item[data-cat]');
-    const appGroups  = menu.querySelectorAll('.mm-app-group');
-    const appItems   = menu.querySelectorAll('.mm-app-item');
-    const previewImg   = menu.querySelector('#mmPreviewImg');
-    const previewLbl   = menu.querySelector('#mmPreviewLabel');
-    const previewName  = menu.querySelector('#mmPreviewName');
-    const previewDesc  = menu.querySelector('#mmPreviewDesc');
-    const tierStrip    = menu.querySelector('#mmTierStrip');
+    const menu = productsLi.querySelector('.megamenu.wide');
+    const mainItems = menu.querySelectorAll('.mm-col-main .mm-main-item[data-main]');
+    const appGroups = menu.querySelectorAll('.mm-app-group[data-app-category]');
+    const appItems = menu.querySelectorAll('.mm-app-item');
+    const previewImg = menu.querySelector('#mmPreviewImg');
+    const previewLbl = menu.querySelector('#mmPreviewLabel');
+    const previewName = menu.querySelector('#mmPreviewName');
+    const previewDesc = menu.querySelector('#mmPreviewDesc');
+    const previewCta = menu.querySelector('#mmPreviewCta');
+    const tierStrip = menu.querySelector('#mmTierStrip');
     let hoverTimer = null;
+    let activeGroup = null;
 
+    function groupFor(appEl){ return appEl.closest('.mm-app-group[data-app-category]'); }
+    function setPreviewText(appEl, group){
+      const label = appEl.dataset.previewLabel || group.dataset.previewLabel || '';
+      const name = appEl.dataset.previewName || group.dataset.previewName || '';
+      const desc = appEl.dataset.previewDesc || group.dataset.previewDesc || '';
+      if (label) previewLbl.textContent = label;
+      if (name) previewName.innerHTML = renderAa(name);
+      if (desc) previewDesc.textContent = desc;
+      if (previewCta && group.dataset.collectionHref) previewCta.href = group.dataset.collectionHref;
+      // CFG-COWORK-13: collection-keyed image actually changes on application hover.
+      // Empty group preview (currently Synapse) intentionally preserves the prior verified image.
+      crossfade(previewImg, group.dataset.preview || '');
+    }
     function switchMain(mainKey){
+      const visibleGroups = Array.from(appGroups).filter(g => g.dataset.appCategory === mainKey);
       mainItems.forEach(el => el.classList.toggle('active', el.dataset.main === mainKey));
-      catGroups.forEach(g => g.classList.toggle('active', g.dataset.catGroup === mainKey));
-      // B2 (v2.5.8): Auto-activate first category for ALL main items (including Lamps),
-      // mirroring the Indoor/Outdoor default-show pattern. Lamps defaults to lamps-tubul apps.
-      const firstCat = menu.querySelector(`.mm-cat-group[data-cat-group="${mainKey}"] .mm-cat-item`);
-      if (firstCat){ activateCat(firstCat, true); }
+      appGroups.forEach(g => g.classList.toggle('active', g.dataset.appCategory === mainKey));
+      menu.style.setProperty('--app-group-count', String(Math.max(1, visibleGroups.length)));
+      const firstGroup = visibleGroups[0] || null;
+      const firstApp = firstGroup ? firstGroup.querySelector('.mm-app-item') : null;
+      if (firstGroup && firstApp) swapAppPreview(firstApp);
     }
-
-    function activateCat(catEl, auto){
-      catItems.forEach(el => el.classList.remove('active'));
-      catEl.classList.add('active');
-      const catKey = catEl.dataset.cat;
-      appGroups.forEach(g => g.classList.toggle('active', g.dataset.appGroup === catKey));
-      crossfade(previewImg, catEl.dataset.preview);
-      if (catEl.dataset.previewLabel) previewLbl.textContent  = catEl.dataset.previewLabel;
-      if (catEl.dataset.previewName)  previewName.innerHTML   = renderAa(catEl.dataset.previewName);
-      if (catEl.dataset.previewDesc)  previewDesc.textContent = catEl.dataset.previewDesc;
-      tierStrip.classList.add('hidden');
-      const _catHrefMap = {
-        "indoor-plano":"/collections/planoarch/index.html",
-        "indoor-lampar":"/collections/lamparch/",
-        "outdoor-luxo":"/collections/luxoarch/index.html",
-        "outdoor-city":"/collections/cityarch/index.html",
-        "res-consumer":"/collections/consumer/index.html",
-        "res-multi":"/collections/multi-family/",
-        "lamps-tubul":"/collections/tubularch/index.html",
-        "ctrl-constant":"/collections/constant/",
-        "ctrl-controls":"/collections/controls/",
-        "openbox-all":"/"
-      };
-      const _previewCta = menu.querySelector('#mmPreviewCta');
-      if (_previewCta && _catHrefMap[catKey]) _previewCta.href = _catHrefMap[catKey];
-    }
-
     const FAMILY_HERO = {
-      /* CFG-SSOT-1: category fallback heroes — used when no specific tier product is hovered */
-      'indoor-plano':   '/products/proarch/assets/hero/proarch-hero-1.webp',
-      'indoor-lampar':  '/products/titan/titan/photos/TITAN-85-155W-1_nobg.png',
-      'outdoor-luxo':   '/products/liberty/assets/hero/liberty-hero-1.webp',
-      'outdoor-city':   '/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp',
-      'lamps-tubul':    '/mm-previews/tier-hero-tubul.webp',
+      'indoor-plano':'/products/proarch/assets/hero/proarch-hero-1.webp',
+      'indoor-lampar':'/products/titan/titan/photos/TITAN-85-155W-1_nobg.png',
+      'outdoor-luxo':'/products/liberty/assets/hero/liberty-hero-1.webp',
+      'outdoor-city':'/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp',
+      'lamps-tubul':'/mm-previews/tier-hero-tubul.webp'
     };
-    /* Per-product page URLs — CFG-SSOT-1: generated from registry */
     const TIER_URLS = JSON.parse(REGISTRY_TIER_URLS);
-    /* Per-product images for tier cards — CFG-SSOT-1: generated from registry */
     const TIER_IMGS = JSON.parse(REGISTRY_TIER_IMGS);
-
     window._algSwapApp = function(appEl){ swapAppPreview(appEl); };
     function swapAppPreview(appEl){
-      crossfade(previewImg, appEl.dataset.preview);
-      if (appEl.dataset.previewLabel) previewLbl.textContent  = appEl.dataset.previewLabel;
-      if (appEl.dataset.previewName)  previewName.innerHTML   = renderAa(appEl.dataset.previewName);
-      if (appEl.dataset.previewDesc)  previewDesc.textContent = appEl.dataset.previewDesc;
+      const group = groupFor(appEl); if (!group) return;
+      activeGroup = group;
+      appItems.forEach(el => el.classList.toggle('active', el === appEl));
+      setPreviewText(appEl, group);
       if (appEl.dataset.previewTiers === '1'){
         tierStrip.classList.remove('hidden');
-        const activeCat = menu.querySelector('.mm-cat-item.active');
-        const catKey    = activeCat ? activeCat.dataset.cat : null;
-        const heroSrc   = catKey && FAMILY_HERO[catKey] ? FAMILY_HERO[catKey] : null;
-        const eco  = appEl.dataset.tierEco     || '';
-        const pro  = appEl.dataset.tierPro     || '';
-        const plus = appEl.dataset.tierProplus || '';
-        const fallback = heroSrc || '/products/liberty/assets/hero/liberty-hero-1.webp';
-        document.getElementById('tierImgEco').src     = (eco  && TIER_IMGS[eco])  ? TIER_IMGS[eco]  : fallback;
-        document.getElementById('tierImgPro').src     = (pro  && TIER_IMGS[pro])  ? TIER_IMGS[pro]  : fallback;
+        const heroSrc = FAMILY_HERO[group.dataset.appGroup] || group.dataset.preview || '';
+        const eco = appEl.dataset.tierEco || '', pro = appEl.dataset.tierPro || '', plus = appEl.dataset.tierProplus || '';
+        const fallback = heroSrc || previewImg.getAttribute('src') || '';
+        document.getElementById('tierImgEco').src = (eco && TIER_IMGS[eco]) ? TIER_IMGS[eco] : fallback;
+        document.getElementById('tierImgPro').src = (pro && TIER_IMGS[pro]) ? TIER_IMGS[pro] : fallback;
         document.getElementById('tierImgProplus').src = (plus && TIER_IMGS[plus]) ? TIER_IMGS[plus] : fallback;
-        const ecoCard  = document.getElementById('tierSkuEco').closest('.tier-card');
-        const proCard  = document.getElementById('tierSkuPro').closest('.tier-card');
-        const plusCard = document.getElementById('tierSkuProplus').closest('.tier-card');
-        if (eco)  { ecoCard.classList.remove('slot-empty');  document.getElementById('tierSkuEco').innerHTML     = renderAa(eco);  ecoCard.dataset.tierKey  = eco;  }
-        else      { ecoCard.classList.add('slot-empty');  ecoCard.dataset.tierKey  = ''; }
-        if (pro)  { proCard.classList.remove('slot-empty');  document.getElementById('tierSkuPro').innerHTML     = renderAa(pro);  proCard.dataset.tierKey  = pro;  }
-        else      { proCard.classList.add('slot-empty');  proCard.dataset.tierKey  = ''; }
-        if (plus) { plusCard.classList.remove('slot-empty'); document.getElementById('tierSkuProplus').innerHTML = renderAa(plus); plusCard.dataset.tierKey = plus; }
-        else      { plusCard.classList.add('slot-empty'); plusCard.dataset.tierKey = ''; }
-      } else {
-        tierStrip.classList.add('hidden');
-      }
+        [['Eco',eco],['Pro',pro],['Proplus',plus]].forEach(([suffix, sku]) => {
+          const card = document.getElementById(`tierSku${suffix}`).closest('.tier-card');
+          if (sku){ card.classList.remove('slot-empty'); document.getElementById(`tierSku${suffix}`).innerHTML = renderAa(sku); card.dataset.tierKey = sku; }
+          else { card.classList.add('slot-empty'); card.dataset.tierKey = ''; }
+        });
+      } else { tierStrip.classList.add('hidden'); }
     }
-
     mainItems.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        clearTimeout(hoverTimer);
-        const key = el.dataset.main;
-        if (!key) return;
-        hoverTimer = setTimeout(() => switchMain(key), HOVER_DELAY_MS);
-      });
-      el.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
-    });
-    catItems.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        clearTimeout(hoverTimer);
-        hoverTimer = setTimeout(() => activateCat(el, false), HOVER_DELAY_MS);
-      });
-      el.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
+      const activate = () => { clearTimeout(hoverTimer); hoverTimer = setTimeout(() => switchMain(el.dataset.main), HOVER_DELAY_MS); };
+      el.addEventListener('mouseenter', activate); el.addEventListener('focus', activate); el.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
     });
     appItems.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        clearTimeout(hoverTimer);
-        hoverTimer = setTimeout(() => swapAppPreview(el), HOVER_DELAY_MS);
-      });
-      el.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
+      const activate = () => { clearTimeout(hoverTimer); hoverTimer = setTimeout(() => swapAppPreview(el), HOVER_DELAY_MS); };
+      el.addEventListener('mouseenter', activate); el.addEventListener('focus', activate); el.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
     });
+    const initialApp = menu.querySelector('.mm-app-group[data-app-category="indoor"] .mm-app-item');
+    if (initialApp) swapAppPreview(initialApp);
     /* Tier card clicks — navigate to product page if one exists */
     ['t-eco','t-pro','t-proplus'].forEach(cls => {
       const card = document.querySelector('.tier-card.' + cls);
@@ -1437,24 +1211,12 @@ data-preview="/mm-previews/warehouse-deals.webp"
     });
     productsLi.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
 
-    /* Init: seed preview from the first active cat item so first open is never stale */
+    /* Init: render the full active category on first paint, not only its preview. */
     function productsInitPreview() {
-      const firstActive = menu.querySelector('.mm-cat-item.active');
-      if (firstActive) {
-        // Direct set (no crossfade delay) so first paint is instant
-        const src = firstActive.dataset.preview;
-        if (src && previewImg.getAttribute('src') !== src) {
-          previewImg.setAttribute('src', src);
-        }
-        if (firstActive.dataset.previewLabel) previewLbl.textContent = firstActive.dataset.previewLabel;
-        if (firstActive.dataset.previewName)  previewName.innerHTML  = renderAa(firstActive.dataset.previewName);
-        if (firstActive.dataset.previewDesc)  previewDesc.textContent = firstActive.dataset.previewDesc;
-        // Preload so first hover has no flash
-        if (src) { const _img = new Image(); _img.src = src; }
-      }
+      const initialMain = menu.querySelector('.mm-col-main .mm-main-item.active[data-main]') || mainItems[0];
+      if (initialMain) switchMain(initialMain.dataset.main);
     }
     productsLi.addEventListener('mouseenter', productsInitPreview, { once: false });
-    // Also run once at load so the static HTML default is never stale
     productsInitPreview();
   }
 
