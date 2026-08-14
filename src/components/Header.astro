@@ -6,13 +6,13 @@
  *   Row 1 — Utility bar (dark bg, sticky top:0): Find a Distributor · Find a Rep · Sample Request · Contact · Sign In
  *   Row 2 — site-nav (white, sticky top:34px):
  *     Left:  color SVG logo
- *     Center: SOLUTIONS · PRODUCTS · TOOLS · SUPPORT · ABOUT
+ *     Center: PRODUCTS · SOLUTIONS · TOOLS · SUPPORT · ABOUT
  *     Right: Request Sample (outline) + Request Layout (red filled)
  *     Far right: hamburger (mobile)
  *
  * Mega menus:
- *   SOLUTIONS  — 3-col: Main nav | 8 industry verticals | Preview pane
  *   PRODUCTS   — 4-col wide: Main | Category | Application | Preview + tier strip
+ *   SOLUTIONS  — 3-col: Main nav | 8 industry verticals | Preview pane
  *   TOOLS      — 2-col narrow: For Buyers | For Specifiers
  *   SUPPORT    — 2-col narrow: Service | Legal & Compliance
  *
@@ -80,105 +80,6 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
   </div>
 
   <ul class="main-nav">
-
-    <!-- ============================================================
-         SOLUTIONS — 3-col: Main | Verticals | Preview
-         ============================================================ -->
-    <li class="has-dropdown" data-mm="solutions">
-      <a href="/solutions">Solutions</a>
-      <div class="megamenu solutions">
-        <div class="mm-col mm-col-main">
-          <div class="mm-col-head">Browse by</div>
-          <div class="mm-main-group-label">Start here</div>
-          <a href="/solutions" class="mm-main-item active">Solutions<span class="mm-main-sub">By vertical · 8 industries</span></a>
-          <!-- v27x §6: Consumer & Retail dual-listed in Start here -->
-          <a href="/collections/consumer" class="mm-main-item">Consumer &amp; Retail<span class="mm-main-sub">Six aisles · Big-box retail</span></a>
-          <div class="mm-main-divider"></div>
-          <div class="mm-main-group-label">Purchase tools</div>
-          <a href="/find-a-rep/" class="mm-main-item">Where to Buy</a>
-          <a href="/support/library/?taa=1" class="mm-main-item">TAA Compliant</a>
-          <a href="/find-a-rep/" class="mm-main-item">Find a Rep</a>
-          <a href="/find-a-distributor/" class="mm-main-item">Find a Distributor</a>
-        </div>
-        <div class="mm-col mm-col-vert">
-          <div class="mm-col-head">Industry Vertical</div>
-          <a href="/solutions/cold-storage-grocery" class="mm-vert-item active"
-             data-preview="/images/verticals/vertical-coldstorage.webp"
-             data-preview-name="Cold Storage &amp; Grocery"
-             data-preview-label="Vertical · Cold Chain"
-             data-preview-desc="Freezer, cooler, and grocery cold-chain fixtures rated for low-temperature starts down to -40°F. IP-rated with moisture-resistant gaskets.">
-             Cold Storage &amp; Grocery<span class="mm-vert-sub">Cooler luminaires · refer</span>
-          </a>
-          <a href="/solutions/data-center" class="mm-vert-item"
-             data-preview="/images/verticals/vertical-datacenter.webp"
-             data-preview-name="Data Center"
-             data-preview-label="Vertical · Data Center"
-             data-preview-desc="Hyperscale and colocation facility lighting with controls integration. Low-profile troffers and linear with BMS-ready DALI and 0–10V dimming.">
-             Data Center<span class="mm-vert-sub">Troffers · linear · DALI</span>
-          </a>
-          <a href="/solutions/education" class="mm-vert-item"
-             data-preview="/images/verticals/vertical-education.webp"
-             data-preview-name="Education"
-             data-preview-label="Vertical · Education"
-             data-preview-desc="K-12 and higher-ed lighting with CEC JA8 and DLC-listed. Panel, troffer, and classroom controls packages with occupancy + daylight harvesting.">
-             Education<span class="mm-vert-sub">Panels · JA8 · controls</span>
-          </a>
-          <a href="/solutions/government-military" class="mm-vert-item"
-             data-preview="/images/verticals/vertical-government.webp"
-             data-preview-name="Government &amp; Military"
-             data-preview-label="Vertical · Gov &amp; Mil"
-             data-preview-desc="TAA-compliant fixtures for federal, state, and DoD facilities. Buy American Act eligible with documentation for GSA schedules and set-aside procurements.">
-             Government &amp; Military<span class="mm-vert-sub">TAA · BAA · GSA</span>
-          </a>
-          <a href="/solutions/healthcare" class="mm-vert-item"
-             data-preview="/images/verticals/vertical-healthcare.webp"
-             data-preview-name="Healthcare"
-             data-preview-label="Vertical · Healthcare"
-             data-preview-desc="Patient-care, surgical, and administrative lighting with compliance coverage. UL1598 listed with anti-microbial finish options and tunable-white.">
-             Healthcare<span class="mm-vert-sub">Tunable-white · surgical</span>
-          </a>
-          <a href="/solutions/hospitality" class="mm-vert-item"
-             data-preview="/images/verticals/vertical-hospitality.webp"
-             data-preview-name="Hospitality"
-             data-preview-label="Vertical · Hospitality"
-             data-preview-desc="Hotels, restaurants, and hospitality venues with warm-dimming and controls. Décor-grade finishes with 2700K–3000K warm CCT and phase-cut compatibility.">
-             Hospitality<span class="mm-vert-sub">Warm-dim · décor · phase</span>
-          </a>
-          <a href="/solutions/industrial-manufacturing" class="mm-vert-item"
-             data-preview="/images/verticals/vertical-manufacturing.webp"
-             data-preview-name="Industrial &amp; Manufacturing"
-             data-preview-label="Vertical · Industrial"
-             data-preview-desc="Production-floor and process-facility lighting engineered for uptime. Washdown-rated, vibration-resistant, and hazardous-location configurations.">
-             Industrial &amp; Manufacturing<span class="mm-vert-sub">Washdown · hazloc · strip</span>
-          </a>
-          <a href="/solutions/warehouse-logistics" class="mm-vert-item"
-             data-preview="/images/verticals/vertical-warehouse.webp"
-             data-preview-name="Warehouse &amp; Logistics"
-             data-preview-label="Vertical · Warehouse"
-             data-preview-desc="High-bay and low-bay systems engineered for distribution centers and 3PL facilities. DLC-listed with integrated sensors and emergency egress.">
-             Warehouse &amp; Logistics<span class="mm-vert-sub">High bays · EM · sensors</span>
-          </a>
-          <!-- v27x §6: Consumer & Retail entry under Solutions -->
-          <a href="/collections/consumer" class="mm-vert-item"
-             data-preview-name="Consumer &amp; Retail"
-             data-preview-label="Consumer · Six Aisles"
-             data-preview-desc="Six everyday-lighting aisles — Home, Garden, Work, Auto, Camping, and Party. ALG on the shelf at major big-box retailers.">
-             Consumer &amp; Retail<span class="mm-vert-sub">Six aisles · Big-box retail</span>
-          </a>
-        </div>
-        <div class="mm-col mm-col-preview">
-          <div class="mm-preview">
-            <div class="preview-img-wrap">
-              <img src="/images/verticals/vertical-coldstorage.webp" alt="Solutions preview" id="solPreviewImg" loading="lazy">
-            </div>
-            <div class="preview-label" id="solPreviewLabel">Vertical · Cold Chain</div>
-            <div class="preview-name" id="solPreviewName">Cold Storage &amp; Grocery</div>
-            <div class="preview-desc" id="solPreviewDesc">Freezer, cooler, and grocery cold-chain fixtures rated for low-temperature starts down to -40°F. IP-rated with moisture-resistant gaskets.</div>
-            <a href="/solutions" class="preview-cta">View solutions →</a>
-          </div>
-        </div>
-      </div>
-    </li>
 
     <!-- ============================================================
          PRODUCTS — v2 merged: Browse By | Application (badge-grouped) | Preview
@@ -349,6 +250,105 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
               <div class="tier-card t-pro"><img src="/products/proarch/assets/hero/proarch-hero-1.webp" alt="PRO tier" id="tierImgPro" loading="lazy"><div class="tier-label">PRO</div><div class="tier-sku" id="tierSkuPro">—</div></div>
               <div class="tier-card t-proplus"><img src="/products/proarch/assets/hero/proarch-hero-1.webp" alt="PRO+ tier" id="tierImgProplus" loading="lazy"><div class="tier-label">PRO+</div><div class="tier-sku" id="tierSkuProplus">—</div></div>
             </div>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <!-- ============================================================
+         SOLUTIONS — 3-col: Main | Verticals | Preview
+         ============================================================ -->
+    <li class="has-dropdown" data-mm="solutions">
+      <a href="/solutions">Solutions</a>
+      <div class="megamenu solutions">
+        <div class="mm-col mm-col-main">
+          <div class="mm-col-head">Browse by</div>
+          <div class="mm-main-group-label">Start here</div>
+          <a href="/solutions" class="mm-main-item active">Solutions<span class="mm-main-sub">By vertical · 8 industries</span></a>
+          <!-- v27x §6: Consumer & Retail dual-listed in Start here -->
+          <a href="/collections/consumer" class="mm-main-item">Consumer &amp; Retail<span class="mm-main-sub">Six aisles · Big-box retail</span></a>
+          <div class="mm-main-divider"></div>
+          <div class="mm-main-group-label">Purchase tools</div>
+          <a href="/find-a-rep/" class="mm-main-item">Where to Buy</a>
+          <a href="/support/library/?taa=1" class="mm-main-item">TAA Compliant</a>
+          <a href="/find-a-rep/" class="mm-main-item">Find a Rep</a>
+          <a href="/find-a-distributor/" class="mm-main-item">Find a Distributor</a>
+        </div>
+        <div class="mm-col mm-col-vert">
+          <div class="mm-col-head">Industry Vertical</div>
+          <a href="/solutions/cold-storage-grocery" class="mm-vert-item active"
+             data-preview="/images/verticals/vertical-coldstorage.webp"
+             data-preview-name="Cold Storage &amp; Grocery"
+             data-preview-label="Vertical · Cold Chain"
+             data-preview-desc="Freezer, cooler, and grocery cold-chain fixtures rated for low-temperature starts down to -40°F. IP-rated with moisture-resistant gaskets.">
+             Cold Storage &amp; Grocery<span class="mm-vert-sub">Cooler luminaires · refer</span>
+          </a>
+          <a href="/solutions/data-center" class="mm-vert-item"
+             data-preview="/images/verticals/vertical-datacenter.webp"
+             data-preview-name="Data Center"
+             data-preview-label="Vertical · Data Center"
+             data-preview-desc="Hyperscale and colocation facility lighting with controls integration. Low-profile troffers and linear with BMS-ready DALI and 0–10V dimming.">
+             Data Center<span class="mm-vert-sub">Troffers · linear · DALI</span>
+          </a>
+          <a href="/solutions/education" class="mm-vert-item"
+             data-preview="/images/verticals/vertical-education.webp"
+             data-preview-name="Education"
+             data-preview-label="Vertical · Education"
+             data-preview-desc="K-12 and higher-ed lighting with CEC JA8 and DLC-listed. Panel, troffer, and classroom controls packages with occupancy + daylight harvesting.">
+             Education<span class="mm-vert-sub">Panels · JA8 · controls</span>
+          </a>
+          <a href="/solutions/government-military" class="mm-vert-item"
+             data-preview="/images/verticals/vertical-government.webp"
+             data-preview-name="Government &amp; Military"
+             data-preview-label="Vertical · Gov &amp; Mil"
+             data-preview-desc="TAA-compliant fixtures for federal, state, and DoD facilities. Buy American Act eligible with documentation for GSA schedules and set-aside procurements.">
+             Government &amp; Military<span class="mm-vert-sub">TAA · BAA · GSA</span>
+          </a>
+          <a href="/solutions/healthcare" class="mm-vert-item"
+             data-preview="/images/verticals/vertical-healthcare.webp"
+             data-preview-name="Healthcare"
+             data-preview-label="Vertical · Healthcare"
+             data-preview-desc="Patient-care, surgical, and administrative lighting with compliance coverage. UL1598 listed with anti-microbial finish options and tunable-white.">
+             Healthcare<span class="mm-vert-sub">Tunable-white · surgical</span>
+          </a>
+          <a href="/solutions/hospitality" class="mm-vert-item"
+             data-preview="/images/verticals/vertical-hospitality.webp"
+             data-preview-name="Hospitality"
+             data-preview-label="Vertical · Hospitality"
+             data-preview-desc="Hotels, restaurants, and hospitality venues with warm-dimming and controls. Décor-grade finishes with 2700K–3000K warm CCT and phase-cut compatibility.">
+             Hospitality<span class="mm-vert-sub">Warm-dim · décor · phase</span>
+          </a>
+          <a href="/solutions/industrial-manufacturing" class="mm-vert-item"
+             data-preview="/images/verticals/vertical-manufacturing.webp"
+             data-preview-name="Industrial &amp; Manufacturing"
+             data-preview-label="Vertical · Industrial"
+             data-preview-desc="Production-floor and process-facility lighting engineered for uptime. Washdown-rated, vibration-resistant, and hazardous-location configurations.">
+             Industrial &amp; Manufacturing<span class="mm-vert-sub">Washdown · hazloc · strip</span>
+          </a>
+          <a href="/solutions/warehouse-logistics" class="mm-vert-item"
+             data-preview="/images/verticals/vertical-warehouse.webp"
+             data-preview-name="Warehouse &amp; Logistics"
+             data-preview-label="Vertical · Warehouse"
+             data-preview-desc="High-bay and low-bay systems engineered for distribution centers and 3PL facilities. DLC-listed with integrated sensors and emergency egress.">
+             Warehouse &amp; Logistics<span class="mm-vert-sub">High bays · EM · sensors</span>
+          </a>
+          <!-- v27x §6: Consumer & Retail entry under Solutions -->
+          <a href="/collections/consumer" class="mm-vert-item"
+             data-preview-name="Consumer &amp; Retail"
+             data-preview-label="Consumer · Six Aisles"
+             data-preview-desc="Six everyday-lighting aisles — Home, Garden, Work, Auto, Camping, and Party. ALG on the shelf at major big-box retailers.">
+             Consumer &amp; Retail<span class="mm-vert-sub">Six aisles · Big-box retail</span>
+          </a>
+        </div>
+        <div class="mm-col mm-col-preview">
+          <div class="mm-preview">
+            <div class="preview-img-wrap">
+              <img src="/images/verticals/vertical-coldstorage.webp" alt="Solutions preview" id="solPreviewImg" loading="lazy">
+            </div>
+            <div class="preview-label" id="solPreviewLabel">Vertical · Cold Chain</div>
+            <div class="preview-name" id="solPreviewName">Cold Storage &amp; Grocery</div>
+            <div class="preview-desc" id="solPreviewDesc">Freezer, cooler, and grocery cold-chain fixtures rated for low-temperature starts down to -40°F. IP-rated with moisture-resistant gaskets.</div>
+            <a href="/solutions" class="preview-cta">View solutions →</a>
           </div>
         </div>
       </div>
