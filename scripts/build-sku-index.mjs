@@ -30,7 +30,7 @@
  *   Décor signⒶTURE → EXCLUDED (discontinued line per James direction)
  */
 
-import { writeFileSync, mkdirSync, existsSync } from 'fs';
+import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import XLSX from 'xlsx';
@@ -42,6 +42,7 @@ const ROOT = join(__dirname, '..');
 // lampararch, cityarch, multifamily). v1 spreadsheet path is decommissioned.
 const XLSX_PATH_A = join(ROOT, 'data', 'SKU_Attributes_Template_v2.xlsx');
 const XLSX_PATH_B = join(ROOT, 'data', 'Item.xlsx');
+const REGISTRY_PATH = join(ROOT, 'data', 'sku-family-registry.json');
 const OUT_PATH    = join(ROOT, 'src', 'data', 'sku-index.json');
 
 // Collections to exclude entirely (discontinued)
@@ -87,6 +88,99 @@ function collectionSlug(raw) {
   // cityⒶRCH → cityarch, multi-fⒶMILY → multifamily
   return raw.replace(/Ⓐ/g, 'a').replace(/RCH/g, 'rch').replace(/MILY/g, 'mily')
             .toLowerCase().replace(/[^a-z]/g, '');
+}
+
+function matchesFamily(record, match) {
+  return Object.entries(match).every(([field, value]) => record[field] === value);
+}
+
+function applyRegistry(collections) {
+  if (!existsSync(REGISTRY_PATH)) {
+    throw new Error(`[BUILD] Required registry input is missing: ${REGISTRY_PATH}`);
+  }
+
+  const registry = JSON.parse(readFileSync(REGISTRY_PATH, 'utf8'));
+  if (registry.version !== 1 || !Array.isArray(registry.collectionExtras) || !Array.isArray(registry.familyRemovals) || !Array.isArray(registry.familyOverrides) || !Array.isArray(registry.familyExtras) || !Array.isArray(registry.skuOverrides) || !Array.isArray(registry.skuRemovals) || !Array.isArray(registry.skuExtras)) {
+    throw new Error('[BUILD] sku-family-registry.json must be version 1 with collectionExtras, familyRemovals, familyOverrides, familyExtras, skuOverrides, skuRemovals, and skuExtras arrays');
+  }
+
+  for (const extra of registry.collectionExtras) {
+    if (collections[extra.collection]) {
+      throw new Error(`[BUILD] Registry collection extra duplicates generated collection: ${extra.collection}`);
+    }
+    collections[extra.collection] = extra.record;
+  }
+
+  for (const removal of registry.familyRemovals) {
+    const collection = collections[removal.collection];
+    const matches = collection?.families.filter((family) => matchesFamily(family, removal.match)) ?? [];
+    if (matches.length !== 1) {
+      throw new Error(`[BUILD] Registry removal ${removal.collection}/${removal.match.family} matched ${matches.length} generated families`);
+    }
+    collection.families = collection.families.filter((family) => family !== matches[0]);
+  }
+
+  for (const override of registry.familyOverrides) {
+    const collection = collections[override.collection];
+    const matches = collection?.families.filter((family) => matchesFamily(family, override.match)) ?? [];
+    if (matches.length !== 1) {
+      throw new Error(`[BUILD] Registry override ${override.collection}/${override.match.family} matched ${matches.length} generated families`);
+    }
+    Object.assign(matches[0], override.set);
+  }
+
+  for (const extra of registry.familyExtras) {
+    const collection = collections[extra.collection];
+    if (!collection) {
+      throw new Error(`[BUILD] Registry extra targets unavailable collection: ${extra.collection}`);
+    }
+    const duplicate = collection.families.some((family) =>
+      family.family === extra.record.family && family.tierKey === extra.record.tierKey && family.slug === extra.record.slug
+    );
+    if (duplicate) {
+      throw new Error(`[BUILD] Registry extra duplicates generated family: ${extra.collection}/${extra.record.family}`);
+    }
+    collection.families.push(extra.record);
+  }
+
+  for (const extra of registry.skuExtras) {
+    const collection = collections[extra.collection];
+    if (!collection) {
+      throw new Error(`[BUILD] Registry SKU extra targets unavailable collection: ${extra.collection}`);
+    }
+    const duplicate = collection.skus.some((sku) => sku.sku === extra.record.sku);
+    if (duplicate) {
+      throw new Error(`[BUILD] Registry SKU extra duplicates generated SKU: ${extra.collection}/${extra.record.sku}`);
+    }
+    collection.skus.push(extra.record);
+  }
+
+  for (const override of registry.skuOverrides) {
+    const collection = collections[override.collection];
+    const matches = collection?.skus.filter((sku) => Object.entries(override.match).every(([field, value]) => sku[field] === value)) ?? [];
+    if (matches.length !== 1) {
+      throw new Error(`[BUILD] Registry SKU override ${override.collection}/${override.match.sku} matched ${matches.length} emitted records`);
+    }
+    Object.assign(matches[0], override.set);
+  }
+
+  for (const removal of registry.skuRemovals) {
+    if (!removal.evidence || !['confirmed_data_entry_corruption', 'confirmed_zoho_discontinuation'].includes(removal.evidence.type)) {
+      throw new Error(`[BUILD] Registry SKU removal ${removal.collection}/${removal.sku} requires positive Zoho discontinuation or confirmed data-corruption evidence`);
+    }
+    const collection = collections[removal.collection];
+    const matches = collection?.skus.filter((sku) => sku.sku === removal.sku) ?? [];
+    if (matches.length !== 1) {
+      throw new Error(`[BUILD] Registry SKU removal ${removal.collection}/${removal.sku} matched ${matches.length} emitted records`);
+    }
+    collection.skus = collection.skus.filter((sku) => sku !== matches[0]);
+  }
+
+  for (const collection of Object.values(collections)) {
+    for (const family of collection.families) {
+      family.zoho_family = family.zoho_family || family.family;
+    }
+  }
 }
 
 // ── Bucket B: Nostalgic shape map ─────────────────────────────────────────────
@@ -238,6 +332,7 @@ if (existsSync(XLSX_PATH_B)) {
   const COMMGRADE_COL = ci['CF.Commercial Grade']   ?? 84;
   const FAMILY_COL    = ci['CF.Family']             ?? 87;
   const ITEM_NAME_COL = ci['Item Name']             ?? 0;
+  const SKU_COL       = ci['SKU']                   ?? 26;
 
   const BUCKET_B = new Set(['tubulⒶRCH', 'Décor nostⒶLGIC', 'Décor vintⒶGE', 'Utility signⒶTURE']);
 
@@ -254,6 +349,7 @@ if (existsSync(XLSX_PATH_B)) {
     const commGrade  = String(row[COMMGRADE_COL] ?? '').trim();
     const cfFamily   = String(row[FAMILY_COL] ?? '').trim();
     const itemName   = String(row[ITEM_NAME_COL] ?? '').trim();
+    const skuCode    = String(row[SKU_COL] ?? '').trim();
 
     const { familySlug, capabilityTier, rawShape } = resolveFamily(collRaw, commGrade, cfFamily, wattageStr);
     if (!familySlug) continue;
@@ -269,7 +365,7 @@ if (existsSync(XLSX_PATH_B)) {
 
     const watt = parseFloat(wattageStr.replace(/W$/i, ''));
     byCollB[collSlug][familySlug].push({
-      sku: itemName, family: familySlug,
+      sku: skuCode, item_name: itemName, family: familySlug,
       sub_category: rawShape || familySlug,
       display_echelon: capabilityTier || '',
       wattages: isNaN(watt) ? [] : [watt],
@@ -318,6 +414,15 @@ console.log('[build-sku-index] Hard-fail assertion: all expected-live families h
 
 // ── Merge and write ───────────────────────────────────────────────────────────
 const collections = { ...collectionsA, ...collectionsB };
+applyRegistry(collections);
+
+const invalidBucketBSkus = Object.entries(collectionsB).flatMap(([collection, data]) =>
+  data.skus.filter((sku) => !sku.sku || sku.sku.includes('|')).map((sku) => `${collection}/${sku.family}: ${sku.sku || '(empty)'}`)
+);
+if (invalidBucketBSkus.length) {
+  throw new Error(`[BUILD] Bucket B emitted ${invalidBucketBSkus.length} invalid SKU value(s): ${invalidBucketBSkus.slice(0, 5).join('; ')}`);
+}
+
 mkdirSync(join(ROOT, 'src', 'data'), { recursive: true });
 writeFileSync(OUT_PATH, JSON.stringify({ collections }, null, 2), 'utf8');
 
