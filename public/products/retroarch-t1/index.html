@@ -7519,6 +7519,14 @@ body { overflow-x: hidden; }
           return;
         }
 
+        // The confirmed retroARCH-T1 catalog uses LPVR{form}-33MXP1 with only
+        // /EM and /SR suffixes. WATTselect/CCTselect are driver settings and
+        // companion control/whip products remain separate line items.
+        if (['wattage', 'cct', 'sensor', 'whip'].indexOf(k) >= 0) return;
+        if (k === 'emergency') {
+          html += sep + 'EM';
+          return;
+        }
         var chip = section.querySelector('.cfg-chip[data-field="' + k + '"][data-val="' + val + '"]');
         var code = chip ? chip.dataset.code : '';
         if (code === '') return;          // None / Standard variant → blank

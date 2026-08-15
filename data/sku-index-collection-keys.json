@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "keys": [
+    "luxoarch",
+    "planoarch",
+    "cityarch",
+    "lampararch",
+    "multifamily",
+    "tubulararch",
+    "vintage-decor",
+    "nostalgic-decor",
+    "signature",
+    "tubularch"
+  ],
+  "review": {
+    "approved_by": "James",
+    "approved_on": "2026-08-15",
+    "rationale": "Initial stable collection-key contract following the signature compatibility correction; future additions or removals require an explicit reviewed contract update."
+  }
+}

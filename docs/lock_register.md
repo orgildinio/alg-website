@@ -87,6 +87,7 @@ Locked components MUST NOT be modified in any future iteration without an explic
 | Date | Branch | Paths | Reason |
 |---|---|---|---|
 | 2026-04-27 | iter/v2.7.2-bucket-b-visual-rebuild | `scripts/verify.mjs` | Additive-only: removed branch exemption from Group G, added Groups O and P |
+| 2026-08-15 | main / SKU registry release follow-up | `scripts/verify.mjs` | Reviewed verifier repair: final-output Ⓐ canonicalization, refreshed registry-backed count expectations, and stable collection-key contract gate |
 
 ## v2.6.0 — Bucket A expansion (2026-04-27)
 

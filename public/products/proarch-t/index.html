@@ -8363,9 +8363,19 @@ body { overflow-x: hidden; }
           return;
         }
 
+        // The confirmed T1 catalog uses LPVT{form}-33MXP1 with only /EM and
+        // /SR suffixes. WATTselect/CCTselect are driver settings, while the
+        // remaining control accessories are separate line items, not SKU tails.
+        if (state.series === 'MXP1' && ['wattage', 'cct', 'sensor', 'whip'].indexOf(k) >= 0) return;
+        if (state.series === 'MXP1' && k === 'emergency') {
+          html += sep + 'EM';
+          return;
+        }
+
         // Single-select — look up the code from the matching chip
         var chip = section.querySelector('.cfg-chip[data-field="' + k + '"][data-val="' + val + '"]');
         var code = chip ? chip.dataset.code : '';
+        if (state.series === 'MXP1' && k === 'series') code = '33MXP1';
         if (code === '') return;          // default optic / standard TAA → blank
         // SUSPN## custom length · substitute user-entered length (or placeholder)
         if (k === 'suspension' && val === 'SUSPNcustom') {
