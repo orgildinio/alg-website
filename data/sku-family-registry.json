@@ -14744,66 +14744,6 @@
       "collection": "planoarch",
       "sku": "LPVT24-33MXP1/E6W3",
       "reason": "Not present in the confirmed live Zoho MXP1 LPVT suffix set"
-    },
-    {
-      "collection": "multifamily",
-      "sku": "LDRR410-S5-N2/S/BK",
-      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
-    },
-    {
-      "collection": "multifamily",
-      "sku": "LDRR410-S5-N2/S/BK/12PK",
-      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
-    },
-    {
-      "collection": "multifamily",
-      "sku": "LDRR410-S5-N2/S/BZ",
-      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
-    },
-    {
-      "collection": "multifamily",
-      "sku": "LDRR410-S5-N2/S/BZ/12PK",
-      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
-    },
-    {
-      "collection": "multifamily",
-      "sku": "LDRR410-S5-N2/S/W",
-      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
-    },
-    {
-      "collection": "multifamily",
-      "sku": "LDRR410-S5-N2/S/W/12PK",
-      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
-    },
-    {
-      "collection": "multifamily",
-      "sku": "LDRR615-S5-N2/S/BK",
-      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
-    },
-    {
-      "collection": "multifamily",
-      "sku": "LDRR615-S5-N2/S/BK/12PK",
-      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
-    },
-    {
-      "collection": "multifamily",
-      "sku": "LDRR615-S5-N2/S/BZ",
-      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
-    },
-    {
-      "collection": "multifamily",
-      "sku": "LDRR615-S5-N2/S/BZ/12PK",
-      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
-    },
-    {
-      "collection": "multifamily",
-      "sku": "LDRR615-S5-N2/S/W",
-      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
-    },
-    {
-      "collection": "multifamily",
-      "sku": "LDRR615-S5-N2/S/W/12PK",
-      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
     }
   ],
   "skuOverrides": [
@@ -15091,6 +15031,138 @@
       "set": {
         "sku_kind": "configurable_stem",
         "sku_source_status": "Inactive"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "sku": "LDRR410-S5-N2/S/BK"
+      },
+      "set": {
+        "catalog_status": "pending_finish_reconciliation",
+        "finish_variant_status": "unresolved",
+        "zoho_active_baffled_counterpart": "LDRR410-S5-N2/B/BK"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "sku": "LDRR410-S5-N2/S/BK/12PK"
+      },
+      "set": {
+        "catalog_status": "pending_finish_reconciliation",
+        "finish_variant_status": "unresolved",
+        "zoho_active_baffled_counterpart": "LDRR410-S5-N2/B/BK/12PK"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "sku": "LDRR410-S5-N2/S/BZ"
+      },
+      "set": {
+        "catalog_status": "pending_finish_reconciliation",
+        "finish_variant_status": "unresolved",
+        "zoho_active_baffled_counterpart": "LDRR410-S5-N2/B/BZ"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "sku": "LDRR410-S5-N2/S/BZ/12PK"
+      },
+      "set": {
+        "catalog_status": "pending_finish_reconciliation",
+        "finish_variant_status": "unresolved",
+        "zoho_active_baffled_counterpart": "LDRR410-S5-N2/B/BZ/12PK"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "sku": "LDRR410-S5-N2/S/W"
+      },
+      "set": {
+        "catalog_status": "pending_finish_reconciliation",
+        "finish_variant_status": "unresolved",
+        "zoho_active_baffled_counterpart": "LDRR410-S5-N2/B/W"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "sku": "LDRR410-S5-N2/S/W/12PK"
+      },
+      "set": {
+        "catalog_status": "pending_finish_reconciliation",
+        "finish_variant_status": "unresolved",
+        "zoho_active_baffled_counterpart": "LDRR410-S5-N2/B/W/12PK"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "sku": "LDRR615-S5-N2/S/BK"
+      },
+      "set": {
+        "catalog_status": "pending_finish_reconciliation",
+        "finish_variant_status": "unresolved",
+        "zoho_active_baffled_counterpart": "LDRR615-S5-N2/B/BK"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "sku": "LDRR615-S5-N2/S/BK/12PK"
+      },
+      "set": {
+        "catalog_status": "pending_finish_reconciliation",
+        "finish_variant_status": "unresolved",
+        "zoho_active_baffled_counterpart": "LDRR615-S5-N2/B/BK/12PK"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "sku": "LDRR615-S5-N2/S/BZ"
+      },
+      "set": {
+        "catalog_status": "pending_finish_reconciliation",
+        "finish_variant_status": "unresolved",
+        "zoho_active_baffled_counterpart": "LDRR615-S5-N2/B/BZ"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "sku": "LDRR615-S5-N2/S/BZ/12PK"
+      },
+      "set": {
+        "catalog_status": "pending_finish_reconciliation",
+        "finish_variant_status": "unresolved",
+        "zoho_active_baffled_counterpart": "LDRR615-S5-N2/B/BZ/12PK"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "sku": "LDRR615-S5-N2/S/W"
+      },
+      "set": {
+        "catalog_status": "pending_finish_reconciliation",
+        "finish_variant_status": "unresolved",
+        "zoho_active_baffled_counterpart": "LDRR615-S5-N2/B/W"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "sku": "LDRR615-S5-N2/S/W/12PK"
+      },
+      "set": {
+        "catalog_status": "pending_finish_reconciliation",
+        "finish_variant_status": "unresolved",
+        "zoho_active_baffled_counterpart": "LDRR615-S5-N2/B/W/12PK"
       }
     }
   ]
