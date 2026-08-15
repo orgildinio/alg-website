@@ -172,6 +172,12 @@ function applyRegistry(collections) {
     }
     collection.skus = collection.skus.filter((sku) => sku !== matches[0]);
   }
+
+  for (const collection of Object.values(collections)) {
+    for (const family of collection.families) {
+      family.zoho_family = family.zoho_family || family.family;
+    }
+  }
 }
 
 // ── Bucket B: Nostalgic shape map ─────────────────────────────────────────────

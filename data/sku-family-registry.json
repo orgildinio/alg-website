@@ -4482,7 +4482,8 @@
         "card_image": "/products/titan/assets/hero/fam-titan-01.webp",
         "slug": "titan",
         "heroImage": "/products/titan/titan/photos/TITAN-85-155W-1_nobg.png",
-        "tierKey": "Titan"
+        "tierKey": "Titan",
+        "zoho_family": "Titan-II"
       }
     },
     {
@@ -14743,6 +14744,66 @@
       "collection": "planoarch",
       "sku": "LPVT24-33MXP1/E6W3",
       "reason": "Not present in the confirmed live Zoho MXP1 LPVT suffix set"
+    },
+    {
+      "collection": "multifamily",
+      "sku": "LDRR410-S5-N2/S/BK",
+      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
+    },
+    {
+      "collection": "multifamily",
+      "sku": "LDRR410-S5-N2/S/BK/12PK",
+      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
+    },
+    {
+      "collection": "multifamily",
+      "sku": "LDRR410-S5-N2/S/BZ",
+      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
+    },
+    {
+      "collection": "multifamily",
+      "sku": "LDRR410-S5-N2/S/BZ/12PK",
+      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
+    },
+    {
+      "collection": "multifamily",
+      "sku": "LDRR410-S5-N2/S/W",
+      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
+    },
+    {
+      "collection": "multifamily",
+      "sku": "LDRR410-S5-N2/S/W/12PK",
+      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
+    },
+    {
+      "collection": "multifamily",
+      "sku": "LDRR615-S5-N2/S/BK",
+      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
+    },
+    {
+      "collection": "multifamily",
+      "sku": "LDRR615-S5-N2/S/BK/12PK",
+      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
+    },
+    {
+      "collection": "multifamily",
+      "sku": "LDRR615-S5-N2/S/BZ",
+      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
+    },
+    {
+      "collection": "multifamily",
+      "sku": "LDRR615-S5-N2/S/BZ/12PK",
+      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
+    },
+    {
+      "collection": "multifamily",
+      "sku": "LDRR615-S5-N2/S/W",
+      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
+    },
+    {
+      "collection": "multifamily",
+      "sku": "LDRR615-S5-N2/S/W/12PK",
+      "reason": "Absent from active Item.xlsx export and has no direct repository source outside sku-index.json"
     }
   ],
   "skuOverrides": [
@@ -15020,6 +15081,16 @@
         ],
         "taa": true,
         "dlc": "Listed"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "match": {
+        "sku": "LLHB4400-xx-U2"
+      },
+      "set": {
+        "sku_kind": "configurable_stem",
+        "sku_source_status": "Inactive"
       }
     }
   ]
