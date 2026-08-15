@@ -50,9 +50,9 @@ const EXCLUDED_COLLECTIONS = new Set(['Décor signⒶTURE']);
 
 // Coming-soon families — SKUs count toward collection total but don't render in detail pages
 const COMING_SOON_FAMILIES = new Set([
-  'utility-signature/a-lamp',
-  'utility-signature/br-lamp',
-  'utility-signature/par-lamp',
+  'signature/a-lamp',
+  'signature/br-lamp',
+  'signature/par-lamp',
 ]);
 
 // ── helpers ───────────────────────────────────────────────────────────────────
@@ -357,7 +357,7 @@ if (existsSync(XLSX_PATH_B)) {
     const collSlug = collRaw === 'tubulⒶRCH'        ? 'tubulararch'
                    : collRaw === 'Décor nostⒶLGIC'   ? 'nostalgic-decor'
                    : collRaw === 'Décor vintⒶGE'     ? 'vintage-decor'
-                   : collRaw === 'Utility signⒶTURE' ? 'utility-signature'
+                   : collRaw === 'Utility signⒶTURE' ? 'signature'
                    : collRaw.toLowerCase();
 
     if (!byCollB[collSlug]) byCollB[collSlug] = {};
@@ -399,7 +399,7 @@ const FAMILIES_REQUIRING_SKUS = [
   'nostalgic-decor/g16-5', 'nostalgic-decor/g25', 'nostalgic-decor/s14',
   'vintage-decor/candelabra', 'vintage-decor/edison', 'vintage-decor/globe',
   'vintage-decor/radio', 'vintage-decor/tubular', 'vintage-decor/victorian',
-  'utility-signature/husk-hid',
+  'signature/husk-hid',
 ];
 
 for (const path of FAMILIES_REQUIRING_SKUS) {
