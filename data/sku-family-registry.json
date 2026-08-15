@@ -14743,7 +14743,12 @@
     {
       "collection": "planoarch",
       "sku": "LPVT24-33MXP1/E6W3",
-      "reason": "Not present in the confirmed live Zoho MXP1 LPVT suffix set"
+      "reason": "Mangled hybrid of LPVT/MXP1 troffer stem and LBLP/MXP2 E6W3 suffix; the real active SKU is LBLP24-33MXP2/E6W3",
+      "evidence": {
+        "type": "confirmed_data_entry_corruption",
+        "source": "User-supplied live Zoho lookup",
+        "real_sku": "LBLP24-33MXP2/E6W3"
+      }
     }
   ],
   "skuOverrides": [

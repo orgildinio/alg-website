@@ -165,6 +165,9 @@ function applyRegistry(collections) {
   }
 
   for (const removal of registry.skuRemovals) {
+    if (!removal.evidence || !['confirmed_data_entry_corruption', 'confirmed_zoho_discontinuation'].includes(removal.evidence.type)) {
+      throw new Error(`[BUILD] Registry SKU removal ${removal.collection}/${removal.sku} requires positive Zoho discontinuation or confirmed data-corruption evidence`);
+    }
     const collection = collections[removal.collection];
     const matches = collection?.skus.filter((sku) => sku.sku === removal.sku) ?? [];
     if (matches.length !== 1) {
