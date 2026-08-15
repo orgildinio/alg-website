@@ -100,8 +100,15 @@ function applyRegistry(collections) {
   }
 
   const registry = JSON.parse(readFileSync(REGISTRY_PATH, 'utf8'));
-  if (registry.version !== 1 || !Array.isArray(registry.familyRemovals) || !Array.isArray(registry.familyOverrides) || !Array.isArray(registry.familyExtras)) {
-    throw new Error('[BUILD] sku-family-registry.json must be version 1 with familyRemovals, familyOverrides, and familyExtras arrays');
+  if (registry.version !== 1 || !Array.isArray(registry.collectionExtras) || !Array.isArray(registry.familyRemovals) || !Array.isArray(registry.familyOverrides) || !Array.isArray(registry.familyExtras) || !Array.isArray(registry.skuOverrides) || !Array.isArray(registry.skuRemovals) || !Array.isArray(registry.skuExtras)) {
+    throw new Error('[BUILD] sku-family-registry.json must be version 1 with collectionExtras, familyRemovals, familyOverrides, familyExtras, skuOverrides, skuRemovals, and skuExtras arrays');
+  }
+
+  for (const extra of registry.collectionExtras) {
+    if (collections[extra.collection]) {
+      throw new Error(`[BUILD] Registry collection extra duplicates generated collection: ${extra.collection}`);
+    }
+    collections[extra.collection] = extra.record;
   }
 
   for (const removal of registry.familyRemovals) {
@@ -134,6 +141,36 @@ function applyRegistry(collections) {
       throw new Error(`[BUILD] Registry extra duplicates generated family: ${extra.collection}/${extra.record.family}`);
     }
     collection.families.push(extra.record);
+  }
+
+  for (const extra of registry.skuExtras) {
+    const collection = collections[extra.collection];
+    if (!collection) {
+      throw new Error(`[BUILD] Registry SKU extra targets unavailable collection: ${extra.collection}`);
+    }
+    const duplicate = collection.skus.some((sku) => sku.sku === extra.record.sku);
+    if (duplicate) {
+      throw new Error(`[BUILD] Registry SKU extra duplicates generated SKU: ${extra.collection}/${extra.record.sku}`);
+    }
+    collection.skus.push(extra.record);
+  }
+
+  for (const override of registry.skuOverrides) {
+    const collection = collections[override.collection];
+    const matches = collection?.skus.filter((sku) => Object.entries(override.match).every(([field, value]) => sku[field] === value)) ?? [];
+    if (matches.length !== 1) {
+      throw new Error(`[BUILD] Registry SKU override ${override.collection}/${override.match.sku} matched ${matches.length} emitted records`);
+    }
+    Object.assign(matches[0], override.set);
+  }
+
+  for (const removal of registry.skuRemovals) {
+    const collection = collections[removal.collection];
+    const matches = collection?.skus.filter((sku) => sku.sku === removal.sku) ?? [];
+    if (matches.length !== 1) {
+      throw new Error(`[BUILD] Registry SKU removal ${removal.collection}/${removal.sku} matched ${matches.length} emitted records`);
+    }
+    collection.skus = collection.skus.filter((sku) => sku !== matches[0]);
   }
 }
 
