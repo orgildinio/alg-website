@@ -1,0 +1,2705 @@
+{
+  "version": 1,
+  "familyRemovals": [
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Radiator-I",
+        "sub_category": "Sports Lighting",
+        "display_echelon": "PRO"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Radiator-II",
+        "sub_category": "Sports Lighting",
+        "display_echelon": "PRO"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Radiator-III",
+        "sub_category": "Sports Lighting",
+        "display_echelon": "PRO"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Beacon-I",
+        "sub_category": "Sports Lighting",
+        "display_echelon": "PRO+"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Anaheim",
+        "sub_category": "Wall Pack",
+        "display_echelon": "ECO"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Guardian",
+        "sub_category": "Wall Pack",
+        "display_echelon": "ECO"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Ramparts",
+        "sub_category": "Wall Pack",
+        "display_echelon": "ECO"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Shield",
+        "sub_category": "Wall Pack",
+        "display_echelon": "ECO"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Watchtower",
+        "sub_category": "Wall Pack",
+        "display_echelon": "ECO"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Wedge-I",
+        "sub_category": "Wall Pack",
+        "display_echelon": "ECO"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Atlanta",
+        "sub_category": "Wall Pack",
+        "display_echelon": "PRO"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Nightwatch",
+        "sub_category": "Wall Pack",
+        "display_echelon": "PRO"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Sentinel",
+        "sub_category": "Wall Pack",
+        "display_echelon": "PRO"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "match": {
+        "family": "proⒶRCH-II",
+        "sub_category": "Panel",
+        "display_echelon": "ECO"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "match": {
+        "family": "proⒶRCH-III",
+        "sub_category": "Panel",
+        "display_echelon": "PRO+"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "match": {
+        "family": "retroⒶRCH-T1",
+        "sub_category": "Retrofit Troffer",
+        "display_echelon": "PRO"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "match": {
+        "family": "proⒶRCH-T1",
+        "sub_category": "Troffer",
+        "display_echelon": "ECO"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "match": {
+        "family": "proⒶRCH-T2",
+        "sub_category": "Troffer",
+        "display_echelon": "PRO"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "match": {
+        "family": "Waymark",
+        "sub_category": "Wraparound",
+        "display_echelon": "PRO"
+      }
+    },
+    {
+      "collection": "cityarch",
+      "match": {
+        "family": "Hyperion",
+        "sub_category": "Direct Burial",
+        "display_echelon": ""
+      }
+    },
+    {
+      "collection": "cityarch",
+      "match": {
+        "family": "Redwood",
+        "sub_category": "Pole",
+        "display_echelon": ""
+      }
+    },
+    {
+      "collection": "cityarch",
+      "match": {
+        "family": "Sequoia",
+        "sub_category": "Pole",
+        "display_echelon": ""
+      }
+    },
+    {
+      "collection": "cityarch",
+      "match": {
+        "family": "Alpine",
+        "sub_category": "Surface Mount",
+        "display_echelon": ""
+      }
+    },
+    {
+      "collection": "cityarch",
+      "match": {
+        "family": "Centurion",
+        "sub_category": "Tapered",
+        "display_echelon": ""
+      }
+    },
+    {
+      "collection": "lampararch",
+      "match": {
+        "family": "Icarus-III",
+        "sub_category": "High-Bay",
+        "display_echelon": "ECO"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "match": {
+        "family": "Tiny-I",
+        "sub_category": "High-Bay",
+        "display_echelon": "ECO"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "match": {
+        "family": "Jupiter-II",
+        "sub_category": "High-Bay",
+        "display_echelon": "PRO"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "match": {
+        "family": "Titan-II",
+        "sub_category": "High-Bay",
+        "display_echelon": "PRO"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "match": {
+        "family": "Vanguard-I",
+        "sub_category": "Linear Strip",
+        "display_echelon": "ECO"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "match": {
+        "family": "Hallmark",
+        "sub_category": "Linear Strip",
+        "display_echelon": "PRO+"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "match": {
+        "family": "retroⒶRCH-L1",
+        "sub_category": "Retrofit Linear Strip",
+        "display_echelon": ""
+      }
+    },
+    {
+      "collection": "lampararch",
+      "match": {
+        "family": "Eureka-II",
+        "sub_category": "Vapor-Tight",
+        "display_echelon": "ECO"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "match": {
+        "family": "Eureka-I",
+        "sub_category": "Vapor-Tight",
+        "display_echelon": "PRO"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "family": "Gehry",
+        "sub_category": "Commercial Recess Can",
+        "display_echelon": ""
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "family": "Nebula-II",
+        "sub_category": "Downlight",
+        "display_echelon": "ECO"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "family": "Eclipse-II",
+        "sub_category": "Downlight",
+        "display_echelon": "PRO"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "family": "Radius-II",
+        "sub_category": "Downlight",
+        "display_echelon": "PRO"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "family": "Radius SafeZone",
+        "sub_category": "Downlight",
+        "display_echelon": "PRO+"
+      }
+    },
+    {
+      "collection": "tubulararch",
+      "match": {
+        "family": "t5",
+        "sub_category": "T5HO",
+        "display_echelon": "UL-A"
+      }
+    }
+  ],
+  "familyOverrides": [
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Aura",
+        "sub_category": "Cylinder",
+        "display_echelon": "PRO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/aura/",
+        "card_image": "/images/family-cards/luxoarch/aura.png",
+        "slug": "aura",
+        "heroImage": null,
+        "tierKey": "Aura-I"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Canadarm",
+        "sub_category": "Dock Light",
+        "display_echelon": "PRO"
+      },
+      "set": {
+        "sku_count": 4,
+        "dlc": false,
+        "ccts": [
+          "5000"
+        ],
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Canadarm",
+        "heroImage": "/images/family-cards/luxoarch/canadarm.png",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Everest",
+        "sub_category": "Flood Light",
+        "display_echelon": "ECO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "ccts": [
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/everest/",
+        "card_image": "/images/family-cards/luxoarch/everest.png",
+        "slug": "everest",
+        "heroImage": "/products/everest/assets/hero/everest-hero-1.webp",
+        "tierKey": "Everest-I"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Heritage",
+        "sub_category": "Area Light",
+        "display_echelon": "ECO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "sku_count": 8,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/heritage/",
+        "card_image": "/images/family-cards/luxoarch/heritage.png",
+        "slug": "heritage",
+        "heroImage": "/products/heritage/assets/hero/heritage-hero-1.webp",
+        "tierKey": "Heritage-I"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Illuminator",
+        "sub_category": "Sports Lighting",
+        "display_echelon": "PRO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "sku_count": 23,
+        "ccts": [
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V",
+          "347 - 480V"
+        ],
+        "pdpUrl": "/products/illuminator/",
+        "card_image": "/images/family-cards/luxoarch/illuminator.png",
+        "slug": "illuminator",
+        "heroImage": "/products/illuminator/assets/hero/illuminator-hero-1.webp",
+        "tierKey": "Illuminator-I"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "LSL Series",
+        "sub_category": "String Light",
+        "display_echelon": "ECO"
+      },
+      "set": {
+        "sku_count": 20,
+        "ccts": [
+          "2200",
+          "2400",
+          "2700"
+        ],
+        "voltages": [
+          "120V"
+        ],
+        "pdpUrl": "https://workdrive.archipelagolighting.com/external/137653d92417db42eef7a4bb74ad7fefdee796200a12be82065695a0ac634557",
+        "linkType": "datasheet",
+        "card_image": "/images/family-cards/luxoarch/lsl-series.png",
+        "heroImage": "/images/family-cards/luxoarch/lsl-series.png",
+        "tierKey": "LSL Series"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Liberty",
+        "sub_category": "Area Light",
+        "display_echelon": "PRO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "sku_count": 69,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/liberty/",
+        "card_image": "/images/family-cards/luxoarch/liberty.png",
+        "slug": "liberty",
+        "heroImage": "/products/liberty/assets/hero/liberty-hero-1.webp",
+        "tierKey": "Liberty-I"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Navigator",
+        "sub_category": "Canopy",
+        "display_echelon": "ECO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "ccts": [
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/navigator/",
+        "card_image": "/images/family-cards/luxoarch/navigator.png",
+        "slug": "navigator",
+        "heroImage": "/products/navigator/assets/hero/navigator-hero-1.webp",
+        "tierKey": "Navigator-I"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "match": {
+        "family": "Pathfinder",
+        "sub_category": "Canopy",
+        "display_echelon": "PRO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/pathfinder/",
+        "card_image": "/images/family-cards/luxoarch/pathfinder.png",
+        "slug": "pathfinder",
+        "heroImage": "/products/pathfinder/assets/hero/pathfinder-hero-1.webp",
+        "tierKey": "Pathfinder-I"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "match": {
+        "family": "Astra",
+        "sub_category": "Downlight",
+        "display_echelon": "PRO+"
+      },
+      "set": {
+        "max_wattage": 0,
+        "sku_count": 60,
+        "dlc": false,
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/astra/",
+        "card_image": "/products/astra/assets/hero/fam-astra-1.webp",
+        "slug": "astra",
+        "heroImage": "/products/astra/assets/hero/astra-finish-white.webp",
+        "tierKey": "Astra"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "match": {
+        "family": "Lara",
+        "sub_category": "Architectural Linear",
+        "display_echelon": "ECO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "sku_count": 16,
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/lara/",
+        "card_image": "/products/lara/assets/hero/lara-4ft-white.webp",
+        "slug": "lara",
+        "heroImage": "/products/lara/assets/hero/lara-2ft.webp",
+        "tierKey": "Lara"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "match": {
+        "family": "Luna",
+        "sub_category": "Architectural Linear",
+        "display_echelon": "PRO+"
+      },
+      "set": {
+        "max_wattage": 0,
+        "sku_count": 36,
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/luna/",
+        "card_image": "/products/luna/assets/hero/luna-hero-1.webp",
+        "slug": "luna",
+        "heroImage": "/products/luna/assets/hero/luna-pendant-diffuser.webp",
+        "tierKey": "Luna"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "match": {
+        "family": "Luxmark",
+        "sub_category": "Troffer",
+        "display_echelon": "PRO+"
+      },
+      "set": {
+        "max_wattage": 0,
+        "sku_count": 14,
+        "ccts": [
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/luxmark/",
+        "card_image": "/products/luxmark/assets/hero/fam-luxmark.webp",
+        "slug": "luxmark",
+        "heroImage": "/products/luxmark/assets/hero/LPVT24-3550CS/LPVT24-3550CS-FRONT.png",
+        "tierKey": "Luxmark"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "match": {
+        "family": "Solstice",
+        "sub_category": "Downlight",
+        "display_echelon": "ECO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "sku_count": 37,
+        "dlc": false,
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/solstice/",
+        "card_image": "/products/solstice/assets/hero/fam-solstice.webp",
+        "slug": "solstice",
+        "heroImage": "/products/solstice/assets/hero/solstice-aperture-4.webp",
+        "tierKey": "Solstice"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "match": {
+        "family": "Solstice SafeZone",
+        "sub_category": "Downlight",
+        "display_echelon": "PRO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "dlc": false,
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/solstice-safezone/",
+        "card_image": "/products/solstice-safezone/assets/hero/fam-safezone.webp",
+        "slug": "solstice-safezone",
+        "heroImage": "/products/solstice-safezone/assets/hero/safezone-aperture-4.webp",
+        "tierKey": "Solstice SafeZone"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "match": {
+        "family": "Spectra",
+        "sub_category": "Downlight",
+        "display_echelon": "PRO+"
+      },
+      "set": {
+        "max_wattage": 0,
+        "sku_count": 5,
+        "dlc": false,
+        "ccts": [
+          "3000",
+          "3500",
+          "4000"
+        ],
+        "pdpUrl": "/products/spectra/",
+        "card_image": "/products/spectra/assets/hero/spectra-default.webp",
+        "slug": "spectra",
+        "heroImage": "/products/spectra/assets/hero/spectra-aperture-4.webp",
+        "tierKey": "Spectra"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "match": {
+        "family": "Trackstar",
+        "sub_category": "Track Light",
+        "display_echelon": "ECO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "sku_count": 3,
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/trackstar/",
+        "card_image": "/products/trackstar/assets/hero/fam-trackstar.webp",
+        "slug": "trackstar",
+        "heroImage": "/products/trackstar/assets/hero/1.png",
+        "tierKey": "Trackstar"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "match": {
+        "family": "retroⒶRCH-P1",
+        "sub_category": "Retrofit Panel",
+        "display_echelon": "PRO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "ccts": [
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/retroarch-p1/",
+        "card_image": "/products/retroarch-p1/assets/hero/fam-retroarch-p1.webp",
+        "slug": "retroarch-p1",
+        "heroImage": "/products/retroarch-p1/assets/hero/lblr24-hero-2.webp",
+        "tierKey": "retroⒶRCH-P1"
+      }
+    },
+    {
+      "collection": "cityarch",
+      "match": {
+        "family": "Abbey",
+        "sub_category": "Roadway",
+        "display_echelon": "PRO"
+      },
+      "set": {
+        "sku_count": 23,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/lrdw-abbey-roadway/",
+        "card_image": "/products/lrdw-abbey-roadway/assets/abbey/abbey-hero-1.webp",
+        "slug": "lrdw-abbey-roadway",
+        "heroImage": "/products/lrdw-abbey-roadway/assets/abbey/hero/abbey-1-silver-front.png",
+        "tierKey": "Abbey-I"
+      }
+    },
+    {
+      "collection": "cityarch",
+      "match": {
+        "family": "LPAR Series",
+        "sub_category": "Traffic Control Lamp",
+        "display_echelon": "PRO"
+      },
+      "set": {
+        "ccts": [
+          "3000",
+          "4800"
+        ],
+        "voltages": [
+          "120V"
+        ],
+        "pdpUrl": "/products/lpar-traffic-par38/",
+        "card_image": "/products/lpar-traffic-par38/assets/lpar/lpar-hero-1.png",
+        "slug": "lpar-traffic-par38",
+        "heroImage": "/products/lpar-traffic-par38/assets/lpar/lpar-hero-1.png",
+        "tierKey": "LPAR Series"
+      }
+    },
+    {
+      "collection": "cityarch",
+      "match": {
+        "family": "OmniMax",
+        "sub_category": "High Mast",
+        "display_echelon": "PRO+"
+      },
+      "set": {
+        "max_wattage": 0,
+        "ccts": [
+          "5000"
+        ],
+        "pdpUrl": "/products/lhmf-omnimax-high-mast/",
+        "card_image": "/products/lhmf-omnimax-high-mast/assets/omnimax/hero/omnimax-hero-1.webp",
+        "slug": "lhmf-omnimax-high-mast",
+        "heroImage": "/products/lhmf-omnimax-high-mast/assets/omnimax/hero/omnimax-hero-1.webp",
+        "tierKey": "OmniMax-I"
+      }
+    },
+    {
+      "collection": "cityarch",
+      "match": {
+        "family": "Sentry",
+        "sub_category": "Bollard",
+        "display_echelon": "PRO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "sku_count": 22,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/lbol-sentry-bollard/",
+        "card_image": "/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp",
+        "slug": "lbol-sentry-bollard",
+        "heroImage": "/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp",
+        "tierKey": "Sentry-I"
+      }
+    },
+    {
+      "collection": "cityarch",
+      "match": {
+        "family": "Symmetry",
+        "sub_category": "Post Top",
+        "display_echelon": "PRO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "ccts": [
+          "3000",
+          "3500",
+          "4000",
+          "4500",
+          "5000"
+        ],
+        "pdpUrl": "/products/lptp-symmetry-post-top/",
+        "card_image": "/products/lptp-symmetry-post-top/assets/symmetry/hero/symmetry-1-front-round.png",
+        "slug": "lptp-symmetry-post-top",
+        "heroImage": "/products/lptp-symmetry-post-top/assets/symmetry/hero/symmetry-1-front-round.png",
+        "tierKey": "Symmetry-I"
+      }
+    },
+    {
+      "collection": "cityarch",
+      "match": {
+        "family": "Unity",
+        "sub_category": "Post Top",
+        "display_echelon": "ECO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "pdpUrl": "/products/lptp-unity-post-top/",
+        "card_image": "/products/lptp-unity-post-top/assets/unity/unity-hero-1.webp",
+        "slug": "lptp-unity-post-top",
+        "heroImage": "/products/lptp-unity-post-top/assets/unity/unity-hero-1.webp",
+        "tierKey": "Unity-I"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "family": "Lunar Eclipse",
+        "sub_category": "Downlight",
+        "display_echelon": "PRO"
+      },
+      "set": {
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120V"
+        ],
+        "pdpUrl": "/products/multi-family/lunar-eclipse/",
+        "card_image": "/products/multi-family/card-images/lunar-eclipse-card.png",
+        "slug": "lunar-eclipse",
+        "heroImage": "/products/multi-family/lunar-eclipse/assets/photos/lunar-eclipse/13in/Eclipse-II-13in-White-1.png",
+        "tierKey": "Lunar Eclipse",
+        "card_label": "LDLL · Lunar Eclipse"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "family": "Orbit",
+        "sub_category": "Downlight",
+        "display_echelon": "ECO"
+      },
+      "set": {
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120V"
+        ],
+        "mount_types": [],
+        "pdpUrl": "/products/multi-family/orbit-i/",
+        "card_image": "",
+        "tierKey": "Orbit-I",
+        "slug": "orbit-i",
+        "heroImage": "/products/multi-family/orbit-i/assets/photos/orbit/6in/LDGR615-1.png",
+        "echelon": "PRO",
+        "card_label": "LDGR · Orbit"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "family": "Wally",
+        "sub_category": "Security Flood",
+        "display_echelon": "ECO"
+      },
+      "set": {
+        "max_wattage": 0,
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120V"
+        ],
+        "mount_types": [],
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Wally",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "multifamily",
+      "match": {
+        "family": "eCrescent",
+        "sub_category": "Downlight",
+        "display_echelon": "ECO"
+      },
+      "set": {
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120V"
+        ],
+        "pdpUrl": "/products/multi-family/ecrescent/",
+        "card_image": "/products/multi-family/card-images/ecrescent-card.png",
+        "slug": "ecrescent",
+        "heroImage": "/products/multi-family/ecrescent/assets/ecrescent/ecrescent-6in-hero-1.png",
+        "tierKey": "eCrescent",
+        "card_label": "LSMT · eCrescent"
+      }
+    },
+    {
+      "collection": "tubulararch",
+      "match": {
+        "family": "t8",
+        "sub_category": "T8",
+        "display_echelon": "UL-A+B"
+      },
+      "set": {
+        "tierKey": "t8"
+      }
+    },
+    {
+      "collection": "tubulararch",
+      "match": {
+        "family": "pl",
+        "sub_category": "PL",
+        "display_echelon": "UL-A"
+      },
+      "set": {
+        "tierKey": "pl"
+      }
+    },
+    {
+      "collection": "tubulararch",
+      "match": {
+        "family": "pll",
+        "sub_category": "PLL",
+        "display_echelon": "UL-A"
+      },
+      "set": {
+        "tierKey": "pll"
+      }
+    },
+    {
+      "collection": "tubulararch",
+      "match": {
+        "family": "u6",
+        "sub_category": "U6",
+        "display_echelon": "UL-A+B"
+      },
+      "set": {
+        "tierKey": "u6"
+      }
+    },
+    {
+      "collection": "vintage-decor",
+      "match": {
+        "family": "victorian",
+        "sub_category": "Victorian",
+        "display_echelon": ""
+      },
+      "set": {
+        "tierKey": "victorian"
+      }
+    },
+    {
+      "collection": "vintage-decor",
+      "match": {
+        "family": "tubular",
+        "sub_category": "Tubular",
+        "display_echelon": ""
+      },
+      "set": {
+        "tierKey": "tubular"
+      }
+    },
+    {
+      "collection": "vintage-decor",
+      "match": {
+        "family": "edison",
+        "sub_category": "Edison",
+        "display_echelon": ""
+      },
+      "set": {
+        "tierKey": "edison"
+      }
+    },
+    {
+      "collection": "vintage-decor",
+      "match": {
+        "family": "radio",
+        "sub_category": "Radio",
+        "display_echelon": ""
+      },
+      "set": {
+        "tierKey": "radio"
+      }
+    },
+    {
+      "collection": "vintage-decor",
+      "match": {
+        "family": "globe",
+        "sub_category": "Globe",
+        "display_echelon": ""
+      },
+      "set": {
+        "tierKey": "globe"
+      }
+    },
+    {
+      "collection": "vintage-decor",
+      "match": {
+        "family": "candelabra",
+        "sub_category": "Candle",
+        "display_echelon": ""
+      },
+      "set": {
+        "tierKey": "candelabra"
+      }
+    },
+    {
+      "collection": "nostalgic-decor",
+      "match": {
+        "family": "s14",
+        "sub_category": "S14",
+        "display_echelon": ""
+      },
+      "set": {
+        "tierKey": "s14"
+      }
+    },
+    {
+      "collection": "nostalgic-decor",
+      "match": {
+        "family": "g25",
+        "sub_category": "Globe 40",
+        "display_echelon": ""
+      },
+      "set": {
+        "tierKey": "g25"
+      }
+    },
+    {
+      "collection": "nostalgic-decor",
+      "match": {
+        "family": "g16-5",
+        "sub_category": "Globe G16.5",
+        "display_echelon": ""
+      },
+      "set": {
+        "tierKey": "g16-5"
+      }
+    },
+    {
+      "collection": "nostalgic-decor",
+      "match": {
+        "family": "ca10",
+        "sub_category": "Candle | Flame-Tip",
+        "display_echelon": ""
+      },
+      "set": {
+        "tierKey": "ca10"
+      }
+    },
+    {
+      "collection": "nostalgic-decor",
+      "match": {
+        "family": "b10",
+        "sub_category": "Candle | Blunt-Tip",
+        "display_echelon": ""
+      },
+      "set": {
+        "tierKey": "b10"
+      }
+    },
+    {
+      "collection": "nostalgic-decor",
+      "match": {
+        "family": "a15",
+        "sub_category": "A-Lamp",
+        "display_echelon": ""
+      },
+      "set": {
+        "tierKey": "a15"
+      }
+    },
+    {
+      "collection": "nostalgic-decor",
+      "match": {
+        "family": "a19",
+        "sub_category": "A-Lamp",
+        "display_echelon": ""
+      },
+      "set": {
+        "tierKey": "a19"
+      }
+    }
+  ],
+  "familyExtras": [
+    {
+      "collection": "luxoarch",
+      "record": {
+        "family": "Anaheim",
+        "sub_category": "Wall Pack | Architectural",
+        "display_echelon": "ECO",
+        "max_wattage": 80,
+        "sku_count": 10,
+        "dlc": true,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/anaheim/",
+        "card_image": "/images/family-cards/luxoarch/anaheim.png",
+        "slug": "anaheim",
+        "heroImage": "/products/anaheim/assets/hero/anaheim-hero-1.webp",
+        "tierKey": "Anaheim-I"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "record": {
+        "family": "Atlanta",
+        "sub_category": "Wall Pack | Architectural",
+        "display_echelon": "PRO",
+        "max_wattage": 0,
+        "sku_count": 2,
+        "dlc": true,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/atlanta/",
+        "card_image": "/images/family-cards/luxoarch/atlanta.png",
+        "slug": "atlanta",
+        "heroImage": "/products/atlanta/assets/hero/atlanta-hero-1.webp",
+        "tierKey": "Atlanta-I"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "record": {
+        "family": "Beacon",
+        "sub_category": "Sports Lighting",
+        "display_echelon": "PRO+",
+        "max_wattage": 1200,
+        "sku_count": 7,
+        "dlc": false,
+        "ccts": [
+          "5700"
+        ],
+        "voltages": [
+          "200 - 480V"
+        ],
+        "mount_types": [],
+        "taa": true,
+        "pdpUrl": "https://workdrive.archipelagolighting.com/external/97dc4cf863e7f2d3ef9f8d1af87df1ee91411ac5c526d1c854d4f3a3e03d1002",
+        "linkType": "datasheet",
+        "card_image": "",
+        "tierKey": "Beacon"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "record": {
+        "family": "Guardian",
+        "sub_category": "Wall Pack | Classic",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 8,
+        "dlc": true,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/guardian/",
+        "card_image": "/images/family-cards/luxoarch/guardian.png",
+        "slug": "guardian",
+        "heroImage": "/products/guardian/assets/hero/guardian-hero-1.webp",
+        "tierKey": "Guardian-I"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "record": {
+        "family": "Nightwatch",
+        "sub_category": "Wall Pack | Full-Cutoff",
+        "display_echelon": "PRO",
+        "max_wattage": 0,
+        "sku_count": 10,
+        "dlc": true,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/nightwatch/",
+        "card_image": "/images/family-cards/luxoarch/nightwatch.png",
+        "slug": "nightwatch",
+        "heroImage": "/products/nightwatch/assets/hero/nightwatch-hero-1.webp",
+        "tierKey": "Nightwatch-I"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "record": {
+        "family": "Plymouth",
+        "sub_category": "Area Light",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 2,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Plymouth",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "record": {
+        "family": "Radiator",
+        "sub_category": "Sports Lighting",
+        "display_echelon": "PRO",
+        "max_wattage": 1200,
+        "sku_count": 31,
+        "dlc": true,
+        "ccts": [
+          "4000",
+          "5000",
+          "5700",
+          "RGB"
+        ],
+        "voltages": [
+          "120 - 277V",
+          "200 - 480V",
+          "277 - 480V"
+        ],
+        "mount_types": [],
+        "taa": true,
+        "pdpUrl": "/products/radiator/",
+        "card_image": null,
+        "slug": "radiator",
+        "heroImage": "/images/family-cards/luxoarch/radiator-iii.png",
+        "tierKey": "Radiator-III"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "record": {
+        "family": "Ramparts",
+        "sub_category": "Wall Pack | Entryway",
+        "display_echelon": "ECO",
+        "max_wattage": 20,
+        "sku_count": 2,
+        "dlc": true,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/ramparts/",
+        "card_image": "/images/family-cards/luxoarch/ramparts.png",
+        "slug": "ramparts",
+        "heroImage": "/products/ramparts/assets/hero/ramparts-hero-1.webp",
+        "tierKey": "Ramparts-I"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "record": {
+        "family": "Rosetta",
+        "sub_category": "Area Light",
+        "display_echelon": "PRO+",
+        "max_wattage": 0,
+        "sku_count": 8,
+        "dlc": false,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V",
+          "277 - 480V"
+        ],
+        "mount_types": [],
+        "taa": true,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Rosetta-III",
+        "heroImage": "/products/liberty/assets/hero/fam-rosetta-iii.webp",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "record": {
+        "family": "Sentinel",
+        "sub_category": "Wall Pack | Classic",
+        "display_echelon": "PRO",
+        "max_wattage": 0,
+        "sku_count": 6,
+        "dlc": true,
+        "ccts": [
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/sentinel/",
+        "card_image": "/images/family-cards/luxoarch/sentinel.png",
+        "slug": "sentinel",
+        "heroImage": "/products/sentinel/assets/hero/sentinel-hero-1.webp",
+        "tierKey": "Sentinel-I"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "record": {
+        "family": "Shield",
+        "sub_category": "Wall Pack | Classic",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 4,
+        "dlc": true,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": null,
+        "tierKey": "Shield",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "record": {
+        "family": "Tenon Adaptors",
+        "sub_category": "Area Light",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 13,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Tenon Adaptors",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "record": {
+        "family": "Watchtower",
+        "sub_category": "Wall Pack | Full-Cutoff",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 6,
+        "dlc": true,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/watchtower/",
+        "card_image": "/images/family-cards/luxoarch/watchtower.png",
+        "slug": "watchtower",
+        "heroImage": "/products/watchtower/assets/hero/watchtower-hero-1.webp",
+        "tierKey": "Watchtower-I"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "record": {
+        "family": "Wedge",
+        "sub_category": "Wall Pack | Entryway",
+        "display_echelon": "ECO",
+        "max_wattage": 20,
+        "sku_count": 4,
+        "dlc": true,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/wedge/",
+        "card_image": null,
+        "slug": "wedge",
+        "heroImage": "/products/wedge/assets/hero/wedge-hero-1.webp",
+        "tierKey": "Wedge-I"
+      }
+    },
+    {
+      "collection": "luxoarch",
+      "record": {
+        "family": "Zion",
+        "sub_category": "Flood Light",
+        "display_echelon": "PRO+",
+        "max_wattage": 0,
+        "sku_count": 16,
+        "dlc": false,
+        "ccts": [
+          "3000",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V",
+          "277 - 480V"
+        ],
+        "mount_types": [],
+        "taa": true,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Zion-II",
+        "heroImage": "/images/family-cards/luxoarch/everest.png",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "planoarch",
+      "record": {
+        "family": "Brooklyn",
+        "sub_category": "",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 1,
+        "dlc": false,
+        "ccts": [
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Brooklyn",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "planoarch",
+      "record": {
+        "family": "CCTselect",
+        "sub_category": "",
+        "display_echelon": "PRO",
+        "max_wattage": 0,
+        "sku_count": 4,
+        "dlc": false,
+        "ccts": [
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "CCTselect",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "planoarch",
+      "record": {
+        "family": "Stellar",
+        "sub_category": "",
+        "display_echelon": "PRO",
+        "max_wattage": 0,
+        "sku_count": 1,
+        "dlc": false,
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Stellar",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "planoarch",
+      "record": {
+        "family": "Waymark",
+        "sub_category": "Wraparound | Stairwell & Passageway",
+        "display_echelon": "PRO",
+        "max_wattage": 0,
+        "sku_count": 4,
+        "dlc": true,
+        "ccts": [
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/waymark/",
+        "card_image": "/products/waymark/assets/hero/fam-waymark.webp",
+        "slug": "waymark",
+        "heroImage": "/products/waymark/assets/hero/LWRL2-2035CS/LWRL2-2035CS-FRONT.png",
+        "tierKey": "Waymark"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "record": {
+        "family": "proⒶRCH",
+        "sub_category": "Panel",
+        "display_echelon": "PRO+",
+        "max_wattage": 0,
+        "sku_count": 49,
+        "dlc": true,
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000",
+          "5700",
+          "6500"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [
+          "Surface",
+          "Grid"
+        ],
+        "taa": true,
+        "pdpUrl": "/products/proarch/",
+        "card_image": "/products/proarch/assets/hero/proarch-hero-1.webp",
+        "slug": "proarch",
+        "heroImage": "/products/proarch/assets/hero/proarch-hero-1.webp",
+        "tierKey": "proⒶRCH"
+      }
+    },
+    {
+      "collection": "planoarch",
+      "record": {
+        "family": "quinceⒶRCH",
+        "sub_category": "",
+        "display_echelon": "PRO",
+        "max_wattage": 0,
+        "sku_count": 5,
+        "dlc": false,
+        "ccts": [
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "quinceⒶRCH",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "planoarch",
+      "record": {
+        "family": "retroⒶRCH",
+        "sub_category": "",
+        "display_echelon": "PRO",
+        "max_wattage": 0,
+        "sku_count": 12,
+        "dlc": false,
+        "ccts": [
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "retroⒶRCH",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "planoarch",
+      "record": {
+        "family": "selectⒶRCH",
+        "sub_category": "",
+        "display_echelon": "ECO",
+        "max_wattage": 60,
+        "sku_count": 18,
+        "dlc": false,
+        "ccts": [
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": true,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "selectⒶRCH",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "planoarch",
+      "record": {
+        "family": "staticⒶRCH",
+        "sub_category": "",
+        "display_echelon": "ECO",
+        "max_wattage": 25,
+        "sku_count": 1,
+        "dlc": false,
+        "ccts": [
+          "4000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "staticⒶRCH",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "planoarch",
+      "record": {
+        "family": "ventiⒶRCH",
+        "sub_category": "",
+        "display_echelon": "PRO+",
+        "max_wattage": 0,
+        "sku_count": 6,
+        "dlc": false,
+        "ccts": [
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "ventiⒶRCH",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "planoarch",
+      "record": {
+        "family": "proⒶRCH-T",
+        "slug": "proarch-t",
+        "pdpUrl": "/products/proarch-t/",
+        "heroImage": "/products/proarch-t/assets/hero/lpvt24-hero-2.webp",
+        "tierKey": "proⒶRCH-T",
+        "echelon": "ECO",
+        "application": [
+          "troffer"
+        ],
+        "sub_category": "Troffer",
+        "display_echelon": "ECO",
+        "taa": true,
+        "mount_types": [
+          "Grid"
+        ]
+      }
+    },
+    {
+      "collection": "planoarch",
+      "record": {
+        "family": "retroⒶRCH-T1",
+        "slug": "retroarch-t1",
+        "pdpUrl": "/products/retroarch-t1/",
+        "heroImage": "/products/retroarch-t1/assets/hero/lpvr24-hero-2.webp",
+        "tierKey": "retroⒶRCH-T1",
+        "echelon": "ECO",
+        "application": [
+          "retrofit-troffer"
+        ],
+        "sub_category": "Retrofit Troffer",
+        "display_echelon": "ECO",
+        "taa": true,
+        "mount_types": [
+          "Grid"
+        ]
+      }
+    },
+    {
+      "collection": "cityarch",
+      "record": {
+        "family": "Alpine",
+        "sub_category": "Pole",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 23,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Alpine",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "cityarch",
+      "record": {
+        "family": "Centurion",
+        "sub_category": "Pole",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 1,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Centurion",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "cityarch",
+      "record": {
+        "family": "Hyperion",
+        "sub_category": "Pole",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 1,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Hyperion",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "cityarch",
+      "record": {
+        "family": "LY-T10",
+        "sub_category": "Street Sign Lamp",
+        "display_echelon": "ECO",
+        "max_wattage": 44,
+        "sku_count": 4,
+        "dlc": true,
+        "ccts": [
+          "4100",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/ly-t10-slimline-sign-lamp/",
+        "card_image": "/products/ly-t10-slimline-sign-lamp/assets/lyt10/lyt10-hero-1.png",
+        "slug": "ly-t10-slimline-sign-lamp",
+        "heroImage": "/products/ly-t10-slimline-sign-lamp/assets/lyt10/lyt10-hero-1.png",
+        "tierKey": "LY-T10"
+      }
+    },
+    {
+      "collection": "cityarch",
+      "record": {
+        "family": "Redwood",
+        "sub_category": "Pole",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 4,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Redwood",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "cityarch",
+      "record": {
+        "family": "Sequoia",
+        "sub_category": "Pole",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 7,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Sequoia",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "cityarch",
+      "record": {
+        "family": "Traffic Control",
+        "tierKey": "Traffic Control",
+        "heroImage": "/products/lbol-sentry-bollard/assets/sentry/sentry-hero-1.webp",
+        "pdpUrl": "https://workdrive.archipelagolighting.com/external/2716170a47ea7592faba911cd7a28b29bb7b9cf3cfa22584b40ccdf4d31b4d95",
+        "linkType": "datasheet",
+        "slug": "",
+        "sub_category": "Traffic Control Lamp",
+        "display_echelon": "ECO"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "record": {
+        "family": "Apollo",
+        "sub_category": "",
+        "display_echelon": "ECO",
+        "max_wattage": 400,
+        "sku_count": 7,
+        "dlc": false,
+        "ccts": [
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Apollo",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "lampararch",
+      "record": {
+        "family": "Atlas",
+        "sub_category": "",
+        "display_echelon": "PRO",
+        "max_wattage": 400,
+        "sku_count": 4,
+        "dlc": false,
+        "ccts": [
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Atlas",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "lampararch",
+      "record": {
+        "family": "Eureka",
+        "sub_category": "Vapor-Tight",
+        "display_echelon": "PRO",
+        "max_wattage": 0,
+        "sku_count": 15,
+        "dlc": false,
+        "ccts": [
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/eureka/",
+        "card_image": "",
+        "tierKey": "Eureka-I",
+        "heroImage": "/products/eureka/eureka/photos/LV3P-1_nobg.png",
+        "slug": "eureka"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "record": {
+        "family": "Hallmark",
+        "sub_category": "Linear Strip",
+        "display_echelon": "PRO",
+        "max_wattage": 0,
+        "sku_count": 46,
+        "dlc": true,
+        "ccts": [
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/hallmark/",
+        "card_image": "/images/families/fam-hallmark.webp",
+        "slug": "hallmark",
+        "heroImage": "/products/hallmark/hallmark/photos/Hallmark-White-Round_nobg.png",
+        "tierKey": "Hallmark"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "record": {
+        "family": "Icarus",
+        "sub_category": "Round High Bay",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 35,
+        "dlc": true,
+        "ccts": [
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [
+          "Ring Hook"
+        ],
+        "taa": true,
+        "pdpUrl": "/products/icarus/",
+        "card_image": "/products/icarus/assets/hero/fam-icarus.webp",
+        "slug": "icarus",
+        "heroImage": "/products/icarus/icarus/photos/LRHB3W150-S4-I3UBTAA_3_nobg.png",
+        "tierKey": "Icarus"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "record": {
+        "family": "Juno",
+        "sub_category": "",
+        "display_echelon": "ECO",
+        "max_wattage": 64,
+        "sku_count": 12,
+        "dlc": false,
+        "ccts": [
+          "3500",
+          "4000",
+          "4100",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Juno",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "lampararch",
+      "record": {
+        "family": "Jupiter",
+        "sub_category": "Round High Bay",
+        "display_echelon": "PRO",
+        "max_wattage": 400,
+        "sku_count": 34,
+        "dlc": true,
+        "ccts": [
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V",
+          "277 - 480V"
+        ],
+        "mount_types": [
+          "Ring Hook"
+        ],
+        "taa": true,
+        "pdpUrl": "/products/jupiter/",
+        "card_image": "/products/jupiter/assets/hero/fam-jupiter-020.webp",
+        "slug": "jupiter",
+        "heroImage": "/products/jupiter/jupiter/photos/JUPITER_200W_1_nobg.png",
+        "tierKey": "Jupiter"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "record": {
+        "family": "Millennium",
+        "sub_category": "",
+        "display_echelon": "PRO+",
+        "max_wattage": 0,
+        "sku_count": 6,
+        "dlc": false,
+        "ccts": [
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": true,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Millennium",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "lampararch",
+      "record": {
+        "family": "Nexus",
+        "sub_category": "",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 1,
+        "dlc": false,
+        "ccts": [
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Nexus",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "lampararch",
+      "record": {
+        "family": "Tiny",
+        "sub_category": "Linear High Bay",
+        "display_echelon": "ECO",
+        "max_wattage": 220,
+        "sku_count": 6,
+        "dlc": true,
+        "ccts": [
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V",
+          "277 - 480V"
+        ],
+        "mount_types": [],
+        "taa": true,
+        "pdpUrl": "/products/tiny/",
+        "card_image": "/products/tiny/assets/hero/fam-tiny.webp",
+        "slug": "tiny",
+        "heroImage": "/products/tiny/tiny/photos/LLHB-1.2FT-150W-1_nobg.webp",
+        "tierKey": "Tiny"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "record": {
+        "family": "Titan",
+        "sub_category": "Linear High Bay",
+        "display_echelon": "PRO",
+        "max_wattage": 0,
+        "sku_count": 40,
+        "dlc": true,
+        "ccts": [
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V",
+          "277 - 480V"
+        ],
+        "mount_types": [],
+        "taa": true,
+        "pdpUrl": "/products/titan/",
+        "card_image": "/products/titan/assets/hero/fam-titan-01.webp",
+        "slug": "titan",
+        "heroImage": "/products/titan/titan/photos/TITAN-85-155W-1_nobg.png",
+        "tierKey": "Titan"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "record": {
+        "family": "Universal",
+        "sub_category": "",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 4,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Universal",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "lampararch",
+      "record": {
+        "family": "Vanguard",
+        "sub_category": "",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 16,
+        "dlc": false,
+        "ccts": [
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Vanguard",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "lampararch",
+      "record": {
+        "family": "retroⒶRCH-L1",
+        "sub_category": "Retrofit Linear Strip",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 4,
+        "dlc": true,
+        "ccts": [
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/retroarch-l1/",
+        "card_image": "/products/retroarch-l1/assets/hero/fam-retroarch-l1.webp",
+        "slug": "retroarch-l1",
+        "heroImage": "/products/retroarch-l1/retroarch-l1/photos/LLSRXX-4-PS3-002_No_BG_1_0001.png",
+        "tierKey": "retroⒶRCH-L1"
+      }
+    },
+    {
+      "collection": "lampararch",
+      "record": {
+        "family": "Eureka (ECO)",
+        "tierKey": "Eureka-II",
+        "heroImage": "/products/eureka/eureka/photos/LV3P-2FT_nobg.png",
+        "pdpUrl": "/products/eureka/",
+        "slug": "eureka-eco",
+        "sub_category": "",
+        "display_echelon": "ECO",
+        "pdp_ready": false
+      }
+    },
+    {
+      "collection": "multifamily",
+      "record": {
+        "family": "Clarity",
+        "sub_category": "Vanity",
+        "display_echelon": "ECO",
+        "max_wattage": 50,
+        "sku_count": 15,
+        "dlc": false,
+        "ccts": [
+          "2700",
+          "3500",
+          "4000",
+          "5000",
+          "6500"
+        ],
+        "voltages": [
+          "120V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Clarity",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "multifamily",
+      "record": {
+        "family": "Crescent",
+        "sub_category": "Downlight",
+        "display_echelon": "ECO",
+        "max_wattage": 15,
+        "sku_count": 4,
+        "dlc": false,
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/multi-family/crescent/",
+        "card_image": "",
+        "tierKey": "Crescent",
+        "slug": "crescent",
+        "heroImage": "/products/multi-family/crescent/assets/photos/crescent/13in/Eclipse-II-13in-White-1.png",
+        "echelon": "PRO",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "multifamily",
+      "record": {
+        "family": "Eclipse",
+        "sub_category": "Downlight",
+        "display_echelon": "PRO",
+        "max_wattage": 24,
+        "sku_count": 25,
+        "dlc": false,
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/multi-family/eclipse-ii/",
+        "card_image": "",
+        "tierKey": "Eclipse-II",
+        "slug": "eclipse-ii",
+        "heroImage": "/products/multi-family/eclipse-ii/assets/photos/eclipse-ii/13in/Eclipse-II-13in-White-1.png",
+        "echelon": "PRO",
+        "card_label": "LDLL · Eclipse"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "record": {
+        "family": "Gehry",
+        "sub_category": "Commercial Recess Can",
+        "display_echelon": "ECO",
+        "max_wattage": 0,
+        "sku_count": 22,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/multi-family/gehry/",
+        "card_image": "/products/multi-family/card-images/gehry-card.png",
+        "slug": "gehry",
+        "heroImage": "/products/multi-family/gehry/assets/gehry/gehry-hero-1.png",
+        "tierKey": "Gehry"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "record": {
+        "family": "Nebula",
+        "sub_category": "Downlight",
+        "display_echelon": "ECO",
+        "max_wattage": 15,
+        "sku_count": 54,
+        "dlc": false,
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/multi-family/nebula-ii/",
+        "card_image": "",
+        "tierKey": "Nebula-II",
+        "slug": "nebula-ii",
+        "heroImage": "/products/multi-family/nebula-ii/assets/photos/hero/6in/Nebula-II-6in-1.png",
+        "echelon": "ECO",
+        "card_label": "LDRR · Nebula"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "record": {
+        "family": "Radius SafeZone",
+        "sub_category": "SafeZone Downlights",
+        "display_echelon": "PRO+",
+        "max_wattage": 19,
+        "sku_count": 8,
+        "dlc": false,
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120V"
+        ],
+        "mount_types": [
+          "Recessed Mount"
+        ],
+        "taa": false,
+        "pdpUrl": "/products/multi-family/radius-safezone/",
+        "card_image": "/products/multi-family/card-images/radius-safezone-fire-card.png",
+        "slug": "radius-safezone",
+        "heroImage": "/products/multi-family/radius-safezone/assets/radius-safezone/radius-safezone-6in-hero-1.png",
+        "tierKey": "Radius SafeZone",
+        "card_label": "LDRS · Radius SafeZone"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "record": {
+        "family": "Radius",
+        "sub_category": "Downlight",
+        "display_echelon": "PRO",
+        "max_wattage": 18,
+        "sku_count": 16,
+        "dlc": false,
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "/products/multi-family/radius-ii/",
+        "card_image": "",
+        "tierKey": "Radius-II",
+        "slug": "radius-ii",
+        "heroImage": "/products/multi-family/radius-ii/assets/radius-ii/radius-ii-6in-hero-1.png",
+        "echelon": "PRO",
+        "card_label": "LDRS · Radius"
+      }
+    },
+    {
+      "collection": "multifamily",
+      "record": {
+        "family": "Radius-II SafeZone",
+        "sub_category": "SafeZone Downlights",
+        "display_echelon": "PRO+",
+        "max_wattage": 14,
+        "sku_count": 2,
+        "dlc": false,
+        "ccts": [
+          "2700",
+          "3000",
+          "3500",
+          "4000",
+          "5000"
+        ],
+        "voltages": [
+          "120V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "Radius-II SafeZone",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "multifamily",
+      "record": {
+        "family": "RingMaster",
+        "sub_category": "Flushmount",
+        "display_echelon": "PRO",
+        "max_wattage": 26,
+        "sku_count": 8,
+        "dlc": false,
+        "ccts": [
+          "2700",
+          "3500",
+          "4000",
+          "5000",
+          "6500"
+        ],
+        "voltages": [
+          "120 - 277V"
+        ],
+        "mount_types": [],
+        "taa": false,
+        "pdpUrl": "",
+        "card_image": "",
+        "tierKey": "RingMaster",
+        "hidden": true
+      }
+    },
+    {
+      "collection": "tubulararch",
+      "record": {
+        "family": "t5-cs-u5",
+        "sub_category": "T5HE · T5HO",
+        "display_echelon": "UL-A+B",
+        "max_wattage": 24,
+        "sku_count": 6,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "comingSoon": false,
+        "tierKey": "t5-cs-u5"
+      }
+    },
+    {
+      "collection": "tubulararch",
+      "record": {
+        "family": "t5-cs-de5",
+        "sub_category": "T5HE · T5HO",
+        "display_echelon": "UL-B",
+        "max_wattage": 24,
+        "sku_count": 6,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "comingSoon": false,
+        "tierKey": "t5-cs-de5"
+      }
+    },
+    {
+      "collection": "tubulararch",
+      "record": {
+        "family": "t5-he-u5",
+        "sub_category": "T5HE",
+        "display_echelon": "UL-A+B",
+        "max_wattage": 15,
+        "sku_count": 7,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "comingSoon": false,
+        "tierKey": "t5-he-u5"
+      }
+    },
+    {
+      "collection": "tubulararch",
+      "record": {
+        "family": "t5-he-k5",
+        "sub_category": "T5HE",
+        "display_echelon": "UL-A",
+        "max_wattage": 24,
+        "sku_count": 8,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "comingSoon": false,
+        "tierKey": "t5-he-k5"
+      }
+    },
+    {
+      "collection": "tubulararch",
+      "record": {
+        "family": "t5-ho-u5",
+        "sub_category": "T5HO",
+        "display_echelon": "UL-A+B",
+        "max_wattage": 24,
+        "sku_count": 3,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "comingSoon": false,
+        "tierKey": "t5-ho-u5"
+      }
+    },
+    {
+      "collection": "tubulararch",
+      "record": {
+        "family": "t5-ho-k5",
+        "sub_category": "T5HO",
+        "display_echelon": "UL-A",
+        "max_wattage": 24,
+        "sku_count": 2,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "comingSoon": false,
+        "tierKey": "t5-ho-k5"
+      }
+    },
+    {
+      "collection": "tubulararch",
+      "record": {
+        "family": "t5-ho-de5",
+        "sub_category": "T5HO",
+        "display_echelon": "UL-B",
+        "max_wattage": 25,
+        "sku_count": 1,
+        "dlc": false,
+        "ccts": [],
+        "voltages": [],
+        "mount_types": [],
+        "taa": false,
+        "comingSoon": false,
+        "tierKey": "t5-ho-de5"
+      }
+    }
+  ]
+}
