@@ -1007,18 +1007,20 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
   .megamenu.wide .mm-col-main .mm-main-group-label{color:#3A3E47;}
   .megamenu.wide .mm-main-divider,
   .megamenu.solutions .mm-col-main .mm-main-divider{background:rgba(17,17,17,0.08);}
+  /* #99f: canonical pressed/active fill; keep ALG red elsewhere. */
   .megamenu.wide .mm-col-main .mm-main-item.active,
   .megamenu.wide .mm-col-main .mm-main-item:hover,
   .megamenu.solutions .mm-col-main .mm-main-item.active,
-  .megamenu.solutions .mm-col-main .mm-main-item:hover{background:var(--brand);color:#fff;}
+  .megamenu.solutions .mm-col-main .mm-main-item:hover{background:#C8132E;color:#fff;}
   .megamenu.wide .mm-col-main .mm-main-item.active .mm-main-sub,
   .megamenu.wide .mm-col-main .mm-main-item:hover .mm-main-sub,
   .megamenu.solutions .mm-col-main .mm-main-item.active .mm-main-sub,
-  .megamenu.solutions .mm-col-main .mm-main-item:hover .mm-main-sub{color:rgba(255,255,255,0.85);}
+  .megamenu.solutions .mm-col-main .mm-main-item:hover .mm-main-sub{color:#fff;}
   .megamenu.wide .mm-col-main .mm-main-item.active .aa,
   .megamenu.wide .mm-col-main .mm-main-item:hover .aa,
   .megamenu.solutions .mm-col-main .mm-main-item.active .aa,
-  .megamenu.solutions .mm-col-main .mm-main-item:hover .aa{color:rgb(17,17,17);}
+  .megamenu.solutions .mm-col-main .mm-main-item:hover .aa{color:var(--brand);}
+  .megamenu.wide .mm-cs-chip{font-size:12px;color:#111;}
   .megamenu.wide .mm-collection-badge{margin:0 0 7px;padding:0;background:transparent;border:0;border-radius:0;color:var(--ink3);}
   .megamenu.wide .mm-app-item{padding:8px 5px;line-height:1.45;margin-bottom:1px;}
   .megamenu.wide .mm-app-item:hover,.megamenu.wide .mm-app-item:focus-visible,.megamenu.wide .mm-app-item.active{background:var(--bg2);border-left-color:var(--brand);}
@@ -1048,7 +1050,7 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
   .megamenu.solutions .mm-preview .preview-cta{font-size:14px;color:var(--brand);padding:9px 13px;}
   .megamenu.solutions .mm-col-main .mm-main-item{white-space:nowrap;}
   .mm-vert-item{padding:10px 12px;font-size:15px;line-height:1.38;color:var(--ink);}
-  .mm-vert-item .mm-vert-sub{font-size:11px;line-height:1.4;color:var(--ink3);}
+  .mm-vert-item .mm-vert-sub{font-size:12px;line-height:1.4;color:#3A3E47;}
   .megamenu .mm-head{font-size:10px;line-height:1.4;margin-bottom:10px;padding-bottom:8px;}
   .megamenu:not(.wide):not(.solutions) a{padding:7px 0;font-size:14px;line-height:1.4;}
   .megamenu:not(.wide):not(.solutions) a.featured{padding:10px 12px;margin:6px 0;font-size:14px;line-height:1.4;}
