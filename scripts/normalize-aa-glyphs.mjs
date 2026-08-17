@@ -25,9 +25,17 @@ function isIgnoredTextNode(node) {
 }
 
 let wrapped = 0;
+let skippedCssParseFiles = 0;
 for (const file of await walk(DIST_DIR)) {
   const html = await readFile(file, 'utf8');
-  const dom = new JSDOM(html);
+  let dom;
+  try {
+    dom = new JSDOM(html);
+  } catch (error) {
+    skippedCssParseFiles++;
+    console.warn(`⚠ Glyph normalization skipped ${file}: jsdom could not parse unsupported CSS without terminating the build: ${error.message}`);
+    continue;
+  }
   const { document, NodeFilter } = dom.window;
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   const textNodes = [];
@@ -54,3 +62,6 @@ for (const file of await walk(DIST_DIR)) {
 }
 
 console.log(`Canonicalized ${wrapped} rendered Ⓐ mark(s) as <span class="aa">Ⓐ</span>.`);
+if (skippedCssParseFiles > 0) {
+  console.warn(`⚠ Glyph normalization completed with ${skippedCssParseFiles} CSS-parse warning(s).`);
+}
