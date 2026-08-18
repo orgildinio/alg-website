@@ -58,8 +58,6 @@ Finally, confirm the order and installation details before release. Review the c
 
 ## Built for Demanding Environments
 
-## Built for Demanding Environments
-
 Protection against dust and powerful water jets makes the Eureka Series suited to environments where standard fixtures fail. Coverage includes NEMA 4X, IP66 protection, and a seven-year warranty. An integrated aluminum heat sink manages heat dissipation, while the impact-resistant polycarbonate housing with stainless steel latches is UL rated for wet locations.
 
 ## Ideal Applications
