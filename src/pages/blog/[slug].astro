@@ -1,0 +1,131 @@
+---
+/** Elmer-approved Lighting Desk article template: dark editorial surface, wide reading rhythm, sticky right rail. */
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const { data } = post;
+const publicationDate = data.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: data.title,
+  datePublished: data.date.toISOString().slice(0, 10),
+  author: { '@type': 'Person', name: data.author },
+  image: `https://www.archipelagolighting.com${data.hero}`,
+  mainEntityOfPage: `https://www.archipelagolighting.com/blog/${post.slug}/`,
+  publisher: { '@type': 'Organization', name: 'Archipelago Lighting Group' },
+};
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: data.faq.map((item) => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })),
+};
+---
+
+<BaseLayout title={`${data.title} — The Lighting Desk`} description={data.excerpt} ogImage={`https://www.archipelagolighting.com${data.hero}`} bodyClass="page-lighting-desk">
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+  </Fragment>
+
+  <article class="desk-post">
+    <header class="post-header content-frame">
+      <nav aria-label="Breadcrumb" class="post-crumb"><a href="/">Home</a><span>/</span><a href="/blog/">The Lighting Desk</a><span>/</span><span>{data.category}</span></nav>
+      <p class="post-kicker">{data.category}</p>
+      <h1>{data.title.split(': ')[0]}<br /><span>{data.title.split(': ')[1]}</span></h1>
+      <p class="post-byline"><span class="author-mark">JD</span><span>By {data.author}</span><span>·</span><time datetime={data.date.toISOString()}>{publicationDate}</time></p>
+    </header>
+
+    <div class="post-hero content-frame"><img src={data.hero} alt={data.heroAlt} width="1800" height="1016" /></div>
+
+    <div class="post-layout content-frame">
+      <div class="post-flow">
+        <div class="post-intro"><Content /></div>
+        <figure class="supporting-image"><img src={data.supportingImage} alt={data.supportingImageAlt} width="1400" height="933" /></figure>
+        <section class="post-faq" id="frequently-asked-questions">
+          <p class="section-kicker">Answers for the job</p>
+          <h2>Frequently Asked Questions</h2>
+          {data.faq.map((item, index) => (
+            <details open={index === 0}>
+              <summary>{item.question}<span aria-hidden="true">+</span></summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </section>
+        <section class="post-cta">
+          <p class="section-kicker">Ready to specify?</p>
+          <h2>Ready to Spec Eureka Series?</h2>
+          <p>See how one SKU can cover nine configurations for your next washdown, manufacturing, or agricultural lighting project.</p>
+          <a href={data.ctaHref}>{data.ctaLabel} <span aria-hidden="true">→</span></a>
+        </section>
+      </div>
+      <aside class="post-toc" aria-label="On this page">
+        <p>On This Page</p>
+        <nav>{headings.filter((heading) => heading.depth === 2).map((heading) => <a href={`#${heading.slug}`}>{heading.text}</a>)}<a href="#frequently-asked-questions">Frequently Asked Questions</a></nav>
+      </aside>
+    </div>
+  </article>
+</BaseLayout>
+
+<style is:global>
+/* Lighting Desk post: approved dark editorial rhythm, Lato + JetBrains Mono, 14px minimum. */
+.page-lighting-desk { background:#121212; color:#f5f3ee; font-family:'Lato',system-ui,sans-serif; }
+.page-lighting-desk .content-frame { width:min(1160px,calc(100% - 48px)); margin-inline:auto; }
+.desk-post { background:#121212; padding:68px 0 0; }
+.post-header { padding:40px 0 34px; }
+.post-crumb { display:flex; gap:9px; flex-wrap:wrap; font:500 14px/1.5 'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.12em; color:#a9a6a1; }
+.post-crumb a { color:#d7d4cf; text-decoration:none; }
+.post-kicker,.section-kicker { color:#F32740; font:500 14px/1.5 'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.16em; margin:42px 0 14px; }
+.post-header h1 { font:900 clamp(46px,6vw,76px)/.98 'Lato',system-ui,sans-serif; letter-spacing:-.055em; margin:0; max-width:850px; color:#f7f5f1; }
+.post-header h1 span { color:#F32740; }
+.post-byline { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin:30px 0 0; color:#d7d4cf; font:500 14px/1.5 'JetBrains Mono',monospace; letter-spacing:.08em; text-transform:uppercase; }
+.author-mark { width:34px; height:34px; border:1px solid #F32740; color:#F32740; border-radius:50%; display:grid; place-items:center; font-size:14px; letter-spacing:0; }
+.post-hero img { width:100%; height:auto; max-height:610px; object-fit:cover; border-radius:3px; display:block; }
+.post-layout { display:grid; grid-template-columns:minmax(0,730px) minmax(205px,1fr); gap:92px; align-items:start; padding:44px 0 96px; }
+.post-flow { font-size:18px; line-height:1.65; color:#e3e0db; }
+.post-flow p { margin:0 0 26px; }
+.post-flow h2 { color:#f7f5f1; font:800 clamp(30px,3vw,42px)/1.08 'Lato',system-ui,sans-serif; letter-spacing:-.035em; margin:58px 0 20px; scroll-margin-top:120px; }
+.post-flow blockquote { margin:34px 0; border-left:3px solid #F32740; padding:16px 22px; background:#f3cf45; color:#171717; font:600 16px/1.55 'JetBrains Mono',monospace; letter-spacing:.02em; }
+.supporting-image { margin:42px 0 54px; }
+.supporting-image img { display:block; width:100%; height:auto; border-radius:3px; }
+.post-faq { margin-top:72px; scroll-margin-top:120px; }
+.post-faq .section-kicker,.post-cta .section-kicker { margin-top:0; }
+.post-faq h2,.post-cta h2 { margin-top:0; }
+.post-faq details { border-top:1px solid #3c3b39; }
+.post-faq details:last-child { border-bottom:1px solid #3c3b39; }
+.post-faq summary { cursor:pointer; list-style:none; padding:21px 36px 21px 0; position:relative; color:#f7f5f1; font:700 18px/1.45 'Lato',system-ui,sans-serif; }
+.post-faq summary::-webkit-details-marker { display:none; }
+.post-faq summary span { position:absolute; right:0; top:21px; color:#F32740; font:500 24px/1 'Lato',sans-serif; }
+.post-faq details[open] summary span { transform:rotate(45deg); }
+.post-faq details p { color:#c9c6c0; font-size:16px; padding:0 28px 16px 0; }
+.post-cta { margin-top:76px; padding:40px; background:#1d1d1d; border-left:4px solid #F32740; }
+.post-cta p { color:#c9c6c0; }
+.post-cta a { display:inline-flex; align-items:center; gap:12px; background:#F32740; color:#fff; padding:15px 20px; text-decoration:none; font:700 14px/1.25 'JetBrains Mono',monospace; letter-spacing:.1em; text-transform:uppercase; }
+.post-toc { position:sticky; top:130px; border-left:1px solid #3c3b39; padding-left:24px; }
+.post-toc > p { color:#F32740; font:500 14px/1.5 'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; margin:0 0 18px; }
+.post-toc nav { display:grid; gap:14px; }
+.post-toc a { color:#bcb8b1; font:500 14px/1.45 'Lato',sans-serif; text-decoration:none; border-left:2px solid transparent; padding-left:11px; transition:.16s ease; }
+.post-toc a:hover,.post-toc a.is-active { border-color:#F32740; color:#fff; }
+@media (max-width:900px){ .post-layout{grid-template-columns:1fr;gap:36px}.post-toc{order:-1;position:static;display:none}.post-header h1{font-size:clamp(42px,10vw,64px)} }
+@media (max-width:600px){ .page-lighting-desk .content-frame{width:min(100% - 32px,1160px)}.desk-post{padding-top:32px}.post-cta{padding:28px 22px}.post-flow{font-size:16px}.post-header h1{font-size:42px}.post-hero img{min-height:250px;object-fit:cover} }
+</style>
+
+<script is:inline>
+  const tocLinks = [...document.querySelectorAll('.post-toc a[href^="#"]')];
+  const sections = tocLinks.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+  if ('IntersectionObserver' in window && sections.length) {
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      tocLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === `#${visible.target.id}`));
+    }, { rootMargin: '-18% 0px -66% 0px', threshold: [0, .25, .5] });
+    sections.forEach((section) => observer.observe(section));
+  }
+</script>
