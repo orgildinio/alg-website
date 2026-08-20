@@ -374,11 +374,11 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
     </li>
 
     <!-- ============================================================
-         SUPPORT — 2-col narrow
+         SUPPORT — Service, Legal & Compliance, Media
          ============================================================ -->
     <li class="has-dropdown">
       <a href="/support/">Support</a>
-      <div class="megamenu">
+      <div class="megamenu support-megamenu">
         <div>
           <div class="mm-head">Service</div>
           <a href="/support/">Support Hub</a>
@@ -395,6 +395,10 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
           <a href="/patents/">Patents</a>
           <a href="/support/">CEC JA8 Compliance</a>
           <a href="/privacy-policy/">Privacy Policy</a>
+        </div>
+        <div>
+          <div class="mm-head">Media</div>
+          <a href="/blog/">Blog</a>
         </div>
       </div>
     </li>
@@ -576,6 +580,8 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
       <a href="mailto:sales@archipelagolighting.com?subject=Sample%20request" class="mob-l2">Sample Request</a>
       <a href="/support/library/" class="mob-l2">Resource Library</a>
       <a href="/support/rebate-center/" class="mob-l2">Rebate Center</a>
+      <p class="mob-group-title">Media</p>
+      <a href="/blog/" class="mob-l2">Blog</a>
       <a href="/documents/ALG-Limited-Product-Warranty.pdf" target="_blank" rel="noopener" class="mob-l2">Warranty Statement</a>
       <a href="/terms/" class="mob-l2">Terms &amp; Conditions</a>
       <a href="/patents/" class="mob-l2">Patents</a>
@@ -828,6 +834,7 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
     z-index:60;
     border-radius:4px;
   }
+  .megamenu.support-megamenu{min-width:660px;grid-template-columns:1.1fr 1fr .58fr;}
 
   /* ================================================================
      MEGA MENU — wide (Products · 4-col)
@@ -923,6 +930,7 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
     background:var(--bg2);padding:11px 12px;margin:7px 0;
     border-left:3px solid var(--brand);font-weight:600;font-size:15px;line-height:1.45;
   }
+  .mob-group-title{margin:14px 0 3px;padding:0 16px;color:var(--brand);font:600 12px/1.45 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;}
 
   /* ================================================================
      SOLUTIONS MEGA MENU

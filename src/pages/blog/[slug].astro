@@ -11,6 +11,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
 const { data } = post;
+const [titleLead, titleAccent] = data.title.split(': ', 2);
 const publicationDate = data.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 const articleJsonLd = {
   '@context': 'https://schema.org',
@@ -39,7 +40,7 @@ const faqJsonLd = {
     <header class="post-header content-frame">
       <nav aria-label="Breadcrumb" class="post-crumb"><a href="/">Home</a><span>/</span><a href="/blog/">The Lighting Desk</a><span>/</span><span>{data.category}</span></nav>
       <p class="post-kicker">{data.category}</p>
-      <h1>{data.title.split(': ')[0]}<br /><span>{data.title.split(': ')[1]}</span></h1>
+      <h1>{titleLead}{titleAccent && <><br /><span>{titleAccent}</span></>}</h1>
       <p class="post-byline"><span class="author-mark">JD</span><span>By {data.author}</span><span>·</span><time datetime={data.date.toISOString()}>{publicationDate}</time></p>
     </header>
 
@@ -61,8 +62,8 @@ const faqJsonLd = {
         </section>
         <section class="post-cta">
           <p class="section-kicker">Ready to specify?</p>
-          <h2>Ready to Spec Eureka Series?</h2>
-          <p>See how one SKU can cover nine configurations for your next washdown, manufacturing, or agricultural lighting project.</p>
+          <h2>{data.ctaHeading ?? 'Continue the conversation'}</h2>
+          <p>{data.ctaDescription ?? data.excerpt}</p>
           <a href={data.ctaHref}>{data.ctaLabel} <span aria-hidden="true">→</span></a>
         </section>
       </div>

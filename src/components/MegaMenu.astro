@@ -6,7 +6,7 @@
  *   solutions — browse-by structure, purchase tools, 8-vertical grid, vertical preview pane
  *   products  — top-level categories with brand stems, application taxonomy, tier tiles
  *   tools     — For Buyers + For Specifiers
- *   support   — Service block + Legal & Compliance block
+ *   support   — Service, Legal & Compliance, and Media blocks
  *
  * Controlled by Header.astro script via id="megaMenuPanel" and data-mega on .mega-pane.
  * All panes start hidden; Header script shows the active one.
@@ -230,7 +230,6 @@ const verticals = [
           <a href="/support/library/" class="mega-support-item">Resource Library</a>
           <a href="/support/rebate-center/" class="mega-support-item">Rebate Center</a>
           <a href="https://careers.archipelagolighting.com" target="_blank" rel="noopener" class="mega-support-item">Career</a>
-          <a href="/about/blog" class="mega-support-item">Blog</a>
         </div>
         <div class="mega-support-col">
           <p class="mega-section-label">LEGAL &amp; COMPLIANCE</p>
@@ -239,6 +238,10 @@ const verticals = [
           <a href="/legal/patents" class="mega-support-item">Patents</a>
           <a href="/support/library/" class="mega-support-item">TAA Documentation</a>
           <a href="/legal/privacy" class="mega-support-item">Privacy Policy</a>
+        </div>
+        <div class="mega-support-col">
+          <p class="mega-section-label">MEDIA</p>
+          <a href="/blog/" class="mega-support-item">Blog</a>
         </div>
       </div>
     </div>
@@ -359,7 +362,7 @@ const verticals = [
   .mega-tools-desc { font-size: 12px; color: var(--color-ink-mute, #6B6B6B); }
 
   /* Support */
-  .mega-support-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 640px; }
+  .mega-support-layout { display: grid; grid-template-columns: 1.1fr 1fr .58fr; gap: 32px; max-width: 900px; }
   .mega-support-col { display: flex; flex-direction: column; gap: 4px; }
   .mega-support-item {
     font-size: 13px; color: var(--color-ink-soft, #444444); text-decoration: none;
