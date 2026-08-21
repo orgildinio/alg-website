@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync } from 'node:fs';
 
 const catalog = JSON.parse(readFileSync(new URL('../public/search-catalog.json', import.meta.url), 'utf8'));
+if (!catalog.records.site?.some(record => record.url.endsWith('/blog/'))) throw new Error('Search catalog is missing the blog index record');
 
 function requiredProduct(title) {
   const record = catalog.records.products.find(item => item.title === title);
@@ -46,6 +47,9 @@ for (const group of Object.values(catalog.records)) {
 const blogFiles = readdirSync(new URL('../src/content/blog/', import.meta.url))
   .filter(file => file.endsWith('.md'));
 if (blogFiles.length < 6) throw new Error(`Expected at least six blog articles; found ${blogFiles.length}`);
+if (catalog.records.site.filter(record => record.url.includes('/blog/')).length !== blogFiles.length + 1) {
+  throw new Error('Search catalog does not include the blog index plus every current blog article');
+}
 
 const packageJson = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
 if (!packageJson.scripts?.['cf-build']?.includes('build-search-catalog.mjs')) {
@@ -55,5 +59,5 @@ if (!packageJson.scripts?.['cf-build']?.includes('astro build')) {
   throw new Error('cf-build does not run Astro and its Pagefind integration');
 }
 
-console.log(`Verified ${blogFiles.length} blog articles are included in the Pagefind production-build path.`);
+console.log(`Verified ${blogFiles.length} blog articles plus the blog index are included in the generated and Pagefind production-build paths.`);
 console.log(`Verified ${catalog.records.products.length} products, ${catalog.records.applications.length} applications, and ${catalog.records.collections.length} collections.`);

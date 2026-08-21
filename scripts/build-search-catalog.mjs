@@ -5,13 +5,14 @@
  * pages (including new blog posts) enter search automatically. This script
  * adds the product/application semantics that page-text search cannot infer.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA_PATH = join(ROOT, 'src', 'data', 'sku-index.json');
 const HEADER_PATH = join(ROOT, 'src', 'components', 'Header.astro');
+const BLOG_PATH = join(ROOT, 'src', 'content', 'blog');
 const OUTPUT_PATH = join(ROOT, 'public', 'search-catalog.json');
 
 const SITE = 'https://www.archipelagolighting.com';
@@ -114,6 +115,42 @@ function extractApplications(header) {
   return records;
 }
 
+function frontmatterValue(source, key) {
+  const quoted = source.match(new RegExp(`^${key}:\\s*["']([^"']+)["']\\s*$`, 'm'));
+  if (quoted) return quoted[1].trim();
+  const bare = source.match(new RegExp(`^${key}:\\s*([^\\n]+)$`, 'm'));
+  return bare ? bare[1].trim() : '';
+}
+
+function extractBlogRecords() {
+  const posts = readdirSync(BLOG_PATH)
+    .filter(file => file.endsWith('.md'))
+    .map(file => {
+      const source = readFileSync(join(BLOG_PATH, file), 'utf8');
+      const slug = file.replace(/\.md$/, '');
+      const title = frontmatterValue(source, 'title');
+      const category = frontmatterValue(source, 'category');
+      const excerpt = frontmatterValue(source, 'excerpt');
+      const date = frontmatterValue(source, 'date');
+      return {
+        type: 'site',
+        title,
+        url: absolute(`/blog/${slug}/`),
+        aliases: unique([title, category, excerpt, date, 'blog', 'article']),
+        breadcrumb: `Blog › ${category || 'Article'}`,
+      };
+    })
+    .filter(record => record.title);
+
+  return [{
+    type: 'site',
+    title: 'ALG Blog',
+    url: absolute('/blog/'),
+    aliases: ['blog', 'articles', 'lighting insights', 'spec notes', 'product news'],
+    breadcrumb: 'Blog',
+  }, ...posts];
+}
+
 const skuIndex = JSON.parse(readFileSync(DATA_PATH, 'utf8'));
 const header = readFileSync(HEADER_PATH, 'utf8');
 const products = [];
@@ -163,16 +200,18 @@ for (const override of PRODUCT_OVERRIDES) {
 }
 
 const applications = extractApplications(header);
+const site = extractBlogRecords();
 const sortByTitle = (a, b) => a.title.localeCompare(b.title, 'en');
 products.sort(sortByTitle);
 collections.sort(sortByTitle);
 applications.sort(sortByTitle);
+site.sort(sortByTitle);
 
 const output = {
   generatedAt: new Date().toISOString(),
-  source: 'sku-index.json + Header.astro',
-  records: { products, applications, collections },
+  source: 'sku-index.json + Header.astro + src/content/blog',
+  records: { products, applications, collections, site },
 };
 
 writeFileSync(OUTPUT_PATH, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
-console.log(`[build-search-catalog] Wrote ${OUTPUT_PATH}: ${products.length} products, ${applications.length} applications, ${collections.length} collections.`);
+console.log(`[build-search-catalog] Wrote ${OUTPUT_PATH}: ${products.length} products, ${applications.length} applications, ${collections.length} collections, ${site.length} blog/site records.`);

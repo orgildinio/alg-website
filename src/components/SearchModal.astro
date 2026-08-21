@@ -389,7 +389,7 @@ function loadCatalog() {
       })
       .catch(function(error) {
         console.warn('[ALG Search] Catalog unavailable:', error);
-        return { records: { products: [], applications: [], collections: [] } };
+        return { records: { products: [], applications: [], collections: [], site: [] } };
       });
   }
   return catalogPromise;
@@ -405,19 +405,35 @@ function scoreCatalogRecord(record, query) {
   if (aliases.some(function(alias) { return alias.indexOf(q) === 0; })) return 920;
   var tokens = q.split(' ').filter(Boolean);
   if (!tokens.length) return 0;
+  // Multi-word queries should not match merely because a long description
+  // happens to contain isolated generic terms such as "light".
+  if (tokens.length > 1) return 0;
   var haystack = [title].concat(aliases).join(' ');
   var covered = tokens.filter(function(token) { return haystack.indexOf(token) !== -1; }).length;
   return covered === tokens.length ? 700 + covered * 20 : 0;
 }
 function searchCatalog(catalog, query) {
   var grouped = {};
-  ['products', 'applications', 'collections'].forEach(function(group) {
+  ['products', 'applications', 'collections', 'site'].forEach(function(group) {
     var matches = (catalog.records && catalog.records[group] ? catalog.records[group] : [])
       .map(function(record) { return Object.assign({}, record, { score: scoreCatalogRecord(record, query) }); })
       .filter(function(record) { return record.score > 0; })
       .sort(function(a, b) { return b.score - a.score || a.title.localeCompare(b.title); })
       .slice(0, 8);
     if (matches.length) grouped[group] = matches;
+  });
+
+  // An application route identifies its parent product collection. Surface
+  // that collection after the application, even when the collection name
+  // itself does not repeat the user’s application phrase.
+  (grouped.applications || []).forEach(function(application) {
+    var parentMatch = String(application.url).match(/^(https?:\/\/[^/]+\/collections\/[^/?#]+)/);
+    if (!parentMatch) return;
+    var parent = parentMatch[1].replace(/\/?$/, '/');
+    var collection = (catalog.records?.collections || []).find(function(record) {
+      return comparableUrl(record.url) === comparableUrl(parent);
+    });
+    if (collection) addResult(grouped, 'collections', collection);
   });
   return grouped;
 }
@@ -538,7 +554,15 @@ async function doSearch(query) {
       // When the generated catalog has already supplied an explicit entity
       // group, retain that curated relevance set instead of mixing in broad
       // full-text matches from related product and collection pages.
-      if (['products', 'applications', 'collections'].includes(group) && grouped[group]?.length) return;
+      if (['products', 'applications', 'collections', 'site'].includes(group) && grouped[group]?.length) return;
+      // Catalog data is the authoritative product vocabulary. Avoid promoting
+      // broad page-body matches as Products when neither the page title nor
+      // its route identifies the visitor’s query.
+      if (group === 'products' && !grouped.products?.length) {
+        var entityTerms = normalizeSearchText(query).split(' ').filter(Boolean);
+        var pageTitle = normalizeSearchText((item.meta && item.meta.title) || item.title || '');
+        if (!entityTerms.some(function(term) { return pageTitle.includes(term); })) return;
+      }
       addResult(grouped, group, item);
     });
   }
