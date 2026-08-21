@@ -850,7 +850,7 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
     position:fixed;top:calc(var(--main-nav-height) + 2px);left:0;right:0;
     width:100%;max-width:none;min-width:0;padding:0;background:transparent;border:none;
     display:grid;grid-template-columns:260px max-content minmax(0,1fr);gap:0;
-    max-height:calc(100vh - 110px);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.18);border-radius:4px;
+    height:calc(100vh - 110px);max-height:calc(100vh - 110px);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.18);border-radius:4px;
   }
   .megamenu.wide .mm-col{padding:20px 18px;overflow-y:auto;max-height:calc(100vh - 110px);scrollbar-width:thin;scrollbar-color:var(--ink4) transparent;}
   .megamenu.wide .mm-col::-webkit-scrollbar{width:6px;}
@@ -908,7 +908,7 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
   .megamenu.wide .mm-preview .preview-desc{font-family:'Lato',system-ui,sans-serif;font-size:17px;color:var(--text-secondary);line-height:1.5;margin:0 0 16px;}
   .megamenu.wide .mm-preview .preview-cta{font-family:var(--font-mono);font-size:15px;font-weight:700;color:var(--text-primary);letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;align-self:flex-start;padding:11px 16px;border:1px solid var(--brand);border-radius:3px;transition:background 0.15s,color 0.15s;}
   .megamenu.wide .mm-preview .preview-cta:hover{background:var(--brand);color:var(--color-bg);}
-  .megamenu.wide .mm-preview .tier-strip{display:grid;flex:1;min-height:180px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:18px;align-items:stretch;}
+  .megamenu.wide .mm-preview .tier-strip{display:grid;flex:0 1 auto;min-height:0;max-height:280px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:18px;align-items:stretch;}
   /* Keep sparse tier sets from changing the Products panel height. The cap scales with
      viewport height, while the contained artwork still uses all of each card's image area. */
   .megamenu.wide .mm-preview .tier-strip[data-card-count="1"],
@@ -920,9 +920,9 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
   .megamenu.wide .mm-preview .tier-strip[data-card-count="1"]{grid-template-columns:repeat(2,minmax(0,1fr));}
   .megamenu.wide .mm-preview .tier-strip[data-card-count="1"] .tier-card:not(.slot-empty){grid-column:1;}
   .megamenu.wide .mm-preview .tier-strip.hidden{display:none;}
-  .megamenu.wide .mm-preview .tier-card{background:var(--bg-card);border-radius:4px;padding:14px 12px;display:grid;grid-template-rows:minmax(0,1fr) auto auto;align-items:center;justify-content:stretch;text-align:center;border-top:3px solid var(--brand);min-width:0;overflow:hidden;}
+  .megamenu.wide .mm-preview .tier-card{background:transparent;border-radius:4px;padding:14px 12px;display:grid;grid-template-rows:minmax(0,1fr) auto auto;align-items:center;justify-content:stretch;text-align:center;border-top:3px solid var(--brand);min-width:0;overflow:hidden;}
   .megamenu.wide .mm-preview .tier-card.slot-empty{display:none;}
-  .megamenu.wide .mm-preview .tier-card img{width:100%;height:100%;min-height:0;max-width:none;max-height:none;object-fit:contain;background:var(--bg-spec);border-radius:2px;margin-bottom:8px;}
+  .megamenu.wide .mm-preview .tier-card img{width:100%;height:100%;min-height:0;max-width:none;max-height:180px;object-fit:contain;background:transparent;border-radius:2px;margin-bottom:8px;}
   .megamenu.wide .mm-preview .tier-card .tier-label{font-family:var(--font-mono);font-size:14px;line-height:1.4;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
   .megamenu.wide .mm-preview .tier-card .tier-sku{font-family:var(--font-mono);font-size:15px;font-weight:600;color:var(--text-primary);line-height:1.3;}
   @media(max-width:1100px){.megamenu.wide{grid-template-columns:220px max-content minmax(0,1fr);}.megamenu.wide .mm-col.mm-col-preview{width:auto;}}
