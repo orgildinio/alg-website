@@ -54,6 +54,19 @@ const PRODUCT_OVERRIDES = [
   },
 ];
 
+const SITE_RECORDS = [
+  { title: 'Support Hub', url: '/support/', aliases: ['support', 'help', 'service', 'customer service'], breadcrumb: 'Support' },
+  { title: 'Resource Library', url: '/support/library/', aliases: ['resource library', 'documents', 'datasheets', 'ies files', 'installation guides'], breadcrumb: 'Support › Library' },
+  { title: 'Returns & Exchanges', url: '/support/returns/', aliases: ['returns', 'rma', 'exchange', 'return procedure'], breadcrumb: 'Support' },
+  { title: 'Rebate Center', url: '/support/rebate-center/', aliases: ['rebates', 'utility rebate', 'incentive'], breadcrumb: 'Support' },
+  { title: 'Terms & Conditions', url: '/terms/', aliases: ['terms', 'terms and conditions', 'terms of service'], breadcrumb: 'Company › Legal' },
+  { title: 'Privacy Policy', url: '/privacy-policy/', aliases: ['privacy', 'privacy policy'], breadcrumb: 'Company › Legal' },
+  { title: 'Patents', url: '/patents/', aliases: ['patents', 'intellectual property'], breadcrumb: 'Company › Legal' },
+  { title: 'Find a Sales Rep', url: '/find-a-rep/', aliases: ['sales rep', 'rep locator', 'representative'], breadcrumb: 'Partners' },
+  { title: 'Find a Distributor', url: '/find-a-distributor/', aliases: ['distributor', 'where to buy'], breadcrumb: 'Partners' },
+  { title: 'Career', url: 'https://careers.archipelagolighting.com/', aliases: ['career', 'careers', 'jobs', 'employment'], breadcrumb: 'Company' },
+];
+
 function cleanText(value = '') {
   return String(value)
     .replace(/<[^>]*>/g, ' ')
@@ -142,7 +155,9 @@ function extractBlogRecords() {
     })
     .filter(record => record.title);
 
-  return [{
+  return [
+    ...SITE_RECORDS.map(record => ({ type: 'site', ...record, url: absolute(record.url), aliases: unique(record.aliases) })),
+    {
     type: 'site',
     title: 'ALG Blog',
     url: absolute('/blog/'),

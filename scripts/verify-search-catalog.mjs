@@ -36,9 +36,10 @@ requireMatch('products', 'area light', 'Heritage Series');
 requireMatch('applications', 'area light', 'Area Luminaire');
 requireMatch('products', 'husk', 'Husk Series');
 
+const allowedExternalUrls = new Set(['https://careers.archipelagolighting.com/']);
 for (const group of Object.values(catalog.records)) {
   for (const record of group) {
-    if (!/^https:\/\/www\.archipelagolighting\.com\//.test(record.url)) {
+    if (!/^https:\/\/www\.archipelagolighting\.com\//.test(record.url) && !allowedExternalUrls.has(record.url)) {
       throw new Error(`Non-canonical URL in catalog: ${record.title} -> ${record.url}`);
     }
   }
