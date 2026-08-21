@@ -558,7 +558,7 @@ async function doSearch(query) {
       // Catalog data is the authoritative product vocabulary. Avoid promoting
       // broad page-body matches as Products when neither the page title nor
       // its route identifies the visitor’s query.
-      if (group === 'products' && !grouped.products?.length) {
+      if (['products', 'collections', 'verticals'].includes(group) && !grouped[group]?.length) {
         var entityTerms = normalizeSearchText(query).split(' ').filter(Boolean);
         var pageTitle = normalizeSearchText((item.meta && item.meta.title) || item.title || '');
         if (!entityTerms.some(function(term) { return pageTitle.includes(term); })) return;
