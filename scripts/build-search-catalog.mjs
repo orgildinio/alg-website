@@ -186,6 +186,19 @@ for (const [collectionKey, collection] of Object.entries(skuIndex.collections ||
 
   for (const family of collection.families || []) {
     if (!family.pdpUrl || family.pdp_ready === false || family.linkType === 'datasheet') continue;
+
+    // Derive SKU prefixes from the collection-level SKU records that belong to this family.
+    // This lets visitors search by part-number prefix (e.g. "LSBX" or "LSBX150") and find
+    // the correct product series.
+    const familySkus = (collection.skus || [])
+      .filter(s => s.family === family.family)
+      .map(s => s.sku)
+      .filter(Boolean);
+    // Extract the alphabetical prefix (e.g. LSBX from LSBX150-3CS-ULD)
+    const skuPrefixes = [...new Set(
+      familySkus.map(s => { const m = s.match(/^([A-Z]{2,6})/); return m ? m[1] : null; }).filter(Boolean)
+    )];
+
     const title = `${family.family} Series`;
     const application = family.sub_category || '';
     const aliases = unique([
@@ -195,6 +208,7 @@ for (const [collectionKey, collection] of Object.entries(skuIndex.collections ||
       family.tierKey,
       family.zoho_family,
       application,
+      ...skuPrefixes,
       ...(APPLICATION_SYNONYMS[application.toLowerCase()] || []),
     ]);
     const record = {
