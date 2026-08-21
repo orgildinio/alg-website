@@ -909,6 +909,14 @@ const REGISTRY_TIER_URLS = JSON.stringify(_tierUrls);
   .megamenu.wide .mm-preview .preview-cta{font-family:var(--font-mono);font-size:15px;font-weight:700;color:var(--text-primary);letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;align-self:flex-start;padding:11px 16px;border:1px solid var(--brand);border-radius:3px;transition:background 0.15s,color 0.15s;}
   .megamenu.wide .mm-preview .preview-cta:hover{background:var(--brand);color:var(--color-bg);}
   .megamenu.wide .mm-preview .tier-strip{display:grid;flex:1;min-height:180px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:18px;align-items:stretch;}
+  /* Keep sparse tier sets from changing the Products panel height. The cap scales with
+     viewport height, while the contained artwork still uses all of each card's image area. */
+  .megamenu.wide .mm-preview .tier-strip[data-card-count="1"],
+  .megamenu.wide .mm-preview .tier-strip[data-card-count="2"]{
+    flex:0 0 clamp(228px,29vh,320px);
+    height:clamp(228px,29vh,320px);
+    min-height:0;
+  }
   .megamenu.wide .mm-preview .tier-strip[data-card-count="1"]{grid-template-columns:repeat(2,minmax(0,1fr));}
   .megamenu.wide .mm-preview .tier-strip[data-card-count="1"] .tier-card:not(.slot-empty){grid-column:1;}
   .megamenu.wide .mm-preview .tier-strip.hidden{display:none;}
