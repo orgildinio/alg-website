@@ -542,6 +542,9 @@ async function doSearch(query) {
   var sources = await Promise.all([loadPagefind(), loadCatalog()]);
   var pf = sources[0];
   var grouped = searchCatalog(sources[1], query);
+  var suppressedPagefindUrls = (grouped.products || []).flatMap(function(record) {
+    return record.suppressPagefindUrls || [];
+  }).map(comparableUrl);
   if (pf) {
     var raw = await pf.search(query);
     var items = await Promise.all(raw.results.slice(0, 48).map(async function(result) {
@@ -551,6 +554,7 @@ async function doSearch(query) {
     }));
     items.sort(function(a, b) { return b.score - a.score; }).forEach(function(item) {
       var group = classify(item.url);
+      if (suppressedPagefindUrls.includes(comparableUrl(item.url))) return;
       // When the generated catalog has already supplied an explicit entity
       // group, retain that curated relevance set instead of mixing in broad
       // full-text matches from related product and collection pages.

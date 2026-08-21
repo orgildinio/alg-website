@@ -51,6 +51,7 @@ const PRODUCT_OVERRIDES = [
     url: '/collections/planoarch/husk/',
     aliases: ['Husk', 'Husk HID', 'HID retrofit', 'HID retrofit lamp'],
     breadcrumb: 'Products › Lamps › HID Retrofit',
+    suppressPagefindUrls: ['/collections/signature/husk-hid/'],
   },
 ];
 
@@ -210,7 +211,13 @@ for (const [collectionKey, collection] of Object.entries(skuIndex.collections ||
 
 for (const override of PRODUCT_OVERRIDES) {
   if (!products.some(record => record.url === absolute(override.url))) {
-    products.push({ type: 'products', tier: '', ...override, url: absolute(override.url) });
+    products.push({
+      type: 'products',
+      tier: '',
+      ...override,
+      url: absolute(override.url),
+      suppressPagefindUrls: (override.suppressPagefindUrls || []).map(absolute),
+    });
   }
 }
 

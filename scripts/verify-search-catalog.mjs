@@ -35,6 +35,9 @@ requireMatch('products', 'area light', 'Liberty Series');
 requireMatch('products', 'area light', 'Heritage Series');
 requireMatch('applications', 'area light', 'Area Luminaire');
 requireMatch('products', 'husk', 'Husk Series');
+if (!catalog.records.products.find(item => item.title === 'Husk Series')?.suppressPagefindUrls?.includes('https://www.archipelagolighting.com/collections/signature/husk-hid/')) {
+  throw new Error('Husk Series must suppress its legacy collection-path search duplicate');
+}
 
 const allowedExternalUrls = new Set(['https://careers.archipelagolighting.com/']);
 for (const group of Object.values(catalog.records)) {
