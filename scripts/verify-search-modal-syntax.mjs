@@ -15,6 +15,7 @@ const required = [
   "['products','applications','collections','site'",
   "GROUP_LABELS = { products:'Products', applications:'Applications', collections:'Collections'",
   "fetch('/search-catalog.json'",
+  "pfInstance.options({ basePath: '/_pagefind/' })",
   'function searchCatalog',
   'function comparableUrl',
   'async function doSearch',

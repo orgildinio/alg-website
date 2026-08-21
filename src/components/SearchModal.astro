@@ -511,6 +511,7 @@ async function loadPagefind() {
   if (pfInstance) return pfInstance;
   try {
     pfInstance = await import('/_pagefind/pagefind.js');
+    await pfInstance.options({ basePath: '/_pagefind/' });
     await pfInstance.init();
   } catch(e) {
     console.warn('[ALG Search] Pagefind not available:', e);
