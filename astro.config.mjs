@@ -74,17 +74,17 @@ function sitemapIntegration() {
           })
           .filter(url => !EXCLUDE.some(ex => url.includes(ex)));
 
-        const now = new Date().toISOString().slice(0, 10);
-
         // sitemap-0.xml — all URLs
+        // Do not emit a synthetic build-date lastmod. Google advises using
+        // lastmod only when it accurately reflects a significant page update.
         const urlset = urls.map(url =>
-          `  <url>\n    <loc>${url}</loc>\n    <lastmod>${now}</lastmod>\n  </url>`
+          `  <url>\n    <loc>${url}</loc>\n  </url>`
         ).join('\n');
         const sitemap0 = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urlset}\n</urlset>\n`;
         writeFileSync(join(outDir, 'sitemap-0.xml'), sitemap0, 'utf-8');
 
         // sitemap-index.xml — points to sitemap-0.xml
-        const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap>\n    <loc>${SITE}/sitemap-0.xml</loc>\n    <lastmod>${now}</lastmod>\n  </sitemap>\n</sitemapindex>\n`;
+        const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap>\n    <loc>${SITE}/sitemap-0.xml</loc>\n  </sitemap>\n</sitemapindex>\n`;
         writeFileSync(join(outDir, 'sitemap-index.xml'), sitemapIndex, 'utf-8');
 
         console.log(`[alg-sitemap] Wrote sitemap-index.xml + sitemap-0.xml (${urls.length} URLs)`);

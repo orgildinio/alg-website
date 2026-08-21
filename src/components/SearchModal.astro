@@ -1,6 +1,6 @@
 ---
 /**
- * SearchModal.astro — Global site search (Pagefind-powered)
+ * SearchModal.astro — Global site search (catalog-aware + Pagefind)
  * Variant A · Tight List
  *
  * IMPORTANT: <style is:global> is intentional.
@@ -322,9 +322,9 @@ var ICON_SVG = {
   circledot: makeIcon('<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="1"/>'),
 };
 
-var GROUP_ICON   = { products:'lightbulb', collections:'layers', verticals:'building2', tools:'wrench', docs:'filetext', other:'circledot' };
-var GROUP_ORDER  = ['products','collections','verticals','tools','docs','other'];
-var GROUP_LABELS = { products:'Products', collections:'Collections', verticals:'Industry Verticals', tools:'Tools', docs:'Documentation', other:'Other' };
+var GROUP_ICON   = { products:'lightbulb', applications:'building2', collections:'layers', site:'filetext', verticals:'building2', tools:'wrench', docs:'filetext', other:'circledot' };
+var GROUP_ORDER  = ['products','applications','collections','site','verticals','tools','docs','other'];
+var GROUP_LABELS = { products:'Products', applications:'Applications', collections:'Collections', site:'Site', verticals:'Industry Verticals', tools:'Tools', docs:'Documentation', other:'Other' };
 
 /* ── URL classifier ── */
 function classify(url) {
@@ -334,7 +334,7 @@ function classify(url) {
   if (/^\/solutions\//.test(p))   return 'verticals';
   if (/\/(rebate|configurator|find-a-distributor|tools|calculator)/.test(p)) return 'tools';
   if (/\/(datasheets?|ies|lm79|lm80|spec-sheet|pdf)/.test(p)) return 'docs';
-  return 'other';
+  return 'site';
 }
 
 /* ── Breadcrumb from URL (fallback) ── */
@@ -347,7 +347,7 @@ function breadcrumbFromUrl(url) {
   } catch(e) { return url; }
 }
 function breadcrumb(item) {
-  return (item.meta && item.meta.breadcrumb) ? item.meta.breadcrumb : breadcrumbFromUrl(item.url);
+  return item.breadcrumb || ((item.meta && item.meta.breadcrumb) ? item.meta.breadcrumb : breadcrumbFromUrl(item.url));
 }
 
 function esc(s) {
@@ -364,6 +364,80 @@ function parseTitle(rawTitle) {
     return { title: title, tier: tierRaw, tierCls: tierCls };
   }
   return { title: rawTitle, tier: null, tierCls: null };
+}
+
+/* ── Catalog relevance ──
+ * The generated catalog adds family aliases and application relationships that
+ * full-text crawling cannot determine. It is rebuilt before every Astro build.
+ */
+var catalogPromise = null;
+function normalizeSearchText(value) {
+  return String(value || '')
+    .replace(/Ⓐ/g, 'a')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+function loadCatalog() {
+  if (!catalogPromise) {
+    catalogPromise = fetch('/search-catalog.json', { cache: 'no-store' })
+      .then(function(response) {
+        if (!response.ok) throw new Error('Search catalog unavailable');
+        return response.json();
+      })
+      .catch(function(error) {
+        console.warn('[ALG Search] Catalog unavailable:', error);
+        return { records: { products: [], applications: [], collections: [] } };
+      });
+  }
+  return catalogPromise;
+}
+function scoreCatalogRecord(record, query) {
+  var q = normalizeSearchText(query);
+  if (!q) return 0;
+  var title = normalizeSearchText(record.title);
+  var aliases = (record.aliases || []).map(normalizeSearchText);
+  if (title === q) return 1200;
+  if (aliases.indexOf(q) !== -1) return 1100;
+  if (title.indexOf(q) === 0) return 1000;
+  if (aliases.some(function(alias) { return alias.indexOf(q) === 0; })) return 920;
+  var tokens = q.split(' ').filter(Boolean);
+  if (!tokens.length) return 0;
+  var haystack = [title].concat(aliases).join(' ');
+  var covered = tokens.filter(function(token) { return haystack.indexOf(token) !== -1; }).length;
+  return covered === tokens.length ? 700 + covered * 20 : 0;
+}
+function searchCatalog(catalog, query) {
+  var grouped = {};
+  ['products', 'applications', 'collections'].forEach(function(group) {
+    var matches = (catalog.records && catalog.records[group] ? catalog.records[group] : [])
+      .map(function(record) { return Object.assign({}, record, { score: scoreCatalogRecord(record, query) }); })
+      .filter(function(record) { return record.score > 0; })
+      .sort(function(a, b) { return b.score - a.score || a.title.localeCompare(b.title); })
+      .slice(0, 8);
+    if (matches.length) grouped[group] = matches;
+  });
+  return grouped;
+}
+function comparableUrl(url) {
+  return String(url || '')
+    .replace(/^https?:\/\/www\.archipelagolighting\.com/i, '')
+    .replace(/\/?$/, '/') || '/';
+}
+function addResult(grouped, group, item) {
+  if (!grouped[group]) grouped[group] = [];
+  var exists = Object.keys(grouped).some(function(existingGroup) {
+    return grouped[existingGroup].some(function(existing) {
+      return comparableUrl(existing.url) === comparableUrl(item.url);
+    });
+  });
+  if (!exists) grouped[group].push(item);
+}
+function limitGroups(grouped) {
+  Object.keys(grouped).forEach(function(group) { grouped[group] = grouped[group].slice(0, 8); });
+  return grouped;
 }
 
 /* ── Render ── */
@@ -394,8 +468,8 @@ function render(grouped, query) {
     results.appendChild(hdr);
 
     items.forEach(function(item) {
-      var rawTitle = (item.meta && item.meta.title) ? item.meta.title : 'Untitled';
-      var parsed   = parseTitle(rawTitle);
+      var rawTitle = item.title || ((item.meta && item.meta.title) ? item.meta.title : 'Untitled');
+      var parsed   = item.tier ? { title: rawTitle, tier: item.tier, tierCls: item.tier.toLowerCase().replace('+', 'plus') } : parseTitle(rawTitle);
       var bc       = breadcrumb(item);
 
       /* tier badge HTML — only for products */
@@ -432,7 +506,7 @@ function showLoading(q) {
     '</div>';
 }
 
-/* ── Pagefind ── */
+/* ── Pagefind + generated catalog ── */
 async function loadPagefind() {
   if (pfInstance) return pfInstance;
   try {
@@ -446,25 +520,25 @@ async function loadPagefind() {
 }
 
 async function doSearch(query) {
-  var pf = await loadPagefind();
-  if (!pf) {
-    results.innerHTML = '<div class="alg-search-empty"><div class="alg-search-empty-headline">Search index not available.</div><div class="alg-search-empty-hint">Run a production build to generate the index.</div></div>';
-    return;
-  }
   if (!query || query.trim().length < 2) { results.innerHTML = ''; return; }
   showLoading(query);
-  var raw   = await pf.search(query);
-  var items = await Promise.all(raw.results.slice(0, 24).map(function(r){ return r.data(); }));
-  var grouped = {};
-  items.forEach(function(item) {
-    var g = classify(item.url);
-    if (!grouped[g]) grouped[g] = [];
-    grouped[g].push(item);
-  });
-  /* Option A: suppress 'other' if any primary group has results */
-  var hasPrimary = grouped.products || grouped.collections || grouped.verticals || grouped.tools || grouped.docs;
+  var sources = await Promise.all([loadPagefind(), loadCatalog()]);
+  var pf = sources[0];
+  var grouped = searchCatalog(sources[1], query);
+  if (pf) {
+    var raw = await pf.search(query);
+    var items = await Promise.all(raw.results.slice(0, 48).map(async function(result) {
+      var item = await result.data();
+      item.score = result.score || 0;
+      return item;
+    }));
+    items.sort(function(a, b) { return b.score - a.score; }).forEach(function(item) {
+      addResult(grouped, classify(item.url), item);
+    });
+  }
+  var hasPrimary = grouped.products || grouped.applications || grouped.collections || grouped.site || grouped.verticals || grouped.tools || grouped.docs;
   if (hasPrimary) delete grouped.other;
-  render(grouped, query);
+  render(limitGroups(grouped), query);
 }
 
 /* ── Keyboard navigation ── */

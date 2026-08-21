@@ -7,11 +7,11 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && node scripts/normalize-aa-glyphs.mjs",
-    "cf-build": "PUBLIC_BUILD_HASH=${CF_PAGES_COMMIT_SHA:-dev} PUBLIC_BUILD_TIME=${CF_PAGES_BUILD_DATE:-$(date -u +%Y-%m-%dT%H:%M:%SZ)} astro build && node scripts/normalize-aa-glyphs.mjs",
+    "build": "node scripts/build-search-catalog.mjs && astro build && node scripts/normalize-aa-glyphs.mjs",
+    "cf-build": "node scripts/build-search-catalog.mjs && PUBLIC_BUILD_HASH=${CF_PAGES_COMMIT_SHA:-dev} PUBLIC_BUILD_TIME=${CF_PAGES_BUILD_DATE:-$(date -u +%Y-%m-%dT%H:%M:%SZ)} astro build && node scripts/normalize-aa-glyphs.mjs",
     "preview": "astro preview",
     "astro": "astro",
-    "verify": "node scripts/verify.mjs"
+    "verify": "node scripts/verify.mjs && node scripts/verify-search-catalog.mjs && node scripts/verify-search-modal-syntax.mjs"
   },
   "dependencies": {
     "astro": "^4.16.0"

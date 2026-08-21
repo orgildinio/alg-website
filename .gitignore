@@ -30,3 +30,5 @@ manus_extract/
 *_Package.zip
 v*_Package.zip
 public/products/astra/assets/astra_promo.mp4
+# Generated before every Astro build from the registry and mega-menu source.
+public/search-catalog.json
