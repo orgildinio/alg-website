@@ -533,7 +533,12 @@ async function doSearch(query) {
       return item;
     }));
     items.sort(function(a, b) { return b.score - a.score; }).forEach(function(item) {
-      addResult(grouped, classify(item.url), item);
+      var group = classify(item.url);
+      // When the generated catalog has already supplied an explicit entity
+      // group, retain that curated relevance set instead of mixing in broad
+      // full-text matches from related product and collection pages.
+      if (['products', 'applications', 'collections'].includes(group) && grouped[group]?.length) return;
+      addResult(grouped, group, item);
     });
   }
   var hasPrimary = grouped.products || grouped.applications || grouped.collections || grouped.site || grouped.verticals || grouped.tools || grouped.docs;
